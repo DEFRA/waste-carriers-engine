@@ -4,8 +4,6 @@ env:
 
 language: ruby
 rvm: 2.4.2
-script:
-  - bundle exec rspec
 services:
   - mongodb
 before-script:
@@ -20,5 +18,7 @@ before-script:
   # Set up test databases
   - "mongo waste-carriers-test --eval 'db.addUser({user: \"mongoUser\", pwd: \"password1234\", roles:[\"readWrite\", \"dbAdmin\", \"userAdmin\"]})'"
   - "mongo waste-carriers-users-test --eval 'db.addUser({user: \"mongoUser\", pwd: \"password1234\", roles:[\"readWrite\", \"dbAdmin\", \"userAdmin\"]})'"
+script:
+  - bundle exec rspec
 after_script:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
