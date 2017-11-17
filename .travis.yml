@@ -4,6 +4,14 @@ env:
 
 language: ruby
 rvm: 2.4.2
+cache: bundler
+
+# Travis CI clones repositories to a depth of 50 commits, which is only really
+# useful if you are performing git operations.
+# https://docs.travis-ci.com/user/customizing-the-build/#Git-Clone-Depth
+git:
+  depth: 3
+
 services:
   - mongodb
 before-script:
@@ -12,9 +20,14 @@ before-script:
   # ./cc-test-reporter commands on travis-ci push builds only. Hence we wrap all
   # the codeclimate test coverage related commands in a check that tests if we
   # are in a pull request or not.
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; fi
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then chmod +x ./cc-test-reporter; fi
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter before-build; fi
+  # - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; fi
+  # - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then chmod +x ./cc-test-reporter; fi
+  # - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter before-build; fi
+  #
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
   # Set up test databases
   - "mongo waste-carriers-test --eval 'db.addUser({user: \"mongoUser\", pwd: \"password1234\", roles:[\"readWrite\", \"dbAdmin\", \"userAdmin\"]})'"
   - "mongo waste-carriers-users-test --eval 'db.addUser({user: \"mongoUser\", pwd: \"password1234\", roles:[\"readWrite\", \"dbAdmin\", \"userAdmin\"]})'"
