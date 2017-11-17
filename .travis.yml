@@ -14,19 +14,15 @@ git:
 
 services:
   - mongodb
-before-script:
+before_script:
   # Setup to support the CodeClimate test coverage submission
   # As per CodeClimate's documentation, they suggest only running
   # ./cc-test-reporter commands on travis-ci push builds only. Hence we wrap all
   # the codeclimate test coverage related commands in a check that tests if we
   # are in a pull request or not.
-  # - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; fi
-  # - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then chmod +x ./cc-test-reporter; fi
-  # - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter before-build; fi
-  #
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; fi
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then chmod +x ./cc-test-reporter; fi
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter before-build; fi
 
   # Set up test databases
   - "mongo waste-carriers-test --eval 'db.addUser({user: \"mongoUser\", pwd: \"password1234\", roles:[\"readWrite\", \"dbAdmin\", \"userAdmin\"]})'"
