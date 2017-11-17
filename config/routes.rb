@@ -6,7 +6,5 @@ Rails.application.routes.draw do
 
   resources :registrations
 
-  get "/pages/:page" => "pages#show"
-
   root "registrations#index"
 end
