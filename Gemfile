@@ -43,7 +43,9 @@ gem "govuk_elements_rails", "~> 3.1"
 gem "govuk_template", "~> 0.23"
 
 # Use High Voltage for static pages
-gem "high_voltage"
+gem "high_voltage", "~> 3.0"
+
+gem "secure_headers", "~> 5.0"
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
