@@ -1,0 +1,9 @@
+language: ruby
+rvm: 2.4.2
+script:
+  - bundle exec rspec
+services:
+  - mongodb
+before-script:
+  - mongo waste-carriers-test --eval 'db.addUser({user: "mongoUser", pwd: "password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+  - mongo waste-carriers-users-test --eval 'db.addUser({user: "mongoUser", pwd: "password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
