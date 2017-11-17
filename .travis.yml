@@ -5,5 +5,5 @@ script:
 services:
   - mongodb
 before-script:
-  - mongo waste-carriers-test --eval 'db.addUser({user: "mongoUser", pwd: "password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
-  - mongo waste-carriers-users-test --eval 'db.addUser({user: "mongoUser", pwd: "password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+  - "mongo waste-carriers-test --eval 'db.addUser({user: \"mongoUser\", pwd: \"password1234\", roles:[\"readWrite\", \"dbAdmin\", \"userAdmin\"]})'"
+  - "mongo waste-carriers-users-test --eval 'db.addUser({user: \"mongoUser\", pwd: \"password1234\", roles:[\"readWrite\", \"dbAdmin\", \"userAdmin\"]})'"
