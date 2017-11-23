@@ -1,5 +1,5 @@
-class ContactDetailsFormController < ApplicationController
-  before_action :set_registration, only: %i[new create]
+class ContactDetailsFormsController < ApplicationController
+  before_action :set_registration, only: %i[edit update]
 
   def edit
     @contact_details_form = ContactDetailsForm.new(@registration)

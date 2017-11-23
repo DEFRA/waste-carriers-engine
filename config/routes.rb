@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   end
 
   resources :registrations
+  resources :contact_details_forms #, only: [:edit, :update]
 
   root "registrations#index"
 end

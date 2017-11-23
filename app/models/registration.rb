@@ -26,7 +26,7 @@ class Registration
   field :companyNo,               type: Integer
   field :firstName,               type: String
   field :lastName,                type: String
-  field :phoneNumber,             type: Integer # Are we sure? Could contain + () etc
+  field :phoneNumber,             type: String
   field :contactEmail,            type: String
   field :accountEmail,            type: String
   field :declaredConvictions,     type: Boolean
