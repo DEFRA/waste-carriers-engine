@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   end
 
   resources :registrations
-  resources :contact_details_forms #, only: [:edit, :update]
+  resources :contact_details_forms, only: [:new, :create], path_names: { new: "/:id", create: "/update/:id" }
+  # resources :contact_details_forms #, only: [:edit, :update]
 
   root "registrations#index"
 end
