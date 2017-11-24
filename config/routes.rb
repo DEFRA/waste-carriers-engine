@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :registrations
   resources :contact_details_forms,
             only: [:new, :create],
-            path: "contact_details",
+            path: "contact-details",
             path_names: { new: "/:id" }
 
   root "registrations#index"

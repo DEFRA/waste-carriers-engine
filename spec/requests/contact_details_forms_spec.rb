@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "ContactDetailsForms", type: :request do
-  describe "GET /contact_details_forms/[:id]" do
+  describe "GET new_contact_details_form_path" do
     context "when a registration exists" do
       let(:registration) { create(:registration, :has_required_data) }
 
@@ -12,7 +12,7 @@ RSpec.describe "ContactDetailsForms", type: :request do
     end
   end
 
-  describe "POST /contact_details_forms/[:id]" do
+  describe "POST contact_details_forms_path" do
     context "when a registration exists" do
       let(:registration) { create(:registration, :has_required_data) }
 
