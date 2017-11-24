@@ -22,6 +22,7 @@
         <td><%= registration.metaData.status %></td>
         <td><%= link_to 'Show', registration %></td>
         <td><%= link_to 'Edit', edit_registration_path(registration) %></td>
+        <td><%= link_to 'Contact details', new_contact_details_form_path(registration) %></td>
         <td><%= link_to 'Destroy', registration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
