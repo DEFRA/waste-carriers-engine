@@ -6,7 +6,7 @@ RSpec.describe "ContactDetailsForms", type: :request do
       let(:registration) { create(:registration, :has_required_data) }
 
       it "returns a success response" do
-        get "/contact_details_forms/#{registration[:id]}"
+        get new_contact_details_form_path(registration[:id])
         expect(response).to have_http_status(200)
       end
     end
@@ -28,7 +28,7 @@ RSpec.describe "ContactDetailsForms", type: :request do
         }
 
         it "updates the registration" do
-          post "/contact_details_forms", contact_details_form: valid_params
+          post contact_details_forms_path, contact_details_form: valid_params
           updated_registration = Registration.find(registration[:id])
 
           expect(updated_registration.firstName).to eq(valid_params[:firstName])
@@ -38,12 +38,12 @@ RSpec.describe "ContactDetailsForms", type: :request do
         end
 
         it "returns a 302 response" do
-          post "/contact_details_forms", contact_details_form: valid_params
+          post contact_details_forms_path, contact_details_form: valid_params
           expect(response).to have_http_status(302)
         end
 
         it "redirects to the root path" do
-          post "/contact_details_forms", contact_details_form: valid_params
+          post contact_details_forms_path, contact_details_form: valid_params
           expect(response).to redirect_to(registration)
         end
       end
@@ -61,7 +61,7 @@ RSpec.describe "ContactDetailsForms", type: :request do
 
         it "does not update the registration" do
           original_registration = registration
-          post "/contact_details_forms", contact_details_form: invalid_params
+          post contact_details_forms_path, contact_details_form: invalid_params
           expect(registration).to eq(original_registration)
         end
       end
