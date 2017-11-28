@@ -1,4 +1,10 @@
-<h1 class="heading-large">Resend unlock instructions</h1>
+<%= render("shared/back", back_path: new_user_session_path) %>
+
+<h1 class="heading-large">Send unlock instructions</h1>
+
+<p class="text">If you or someone else tries to sign in too many times using incorrect details the account may be temporarily locked. This is for your security.</p>
+
+<p class="text">Tell us which email address was used to register and we’ll send instructions on how to unlock the account.</p>
 
 <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
     <%= render("shared/errors", object: resource) %>
@@ -9,8 +15,6 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Resend unlock instructions", class: "button" %>
+    <%= f.submit "Send unlock instructions", class: "button" %>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
