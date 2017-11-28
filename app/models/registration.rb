@@ -32,7 +32,7 @@ class Registration
   field :declaredConvictions,     type: Boolean
   field :declaration,             type: Integer # Unsure of type
   field :regIdentifier,           type: String
-  field :expiresOn,               type: DateTime
+  field :expires_on,              type: DateTime
 
   validates :regIdentifier,
             :addresses,

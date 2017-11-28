@@ -7,6 +7,7 @@ class MetaData
   field :status,          type: String
   field :route,           type: String
   field :dateRegistered,  type: DateTime
+  field :dateActivated,   type: DateTime
   field :anotherString,   type: String # Not sure if this is needed
   field :lastModified,    type: DateTime
   field :revokedReason,   type: String

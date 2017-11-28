@@ -247,9 +247,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#first_name" do
-      context "when a registration's key person does not have a first_name" do
-        let(:key_person) { build(:keyPerson, :has_required_data, first_name: nil) }
+    describe "#firstName" do
+      context "when a registration's key person does not have a firstName" do
+        let(:key_person) { build(:keyPerson, :has_required_data, firstName: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -258,9 +258,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#last_name" do
-      context "when a registration's key person does not have a last_name" do
-        let(:key_person) { build(:keyPerson, :has_required_data, last_name: nil) }
+    describe "#lastName" do
+      context "when a registration's key person does not have a lastName" do
+        let(:key_person) { build(:keyPerson, :has_required_data, lastName: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -280,9 +280,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#dob" do
-      context "when a registration's key person does not have a dob" do
-        let(:key_person) { build(:keyPerson, :has_required_data, dob: nil) }
+    describe "#dateOfBirth" do
+      context "when a registration's key person does not have a dateOfBirth" do
+        let(:key_person) { build(:keyPerson, :has_required_data, dateOfBirth: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -291,9 +291,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#person_type" do
-      context "when a registration's key person does not have a person_type" do
-        let(:key_person) { build(:keyPerson, :has_required_data, person_type: nil) }
+    describe "#personType" do
+      context "when a registration's key person does not have a personType" do
+        let(:key_person) { build(:keyPerson, :has_required_data, personType: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -382,16 +382,16 @@ RSpec.describe Registration, type: :model do
       context "when a registration is activated" do
         let(:registration) { build(:registration, :is_pending) }
 
-        it "sets expiresOn 3 years in the future" do
-          expect(registration.expiresOn).to be_nil
+        it "sets expires_on 3 years in the future" do
+          expect(registration.expires_on).to be_nil
           registration.metaData.activate
           # Use .to_i to ignore milliseconds when comparing time
-          expect(registration.expiresOn.to_i).to eq(3.years.from_now.to_i)
+          expect(registration.expires_on.to_i).to eq(3.years.from_now.to_i)
         end
       end
 
       context "when a registration is active" do
-        let(:registration) { build(:registration, :has_expiresOn, :is_active) }
+        let(:registration) { build(:registration, :has_expires_on, :is_active) }
 
         it "has 'active' status" do
           expect(registration.metaData).to have_state(:active)
@@ -421,7 +421,7 @@ RSpec.describe Registration, type: :model do
         end
 
         context "when the registration expiration date is more than 6 months away" do
-          let(:registration) { build(:registration, :is_active, expiresOn: 1.year.from_now) }
+          let(:registration) { build(:registration, :is_active, expires_on: 1.year.from_now) }
 
           it "cannot be renewed" do
             expect(registration.metaData).to_not allow_event :renew
@@ -429,7 +429,7 @@ RSpec.describe Registration, type: :model do
         end
 
         context "when the registration expiration date is less than 6 months away" do
-          let(:registration) { build(:registration, :is_active, expiresOn: 1.month.from_now) }
+          let(:registration) { build(:registration, :is_active, expires_on: 1.month.from_now) }
 
           it "can be renewed" do
             expect(registration.metaData).to allow_event :renew
@@ -438,12 +438,12 @@ RSpec.describe Registration, type: :model do
         end
 
         context "when a registration is renewed" do
-          let(:registration) { build(:registration, :is_active, expiresOn: 1.month.from_now) }
+          let(:registration) { build(:registration, :is_active, expires_on: 1.month.from_now) }
 
-          it "extends expiresOn by 3 years" do
-            old_expiry_date = registration.expiresOn
+          it "extends expires_on by 3 years" do
+            old_expiry_date = registration.expires_on
             registration.metaData.renew
-            new_expiry_date = registration.expiresOn
+            new_expiry_date = registration.expires_on
 
             # Use .to_i to ignore milliseconds when comparing time
             expect(new_expiry_date.to_i).to eq((old_expiry_date + 3.years).to_i)
@@ -482,7 +482,7 @@ RSpec.describe Registration, type: :model do
       end
 
       context "when a registration is expired" do
-        let(:registration) { build(:registration, :is_expired, expiresOn: 1.month.ago) }
+        let(:registration) { build(:registration, :is_expired, expires_on: 1.month.ago) }
 
         it "has 'expired' status" do
           expect(registration.metaData).to have_state(:expired)

@@ -5,12 +5,12 @@ class ConvictionSearchResult
   embedded_in :keyPerson
 
   # TODO: Confirm types
-  field :match_result, type: String
-  field :matching_system, type: String
-  field :reference, type: String
-  field :matched_name, type: String
-  field :searched_at, type: DateTime
-  field :confirmed, type: Boolean
-  field :confirmed_at, type: DateTime
-  field :confirmed_by, type: String
+  field :matchResult,     type: String
+  field :matchingSystem,  type: String
+  field :reference,       type: String
+  field :matchedName,     type: String
+  field :searchedAt,      type: DateTime
+  field :confirmed,       type: Boolean
+  field :confirmedAt,     type: DateTime
+  field :confirmedBy,     type: String
 end
