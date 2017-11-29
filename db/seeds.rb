@@ -5,7 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-unless Rails.env.production?
+
+# Only seed if not running in production or we specifically require it, eg. for Heroku
+if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
   User.find_or_create_by(
     email: "user@waste-exemplar.gov.uk",
     password: "Secret123"
