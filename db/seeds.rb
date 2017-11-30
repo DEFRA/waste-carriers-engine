@@ -10,7 +10,7 @@
 if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
   User.find_or_create_by(
     email: "user@waste-exemplar.gov.uk",
-    password: "Secret123"
+    password: ENV["WCR_TEST_USER_PASSWORD"] || "Secret123"
   )
 
   Registration.find_or_create_by(
