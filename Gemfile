@@ -62,6 +62,11 @@ group :development do
   gem "spring"
 end
 
+group :production do
+  # Used for Heroku logging and asset serving
+  gem "rails_12factor"
+end
+
 group :test do
   gem "database_cleaner"
   gem "factory_bot_rails"
