@@ -24,7 +24,7 @@ production:
     # Config for the registrations database
     default:
       database: <%= ENV['WCRS_REGSDB_NAME'] %>
-      username: <%= ENV['WCRS_REGSDB_USERNAME'] %>
+      user: <%= ENV['WCRS_REGSDB_USERNAME'] %>
       password: <%= ENV['WCRS_REGSDB_PASSWORD'] %>
       hosts:
         - <%= ENV['WCRS_REGSDB_URL1'] %>
@@ -32,7 +32,7 @@ production:
     # Config for the users database
     users:
       database: <%= ENV['WCRS_USERSDB_NAME'] %>
-      username: <%= ENV['WCRS_USERSDB_USERNAME'] %>
+      user: <%= ENV['WCRS_USERSDB_USERNAME'] %>
       password: <%= ENV['WCRS_USERSDB_PASSWORD'] %>
       hosts:
         - <%= ENV['WCRS_USERSDB_URL1'] %>
