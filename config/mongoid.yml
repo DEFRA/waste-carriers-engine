@@ -24,21 +24,9 @@ production:
     # Config for the registrations database
     default:
       uri: <%= ENV['WCRS_REGSDB_URI'] %>
-    #   database: <%= ENV['WCRS_REGSDB_NAME'] %>
-    #   username: <%= ENV['WCRS_REGSDB_USERNAME'] %>
-    #   password: <%= ENV['WCRS_REGSDB_PASSWORD'] %>
-    #   hosts:
-    #     - <%= ENV['WCRS_REGSDB_URL1'] %>
-    #   options:
     # Config for the users database
     users:
       uri: <%= ENV['WCRS_USERSDB_URI'] %>
-    #   database: <%= ENV['WCRS_USERSDB_NAME'] %>
-    #   username: <%= ENV['WCRS_USERSDB_USERNAME'] %>
-    #   password: <%= ENV['WCRS_USERSDB_PASSWORD'] %>
-    #   hosts:
-    #     - <%= ENV['WCRS_USERSDB_URL1'] %>
-    #   options:
   # Configure Mongoid specific options. (optional)
   options:
 test:
