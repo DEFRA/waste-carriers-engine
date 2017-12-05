@@ -5,8 +5,8 @@ RSpec.describe "registrations/show", type: :view do
     @registration = assign(:registration, create(
                                             :registration,
                                             :has_required_data,
-                                            regIdentifier: "Reg Identifier",
-                                            companyName: "Company Name Show"
+                                            reg_identifier: "Reg Identifier",
+                                            company_name: "Company Name Show"
     ))
   end
 

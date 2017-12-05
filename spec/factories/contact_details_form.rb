@@ -1,10 +1,10 @@
 FactoryBot.define do
-  factory :contactDetailsForm do
+  factory :contact_details_form do
     trait :has_required_data do
-      firstName "Jane"
-      lastName "Hopper"
-      phoneNumber "09876 543210"
-      contactEmail "test@example.com"
+      first_name "Jane"
+      last_name "Hopper"
+      phone_number "09876 543210"
+      contact_email "test@example.com"
 
       initialize_with { new(create(:registration, :has_required_data)) }
     end

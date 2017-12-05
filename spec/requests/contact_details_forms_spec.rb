@@ -19,10 +19,10 @@ RSpec.describe "ContactDetailsForms", type: :request do
       context "when valid params are submitted" do
         let(:valid_params) {
           {
-            firstName: "Steve",
-            lastName: "Harrington",
-            phoneNumber: "01234 567890",
-            contactEmail: "test@example.com",
+            first_name: "Steve",
+            last_name: "Harrington",
+            phone_number: "01234 567890",
+            contact_email: "test@example.com",
             id: registration[:id]
           }
         }
@@ -31,10 +31,10 @@ RSpec.describe "ContactDetailsForms", type: :request do
           post contact_details_forms_path, contact_details_form: valid_params
           updated_registration = Registration.find(registration[:id])
 
-          expect(updated_registration.firstName).to eq(valid_params[:firstName])
-          expect(updated_registration.lastName).to eq(valid_params[:lastName])
-          expect(updated_registration.phoneNumber).to eq(valid_params[:phoneNumber])
-          expect(updated_registration.contactEmail).to eq(valid_params[:contactEmail])
+          expect(updated_registration.first_name).to eq(valid_params[:first_name])
+          expect(updated_registration.last_name).to eq(valid_params[:last_name])
+          expect(updated_registration.phone_number).to eq(valid_params[:phone_number])
+          expect(updated_registration.contact_email).to eq(valid_params[:contact_email])
         end
 
         it "returns a 302 response" do
@@ -51,10 +51,10 @@ RSpec.describe "ContactDetailsForms", type: :request do
       context "when invalid params are submitted" do
         let(:invalid_params) {
           {
-            firstName: "",
-            lastName: "",
-            phoneNumber: "",
-            contactEmail: "",
+            first_name: "",
+            last_name: "",
+            phone_number: "",
+            contact_email: "",
             id: registration[:id]
           }
         }

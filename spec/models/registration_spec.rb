@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Registration, type: :model do
-  describe "#regIdentifier" do
-    context "when a registration has no regIdentifier" do
-      let(:registration) { build(:registration, :has_required_data, regIdentifier: nil) }
+  describe "#reg_identifier" do
+    context "when a registration has no reg_identifier" do
+      let(:registration) { build(:registration, :has_required_data, reg_identifier: nil) }
 
       it "is not valid" do
         expect(registration).to_not be_valid
@@ -65,11 +65,11 @@ RSpec.describe Registration, type: :model do
 
   describe "#convictionSearchResult" do
     context "when a registration has a convictionSearchResult" do
-      let(:convictionSearchResult) { build(:convictionSearchResult) }
+      let(:conviction_search_result) { build(:convictionSearchResult) }
       let(:registration) do
         build(:registration,
               :has_required_data,
-              convictionSearchResult: convictionSearchResult)
+              convictionSearchResult: conviction_search_result)
       end
 
       it "is valid" do
@@ -95,11 +95,11 @@ RSpec.describe Registration, type: :model do
 
   describe "#financeDetails" do
     context "when a registration has a financeDetails" do
-      let(:financeDetails) { build(:financeDetails, :has_required_data) }
+      let(:finance_details) { build(:financeDetails, :has_required_data) }
       let(:registration) do
         build(:registration,
               :has_required_data,
-              financeDetails: financeDetails)
+              financeDetails: finance_details)
       end
 
       it "is valid" do
@@ -109,11 +109,11 @@ RSpec.describe Registration, type: :model do
 
     describe "#balance" do
       context "when a registration has a financeDetails which has no balance" do
-        let(:financeDetails) { build(:financeDetails, balance: nil) }
+        let(:finance_details) { build(:financeDetails, balance: nil) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: financeDetails)
+                financeDetails: finance_details)
         end
 
         it "is not valid" do
@@ -125,11 +125,11 @@ RSpec.describe Registration, type: :model do
     describe "#orders" do
       context "when a registration has a financeDetails which has one order" do
         let(:order) { build(:order) }
-        let(:financeDetails) { build(:financeDetails, :has_required_data, orders: [order]) }
+        let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: financeDetails)
+                financeDetails: finance_details)
         end
 
         it "is valid" do
@@ -140,11 +140,11 @@ RSpec.describe Registration, type: :model do
       context "when a registration has a financeDetails which has multiple orders" do
         let(:order_a) { build(:order) }
         let(:order_b) { build(:order) }
-        let(:financeDetails) { build(:financeDetails, :has_required_data, orders: [order_a, order_b]) }
+        let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order_a, order_b]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: financeDetails)
+                financeDetails: finance_details)
         end
 
         it "is valid" do
@@ -154,13 +154,13 @@ RSpec.describe Registration, type: :model do
 
       describe "#orderItems" do
         context "when a registration has a financeDetails which has an order which has an orderItem" do
-          let(:orderItem) { build(:orderItem) }
-          let(:order) { build(:order, orderItems: [orderItem]) }
-          let(:financeDetails) { build(:financeDetails, :has_required_data, orders: [order]) }
+          let(:order_item) { build(:orderItem) }
+          let(:order) { build(:order, orderItems: [order_item]) }
+          let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order]) }
           let(:registration) do
             build(:registration,
                   :has_required_data,
-                  financeDetails: financeDetails)
+                  financeDetails: finance_details)
           end
 
           it "is valid" do
@@ -169,14 +169,14 @@ RSpec.describe Registration, type: :model do
         end
 
         context "when a registration has a financeDetails which has an order which has multiple orderItems" do
-          let(:orderItem_a) { build(:orderItem) }
-          let(:orderItem_b) { build(:orderItem) }
-          let(:order) { build(:order, orderItems: [orderItem_a, orderItem_b]) }
-          let(:financeDetails) { build(:financeDetails, :has_required_data, orders: [order]) }
+          let(:order_item_a) { build(:orderItem) }
+          let(:order_item_b) { build(:orderItem) }
+          let(:order) { build(:order, orderItems: [order_item_a, order_item_b]) }
+          let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order]) }
           let(:registration) do
             build(:registration,
                   :has_required_data,
-                  financeDetails: financeDetails)
+                  financeDetails: finance_details)
           end
 
           it "is valid" do
@@ -189,11 +189,11 @@ RSpec.describe Registration, type: :model do
     describe "#payments" do
       context "when a registration has a financeDetails which has one payment" do
         let(:payment) { build(:payment) }
-        let(:financeDetails) { build(:financeDetails, :has_required_data, payments: [payment]) }
+        let(:finance_details) { build(:financeDetails, :has_required_data, payments: [payment]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: financeDetails)
+                financeDetails: finance_details)
         end
 
         it "is valid" do
@@ -204,11 +204,11 @@ RSpec.describe Registration, type: :model do
       context "when a registration has a financeDetails which has multiple payments" do
         let(:payment_a) { build(:payment) }
         let(:payment_b) { build(:payment) }
-        let(:financeDetails) { build(:financeDetails, :has_required_data, payments: [payment_a, payment_b]) }
+        let(:finance_details) { build(:financeDetails, :has_required_data, payments: [payment_a, payment_b]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: financeDetails)
+                financeDetails: finance_details)
         end
 
         it "is valid" do
@@ -247,9 +247,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#firstName" do
-      context "when a registration's key person does not have a firstName" do
-        let(:key_person) { build(:keyPerson, :has_required_data, firstName: nil) }
+    describe "#first_name" do
+      context "when a registration's key person does not have a first_name" do
+        let(:key_person) { build(:keyPerson, :has_required_data, first_name: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -258,9 +258,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#lastName" do
-      context "when a registration's key person does not have a lastName" do
-        let(:key_person) { build(:keyPerson, :has_required_data, lastName: nil) }
+    describe "#last_name" do
+      context "when a registration's key person does not have a last_name" do
+        let(:key_person) { build(:keyPerson, :has_required_data, last_name: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -280,9 +280,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#dateOfBirth" do
-      context "when a registration's key person does not have a dateOfBirth" do
-        let(:key_person) { build(:keyPerson, :has_required_data, dateOfBirth: nil) }
+    describe "#date_of_birth" do
+      context "when a registration's key person does not have a date_of_birth" do
+        let(:key_person) { build(:keyPerson, :has_required_data, date_of_birth: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -291,9 +291,9 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#personType" do
-      context "when a registration's key person does not have a personType" do
-        let(:key_person) { build(:keyPerson, :has_required_data, personType: nil) }
+    describe "#person_type" do
+      context "when a registration's key person does not have a person_type" do
+        let(:key_person) { build(:keyPerson, :has_required_data, person_type: nil) }
         let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
 
         it "is not valid" do
@@ -304,8 +304,8 @@ RSpec.describe Registration, type: :model do
 
     describe "#convictionSearchResult" do
       context "when a registration's key person has a convictionSearchResult" do
-        let(:convictionSearchResult) { build(:convictionSearchResult) }
-        let(:key_person) { build(:keyPerson, :has_required_data, convictionSearchResult: convictionSearchResult) }
+        let(:conviction_search_result) { build(:convictionSearchResult) }
+        let(:key_person) { build(:keyPerson, :has_required_data, convictionSearchResult: conviction_search_result) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
@@ -330,8 +330,8 @@ RSpec.describe Registration, type: :model do
 
     describe "#status" do
       context "when a registration is created" do
-        let(:metaData) { build(:metaData) }
-        let(:registration) { build(:registration, :has_required_data, metaData: metaData) }
+        let(:meta_data) { build(:metaData) }
+        let(:registration) { build(:registration, :has_required_data, metaData: meta_data) }
 
         it "has 'pending' status" do
           expect(registration.metaData).to have_state(:pending)

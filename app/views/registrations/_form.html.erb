@@ -2,12 +2,12 @@
   <%= render("shared/errors", object: @registration) %>
 
   <div class="form-group">
-    <%= f.label :regIdentifier, class: "form-label" %>
-    <%= f.text_field :regIdentifier, class: "form-control" %>
+    <%= f.label :reg_identifier, class: "form-label" %>
+    <%= f.text_field :reg_identifier, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :companyName, class: "form-label" %>
-    <%= f.text_field :companyName, class: "form-control" %>
+    <%= f.label :company_name, class: "form-label" %>
+    <%= f.text_field :company_name, class: "form-control" %>
   </div>
   <div class="form-group">
     <%= f.submit "Submit new registration", class: "button" %>

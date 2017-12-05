@@ -3,8 +3,7 @@ class ConvictionSignOff
 
   embedded_in :registration
 
-  # TODO: Confirm types
-  field :confirmed, type: Boolean
-  field :confirmedAt, type: DateTime
-  field :confirmedBy, type: String
+  field :confirmed,                       type: Boolean
+  field :confirmedAt, as: :confirmed_at,  type: DateTime
+  field :confirmedBy, as: :confirmed_by,  type: String
 end

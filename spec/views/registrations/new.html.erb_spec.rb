@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "registrations/new", type: :view do
   before(:each) do
     assign(:registration, Registration.new(
-                            regIdentifier: "Reg Identifier",
-                            companyName: "Company Name New"
+                            reg_identifier: "Reg Identifier",
+                            company_name: "Company Name New"
     ))
   end
 
@@ -13,9 +13,9 @@ RSpec.describe "registrations/new", type: :view do
 
     assert_select "form[action=?][method=?]", registrations_path, "post" do
 
-      assert_select "input#registration_regIdentifier[name=?]", "registration[regIdentifier]"
+      assert_select "input#registration_reg_identifier[name=?]", "registration[reg_identifier]"
 
-      assert_select "input#registration_companyName[name=?]", "registration[companyName]"
+      assert_select "input#registration_company_name[name=?]", "registration[company_name]"
     end
   end
 end

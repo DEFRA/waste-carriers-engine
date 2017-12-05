@@ -7,16 +7,16 @@ class KeyPerson
   accepts_nested_attributes_for :convictionSearchResult
 
   # TODO: Confirm types
-  field :firstName,    type: String
-  field :lastName,     type: String
-  field :position,     type: String
+  field :firstName, as: :first_name,       type: String
+  field :lastName, as: :last_name,         type: String
+  field :position,                         type: String
   # Do we need all these date fields? TODO: Compare against existing DB
-  field :dob_day,      type: Integer
-  field :dob_month,    type: Integer
-  field :dob_year,     type: Integer
-  field :dateOfBirth,  type: DateTime
-  field :personType,   type: String # "Key" by default, but why would you add an irrelevant person?
+  field :dob_day,                          type: Integer
+  field :dob_month,                        type: Integer
+  field :dob_year,                         type: Integer
+  field :dateOfBirth, as: :date_of_birth,  type: DateTime
+  field :personType, as: :person_type,     type: String # "Key" by default, but why would you add an irrelevant person?
 
-  validates :firstName, :lastName, :position, :dateOfBirth, :personType,
+  validates :first_name, :last_name, :position, :date_of_birth, :person_type,
             presence: true
 end

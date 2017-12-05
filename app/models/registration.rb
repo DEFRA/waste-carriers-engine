@@ -15,24 +15,24 @@ class Registration
                                 :convictionSearchResult,
                                 :conviction_sign_offs
 
-  field :uuid,                    type: String
-  field :tier,                    type: String
-  field :registrationType,        type: String
-  field :businessType,            type: String
-  field :otherBusinesses,         type: Boolean
-  field :isMainService,           type: Boolean
-  field :onlyAMF,                 type: Boolean
-  field :companyName,             type: String
-  field :companyNo,               type: Integer
-  field :firstName,               type: String
-  field :lastName,                type: String
-  field :phoneNumber,             type: String
-  field :contactEmail,            type: String
-  field :accountEmail,            type: String
-  field :declaredConvictions,     type: Boolean
-  field :declaration,             type: Integer # Unsure of type
-  field :regIdentifier,           type: String
-  field :expires_on,              type: DateTime
+  field :uuid,                                            type: String
+  field :tier,                                            type: String
+  field :registrationType, as: :registration_type,        type: String
+  field :businessType, as: :business_type,                type: String
+  field :otherBusinesses, as: :other_businesses,          type: Boolean
+  field :isMainService, as: :is_main_service,             type: Boolean
+  field :onlyAMF, as: :only_amf,                          type: Boolean
+  field :companyName, as: :company_name,                  type: String
+  field :companyNo, as: :company_no,                      type: Integer
+  field :firstName, as: :first_name,                      type: String
+  field :lastName, as: :last_name,                        type: String
+  field :phoneNumber, as: :phone_number,                  type: String
+  field :contactEmail, as: :contact_email,                type: String
+  field :accountEmail, as: :account_email,                type: String
+  field :declaredConvictions, as: :declared_convictions,  type: Boolean
+  field :declaration,                                     type: Integer # Unsure of type
+  field :regIdentifier, as: :reg_identifier,              type: String
+  field :expires_on,                                      type: DateTime
 
   validates :regIdentifier,
             :addresses,

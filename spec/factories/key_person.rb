@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :keyPerson do
     trait :has_required_data do
-      firstName "Kate"
-      lastName "Franklin"
+      first_name "Kate"
+      last_name "Franklin"
       position "Director"
-      dateOfBirth Date.new
-      personType "Relevant"
+      date_of_birth Date.new
+      person_type "Relevant"
     end
   end
 end

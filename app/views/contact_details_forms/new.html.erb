@@ -2,20 +2,20 @@
   <%= render("shared/errors", object: @contact_details_form) %>
 
   <div class="form-group">
-    <%= f.label :firstName, class: "form-label" %>
-    <%= f.text_field :firstName, class: "form-control" %>
+    <%= f.label :first_name, class: "form-label" %>
+    <%= f.text_field :first_name, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :lastName, class: "form-label" %>
-    <%= f.text_field :lastName, class: "form-control" %>
+    <%= f.label :last_name, class: "form-label" %>
+    <%= f.text_field :last_name, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :phoneNumber, class: "form-label" %>
-    <%= f.text_field :phoneNumber, class: "form-control" %>
+    <%= f.label :phone_number, class: "form-label" %>
+    <%= f.text_field :phone_number, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :contactEmail, class: "form-label" %>
-    <%= f.text_field :contactEmail, class: "form-control" %>
+    <%= f.label :contact_email, class: "form-label" %>
+    <%= f.text_field :contact_email, class: "form-control" %>
   </div>
   <%= f.hidden_field :id, value: params[:id] %>
   <div class="form-group">

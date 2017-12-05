@@ -6,14 +6,14 @@ RSpec.describe "registrations/index", type: :view do
              create(
                :registration,
                :has_required_data,
-               regIdentifier: "Reg Identifier",
-               companyName: "Company Name Index"
+               reg_identifier: "Reg Identifier",
+               company_name: "Company Name Index"
              ),
              create(
                :registration,
                :has_required_data,
-               regIdentifier: "Reg Identifier",
-               companyName: "Company Name Index"
+               reg_identifier: "Reg Identifier",
+               company_name: "Company Name Index"
              )
            ])
   end
