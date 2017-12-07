@@ -1,0 +1,10 @@
+<%= form_for(@renewal_start_form) do |f| %>
+  <%= render("shared/errors", object: @renewal_start_form) %>
+
+  <h1 class="heading-large">You are about to renew <%= @renewal_start_form.regIdentifier %></h1>
+
+  <%= f.hidden_field :regIdentifier, value: @renewal_start_form.regIdentifier %>
+  <div class="form-group">
+    <%= f.submit "Begin renewal", class: "button" %>
+  </div>
+<% end %>

@@ -1,4 +1,6 @@
 class ContactDetailsFormsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @registration = Registration.find(params[:id])
     @contact_details_form = ContactDetailsForm.new(@registration)
