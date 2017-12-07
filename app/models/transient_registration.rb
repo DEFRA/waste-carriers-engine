@@ -3,16 +3,18 @@ class TransientRegistration
   include CanHaveRegistrationAttributes
 
   # TODO: Add state machine
-
-  def valid_new_renewal?
-    valid_reg_identifier? && no_renewal_in_progress? && registration_exists?
-  end
+  #
+  # def valid_new_renewal?
+  #   valid_reg_identifier? && no_renewal_in_progress? && registration_exists?
+  # end
 
   def renewal_attributes
     registration = Registration.where(reg_identifier: reg_identifier).first
     # Don't return object IDs as Mongo should generate new unique ones
     registration.attributes.except("_id")
   end
+
+  validate :valid_reg_identifier?, :no_renewal_in_progress?, :registration_exists?
 
   private
 
