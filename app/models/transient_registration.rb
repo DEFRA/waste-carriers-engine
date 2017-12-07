@@ -1,5 +1,6 @@
-class TransientRegistration < Registration
+class TransientRegistration
   include Mongoid::Document
+  include CanHaveRegistrationAttributes
 
   # TODO: Add state machine
 
