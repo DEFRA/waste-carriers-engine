@@ -13,7 +13,7 @@ class RenewalStartFormsController < ApplicationController
 
     respond_to do |format|
       if @renewal_start_form.submit(params[:renewal_start_form])
-        format.html { redirect_to @transient_registration, notice: "Transient registration was successfully updated." }
+        format.html { redirect_to root_path, notice: "Transient registration was successfully updated." }
         format.json { render :show, status: :ok, location: @transient_registration }
       else
         format.html { render :new }
@@ -25,10 +25,10 @@ class RenewalStartFormsController < ApplicationController
   private
 
   def set_transient_registration(reg_identifier)
-    if TransientRegistration.where(regIdentifier: reg_identifier).exists?
-      @transient_registration = TransientRegistration.find(regIdentifier: reg_identifier)
+    if TransientRegistration.where(reg_identifier: reg_identifier).exists?
+      @transient_registration = TransientRegistration.find(reg_identifier: reg_identifier)
     else
-      @transient_registration = TransientRegistration.new(regIdentifier: reg_identifier)
+      @transient_registration = TransientRegistration.new(reg_identifier: reg_identifier)
     end
   end
 end
