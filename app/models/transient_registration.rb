@@ -20,18 +20,18 @@ class TransientRegistration
     # Make sure the format of the reg_identifier is valid to prevent injection
     # Format should be CBDU, followed by at least one digit
     return unless reg_identifier.blank? || !reg_identifier.match?(/^CBDU[0-9]+$/)
-    errors.add(:reg_identifier, "is not a valid format")
+    errors.add(:reg_identifier, :invalid_format)
   end
 
   # Check if a transient renewal already exists for this registration so we don't have
   # multiple renewals in progress at once
   def no_renewal_in_progress?
     return unless TransientRegistration.where(reg_identifier: reg_identifier).exists?
-    errors.add(:reg_identifier, "already has a renewal in progress")
+    errors.add(:reg_identifier, :renewal_in_progress)
   end
 
   def registration_exists?
     return if Registration.where(reg_identifier: reg_identifier).exists?
-    errors.add(:reg_identifier, "does not exist")
+    errors.add(:reg_identifier, :no_registration)
   end
 end

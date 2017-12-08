@@ -1,6 +1,6 @@
 <% if @renewal_start_form.errors.any? %>
 
-  <h1 class="heading-large">You can't renew this registration</h1>
+  <h1 class="heading-large"><%= t(".error_heading") %></h1>
 
   <% @renewal_start_form.errors.full_messages.each do |message| %>
     <li><%= message %></li>
@@ -11,11 +11,11 @@
   <%= form_for(@renewal_start_form) do |f| %>
     <%= render("shared/errors", object: @renewal_start_form) %>
 
-    <h1 class="heading-large">You are about to renew <%= @renewal_start_form.reg_identifier %></h1>
+    <h1 class="heading-large"><%= t(".confirmation_text", reg_identifier: @renewal_start_form.reg_identifier) %></h1>
 
     <%= f.hidden_field :reg_identifier, value: @renewal_start_form.reg_identifier %>
     <div class="form-group">
-      <%= f.submit "Begin renewal", class: "button" %>
+      <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
 

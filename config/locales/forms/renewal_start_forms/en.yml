@@ -1,0 +1,6 @@
+en:
+  renewal_start_forms:
+    new:
+      confirmation_text: You are about to renew %{reg_identifier}.
+      error_heading: You cannot renew this registration
+      next_button: Begin renewal

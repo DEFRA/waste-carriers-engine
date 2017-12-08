@@ -9,9 +9,9 @@ RSpec.describe "RenewalStartForms", type: :request do
       end
 
       context "when a matching registration exists" do
-        context "when no renewal is in progress for the registration" do
-          let(:registration) { create(:registration, :has_required_data) }
+        let(:registration) { create(:registration, :has_required_data) }
 
+        context "when no renewal is in progress for the registration" do
           it "returns a success response" do
             get new_renewal_start_form_path(registration[:reg_identifier])
             expect(response).to have_http_status(200)
@@ -19,15 +19,28 @@ RSpec.describe "RenewalStartForms", type: :request do
         end
 
         context "when a renewal is already in progress" do
-          it "says no" do
-            # TODO
+          before(:each) do
+            create(:transient_registration, :has_required_data, reg_identifier: registration.reg_identifier)
+          end
+
+          it "shows an error message" do
+            get new_renewal_start_form_path(registration[:reg_identifier])
+            expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.renewal_in_progress"))
           end
         end
       end
 
       context "when no matching registration exists" do
-        it "says no" do
-          # TODO
+        it "shows an error message" do
+          get new_renewal_start_form_path("CBDU999999999")
+          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.no_registration"))
+        end
+      end
+
+      context "when the reg_identifier doesn't match the format" do
+        it "shows an error message" do
+          get new_renewal_start_form_path("asdf")
+          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
         end
       end
     end
@@ -103,21 +116,20 @@ RSpec.describe "RenewalStartForms", type: :request do
         end
 
         context "when a renewal is already in progress" do
-          let(:valid_params) { { reg_identifier: registration.reg_identifier } }
+          let(:invalid_params) { { reg_identifier: registration.reg_identifier } }
 
           before(:each) do
             create(:transient_registration, :has_required_data, reg_identifier: registration.reg_identifier)
           end
 
-          it "redirects to an error page" do
-            post renewal_start_forms_path, renewal_start_form: valid_params
-            # TODO: Add error page
-            # expect(response).to redirect_to(error_path)
+          it "shows an error message" do
+            post renewal_start_forms_path, renewal_start_form: invalid_params
+            expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.renewal_in_progress"))
           end
 
           it "does not create a new transient registration" do
             original_tr_count = TransientRegistration.count
-            post renewal_start_forms_path, renewal_start_form: valid_params
+            post renewal_start_forms_path, renewal_start_form: invalid_params
             updated_tr_count = TransientRegistration.count
 
             expect(original_tr_count).to eq(updated_tr_count)
@@ -126,17 +138,33 @@ RSpec.describe "RenewalStartForms", type: :request do
       end
 
       context "when no matching registration exists" do
-        let(:valid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { reg_identifier: "CBDU99999" } }
 
-        it "redirects to an error page" do
-          post renewal_start_forms_path, renewal_start_form: valid_params
-          # TODO: Add error page
-          # expect(response).to redirect_to(error_path)
+        it "shows an error message" do
+          post renewal_start_forms_path, renewal_start_form: invalid_params
+          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.no_registration"))
         end
 
         it "does not create a new transient registration" do
           original_tr_count = TransientRegistration.count
-          post renewal_start_forms_path, renewal_start_form: valid_params
+          post renewal_start_forms_path, renewal_start_form: invalid_params
+          updated_tr_count = TransientRegistration.count
+
+          expect(original_tr_count).to eq(updated_tr_count)
+        end
+      end
+
+      context "when the reg_identifier doesn't match the format" do
+        let(:invalid_params) { { reg_identifier: "foo" } }
+
+        it "shows an error message" do
+          post renewal_start_forms_path, renewal_start_form: invalid_params
+          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+        end
+
+        it "does not create a new transient registration" do
+          original_tr_count = TransientRegistration.count
+          post renewal_start_forms_path, renewal_start_form: invalid_params
           updated_tr_count = TransientRegistration.count
 
           expect(original_tr_count).to eq(updated_tr_count)
