@@ -3,8 +3,8 @@ class RenewalStartFormsController < ApplicationController
 
   def new
     set_transient_registration(params[:reg_identifier])
-    @transient_registration.valid?
     @renewal_start_form = RenewalStartForm.new(@transient_registration)
+    @renewal_start_form.validate
   end
 
   def create
@@ -25,10 +25,10 @@ class RenewalStartFormsController < ApplicationController
   private
 
   def set_transient_registration(reg_identifier)
-    if TransientRegistration.where(reg_identifier: reg_identifier).exists?
-      @transient_registration = TransientRegistration.where(reg_identifier: reg_identifier).first
-    else
-      @transient_registration = TransientRegistration.new(reg_identifier: reg_identifier)
-    end
+    @transient_registration = if TransientRegistration.where(reg_identifier: reg_identifier).exists?
+                                TransientRegistration.where(reg_identifier: reg_identifier).first
+                              else
+                                TransientRegistration.new(reg_identifier: reg_identifier)
+                              end
   end
 end

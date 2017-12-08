@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :registration do
     trait :has_required_data do
-      reg_identifier "CBDU1"
+      sequence(:reg_identifier) { |n| "CBDU#{n}" }
 
       metaData { build(:metaData) }
       addresses { [build(:address)] }

@@ -58,27 +58,25 @@ RSpec.describe "RenewalStartForms", type: :request do
       end
 
       context "when a matching registration exists" do
-        context "when no renewal is in progress for the registration" do
-          let(:registration) { create(:registration, :has_required_data) }
+        let(:registration) { create(:registration, :has_required_data) }
 
+        context "when no renewal is in progress for the registration" do
           context "when valid params are submitted" do
-            let(:valid_params) { { reg_identifier: registration[:reg_identifier] } }
+            let(:valid_params) { { reg_identifier: registration.reg_identifier } }
 
             it "creates a new transient registration" do
               expected_tr_count = TransientRegistration.count + 1
               post renewal_start_forms_path, renewal_start_form: valid_params
               updated_tr_count = TransientRegistration.count
 
-              puts "EXPECTED: #{expected_tr_count}"
-              puts "UPDATED: #{updated_tr_count}"
               expect(expected_tr_count).to eq(updated_tr_count)
             end
 
             it "creates a transient registration with correct data" do
               post renewal_start_forms_path, renewal_start_form: valid_params
-              transient_registration = TransientRegistration.where(reg_identifier: registration[:reg_identifier])
+              transient_registration = TransientRegistration.where(reg_identifier: registration.reg_identifier).first
 
-              expect(transient_registration[:reg_identifier]).to eq(valid_params[:reg_identifier])
+              expect(transient_registration.reg_identifier).to eq(valid_params[:reg_identifier])
             end
 
             it "returns a 302 response" do
@@ -105,17 +103,43 @@ RSpec.describe "RenewalStartForms", type: :request do
         end
 
         context "when a renewal is already in progress" do
-          let(:existing_renewal) { create(:transient_registration, :has_required_data) }
+          let(:valid_params) { { reg_identifier: registration.reg_identifier } }
 
-          it "says no" do
-            # TODO
+          before(:each) do
+            create(:transient_registration, :has_required_data, reg_identifier: registration.reg_identifier)
+          end
+
+          it "redirects to an error page" do
+            post renewal_start_forms_path, renewal_start_form: valid_params
+            # TODO: Add error page
+            # expect(response).to redirect_to(error_path)
+          end
+
+          it "does not create a new transient registration" do
+            original_tr_count = TransientRegistration.count
+            post renewal_start_forms_path, renewal_start_form: valid_params
+            updated_tr_count = TransientRegistration.count
+
+            expect(original_tr_count).to eq(updated_tr_count)
           end
         end
       end
 
       context "when no matching registration exists" do
-        it "says no" do
-          # TODO
+        let(:valid_params) { { reg_identifier: "foo" } }
+
+        it "redirects to an error page" do
+          post renewal_start_forms_path, renewal_start_form: valid_params
+          # TODO: Add error page
+          # expect(response).to redirect_to(error_path)
+        end
+
+        it "does not create a new transient registration" do
+          original_tr_count = TransientRegistration.count
+          post renewal_start_forms_path, renewal_start_form: valid_params
+          updated_tr_count = TransientRegistration.count
+
+          expect(original_tr_count).to eq(updated_tr_count)
         end
       end
     end

@@ -36,10 +36,5 @@ module CanHaveRegistrationAttributes
     field :declaration,                                     type: Integer # Unsure of type
     field :regIdentifier, as: :reg_identifier,              type: String
     field :expires_on,                                      type: DateTime
-
-    validates :regIdentifier,
-              :addresses,
-              :metaData,
-              presence: true
   end
 end
