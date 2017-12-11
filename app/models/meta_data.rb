@@ -4,7 +4,6 @@ class MetaData
 
   embedded_in :registration
 
-  field :status,                                type: String
   field :route,                                 type: String
   field :dateRegistered, as: :date_registered,  type: DateTime
   field :dateActivated, as: :date_activated,    type: DateTime

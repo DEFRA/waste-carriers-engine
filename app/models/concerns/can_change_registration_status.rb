@@ -5,6 +5,8 @@ module CanChangeRegistrationStatus
   included do
     include AASM
 
+    field :status, type: String
+
     aasm column: :status do
       # States
       state :pending, initial: true
