@@ -1,18 +1,17 @@
 class TransientRegistration
   include Mongoid::Document
   include CanHaveRegistrationAttributes
+  include CanChangeWorkflowStatus
 
-  # TODO: Add state machine
+  validate :valid_reg_identifier?
+  validate :no_renewal_in_progress?
+  validate :registration_exists?
 
   def renewal_attributes
     registration = Registration.where(reg_identifier: reg_identifier).first
     # Don't return object IDs as Mongo should generate new unique ones
     registration.attributes.except("_id")
   end
-
-  validate :valid_reg_identifier?
-  validate :no_renewal_in_progress?
-  validate :registration_exists?
 
   private
 

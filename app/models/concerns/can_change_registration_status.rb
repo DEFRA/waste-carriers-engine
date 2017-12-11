@@ -1,4 +1,4 @@
-module CanChangeStatus
+module CanChangeRegistrationStatus
   extend ActiveSupport::Concern
   include Mongoid::Document
 

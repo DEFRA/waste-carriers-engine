@@ -1,6 +1,6 @@
 class MetaData
   include Mongoid::Document
-  include CanChangeStatus
+  include CanChangeRegistrationStatus
 
   embedded_in :registration
 
