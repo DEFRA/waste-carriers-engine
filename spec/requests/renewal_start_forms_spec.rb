@@ -20,7 +20,7 @@ RSpec.describe "RenewalStartForms", type: :request do
 
         context "when a renewal is already in progress" do
           before(:each) do
-            create(:transient_registration, :has_required_data, reg_identifier: registration.reg_identifier)
+            create(:transient_registration, reg_identifier: registration.reg_identifier)
           end
 
           it "shows an error message" do
@@ -71,7 +71,7 @@ RSpec.describe "RenewalStartForms", type: :request do
       end
 
       context "when a matching registration exists" do
-        let(:registration) { create(:registration, :has_required_data) }
+        let(:registration) { create(:registration, :has_required_data, company_name: "Correct Name") }
 
         context "when no renewal is in progress for the registration" do
           context "when valid params are submitted" do
@@ -89,7 +89,8 @@ RSpec.describe "RenewalStartForms", type: :request do
               post renewal_start_forms_path, renewal_start_form: valid_params
               transient_registration = TransientRegistration.where(reg_identifier: registration.reg_identifier).first
 
-              expect(transient_registration.reg_identifier).to eq(valid_params[:reg_identifier])
+              expect(transient_registration.reg_identifier).to eq(registration.reg_identifier)
+              expect(transient_registration.company_name).to eq(registration.company_name)
             end
 
             it "returns a 302 response" do
@@ -119,7 +120,7 @@ RSpec.describe "RenewalStartForms", type: :request do
           let(:invalid_params) { { reg_identifier: registration.reg_identifier } }
 
           before(:each) do
-            create(:transient_registration, :has_required_data, reg_identifier: registration.reg_identifier)
+            create(:transient_registration, reg_identifier: registration.reg_identifier)
           end
 
           it "shows an error message" do

@@ -18,8 +18,8 @@ class TransientRegistration
 
   def valid_reg_identifier?
     # Make sure the format of the reg_identifier is valid to prevent injection
-    # Format should be CBDU, followed by at least one digit
-    return unless reg_identifier.blank? || !reg_identifier.match?(/^CBDU[0-9]+$/)
+    # Format should be CBDU or CBDL, followed by at least one digit
+    return unless reg_identifier.blank? || !reg_identifier.match?(/^CBD[U|L][0-9]+$/)
     errors.add(:reg_identifier, :invalid_format)
   end
 

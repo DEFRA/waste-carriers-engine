@@ -20,8 +20,8 @@ class RenewalStartForm
 
     # Update the transient registration with params from the registration if valid
     if valid?
-      params = @transient_registration.renewal_attributes
-      @transient_registration.assign_attributes(params)
+      attributes = @transient_registration.renewal_attributes
+      @transient_registration.assign_attributes(attributes)
 
       @transient_registration.save!
       true

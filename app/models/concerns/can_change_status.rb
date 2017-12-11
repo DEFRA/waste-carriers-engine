@@ -50,9 +50,7 @@ module CanChangeStatus
     # Guards
     def close_to_expiry_date?
       expiry_day = registration.expires_on.to_date
-      six_months_from_today = 6.months.from_now
-
-      expiry_day < six_months_from_today
+      expiry_day < 6.months.from_now
     end
 
     # Transition effects
