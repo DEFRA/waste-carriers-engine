@@ -3,10 +3,7 @@ require "rails_helper"
 RSpec.describe RenewalStartForm, type: :model do
   describe "#reg_identifier" do
     context "when a valid transient registration exists" do
-      let(:registration) { create(:registration, :has_required_data) }
-      let(:transient_registration) {
-        build(:transient_registration, reg_identifier: registration.reg_identifier)
-      }
+      let(:transient_registration) { build(:transient_registration, :has_required_data) }
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
       let(:renewal_start_form) { RenewalStartForm.new(transient_registration) }
 
@@ -16,6 +13,7 @@ RSpec.describe RenewalStartForm, type: :model do
         end
 
         it "is valid" do
+          expect(1).to eq(1)
           expect(renewal_start_form).to be_valid
         end
       end
