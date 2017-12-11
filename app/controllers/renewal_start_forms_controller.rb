@@ -1,6 +1,4 @@
-class RenewalStartFormsController < ApplicationController
-  before_action :authenticate_user!
-
+class RenewalStartFormsController < FormsController
   def new
     set_transient_registration(params[:reg_identifier])
     @renewal_start_form = RenewalStartForm.new(@transient_registration)
