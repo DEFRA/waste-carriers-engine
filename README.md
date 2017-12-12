@@ -68,7 +68,7 @@ Make sure the Vagrant image with the databases is up and running.
 
 Start the application with:
 
-`bundle exec rails s p 3001`
+`bundle exec rails s -p 3001`
 
 The port change is to avoid a clash with waste-carriers-frontend.
 

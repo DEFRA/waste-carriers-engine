@@ -22,10 +22,11 @@ class FormsController < ApplicationController
     end
   end
 
+  def form_matches_state?
+    controller_name == "#{@transient_registration.workflow_state}s"
+  end
+
   def redirect_to_correct_form
-    # If we're already on the right page for this state, no need to redirect
-    return false if current_page?(form_path)
-    # Otherwise, redirect to the correct form
     redirect_to form_path
   end
 
