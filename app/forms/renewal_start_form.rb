@@ -7,8 +7,6 @@ class RenewalStartForm < BaseForm
     self.reg_identifier = @transient_registration.reg_identifier
   end
 
-  validates :reg_identifier, presence: true
-
   def submit(params)
     # Define the params which are allowed
     self.reg_identifier = params[:reg_identifier]

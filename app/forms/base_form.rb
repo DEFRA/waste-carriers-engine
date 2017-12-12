@@ -1,6 +1,7 @@
 class BaseForm
   include ActiveModel::Model
 
+  validates :reg_identifier, presence: true
   validate :transient_registration_valid?
 
   private
