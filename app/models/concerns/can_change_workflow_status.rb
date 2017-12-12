@@ -8,160 +8,160 @@ module CanChangeWorkflowStatus
     field :workflow_state, type: String
 
     aasm column: :workflow_state do
-      # States / pages
-      state :renewal_start_page, initial: true
-      state :business_type_page
-      state :smart_answers_page
-      state :cbd_type_page
-      state :renewal_information_page
-      state :registration_number_page
+      # States / forms
+      state :renewal_start_form, initial: true
+      state :business_type_form
+      state :smart_answers_form
+      state :cbd_type_form
+      state :renewal_information_form
+      state :registration_number_form
 
-      state :company_name_page
-      state :company_postcode_page
-      state :company_address_page
+      state :company_name_form
+      state :company_postcode_form
+      state :company_address_form
 
-      state :key_people_director_page
+      state :key_people_director_form
 
-      state :declare_convictions_page
-      state :conviction_details_page
+      state :declare_convictions_form
+      state :conviction_details_form
 
-      state :contact_name_page
-      state :contact_phone_page
-      state :contact_email_page
-      state :contact_address_page
+      state :contact_name_form
+      state :contact_phone_form
+      state :contact_email_form
+      state :contact_address_form
 
-      state :check_your_answers_page
-      state :declaration_page
-      state :payment_summary_page
-      state :worldpay_page
+      state :check_your_answers_form
+      state :declaration_form
+      state :payment_summary_form
+      state :worldpay_form
 
-      state :renewal_complete_page
+      state :renewal_complete_form
 
-      state :cannot_renew_type_change_page
-      state :cannot_renew_unknown_type_page
-      state :cannot_renew_should_be_lower_page
-      state :cannot_renew_reg_number_change_page
+      state :cannot_renew_type_change_form
+      state :cannot_renew_unknown_type_form
+      state :cannot_renew_should_be_lower_form
+      state :cannot_renew_reg_number_change_form
 
       # Transitions
       event :next do
-        transitions from: :renewal_start_page,
-                    to: :business_type_page
+        transitions from: :renewal_start_form,
+                    to: :business_type_form
 
-        transitions from: :business_type_page,
-                    to: :smart_answers_page
+        transitions from: :business_type_form,
+                    to: :smart_answers_form
 
-        transitions from: :smart_answers_page,
-                    to: :cbd_type_page
+        transitions from: :smart_answers_form,
+                    to: :cbd_type_form
 
-        transitions from: :cbd_type_page,
-                    to: :renewal_information_page
+        transitions from: :cbd_type_form,
+                    to: :renewal_information_form
 
-        transitions from: :renewal_information_page,
-                    to: :registration_number_page
+        transitions from: :renewal_information_form,
+                    to: :registration_number_form
 
-        transitions from: :registration_number_page,
-                    to: :company_name_page
+        transitions from: :registration_number_form,
+                    to: :company_name_form
 
-        transitions from: :company_name_page,
-                    to: :company_postcode_page
+        transitions from: :company_name_form,
+                    to: :company_postcode_form
 
-        transitions from: :company_postcode_page,
-                    to: :company_address_page
+        transitions from: :company_postcode_form,
+                    to: :company_address_form
 
-        transitions from: :company_address_page,
-                    to: :key_people_director_page
+        transitions from: :company_address_form,
+                    to: :key_people_director_form
 
-        transitions from: :key_people_director_page,
-                    to: :declare_convictions_page
+        transitions from: :key_people_director_form,
+                    to: :declare_convictions_form
 
-        transitions from: :declare_convictions_page,
-                    to: :conviction_details_page
+        transitions from: :declare_convictions_form,
+                    to: :conviction_details_form
 
-        transitions from: :conviction_details_page,
-                    to: :contact_name_page
+        transitions from: :conviction_details_form,
+                    to: :contact_name_form
 
-        transitions from: :contact_name_page,
-                    to: :contact_phone_page
+        transitions from: :contact_name_form,
+                    to: :contact_phone_form
 
-        transitions from: :contact_phone_page,
-                    to: :contact_email_page
+        transitions from: :contact_phone_form,
+                    to: :contact_email_form
 
-        transitions from: :contact_email_page,
-                    to: :contact_address_page
+        transitions from: :contact_email_form,
+                    to: :contact_address_form
 
-        transitions from: :contact_address_page,
-                    to: :check_your_answers_page
+        transitions from: :contact_address_form,
+                    to: :check_your_answers_form
 
-        transitions from: :check_your_answers_page,
-                    to: :declaration_page
+        transitions from: :check_your_answers_form,
+                    to: :declaration_form
 
-        transitions from: :declaration_page,
-                    to: :payment_summary_page
+        transitions from: :declaration_form,
+                    to: :payment_summary_form
 
-        transitions from: :payment_summary_page,
-                    to: :worldpay_page
+        transitions from: :payment_summary_form,
+                    to: :worldpay_form
 
-        transitions from: :worldpay_page,
-                    to: :renewal_complete_page
+        transitions from: :worldpay_form,
+                    to: :renewal_complete_form
       end
 
       event :back do
-        transitions from: :business_type_page,
-                    to: :renewal_start_page
+        transitions from: :business_type_form,
+                    to: :renewal_start_form
 
-        transitions from: :smart_answers_page,
-                    to: :business_type_page
+        transitions from: :smart_answers_form,
+                    to: :business_type_form
 
-        transitions from: :cbd_type_page,
-                    to: :smart_answers_page
+        transitions from: :cbd_type_form,
+                    to: :smart_answers_form
 
-        transitions from: :renewal_information_page,
-                    to: :cbd_type_page
+        transitions from: :renewal_information_form,
+                    to: :cbd_type_form
 
-        transitions from: :registration_number_page,
-                    to: :renewal_information_page
+        transitions from: :registration_number_form,
+                    to: :renewal_information_form
 
-        transitions from: :company_name_page,
-                    to: :registration_number_page
+        transitions from: :company_name_form,
+                    to: :registration_number_form
 
-        transitions from: :company_postcode_page,
-                    to: :company_name_page
+        transitions from: :company_postcode_form,
+                    to: :company_name_form
 
-        transitions from: :company_address_page,
-                    to: :company_postcode_page
+        transitions from: :company_address_form,
+                    to: :company_postcode_form
 
-        transitions from: :key_people_director_page,
-                    to: :company_address_page
+        transitions from: :key_people_director_form,
+                    to: :company_address_form
 
-        transitions from: :declare_convictions_page,
-                    to: :key_people_director_page
+        transitions from: :declare_convictions_form,
+                    to: :key_people_director_form
 
-        transitions from: :conviction_details_page,
-                    to: :declare_convictions_page
+        transitions from: :conviction_details_form,
+                    to: :declare_convictions_form
 
-        transitions from: :contact_name_page,
-                    to: :conviction_details_page
+        transitions from: :contact_name_form,
+                    to: :conviction_details_form
 
-        transitions from: :contact_phone_page,
-                    to: :contact_name_page
+        transitions from: :contact_phone_form,
+                    to: :contact_name_form
 
-        transitions from: :contact_email_page,
-                    to: :contact_phone_page
+        transitions from: :contact_email_form,
+                    to: :contact_phone_form
 
-        transitions from: :contact_address_page,
-                    to: :contact_email_page
+        transitions from: :contact_address_form,
+                    to: :contact_email_form
 
-        transitions from: :check_your_answers_page,
-                    to: :contact_address_page
+        transitions from: :check_your_answers_form,
+                    to: :contact_address_form
 
-        transitions from: :declaration_page,
-                    to: :check_your_answers_page
+        transitions from: :declaration_form,
+                    to: :check_your_answers_form
 
-        transitions from: :payment_summary_page,
-                    to: :declaration_page
+        transitions from: :payment_summary_form,
+                    to: :declaration_form
 
-        transitions from: :worldpay_page,
-                    to: :payment_summary_page
+        transitions from: :worldpay_form,
+                    to: :payment_summary_form
       end
     end
   end

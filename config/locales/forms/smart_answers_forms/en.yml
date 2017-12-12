@@ -1,0 +1,6 @@
+en:
+  smart_answers_forms:
+    new:
+      heading: Smart answers
+      error_heading: Something is wrong
+      next_button: Continue

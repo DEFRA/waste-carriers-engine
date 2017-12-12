@@ -1,4 +1,4 @@
-class ContactDetailsFormsController < FormsController
+class ContactDetailsFormsController < ApplicationController
   def new
     @registration = Registration.find(params[:id])
     @contact_details_form = ContactDetailsForm.new(@registration)

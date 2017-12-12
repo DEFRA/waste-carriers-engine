@@ -20,12 +20,14 @@ RSpec.describe "RenewalStartForms", type: :request do
 
         context "when a renewal is already in progress" do
           before(:each) do
-            create(:transient_registration, reg_identifier: registration.reg_identifier)
+            create(:transient_registration,
+                   reg_identifier: registration.reg_identifier,
+                   workflow_state: "business_type_form")
           end
 
-          it "shows an error message" do
+          it "redirects to the form for the current state" do
             get new_renewal_start_form_path(registration[:reg_identifier])
-            expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.renewal_in_progress"))
+            expect(response).to redirect_to(new_business_type_form_path(registration[:reg_identifier]))
           end
         end
       end
@@ -98,9 +100,9 @@ RSpec.describe "RenewalStartForms", type: :request do
               expect(response).to have_http_status(302)
             end
 
-            it "redirects to the root path" do
+            it "redirects to the business type form" do
               post renewal_start_forms_path, renewal_start_form: valid_params
-              expect(response).to redirect_to(root_path)
+              expect(response).to redirect_to(new_business_type_form_path(valid_params[:reg_identifier]))
             end
           end
 
@@ -120,12 +122,14 @@ RSpec.describe "RenewalStartForms", type: :request do
           let(:invalid_params) { { reg_identifier: registration.reg_identifier } }
 
           before(:each) do
-            create(:transient_registration, reg_identifier: registration.reg_identifier)
+            create(:transient_registration,
+                   reg_identifier: registration.reg_identifier,
+                   workflow_state: "business_type_form")
           end
 
-          it "shows an error message" do
+          it "redirects to the form for the current state" do
             post renewal_start_forms_path, renewal_start_form: invalid_params
-            expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.renewal_in_progress"))
+            expect(response).to redirect_to(new_business_type_form_path(invalid_params[:reg_identifier]))
           end
 
           it "does not create a new transient registration" do

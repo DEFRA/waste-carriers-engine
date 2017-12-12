@@ -1,4 +1,4 @@
-class RenewalStartForm < BaseForm
+class BusinessTypeForm < BaseForm
   attr_accessor :reg_identifier
 
   def initialize(transient_registration)
@@ -7,7 +7,7 @@ class RenewalStartForm < BaseForm
     self.reg_identifier = @transient_registration.reg_identifier
   end
 
-  validates :reg_identifier, presence: true
+  validate :transient_registration_valid?
 
   def submit(params)
     # Define the params which are allowed
@@ -24,6 +24,15 @@ class RenewalStartForm < BaseForm
       true
     else
       false
+    end
+  end
+
+  private
+
+  def transient_registration_valid?
+    return if @transient_registration.valid?
+    @transient_registration.errors.each do |_attribute, message|
+      errors[:base] << message
     end
   end
 end

@@ -4,7 +4,7 @@ class TransientRegistration
   include CanChangeWorkflowStatus
 
   validate :valid_reg_identifier?
-  validate :no_renewal_in_progress?
+  validate :no_renewal_in_progress?, on: :create
   validate :registration_exists?
 
   def renewal_attributes

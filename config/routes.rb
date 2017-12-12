@@ -16,5 +16,15 @@ Rails.application.routes.draw do
             path: "renew",
             path_names: { new: "/:reg_identifier" }
 
+  resources :business_type_forms,
+            only: [:new, :create],
+            path: "business-type",
+            path_names: { new: "/:reg_identifier" }
+
+  resources :smart_answers_forms,
+            only: [:new, :create],
+            path: "smart-answers",
+            path_names: { new: "/:reg_identifier" }
+
   root "registrations#index"
 end

@@ -1,0 +1,6 @@
+en:
+  business_type_forms:
+    new:
+      heading: Business type
+      error_heading: Something is wrong
+      next_button: Continue

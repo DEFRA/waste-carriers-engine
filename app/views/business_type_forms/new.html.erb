@@ -1,0 +1,22 @@
+<% if @business_type_form.errors.any? %>
+
+  <h1 class="heading-large"><%= t(".error_heading") %></h1>
+
+  <% @business_type_form.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+
+<% else %>
+
+  <%= form_for(@business_type_form) do |f| %>
+    <%= render("shared/errors", object: @business_type_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <%= f.hidden_field :id, value: params[:id] %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+
+<% end %>
