@@ -20,6 +20,19 @@ RSpec.describe "BusinessTypeForms", type: :request do
           expect(response).to have_http_status(200)
         end
       end
+
+      context "when a transient registration is in a different state" do
+        let(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 workflow_state: "renewal_start_form")
+        end
+
+        it "redirects to the form for the current state" do
+          get new_business_type_form_path(transient_registration[:reg_identifier])
+          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+        end
+      end
     end
   end
 
@@ -62,13 +75,47 @@ RSpec.describe "BusinessTypeForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: "foo"
             }
           }
 
-          it "does not update the transient registration" do
-            # TODO: Add test once data is submitted through the form
+          it "returns a 302 response" do
+            post business_type_forms_path, business_type_form: invalid_params
+            expect(response).to have_http_status(302)
           end
+
+          it "does not update the transient registration" do
+            post business_type_forms_path, business_type_form: invalid_params
+            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+          end
+        end
+      end
+
+      context "when the transient registration is in the wrong state" do
+        let(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 workflow_state: "renewal_start_form")
+        end
+
+        let(:valid_params) {
+          {
+            reg_identifier: transient_registration[:reg_identifier]
+          }
+        }
+
+        it "does not update the transient registration" do
+          # TODO: Add test once data is submitted through the form
+        end
+
+        it "returns a 302 response" do
+          post business_type_forms_path, business_type_form: valid_params
+          expect(response).to have_http_status(302)
+        end
+
+        it "redirects to the correct form for the state" do
+          post business_type_forms_path, business_type_form: valid_params
+          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
@@ -97,6 +144,26 @@ RSpec.describe "BusinessTypeForms", type: :request do
           it "redirects to the renewal start form" do
             get back_business_type_forms_path(transient_registration[:reg_identifier])
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+          end
+        end
+      end
+
+      context "when the transient registration is in the wrong state" do
+        let(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 workflow_state: "smart_answers_form")
+        end
+
+        context "when the back action is triggered" do
+          it "returns a 302 response" do
+            get back_business_type_forms_path(transient_registration[:reg_identifier])
+            expect(response).to have_http_status(302)
+          end
+
+          it "redirects to the correct form for the state" do
+            get back_business_type_forms_path(transient_registration[:reg_identifier])
+            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
           end
         end
       end

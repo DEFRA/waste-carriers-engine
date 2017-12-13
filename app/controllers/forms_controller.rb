@@ -3,25 +3,19 @@ class FormsController < ApplicationController
 
   before_action :authenticate_user!
 
+  def go_back
+    set_transient_registration(params[:reg_identifier])
+
+    @transient_registration.back! if form_matches_state?
+    redirect_to_correct_form
+  end
+
   def set_transient_registration(reg_identifier)
     @transient_registration = if TransientRegistration.where(reg_identifier: reg_identifier).exists?
                                 TransientRegistration.where(reg_identifier: reg_identifier).first
                               else
                                 TransientRegistration.new(reg_identifier: reg_identifier)
                               end
-  end
-
-  def go_back
-    set_transient_registration(params[:reg_identifier])
-
-    respond_to do |format|
-      if form_matches_state?
-        @transient_registration.back!
-        format.html { redirect_to_correct_form }
-      else
-        redirect_to_correct_form
-      end
-    end
   end
 
   def submit_form(form, params)

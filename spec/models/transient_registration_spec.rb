@@ -1,6 +1,31 @@
 require "rails_helper"
 
 RSpec.describe TransientRegistration, type: :model do
+  describe "#reg_identifier" do
+    context "when a TransientRegistration is created" do
+      let(:transient_registration) do
+        build(:transient_registration,
+              :has_required_data)
+      end
+
+      it "is not valid if the reg_identifier is in the wrong format" do
+        transient_registration.reg_identifier = "foo"
+        expect(transient_registration).to_not be_valid
+      end
+
+      it "is not valid if no matching registration exists" do
+        transient_registration.reg_identifier = "CBDU999999"
+        expect(transient_registration).to_not be_valid
+      end
+
+      it "is not valid if the reg_identifier is already in use" do
+        existing_transient_registration = create(:transient_registration, :has_required_data)
+        transient_registration.reg_identifier = existing_transient_registration.reg_identifier
+        expect(transient_registration).to_not be_valid
+      end
+    end
+  end
+
   describe "#workflow_state" do
     context "when a TransientRegistration is created" do
       let(:transient_registration) do

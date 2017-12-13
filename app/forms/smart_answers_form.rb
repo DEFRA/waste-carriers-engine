@@ -7,8 +7,6 @@ class SmartAnswersForm < BaseForm
     self.reg_identifier = @transient_registration.reg_identifier
   end
 
-  validate :transient_registration_valid?
-
   def submit(params)
     # Define the params which are allowed
     self.reg_identifier = params[:reg_identifier]
@@ -24,15 +22,6 @@ class SmartAnswersForm < BaseForm
       true
     else
       false
-    end
-  end
-
-  private
-
-  def transient_registration_valid?
-    return if @transient_registration.valid?
-    @transient_registration.errors.each do |_attribute, message|
-      errors[:base] << message
     end
   end
 end
