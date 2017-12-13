@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     get "/users/sign_out" => "devise/sessions#destroy"
   end
 
+  root "registrations#index"
+
   resources :registrations
 
   resources :contact_details_forms,
@@ -19,12 +21,20 @@ Rails.application.routes.draw do
   resources :business_type_forms,
             only: [:new, :create],
             path: "business-type",
-            path_names: { new: "/:reg_identifier" }
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "business_type_forms#go_back",
+              as: "back",
+              on: :collection
+            end
 
   resources :smart_answers_forms,
             only: [:new, :create],
             path: "smart-answers",
-            path_names: { new: "/:reg_identifier" }
-
-  root "registrations#index"
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "smart_answers_forms#go_back",
+              as: "back",
+              on: :collection
+            end
 end

@@ -1,3 +1,5 @@
+<%= render("shared/back", back_path: back_smart_answers_forms_path) %>
+
 <% if @smart_answers_form.errors.any? %>
 
   <h1 class="heading-large"><%= t(".error_heading") %></h1>
@@ -13,7 +15,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <%= f.hidden_field :id, value: params[:id] %>
+    <%= f.hidden_field :reg_identifier, value: params[:reg_identifier] %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

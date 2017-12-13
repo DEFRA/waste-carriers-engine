@@ -11,6 +11,19 @@ class FormsController < ApplicationController
                               end
   end
 
+  def go_back
+    set_transient_registration(params[:reg_identifier])
+
+    respond_to do |format|
+      if form_matches_state?
+        @transient_registration.back!
+        format.html { redirect_to_correct_form }
+      else
+        redirect_to_correct_form
+      end
+    end
+  end
+
   def submit_form(form, params)
     respond_to do |format|
       if form.submit(params)
@@ -29,6 +42,8 @@ class FormsController < ApplicationController
   def redirect_to_correct_form
     redirect_to form_path
   end
+
+  private
 
   def form_path
     # Get the path based on the workflow state, with reg_identifier as params, ie:

@@ -73,4 +73,33 @@ RSpec.describe "BusinessTypeForms", type: :request do
       end
     end
   end
+
+  describe "GET back_business_type_forms_path" do
+    context "when a user is signed in" do
+      before(:each) do
+        user = create(:user)
+        sign_in(user)
+      end
+
+      context "when a valid transient registration exists" do
+        let(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 workflow_state: "business_type_form")
+        end
+
+        context "when the back action is triggered" do
+          it "returns a 302 response" do
+            get back_business_type_forms_path(transient_registration[:reg_identifier])
+            expect(response).to have_http_status(302)
+          end
+
+          it "redirects to the renewal start form" do
+            get back_business_type_forms_path(transient_registration[:reg_identifier])
+            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+          end
+        end
+      end
+    end
+  end
 end
