@@ -11,7 +11,7 @@ RSpec.describe BusinessTypeForm, type: :model do
       end
     end
 
-    context "when the form is valid" do
+    context "when the form is not valid" do
       let(:business_type_form) { build(:business_type_form, :has_required_data) }
       let(:invalid_params) { { reg_identifier: "foo" } }
 
