@@ -20,6 +20,19 @@ RSpec.describe "SmartAnswersForms", type: :request do
           expect(response).to have_http_status(200)
         end
       end
+
+      context "when a transient registration is in a different state" do
+        let(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 workflow_state: "renewal_start_form")
+        end
+
+        it "redirects to the form for the current state" do
+          get new_business_type_form_path(transient_registration[:reg_identifier])
+          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+        end
+      end
     end
   end
 

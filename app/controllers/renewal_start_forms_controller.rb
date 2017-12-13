@@ -1,4 +1,6 @@
 class RenewalStartFormsController < FormsController
+
+  # Unlike other forms, we don't use 'super' for this action because we need to run different validations
   def new
     set_transient_registration(params[:reg_identifier])
 
@@ -12,13 +14,6 @@ class RenewalStartFormsController < FormsController
   end
 
   def create
-    set_transient_registration(params[:renewal_start_form][:reg_identifier])
-    @renewal_start_form = RenewalStartForm.new(@transient_registration)
-
-    if !form_matches_state?
-      redirect_to_correct_form
-    else
-      submit_form(@renewal_start_form, params[:renewal_start_form])
-    end
+    super(RenewalStartForm, "renewal_start_form")
   end
 end

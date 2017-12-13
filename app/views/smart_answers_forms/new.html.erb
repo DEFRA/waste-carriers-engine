@@ -1,4 +1,4 @@
-<%= render("shared/back", back_path: back_smart_answers_forms_path) %>
+<%= render("shared/back", back_path:  back_smart_answers_forms_path(@smart_answers_form.reg_identifier)) %>
 
 <% if @smart_answers_form.errors.any? %>
 
@@ -15,7 +15,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <%= f.hidden_field :reg_identifier, value: params[:reg_identifier] %>
+    <%= f.hidden_field :reg_identifier, value: @smart_answers_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
