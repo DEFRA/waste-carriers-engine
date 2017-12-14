@@ -8,11 +8,6 @@ Rails.application.routes.draw do
 
   resources :registrations
 
-  resources :contact_details_forms,
-            only: [:new, :create],
-            path: "contact-details",
-            path_names: { new: "/:id" }
-
   resources :renewal_start_forms,
             only: [:new, :create],
             path: "renew",
