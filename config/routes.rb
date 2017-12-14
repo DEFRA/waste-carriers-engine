@@ -122,4 +122,14 @@ Rails.application.routes.draw do
               as: "back",
               on: :collection
             end
+
+  resources :contact_name_forms,
+            only: [:new, :create],
+            path: "contact-name",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "contact_name_forms#go_back",
+              as: "back",
+              on: :collection
+            end
 end
