@@ -102,4 +102,14 @@ Rails.application.routes.draw do
               as: "back",
               on: :collection
             end
+
+  resources :declare_convictions_forms,
+            only: [:new, :create],
+            path: "declare-convictions",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "declare_convictions_forms#go_back",
+              as: "back",
+              on: :collection
+            end
 end
