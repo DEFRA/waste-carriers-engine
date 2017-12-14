@@ -52,4 +52,14 @@ Rails.application.routes.draw do
               as: "back",
               on: :collection
             end
+
+  resources :registration_number_forms,
+            only: [:new, :create],
+            path: "registration-number",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "registration_number_forms#go_back",
+              as: "back",
+              on: :collection
+            end
 end
