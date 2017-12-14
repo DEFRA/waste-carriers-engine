@@ -62,13 +62,17 @@ RSpec.describe SmartAnswersForm, type: :model do
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
       let(:smart_answers_form) { SmartAnswersForm.new(transient_registration) }
 
-      it "is not valid" do
+      before(:each) do
+        # Make reg_identifier valid for the form, but not the transient object
         smart_answers_form.reg_identifier = transient_registration.reg_identifier
+        transient_registration.reg_identifier = "foo"
+      end
+
+      it "is not valid" do
         expect(smart_answers_form).to_not be_valid
       end
 
       it "inherits the errors from the transient_registration" do
-        smart_answers_form.reg_identifier = transient_registration.reg_identifier
         smart_answers_form.valid?
         expect(smart_answers_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
       end
