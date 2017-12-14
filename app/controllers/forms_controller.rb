@@ -5,28 +5,13 @@ class FormsController < ApplicationController
 
   # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
   def new(form_class, form)
-    set_transient_registration(params[:reg_identifier])
-
-    unless form_matches_state?
-      redirect_to_correct_form
-      return
-    end
-
-    # Set an instance variable for the form (eg. @business_type_form) using the provided class (eg. BusinessTypeForm)
-    instance_variable_set("@#{form}", form_class.new(@transient_registration))
+    set_up_form(form_class, form, params[:reg_identifier])
   end
 
   # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
   def create(form_class, form)
-    set_transient_registration(params[form][:reg_identifier])
+    return unless set_up_form(form_class, form, params[form][:reg_identifier])
 
-    unless form_matches_state?
-      redirect_to_correct_form
-      return
-    end
-
-    # Set an instance variable for the form (eg. @business_type_form) using the provided class (eg. BusinessTypeForm)
-    instance_variable_set("@#{form}", form_class.new(@transient_registration))
     # Submit the form by getting the instance variable we just set
     submit_form(instance_variable_get("@#{form}"), params[form])
   end
@@ -41,11 +26,8 @@ class FormsController < ApplicationController
   protected
 
   def set_transient_registration(reg_identifier)
-    @transient_registration = if TransientRegistration.where(reg_identifier: reg_identifier).exists?
-                                TransientRegistration.where(reg_identifier: reg_identifier).first
-                              else
-                                TransientRegistration.new(reg_identifier: reg_identifier)
-                              end
+    @transient_registration = TransientRegistration.where(reg_identifier: reg_identifier).first ||
+                              TransientRegistration.new(reg_identifier: reg_identifier)
   end
 
   def submit_form(form, params)
@@ -68,6 +50,20 @@ class FormsController < ApplicationController
   end
 
   private
+
+  # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
+  # and the reg_identifier param
+  def set_up_form(form_class, form, reg_identifier)
+    set_transient_registration(reg_identifier)
+
+    unless form_matches_state?
+      redirect_to_correct_form
+      return false
+    end
+
+    # Set an instance variable for the form (eg. @business_type_form) using the provided class (eg. BusinessTypeForm)
+    instance_variable_set("@#{form}", form_class.new(@transient_registration))
+  end
 
   # Get the path based on the workflow state, with reg_identifier as params, ie:
   # new_state_name_path/:reg_identifier

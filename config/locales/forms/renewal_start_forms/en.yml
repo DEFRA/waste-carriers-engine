@@ -4,3 +4,12 @@ en:
       confirmation_text: You are about to renew %{reg_identifier}.
       error_heading: You cannot renew this registration
       next_button: Begin renewal
+  activemodel:
+    errors:
+      models:
+        renewal_start_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "is not in a valid format"
+              no_registration: "doesn't match any registrations"
+              renewal_in_progress: "already has a renewal is already in progress"
