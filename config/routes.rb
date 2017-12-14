@@ -72,4 +72,15 @@ Rails.application.routes.draw do
               as: "back",
               on: :collection
             end
+
+  resources :company_postcode_forms,
+            only: [:new, :create],
+            path: "company-postcode",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "company_postcode_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
 end
