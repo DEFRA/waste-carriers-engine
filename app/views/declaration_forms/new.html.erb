@@ -1,0 +1,24 @@
+<%= render("shared/back", back_path: back_declaration_forms_path(@declaration_form.reg_identifier)) %>
+
+<% if @declaration_form.errors.any? %>
+
+  <h1 class="heading-large"><%= t(".error_heading") %></h1>
+
+  <% @declaration_form.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+
+<% else %>
+
+  <%= form_for(@declaration_form) do |f| %>
+    <%= render("shared/errors", object: @declaration_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <%= f.hidden_field :reg_identifier, value: @declaration_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+
+<% end %>
