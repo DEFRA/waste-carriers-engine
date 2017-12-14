@@ -1,7 +1,7 @@
 en:
   company_address_forms:
     new:
-      heading: company_address
+      heading: What's the address of the company? (select)
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

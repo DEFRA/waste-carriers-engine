@@ -1,7 +1,7 @@
 en:
   renewal_information_forms:
     new:
-      heading: renewal_information
+      heading: Confirmation of your renewal so far
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

@@ -1,7 +1,7 @@
 en:
   conviction_details_forms:
     new:
-      heading: conviction_details
+      heading: Details of the person with a conviction
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

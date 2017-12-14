@@ -1,7 +1,7 @@
 en:
   registration_number_forms:
     new:
-      heading: registration_number
+      heading: What's the registration number of the company?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

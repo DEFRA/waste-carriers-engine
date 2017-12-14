@@ -1,7 +1,7 @@
 en:
   contact_address_forms:
     new:
-      heading: contact_address
+      heading: What's the address of the person we should contact?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

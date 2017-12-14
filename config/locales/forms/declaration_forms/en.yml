@@ -1,7 +1,7 @@
 en:
   declaration_forms:
     new:
-      heading: declaration
+      heading: Declaration
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

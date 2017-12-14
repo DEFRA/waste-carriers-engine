@@ -1,7 +1,7 @@
 en:
   key_people_director_forms:
     new:
-      heading: key_people_director
+      heading: Director details
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

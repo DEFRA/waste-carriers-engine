@@ -1,7 +1,7 @@
 en:
   contact_phone_forms:
     new:
-      heading: contact_phone
+      heading: What's the telephone number of the person we should contact?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

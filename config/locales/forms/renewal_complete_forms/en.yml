@@ -1,7 +1,7 @@
 en:
   renewal_complete_forms:
     new:
-      heading: renewal_complete
+      heading: Renewal complete
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

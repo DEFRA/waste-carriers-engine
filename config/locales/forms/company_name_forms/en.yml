@@ -1,7 +1,7 @@
 en:
   company_name_forms:
     new:
-      heading: company_name
+      heading: What's the name of the company?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

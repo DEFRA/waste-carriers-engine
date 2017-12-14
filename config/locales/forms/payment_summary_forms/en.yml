@@ -1,7 +1,7 @@
 en:
   payment_summary_forms:
     new:
-      heading: payment_summary
+      heading: Payment summary
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

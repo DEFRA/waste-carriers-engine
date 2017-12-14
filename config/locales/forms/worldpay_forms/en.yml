@@ -1,7 +1,7 @@
 en:
   worldpay_forms:
     new:
-      heading: worldpay
+      heading: (Worldpay goes here)
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

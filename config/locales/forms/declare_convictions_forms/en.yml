@@ -1,7 +1,7 @@
 en:
   declare_convictions_forms:
     new:
-      heading: declare_convictions
+      heading: Has anyone involved in managing your organisation been convicted of an environmental offence in the last 12 months?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

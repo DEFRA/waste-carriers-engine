@@ -1,7 +1,7 @@
 en:
   check_your_answers_forms:
     new:
-      heading: check_your_answers
+      heading: Check your details before renewing your registration
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

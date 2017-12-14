@@ -1,7 +1,7 @@
 en:
   cbd_type_forms:
     new:
-      heading: cbd_type
+      heading: Do you carry the waste yourselves, or arrange for others to do it?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
