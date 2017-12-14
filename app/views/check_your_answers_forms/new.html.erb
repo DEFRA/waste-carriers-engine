@@ -1,0 +1,24 @@
+<%= render("shared/back", back_path: back_check_your_answers_forms_path(@check_your_answers_form.reg_identifier)) %>
+
+<% if @check_your_answers_form.errors.any? %>
+
+  <h1 class="heading-large"><%= t(".error_heading") %></h1>
+
+  <% @check_your_answers_form.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+
+<% else %>
+
+  <%= form_for(@check_your_answers_form) do |f| %>
+    <%= render("shared/errors", object: @check_your_answers_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <%= f.hidden_field :reg_identifier, value: @check_your_answers_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+
+<% end %>

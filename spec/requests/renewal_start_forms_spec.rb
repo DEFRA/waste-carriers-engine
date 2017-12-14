@@ -8,24 +8,13 @@ RSpec.describe "RenewalStartForms", type: :request do
         sign_in(user)
       end
 
-      context "when a matching registration exists" do
-        let(:registration) { create(:registration, :has_required_data) }
+      context "when no renewal is in progress" do
+        context "when a matching registration exists" do
+          let(:registration) { create(:registration, :has_required_data) }
 
-        context "when no renewal is in progress for the registration" do
           it "returns a success response" do
             get new_renewal_start_form_path(registration[:reg_identifier])
             expect(response).to have_http_status(200)
-          end
-        end
-
-        context "when a renewal is already in progress" do
-          before(:each) do
-            create(:transient_registration, reg_identifier: registration.reg_identifier)
-          end
-
-          it "shows an error message" do
-            get new_renewal_start_form_path(registration[:reg_identifier])
-            expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.renewal_in_progress"))
           end
         end
       end
@@ -41,6 +30,34 @@ RSpec.describe "RenewalStartForms", type: :request do
         it "shows an error message" do
           get new_renewal_start_form_path("asdf")
           expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+        end
+      end
+
+      context "when a renewal is in progress" do
+        context "when a valid transient registration exists" do
+          let(:transient_registration) do
+            create(:transient_registration,
+                   :has_required_data,
+                   workflow_state: "renewal_start_form")
+          end
+
+          it "returns a success response" do
+            get new_renewal_start_form_path(transient_registration[:reg_identifier])
+            expect(response).to have_http_status(200)
+          end
+        end
+
+        context "when the transient registration is in a different state" do
+          let(:transient_registration) do
+            create(:transient_registration,
+                   :has_required_data,
+                   workflow_state: "business_type_form")
+          end
+
+          it "redirects to the form for the current state" do
+            get new_renewal_start_form_path(transient_registration[:reg_identifier])
+            expect(response).to redirect_to(new_business_type_form_path(transient_registration[:reg_identifier]))
+          end
         end
       end
     end
@@ -70,10 +87,10 @@ RSpec.describe "RenewalStartForms", type: :request do
         sign_in(user)
       end
 
-      context "when a matching registration exists" do
-        let(:registration) { create(:registration, :has_required_data, company_name: "Correct Name") }
+      context "when no renewal is in progress" do
+        context "when a matching registration exists" do
+          let(:registration) { create(:registration, :has_required_data, company_name: "Correct Name") }
 
-        context "when no renewal is in progress for the registration" do
           context "when valid params are submitted" do
             let(:valid_params) { { reg_identifier: registration.reg_identifier } }
 
@@ -98,9 +115,9 @@ RSpec.describe "RenewalStartForms", type: :request do
               expect(response).to have_http_status(302)
             end
 
-            it "redirects to the root path" do
+            it "redirects to the business type form" do
               post renewal_start_forms_path, renewal_start_form: valid_params
-              expect(response).to redirect_to(root_path)
+              expect(response).to redirect_to(new_business_type_form_path(valid_params[:reg_identifier]))
             end
           end
 
@@ -113,27 +130,6 @@ RSpec.describe "RenewalStartForms", type: :request do
               updated_tr_count = TransientRegistration.count
               expect(original_tr_count).to eq(updated_tr_count)
             end
-          end
-        end
-
-        context "when a renewal is already in progress" do
-          let(:invalid_params) { { reg_identifier: registration.reg_identifier } }
-
-          before(:each) do
-            create(:transient_registration, reg_identifier: registration.reg_identifier)
-          end
-
-          it "shows an error message" do
-            post renewal_start_forms_path, renewal_start_form: invalid_params
-            expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.renewal_in_progress"))
-          end
-
-          it "does not create a new transient registration" do
-            original_tr_count = TransientRegistration.count
-            post renewal_start_forms_path, renewal_start_form: invalid_params
-            updated_tr_count = TransientRegistration.count
-
-            expect(original_tr_count).to eq(updated_tr_count)
           end
         end
       end
@@ -169,6 +165,68 @@ RSpec.describe "RenewalStartForms", type: :request do
           updated_tr_count = TransientRegistration.count
 
           expect(original_tr_count).to eq(updated_tr_count)
+        end
+      end
+
+      context "when a renewal is in progress" do
+        let(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 workflow_state: "renewal_start_form")
+        end
+
+        let(:valid_params) { { reg_identifier: transient_registration.reg_identifier } }
+
+        it "returns a 302 response" do
+          post renewal_start_forms_path, renewal_start_form: valid_params
+          expect(response).to have_http_status(302)
+        end
+
+        it "redirects to the business type form" do
+          post renewal_start_forms_path, renewal_start_form: valid_params
+          expect(response).to redirect_to(new_business_type_form_path(valid_params[:reg_identifier]))
+        end
+
+        it "does not create a new transient registration" do
+          # Touch the test object so it gets created now and the count is correct
+          transient_registration.touch
+
+          original_tr_count = TransientRegistration.count
+          post renewal_start_forms_path, renewal_start_form: valid_params
+          updated_tr_count = TransientRegistration.count
+
+          expect(original_tr_count).to eq(updated_tr_count)
+        end
+
+        context "when the state is different" do
+          let(:transient_registration) do
+            create(:transient_registration,
+                   :has_required_data,
+                   workflow_state: "smart_answers_form")
+          end
+
+          let(:valid_params) { { reg_identifier: transient_registration.reg_identifier } }
+
+          it "returns a 302 response" do
+            post renewal_start_forms_path, renewal_start_form: valid_params
+            expect(response).to have_http_status(302)
+          end
+
+          it "redirects to the correct form" do
+            post renewal_start_forms_path, renewal_start_form: valid_params
+            expect(response).to redirect_to(new_smart_answers_form_path(valid_params[:reg_identifier]))
+          end
+
+          it "does not create a new transient registration" do
+            # Touch the test object so it gets created now and the count is correct
+            transient_registration.touch
+
+            original_tr_count = TransientRegistration.count
+            post renewal_start_forms_path, renewal_start_form: valid_params
+            updated_tr_count = TransientRegistration.count
+
+            expect(original_tr_count).to eq(updated_tr_count)
+          end
         end
       end
     end

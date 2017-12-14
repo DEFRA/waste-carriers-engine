@@ -1,0 +1,15 @@
+en:
+  key_people_director_forms:
+    new:
+      heading: Director details
+      error_heading: Something is wrong
+      next_button: Continue
+  activemodel:
+    errors:
+      models:
+        key_people_director_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"

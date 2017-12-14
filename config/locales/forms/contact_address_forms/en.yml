@@ -1,0 +1,15 @@
+en:
+  contact_address_forms:
+    new:
+      heading: What's the address of the person we should contact?
+      error_heading: Something is wrong
+      next_button: Continue
+  activemodel:
+    errors:
+      models:
+        contact_address_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"
