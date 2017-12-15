@@ -1,4 +1,6 @@
 class RenewalStartForm < BaseForm
+  include CanCalculateRenewalDates
+
   attr_accessor :reg_identifier
 
   def initialize(transient_registration)
@@ -26,6 +28,6 @@ class RenewalStartForm < BaseForm
   end
 
   def projected_renewal_end_date
-    @transient_registration.renewal_attributes["expires_on"].to_date + 3.years
+    expiry_date_after_renewal(@transient_registration.renewal_attributes["expires_on"].to_date)
   end
 end

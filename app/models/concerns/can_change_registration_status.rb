@@ -1,6 +1,7 @@
 module CanChangeRegistrationStatus
   extend ActiveSupport::Concern
   include Mongoid::Document
+  include CanCalculateRenewalDates
 
   included do
     include AASM
@@ -61,7 +62,7 @@ module CanChangeRegistrationStatus
     end
 
     def extend_expiry_date
-      new_expiry_date = registration.expires_on + 3.years
+      new_expiry_date = expiry_date_after_renewal(registration.expires_on)
       registration.set(expires_on: new_expiry_date)
     end
 
