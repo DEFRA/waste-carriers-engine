@@ -1,9 +1,12 @@
 en:
   renewal_start_forms:
     new:
-      confirmation_text: You are about to renew %{reg_identifier}.
+      heading: You are about to renew %{reg_identifier}
+      paragraph_1: Renewing this registration will extend its expiry date to %{date}. There is a charge of £%{renewal_charge} to do this, plus a £%{type_change_charge} charge if you change the registration type.
+      paragraph_2: If your business type has changed, for example from sole trader to limited company, you cannot renew and instead must create a new registration.
+      paragraph_3: We’ll also check the type of activities you are doing to confirm you still require an upper tier registration. If you don’t you cannot renew and again must create a new lower tier registration.
       error_heading: You cannot renew this registration
-      next_button: Begin renewal
+      next_button: Continue
   activemodel:
     errors:
       models:
