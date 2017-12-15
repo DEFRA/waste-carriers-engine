@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/DEFRA/waste-carriers-renewals.svg?branch=master)](https://travis-ci.org/DEFRA/waste-carriers-renewals) [![Maintainability](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/maintainability)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/test_coverage)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/test_coverage) [![security](https://hakiri.io/github/DEFRA/waste-carriers-renewals/master.svg)](https://hakiri.io/github/DEFRA/waste-carriers-renewals/master) [![Dependency Status](https://dependencyci.com/github/DEFRA/waste-carriers-renewals/badge)](https://dependencyci.com/github/DEFRA/waste-carriers-renewals)
 
-The Waste Carrier Registrations Service allows businesses, who deal with waste and thus have to register according to the regulations, to register online. Once registered, businesses can sign in again to edit their registrations if needed.
+The 'Register as a waste carrier' service allows businesses, who deal with waste and have to register according to the regulations, to register online. Once registered, businesses can sign in again to edit their registrations if needed.
 
-The service also allows authorised agency users and NCCC contact centre staff to create and manage registrations on other users behalf, e.g. to support 'Assisted Digital' registrations. The service provides an internal user account management facility which allows authorised administrators to create and manage other agency user accounts.
+The service also allows authorised agency users and NCCC staff to create and manage registrations on other users' behalf, e.g. to support 'Assisted Digital' registrations. The service provides an internal user account management facility which allows authorised administrators to create and manage other agency user accounts.
 
-The renewals application allows users who registered using the Waste Carrier Registrations Service to renew their registrations.
+The waste-carriers-renewals application allows users who registered using the 'Register as a waste carrier' service to renew their registrations.
 
 ## Prerequisites
 
