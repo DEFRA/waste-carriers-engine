@@ -3,7 +3,7 @@ FactoryBot.define do
     trait :has_required_data do
       # Create a registration and use the reg_identifier so validations pass
       after(:build) do |transient_registration|
-        registration = create(:registration, :has_required_data)
+        registration = create(:registration, :has_required_data, :expires_soon)
         transient_registration.reg_identifier = registration.reg_identifier
       end
     end

@@ -24,4 +24,8 @@ class RenewalStartForm < BaseForm
       false
     end
   end
+
+  def projected_renewal_end_date
+    @transient_registration.renewal_attributes["expires_on"].to_date + 3.years
+  end
 end

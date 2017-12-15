@@ -391,7 +391,7 @@ RSpec.describe Registration, type: :model do
       end
 
       context "when a registration is active" do
-        let(:registration) { build(:registration, :has_expires_on, :is_active) }
+        let(:registration) { build(:registration, :expires_later, :is_active) }
 
         it "has 'active' status" do
           expect(registration.metaData).to have_state(:active)

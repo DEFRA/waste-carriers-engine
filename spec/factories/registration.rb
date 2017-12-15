@@ -7,7 +7,11 @@ FactoryBot.define do
       addresses { [build(:address)] }
     end
 
-    trait :has_expires_on do
+    trait :expires_soon do
+      expires_on 2.months.from_now
+    end
+
+    trait :expires_later do
       expires_on 2.years.from_now
     end
 

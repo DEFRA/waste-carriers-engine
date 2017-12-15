@@ -14,7 +14,7 @@
 
     <h1 class="heading-large"><%= t(".heading", reg_identifier: @renewal_start_form.reg_identifier) %></h1>
 
-    <p><%= t(".paragraph_1", date: "TODO", renewal_charge: "TODO", type_change_charge: "TODO") %></p>
+    <p><%= t(".paragraph_1", date: @renewal_start_form.projected_renewal_end_date, renewal_charge: Rails.configuration.renewal_charge, type_change_charge: Rails.configuration.type_change_charge) %></p>
     <p><%= t(".paragraph_2") %></p>
     <p><%= t(".paragraph_3") %></p>
 

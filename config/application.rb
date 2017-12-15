@@ -31,5 +31,9 @@ module WasteCarriersRenewals
       application.css
       print.css
     )
+
+    # Fees
+    config.renewal_charge = 105
+    config.type_change_charge = 40
   end
 end

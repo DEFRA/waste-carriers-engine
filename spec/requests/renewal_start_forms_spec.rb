@@ -10,7 +10,7 @@ RSpec.describe "RenewalStartForms", type: :request do
 
       context "when no renewal is in progress" do
         context "when a matching registration exists" do
-          let(:registration) { create(:registration, :has_required_data) }
+          let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
           it "returns a success response" do
             get new_renewal_start_form_path(registration[:reg_identifier])
