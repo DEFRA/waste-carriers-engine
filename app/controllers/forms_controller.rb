@@ -23,7 +23,7 @@ class FormsController < ApplicationController
     redirect_to_correct_form
   end
 
-  protected
+  private
 
   # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
   # and the reg_identifier param
@@ -48,8 +48,6 @@ class FormsController < ApplicationController
     # Set an instance variable for the form (eg. @business_type_form) using the provided class (eg. BusinessTypeForm)
     instance_variable_set("@#{form}", form_class.new(@transient_registration))
   end
-
-  private
 
   def user_has_permission?
     can? :update, @transient_registration
