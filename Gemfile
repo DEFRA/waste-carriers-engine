@@ -34,6 +34,9 @@ gem "sdoc", "~> 0.4.0", group: :doc
 # Use AASM to manage states and transitions
 gem "aasm", "~> 4.12"
 
+# Use CanCanCan for user roles and permissions
+gem "cancancan", "~> 2.0"
+
 # Use Devise for user authentication
 gem "devise", "~> 4.3"
 
