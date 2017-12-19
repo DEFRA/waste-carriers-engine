@@ -35,7 +35,8 @@ gem "sdoc", "~> 0.4.0", group: :doc
 gem "aasm", "~> 4.12"
 
 # Use CanCanCan for user roles and permissions
-gem "cancancan", "~> 2.0"
+# Version 2.0 doesn't support Mongoid, so we're locked to an earlier one
+gem "cancancan", "~> 1.10"
 
 # Use Devise for user authentication
 gem "devise", "~> 4.3"
