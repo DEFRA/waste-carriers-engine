@@ -10,16 +10,16 @@ RSpec.describe "RenewalStartForms", type: :request do
       end
 
       context "when no matching registration exists" do
-        it "shows an error message" do
+        it "redirects to the invalid reg_identifier error page" do
           get new_renewal_start_form_path("CBDU999999999")
-          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.no_registration"))
+          expect(response).to redirect_to(page_path("errors/invalid"))
         end
       end
 
       context "when the reg_identifier doesn't match the format" do
-        it "shows an error message" do
-          get new_renewal_start_form_path("asdf")
-          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+        it "redirects to the invalid reg_identifier error page" do
+          get new_renewal_start_form_path("foo")
+          expect(response).to redirect_to(page_path("errors/invalid"))
         end
       end
 
@@ -74,9 +74,9 @@ RSpec.describe "RenewalStartForms", type: :request do
                      account_email: "not-#{user.email}")
             end
 
-            it "prevents access" do
+            it "redirects to the permissions error page" do
               get new_renewal_start_form_path(registration[:reg_identifier])
-              skip("don't know what this should do yet")
+              expect(response).to redirect_to(page_path("errors/permission"))
             end
           end
 
@@ -88,9 +88,9 @@ RSpec.describe "RenewalStartForms", type: :request do
                      workflow_state: "renewal_start_form")
             end
 
-            it "prevents access" do
+            it "redirects to the permissions error page" do
               get new_renewal_start_form_path(transient_registration[:reg_identifier])
-              skip("don't know what this should do yet")
+              expect(response).to redirect_to(page_path("errors/permission"))
             end
           end
         end
@@ -126,9 +126,9 @@ RSpec.describe "RenewalStartForms", type: :request do
       context "when no matching registration exists" do
         let(:invalid_params) { { reg_identifier: "CBDU99999" } }
 
-        it "shows an error message" do
+        it "redirects to the invalid reg_identifier error page" do
           post renewal_start_forms_path, renewal_start_form: invalid_params
-          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.no_registration"))
+          expect(response).to redirect_to(page_path("errors/invalid"))
         end
 
         it "does not create a new transient registration" do
@@ -143,9 +143,9 @@ RSpec.describe "RenewalStartForms", type: :request do
       context "when the reg_identifier doesn't match the format" do
         let(:invalid_params) { { reg_identifier: "foo" } }
 
-        it "shows an error message" do
+        it "redirects to the invalid reg_identifier error page" do
           post renewal_start_forms_path, renewal_start_form: invalid_params
-          expect(response.body).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+          expect(response).to redirect_to(page_path("errors/invalid"))
         end
 
         it "does not create a new transient registration" do
@@ -285,9 +285,9 @@ RSpec.describe "RenewalStartForms", type: :request do
           end
           let(:valid_params) { { reg_identifier: registration.reg_identifier } }
 
-          it "prevents access" do
+          it "redirects to the permissions error page" do
             post renewal_start_forms_path, renewal_start_form: valid_params
-            skip("don't know what this should do yet")
+            expect(response).to redirect_to(page_path("errors/permission"))
           end
         end
 
@@ -300,9 +300,9 @@ RSpec.describe "RenewalStartForms", type: :request do
           end
           let(:valid_params) { { reg_identifier: transient_registration.reg_identifier } }
 
-          it "prevents access" do
+          it "redirects to the permissions error page" do
             post renewal_start_forms_path, renewal_start_form: valid_params
-            skip("don't know what this should do yet")
+            expect(response).to redirect_to(page_path("errors/permission"))
           end
         end
       end

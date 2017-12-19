@@ -30,6 +30,16 @@ class FormsController < ApplicationController
   def set_up_form(form_class, form, reg_identifier)
     set_transient_registration(reg_identifier)
 
+    unless @transient_registration.valid?
+      redirect_to page_path("errors/invalid")
+      return false
+    end
+
+    unless user_has_permission?
+      redirect_to page_path("errors/permission")
+      return false
+    end
+
     unless form_matches_state?
       redirect_to_correct_form
       return false
@@ -40,6 +50,10 @@ class FormsController < ApplicationController
   end
 
   private
+
+  def user_has_permission?
+    can? :update, @transient_registration
+  end
 
   def set_transient_registration(reg_identifier)
     @transient_registration = TransientRegistration.where(reg_identifier: reg_identifier).first ||

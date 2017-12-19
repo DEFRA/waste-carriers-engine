@@ -6,7 +6,7 @@ class TransientRegistration
   validates_with RegIdentifierValidator
   validate :no_renewal_in_progress?, on: :create
 
-  after_initialize :copy_data_from_registration
+  after_initialize :copy_data_from_registration, on: :create
 
   private
 

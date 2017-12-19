@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe "RegistrationNumberForms", type: :request do
   describe "GET new_registration_number_path" do
-    context "when a user is signed in" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
       before(:each) do
-        user = create(:user)
         sign_in(user)
       end
 
@@ -12,6 +12,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "registration_number_form")
         end
 
@@ -25,6 +26,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
 
@@ -37,9 +39,9 @@ RSpec.describe "RegistrationNumberForms", type: :request do
   end
 
   describe "POST registration_number_forms_path" do
-    context "when a user is signed in" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
       before(:each) do
-        user = create(:user)
         sign_in(user)
       end
 
@@ -47,6 +49,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "registration_number_form")
         end
 
@@ -95,6 +98,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
 
@@ -122,9 +126,9 @@ RSpec.describe "RegistrationNumberForms", type: :request do
   end
 
   describe "GET back_registration_number_forms_path" do
-    context "when a user is signed in" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
       before(:each) do
-        user = create(:user)
         sign_in(user)
       end
 
@@ -132,6 +136,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "registration_number_form")
         end
 
@@ -152,6 +157,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
 

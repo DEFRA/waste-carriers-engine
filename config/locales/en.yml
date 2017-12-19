@@ -14,3 +14,10 @@ en:
   shared:
     footer:
       support_text: 'Environment Agency (England) helpline: 03708 506506'
+
+  # Custom error pages
+  invalid_reg_identifier_heading: The registration number you entered is not valid
+  invalid_reg_identifier_text: Maybe you should try searching again.
+
+  no_permissions_heading: You don't have permission to access that registration
+  no_permissions_text: Maybe you should try searching again.

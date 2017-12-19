@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe "KeyPeopleDirectorForms", type: :request do
   describe "GET new_key_people_director_path" do
-    context "when a user is signed in" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
       before(:each) do
-        user = create(:user)
         sign_in(user)
       end
 
@@ -12,6 +12,7 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "key_people_director_form")
         end
 
@@ -25,6 +26,7 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
 
@@ -37,9 +39,9 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
   end
 
   describe "POST key_people_director_forms_path" do
-    context "when a user is signed in" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
       before(:each) do
-        user = create(:user)
         sign_in(user)
       end
 
@@ -47,6 +49,7 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "key_people_director_form")
         end
 
@@ -95,6 +98,7 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
 
@@ -122,9 +126,9 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
   end
 
   describe "GET back_key_people_director_forms_path" do
-    context "when a user is signed in" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
       before(:each) do
-        user = create(:user)
         sign_in(user)
       end
 
@@ -132,6 +136,7 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "key_people_director_form")
         end
 
@@ -152,6 +157,7 @@ RSpec.describe "KeyPeopleDirectorForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
 
