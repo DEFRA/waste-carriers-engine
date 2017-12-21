@@ -1,24 +1,51 @@
 <%= render("shared/back", back_path: back_business_type_forms_path(@business_type_form.reg_identifier)) %>
 
-<% if @business_type_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @business_type_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@business_type_form) do |f| %>
     <%= render("shared/errors", object: @business_type_form) %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+    <div class="form-group">
+      <fieldset>
+        <legend>
+          <h1 class="heading-large"><%= t(".heading") %></h1>
+        </legend>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'localAuthority' %>
+          <%= f.label :business_type, t(".option_local_authority"), value: 'localAuthority' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'limitedCompany' %>
+          <%= f.label :business_type, t(".option_limited_company"), value: 'limitedCompany' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'limitedLiabilityPartnership' %>
+          <%= f.label :business_type, t(".option_limited_liability_partnership"), value: 'limitedLiabilityPartnership' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'soleTrader' %>
+          <%= f.label :business_type, t(".option_individual"), value: 'soleTrader' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'partnership' %>
+          <%= f.label :business_type, t(".option_partnership"), value: 'partnership' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'other' %>
+          <%= f.label :business_type, t(".option_other"), value: 'other' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'overseas' %>
+          <%= f.label :business_type, t(".option_overseas"), value: 'overseas' %>
+        </div>
+      </fieldset>
+    </div>
+
+    <p><%= t(".help") %></p>
 
     <%= f.hidden_field :reg_identifier, value: @business_type_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
+</div>

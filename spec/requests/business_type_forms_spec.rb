@@ -50,18 +50,21 @@ RSpec.describe "BusinessTypeForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
+                 business_type: "limitedCompany",
                  workflow_state: "business_type_form")
         end
 
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              business_type: "partnership"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post business_type_forms_path, business_type_form: valid_params
+            expect(transient_registration.reload[:reg_identifier]).to eq(valid_params[:reg_identifier])
           end
 
           it "returns a 302 response" do
@@ -78,7 +81,8 @@ RSpec.describe "BusinessTypeForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              business_type: "foo"
             }
           }
 
@@ -99,17 +103,20 @@ RSpec.describe "BusinessTypeForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
+                 business_type: "limitedCompany",
                  workflow_state: "renewal_start_form")
         end
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            business_type: "partnership"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post business_type_forms_path, business_type_form: valid_params
+          expect(transient_registration.reload[:business_type]).to_not eq(valid_params[:business_type])
         end
 
         it "returns a 302 response" do
