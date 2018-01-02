@@ -1,0 +1,14 @@
+en:
+  cannot_renew_type_change_forms:
+    new:
+      heading: You cannot renew this registration
+      error_heading: Something is wrong
+  activemodel:
+    errors:
+      models:
+        cannot_renew_type_change_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"
