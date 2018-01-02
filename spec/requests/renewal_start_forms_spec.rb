@@ -44,8 +44,6 @@ RSpec.describe "RenewalStartForms", type: :request do
               end
 
               it "returns a success response" do
-                puts Registration.where(reg_identifier: transient_registration[:reg_identifier]).first.to_json
-                puts TransientRegistration.where(reg_identifier: transient_registration[:reg_identifier]).first.to_json
                 get new_renewal_start_form_path(transient_registration[:reg_identifier])
                 expect(response).to have_http_status(200)
               end

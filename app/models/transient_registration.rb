@@ -14,8 +14,6 @@ class TransientRegistration
     # Don't try to get Registration data with an invalid reg_identifier
     return unless valid? && new_record?
 
-    puts "COPYING!!!"
-
     registration = Registration.where(reg_identifier: reg_identifier).first
 
     # Don't copy object IDs as Mongo should generate new unique ones
