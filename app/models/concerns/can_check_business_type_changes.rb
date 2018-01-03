@@ -34,7 +34,6 @@ module CanCheckBusinessTypeChanges
 
   def authority_valid?
     return true if business_type == "localAuthority"
-    return true if business_type == "overseas"
     false
   end
 
@@ -58,7 +57,6 @@ module CanCheckBusinessTypeChanges
 
   def public_body_valid?
     return true if business_type == "localAuthority"
-    return true if business_type == "overseas"
     false
   end
 

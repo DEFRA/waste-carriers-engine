@@ -65,8 +65,26 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:business_type_form).to(:renewal_start_form).on_event(:back)
       end
 
-      it "changes to :smart_answers_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+      context "when the business type does not change" do
+        it "changes to :smart_answers_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+        end
+      end
+
+      context "when the business type changes" do
+        context "when the change is doesn't require a new registration" do
+          it "changes to :smart_answers_form after the 'next' event" do
+            transient_registration.business_type = "overseas"
+            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          end
+        end
+
+        context "when the change requires a new registration" do
+          it "changes to :smart_answers_form after the 'next' event" do
+            transient_registration.business_type = "soleTrader"
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
       end
     end
 
