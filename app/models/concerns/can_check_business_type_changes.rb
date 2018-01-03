@@ -7,74 +7,63 @@ module CanCheckBusinessTypeChanges
       old_type = Registration.where(reg_identifier: reg_identifier).first.business_type
 
       case old_type
-      # If the old type is the same as the new type, no change has happened and it's valid
+      # If there's no change to the business type, it's valid
       when business_type
         true
-
-      # If the old type is sole trader and the new type is different
-      when "soleTrader"
-        case business_type
-        when "overseas"
-          true
-        else
-          false
-        end
-
-      # If the old type is partnership and the new type is different
-      when "partnership"
-        case business_type
-        when "limitedLiabilityPartnership"
-          true
-        when "overseas"
-          true
-        else
-          false
-        end
-
-      # If the old type is limited company and the new type is different
-      when "limitedCompany"
-        case business_type
-        when "limitedLiabilityPartnership"
-          true
-        when "overseas"
-          true
-        else
-          false
-        end
-
-      # If the old type is public body and the new type is different
-      when "publicBody"
-        case business_type
-        when "localAuthority"
-          true
-        else
-          false
-        end
-
-      # If the old type is charity and the new type is different
-      when "charity"
-        case business_type
-        when "other"
-          true
-        when "overseas"
-          true
-        else
-          false
-        end
-
-      # If the old type is authority and the new type is different
+      # Otherwise, check based on what the previous type was
       when "authority"
-        case business_type
-        when "foo"
-          true
-        else
-          false
-        end
-
-      # If the old type is none of the above
+        authority_valid?
+      when "charity"
+        charity_valid?
+      when "limitedCompany"
+        limited_company_valid?
+      when "partnership"
+        partnership_valid?
+      when "publicBody"
+        public_body_valid?
+      when "soleTrader"
+        sole_trader_valid?
+      # If the old type was none of the above, it's invalid
       else
         false
       end
     end
+  end
+
+  private
+
+  def authority_valid?
+    return true if business_type == "localAuthority"
+    return true if business_type == "overseas"
+    false
+  end
+
+  def charity_valid?
+    return true if business_type == "other"
+    return true if business_type == "overseas"
+    false
+  end
+
+  def limited_company_valid?
+    return true if business_type == "limitedLiabilityPartnership"
+    return true if business_type == "overseas"
+    false
+  end
+
+  def partnership_valid?
+    return true if business_type == "limitedLiabilityPartnership"
+    return true if business_type == "overseas"
+    false
+  end
+
+  def public_body_valid?
+    return true if business_type == "localAuthority"
+    return true if business_type == "overseas"
+    false
+  end
+
+  def sole_trader_valid?
+    return true if business_type == "overseas"
+    false
   end
 end
