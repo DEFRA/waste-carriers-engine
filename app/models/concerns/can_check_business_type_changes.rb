@@ -12,17 +12,17 @@ module CanCheckBusinessTypeChanges
         true
       # Otherwise, check based on what the previous type was
       when "authority"
-        compare_types(["localAuthority"])
+        matches_allowed_types?(["localAuthority"])
       when "charity"
-        compare_types(["other", "overseas"])
+        matches_allowed_types?(["other", "overseas"])
       when "limitedCompany"
-        compare_types(["limitedLiabilityPartnership", "overseas"])
+        matches_allowed_types?(["limitedLiabilityPartnership", "overseas"])
       when "partnership"
-        compare_types(["limitedLiabilityPartnership", "overseas"])
+        matches_allowed_types?(["limitedLiabilityPartnership", "overseas"])
       when "publicBody"
-        compare_types(["localAuthority"])
+        matches_allowed_types?(["localAuthority"])
       when "soleTrader"
-        compare_types(["overseas"])
+        matches_allowed_types?(["overseas"])
       # If the old type was none of the above, it's invalid
       else
         false
@@ -32,7 +32,7 @@ module CanCheckBusinessTypeChanges
 
   private
 
-  def compare_types(valid_types)
+  def matches_allowed_types?(valid_types)
     valid_types.include?(business_type)
   end
 end

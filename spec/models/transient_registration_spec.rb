@@ -232,6 +232,23 @@ RSpec.describe TransientRegistration, type: :model do
           end
         end
       end
+
+      context "when the business type was originally something else" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "foo")
+        end
+
+        context "when the business type changes" do
+          before(:each) do
+            transient_registration.business_type = "limitedCompany"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
+      end
     end
 
     context "when a TransientRegistration's state is :smart_answers_form" do
