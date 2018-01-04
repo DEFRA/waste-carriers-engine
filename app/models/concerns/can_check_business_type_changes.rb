@@ -12,17 +12,17 @@ module CanCheckBusinessTypeChanges
         true
       # Otherwise, check based on what the previous type was
       when "authority"
-        authority_valid?
+        compare_types(["localAuthority"])
       when "charity"
-        charity_valid?
+        compare_types(["other", "overseas"])
       when "limitedCompany"
-        limited_company_valid?
+        compare_types(["limitedLiabilityPartnership", "overseas"])
       when "partnership"
-        partnership_valid?
+        compare_types(["limitedLiabilityPartnership", "overseas"])
       when "publicBody"
-        public_body_valid?
+        compare_types(["localAuthority"])
       when "soleTrader"
-        sole_trader_valid?
+        compare_types(["overseas"])
       # If the old type was none of the above, it's invalid
       else
         false
@@ -32,36 +32,7 @@ module CanCheckBusinessTypeChanges
 
   private
 
-  def authority_valid?
-    return true if business_type == "localAuthority"
-    false
-  end
-
-  def charity_valid?
-    return true if business_type == "other"
-    return true if business_type == "overseas"
-    false
-  end
-
-  def limited_company_valid?
-    return true if business_type == "limitedLiabilityPartnership"
-    return true if business_type == "overseas"
-    false
-  end
-
-  def partnership_valid?
-    return true if business_type == "limitedLiabilityPartnership"
-    return true if business_type == "overseas"
-    false
-  end
-
-  def public_body_valid?
-    return true if business_type == "localAuthority"
-    false
-  end
-
-  def sole_trader_valid?
-    return true if business_type == "overseas"
-    false
+  def compare_types(valid_types)
+    valid_types.include?(business_type)
   end
 end
