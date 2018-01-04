@@ -5,7 +5,7 @@ en:
       option_local_authority: Local authority or public body
       option_limited_company: Limited company (eg a registered company or plc)
       option_limited_liability_partnership: Limited liability partnership
-      option_individual: Individual (eg a householder)
+      option_individual: Individual (eg a sole trader)
       option_partnership: Partnership
       option_other: Other organisation (eg a trust, charity or club)
       option_overseas: Based overseas
