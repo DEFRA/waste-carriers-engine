@@ -33,7 +33,11 @@ module WasteCarriersRenewals
     )
 
     # Fees
-    config.renewal_charge = 105
-    config.type_change_charge = 40
+    config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i
+    config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i
+
+    # Times
+    config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
+    config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
   end
 end
