@@ -5,5 +5,5 @@
   <p><%= t(".paragraph_1") %></p>
   <p><%= t(".paragraph_2", reg_identifier: @cannot_renew_type_change_form.reg_identifier) %></p>
   <p><%= t(".paragraph_3") %></p>
-  <a href="<%= ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"] %>/registrations/start" class="button"><%= t(".next_button") %></a>
+  <a href="<%= Rails.configuration.wcrs_frontend_url %>/registrations/start" class="button"><%= t(".next_button") %></a>
 </div>
