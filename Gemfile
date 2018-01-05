@@ -39,7 +39,7 @@ gem "aasm", "~> 4.12"
 gem "cancancan", "~> 1.10"
 
 # Use Devise for user authentication
-gem "devise", "~> 4.3"
+gem "devise", "~> 4.3.0"
 
 # GOV.UK styling
 gem "govuk_elements_rails", "~> 3.1"
