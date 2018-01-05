@@ -32,6 +32,11 @@ module WasteCarriersRenewals
       print.css
     )
 
+    # Errbit config
+    config.airbrake_host = ENV["WCRS_RENEWALS_AIRBRAKE_HOST"]
+    config.airbrake_id = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_ID"]
+    config.airbrake_key = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_KEY"]
+
     # Paths
     config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"]
 
