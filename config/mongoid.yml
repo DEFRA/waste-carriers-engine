@@ -32,11 +32,11 @@ production:
 test:
   clients:
     default:
-      database: <%= ENV['WCRS_REGSDB_NAME'] || 'waste-carriers-test' %>
-      username: <%= ENV['WCRS_REGSDB_USERNAME'] || 'mongoUser' %>
-      password: <%= ENV['WCRS_REGSDB_PASSWORD'] || 'password1234' %>
+      database: <%= ENV['WCRS_TEST_REGSDB_NAME'] || 'waste-carriers-test' %>
+      username: <%= ENV['WCRS_TEST_REGSDB_USERNAME'] || 'mongoUser' %>
+      password: <%= ENV['WCRS_TEST_REGSDB_PASSWORD'] || 'password1234' %>
       hosts:
-        - <%= ENV['WCRS_REGSDB_URL1'] || 'localhost:27017' %>
+        - <%= ENV['WCRS_TEST_REGSDB_URL1'] || 'localhost:27017' %>
       options:
         # In the test environment we lower the retries and retry interval to
         # low amounts for fast failures.
@@ -44,11 +44,11 @@ test:
         retry_interval: 0
     users:
       # Details for the user database
-      database: <%= ENV['WCRS_USERSDB_NAME'] || 'waste-carriers-users-test' %>
-      username: <%= ENV['WCRS_USERSDB_USERNAME'] || 'mongoUser' %>
-      password: <%= ENV['WCRS_USERSDB_PASSWORD'] || 'password1234' %>
+      database: <%= ENV['WCRS_TEST_USERSDB_NAME'] || 'waste-carriers-users-test' %>
+      username: <%= ENV['WCRS_TEST_USERSDB_USERNAME'] || 'mongoUser' %>
+      password: <%= ENV['WCRS_TEST_USERSDB_PASSWORD'] || 'password1234' %>
       hosts:
-        - <%= ENV['WCRS_REGSDB_URL1'] || 'localhost:27017' %>
+        - <%= ENV['WCRS_TEST_REGSDB_URL1'] || 'localhost:27017' %>
       options:
         # In the test environment we lower the retries and retry interval to
         # low amounts for fast failures.
