@@ -38,6 +38,14 @@ And install the dependencies:
 
 `bundle install`
 
+## .env
+
+The project uses the dotenv gem to load environment variables when the app starts. Dotenv expects to find a .env file in the project root.
+
+Duplicate .env.example and rename the copy as .env
+
+Open it and update the settings as required.
+
 ### Databases
 
 Registration data and user data for the Waste Carriers service are held in 2 MongoDb databases. Multiple applications for the service use these databases, including this one.

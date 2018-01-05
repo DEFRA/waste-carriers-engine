@@ -4,7 +4,7 @@ RSpec.describe BusinessTypeForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:business_type_form) { build(:business_type_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: business_type_form.reg_identifier } }
+      let(:valid_params) { { reg_identifier: business_type_form.reg_identifier, business_type: "limitedCompany" } }
 
       it "should submit" do
         expect(business_type_form.submit(valid_params)).to eq(true)
@@ -13,7 +13,7 @@ RSpec.describe BusinessTypeForm, type: :model do
 
     context "when the form is not valid" do
       let(:business_type_form) { build(:business_type_form, :has_required_data) }
-      let(:invalid_params) { { reg_identifier: "foo" } }
+      let(:invalid_params) { { reg_identifier: "foo", business_type: "foo" } }
 
       it "should not submit" do
         expect(business_type_form.submit(invalid_params)).to eq(false)
@@ -21,19 +21,21 @@ RSpec.describe BusinessTypeForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "business_type_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:business_type_form) { BusinessTypeForm.new(transient_registration) }
+  context "when a valid transient registration exists" do
+    let(:transient_registration) do
+      create(:transient_registration,
+             :has_required_data,
+             business_type: "limitedCompany",
+             workflow_state: "business_type_form")
+    end
+    # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+    let(:business_type_form) { BusinessTypeForm.new(transient_registration) }
 
+    describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
         before(:each) do
           business_type_form.reg_identifier = transient_registration.reg_identifier
+          business_type_form.business_type = transient_registration.business_type
         end
 
         it "is valid" do
@@ -44,6 +46,39 @@ RSpec.describe BusinessTypeForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           business_type_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(business_type_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#business_type" do
+      context "when a business_type meets the requirements" do
+        before(:each) do
+          business_type_form.reg_identifier = transient_registration.reg_identifier
+          business_type_form.business_type = transient_registration.business_type
+        end
+
+        it "is valid" do
+          expect(business_type_form).to be_valid
+        end
+      end
+
+      context "when a business_type is blank" do
+        before(:each) do
+          business_type_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(business_type_form).to_not be_valid
+        end
+      end
+
+      context "when a business_type is not in the allowed list" do
+        before(:each) do
+          business_type_form.reg_identifier = "foo"
         end
 
         it "is not valid" do

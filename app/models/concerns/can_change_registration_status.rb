@@ -53,12 +53,12 @@ module CanChangeRegistrationStatus
     # Guards
     def close_to_expiry_date?
       expiry_day = registration.expires_on.to_date
-      expiry_day < 6.months.from_now
+      expiry_day < Rails.configuration.renewal_window.months.from_now
     end
 
     # Transition effects
     def set_expiry_date
-      registration.set(expires_on: 3.years.from_now)
+      registration.set(expires_on: Rails.configuration.expires_after.years.from_now)
     end
 
     def extend_expiry_date

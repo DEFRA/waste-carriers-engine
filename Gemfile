@@ -53,7 +53,7 @@ gem "secure_headers", "~> 5.0"
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug"
-
+  gem "dotenv-rails"
   gem "rspec-rails", "~> 3.6"
 end
 

@@ -6,13 +6,13 @@ class TransientRegistration
   validates_with RegIdentifierValidator
   validate :no_renewal_in_progress?, on: :create
 
-  after_initialize :copy_data_from_registration, on: :create
+  after_initialize :copy_data_from_registration
 
   private
 
   def copy_data_from_registration
     # Don't try to get Registration data with an invalid reg_identifier
-    return unless valid?
+    return unless valid? && new_record?
 
     registration = Registration.where(reg_identifier: reg_identifier).first
 

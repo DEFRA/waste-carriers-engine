@@ -1,7 +1,15 @@
 en:
   business_type_forms:
     new:
-      heading: Business type
+      heading: What type of business or organisation are you?
+      option_local_authority: Local authority or public body
+      option_limited_company: Limited company (eg a registered company or plc)
+      option_limited_liability_partnership: Limited liability partnership
+      option_individual: Individual (eg a sole trader)
+      option_partnership: Partnership
+      option_other: Other organisation (eg a trust, charity or club)
+      option_overseas: Based overseas
+      help: Not sure? Call our helpline on 03708 506 506.
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
