@@ -35,7 +35,7 @@ gem "sdoc", "~> 0.4.0", group: :doc
 gem "aasm", "~> 4.12"
 
 # Use Airbrake for error reporting to Errbit
-gem "airbrake", "~> 7.1"
+gem "airbrake", "5.4.1"
 
 # Use CanCanCan for user roles and permissions
 # Version 2.0 doesn't support Mongoid, so we're locked to an earlier one

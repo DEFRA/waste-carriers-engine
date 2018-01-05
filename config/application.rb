@@ -33,6 +33,7 @@ module WasteCarriersRenewals
     )
 
     # Errbit config
+    config.airbrake_on = ENV["WCRS_RENEWALS_USE_AIRBRAKE"]
     config.airbrake_host = ENV["WCRS_RENEWALS_AIRBRAKE_HOST"]
     config.airbrake_id = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_ID"]
     config.airbrake_key = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_KEY"]
