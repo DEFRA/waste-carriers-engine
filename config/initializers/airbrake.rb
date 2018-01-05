@@ -13,6 +13,12 @@ Airbrake.configure do |config|
   # project_key navigate to your project's General Settings and copy the values
   # from the right sidebar.
   # https://github.com/airbrake/airbrake-ruby#project_id--project_key
+
+  # Debug info
+  puts Rails.configuration.airbrake_host
+  puts Rails.configuration.airbrake_id
+  puts Rails.configuration.airbrake_key
+
   config.host = Rails.configuration.airbrake_host
   config.project_id = Rails.configuration.airbrake_id
   config.project_key = Rails.configuration.airbrake_key
