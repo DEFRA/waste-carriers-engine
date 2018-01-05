@@ -38,7 +38,6 @@ module CanChangeWorkflowStatus
       state :renewal_complete_form
 
       state :cannot_renew_type_change_form
-      state :cannot_renew_unknown_type_form
       state :cannot_renew_should_be_lower_form
       state :cannot_renew_reg_number_change_form
 
@@ -48,7 +47,11 @@ module CanChangeWorkflowStatus
                     to: :business_type_form
 
         transitions from: :business_type_form,
-                    to: :smart_answers_form
+                    to: :smart_answers_form,
+                    if: :business_type_change_valid?
+
+        transitions from: :business_type_form,
+                    to: :cannot_renew_type_change_form
 
         transitions from: :smart_answers_form,
                     to: :cbd_type_form
@@ -162,6 +165,9 @@ module CanChangeWorkflowStatus
 
         transitions from: :worldpay_form,
                     to: :payment_summary_form
+
+        transitions from: :cannot_renew_type_change_form,
+                    to: :business_type_form
       end
     end
   end

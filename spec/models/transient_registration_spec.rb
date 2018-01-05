@@ -65,8 +65,189 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:business_type_form).to(:renewal_start_form).on_event(:back)
       end
 
-      it "changes to :smart_answers_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+      context "when the business type does not change" do
+        it "changes to :smart_answers_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+        end
+      end
+
+      context "when the business type is originally 'authority'" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "authority")
+        end
+
+        context "when the business type changes to something not requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "localAuthority"
+          end
+
+          it "changes to :smart_answers_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          end
+        end
+
+        context "when the business type changes to something requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "limitedCompany"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
+      end
+
+      context "when the business type is originally 'charity'" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "charity")
+        end
+
+        context "when the business type changes to something not requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "other"
+          end
+
+          it "changes to :smart_answers_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          end
+        end
+
+        context "when the business type changes to something requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "limitedCompany"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
+      end
+
+      context "when the business type is originally 'limitedCompany'" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "limitedCompany")
+        end
+
+        context "when the business type changes to something not requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "overseas"
+          end
+
+          it "changes to :smart_answers_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          end
+        end
+
+        context "when the business type changes to something requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "soleTrader"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
+      end
+
+      context "when the business type is originally 'partnership'" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "partnership")
+        end
+
+        context "when the business type changes to something not requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "overseas"
+          end
+
+          it "changes to :smart_answers_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          end
+        end
+
+        context "when the business type changes to something requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "soleTrader"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
+      end
+
+      context "when the business type is originally 'publicBody'" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "publicBody")
+        end
+
+        context "when the business type changes to something not requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "localAuthority"
+          end
+
+          it "changes to :smart_answers_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          end
+        end
+
+        context "when the business type changes to something requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "limitedCompany"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
+      end
+
+      context "when the business type is originally 'soleTrader'" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "soleTrader")
+        end
+
+        context "when the business type changes to something not requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "overseas"
+          end
+
+          it "changes to :smart_answers_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          end
+        end
+
+        context "when the business type changes to something requiring a new registration" do
+          before(:each) do
+            transient_registration.business_type = "limitedCompany"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
+      end
+
+      context "when the business type was originally something else" do
+        before(:each) do
+          registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+          registration.update_attributes(business_type: "foo")
+        end
+
+        context "when the business type changes" do
+          before(:each) do
+            transient_registration.business_type = "limitedCompany"
+          end
+
+          it "changes to :cannot_renew_type_change_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_type_change_form).on_event(:next)
+          end
+        end
       end
     end
 

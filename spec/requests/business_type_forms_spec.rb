@@ -54,7 +54,50 @@ RSpec.describe "BusinessTypeForms", type: :request do
                  workflow_state: "business_type_form")
         end
 
-        context "when valid params are submitted" do
+        context "when the business type is not changed" do
+          let(:valid_params) {
+            {
+              reg_identifier: transient_registration[:reg_identifier],
+              business_type: "limitedCompany"
+            }
+          }
+
+          it "returns a 302 response" do
+            post business_type_forms_path, business_type_form: valid_params
+            expect(response).to have_http_status(302)
+          end
+
+          it "redirects to the smart answers form" do
+            post business_type_forms_path, business_type_form: valid_params
+            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
+          end
+        end
+
+        context "when the business type is changed and the change is allowed" do
+          let(:valid_params) {
+            {
+              reg_identifier: transient_registration[:reg_identifier],
+              business_type: "overseas"
+            }
+          }
+
+          it "updates the transient registration" do
+            post business_type_forms_path, business_type_form: valid_params
+            expect(transient_registration.reload[:reg_identifier]).to eq(valid_params[:reg_identifier])
+          end
+
+          it "returns a 302 response" do
+            post business_type_forms_path, business_type_form: valid_params
+            expect(response).to have_http_status(302)
+          end
+
+          it "redirects to the smart answers form" do
+            post business_type_forms_path, business_type_form: valid_params
+            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
+          end
+        end
+
+        context "when the business type is changed and the change is not allowed" do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
@@ -72,9 +115,9 @@ RSpec.describe "BusinessTypeForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the smart answers form" do
+          it "redirects to the 'cannot renew due to business type change' form" do
             post business_type_forms_path, business_type_form: valid_params
-            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_cannot_renew_type_change_form_path(transient_registration[:reg_identifier]))
           end
         end
 

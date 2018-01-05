@@ -1,0 +1,17 @@
+en:
+  cannot_renew_type_change_forms:
+    new:
+      heading: You cannot renew %{reg_identifier}
+      paragraph_1: You've told us that your business type has changed since you originally registered.
+      paragraph_2: Because of this change, you cannot renew %{reg_identifier} and instead must make a new registration.
+      paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506
+      next_button: Start a new registration
+  activemodel:
+    errors:
+      models:
+        cannot_renew_type_change_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"

@@ -1,4 +1,4 @@
-class RenewalCompleteForm < BaseForm
+class CannotRenewTypeChangeForm < BaseForm
   attr_accessor :reg_identifier
 
   def initialize(transient_registration)

@@ -2,6 +2,7 @@ class TransientRegistration
   include Mongoid::Document
   include CanHaveRegistrationAttributes
   include CanChangeWorkflowStatus
+  include CanCheckBusinessTypeChanges
 
   validates_with RegIdentifierValidator
   validate :no_renewal_in_progress?, on: :create
