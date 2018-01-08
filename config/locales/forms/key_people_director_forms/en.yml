@@ -1,7 +1,8 @@
 en:
   key_people_director_forms:
     new:
-      heading: Director details
+      heading_limitedCompany: Director details
+      heading_soleTrader: Sole trader details
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

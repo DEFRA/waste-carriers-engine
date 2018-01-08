@@ -1,7 +1,8 @@
 en:
   company_name_forms:
     new:
-      heading: What's the name of the company?
+      heading_limitedCompany: What's the name of the company?
+      heading_soleTrader: What's the name of the sole trader?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

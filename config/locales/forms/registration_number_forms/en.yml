@@ -1,7 +1,8 @@
 en:
   registration_number_forms:
     new:
-      heading: What's the registration number of the company?
+      heading_limitedCompany: What's the registration number of the company?
+      heading_soleTrader: What's the registration number of the sole trader?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

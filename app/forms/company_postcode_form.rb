@@ -1,10 +1,13 @@
 class CompanyPostcodeForm < BaseForm
   attr_accessor :reg_identifier
+  attr_accessor :business_type
 
   def initialize(transient_registration)
     @transient_registration = transient_registration
     # Get values from transient registration so form will be pre-filled
     self.reg_identifier = @transient_registration.reg_identifier
+    # We only use this for the correct microcopy
+    self.business_type = @transient_registration.business_type
   end
 
   def submit(params)

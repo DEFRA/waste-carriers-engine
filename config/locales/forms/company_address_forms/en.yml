@@ -1,7 +1,8 @@
 en:
   company_address_forms:
     new:
-      heading: What's the address of the company? (select)
+      heading_limitedCompany: What's the address of the company? (select)
+      heading_soleTrader: What's the address of the sole trader? (select)
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
