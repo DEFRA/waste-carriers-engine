@@ -2,7 +2,7 @@ en:
   company_postcode_forms:
     new:
       heading_limitedCompany: What's the address of the company? (postcode)
-      heading_soleTrader: What's the address of the sole trader? (postcode)
+      heading_soleTrader: What's the address of the individual? (postcode)
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

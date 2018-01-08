@@ -2,7 +2,7 @@ en:
   key_people_forms:
     new:
       heading_limitedCompany: Director details
-      heading_soleTrader: Sole trader details
+      heading_soleTrader: Individual details
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
