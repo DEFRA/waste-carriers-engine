@@ -358,24 +358,24 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:company_address_form).to(:company_postcode_form).on_event(:back)
       end
 
-      it "changes to :key_people_director_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:company_address_form).to(:key_people_director_form).on_event(:next)
+      it "changes to :key_people_form after the 'next' event" do
+        expect(transient_registration).to transition_from(:company_address_form).to(:key_people_form).on_event(:next)
       end
     end
 
-    context "when a TransientRegistration's state is :key_people_director_form" do
+    context "when a TransientRegistration's state is :key_people_form" do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
-               workflow_state: "key_people_director_form")
+               workflow_state: "key_people_form")
       end
 
       it "changes to :company_address_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:key_people_director_form).to(:company_address_form).on_event(:back)
+        expect(transient_registration).to transition_from(:key_people_form).to(:company_address_form).on_event(:back)
       end
 
       it "changes to :declare_convictions_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:key_people_director_form).to(:declare_convictions_form).on_event(:next)
+        expect(transient_registration).to transition_from(:key_people_form).to(:declare_convictions_form).on_event(:next)
       end
     end
 
@@ -386,8 +386,8 @@ RSpec.describe TransientRegistration, type: :model do
                workflow_state: "declare_convictions_form")
       end
 
-      it "changes to :key_people_director_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:declare_convictions_form).to(:key_people_director_form).on_event(:back)
+      it "changes to :key_people_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:declare_convictions_form).to(:key_people_form).on_event(:back)
       end
 
       it "changes to :conviction_details_form after the 'next' event" do

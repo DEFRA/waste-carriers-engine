@@ -1,0 +1,24 @@
+<%= render("shared/back", back_path: back_key_people_forms_path(@key_people_form.reg_identifier)) %>
+
+<% if @key_people_form.errors.any? %>
+
+  <h1 class="heading-large"><%= t(".error_heading") %></h1>
+
+  <% @key_people_form.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+
+<% else %>
+
+  <%= form_for(@key_people_form) do |f| %>
+    <%= render("shared/errors", object: @key_people_form) %>
+
+    <h1 class="heading-large"><%= t(".heading_#{@key_people_form.business_type}") %></h1>
+
+    <%= f.hidden_field :reg_identifier, value: @key_people_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+
+<% end %>

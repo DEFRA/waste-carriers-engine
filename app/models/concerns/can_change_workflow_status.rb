@@ -20,7 +20,7 @@ module CanChangeWorkflowStatus
       state :company_postcode_form
       state :company_address_form
 
-      state :key_people_director_form
+      state :key_people_form
 
       state :declare_convictions_form
       state :conviction_details_form
@@ -72,9 +72,9 @@ module CanChangeWorkflowStatus
                     to: :company_address_form
 
         transitions from: :company_address_form,
-                    to: :key_people_director_form
+                    to: :key_people_form
 
-        transitions from: :key_people_director_form,
+        transitions from: :key_people_form,
                     to: :declare_convictions_form
 
         transitions from: :declare_convictions_form,
@@ -133,11 +133,11 @@ module CanChangeWorkflowStatus
         transitions from: :company_address_form,
                     to: :company_postcode_form
 
-        transitions from: :key_people_director_form,
+        transitions from: :key_people_form,
                     to: :company_address_form
 
         transitions from: :declare_convictions_form,
-                    to: :key_people_director_form
+                    to: :key_people_form
 
         transitions from: :conviction_details_form,
                     to: :declare_convictions_form

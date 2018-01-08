@@ -93,12 +93,12 @@ Rails.application.routes.draw do
               on: :collection
             end
 
-  resources :key_people_director_forms,
+  resources :key_people_forms,
             only: [:new, :create],
-            path: "key-people-director",
+            path: "key-people",
             path_names: { new: "/:reg_identifier" } do
               get "back/:reg_identifier",
-              to: "key_people_director_forms#go_back",
+              to: "key_people_forms#go_back",
               as: "back",
               on: :collection
             end

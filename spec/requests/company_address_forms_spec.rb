@@ -69,9 +69,9 @@ RSpec.describe "CompanyAddressForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the key_people_director form" do
+          it "redirects to the key_people form" do
             post company_address_forms_path, company_address_form: valid_params
-            expect(response).to redirect_to(new_key_people_director_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_key_people_form_path(transient_registration[:reg_identifier]))
           end
         end
 

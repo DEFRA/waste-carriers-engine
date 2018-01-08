@@ -1,4 +1,4 @@
-class KeyPeopleDirectorForm < BaseForm
+class KeyPeopleForm < BaseForm
   attr_accessor :reg_identifier
   attr_accessor :business_type
 
