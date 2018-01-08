@@ -14,11 +14,6 @@ if Rails.configuration.airbrake_on
     config.project_id = Rails.configuration.airbrake_id
     config.project_key = Rails.configuration.airbrake_key
 
-    # Debug nonsense
-    puts config.host
-    puts config.project_id
-    puts config.project_key
-
     # Configures the root directory of your project. Expects a String or a
     # Pathname, which represents the path to your project. Providing this option
     # helps us to filter out repetitive data from backtrace frames and link to
