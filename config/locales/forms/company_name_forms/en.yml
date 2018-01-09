@@ -1,6 +1,7 @@
 en:
   company_name_forms:
     new:
+      heading_localAuthority: What's the name of the local authority or public body?
       heading_limitedCompany: What's the name of the company?
       heading_soleTrader: What's the name of the individual?
       error_heading: Something is wrong

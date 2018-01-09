@@ -69,6 +69,15 @@ RSpec.describe "RenewalInformationForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
+          context "when the business type is localAuthority" do
+            before(:each) { transient_registration.update_attributes(business_type: "localAuthority") }
+
+            it "redirects to the company_name form" do
+              post renewal_information_forms_path, renewal_information_form: valid_params
+              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
           context "when the business type is limitedCompany" do
             before(:each) { transient_registration.update_attributes(business_type: "limitedCompany") }
 

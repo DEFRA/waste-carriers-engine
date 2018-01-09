@@ -294,6 +294,14 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:renewal_information_form).to(:cbd_type_form).on_event(:back)
       end
 
+      context "when the business type is localAuthority" do
+        before(:each) { transient_registration.business_type = "localAuthority" }
+
+        it "changes to :company_name_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:renewal_information_form).to(:company_name_form).on_event(:next)
+        end
+      end
+
       context "when the business type is limitedCompany" do
         before(:each) { transient_registration.business_type = "limitedCompany" }
 
@@ -332,6 +340,14 @@ RSpec.describe TransientRegistration, type: :model do
         create(:transient_registration,
                :has_required_data,
                workflow_state: "company_name_form")
+      end
+
+      context "when the business type is localAuthority" do
+        before(:each) { transient_registration.business_type = "localAuthority" }
+
+        it "changes to :renewal_infromation_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:company_name_form).to(:renewal_information_form).on_event(:back)
+        end
       end
 
       context "when the business type is limitedCompany" do

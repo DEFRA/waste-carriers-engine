@@ -1,6 +1,7 @@
 en:
   company_postcode_forms:
     new:
+      heading_localAuthority: What's the address of the local authority or public body? (postcode)
       heading_limitedCompany: What's the address of the company? (postcode)
       heading_soleTrader: What's the address of the individual? (postcode)
       error_heading: Something is wrong

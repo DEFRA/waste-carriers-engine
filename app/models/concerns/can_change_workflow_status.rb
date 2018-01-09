@@ -183,6 +183,6 @@ module CanChangeWorkflowStatus
   private
 
   def skip_registration_number?
-    business_type == "soleTrader"
+    %w[localAuthority soleTrader].include?(business_type)
   end
 end

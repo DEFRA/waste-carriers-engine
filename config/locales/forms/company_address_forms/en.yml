@@ -1,6 +1,7 @@
 en:
   company_address_forms:
     new:
+      heading_localAuthority: What's the address of the local authority or public body? (select)
       heading_limitedCompany: What's the address of the company? (select)
       heading_soleTrader: What's the address of the individual? (select)
       error_heading: Something is wrong

@@ -1,6 +1,7 @@
 en:
   key_people_forms:
     new:
+      heading_localAuthority: Chief executive details
       heading_limitedCompany: Director details
       heading_soleTrader: Individual details
       error_heading: Something is wrong
