@@ -190,7 +190,7 @@ module CanChangeWorkflowStatus
   private
 
   def skip_registration_number?
-    %w[localAuthority soleTrader].include?(business_type)
+    %w[localAuthority partnership soleTrader].include?(business_type)
   end
 
   # Charity registrations should be lower tier

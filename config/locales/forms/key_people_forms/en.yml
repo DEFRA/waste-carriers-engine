@@ -4,6 +4,7 @@ en:
       heading_localAuthority: Chief executive details
       heading_limitedCompany: Director details
       heading_limitedLiabilityPartnership: Partner details
+      heading_partnership: Partner details
       heading_soleTrader: Individual details
       error_heading: Something is wrong
       next_button: Continue

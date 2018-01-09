@@ -96,6 +96,15 @@ RSpec.describe "RenewalInformationForms", type: :request do
             end
           end
 
+          context "when the business type is partnership" do
+            before(:each) { transient_registration.update_attributes(business_type: "partnership") }
+
+            it "redirects to the company_name form" do
+              post renewal_information_forms_path, renewal_information_form: valid_params
+              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
           context "when the business type is soleTrader" do
             before(:each) { transient_registration.update_attributes(business_type: "soleTrader") }
 
