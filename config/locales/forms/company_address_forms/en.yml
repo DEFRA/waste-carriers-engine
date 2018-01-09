@@ -3,6 +3,7 @@ en:
     new:
       heading_localAuthority: What's the address of the local authority or public body? (select)
       heading_limitedCompany: What's the address of the company? (select)
+      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership? (select)
       heading_soleTrader: What's the address of the individual? (select)
       error_heading: Something is wrong
       next_button: Continue

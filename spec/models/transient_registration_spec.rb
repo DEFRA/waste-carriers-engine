@@ -310,6 +310,14 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
+      context "when the business type is limitedLiabilityPartnership" do
+        before(:each) { transient_registration.business_type = "limitedLiabilityPartnership" }
+
+        it "changes to :registration_number_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:renewal_information_form).to(:registration_number_form).on_event(:next)
+        end
+      end
+
       context "when the business type is soleTrader" do
         before(:each) { transient_registration.business_type = "soleTrader" }
 
@@ -352,6 +360,14 @@ RSpec.describe TransientRegistration, type: :model do
 
       context "when the business type is limitedCompany" do
         before(:each) { transient_registration.business_type = "limitedCompany" }
+
+        it "changes to :registration_number_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:company_name_form).to(:registration_number_form).on_event(:back)
+        end
+      end
+
+      context "when the business type is limitedLiabilityPartnership" do
+        before(:each) { transient_registration.business_type = "limitedLiabilityPartnership" }
 
         it "changes to :registration_number_form after the 'back' event" do
           expect(transient_registration).to transition_from(:company_name_form).to(:registration_number_form).on_event(:back)

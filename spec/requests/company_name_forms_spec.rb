@@ -164,6 +164,15 @@ RSpec.describe "CompanyNameForms", type: :request do
             end
           end
 
+          context "when the business type is limitedLiabilityPartnership" do
+            before(:each) { transient_registration.update_attributes(business_type: "limitedLiabilityPartnership") }
+
+            it "redirects to the registration_number form" do
+              get back_company_name_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_registration_number_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
           context "when the business type is soleTrader" do
             before(:each) { transient_registration.update_attributes(business_type: "soleTrader") }
 
