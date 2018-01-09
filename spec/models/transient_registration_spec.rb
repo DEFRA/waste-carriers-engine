@@ -109,8 +109,8 @@ RSpec.describe TransientRegistration, type: :model do
             transient_registration.business_type = "other"
           end
 
-          it "changes to :smart_answers_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          it "changes to :cannot_renew_lower_tier_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:cannot_renew_lower_tier_form).on_event(:next)
           end
         end
 

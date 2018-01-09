@@ -37,14 +37,18 @@ module CanChangeWorkflowStatus
 
       state :renewal_complete_form
 
+      state :cannot_renew_lower_tier_form
       state :cannot_renew_type_change_form
-      state :cannot_renew_should_be_lower_form
       state :cannot_renew_reg_number_change_form
 
       # Transitions
       event :next do
         transitions from: :renewal_start_form,
                     to: :business_type_form
+
+        transitions from: :business_type_form,
+                    to: :cannot_renew_lower_tier_form,
+                    if: :switch_to_lower_tier?
 
         transitions from: :business_type_form,
                     to: :smart_answers_form,
@@ -174,6 +178,9 @@ module CanChangeWorkflowStatus
         transitions from: :worldpay_form,
                     to: :payment_summary_form
 
+        transitions from: :cannot_renew_lower_tier_form,
+                    to: :business_type_form
+
         transitions from: :cannot_renew_type_change_form,
                     to: :business_type_form
       end
@@ -184,5 +191,10 @@ module CanChangeWorkflowStatus
 
   def skip_registration_number?
     %w[localAuthority soleTrader].include?(business_type)
+  end
+
+  # Charity registrations should be lower tier
+  def switch_to_lower_tier?
+    business_type == "other"
   end
 end
