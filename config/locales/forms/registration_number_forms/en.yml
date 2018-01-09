@@ -3,7 +3,6 @@ en:
     new:
       heading_limitedCompany: What's the registration number of the company?
       heading_limitedLiabilityPartnership: What's the registration number of the limited liability partnership?
-      heading_soleTrader: What's the registration number of the individual?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
