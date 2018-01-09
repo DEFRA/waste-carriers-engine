@@ -69,9 +69,22 @@ RSpec.describe "RenewalInformationForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the registration_number form" do
-            post renewal_information_forms_path, renewal_information_form: valid_params
-            expect(response).to redirect_to(new_registration_number_form_path(transient_registration[:reg_identifier]))
+          context "when the business type is limitedCompany" do
+            before(:each) { transient_registration.update_attributes(business_type: "limitedCompany") }
+
+            it "redirects to the registration_number form" do
+              post renewal_information_forms_path, renewal_information_form: valid_params
+              expect(response).to redirect_to(new_registration_number_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business type is soleTrader" do
+            before(:each) { transient_registration.update_attributes(business_type: "soleTrader") }
+
+            it "redirects to the company_name form" do
+              post renewal_information_forms_path, renewal_information_form: valid_params
+              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 
