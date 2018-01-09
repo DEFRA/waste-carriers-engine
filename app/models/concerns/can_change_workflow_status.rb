@@ -19,6 +19,7 @@ module CanChangeWorkflowStatus
       state :company_name_form
       state :company_postcode_form
       state :company_address_form
+      state :company_address_overseas_form
 
       state :key_people_form
 
@@ -74,12 +75,19 @@ module CanChangeWorkflowStatus
                     to: :company_name_form
 
         transitions from: :company_name_form,
+                    to: :company_address_overseas_form,
+                    if: :overseas_address?
+
+        transitions from: :company_name_form,
                     to: :company_postcode_form
 
         transitions from: :company_postcode_form,
                     to: :company_address_form
 
         transitions from: :company_address_form,
+                    to: :key_people_form
+
+        transitions from: :company_address_overseas_form,
                     to: :key_people_form
 
         transitions from: :key_people_form,
@@ -145,6 +153,13 @@ module CanChangeWorkflowStatus
         transitions from: :company_address_form,
                     to: :company_postcode_form
 
+        transitions from: :company_address_overseas_form,
+                    to: :company_name_form
+
+        transitions from: :key_people_form,
+                    to: :company_address_overseas_form,
+                    if: :overseas_address?
+
         transitions from: :key_people_form,
                     to: :company_address_form
 
@@ -190,11 +205,15 @@ module CanChangeWorkflowStatus
   private
 
   def skip_registration_number?
-    %w[localAuthority partnership soleTrader].include?(business_type)
+    %w[localAuthority overseas partnership soleTrader].include?(business_type)
   end
 
   # Charity registrations should be lower tier
   def switch_to_lower_tier?
     business_type == "other"
+  end
+
+  def overseas_address?
+    business_type == "overseas"
   end
 end

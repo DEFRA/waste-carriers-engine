@@ -146,9 +146,22 @@ RSpec.describe "KeyPeopleForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the company_address form" do
-            get back_key_people_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+          context "when the business type is not overseas" do
+            before(:each) { transient_registration.update_attributes(business_type: "limitedCompany") }
+
+            it "redirects to the company_address form" do
+              get back_key_people_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business type is overseas" do
+            before(:each) { transient_registration.update_attributes(business_type: "overseas") }
+
+            it "redirects to the company_address_overseas form" do
+              get back_key_people_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_company_address_overseas_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
       end

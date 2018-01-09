@@ -318,6 +318,14 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
+      context "when the business type is overseas" do
+        before(:each) { transient_registration.business_type = "overseas" }
+
+        it "changes to :company_name_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:renewal_information_form).to(:company_name_form).on_event(:next)
+        end
+      end
+
       context "when the business type is partnership" do
         before(:each) { transient_registration.business_type = "partnership" }
 
@@ -382,6 +390,14 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
+      context "when the business type is overseas" do
+        before(:each) { transient_registration.business_type = "overseas" }
+
+        it "changes to :renewal_infromation_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:company_name_form).to(:renewal_information_form).on_event(:back)
+        end
+      end
+
       context "when the business type is partnership" do
         before(:each) { transient_registration.business_type = "partnership" }
 
@@ -398,8 +414,20 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
-      it "changes to :company_postcode_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:company_name_form).to(:company_postcode_form).on_event(:next)
+      context "when the business type is not overseas" do
+        before(:each) { transient_registration.business_type = "limitedCompany" }
+
+        it "changes to :company_postcode_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:company_name_form).to(:company_postcode_form).on_event(:next)
+        end
+      end
+
+      context "when the business type is overseas" do
+        before(:each) { transient_registration.business_type = "overseas" }
+
+        it "changes to :company_address_overseas_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:company_name_form).to(:company_address_overseas_form).on_event(:next)
+        end
       end
     end
 
@@ -435,6 +463,22 @@ RSpec.describe TransientRegistration, type: :model do
       end
     end
 
+    context "when a TransientRegistration's state is :company_address_overseas_form" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "company_address_overseas_form")
+      end
+
+      it "changes to :company_name_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:company_address_overseas_form).to(:company_name_form).on_event(:back)
+      end
+
+      it "changes to :key_people_form after the 'next' event" do
+        expect(transient_registration).to transition_from(:company_address_overseas_form).to(:key_people_form).on_event(:next)
+      end
+    end
+
     context "when a TransientRegistration's state is :key_people_form" do
       let(:transient_registration) do
         create(:transient_registration,
@@ -442,8 +486,20 @@ RSpec.describe TransientRegistration, type: :model do
                workflow_state: "key_people_form")
       end
 
-      it "changes to :company_address_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:key_people_form).to(:company_address_form).on_event(:back)
+      context "when the business type is not overseas" do
+        before(:each) { transient_registration.business_type = "limitedCompany" }
+
+        it "changes to :company_address_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:key_people_form).to(:company_address_form).on_event(:back)
+        end
+      end
+
+      context "when the business type is overseas" do
+        before(:each) { transient_registration.business_type = "overseas" }
+
+        it "changes to :company_address_overseas_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:key_people_form).to(:company_address_overseas_form).on_event(:back)
+        end
       end
 
       it "changes to :declare_convictions_form after the 'next' event" do

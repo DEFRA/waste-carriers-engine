@@ -4,6 +4,7 @@ en:
       heading_localAuthority: What's the name of the local authority or public body?
       heading_limitedCompany: What's the name of the company?
       heading_limitedLiabilityPartnership: What's the name of the limited liability partnership?
+      heading_overseas: What's the name of the business or organisation?
       heading_partnership: What's the name of the partnership?
       heading_soleTrader: What's the name of the individual?
       error_heading: Something is wrong

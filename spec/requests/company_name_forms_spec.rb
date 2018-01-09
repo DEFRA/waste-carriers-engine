@@ -69,9 +69,22 @@ RSpec.describe "CompanyNameForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the company_postcode form" do
-            post company_name_forms_path, company_name_form: valid_params
-            expect(response).to redirect_to(new_company_postcode_form_path(transient_registration[:reg_identifier]))
+          context "when the business type is not overseas" do
+            before(:each) { transient_registration.update_attributes(business_type: "limitedCompany") }
+
+            it "redirects to the company_postcode form" do
+              post company_name_forms_path, company_name_form: valid_params
+              expect(response).to redirect_to(new_company_postcode_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business type is overseas" do
+            before(:each) { transient_registration.update_attributes(business_type: "overseas") }
+
+            it "redirects to the company_address_overseas form" do
+              post company_name_forms_path, company_name_form: valid_params
+              expect(response).to redirect_to(new_company_address_overseas_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 
@@ -170,6 +183,15 @@ RSpec.describe "CompanyNameForms", type: :request do
             it "redirects to the registration_number form" do
               get back_company_name_forms_path(transient_registration[:reg_identifier])
               expect(response).to redirect_to(new_registration_number_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business type is overseas" do
+            before(:each) { transient_registration.update_attributes(business_type: "overseas") }
+
+            it "redirects to the renewal_information form" do
+              get back_company_name_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:reg_identifier]))
             end
           end
 
