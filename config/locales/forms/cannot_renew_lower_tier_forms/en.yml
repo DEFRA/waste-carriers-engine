@@ -1,15 +1,15 @@
 en:
-  cannot_renew_type_change_forms:
+  cannot_renew_lower_tier_forms:
     new:
-      heading: You cannot renew %{reg_identifier}
-      paragraph_1: You've told us that your business type should be lower tier.
-      paragraph_2: Because of this change, you cannot renew %{reg_identifier} and instead must make a new registration.
+      heading: You should not renew %{reg_identifier}
+      paragraph_1: Based on the answers to our questions, you are eligible to register as a lower tier waste carrier.
+      paragraph_2: There is no charge to register as a lower tier waste carrier, but you will need to create a new registration.
       paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506
       next_button: Start a new registration
   activemodel:
     errors:
       models:
-        cannot_renew_type_change_form:
+        cannot_renew_lower_tier_form:
           attributes:
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
