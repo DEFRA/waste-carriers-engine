@@ -9,6 +9,17 @@ RSpec.describe Registration, type: :model do
         expect(registration).to_not be_valid
       end
     end
+
+    context "when a registration has the same reg_identifier as another registration" do
+      let(:registration_a) { create(:registration, :has_required_data) }
+      let(:registration_b) { create(:registration, :has_required_data) }
+
+      before(:each) { registration_b.reg_identifier = registration_a.reg_identifier }
+
+      it "is not valid" do
+        expect(registration_b).to_not be_valid
+      end
+    end
   end
 
   describe "#address" do

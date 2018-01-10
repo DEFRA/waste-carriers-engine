@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "registrations/new", type: :view do
   before(:each) do
     assign(:registration, Registration.new(
-                            reg_identifier: "Reg Identifier",
+                            reg_identifier: "Reg Identifier New",
                             company_name: "Company Name New"
     ))
   end
