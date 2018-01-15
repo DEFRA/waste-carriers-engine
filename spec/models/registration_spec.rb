@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe Registration, type: :model do
   describe "#reg_identifier" do
     context "when a registration has no reg_identifier" do
-      let(:registration) { build(:registration, :has_required_data, reg_identifier: nil) }
+      let(:registration) { build(:registration, :has_required_data) }
+      before(:each) { registration.tier = nil }
 
       it "is not valid" do
         expect(registration).to_not be_valid
@@ -18,6 +19,62 @@ RSpec.describe Registration, type: :model do
 
       it "is not valid" do
         expect(registration_b).to_not be_valid
+      end
+    end
+
+    context "when a registration is created" do
+      let(:registration) { create(:registration, :has_required_data) }
+
+      it "should have a unique reg_identifier" do
+        expect(Registration.where(reg_identifier: registration.reg_identifier).count).to eq(1)
+      end
+
+      context "when another registration is created after that" do
+        let(:registration_b) { create(:registration, :has_required_data) }
+
+        it "should have a sequential reg_identifier" do
+          reg_identifier_a = registration.reg_identifier
+          reg_identifier_b = registration_b.reg_identifier
+
+          reg_identifier_a.slice!("CBDU")
+          reg_identifier_b.slice!("CBDU")
+
+          expect(reg_identifier_b.to_i - reg_identifier_a.to_i).to eq(1)
+        end
+      end
+    end
+  end
+
+  describe "#tier" do
+    context "when a registration has no tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: nil) }
+
+      it "is not valid" do
+        expect(registration).to_not be_valid
+      end
+    end
+
+    context "when a registration has 'UPPER' as a tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: "UPPER") }
+
+      it "is valid" do
+        expect(registration).to be_valid
+      end
+    end
+
+    context "when a registration has 'LOWER' as a tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: "LOWER") }
+
+      it "is valid" do
+        expect(registration).to be_valid
+      end
+    end
+
+    context "when a registration has an invalid string as a tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: "foo") }
+
+      it "is not valid" do
+        expect(registration).to_not be_valid
       end
     end
   end
