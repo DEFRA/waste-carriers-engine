@@ -13,11 +13,7 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     password: ENV["WCR_TEST_USER_PASSWORD"] || "Secret123"
   )
 
-  # TODO: Load files
-
-  # TODO: Convert to JSON
-
-  seeds.each do |seed|
-    Registration.find_or_create_by(seed)
+  Dir.glob("#{Rails.root}/db/seeds/*.json").each do |file|
+    Registration.find_or_create_by(JSON.parse(File.read(file)))
   end
 end
