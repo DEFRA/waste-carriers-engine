@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Registration, type: :model do
   describe "#reg_identifier" do
     context "when a registration has no reg_identifier" do
-      let(:registration) { create(:registration, :has_required_data) }
+      let(:registration) { build(:registration, :has_required_data) }
       before(:each) { registration.tier = nil }
 
       it "is not valid" do
