@@ -5,7 +5,7 @@ module CanGenerateRegIdentifier
     # Use the existing reg_identifier if one is already set, eg. through seeding
     return if reg_identifier
 
-    # Get the record from the collection, or create it if it doesn't exist
+    # Get the counter for reg_identifiers, or create it if it doesn't exist
     counter = Counter.where(_id: "regid").first || Counter.create(_id: "regid", seq: 0)
 
     # Increment the counter and get the updated value
