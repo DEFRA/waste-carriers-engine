@@ -6,16 +6,17 @@ module CanGenerateRegIdentifier
     return if reg_identifier
 
     # Get the counter for reg_identifiers, or create it if it doesn't exist
-    counter = Counter.where(_id: "regid").first || Counter.create(_id: "regid", seq: 0)
+    counter = Counter.where(_id: "regid").first || Counter.create(_id: "regid", seq: 1)
 
-    # Increment the counter and get the updated value
-    counter.increment
-    number = counter.seq
+    # Increment the counter until no reg_identifier is using it
+    while Registration.where(reg_identifier: "CBDU#{counter.seq}").exists? || Registration.where(reg_identifier: "CBDL#{counter.seq}").exists?
+      counter.increment
+    end
 
     self.reg_identifier = if tier == "UPPER"
-                            "CBDU#{number}"
+                            "CBDU#{counter.seq}"
                           elsif tier == "LOWER"
-                            "CBDL#{number}"
+                            "CBDL#{counter.seq}"
                           end
   end
 end
