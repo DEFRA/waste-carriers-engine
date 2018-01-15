@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :registration do
     trait :has_required_data do
-      sequence(:reg_identifier) { |n| "CBDU#{n}" }
       business_type "limitedCompany"
 
       metaData { build(:metaData) }
       addresses { [build(:address)] }
+      tier "UPPER"
     end
 
     trait :expires_soon do

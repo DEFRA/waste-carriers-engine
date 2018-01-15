@@ -70,7 +70,6 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     accountEmail: "user@waste-exemplar.gov.uk",
     declaredConvictions: "no",
     declaration: 1,
-    regIdentifier: "CBDU1",
     expires_on: 6.months.from_now,
     metaData: {
       dateRegistered: 30.months.ago,
@@ -145,7 +144,6 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     accountEmail: "user@waste-exemplar.gov.uk",
     declaredConvictions: "no",
     declaration: 1,
-    regIdentifier: "CBDU2",
     expires_on: 6.months.from_now,
     metaData: {
       dateRegistered: 30.months.ago,
@@ -220,7 +218,6 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     accountEmail: "user@waste-exemplar.gov.uk",
     declaredConvictions: "no",
     declaration: 1,
-    regIdentifier: "CBDU3",
     expires_on: 6.months.from_now,
     metaData: {
       dateRegistered: 30.months.ago,
@@ -307,7 +304,6 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     accountEmail: "user@waste-exemplar.gov.uk",
     declaredConvictions: "no",
     declaration: 1,
-    regIdentifier: "CBDU4",
     expires_on: 6.months.from_now,
     metaData: {
       dateRegistered: 30.months.ago,
@@ -382,7 +378,6 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     accountEmail: "user@waste-exemplar.gov.uk",
     declaredConvictions: "no",
     declaration: 1,
-    regIdentifier: "CBDU5",
     expires_on: 6.months.from_now,
     metaData: {
       dateRegistered: 30.months.ago,
@@ -469,7 +464,6 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     accountEmail: "user@waste-exemplar.gov.uk",
     declaredConvictions: "no",
     declaration: 1,
-    regIdentifier: "CBDU6",
     expires_on: 6.months.from_now,
     metaData: {
       dateRegistered: 30.months.ago,
@@ -545,7 +539,6 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
     accountEmail: "user@waste-exemplar.gov.uk",
     declaredConvictions: "no",
     declaration: 1,
-    regIdentifier: "CBDU7",
     expires_on: 6.months.from_now,
     metaData: {
       dateRegistered: 30.months.ago,

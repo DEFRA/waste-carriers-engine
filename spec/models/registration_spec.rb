@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe Registration, type: :model do
   describe "#reg_identifier" do
     context "when a registration has no reg_identifier" do
-      let(:registration) { build(:registration, :has_required_data, reg_identifier: nil) }
+      let(:registration) { create(:registration, :has_required_data) }
+      before(:each) { registration.tier = nil }
 
       it "is not valid" do
         expect(registration).to_not be_valid
@@ -40,6 +41,40 @@ RSpec.describe Registration, type: :model do
 
           expect(reg_identifier_b.to_i - reg_identifier_a.to_i).to eq(1)
         end
+      end
+    end
+  end
+
+  describe "#tier" do
+    context "when a registration has no tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: nil) }
+
+      it "is not valid" do
+        expect(registration).to_not be_valid
+      end
+    end
+
+    context "when a registration has 'UPPER' as a tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: "UPPER") }
+
+      it "is valid" do
+        expect(registration).to be_valid
+      end
+    end
+
+    context "when a registration has 'LOWER' as a tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: "LOWER") }
+
+      it "is valid" do
+        expect(registration).to be_valid
+      end
+    end
+
+    context "when a registration has an invalid string as a tier" do
+      let(:registration) { build(:registration, :has_required_data, tier: "foo") }
+
+      it "is not valid" do
+        expect(registration).to_not be_valid
       end
     end
   end
