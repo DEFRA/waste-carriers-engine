@@ -23,12 +23,42 @@ Rails.application.routes.draw do
               on: :collection
             end
 
-  resources :smart_answers_forms,
+  resources :other_businesses_forms,
             only: [:new, :create],
-            path: "smart-answers",
+            path: "other-businesses",
             path_names: { new: "/:reg_identifier" } do
               get "back/:reg_identifier",
-              to: "smart_answers_forms#go_back",
+              to: "other_businesses_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
+  resources :service_provided_forms,
+            only: [:new, :create],
+            path: "service-provided",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "service_provided_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
+  resources :construction_demolition_forms,
+            only: [:new, :create],
+            path: "construction-demolition",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "construction_demolition_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
+  resources :waste_types_forms,
+            only: [:new, :create],
+            path: "waste-types",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "waste_types_forms#go_back",
               as: "back",
               on: :collection
             end

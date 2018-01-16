@@ -1,4 +1,4 @@
-class SmartAnswersForm < BaseForm
+class OtherBusinessesForm < BaseForm
   attr_accessor :reg_identifier
 
   def initialize(transient_registration)

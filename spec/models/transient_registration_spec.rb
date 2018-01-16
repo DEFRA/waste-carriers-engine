@@ -66,8 +66,8 @@ RSpec.describe TransientRegistration, type: :model do
       end
 
       context "when the business type does not change" do
-        it "changes to :smart_answers_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+        it "changes to :other_businesses_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:business_type_form).to(:other_businesses_form).on_event(:next)
         end
       end
 
@@ -82,8 +82,8 @@ RSpec.describe TransientRegistration, type: :model do
             transient_registration.business_type = "localAuthority"
           end
 
-          it "changes to :smart_answers_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          it "changes to :other_businesses_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:other_businesses_form).on_event(:next)
           end
         end
 
@@ -136,8 +136,8 @@ RSpec.describe TransientRegistration, type: :model do
             transient_registration.business_type = "overseas"
           end
 
-          it "changes to :smart_answers_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          it "changes to :other_businesses_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:other_businesses_form).on_event(:next)
           end
         end
 
@@ -163,8 +163,8 @@ RSpec.describe TransientRegistration, type: :model do
             transient_registration.business_type = "overseas"
           end
 
-          it "changes to :smart_answers_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          it "changes to :other_businesses_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:other_businesses_form).on_event(:next)
           end
         end
 
@@ -190,8 +190,8 @@ RSpec.describe TransientRegistration, type: :model do
             transient_registration.business_type = "localAuthority"
           end
 
-          it "changes to :smart_answers_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          it "changes to :other_businesses_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:other_businesses_form).on_event(:next)
           end
         end
 
@@ -217,8 +217,8 @@ RSpec.describe TransientRegistration, type: :model do
             transient_registration.business_type = "overseas"
           end
 
-          it "changes to :smart_answers_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:business_type_form).to(:smart_answers_form).on_event(:next)
+          it "changes to :other_businesses_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:business_type_form).to(:other_businesses_form).on_event(:next)
           end
         end
 
@@ -251,31 +251,140 @@ RSpec.describe TransientRegistration, type: :model do
       end
     end
 
-    context "when a TransientRegistration's state is :smart_answers_form" do
+    # TODO: TESTS
+
+    context "when a TransientRegistration's state is :other_businesses_form" do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
-               workflow_state: "smart_answers_form")
+               workflow_state: "other_businesses_form")
       end
 
-      it "changes to :business_type_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:smart_answers_form).to(:business_type_form).on_event(:back)
+      it "transitions to :business_type_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:other_businesses_form).to(:business_type_form).on_event(:back)
       end
 
-      it "changes to :cbd_type_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:smart_answers_form).to(:cbd_type_form).on_event(:next)
+      context "when the business does not carry waste for other businesses or households" do
+        before(:each) { transient_registration.other_businesses = false }
+
+        it "transitions to :construction_demolition_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:other_businesses_form).to(:construction_demolition_form).on_event(:next)
+        end
+      end
+
+      context "when the business does carry waste for other businesses or households" do
+        before(:each) { transient_registration.other_businesses = true }
+
+        it "transitions to :service_provided_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:other_businesses_form).to(:service_provided_form).on_event(:next)
+        end
       end
     end
 
-    context "when a TransientRegistration's state is :cbd_type_form" do
+    context "when a TransientRegistration's state is :service_provided_form" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "service_provided_form")
+      end
+
+      it "transitions to :other_businesses_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:service_provided_form).to(:other_businesses_form).on_event(:back)
+      end
+
+      context "when the business only carries waste it produces" do
+        before(:each) { transient_registration.is_main_service = false }
+
+        it "transitions to :construction_demolition_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:service_provided_form).to(:construction_demolition_form).on_event(:next)
+        end
+      end
+
+      context "when the business carries waste produced by others" do
+        before(:each) { transient_registration.is_main_service = true }
+
+        it "transitions to :waste_types_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:service_provided_form).to(:waste_types_form).on_event(:next)
+        end
+      end
+    end
+
+    context "when a TransientRegistration's state is :construction_demolition_form" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "construction_demolition_form")
+      end
+
+      context "when the business does not carry waste for other businesses or households" do
+        before(:each) { transient_registration.other_businesses = false }
+
+        it "transitions to :service_provided_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:construction_demolition_form).to(:other_businesses_form).on_event(:back)
+        end
+      end
+
+      context "when the business does carry waste for other businesses or households" do
+        before(:each) { transient_registration.other_businesses = true }
+
+        it "transitions to :service_provided_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:construction_demolition_form).to(:service_provided_form).on_event(:back)
+        end
+      end
+
+      it "transitions to :cbd_type_form after the 'next' event" do
+        expect(transient_registration).to transition_from(:construction_demolition_form).to(:cbd_type_form).on_event(:next)
+      end
+    end
+
+    context "when a TransientRegistration's state is :waste_types_form" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "waste_types_form")
+      end
+
+      it "transitions to :service_provided_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:waste_types_form).to(:service_provided_form).on_event(:back)
+      end
+
+      it "transitions to :cbd_type_form after the 'next' event" do
+        expect(transient_registration).to transition_from(:waste_types_form).to(:cbd_type_form).on_event(:next)
+      end
+    end
+
+    context "when a TransientRegistration's state is :cbd_type" do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
                workflow_state: "cbd_type_form")
       end
 
-      it "changes to :smart_answers_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:cbd_type_form).to(:smart_answers_form).on_event(:back)
+      context "when the business doesn't carry waste for other businesses or households" do
+        before(:each) { transient_registration.other_businesses = false }
+
+        it "changes to :construction_demolition_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:cbd_type_form).to(:construction_demolition_form).on_event(:back)
+        end
+      end
+
+      context "when the business carries waste produced by its customers" do
+        before(:each) { transient_registration.is_main_service = true }
+
+        it "changes to :waste_types_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:cbd_type_form).to(:waste_types_form).on_event(:back)
+        end
+      end
+
+      context "when the business carries carries waste for other businesses but produces that waste" do
+        before(:each) do
+          transient_registration.other_businesses = true
+          transient_registration.is_main_service = false
+        end
+
+        it "changes to :construction_demolition_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:cbd_type_form).to(:construction_demolition_form).on_event(:back)
+        end
       end
 
       it "changes to :renewal_information_form after the 'next' event" do

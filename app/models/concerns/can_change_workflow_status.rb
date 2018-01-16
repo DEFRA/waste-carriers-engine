@@ -11,7 +11,14 @@ module CanChangeWorkflowStatus
       # States / forms
       state :renewal_start_form, initial: true
       state :business_type_form
+
       state :smart_answers_form
+
+      state :other_businesses_form
+      state :service_provided_form
+      state :construction_demolition_form
+      state :waste_types_form
+
       state :cbd_type_form
       state :renewal_information_form
       state :registration_number_form
@@ -52,14 +59,35 @@ module CanChangeWorkflowStatus
                     if: :switch_to_lower_tier?
 
         transitions from: :business_type_form,
-                    to: :smart_answers_form,
+                    to: :other_businesses_form,
                     if: :business_type_change_valid?
 
         transitions from: :business_type_form,
                     to: :cannot_renew_type_change_form
 
-        transitions from: :smart_answers_form,
+        # Smart answers
+
+        transitions from: :other_businesses_form,
+                    to: :construction_demolition_form,
+                    if: :only_carries_own_waste?
+
+        transitions from: :other_businesses_form,
+                    to: :service_provided_form
+
+        transitions from: :service_provided_form,
+                    to: :waste_types_form,
+                    if: :waste_is_main_service?
+
+        transitions from: :service_provided_form,
+                    to: :construction_demolition_form
+
+        transitions from: :waste_types_form,
                     to: :cbd_type_form
+
+        transitions from: :construction_demolition_form,
+                    to: :cbd_type_form
+
+        # End smart answers
 
         transitions from: :cbd_type_form,
                     to: :renewal_information_form
@@ -128,11 +156,36 @@ module CanChangeWorkflowStatus
         transitions from: :business_type_form,
                     to: :renewal_start_form
 
-        transitions from: :smart_answers_form,
+        # Smart answers
+
+        transitions from: :other_businesses_form,
                     to: :business_type_form
 
+        transitions from: :service_provided_form,
+                    to: :other_businesses_form
+
+        transitions from: :waste_types_form,
+                    to: :service_provided_form
+
+        transitions from: :construction_demolition_form,
+                    to: :other_businesses_form,
+                    if: :only_carries_own_waste?
+
+        transitions from: :construction_demolition_form,
+                    to: :service_provided_form
+
         transitions from: :cbd_type_form,
-                    to: :smart_answers_form
+                    to: :construction_demolition_form,
+                    if: :only_carries_own_waste?
+
+        transitions from: :cbd_type_form,
+                    to: :waste_types_form,
+                    if: :waste_is_main_service?
+
+        transitions from: :cbd_type_form,
+                    to: :construction_demolition_form
+
+        # End smart answers
 
         transitions from: :renewal_information_form,
                     to: :cbd_type_form
@@ -211,6 +264,14 @@ module CanChangeWorkflowStatus
   # Charity registrations should be lower tier
   def switch_to_lower_tier?
     business_type == "other"
+  end
+
+  def only_carries_own_waste?
+    other_businesses == false
+  end
+
+  def waste_is_main_service?
+    is_main_service == true
   end
 
   def overseas_address?

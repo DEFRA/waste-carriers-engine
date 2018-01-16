@@ -69,7 +69,7 @@ RSpec.describe "BusinessTypeForms", type: :request do
 
           it "redirects to the smart answers form" do
             post business_type_forms_path, business_type_form: valid_params
-            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:reg_identifier]))
           end
         end
 
@@ -93,7 +93,7 @@ RSpec.describe "BusinessTypeForms", type: :request do
 
           it "redirects to the smart answers form" do
             post business_type_forms_path, business_type_form: valid_params
-            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:reg_identifier]))
           end
         end
 
@@ -208,7 +208,7 @@ RSpec.describe "BusinessTypeForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "smart_answers_form")
+                 workflow_state: "other_businesses_form")
         end
 
         context "when the back action is triggered" do
@@ -219,7 +219,7 @@ RSpec.describe "BusinessTypeForms", type: :request do
 
           it "redirects to the correct form for the state" do
             get back_business_type_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:reg_identifier]))
           end
         end
       end
