@@ -1,7 +1,7 @@
 en:
   service_provided_forms:
     new:
-      heading: service_provided
+      heading: Who produces the waste that you deal with?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

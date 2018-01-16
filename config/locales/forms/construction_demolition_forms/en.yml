@@ -1,7 +1,7 @@
 en:
   construction_demolition_forms:
     new:
-      heading: construction_demolition
+      heading: Do you ever deal with building, construction or demolition waste?
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
