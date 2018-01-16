@@ -4,7 +4,12 @@ RSpec.describe WasteTypesForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:waste_types_form) { build(:waste_types_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: waste_types_form.reg_identifier } }
+      let(:valid_params) {
+        {
+          reg_identifier: waste_types_form.reg_identifier,
+          only_amf: waste_types_form.only_amf
+        }
+      }
 
       it "should submit" do
         expect(waste_types_form.submit(valid_params)).to eq(true)

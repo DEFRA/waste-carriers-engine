@@ -56,12 +56,14 @@ RSpec.describe "ConstructionDemolitionForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              construction_waste: true
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post construction_demolition_forms_path, construction_demolition_form: valid_params
+            expect(transient_registration.reload[:construction_waste]).to eq(valid_params[:construction_waste])
           end
 
           it "returns a 302 response" do
@@ -146,9 +148,22 @@ RSpec.describe "ConstructionDemolitionForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the service_provided form" do
-            get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_service_provided_form_path(transient_registration[:reg_identifier]))
+          context "when the business does not carry waste for other businesses or households" do
+            before(:each) { transient_registration.update_attributes(other_businesses: false) }
+
+            it "redirects to the other_businesses form" do
+              get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business does carry waste for other businesses or households" do
+            before(:each) { transient_registration.update_attributes(other_businesses: true) }
+
+            it "redirects to the service_provided form" do
+              get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_service_provided_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
       end

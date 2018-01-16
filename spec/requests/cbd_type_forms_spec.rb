@@ -146,9 +146,37 @@ RSpec.describe "CbdTypeForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the smart_answers form" do
-            get back_cbd_type_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_smart_answers_form_path(transient_registration[:reg_identifier]))
+          context "when the business doesn't carry waste for other businesses or households" do
+            before(:each) { transient_registration.update_attributes(other_businesses: false) }
+
+            it "redirects to the construction_demolition form" do
+              get back_cbd_type_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business carries waste produced by its customers" do
+            before(:each) do
+              transient_registration.update_attributes(other_businesses: true,
+                                                       is_main_service: true)
+            end
+
+            it "redirects to the waste_types form" do
+              get back_cbd_type_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_waste_types_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business carries waste for other businesses but produces that waste" do
+            before(:each) do
+              transient_registration.update_attributes(other_businesses: true,
+                                                       is_main_service: false)
+            end
+
+            it "redirects to the construction_demolition form" do
+              get back_cbd_type_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
       end

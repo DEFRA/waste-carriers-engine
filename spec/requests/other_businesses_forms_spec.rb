@@ -56,12 +56,14 @@ RSpec.describe "OtherBusinessesForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              other_businesses: true
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post other_businesses_forms_path, other_businesses_form: valid_params
+            expect(transient_registration.reload[:other_businesses]).to eq(valid_params[:other_businesses])
           end
 
           it "returns a 302 response" do
@@ -69,9 +71,22 @@ RSpec.describe "OtherBusinessesForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the service_provided form" do
-            post other_businesses_forms_path, other_businesses_form: valid_params
-            expect(response).to redirect_to(new_service_provided_form_path(transient_registration[:reg_identifier]))
+          context "when the business carries waste for other business and households" do
+            before(:each) { valid_params[:other_businesses] = true }
+
+            it "redirects to the service_provided form" do
+              post other_businesses_forms_path, other_businesses_form: valid_params
+              expect(response).to redirect_to(new_service_provided_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business does not carry waste for other business and households" do
+            before(:each) { valid_params[:other_businesses] = false }
+
+            it "redirects to the construction_demolition form" do
+              post other_businesses_forms_path, other_businesses_form: valid_params
+              expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 

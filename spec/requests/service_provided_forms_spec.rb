@@ -56,12 +56,14 @@ RSpec.describe "ServiceProvidedForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              is_main_service: true
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post service_provided_forms_path, service_provided_form: valid_params
+            expect(transient_registration.reload[:is_main_service]).to eq(valid_params[:is_main_service])
           end
 
           it "returns a 302 response" do
@@ -69,9 +71,22 @@ RSpec.describe "ServiceProvidedForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the waste_types form" do
-            post service_provided_forms_path, service_provided_form: valid_params
-            expect(response).to redirect_to(new_waste_types_form_path(transient_registration[:reg_identifier]))
+          context "when the business only carries waste it produces" do
+            before(:each) { valid_params[:is_main_service] = false }
+
+            it "redirects to the construction_demolition form" do
+              post service_provided_forms_path, service_provided_form: valid_params
+              expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business carries waste produced by others" do
+            before(:each) { valid_params[:is_main_service] = true }
+
+            it "redirects to the waste_types form" do
+              post service_provided_forms_path, service_provided_form: valid_params
+              expect(response).to redirect_to(new_waste_types_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 

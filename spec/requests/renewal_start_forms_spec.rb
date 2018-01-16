@@ -246,7 +246,7 @@ RSpec.describe "RenewalStartForms", type: :request do
               create(:transient_registration,
                      :has_required_data,
                      account_email: user.email,
-                     workflow_state: "smart_answers_form")
+                     workflow_state: "other_businesses_form")
             end
 
             let(:valid_params) { { reg_identifier: transient_registration.reg_identifier } }
@@ -258,7 +258,7 @@ RSpec.describe "RenewalStartForms", type: :request do
 
             it "redirects to the correct form" do
               post renewal_start_forms_path, renewal_start_form: valid_params
-              expect(response).to redirect_to(new_smart_answers_form_path(valid_params[:reg_identifier]))
+              expect(response).to redirect_to(new_other_businesses_form_path(valid_params[:reg_identifier]))
             end
 
             it "does not create a new transient registration" do

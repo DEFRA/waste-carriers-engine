@@ -56,12 +56,14 @@ RSpec.describe "WasteTypesForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              only_amf: false
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post waste_types_forms_path, waste_types_form: valid_params
+            expect(transient_registration.reload[:only_amf]).to eq(valid_params[:only_amf])
           end
 
           it "returns a 302 response" do
