@@ -1,11 +1,17 @@
 class BusinessTypeForm < BaseForm
-  attr_accessor :reg_identifier, :business_type
+  attr_accessor :business_type
 
   def initialize(transient_registration)
-    @transient_registration = transient_registration
-    # Get values from transient registration so form will be pre-filled
-    self.reg_identifier = @transient_registration.reg_identifier
+    super
     self.business_type = @transient_registration.business_type
+  end
+
+  def submit(params)
+    # Assign the params for validation and pass them to the BaseForm method for updating
+    self.business_type = params[:business_type]
+    attributes = { business_type: business_type }
+
+    super(attributes, params[:reg_identifier])
   end
 
   validates :business_type, presence: true
@@ -16,20 +22,4 @@ class BusinessTypeForm < BaseForm
                                                 overseas
                                                 partnership
                                                 soleTrader] }
-
-  def submit(params)
-    # Define the params which are allowed
-    self.reg_identifier = params[:reg_identifier]
-    self.business_type = params[:business_type]
-
-    # Update the transient registration with params from the registration if valid
-    if valid?
-      @transient_registration.reg_identifier = reg_identifier
-      @transient_registration.business_type = business_type
-      @transient_registration.save!
-      true
-    else
-      false
-    end
-  end
 end
