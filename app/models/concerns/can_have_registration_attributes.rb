@@ -25,6 +25,7 @@ module CanHaveRegistrationAttributes
     field :otherBusinesses, as: :other_businesses,          type: Boolean
     field :isMainService, as: :is_main_service,             type: Boolean
     field :onlyAMF, as: :only_amf,                          type: Boolean
+    field :constructionWaste, as: :construction_waste,      type: Boolean
     field :companyName, as: :company_name,                  type: String
     field :companyNo, as: :company_no,                      type: Integer
     field :firstName, as: :first_name,                      type: String
