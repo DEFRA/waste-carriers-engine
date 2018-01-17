@@ -57,13 +57,13 @@ RSpec.describe "OtherBusinessesForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              other_businesses: true
+              other_businesses: "true"
             }
           }
 
           it "updates the transient registration" do
             post other_businesses_forms_path, other_businesses_form: valid_params
-            expect(transient_registration.reload[:other_businesses]).to eq(valid_params[:other_businesses])
+            expect(transient_registration.reload[:other_businesses]).to eq(true)
           end
 
           it "returns a 302 response" do
@@ -72,7 +72,7 @@ RSpec.describe "OtherBusinessesForms", type: :request do
           end
 
           context "when the business carries waste for other business and households" do
-            before(:each) { valid_params[:other_businesses] = true }
+            before(:each) { valid_params[:other_businesses] = "true" }
 
             it "redirects to the service_provided form" do
               post other_businesses_forms_path, other_businesses_form: valid_params
@@ -81,7 +81,7 @@ RSpec.describe "OtherBusinessesForms", type: :request do
           end
 
           context "when the business does not carry waste for other business and households" do
-            before(:each) { valid_params[:other_businesses] = false }
+            before(:each) { valid_params[:other_businesses] = "false" }
 
             it "redirects to the construction_demolition form" do
               post other_businesses_forms_path, other_businesses_form: valid_params
@@ -93,7 +93,7 @@ RSpec.describe "OtherBusinessesForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              other_businesses: "foo"
             }
           }
 
@@ -104,7 +104,7 @@ RSpec.describe "OtherBusinessesForms", type: :request do
 
           it "does not update the transient registration" do
             post other_businesses_forms_path, other_businesses_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:other_businesses]).to_not eq(invalid_params[:other_businesses])
           end
         end
       end
@@ -119,12 +119,14 @@ RSpec.describe "OtherBusinessesForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            other_businesses: "false"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post other_businesses_forms_path, other_businesses_form: valid_params
+          expect(transient_registration.reload[:other_businesses]).to_not eq(valid_params[:other_businesses])
         end
 
         it "returns a 302 response" do

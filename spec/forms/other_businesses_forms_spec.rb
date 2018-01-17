@@ -31,6 +31,7 @@ RSpec.describe OtherBusinessesForm, type: :model do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
+               other_businesses: true,
                workflow_state: "other_businesses_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
@@ -49,6 +50,58 @@ RSpec.describe OtherBusinessesForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           other_businesses_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(other_businesses_form).to_not be_valid
+        end
+      end
+    end
+  end
+
+  describe "#other_businesses" do
+    context "when a valid transient registration exists" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "other_businesses_form")
+      end
+      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+      let(:other_businesses_form) { OtherBusinessesForm.new(transient_registration) }
+
+      context "when other_businesses is true" do
+        before(:each) do
+          other_businesses_form.other_businesses = true
+        end
+
+        it "is valid" do
+          expect(other_businesses_form).to be_valid
+        end
+      end
+
+      context "when other_businesses is false" do
+        before(:each) do
+          other_businesses_form.other_businesses = false
+        end
+
+        it "is valid" do
+          expect(other_businesses_form).to be_valid
+        end
+      end
+
+      context "when other_businesses is a non-boolean value" do
+        before(:each) do
+          other_businesses_form.other_businesses = "foo"
+        end
+
+        it "is not valid" do
+          expect(other_businesses_form).to_not be_valid
+        end
+      end
+
+      context "when other_businesses is nil" do
+        before(:each) do
+          other_businesses_form.other_businesses = nil
         end
 
         it "is not valid" do

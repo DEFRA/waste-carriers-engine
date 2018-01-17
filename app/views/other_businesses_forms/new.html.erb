@@ -1,24 +1,29 @@
 <%= render("shared/back", back_path: back_other_businesses_forms_path(@other_businesses_form.reg_identifier)) %>
 
-<% if @other_businesses_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @other_businesses_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@other_businesses_form) do |f| %>
     <%= render("shared/errors", object: @other_businesses_form) %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+    <div class="form-group">
+      <fieldset class="inline">
+        <legend>
+          <h1 class="heading-large"><%= t(".heading") %></h1>
+        </legend>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :other_businesses, "true" %>
+          <%= f.label :other_businesses, t(".option_true"), value: "true" %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :other_businesses, "false" %>
+          <%= f.label :other_businesses, t(".option_false"), value: "false" %>
+        </div>
+      </fieldset>
+    </div>
 
     <%= f.hidden_field :reg_identifier, value: @other_businesses_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
+</div>

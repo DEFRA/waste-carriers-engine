@@ -2,6 +2,8 @@ en:
   other_businesses_forms:
     new:
       heading: Do you ever deal with waste from other businesses or households?
+      option_true: "Yes"
+      option_false: "No"
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
