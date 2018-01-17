@@ -15,14 +15,4 @@ class OtherBusinessesForm < BaseForm
   end
 
   validates :other_businesses, inclusion: { in: [true, false] }
-
-  private
-
-  def convert_to_boolean(value)
-    if value == "true"
-      true
-    elsif value == "false"
-      false
-    end
-  end
 end

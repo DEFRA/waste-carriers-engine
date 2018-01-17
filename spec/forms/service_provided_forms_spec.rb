@@ -31,6 +31,7 @@ RSpec.describe ServiceProvidedForm, type: :model do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
+               is_main_service: true,
                workflow_state: "service_provided_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
@@ -49,6 +50,58 @@ RSpec.describe ServiceProvidedForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           service_provided_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(service_provided_form).to_not be_valid
+        end
+      end
+    end
+  end
+
+  describe "#is_main_service" do
+    context "when a valid transient registration exists" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "service_provided_form")
+      end
+      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+      let(:service_provided_form) { ServiceProvidedForm.new(transient_registration) }
+
+      context "when is_main_service is true" do
+        before(:each) do
+          service_provided_form.is_main_service = true
+        end
+
+        it "is valid" do
+          expect(service_provided_form).to be_valid
+        end
+      end
+
+      context "when is_main_service is false" do
+        before(:each) do
+          service_provided_form.is_main_service = false
+        end
+
+        it "is valid" do
+          expect(service_provided_form).to be_valid
+        end
+      end
+
+      context "when is_main_service is a non-boolean value" do
+        before(:each) do
+          service_provided_form.is_main_service = "foo"
+        end
+
+        it "is not valid" do
+          expect(service_provided_form).to_not be_valid
+        end
+      end
+
+      context "when is_main_service is nil" do
+        before(:each) do
+          service_provided_form.is_main_service = nil
         end
 
         it "is not valid" do

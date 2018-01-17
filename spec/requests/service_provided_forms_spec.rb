@@ -57,13 +57,13 @@ RSpec.describe "ServiceProvidedForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              is_main_service: true
+              is_main_service: "true"
             }
           }
 
           it "updates the transient registration" do
             post service_provided_forms_path, service_provided_form: valid_params
-            expect(transient_registration.reload[:is_main_service]).to eq(valid_params[:is_main_service])
+            expect(transient_registration.reload[:is_main_service]).to eq(true)
           end
 
           it "returns a 302 response" do
@@ -72,7 +72,7 @@ RSpec.describe "ServiceProvidedForms", type: :request do
           end
 
           context "when the business only carries waste it produces" do
-            before(:each) { valid_params[:is_main_service] = false }
+            before(:each) { valid_params[:is_main_service] = "false" }
 
             it "redirects to the construction_demolition form" do
               post service_provided_forms_path, service_provided_form: valid_params
@@ -81,7 +81,7 @@ RSpec.describe "ServiceProvidedForms", type: :request do
           end
 
           context "when the business carries waste produced by others" do
-            before(:each) { valid_params[:is_main_service] = true }
+            before(:each) { valid_params[:is_main_service] = "true" }
 
             it "redirects to the waste_types form" do
               post service_provided_forms_path, service_provided_form: valid_params
@@ -93,7 +93,7 @@ RSpec.describe "ServiceProvidedForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              is_main_service: "foo"
             }
           }
 
@@ -104,7 +104,7 @@ RSpec.describe "ServiceProvidedForms", type: :request do
 
           it "does not update the transient registration" do
             post service_provided_forms_path, service_provided_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:is_main_service]).to_not eq(invalid_params[:is_main_service])
           end
         end
       end
@@ -119,12 +119,14 @@ RSpec.describe "ServiceProvidedForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            is_main_service: "false"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post service_provided_forms_path, service_provided_form: valid_params
+          expect(transient_registration.reload[:is_main_service]).to_not eq(valid_params[:is_main_service])
         end
 
         it "returns a 302 response" do

@@ -28,6 +28,14 @@ class BaseForm
 
   private
 
+  def convert_to_boolean(value)
+    if value == "true"
+      true
+    elsif value == "false"
+      false
+    end
+  end
+
   def transient_registration_valid?
     return if @transient_registration.valid?
     @transient_registration.errors.each do |_attribute, message|
