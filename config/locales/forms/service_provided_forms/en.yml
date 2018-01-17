@@ -11,6 +11,8 @@ en:
       models:
         service_provided_form:
           attributes:
+            is_main_service:
+              inclusion: "You must answer this question"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

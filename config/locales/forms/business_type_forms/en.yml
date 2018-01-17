@@ -17,6 +17,8 @@ en:
       models:
         business_type_form:
           attributes:
+            business_type:
+              inclusion: "You must answer this question"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
