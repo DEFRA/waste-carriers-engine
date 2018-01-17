@@ -57,13 +57,13 @@ RSpec.describe "ConstructionDemolitionForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              construction_waste: true
+              construction_waste: "true"
             }
           }
 
           it "updates the transient registration" do
             post construction_demolition_forms_path, construction_demolition_form: valid_params
-            expect(transient_registration.reload[:construction_waste]).to eq(valid_params[:construction_waste])
+            expect(transient_registration.reload[:construction_waste]).to eq(true)
           end
 
           it "returns a 302 response" do
@@ -80,7 +80,7 @@ RSpec.describe "ConstructionDemolitionForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              construction_waste: "foo"
             }
           }
 
@@ -106,12 +106,14 @@ RSpec.describe "ConstructionDemolitionForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            construction_waste: "false"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post construction_demolition_forms_path, construction_demolition_form: valid_params
+          expect(transient_registration.reload[:construction_waste]).to_not eq(false)
         end
 
         it "returns a 302 response" do

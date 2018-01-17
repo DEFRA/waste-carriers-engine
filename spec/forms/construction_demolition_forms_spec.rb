@@ -31,6 +31,7 @@ RSpec.describe ConstructionDemolitionForm, type: :model do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
+               construction_waste: true,
                workflow_state: "construction_demolition_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
@@ -49,6 +50,58 @@ RSpec.describe ConstructionDemolitionForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           construction_demolition_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(construction_demolition_form).to_not be_valid
+        end
+      end
+    end
+  end
+
+  describe "#construction_waste" do
+    context "when a valid transient registration exists" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "construction_demolition_form")
+      end
+      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+      let(:construction_demolition_form) { ConstructionDemolitionForm.new(transient_registration) }
+
+      context "when construction_waste is true" do
+        before(:each) do
+          construction_demolition_form.construction_waste = true
+        end
+
+        it "is valid" do
+          expect(construction_demolition_form).to be_valid
+        end
+      end
+
+      context "when construction_waste is false" do
+        before(:each) do
+          construction_demolition_form.construction_waste = false
+        end
+
+        it "is valid" do
+          expect(construction_demolition_form).to be_valid
+        end
+      end
+
+      context "when construction_waste is a non-boolean value" do
+        before(:each) do
+          construction_demolition_form.construction_waste = "foo"
+        end
+
+        it "is not valid" do
+          expect(construction_demolition_form).to_not be_valid
+        end
+      end
+
+      context "when construction_waste is nil" do
+        before(:each) do
+          construction_demolition_form.construction_waste = nil
         end
 
         it "is not valid" do

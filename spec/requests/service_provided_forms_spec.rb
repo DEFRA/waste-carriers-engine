@@ -126,7 +126,7 @@ RSpec.describe "ServiceProvidedForms", type: :request do
 
         it "does not update the transient registration" do
           post service_provided_forms_path, service_provided_form: valid_params
-          expect(transient_registration.reload[:is_main_service]).to_not eq(valid_params[:is_main_service])
+          expect(transient_registration.reload[:is_main_service]).to_not eq(false)
         end
 
         it "returns a 302 response" do

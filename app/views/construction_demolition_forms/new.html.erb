@@ -1,24 +1,29 @@
 <%= render("shared/back", back_path: back_construction_demolition_forms_path(@construction_demolition_form.reg_identifier)) %>
 
-<% if @construction_demolition_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @construction_demolition_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@construction_demolition_form) do |f| %>
     <%= render("shared/errors", object: @construction_demolition_form) %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+    <div class="form-group">
+      <fieldset class="inline">
+        <legend>
+          <h1 class="heading-large"><%= t(".heading") %></h1>
+        </legend>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :construction_waste, "true" %>
+          <%= f.label :construction_waste, t(".option_true"), value: "true" %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :construction_waste, "false" %>
+          <%= f.label :construction_waste, t(".option_false"), value: "false" %>
+        </div>
+      </fieldset>
+    </div>
 
     <%= f.hidden_field :reg_identifier, value: @construction_demolition_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
+</div>

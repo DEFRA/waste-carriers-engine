@@ -126,7 +126,7 @@ RSpec.describe "OtherBusinessesForms", type: :request do
 
         it "does not update the transient registration" do
           post other_businesses_forms_path, other_businesses_form: valid_params
-          expect(transient_registration.reload[:other_businesses]).to_not eq(valid_params[:other_businesses])
+          expect(transient_registration.reload[:other_businesses]).to_not eq(false)
         end
 
         it "returns a 302 response" do
