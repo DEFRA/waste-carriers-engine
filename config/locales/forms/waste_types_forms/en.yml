@@ -2,6 +2,8 @@ en:
   waste_types_forms:
     new:
       heading: Do you only deal with the following waste?
+      option_true: "Yes"
+      option_false: "No"
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

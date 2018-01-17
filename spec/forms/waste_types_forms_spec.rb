@@ -31,6 +31,7 @@ RSpec.describe WasteTypesForm, type: :model do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
+               only_amf: true,
                workflow_state: "waste_types_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
@@ -49,6 +50,58 @@ RSpec.describe WasteTypesForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           waste_types_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(waste_types_form).to_not be_valid
+        end
+      end
+    end
+  end
+
+  describe "#only_amf" do
+    context "when a valid transient registration exists" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               workflow_state: "waste_types_form")
+      end
+      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+      let(:waste_types_form) { WasteTypesForm.new(transient_registration) }
+
+      context "when only_amf is true" do
+        before(:each) do
+          waste_types_form.only_amf = true
+        end
+
+        it "is valid" do
+          expect(waste_types_form).to be_valid
+        end
+      end
+
+      context "when only_amf is false" do
+        before(:each) do
+          waste_types_form.only_amf = false
+        end
+
+        it "is valid" do
+          expect(waste_types_form).to be_valid
+        end
+      end
+
+      context "when only_amf is a non-boolean value" do
+        before(:each) do
+          waste_types_form.only_amf = "foo"
+        end
+
+        it "is not valid" do
+          expect(waste_types_form).to_not be_valid
+        end
+      end
+
+      context "when only_amf is nil" do
+        before(:each) do
+          waste_types_form.only_amf = nil
         end
 
         it "is not valid" do

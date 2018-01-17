@@ -1,24 +1,29 @@
 <%= render("shared/back", back_path: back_waste_types_forms_path(@waste_types_form.reg_identifier)) %>
 
-<% if @waste_types_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @waste_types_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@waste_types_form) do |f| %>
     <%= render("shared/errors", object: @waste_types_form) %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+    <div class="form-group">
+      <fieldset class="inline">
+        <legend>
+          <h1 class="heading-large"><%= t(".heading") %></h1>
+        </legend>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :only_amf, "true" %>
+          <%= f.label :only_amf, t(".option_true"), value: "true" %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :only_amf, "false" %>
+          <%= f.label :only_amf, t(".option_false"), value: "false" %>
+        </div>
+      </fieldset>
+    </div>
 
     <%= f.hidden_field :reg_identifier, value: @waste_types_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
+</div>
