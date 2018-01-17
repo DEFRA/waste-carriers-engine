@@ -4,6 +4,9 @@ en:
       heading: Do you ever deal with building, construction or demolition waste?
       option_true: "Yes"
       option_false: "No"
+      waste_detail_subheading: What is building, construction and demolition waste?
+      waste_detail_paragraph_1: This waste typically includes soil, concrete, bricks, glass, wood, plasterboard, asbestos, metal and plastic.
+      waste_detail_paragraph_2: It can be produced as part of a large construction project or a smaller business activity, like a general builder replacing a bathroom, or a gardener replacing fence panels and paving slabs.
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

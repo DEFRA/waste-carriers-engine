@@ -20,6 +20,17 @@
         </div>
       </fieldset>
     </div>
+    <div class="form-group">
+      <details>
+        <summary>
+          <span class="summary"><%= t(".waste_detail_subheading") %></span>
+        </summary>
+        <div class="panel panel-border-narrow">
+          <p><%= t(".waste_detail_paragraph_1") %></p>
+          <p><%= t(".waste_detail_paragraph_2") %></p>
+        </div>
+      </details>
+    </div>
 
     <%= f.hidden_field :reg_identifier, value: @construction_demolition_form.reg_identifier %>
     <div class="form-group">
