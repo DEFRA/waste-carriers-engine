@@ -71,9 +71,30 @@ RSpec.describe "ConstructionDemolitionForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the cbd_type form" do
-            post construction_demolition_forms_path, construction_demolition_form: valid_params
-            expect(response).to redirect_to(new_cbd_type_form_path(transient_registration[:reg_identifier]))
+          context "when the registration should change to lower tier" do
+            before(:each) do
+              transient_registration.update_attributes(other_businesses: false)
+
+              valid_params[:construction_waste] = "false"
+            end
+
+            it "redirects to the cannot_renew_lower_tier form" do
+              post construction_demolition_forms_path, construction_demolition_form: valid_params
+              expect(response).to redirect_to(new_cannot_renew_lower_tier_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the registration should stay upper tier" do
+            before(:each) do
+              transient_registration.update_attributes(other_businesses: false)
+
+              valid_params[:construction_waste] = "true"
+            end
+
+            it "redirects to the cbd_type form" do
+              post construction_demolition_forms_path, construction_demolition_form: valid_params
+              expect(response).to redirect_to(new_cbd_type_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 

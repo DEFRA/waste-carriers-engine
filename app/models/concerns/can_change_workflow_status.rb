@@ -56,7 +56,7 @@ module CanChangeWorkflowStatus
 
         transitions from: :business_type_form,
                     to: :cannot_renew_lower_tier_form,
-                    if: :switch_to_lower_tier?
+                    if: :switch_to_lower_tier_based_on_business_type?
 
         transitions from: :business_type_form,
                     to: :other_businesses_form,
@@ -82,7 +82,15 @@ module CanChangeWorkflowStatus
                     to: :construction_demolition_form
 
         transitions from: :waste_types_form,
+                    to: :cannot_renew_lower_tier_form,
+                    if: :switch_to_lower_tier_based_on_smart_answers?
+
+        transitions from: :waste_types_form,
                     to: :cbd_type_form
+
+        transitions from: :construction_demolition_form,
+                    to: :cannot_renew_lower_tier_form,
+                    if: :switch_to_lower_tier_based_on_smart_answers?
 
         transitions from: :construction_demolition_form,
                     to: :cbd_type_form
@@ -262,8 +270,24 @@ module CanChangeWorkflowStatus
   end
 
   # Charity registrations should be lower tier
-  def switch_to_lower_tier?
+  def switch_to_lower_tier_based_on_business_type?
     business_type == "other"
+  end
+
+  def switch_to_lower_tier_based_on_smart_answers?
+    if other_businesses == false && construction_waste == false
+      true
+    elsif other_businesses == false && construction_waste == true
+      false
+    elsif other_businesses == true && is_main_service == false && construction_waste == false
+      true
+    elsif other_businesses == true && is_main_service == false && construction_waste == true
+      false
+    elsif other_businesses == true && is_main_service == true && only_amf == false
+      false
+    elsif other_businesses == true && is_main_service == true && only_amf == true
+      true
+    end
   end
 
   def only_carries_own_waste?

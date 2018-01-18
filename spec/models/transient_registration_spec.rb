@@ -251,8 +251,6 @@ RSpec.describe TransientRegistration, type: :model do
       end
     end
 
-    # TODO: TESTS
-
     context "when a TransientRegistration's state is :other_businesses_form" do
       let(:transient_registration) do
         create(:transient_registration,
@@ -332,8 +330,28 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
-      it "transitions to :cbd_type_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:construction_demolition_form).to(:cbd_type_form).on_event(:next)
+      context "when the registration should change to lower tier" do
+        before(:each) do
+          transient_registration.other_businesses = true
+          transient_registration.is_main_service = true
+          transient_registration.only_amf = true
+        end
+
+        it "transitions to :cannot_renew_lower_tier_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:construction_demolition_form).to(:cannot_renew_lower_tier_form).on_event(:next)
+        end
+      end
+
+      context "when the registration should stay upper tier" do
+        before(:each) do
+          transient_registration.other_businesses = true
+          transient_registration.is_main_service = true
+          transient_registration.only_amf = false
+        end
+
+        it "transitions to :cbd_type_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:construction_demolition_form).to(:cbd_type_form).on_event(:next)
+        end
       end
     end
 
