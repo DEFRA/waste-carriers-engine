@@ -2,7 +2,8 @@ source "https://rubygems.org"
 ruby "2.4.2"
 
 gem "rails", "4.2.10"
-# Use MongoDB as the database
+# Use MongoDB as the database - we need to support 2.4
+gem "mongo", "2.4.3"
 gem "mongoid", "~> 5.2"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 5.0"
