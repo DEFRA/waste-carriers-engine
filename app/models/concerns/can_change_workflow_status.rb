@@ -254,11 +254,25 @@ module CanChangeWorkflowStatus
         transitions from: :worldpay_form,
                     to: :payment_summary_form
 
-        transitions from: :cannot_renew_lower_tier_form,
-                    to: :business_type_form
+        # Exit routes from renewals process
 
         transitions from: :cannot_renew_type_change_form,
                     to: :business_type_form
+
+        transitions from: :cannot_renew_lower_tier_form,
+                    to: :business_type_form,
+                    if: :switch_to_lower_tier_based_on_business_type?
+
+        transitions from: :cannot_renew_lower_tier_form,
+                    to: :construction_demolition_form,
+                    if: :only_carries_own_waste?
+
+        transitions from: :cannot_renew_lower_tier_form,
+                    to: :waste_types_form,
+                    if: :waste_is_main_service?
+
+        transitions from: :cannot_renew_lower_tier_form,
+                    to: :construction_demolition_form
       end
     end
   end

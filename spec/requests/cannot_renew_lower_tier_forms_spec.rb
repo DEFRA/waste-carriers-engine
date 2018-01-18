@@ -59,9 +59,38 @@ RSpec.describe "CannotRenewLowerTierForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the business_type form" do
-            get back_cannot_renew_lower_tier_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_business_type_form_path(transient_registration[:reg_identifier]))
+          context "when the tier change is due to the business type" do
+            before(:each) { transient_registration.update_attributes(business_type: "other") }
+
+            it "redirects to the business_type form" do
+              get back_cannot_renew_lower_tier_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_business_type_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the tier change is because the business only deals with certain waste types" do
+            before(:each) do
+              transient_registration.update_attributes(other_businesses: true,
+                                                       is_main_service: true,
+                                                       only_amf: true)
+            end
+
+            it "redirects to the waste_types form" do
+              get back_cannot_renew_lower_tier_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_waste_types_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the tier change is because the business doesn't deal with construction waste" do
+            before(:each) do
+              transient_registration.update_attributes(other_businesses: false,
+                                                       construction_waste: false)
+            end
+
+            it "redirects to the construction_demolition form" do
+              get back_cannot_renew_lower_tier_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
       end
