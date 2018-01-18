@@ -6,6 +6,12 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <ul class="list list-bullet">
+      <li><%= t(".waste_type_1") %></li>
+      <li><%= t(".waste_type_2") %></li>
+      <li><%= t(".waste_type_3") %></li>
+    </ul>
+
     <% if @waste_types_form.errors[:only_amf].any? %>
     <div class="form-group form-group-error">
     <% else %>
@@ -19,12 +25,6 @@
         <% if @waste_types_form.errors[:only_amf].any? %>
         <span class="error-message"><%= @waste_types_form.errors[:only_amf].join(", ") %></span>
         <% end %>
-
-        <ul class="list list-bullet">
-          <li><%= t(".waste_type_1") %></li>
-          <li><%= t(".waste_type_2") %></li>
-          <li><%= t(".waste_type_3") %></li>
-        </ul>
 
         <div class="multiple-choice">
           <%= f.radio_button :only_amf, "true" %>
