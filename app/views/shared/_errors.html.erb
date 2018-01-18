@@ -4,7 +4,7 @@
 
     <ul class="error-summary-list">
     <% object.errors.each do |field, message| %>
-      <li><%= message %></li>
+      <li><a href="#<%= field %>"><%= message %></a></li>
     <% end %>
     </ul>
   </div>

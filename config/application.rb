@@ -32,6 +32,11 @@ module WasteCarriersRenewals
       print.css
     )
 
+    # Don't add field_with_errors div wrapper around fields with errors
+    config.action_view.field_error_proc = proc { |html_tag, _instance|
+      "#{html_tag}".html_safe
+    }
+
     # Errbit config
     config.airbrake_on = ENV["WCRS_RENEWALS_USE_AIRBRAKE"]
     config.airbrake_host = ENV["WCRS_RENEWALS_AIRBRAKE_HOST"]

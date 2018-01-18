@@ -4,11 +4,21 @@
   <%= form_for(@service_provided_form) do |f| %>
     <%= render("shared/errors", object: @service_provided_form) %>
 
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <% if @service_provided_form.errors[:is_main_service].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
     <div class="form-group">
-      <fieldset class="inline">
-        <legend>
-          <h1 class="heading-large"><%= t(".heading") %></h1>
+    <% end %>
+      <fieldset class="inline" id="is_main_service">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
         </legend>
+
+        <% if @service_provided_form.errors[:is_main_service].any? %>
+        <span class="error-message"><%= @service_provided_form.errors[:is_main_service].join(", ") %></span>
+        <% end %>
 
         <div class="multiple-choice">
           <%= f.radio_button :is_main_service, "false" %>

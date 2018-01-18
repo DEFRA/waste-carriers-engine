@@ -4,11 +4,21 @@
   <%= form_for(@business_type_form) do |f| %>
     <%= render("shared/errors", object: @business_type_form) %>
 
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <% if @business_type_form.errors[:business_type].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
     <div class="form-group">
-      <fieldset>
-        <legend>
-          <h1 class="heading-large"><%= t(".heading") %></h1>
+    <% end %>
+      <fieldset id="business_type">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
         </legend>
+
+        <% if @business_type_form.errors[:business_type].any? %>
+        <span class="error-message"><%= @business_type_form.errors[:business_type].join(", ") %></span>
+        <% end %>
 
         <div class="multiple-choice">
           <%= f.radio_button :business_type, 'localAuthority' %>
