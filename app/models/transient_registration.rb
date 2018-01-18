@@ -18,7 +18,12 @@ class TransientRegistration
     registration = Registration.where(reg_identifier: reg_identifier).first
 
     # Don't copy object IDs as Mongo should generate new unique ones
-    assign_attributes(registration.attributes.except("_id"))
+    # Don't copy smart answers as we want users to use the latest version of the questions
+    assign_attributes(registration.attributes.except("_id",
+                                                     "otherBusinesses",
+                                                     "isMainService",
+                                                     "constructionWaste",
+                                                     "onlyAMF"))
   end
 
   # Check if a transient renewal already exists for this registration so we don't have
