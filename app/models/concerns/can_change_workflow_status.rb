@@ -289,19 +289,10 @@ module CanChangeWorkflowStatus
   end
 
   def switch_to_lower_tier_based_on_smart_answers?
-    if other_businesses == false && construction_waste == false
-      true
-    elsif other_businesses == false && construction_waste == true
-      false
-    elsif other_businesses == true && is_main_service == false && construction_waste == false
-      true
-    elsif other_businesses == true && is_main_service == false && construction_waste == true
-      false
-    elsif other_businesses == true && is_main_service == true && only_amf == false
-      false
-    elsif other_businesses == true && is_main_service == true && only_amf == true
-      true
-    end
+    return true if other_businesses == false && construction_waste == false
+    return true if other_businesses == true && is_main_service == false && construction_waste == false
+    return true if other_businesses == true && is_main_service == true && only_amf == true
+    false
   end
 
   def only_carries_own_waste?
