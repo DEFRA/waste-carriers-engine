@@ -12,6 +12,8 @@ en:
       feedback_link: feedback
       feedback_url: https://www.gov.uk/done/waste-carrier-or-broker-registration
   shared:
+    errors:
+      heading: A problem to fix
     footer:
       support_text: 'Environment Agency (England) helpline: 03708 506506'
 
