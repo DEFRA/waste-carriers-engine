@@ -47,8 +47,8 @@ module WasteCarriersRenewals
     config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"]
 
     # Fees
-    config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i
-    config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i
+    config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i || 0
+    config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i || 0
 
     # Times
     config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
