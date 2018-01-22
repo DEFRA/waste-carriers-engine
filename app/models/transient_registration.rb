@@ -15,6 +15,14 @@ class TransientRegistration
     original_registration_type != registration_type
   end
 
+  def total_fee
+    if registration_type_changed?
+      Rails.configuration.renewal_charge + Rails.configuration.type_change_charge
+    else
+      Rails.configuration.renewal_charge
+    end
+  end
+
   private
 
   def copy_data_from_registration

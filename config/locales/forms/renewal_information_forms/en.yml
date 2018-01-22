@@ -2,6 +2,11 @@ en:
   renewal_information_forms:
     new:
       heading: Confirmation of your renewal so far
+      paragraph_1: Based on what you've told us so far, you still need an upper tier registration.
+      paragraph_2: The renewal charge for %{reg_identifier} will be £%{renewal_charge}.
+      paragraph_3: Because your carrier type has changed, there will also be a £%{type_change_charge} charge.
+      paragraph_4: Your carrier type has not changed, so there is no extra charge.
+      paragraph_5: The total charge to renew %{reg_identifier} is £%{total_charge}.
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
