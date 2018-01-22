@@ -38,4 +38,27 @@ RSpec.describe TransientRegistration, type: :model do
       end
     end
   end
+
+  describe "registration_type_changed?" do
+    context "when a TransientRegistration is created" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data)
+      end
+
+      it "should return false" do
+        expect(transient_registration.registration_type_changed?).to eq(false)
+      end
+
+      context "when the registration_type is updated" do
+        before(:each) do
+          transient_registration.registration_type = "broker_dealer"
+        end
+
+        it "should return true" do
+          expect(transient_registration.registration_type_changed?).to eq(true)
+        end
+      end
+    end
+  end
 end
