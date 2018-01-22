@@ -2,6 +2,9 @@ en:
   cbd_type_forms:
     new:
       heading: Do you carry the waste yourselves, or arrange for others to do it?
+      option_carrier_dealer: We carry the waste ourselves (carrier and dealer)
+      option_broker_dealer: We arrange for others to carry it (broker and dealer)
+      option_carrier_broker_dealer: We do both (carrier, broker and dealer)
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
@@ -9,6 +12,8 @@ en:
       models:
         cbd_type_form:
           attributes:
+            registration_type:
+              inclusion: "You must answer this question"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
