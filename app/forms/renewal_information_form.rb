@@ -1,9 +1,11 @@
 class RenewalInformationForm < BaseForm
   # TODO: Define accessible attributes, eg attr_accessor :field
+  attr_accessor :type_change, :total_fee
 
   def initialize(transient_registration)
     super
-    # TODO: Define params to get from transient_registration, eg self.field = @transient_registration.field
+    self.type_change = @transient_registration.registration_type_changed?
+    self.total_fee = @transient_registration.total_fee
   end
 
   def submit(params)

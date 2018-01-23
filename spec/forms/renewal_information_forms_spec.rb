@@ -57,6 +57,7 @@ RSpec.describe RenewalInformationForm, type: :model do
     context "when the transient registration is invalid" do
       let(:transient_registration) do
         build(:transient_registration,
+              :has_required_data,
               workflow_state: "renewal_information_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object

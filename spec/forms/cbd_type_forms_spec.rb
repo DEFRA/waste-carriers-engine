@@ -4,7 +4,7 @@ RSpec.describe CbdTypeForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:cbd_type_form) { build(:cbd_type_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: cbd_type_form.reg_identifier } }
+      let(:valid_params) { { reg_identifier: cbd_type_form.reg_identifier, registration_type: cbd_type_form.registration_type } }
 
       it "should submit" do
         expect(cbd_type_form.submit(valid_params)).to eq(true)
@@ -13,7 +13,7 @@ RSpec.describe CbdTypeForm, type: :model do
 
     context "when the form is not valid" do
       let(:cbd_type_form) { build(:cbd_type_form, :has_required_data) }
-      let(:invalid_params) { { reg_identifier: "foo" } }
+      let(:invalid_params) { { reg_identifier: "foo", registration_type: "bar" } }
 
       it "should not submit" do
         expect(cbd_type_form.submit(invalid_params)).to eq(false)
@@ -21,16 +21,17 @@ RSpec.describe CbdTypeForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "cbd_type_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:cbd_type_form) { CbdTypeForm.new(transient_registration) }
+  context "when a valid transient registration exists" do
+    let(:transient_registration) do
+      create(:transient_registration,
+             :has_required_data,
+             registration_type: "carrier_dealer",
+             workflow_state: "cbd_type_form")
+    end
+    # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+    let(:cbd_type_form) { CbdTypeForm.new(transient_registration) }
 
+    describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
         before(:each) do
           cbd_type_form.reg_identifier = transient_registration.reg_identifier
@@ -44,6 +45,39 @@ RSpec.describe CbdTypeForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           cbd_type_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(cbd_type_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#registration_type" do
+      context "when a registration_type meets the requirements" do
+        before(:each) do
+          cbd_type_form.reg_identifier = transient_registration.reg_identifier
+          cbd_type_form.registration_type = transient_registration.registration_type
+        end
+
+        it "is valid" do
+          expect(cbd_type_form).to be_valid
+        end
+      end
+
+      context "when a registration_type is blank" do
+        before(:each) do
+          cbd_type_form.registration_type = ""
+        end
+
+        it "is not valid" do
+          expect(cbd_type_form).to_not be_valid
+        end
+      end
+
+      context "when a registration_type is not in the allowed list" do
+        before(:each) do
+          cbd_type_form.registration_type = "foo"
         end
 
         it "is not valid" do

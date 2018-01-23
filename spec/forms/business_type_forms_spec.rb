@@ -68,7 +68,7 @@ RSpec.describe BusinessTypeForm, type: :model do
 
       context "when a business_type is blank" do
         before(:each) do
-          business_type_form.reg_identifier = ""
+          business_type_form.business_type = ""
         end
 
         it "is not valid" do
@@ -78,7 +78,7 @@ RSpec.describe BusinessTypeForm, type: :model do
 
       context "when a business_type is not in the allowed list" do
         before(:each) do
-          business_type_form.reg_identifier = "foo"
+          business_type_form.business_type = "foo"
         end
 
         it "is not valid" do
