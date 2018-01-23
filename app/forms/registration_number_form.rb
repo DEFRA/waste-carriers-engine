@@ -1,18 +1,20 @@
 class RegistrationNumberForm < BaseForm
-  attr_accessor :business_type
+  attr_accessor :company_no, :business_type
 
   def initialize(transient_registration)
     super
+    self.company_no = @transient_registration.company_no
     # We only use this for the correct microcopy
     self.business_type = @transient_registration.business_type
   end
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    # TODO: Define allowed params, eg self.field = params[:field]
-    # TODO: Include attributes to update in the attributes hash, eg { field: field }
-    attributes = {}
+    self.company_no = params[:company_no]
+    attributes = { company_no: company_no }
 
     super(attributes, params[:reg_identifier])
   end
+
+  validates :company_no, presence: true
 end

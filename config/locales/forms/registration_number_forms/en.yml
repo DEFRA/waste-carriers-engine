@@ -3,6 +3,9 @@ en:
     new:
       heading_limitedCompany: What's the registration number of the company?
       heading_limitedLiabilityPartnership: What's the registration number of the limited liability partnership?
+      company_no_label: Registration number
+      company_no_hint: An 8 digit number, or 2 letters followed by a 6 digit number
+      explanation: We'll look up the details in the Companies House register.
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

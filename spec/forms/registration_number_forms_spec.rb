@@ -4,7 +4,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:registration_number_form) { build(:registration_number_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: registration_number_form.reg_identifier } }
+      let(:valid_params) { { reg_identifier: registration_number_form.reg_identifier, company_no: "87654321" } }
 
       it "should submit" do
         expect(registration_number_form.submit(valid_params)).to eq(true)
@@ -21,16 +21,16 @@ RSpec.describe RegistrationNumberForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "registration_number_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:registration_number_form) { RegistrationNumberForm.new(transient_registration) }
+  context "when a valid transient registration exists" do
+    let(:transient_registration) do
+      create(:transient_registration,
+             :has_required_data,
+             workflow_state: "registration_number_form")
+    end
+    # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+    let(:registration_number_form) { RegistrationNumberForm.new(transient_registration) }
 
+    describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
         before(:each) do
           registration_number_form.reg_identifier = transient_registration.reg_identifier
@@ -44,6 +44,29 @@ RSpec.describe RegistrationNumberForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           registration_number_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(registration_number_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#company_no" do
+      context "when a company_no meets the requirements" do
+        before(:each) do
+          registration_number_form.reg_identifier = transient_registration.reg_identifier
+          registration_number_form.company_no = transient_registration.company_no
+        end
+
+        it "is valid" do
+          expect(registration_number_form).to be_valid
+        end
+      end
+
+      context "when a company_no is blank" do
+        before(:each) do
+          registration_number_form.company_no = ""
         end
 
         it "is not valid" do
