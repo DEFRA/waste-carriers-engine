@@ -46,6 +46,9 @@ gem "cancancan", "~> 1.10"
 # Use Devise for user authentication
 gem "devise", "~> 4.3.0"
 
+# Shared validators for Environment Agency
+gem "ea-validation"
+
 # GOV.UK styling
 gem "govuk_elements_rails", "~> 3.1"
 gem "govuk_template", "~> 0.23"

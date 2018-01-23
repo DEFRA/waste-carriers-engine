@@ -73,6 +73,16 @@ RSpec.describe RegistrationNumberForm, type: :model do
           expect(registration_number_form).to_not be_valid
         end
       end
+
+      context "when a company_no is not in a valid format" do
+        before(:each) do
+          registration_number_form.company_no = "foo"
+        end
+
+        it "is not valid" do
+          expect(registration_number_form).to_not be_valid
+        end
+      end
     end
   end
 
@@ -80,6 +90,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
     context "when the transient registration is invalid" do
       let(:transient_registration) do
         build(:transient_registration,
+              :has_required_data,
               workflow_state: "registration_number_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object

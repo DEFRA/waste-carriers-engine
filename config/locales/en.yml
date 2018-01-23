@@ -16,6 +16,24 @@ en:
       heading: A problem to fix
     footer:
       support_text: 'Environment Agency (England) helpline: 03708 506506'
+  # Validations from ea-validation gem
+  ea:
+    validation:
+      errors:
+        companies_house_number:
+          hint: An 8 digit number, or 2 letters followed by a 6 digit number
+          company_no:
+            invalid_html: Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start.
+        companies_house_name:
+          blank: Enter the registered name of the company
+          invalid: "The company name cannot contain any of these characters: %{invalid}"
+          too_long: Check the name - it should have no more than %{max_length} characters
+        grid_reference:
+          blank: Enter a grid reference
+          invalid: The grid reference should have 2 letters and 10 digits
+        text_only_content:
+          blank: Enter a %{field}
+          invalid: Make sure the %{field} contains only letters, spaces, commas, full stops, hyphens and apostrophes
 
   # Custom error pages
   invalid_reg_identifier_heading: The registration number you entered is not valid

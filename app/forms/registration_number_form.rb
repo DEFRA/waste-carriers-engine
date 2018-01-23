@@ -10,11 +10,13 @@ class RegistrationNumberForm < BaseForm
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    self.company_no = params[:company_no]
+    # If param isn't set, use a blank string instead to avoid errors with the validator
+    self.company_no = params[:company_no] || ""
     attributes = { company_no: company_no }
 
     super(attributes, params[:reg_identifier])
   end
 
   validates :company_no, presence: true
+  validates :company_no, "ea/validation/companies_house_number" => true
 end
