@@ -7,7 +7,7 @@ class CompaniesHouseCaller
     self.api_key = Rails.configuration.companies_house_api_key
   end
 
-  def call
+  def status
     Rails.logger.debug "Sending request to Companies House"
 
     begin
