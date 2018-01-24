@@ -8,7 +8,8 @@ class CompaniesHouseCaller
   end
 
   def call
-    puts "Sending request to Companies House"
+    Rails.logger.debug "Sending request to Companies House"
+
     begin
       response = RestClient::Request.execute(
         method: :get,
@@ -16,20 +17,23 @@ class CompaniesHouseCaller
         user: api_key,
         password: ""
       )
-      # TODO: Deal with what the request returns
+
       json = JSON.parse(response)
-      puts json
-      puts status_is_allowed?(json["company_status"])
+
+      status_is_allowed?(json["company_status"]) ? :active : :inactive
+    rescue RestClient::ResourceNotFound
+      Rails.logger.debug "Companies House: resource not found"
+      :not_found
     rescue RestClient::ExceptionWithResponse => e
-      puts e.response
-      # TODO: Deal with errors
+      Rails.logger.error "Companies House error: " + e.to_s
+      :error
     end
   end
 
   private
 
   def status_is_allowed?(status)
-    %w[active].include?(status)
+    %w[active voluntary-arrangement].include?(status)
   end
 
   def process_company_no(company_no)
