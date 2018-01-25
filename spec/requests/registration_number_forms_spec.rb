@@ -57,7 +57,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              company_no: "87654321"
+              company_no: "02982441"
             }
           }
 
@@ -108,7 +108,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         let(:valid_params) {
           {
             reg_identifier: transient_registration[:reg_identifier],
-            company_no: "87654321"
+            company_no: "01709418"
           }
         }
 

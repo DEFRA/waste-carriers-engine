@@ -4,7 +4,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:registration_number_form) { build(:registration_number_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: registration_number_form.reg_identifier, company_no: "87654321" } }
+      let(:valid_params) { { reg_identifier: registration_number_form.reg_identifier, company_no: "02982441" } }
 
       it "should submit" do
         expect(registration_number_form.submit(valid_params)).to eq(true)
