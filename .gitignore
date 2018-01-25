@@ -21,3 +21,6 @@
 
 # Ignore environment variables
 .env
+
+# Ignore VCR cassette until we can make sure it doesn't include anything sensitive
+/spec/cassettes

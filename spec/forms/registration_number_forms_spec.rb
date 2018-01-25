@@ -7,13 +7,15 @@ RSpec.describe RegistrationNumberForm, type: :model do
       let(:valid_params) { { reg_identifier: registration_number_form.reg_identifier, company_no: "02982441" } }
 
       it "should submit" do
-        expect(registration_number_form.submit(valid_params)).to eq(true)
+        VCR.use_cassette("registration_number_form_valid_company_no") do
+          expect(registration_number_form.submit(valid_params)).to eq(true)
+        end
       end
     end
 
     context "when the form is not valid" do
       let(:registration_number_form) { build(:registration_number_form, :has_required_data) }
-      let(:invalid_params) { { reg_identifier: "foo" } }
+      let(:invalid_params) { { reg_identifier: "foo", company_no: "foo" } }
 
       it "should not submit" do
         expect(registration_number_form.submit(invalid_params)).to eq(false)
@@ -37,7 +39,9 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is valid" do
-          expect(registration_number_form).to be_valid
+          VCR.use_cassette("registration_number_form_valid_company_no") do
+            expect(registration_number_form).to be_valid
+          end
         end
       end
 
@@ -47,7 +51,9 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is not valid" do
-          expect(registration_number_form).to_not be_valid
+          VCR.use_cassette("registration_number_form_valid_company_no") do
+            expect(registration_number_form).to_not be_valid
+          end
         end
       end
     end
@@ -60,7 +66,9 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is valid" do
-          expect(registration_number_form).to be_valid
+          VCR.use_cassette("registration_number_form_valid_company_no") do
+            expect(registration_number_form).to be_valid
+          end
         end
       end
 
@@ -103,12 +111,16 @@ RSpec.describe RegistrationNumberForm, type: :model do
       end
 
       it "is not valid" do
-        expect(registration_number_form).to_not be_valid
+        VCR.use_cassette("registration_number_form_valid_company_no") do
+          expect(registration_number_form).to_not be_valid
+        end
       end
 
       it "inherits the errors from the transient_registration" do
-        registration_number_form.valid?
-        expect(registration_number_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+        VCR.use_cassette("registration_number_form_valid_company_no") do
+          registration_number_form.valid?
+          expect(registration_number_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+        end
       end
     end
   end

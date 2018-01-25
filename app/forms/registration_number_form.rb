@@ -18,6 +18,5 @@ class RegistrationNumberForm < BaseForm
   end
 
   validates :company_no, presence: true
-  validates :company_no, "ea/validation/companies_house_number" => true
   validates_with CompanyNoValidator
 end

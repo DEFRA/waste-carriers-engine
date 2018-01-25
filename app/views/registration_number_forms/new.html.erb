@@ -22,7 +22,7 @@
 
         <%= f.label :company_no, class: "form-label" do %>
           <%= t(".company_no_label") %>
-          <span class='form-hint'><%= t("ea.validation.errors.companies_house_number.hint") %></span>
+          <span class='form-hint'><%= t(".company_no_hint") %></span>
         <% end %>
         <%= f.text_field :company_no, value: @registration_number_form.company_no, class: "form-control" %>
 

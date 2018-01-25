@@ -46,9 +46,6 @@ gem "cancancan", "~> 1.10"
 # Use Devise for user authentication
 gem "devise", "~> 4.3.0"
 
-# Shared validators for Environment Agency
-gem "ea-validation"
-
 # GOV.UK styling
 gem "govuk_elements_rails", "~> 3.1"
 gem "govuk_template", "~> 0.23"
@@ -85,4 +82,6 @@ group :test do
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "simplecov", require: false
+  gem "vcr", "~> 4.0"
+  gem "webmock", "~> 3.3"
 end
