@@ -60,11 +60,6 @@ RSpec.describe RegistrationNumberForm, type: :model do
 
     describe "#company_no" do
       context "when a company_no meets the requirements" do
-        before(:each) do
-          registration_number_form.reg_identifier = transient_registration.reg_identifier
-          registration_number_form.company_no = transient_registration.company_no
-        end
-
         it "is valid" do
           VCR.use_cassette("registration_number_form_valid_company_no") do
             expect(registration_number_form).to be_valid
@@ -89,6 +84,30 @@ RSpec.describe RegistrationNumberForm, type: :model do
 
         it "is not valid" do
           expect(registration_number_form).to_not be_valid
+        end
+      end
+
+      context "when a company_no is not found" do
+        before(:each) do
+          registration_number_form.company_no = "99999999"
+        end
+
+        it "is not valid" do
+          VCR.use_cassette("registration_number_form_not_found_company_no") do
+            expect(registration_number_form).to_not be_valid
+          end
+        end
+      end
+
+      context "when a company_no is inactive" do
+        before(:each) do
+          registration_number_form.company_no = "05675379"
+        end
+
+        it "is not valid" do
+          VCR.use_cassette("registration_number_form_inactive_company_no") do
+            expect(registration_number_form).to_not be_valid
+          end
         end
       end
     end
