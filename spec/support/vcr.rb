@@ -3,5 +3,8 @@ VCR.configure do |c|
   c.hook_into :webmock
 
   c.ignore_hosts "127.0.0.1", "codeclimate.com"
-  c.filter_sensitive_data("key_goes_here") { Rails.configuration.companies_house_api_key }
+  # Strip out authorization info
+  c.filter_sensitive_data("Basic <COMPANIES_HOUSE_API_KEY>") do |interaction|
+    interaction.request.headers["Authorization"].first
+  end
 end
