@@ -14,7 +14,7 @@ class CompanyNoValidator < ActiveModel::Validator
   end
 
   def validate_with_companies_house(record)
-    case CompaniesHouseCaller.new(record.company_no).status
+    case CompaniesHouseService.new(record.company_no).status
     when :active
       true
     when :inactive

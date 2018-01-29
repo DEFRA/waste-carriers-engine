@@ -1,10 +1,8 @@
-class CompaniesHouseCaller
-  attr_accessor :company_no, :url, :api_key
-
+class CompaniesHouseService
   def initialize(company_no)
-    self.company_no = company_no
-    self.url = "https://api.companieshouse.gov.uk/company/#{self.company_no}"
-    self.api_key = Rails.configuration.companies_house_api_key
+    @company_no = company_no
+    @url = "https://api.companieshouse.gov.uk/company/#{@company_no}"
+    @api_key = Rails.configuration.companies_house_api_key
   end
 
   def status
@@ -13,8 +11,8 @@ class CompaniesHouseCaller
     begin
       response = RestClient::Request.execute(
         method: :get,
-        url: url,
-        user: api_key,
+        url: @url,
+        user: @api_key,
         password: ""
       )
 
