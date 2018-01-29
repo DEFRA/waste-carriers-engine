@@ -11,6 +11,23 @@ RSpec.describe RegistrationNumberForm, type: :model do
           expect(registration_number_form.submit(valid_params)).to eq(true)
         end
       end
+
+      context "when the reg_identifier is less than 8 characters" do
+        before(:each) { valid_params[:company_no] = "946107" }
+
+        it "should increase the length" do
+          VCR.use_cassette("registration_number_form_short_company_no") do
+            registration_number_form.submit(valid_params)
+            expect(registration_number_form.company_no).to eq("00946107")
+          end
+        end
+
+        it "should submit" do
+          VCR.use_cassette("registration_number_form_short_company_no") do
+            expect(registration_number_form.submit(valid_params)).to eq(true)
+          end
+        end
+      end
     end
 
     context "when the form is not valid" do
