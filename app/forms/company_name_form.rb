@@ -10,11 +10,11 @@ class CompanyNameForm < BaseForm
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    self.company_name = params[:company_name]
+    self.company_name = params[:company_name].strip
     attributes = { company_name: company_name }
 
     super(attributes, params[:reg_identifier])
   end
 
-  validates :company_name, presence: true, length: { maximum: 255 }
+  validates :company_name, presence: true, length: { in: 1..255 }
 end
