@@ -56,12 +56,14 @@ RSpec.describe "CompanyNameForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              company_name: "WasteCo Ltd"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post company_name_forms_path, company_name_form: valid_params
+            expect(transient_registration.reload[:company_name]).to eq(valid_params[:company_name])
           end
 
           it "returns a 302 response" do
@@ -91,7 +93,8 @@ RSpec.describe "CompanyNameForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              company_name: ""
             }
           }
 
@@ -102,7 +105,7 @@ RSpec.describe "CompanyNameForms", type: :request do
 
           it "does not update the transient registration" do
             post company_name_forms_path, company_name_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:company_name]).to_not eq(invalid_params[:company_name])
           end
         end
       end
@@ -117,12 +120,14 @@ RSpec.describe "CompanyNameForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            company_name: "WasteCo Ltd"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post company_name_forms_path, company_name_form: valid_params
+          expect(transient_registration.reload[:company_name]).to_not eq(valid_params[:company_name])
         end
 
         it "returns a 302 response" do
