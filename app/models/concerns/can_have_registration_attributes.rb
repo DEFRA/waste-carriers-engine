@@ -27,7 +27,7 @@ module CanHaveRegistrationAttributes
     field :onlyAMF, as: :only_amf,                          type: Boolean
     field :constructionWaste, as: :construction_waste,      type: Boolean
     field :companyName, as: :company_name,                  type: String
-    field :companyNo, as: :company_no,                      type: Integer
+    field :companyNo, as: :company_no,                      type: String # Despite its name, this can include letters
     field :firstName, as: :first_name,                      type: String
     field :lastName, as: :last_name,                        type: String
     field :phoneNumber, as: :phone_number,                  type: String

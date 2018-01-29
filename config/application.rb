@@ -43,6 +43,9 @@ module WasteCarriersRenewals
     config.airbrake_id = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_ID"]
     config.airbrake_key = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_KEY"]
 
+    # Companies House config
+    config.companies_house_api_key = ENV["WCRS_RENEWALS_COMPANIES_HOUSE_API_KEY"]
+
     # Paths
     config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"]
 

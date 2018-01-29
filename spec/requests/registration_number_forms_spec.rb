@@ -56,29 +56,38 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              company_no: "09360070"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            VCR.use_cassette("registration_number_form_valid_company_no") do
+              post registration_number_forms_path, registration_number_form: valid_params
+              expect(transient_registration.reload[:company_no].to_s).to eq(valid_params[:company_no])
+            end
           end
 
           it "returns a 302 response" do
-            post registration_number_forms_path, registration_number_form: valid_params
-            expect(response).to have_http_status(302)
+            VCR.use_cassette("registration_number_form_valid_company_no") do
+              post registration_number_forms_path, registration_number_form: valid_params
+              expect(response).to have_http_status(302)
+            end
           end
 
           it "redirects to the company_name form" do
-            post registration_number_forms_path, registration_number_form: valid_params
-            expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+            VCR.use_cassette("registration_number_form_valid_company_no") do
+              post registration_number_forms_path, registration_number_form: valid_params
+              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              company_no: ""
             }
           }
 
@@ -89,7 +98,7 @@ RSpec.describe "RegistrationNumberForms", type: :request do
 
           it "does not update the transient registration" do
             post registration_number_forms_path, registration_number_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:reg_identifier].to_s).to_not eq(invalid_params[:reg_identifier])
           end
         end
       end
@@ -104,22 +113,30 @@ RSpec.describe "RegistrationNumberForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            company_no: "01709418" # This must be a real, active company to pass validation
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          VCR.use_cassette("registration_number_form_valid_company_no") do
+            post registration_number_forms_path, registration_number_form: valid_params
+            expect(transient_registration.reload[:company_no].to_s).to_not eq(valid_params[:company_no])
+          end
         end
 
         it "returns a 302 response" do
-          post registration_number_forms_path, registration_number_form: valid_params
-          expect(response).to have_http_status(302)
+          VCR.use_cassette("registration_number_form_valid_company_no") do
+            post registration_number_forms_path, registration_number_form: valid_params
+            expect(response).to have_http_status(302)
+          end
         end
 
         it "redirects to the correct form for the state" do
-          post registration_number_forms_path, registration_number_form: valid_params
-          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+          VCR.use_cassette("registration_number_form_valid_company_no") do
+            post registration_number_forms_path, registration_number_form: valid_params
+            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+          end
         end
       end
     end

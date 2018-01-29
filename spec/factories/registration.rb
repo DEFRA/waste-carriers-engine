@@ -3,6 +3,7 @@ FactoryBot.define do
     trait :has_required_data do
       business_type "limitedCompany"
       registration_type "carrier_broker_dealer"
+      company_no "09360070" # We need to use a valid company number
 
       metaData { build(:metaData) }
       addresses { [build(:address)] }
