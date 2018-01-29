@@ -18,7 +18,6 @@ class RegistrationNumberForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :company_no, presence: true
   validates_with CompanyNoValidator
 
   private
