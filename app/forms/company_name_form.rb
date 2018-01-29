@@ -17,5 +17,5 @@ class CompanyNameForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :company_name, presence: true, length: { in: 1..255 }
+  validates :company_name, presence: true, length: { maximum: 255 }
 end
