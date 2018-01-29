@@ -18,6 +18,7 @@ en:
               inactive: "Your company must be registered as an active company"
               not_found: "Companies House couldn't find a company with this number"
               error: "There was an error with Companies House"
+              blank: "Enter a company registration number"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
