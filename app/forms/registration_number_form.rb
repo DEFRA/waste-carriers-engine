@@ -12,7 +12,7 @@ class RegistrationNumberForm < BaseForm
     # Assign the params for validation and pass them to the BaseForm method for updating
     # If param isn't set, use a blank string instead to avoid errors with the validator
     self.company_no = params[:company_no] || ""
-    self.company_no = process_company_no(company_no)
+    self.company_no = process_company_no(company_no) if company_no.present?
     attributes = { company_no: company_no }
 
     super(attributes, params[:reg_identifier])
