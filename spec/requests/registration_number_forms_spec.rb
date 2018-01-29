@@ -74,6 +74,27 @@ RSpec.describe "RegistrationNumberForms", type: :request do
               expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
             end
           end
+
+          context "when the original registration had a shorter variant of the company_no" do
+            before(:each) do
+              registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+              registration.update_attributes(company_no: "9360070")
+            end
+
+            it "returns a 302 response" do
+              VCR.use_cassette("registration_number_form_valid_company_no") do
+                post registration_number_forms_path, registration_number_form: valid_params
+                expect(response).to have_http_status(302)
+              end
+            end
+
+            it "redirects to the company_name form" do
+              VCR.use_cassette("registration_number_form_valid_company_no") do
+                post registration_number_forms_path, registration_number_form: valid_params
+                expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+              end
+            end
+          end
         end
 
         context "when valid params are submitted and the company_no is different to the original registration" do
