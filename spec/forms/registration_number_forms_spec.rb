@@ -7,7 +7,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
       let(:valid_params) { { reg_identifier: registration_number_form.reg_identifier, company_no: "09360070" } }
 
       it "should submit" do
-        VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+        VCR.use_cassette("registration_number_form_valid_company_no") do
           expect(registration_number_form.submit(valid_params)).to eq(true)
         end
       end
@@ -39,7 +39,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is valid" do
-          VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_valid_company_no") do
             expect(registration_number_form).to be_valid
           end
         end
@@ -51,7 +51,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is not valid" do
-          VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_valid_company_no") do
             expect(registration_number_form).to_not be_valid
           end
         end
@@ -61,7 +61,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
     describe "#company_no" do
       context "when a company_no meets the requirements" do
         it "is valid" do
-          VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_valid_company_no") do
             expect(registration_number_form).to be_valid
           end
         end
@@ -93,7 +93,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is not valid" do
-          VCR.use_cassette("registration_number_form_not_found_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_not_found_company_no") do
             expect(registration_number_form).to_not be_valid
           end
         end
@@ -105,7 +105,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is not valid" do
-          VCR.use_cassette("registration_number_form_inactive_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_inactive_company_no") do
             expect(registration_number_form).to_not be_valid
           end
         end
@@ -130,13 +130,13 @@ RSpec.describe RegistrationNumberForm, type: :model do
       end
 
       it "is not valid" do
-        VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+        VCR.use_cassette("registration_number_form_valid_company_no") do
           expect(registration_number_form).to_not be_valid
         end
       end
 
       it "inherits the errors from the transient_registration" do
-        VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+        VCR.use_cassette("registration_number_form_valid_company_no") do
           registration_number_form.valid?
           expect(registration_number_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
         end

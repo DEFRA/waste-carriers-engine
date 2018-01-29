@@ -62,21 +62,21 @@ RSpec.describe "RegistrationNumberForms", type: :request do
           }
 
           it "updates the transient registration" do
-            VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+            VCR.use_cassette("registration_number_form_valid_company_no") do
               post registration_number_forms_path, registration_number_form: valid_params
               expect(transient_registration.reload[:company_no].to_s).to eq(valid_params[:company_no])
             end
           end
 
           it "returns a 302 response" do
-            VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+            VCR.use_cassette("registration_number_form_valid_company_no") do
               post registration_number_forms_path, registration_number_form: valid_params
               expect(response).to have_http_status(302)
             end
           end
 
           it "redirects to the company_name form" do
-            VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+            VCR.use_cassette("registration_number_form_valid_company_no") do
               post registration_number_forms_path, registration_number_form: valid_params
               expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
             end
@@ -119,21 +119,21 @@ RSpec.describe "RegistrationNumberForms", type: :request do
         }
 
         it "does not update the transient registration" do
-          VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_valid_company_no") do
             post registration_number_forms_path, registration_number_form: valid_params
             expect(transient_registration.reload[:company_no].to_s).to_not eq(valid_params[:company_no])
           end
         end
 
         it "returns a 302 response" do
-          VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_valid_company_no") do
             post registration_number_forms_path, registration_number_form: valid_params
             expect(response).to have_http_status(302)
           end
         end
 
         it "redirects to the correct form for the state" do
-          VCR.use_cassette("registration_number_form_valid_company_no", re_record_interval: 14.days) do
+          VCR.use_cassette("registration_number_form_valid_company_no") do
             post registration_number_forms_path, registration_number_form: valid_params
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
           end
