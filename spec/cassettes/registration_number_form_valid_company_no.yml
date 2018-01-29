@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.companieshouse.gov.uk/company/09360070
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin16.7.0 x86_64) ruby/2.4.2p198
+      Host:
+      - api.companieshouse.gov.uk
+      Authorization:
+      - Basic <COMPANIES_HOUSE_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 29 Jan 2018 09:52:41 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1178'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - X-RateLimit-Query, origin, content-type, content-length, user-agent, host,
+        accept, authorization
+      Access-Control-Expose-Headers:
+      - Location,www-authenticate,cache-control,pragma,content-type,expires,last-modified
+      - X-RateLimit-Window, X-RateLimit-Limit, X-RateLimit-Remain, X-RateLimit-Reset,
+        Location, www-authenticate, cache-control, pragma, content-type, expires,
+        last-modified
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Pragma:
+      - no-cache
+      X-Ratelimit-Limit:
+      - '600'
+      X-Ratelimit-Remain:
+      - '599'
+      X-Ratelimit-Reset:
+      - '1517219861'
+      X-Ratelimit-Window:
+      - 5m
+      Server:
+      - CompaniesHouse
+    body:
+      encoding: UTF-8
+      string: '{"type":"ltd","company_name":"0800 WASTE LTD.","has_insolvency_history":false,"accounts":{"next_made_up_to":"2017-12-31","overdue":false,"next_accounts":{"period_end_on":"2017-12-31","due_on":"2018-09-30","period_start_on":"2017-01-01","overdue":false},"last_accounts":{"made_up_to":"2016-12-31","period_start_on":"2016-01-01","period_end_on":"2016-12-31"},"accounting_reference_date":{"day":"31","month":"12"},"next_due":"2018-09-30"},"undeliverable_registered_office_address":false,"etag":"d1aac62a36df9712e7ef94c383439a6fa001fa84","company_number":"09360070","registered_office_address":{"address_line_1":"21
+        Haslam Avenue","postal_code":"SM3 9ND","region":"Surrey","locality":"Sutton"},"jurisdiction":"england-wales","date_of_creation":"2014-12-18","company_status":"active","has_charges":false,"sic_codes":["38110"],"last_full_members_list_date":"2015-12-18","confirmation_statement":{"last_made_up_to":"2017-12-15","overdue":false,"next_made_up_to":"2018-12-15","next_due":"2018-12-29"},"links":{"self":"/company/09360070","filing_history":"/company/09360070/filing-history","officers":"/company/09360070/officers"},"registered_office_is_in_dispute":false,"can_file":true}'
+    http_version: 
+  recorded_at: Mon, 29 Jan 2018 09:52:40 GMT
+recorded_with: VCR 4.0.0

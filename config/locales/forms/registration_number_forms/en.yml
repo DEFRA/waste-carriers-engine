@@ -3,6 +3,9 @@ en:
     new:
       heading_limitedCompany: What's the registration number of the company?
       heading_limitedLiabilityPartnership: What's the registration number of the limited liability partnership?
+      company_no_label: Registration number
+      company_no_hint: An 8 digit number, or 2 letters followed by a 6 digit number
+      explanation: We'll look up the details in the Companies House register.
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
@@ -10,6 +13,11 @@ en:
       models:
         registration_number_form:
           attributes:
+            company_no:
+              invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
+              inactive: "Your company must be registered as an active company"
+              not_found: "Companies House couldn't find a company with this number"
+              error: "There was an error with Companies House"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

@@ -4,6 +4,7 @@ FactoryBot.define do
       business_type "limitedCompany"
       company_name "Acme Waste"
       registration_type "carrier_broker_dealer"
+      company_no "09360070" # We need to use a valid company number
 
       metaData { build(:metaData) }
       addresses { [build(:address)] }

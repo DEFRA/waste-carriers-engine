@@ -53,6 +53,9 @@ gem "govuk_template", "~> 0.23"
 # Use High Voltage for static pages
 gem "high_voltage", "~> 3.0"
 
+# Use rest-client for external requests, eg. to Companies House
+gem "rest-client", "~> 2.0"
+
 gem "secure_headers", "~> 5.0"
 
 group :development, :test do
@@ -79,4 +82,6 @@ group :test do
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "simplecov", require: false
+  gem "vcr", "~> 4.0"
+  gem "webmock", "~> 3.3"
 end
