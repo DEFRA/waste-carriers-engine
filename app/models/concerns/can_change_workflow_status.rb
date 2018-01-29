@@ -108,6 +108,10 @@ module CanChangeWorkflowStatus
                     to: :registration_number_form
 
         transitions from: :registration_number_form,
+                    to: :cannot_renew_company_no_change_form,
+                    if: :require_new_registration_based_on_company_no?
+
+        transitions from: :registration_number_form,
                     to: :company_name_form
 
         transitions from: :company_name_form,
@@ -296,6 +300,11 @@ module CanChangeWorkflowStatus
     return true if other_businesses == true && is_main_service == false && construction_waste == false
     return true if other_businesses == true && is_main_service == true && only_amf == true
     false
+  end
+
+  def require_new_registration_based_on_company_no?
+    old_company_no = Registration.where(reg_identifier: reg_identifier).first.company_no.to_s
+    old_company_no != company_no
   end
 
   def only_carries_own_waste?
