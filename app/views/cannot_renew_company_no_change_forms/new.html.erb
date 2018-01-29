@@ -1,0 +1,9 @@
+<%= render("shared/back", back_path: back_cannot_renew_company_no_change_forms_path(@cannot_renew_company_no_change_form.reg_identifier)) %>
+
+<div class="text">
+  <h1 class="heading-large"><%= t(".heading", reg_identifier: @cannot_renew_company_no_change_form.reg_identifier) %></h1>
+  <p><%= t(".paragraph_1") %></p>
+  <p><%= t(".paragraph_2", reg_identifier: @cannot_renew_company_no_change_form.reg_identifier) %></p>
+  <p><%= t(".paragraph_3") %></p>
+  <a href="<%= Rails.configuration.wcrs_frontend_url %>/registrations/start" class="button"><%= t(".next_button") %></a>
+</div>

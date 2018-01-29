@@ -272,4 +272,14 @@ Rails.application.routes.draw do
               as: "back",
               on: :collection
             end
+
+  resources :cannot_renew_company_no_change_forms,
+            only: [:new, :create],
+            path: "cannot-renew-company-no-change",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "cannot_renew_company_no_change_forms#go_back",
+              as: "back",
+              on: :collection
+            end
 end

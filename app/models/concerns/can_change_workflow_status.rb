@@ -47,7 +47,7 @@ module CanChangeWorkflowStatus
 
       state :cannot_renew_lower_tier_form
       state :cannot_renew_type_change_form
-      state :cannot_renew_reg_number_change_form
+      state :cannot_renew_company_no_change_form
 
       # Transitions
       event :next do
@@ -200,6 +200,9 @@ module CanChangeWorkflowStatus
 
         transitions from: :registration_number_form,
                     to: :renewal_information_form
+
+        transitions from: :cannot_renew_company_no_change_form,
+                    to: :registration_number_form
 
         transitions from: :company_name_form,
                     to: :renewal_information_form,
