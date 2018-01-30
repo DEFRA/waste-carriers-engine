@@ -13,13 +13,6 @@ RSpec.describe "Registrations", type: :request do
         expect(response).to have_http_status(200)
       end
     end
-
-    describe "GET /registrations/new" do
-      it "returns a success response" do
-        get new_registration_path
-        expect(response).to have_http_status(200)
-      end
-    end
   end
 
   context "when a user is not signed in" do
@@ -31,18 +24,6 @@ RSpec.describe "Registrations", type: :request do
     describe "GET /registrations" do
       it "returns a 302 response" do
         get registrations_path
-        expect(response).to have_http_status(302)
-      end
-
-      it "redirects to the sign in page" do
-        get registrations_path
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-
-    describe "GET /registrations/new" do
-      it "returns a 302 response" do
-        get new_registration_path
         expect(response).to have_http_status(302)
       end
 

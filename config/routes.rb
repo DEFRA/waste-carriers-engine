@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   root "registrations#index"
 
-  resources :registrations
+  resources :registrations, only: [:index]
 
   resources :renewal_start_forms,
             only: [:new, :create],

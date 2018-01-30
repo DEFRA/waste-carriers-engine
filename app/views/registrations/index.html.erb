@@ -2,7 +2,7 @@
 
 <h1 class="heading-large">Listing Registrations</h1>
 
-<%= link_to 'New Registration', new_registration_path, class: "button" %>
+<p>This page is for testing purposes only. Click the reg_identifier to enter the renewals process.</p>
 
 <table>
   <thead>
@@ -10,20 +10,15 @@
       <th scope="col">Reg identifier</th>
       <th scope="col">Company name</th>
       <th scope="col">Status</th>
-      <th scope="col" colspan="4"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @registrations.each do |registration| %>
       <tr>
-        <td scope="row"><%= registration.regIdentifier %></td>
+        <td scope="row"><%= link_to registration.regIdentifier, new_renewal_start_form_path(registration[:reg_identifier]) %></td>
         <td><%= registration.companyName %></td>
         <td><%= registration.metaData.status %></td>
-        <td><%= link_to 'Show', registration %></td>
-        <td><%= link_to 'Edit', edit_registration_path(registration) %></td>
-        <td><%= link_to 'Renew', new_renewal_start_form_path(registration[:reg_identifier]) %></td>
-        <td><%= link_to 'Destroy', registration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
