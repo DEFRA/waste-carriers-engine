@@ -2,10 +2,16 @@ class CompanyNoValidator < ActiveModel::Validator
   VALID_COMPANIES_HOUSE_REGISTRATION_NUMBER_REGEX = Regexp.new(/\A(\d{8,8}$)|([a-zA-Z]{2}\d{6}$)\z/i).freeze
 
   def validate(record)
-    validate_with_companies_house(record) if format_is_valid?(record)
+    validate_with_companies_house(record) if value_is_present?(record) && format_is_valid?(record)
   end
 
   private
+
+  def value_is_present?(record)
+    return true if record.company_no.present?
+    record.errors.add(:company_no, :blank)
+    false
+  end
 
   def format_is_valid?(record)
     return true if record.company_no.match?(VALID_COMPANIES_HOUSE_REGISTRATION_NUMBER_REGEX)
