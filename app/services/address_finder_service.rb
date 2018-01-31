@@ -16,7 +16,7 @@ class AddressFinderService
 
       json = JSON.parse(response)
 
-      puts json
+      json.each { |address| puts address["partial"] }
     rescue RestClient::BadRequest
       Rails.logger.debug "OS Places: resource not found"
       :not_found
