@@ -1,5 +1,5 @@
 class CompanyPostcodeForm < BaseForm
-  attr_accessor :business_type
+  attr_accessor :business_type, :company_postcode
 
   def initialize(transient_registration)
     super
@@ -9,10 +9,13 @@ class CompanyPostcodeForm < BaseForm
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    # TODO: Define allowed params, eg self.field = params[:field]
+    self.company_postcode = params[:company_postcode]
     # TODO: Include attributes to update in the attributes hash, eg { field: field }
     attributes = {}
 
     super(attributes, params[:reg_identifier])
   end
+
+  validates :company_postcode, presence: true
+  validates :company_postcode, length: { maximum: 10 }
 end

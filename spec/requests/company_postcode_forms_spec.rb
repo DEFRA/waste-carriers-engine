@@ -56,13 +56,10 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              company_postcode: "BS1 5AH"
             }
           }
-
-          it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
-          end
 
           it "returns a 302 response" do
             post company_postcode_forms_path, company_postcode_form: valid_params
@@ -104,13 +101,10 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            company_postcode: "BS1 5AH"
           }
         }
-
-        it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
-        end
 
         it "returns a 302 response" do
           post company_postcode_forms_path, company_postcode_form: valid_params
