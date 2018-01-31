@@ -6,13 +6,13 @@ en:
       heading_limitedLiabilityPartnership: What's the name of the limited liability partnership?
       heading_overseas: What's the name of the business or organisation?
       heading_partnership: What's the name of the partnership?
-      heading_soleTrader: What's the name of the individual?
+      heading_soleTrader: What's the name of the business?
       company_name_label_localAuthority: Local authority or public body name
       company_name_label_limitedCompany: Company trading name
       company_name_label_limitedLiabilityPartnership: Partnership trading name
       company_name_label_overseas: Company trading name
       company_name_label_partnership: Partnership trading name
-      company_name_label_soleTrader: Trading name
+      company_name_label_soleTrader: Business trading name
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
