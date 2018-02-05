@@ -4,7 +4,7 @@ en:
       heading: You cannot renew %{reg_identifier}
       paragraph_1: Your Companies House registration number has changed, which means the organisation responsible for this registration has changed.
       paragraph_2: Because of this change, you cannot renew %{reg_identifier} and instead must make a new registration.
-      paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506
+      paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506.
       next_button: Start a new registration
   activemodel:
     errors:
