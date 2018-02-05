@@ -15,7 +15,7 @@ en:
     errors:
       heading: A problem to fix
     footer:
-      support_text: 'Environment Agency (England) helpline: 03708 506506'
+      support_text: 'Environment Agency (England) helpline: 03708 506 506'
 
   # Custom error pages
   invalid_reg_identifier_heading: The registration number you entered is not valid

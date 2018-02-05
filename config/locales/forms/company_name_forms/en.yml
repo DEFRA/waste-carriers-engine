@@ -10,7 +10,7 @@ en:
       company_name_label_localAuthority: Local authority or public body name
       company_name_label_limitedCompany: Company trading name
       company_name_label_limitedLiabilityPartnership: Partnership trading name
-      company_name_label_overseas: Company trading name
+      company_name_label_overseas: Trading name
       company_name_label_partnership: Partnership trading name
       company_name_label_soleTrader: Business trading name
       error_heading: Something is wrong
