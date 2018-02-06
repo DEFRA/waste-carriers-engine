@@ -21,6 +21,7 @@ class AddressFinderService
       Rails.logger.debug "OS Places: resource not found"
       :not_found
     rescue RestClient::ExceptionWithResponse => e
+      Airbrake.notify(e)
       Rails.logger.error "Os Places error: " + e.to_s
       :error
     end

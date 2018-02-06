@@ -4,10 +4,32 @@ RSpec.describe CompanyPostcodeForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:company_postcode_form) { build(:company_postcode_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: company_postcode_form.reg_identifier, company_postcode: "BS1 5AH" } }
+      let(:valid_params) { { reg_identifier: company_postcode_form.reg_identifier, temp_postcode: "BS1 5AH" } }
 
       it "should submit" do
         expect(company_postcode_form.submit(valid_params)).to eq(true)
+      end
+
+      context "when the postcode is lowercase" do
+        before(:each) do
+          valid_params[:temp_postcode] = "bs1 6ah"
+        end
+
+        it "upcases it" do
+          company_postcode_form.submit(valid_params)
+          expect(company_postcode_form.temp_postcode).to eq("BS1 6AH")
+        end
+      end
+
+      context "when the postcode has trailing spaces" do
+        before(:each) do
+          valid_params[:temp_postcode] = "BS1 6AH      "
+        end
+
+        it "removes them" do
+          company_postcode_form.submit(valid_params)
+          expect(company_postcode_form.temp_postcode).to eq("BS1 6AH")
+        end
       end
     end
 
@@ -51,7 +73,7 @@ RSpec.describe CompanyPostcodeForm, type: :model do
 
       context "when a company_postcode is blank" do
         before(:each) do
-          company_postcode_form.company_postcode = ""
+          company_postcode_form.temp_postcode = ""
         end
 
         it "is not valid" do
@@ -61,7 +83,7 @@ RSpec.describe CompanyPostcodeForm, type: :model do
 
       context "when a company_postcode is too long" do
         before(:each) do
-          company_postcode_form.company_postcode = "ABC123DEF567"
+          company_postcode_form.temp_postcode = "ABC123DEF567"
         end
 
         it "is not valid" do
