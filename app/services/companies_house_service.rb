@@ -23,6 +23,7 @@ class CompaniesHouseService
       Rails.logger.debug "Companies House: resource not found"
       :not_found
     rescue RestClient::ExceptionWithResponse => e
+      Airbrake.notify(e)
       Rails.logger.error "Companies House error: " + e.to_s
       :error
     end
