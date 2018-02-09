@@ -62,18 +62,24 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
           }
 
           it "returns a 302 response" do
-            post company_postcode_forms_path, company_postcode_form: valid_params
-            expect(response).to have_http_status(302)
+            VCR.use_cassette("company_postcode_form_modified_postcode") do
+              post company_postcode_forms_path, company_postcode_form: valid_params
+              expect(response).to have_http_status(302)
+            end
           end
 
           it "updates the transient registration" do
-            post company_postcode_forms_path, company_postcode_form: valid_params
-            expect(transient_registration.reload[:temp_postcode]).to eq(valid_params[:temp_postcode])
+            VCR.use_cassette("company_postcode_form_modified_postcode") do
+              post company_postcode_forms_path, company_postcode_form: valid_params
+              expect(transient_registration.reload[:temp_postcode]).to eq(valid_params[:temp_postcode])
+            end
           end
 
           it "redirects to the company_address form" do
-            post company_postcode_forms_path, company_postcode_form: valid_params
-            expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+            VCR.use_cassette("company_postcode_form_modified_postcode") do
+              post company_postcode_forms_path, company_postcode_form: valid_params
+              expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 

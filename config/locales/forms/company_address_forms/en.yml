@@ -1,11 +1,19 @@
 en:
   company_address_forms:
     new:
-      heading_localAuthority: What's the address of the local authority or public body? (select)
-      heading_limitedCompany: What's the address of the company? (select)
-      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership? (select)
-      heading_partnership: What's the address of the partnership? (select)
-      heading_soleTrader: What's the address of the individual? (select)
+      heading_localAuthority: What's the address of the local authority or public body?
+      heading_limitedCompany: What's the address of the company?
+      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership?
+      heading_partnership: What's the address of the partnership?
+      heading_soleTrader: What's the address of the individual?
+      postcode_label: Postcode
+      postcode_change_link: Change
+      address_label: Address
+      address_blank_option:
+        zero: No addresses found
+        one: 1 address found
+        other: "%{count} addresses found"
+      manual_address_link: "I can't find the address in the list"
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
@@ -13,6 +21,8 @@ en:
       models:
         company_address_form:
           attributes:
+            addresses:
+              blank: "You must select an address"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

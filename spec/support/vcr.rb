@@ -8,6 +8,6 @@ VCR.configure do |c|
 
   # Strip out authorization info
   c.filter_sensitive_data("Basic <COMPANIES_HOUSE_API_KEY>") do |interaction|
-    interaction.request.headers["Authorization"].first
+    interaction.request.headers["Authorization"].first if interaction.request.headers["Authorization"].present?
   end
 end

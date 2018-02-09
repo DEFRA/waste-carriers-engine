@@ -18,8 +18,7 @@ class CompanyPostcodeForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :temp_postcode, presence: true
-  validates :temp_postcode, length: { maximum: 10 }
+  validates_with TempPostcodeValidator
 
   private
 

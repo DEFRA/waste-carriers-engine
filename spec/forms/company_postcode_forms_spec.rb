@@ -7,7 +7,9 @@ RSpec.describe CompanyPostcodeForm, type: :model do
       let(:valid_params) { { reg_identifier: company_postcode_form.reg_identifier, temp_postcode: "BS1 5AH" } }
 
       it "should submit" do
-        expect(company_postcode_form.submit(valid_params)).to eq(true)
+        VCR.use_cassette("company_postcode_form_valid_postcode") do
+          expect(company_postcode_form.submit(valid_params)).to eq(true)
+        end
       end
 
       context "when the postcode is lowercase" do
@@ -16,8 +18,10 @@ RSpec.describe CompanyPostcodeForm, type: :model do
         end
 
         it "upcases it" do
-          company_postcode_form.submit(valid_params)
-          expect(company_postcode_form.temp_postcode).to eq("BS1 6AH")
+          VCR.use_cassette("company_postcode_form_modified_postcode") do
+            company_postcode_form.submit(valid_params)
+            expect(company_postcode_form.temp_postcode).to eq("BS1 6AH")
+          end
         end
       end
 
@@ -27,8 +31,10 @@ RSpec.describe CompanyPostcodeForm, type: :model do
         end
 
         it "removes them" do
-          company_postcode_form.submit(valid_params)
-          expect(company_postcode_form.temp_postcode).to eq("BS1 6AH")
+          VCR.use_cassette("company_postcode_form_modified_postcode") do
+            company_postcode_form.submit(valid_params)
+            expect(company_postcode_form.temp_postcode).to eq("BS1 6AH")
+          end
         end
       end
     end
@@ -49,7 +55,9 @@ RSpec.describe CompanyPostcodeForm, type: :model do
     describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
         it "is valid" do
-          expect(company_postcode_form).to be_valid
+          VCR.use_cassette("company_postcode_form_valid_postcode") do
+            expect(company_postcode_form).to be_valid
+          end
         end
       end
 
@@ -59,7 +67,9 @@ RSpec.describe CompanyPostcodeForm, type: :model do
         end
 
         it "is not valid" do
-          expect(company_postcode_form).to_not be_valid
+          VCR.use_cassette("company_postcode_form_valid_postcode") do
+            expect(company_postcode_form).to_not be_valid
+          end
         end
       end
     end
@@ -67,7 +77,9 @@ RSpec.describe CompanyPostcodeForm, type: :model do
     describe "#company_postcode" do
       context "when a company_postcode meets the requirements" do
         it "is valid" do
-          expect(company_postcode_form).to be_valid
+          VCR.use_cassette("company_postcode_form_valid_postcode") do
+            expect(company_postcode_form).to be_valid
+          end
         end
       end
 
@@ -88,6 +100,18 @@ RSpec.describe CompanyPostcodeForm, type: :model do
 
         it "is not valid" do
           expect(company_postcode_form).to_not be_valid
+        end
+      end
+
+      context "when a company_postcode has no matches" do
+        before(:each) do
+          company_postcode_form.temp_postcode = "AA1 1AA"
+        end
+
+        it "is not valid" do
+          VCR.use_cassette("company_postcode_form_no_matches_postcode") do
+            expect(company_postcode_form).to_not be_valid
+          end
         end
       end
     end

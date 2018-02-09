@@ -1,27 +1,39 @@
 <%= render("shared/back", back_path: back_company_address_forms_path(@company_address_form.reg_identifier)) %>
 
 <div class="text">
-  <% if @company_address_form.errors.any? %>
+  <%= form_for(@company_address_form) do |f| %>
+    <%= render("shared/errors", object: @company_address_form) %>
 
-    <h1 class="heading-large"><%= t(".error_heading") %></h1>
+    <h1 class="heading-large"><%= t(".heading_#{@company_address_form.business_type}") %></h1>
 
-    <% @company_address_form.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+    <div class="form-group">
+      <label class="form-label"><%= t(".postcode_label") %></label>
+      <span><%= @company_address_form.temp_postcode %></span>
+      <%= link_to(t(".postcode_change_link"), back_company_address_forms_path(@company_address_form.reg_identifier)) %>
+    </div>
+
+    <% if @company_address_form.errors[:addresses].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
     <% end %>
+      <fieldset id="addresses">
+        <%= f.label :address, t(".address_label"), class: "form-label" %>
+        <%= f.select(:address,
+                     @company_address_form.temp_addresses.map { |a| [a["partial"], a["uprn"]] },
+                     { include_blank: t(".address_blank_option", count: @company_address_form.temp_addresses.length ) },
+                     { class: "form-control" }) %>
+      </fieldset>
+    </div>
 
-  <% else %>
+    <div class="form-group">
+      <a href="#"><%= t(".manual_address_link") %></a>
+    </div>
 
-    <%= form_for(@company_address_form) do |f| %>
-      <%= render("shared/errors", object: @company_address_form) %>
-
-      <h1 class="heading-large"><%= t(".heading_#{@company_address_form.business_type}") %></h1>
-
-      <%= f.hidden_field :reg_identifier, value: @company_address_form.reg_identifier %>
-      <div class="form-group">
-        <%= f.submit t(".next_button"), class: "button" %>
-      </div>
-    <% end %>
-
+    <%= f.hidden_field :reg_identifier, value: @company_address_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
   <% end %>
 
   <%= render("shared/os_terms_footer") %>
