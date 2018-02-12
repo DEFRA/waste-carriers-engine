@@ -20,7 +20,7 @@
       <fieldset id="addresses">
         <%= f.label :address, t(".address_label"), class: "form-label" %>
         <%= f.select(:address,
-                     @company_address_form.temp_addresses.map { |a| [a["partial"], a["uprn"]] },
+                     options_for_select(@company_address_form.temp_addresses.map { |a| [a["partial"], a["uprn"]] }, @company_address_form.address),
                      { include_blank: t(".address_blank_option", count: @company_address_form.temp_addresses.length ) },
                      { class: "form-control" }) %>
       </fieldset>
