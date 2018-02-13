@@ -29,9 +29,12 @@ class CompanyAddressForm < BaseForm
 
   # Look up addresses based on the temp_postcode
   def look_up_addresses
-    return unless temp_postcode.present?
-    address_finder = AddressFinderService.new(temp_postcode)
-    self.temp_addresses = address_finder.search_by_postcode
+    if temp_postcode.present?
+      address_finder = AddressFinderService.new(temp_postcode)
+      self.temp_addresses = address_finder.search_by_postcode
+    else
+      self.temp_addresses = []
+    end
   end
 
   # If an address has already been assigned to the transient registration, pre-select it
