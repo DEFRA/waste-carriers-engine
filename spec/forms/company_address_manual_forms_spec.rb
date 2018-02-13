@@ -1,22 +1,22 @@
 require "rails_helper"
 
-RSpec.describe CompanyAddressOverseasForm, type: :model do
+RSpec.describe CompanyAddressManualForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
-      let(:company_address_overseas_form) { build(:company_address_overseas_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: company_address_overseas_form.reg_identifier } }
+      let(:company_address_manual_form) { build(:company_address_manual_form, :has_required_data) }
+      let(:valid_params) { { reg_identifier: company_address_manual_form.reg_identifier } }
 
       it "should submit" do
-        expect(company_address_overseas_form.submit(valid_params)).to eq(true)
+        expect(company_address_manual_form.submit(valid_params)).to eq(true)
       end
     end
 
     context "when the form is not valid" do
-      let(:company_address_overseas_form) { build(:company_address_overseas_form, :has_required_data) }
+      let(:company_address_manual_form) { build(:company_address_manual_form, :has_required_data) }
       let(:invalid_params) { { reg_identifier: "foo" } }
 
       it "should not submit" do
-        expect(company_address_overseas_form.submit(invalid_params)).to eq(false)
+        expect(company_address_manual_form.submit(invalid_params)).to eq(false)
       end
     end
   end
@@ -26,28 +26,28 @@ RSpec.describe CompanyAddressOverseasForm, type: :model do
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
-               workflow_state: "company_address_overseas_form")
+               workflow_state: "company_address_manual_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:company_address_overseas_form) { CompanyAddressOverseasForm.new(transient_registration) }
+      let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
 
       context "when a reg_identifier meets the requirements" do
         before(:each) do
-          company_address_overseas_form.reg_identifier = transient_registration.reg_identifier
+          company_address_manual_form.reg_identifier = transient_registration.reg_identifier
         end
 
         it "is valid" do
-          expect(company_address_overseas_form).to be_valid
+          expect(company_address_manual_form).to be_valid
         end
       end
 
       context "when a reg_identifier is blank" do
         before(:each) do
-          company_address_overseas_form.reg_identifier = ""
+          company_address_manual_form.reg_identifier = ""
         end
 
         it "is not valid" do
-          expect(company_address_overseas_form).to_not be_valid
+          expect(company_address_manual_form).to_not be_valid
         end
       end
     end
@@ -57,24 +57,24 @@ RSpec.describe CompanyAddressOverseasForm, type: :model do
     context "when the transient registration is invalid" do
       let(:transient_registration) do
         build(:transient_registration,
-              workflow_state: "company_address_overseas_form")
+              workflow_state: "company_address_manual_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:company_address_overseas_form) { CompanyAddressOverseasForm.new(transient_registration) }
+      let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
 
       before(:each) do
         # Make reg_identifier valid for the form, but not the transient object
-        company_address_overseas_form.reg_identifier = transient_registration.reg_identifier
+        company_address_manual_form.reg_identifier = transient_registration.reg_identifier
         transient_registration.reg_identifier = "foo"
       end
 
       it "is not valid" do
-        expect(company_address_overseas_form).to_not be_valid
+        expect(company_address_manual_form).to_not be_valid
       end
 
       it "inherits the errors from the transient_registration" do
-        company_address_overseas_form.valid?
-        expect(company_address_overseas_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+        company_address_manual_form.valid?
+        expect(company_address_manual_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
       end
     end
   end

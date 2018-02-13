@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "CompanyAddressOverseasForms", type: :request do
-  describe "GET new_company_address_overseas_path" do
+RSpec.describe "CompanyAddressManualForms", type: :request do
+  describe "GET new_company_address_manual_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -13,11 +13,11 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "company_address_overseas_form")
+                 workflow_state: "company_address_manual_form")
         end
 
         it "returns a success response" do
-          get new_company_address_overseas_form_path(transient_registration[:reg_identifier])
+          get new_company_address_manual_form_path(transient_registration[:reg_identifier])
           expect(response).to have_http_status(200)
         end
       end
@@ -31,14 +31,14 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
         end
 
         it "redirects to the form for the current state" do
-          get new_company_address_overseas_form_path(transient_registration[:reg_identifier])
+          get new_company_address_manual_form_path(transient_registration[:reg_identifier])
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "POST company_address_overseas_forms_path" do
+  describe "POST company_address_manual_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -50,7 +50,7 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "company_address_overseas_form")
+                 workflow_state: "company_address_manual_form")
         end
 
         context "when valid params are submitted" do
@@ -65,12 +65,12 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
           end
 
           it "returns a 302 response" do
-            post company_address_overseas_forms_path, company_address_overseas_form: valid_params
+            post company_address_manual_forms_path, company_address_manual_form: valid_params
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the key_people form" do
-            post company_address_overseas_forms_path, company_address_overseas_form: valid_params
+            post company_address_manual_forms_path, company_address_manual_form: valid_params
             expect(response).to redirect_to(new_key_people_form_path(transient_registration[:reg_identifier]))
           end
         end
@@ -83,12 +83,12 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
           }
 
           it "returns a 302 response" do
-            post company_address_overseas_forms_path, company_address_overseas_form: invalid_params
+            post company_address_manual_forms_path, company_address_manual_form: invalid_params
             expect(response).to have_http_status(302)
           end
 
           it "does not update the transient registration" do
-            post company_address_overseas_forms_path, company_address_overseas_form: invalid_params
+            post company_address_manual_forms_path, company_address_manual_form: invalid_params
             expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
           end
         end
@@ -113,19 +113,19 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
         end
 
         it "returns a 302 response" do
-          post company_address_overseas_forms_path, company_address_overseas_form: valid_params
+          post company_address_manual_forms_path, company_address_manual_form: valid_params
           expect(response).to have_http_status(302)
         end
 
         it "redirects to the correct form for the state" do
-          post company_address_overseas_forms_path, company_address_overseas_form: valid_params
+          post company_address_manual_forms_path, company_address_manual_form: valid_params
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "GET back_company_address_overseas_forms_path" do
+  describe "GET back_company_address_manual_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -137,17 +137,17 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "company_address_overseas_form")
+                 workflow_state: "company_address_manual_form")
         end
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_company_address_overseas_forms_path(transient_registration[:reg_identifier])
+            get back_company_address_manual_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the company_name form" do
-            get back_company_address_overseas_forms_path(transient_registration[:reg_identifier])
+            get back_company_address_manual_forms_path(transient_registration[:reg_identifier])
             expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
           end
         end
@@ -163,12 +163,12 @@ RSpec.describe "CompanyAddressOverseasForms", type: :request do
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_company_address_overseas_forms_path(transient_registration[:reg_identifier])
+            get back_company_address_manual_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the correct form for the state" do
-            get back_company_address_overseas_forms_path(transient_registration[:reg_identifier])
+            get back_company_address_manual_forms_path(transient_registration[:reg_identifier])
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
           end
         end

@@ -1,4 +1,4 @@
-class CompanyAddressOverseasForm < BaseForm
+class CompanyAddressManualForm < BaseForm
   attr_accessor :business_type
 
   def initialize(transient_registration)

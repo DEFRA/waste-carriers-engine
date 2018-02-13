@@ -158,9 +158,9 @@ RSpec.describe "KeyPeopleForms", type: :request do
           context "when the business type is overseas" do
             before(:each) { transient_registration.update_attributes(business_type: "overseas") }
 
-            it "redirects to the company_address_overseas form" do
+            it "redirects to the company_address_manual form" do
               get back_key_people_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_company_address_overseas_form_path(transient_registration[:reg_identifier]))
+              expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:reg_identifier]))
             end
           end
         end

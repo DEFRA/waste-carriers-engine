@@ -26,7 +26,7 @@ module CanChangeWorkflowStatus
       state :company_name_form
       state :company_postcode_form
       state :company_address_form
-      state :company_address_overseas_form
+      state :company_address_manual_form
 
       state :key_people_form
 
@@ -115,7 +115,7 @@ module CanChangeWorkflowStatus
                     to: :company_name_form
 
         transitions from: :company_name_form,
-                    to: :company_address_overseas_form,
+                    to: :company_address_manual_form,
                     if: :overseas_address?
 
         transitions from: :company_name_form,
@@ -127,7 +127,7 @@ module CanChangeWorkflowStatus
         transitions from: :company_address_form,
                     to: :key_people_form
 
-        transitions from: :company_address_overseas_form,
+        transitions from: :company_address_manual_form,
                     to: :key_people_form
 
         transitions from: :key_people_form,
@@ -221,11 +221,11 @@ module CanChangeWorkflowStatus
         transitions from: :company_address_form,
                     to: :company_postcode_form
 
-        transitions from: :company_address_overseas_form,
+        transitions from: :company_address_manual_form,
                     to: :company_name_form
 
         transitions from: :key_people_form,
-                    to: :company_address_overseas_form,
+                    to: :company_address_manual_form,
                     if: :overseas_address?
 
         transitions from: :key_people_form,

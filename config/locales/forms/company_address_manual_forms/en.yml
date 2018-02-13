@@ -1,5 +1,5 @@
 en:
-  company_address_overseas_forms:
+  company_address_manual_forms:
     new:
       heading: What's the address of the business or organisation?
       error_heading: Something is wrong
@@ -7,7 +7,7 @@ en:
   activemodel:
     errors:
       models:
-        company_address_overseas_form:
+        company_address_manual_form:
           attributes:
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"

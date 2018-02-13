@@ -123,12 +123,12 @@ Rails.application.routes.draw do
               on: :collection
             end
 
-  resources :company_address_overseas_forms,
+  resources :company_address_manual_forms,
             only: [:new, :create],
-            path: "company-address-overseas",
+            path: "company-address-manual",
             path_names: { new: "/:reg_identifier" } do
               get "back/:reg_identifier",
-              to: "company_address_overseas_forms#go_back",
+              to: "company_address_manual_forms#go_back",
               as: "back",
               on: :collection
             end
