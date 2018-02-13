@@ -52,7 +52,33 @@ RSpec.describe CompanyAddressManualForm, type: :model do
       end
     end
 
-    # TODO: Describe each attribute
+    describe "#country" do
+      context "when the country is blank" do
+        before(:each) do
+          company_address_manual_form.country = nil
+        end
+
+        context "when the business_type is not overseas" do
+          before(:each) do
+            company_address_manual_form.business_type = "limitedCompany"
+          end
+
+          it "is valid" do
+            expect(company_address_manual_form).to be_valid
+          end
+        end
+
+        context "when the business_type is overseas" do
+          before(:each) do
+            company_address_manual_form.business_type = "overseas"
+          end
+
+          it "is not valid" do
+            expect(company_address_manual_form).to_not be_valid
+          end
+        end
+      end
+    end
   end
 
   describe "#transient_registration" do

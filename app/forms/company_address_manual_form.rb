@@ -24,7 +24,11 @@ class CompanyAddressManualForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  # TODO: Validations
+  validates_presence_of :country, if: :overseas?
+
+  def overseas?
+    business_type == "overseas"
+  end
 
   private
 

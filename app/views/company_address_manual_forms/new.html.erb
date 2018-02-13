@@ -84,20 +84,22 @@
       </fieldset>
     </div>
 
-    <% if @company_address_manual_form.errors[:country].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="country">
-        <% if @company_address_manual_form.errors[:country].any? %>
-        <span class="error-message"><%= @company_address_manual_form.errors[:country].join(", ") %></span>
-        <% end %>
+    <% if @company_address_manual_form.overseas? %>
+      <% if @company_address_manual_form.errors[:country].any? %>
+      <div class="form-group form-group-error">
+      <% else %>
+      <div class="form-group">
+      <% end %>
+        <fieldset id="country">
+          <% if @company_address_manual_form.errors[:country].any? %>
+          <span class="error-message"><%= @company_address_manual_form.errors[:country].join(", ") %></span>
+          <% end %>
 
-        <%= f.label :country, t(".country_label"), class: "form-label" %>
-        <%= f.text_field :country, value: @company_address_manual_form.country, class: "form-control" %>
-      </fieldset>
-    </div>
+          <%= f.label :country, t(".country_label"), class: "form-label" %>
+          <%= f.text_field :country, value: @company_address_manual_form.country, class: "form-control" %>
+        </fieldset>
+      </div>
+    <% end %>
 
     <%= f.hidden_field :reg_identifier, value: @company_address_manual_form.reg_identifier %>
     <div class="form-group">
