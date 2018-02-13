@@ -2,7 +2,7 @@ class CompanyAddressForm < BaseForm
   attr_accessor :business_type
   attr_accessor :temp_postcode
   attr_accessor :temp_addresses
-  attr_accessor :address
+  attr_accessor :temp_address
   attr_accessor :addresses
 
   def initialize(transient_registration)
@@ -17,7 +17,7 @@ class CompanyAddressForm < BaseForm
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    self.addresses = [add_address(params[:address])].compact
+    self.addresses = [add_address(params[:temp_address])].compact
     attributes = { addresses: addresses }
 
     super(attributes, params[:reg_identifier])
@@ -40,7 +40,7 @@ class CompanyAddressForm < BaseForm
     current_address = @transient_registration.addresses.where(address_type: "REGISTERED").first
     return unless current_address.uprn.present?
     selected_address = temp_addresses.detect { |address| address["uprn"] == current_address.uprn.to_s }
-    self.address = selected_address["uprn"]
+    self.temp_address = selected_address["uprn"]
   end
 
   def add_address(selected_address_uprn)

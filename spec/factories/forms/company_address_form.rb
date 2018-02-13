@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :company_address_form do
     trait :has_required_data do
-      address "340116"
+      temp_address "340116"
       temp_addresses [{
         "moniker" => "340116",
         "uprn" => "340116",
@@ -26,6 +26,8 @@ FactoryBot.define do
         "departmentName" => "",
         "doubleDependentLocality" => ""
       }]
+
+      addresses { [build(:address, :has_required_data, :registered)] }
 
       initialize_with { new(create(:transient_registration, :has_required_data, workflow_state: "company_address_form")) }
     end

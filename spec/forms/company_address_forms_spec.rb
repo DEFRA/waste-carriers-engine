@@ -4,7 +4,7 @@ RSpec.describe CompanyAddressForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:company_address_form) { build(:company_address_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: company_address_form.reg_identifier, address: company_address_form.address } }
+      let(:valid_params) { { reg_identifier: company_address_form.reg_identifier, temp_address: company_address_form.temp_address } }
 
       it "should submit" do
         VCR.use_cassette("company_postcode_form_valid_postcode") do
