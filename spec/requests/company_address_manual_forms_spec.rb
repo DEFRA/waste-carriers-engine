@@ -56,12 +56,15 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              house_number: "42"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post company_address_manual_forms_path, company_address_manual_form: valid_params
+            registered_address = transient_registration.reload.addresses.where(address_type: "REGISTERED").first
+            expect(registered_address.house_number).to eq(valid_params[:house_number])
           end
 
           it "returns a 302 response" do
@@ -104,12 +107,14 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            house_number: "42"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post company_address_forms_path, company_address_form: valid_params
+          expect(transient_registration.reload.addresses.count).to eq(0)
         end
 
         it "returns a 302 response" do

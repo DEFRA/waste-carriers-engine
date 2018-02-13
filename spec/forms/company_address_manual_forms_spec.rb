@@ -4,7 +4,17 @@ RSpec.describe CompanyAddressManualForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:company_address_manual_form) { build(:company_address_manual_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: company_address_manual_form.reg_identifier } }
+      let(:valid_params) do
+        {
+          reg_identifier: company_address_manual_form.reg_identifier,
+          house_number: company_address_manual_form.house_number,
+          address_line_1: company_address_manual_form.address_line_1,
+          address_line_2: company_address_manual_form.address_line_2,
+          town_city: company_address_manual_form.town_city,
+          postcode: company_address_manual_form.postcode,
+          country: company_address_manual_form.country
+        }
+      end
 
       it "should submit" do
         expect(company_address_manual_form.submit(valid_params)).to eq(true)
@@ -21,26 +31,16 @@ RSpec.describe CompanyAddressManualForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "company_address_manual_form")
+  context "when a valid transient registration exists" do
+    let(:company_address_manual_form) { build(:company_address_manual_form, :has_required_data) }
+
+    context "when everything meets the requirements" do
+      it "is valid" do
+        expect(company_address_manual_form).to be_valid
       end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
+    end
 
-      context "when a reg_identifier meets the requirements" do
-        before(:each) do
-          company_address_manual_form.reg_identifier = transient_registration.reg_identifier
-        end
-
-        it "is valid" do
-          expect(company_address_manual_form).to be_valid
-        end
-      end
-
+    describe "#reg_identifier" do
       context "when a reg_identifier is blank" do
         before(:each) do
           company_address_manual_form.reg_identifier = ""
@@ -51,6 +51,8 @@ RSpec.describe CompanyAddressManualForm, type: :model do
         end
       end
     end
+
+    # TODO: Describe each attribute
   end
 
   describe "#transient_registration" do
