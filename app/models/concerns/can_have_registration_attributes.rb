@@ -37,5 +37,10 @@ module CanHaveRegistrationAttributes
     field :declaration,                                     type: Integer # Unsure of type
     field :regIdentifier, as: :reg_identifier,              type: String
     field :expires_on,                                      type: DateTime
+
+    def registered_address
+      return nil unless addresses.present?
+      addresses.where(address_type: "REGISTERED").first
+    end
   end
 end

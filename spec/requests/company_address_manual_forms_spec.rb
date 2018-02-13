@@ -63,8 +63,7 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
 
           it "updates the transient registration" do
             post company_address_manual_forms_path, company_address_manual_form: valid_params
-            registered_address = transient_registration.reload.addresses.where(address_type: "REGISTERED").first
-            expect(registered_address.house_number).to eq(valid_params[:house_number])
+            expect(transient_registration.reload.registered_address.house_number).to eq(valid_params[:house_number])
           end
 
           it "returns a 302 response" do
