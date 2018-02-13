@@ -43,7 +43,7 @@ class CompanyAddressForm < BaseForm
     current_address = @transient_registration.addresses.where(address_type: "REGISTERED").first
     return unless current_address.uprn.present?
     selected_address = temp_addresses.detect { |address| address["uprn"] == current_address.uprn.to_s }
-    self.temp_address = selected_address["uprn"]
+    self.temp_address = selected_address["uprn"] if selected_address.present?
   end
 
   def add_address(selected_address_uprn)
