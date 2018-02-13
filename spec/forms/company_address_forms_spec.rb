@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe CompanyAddressForm, type: :model do
+  # Stub the address search so we have JSON to use
+  before do
+    address_json = build(:company_address_form, :has_required_data).temp_addresses
+    allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(address_json)
+  end
+
   describe "#submit" do
     context "when the form is valid" do
       let(:company_address_form) { build(:company_address_form, :has_required_data) }
@@ -47,6 +53,23 @@ RSpec.describe CompanyAddressForm, type: :model do
             expect(company_address_form).to_not be_valid
           end
         end
+      end
+    end
+  end
+
+  context "when a form with a valid transient registration exists and the transient registration already has an address" do
+    let(:transient_registration) do
+      build(:transient_registration,
+            :has_postcode,
+            :has_addresses,
+            workflow_state: "company_address_form")
+    end
+    # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+    let(:company_address_form) { CompanyAddressForm.new(transient_registration) }
+
+    describe "#temp_address" do
+      it "pre-selects the address" do
+        expect(company_address_form.temp_address).to eq(transient_registration.addresses.where(address_type: "REGISTERED").first.uprn.to_s)
       end
     end
   end
