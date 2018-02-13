@@ -55,6 +55,18 @@ RSpec.describe CompanyAddressForm, type: :model do
         end
       end
     end
+
+    describe "#addresses" do
+      context "when no address is selected" do
+        before(:each) do
+          company_address_form.addresses = nil
+        end
+
+        it "is not valid" do
+          expect(company_address_form).to_not be_valid
+        end
+      end
+    end
   end
 
   context "when a form with a valid transient registration exists and the transient registration already has an address" do
