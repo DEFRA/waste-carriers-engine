@@ -57,7 +57,9 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              house_number: "42"
+              house_number: "42",
+              address_line_1: "Foo Terrace",
+              town_city: "Barton"
             }
           }
 
@@ -107,7 +109,9 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
         let(:valid_params) {
           {
             reg_identifier: transient_registration[:reg_identifier],
-            house_number: "42"
+            house_number: "42",
+            address_line_1: "Foo Terrace",
+            town_city: "Barton"
           }
         }
 

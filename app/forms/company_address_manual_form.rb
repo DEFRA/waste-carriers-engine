@@ -19,13 +19,22 @@ class CompanyAddressManualForm < BaseForm
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    self.addresses = [add_address(params)]
-    attributes = { addresses: addresses }
+    self.house_number = params[:house_number]
+    self.address_line_1 = params[:address_line_1]
+    self.address_line_2 = params[:address_line_2]
+    self.town_city = params[:town_city]
+    self.postcode = params[:postcode]
+    self.country = params[:country]
+    attributes = { addresses: [add_address(params)] }
 
     super(attributes, params[:reg_identifier])
   end
 
-  validates_presence_of :country, if: :overseas?
+  validates :house_number, presence: true, length: { maximum: 200 }
+  validates :address_line_1, presence: true, length: { maximum: 160 }
+  validates :address_line_2, length: { maximum: 70 }
+  validates :town_city, presence: true, length: { maximum: 30 }
+  validates :country, presence: true, if: :overseas?
 
   def overseas?
     business_type == "overseas"
