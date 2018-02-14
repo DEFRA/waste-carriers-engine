@@ -1,18 +1,25 @@
 en:
   company_postcode_forms:
     new:
-      heading_localAuthority: What's the address of the local authority or public body? (postcode)
-      heading_limitedCompany: What's the address of the company? (postcode)
-      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership? (postcode)
-      heading_partnership: What's the address of the partnership? (postcode)
-      heading_soleTrader: What's the address of the individual? (postcode)
-      error_heading: Something is wrong
-      next_button: Continue
+      heading_localAuthority: What's the address of the local authority or public body?
+      heading_limitedCompany: What's the address of the company?
+      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership?
+      heading_partnership: What's the address of the partnership?
+      heading_soleTrader: What's the address of the individual?
+      temp_postcode_label: UK postcode
+      temp_postcode_hint: For example, BS1 5AH
+      error_heading: A problem to fix
+      next_button: Find address
   activemodel:
     errors:
       models:
         company_postcode_form:
           attributes:
+            temp_postcode:
+              blank: "Enter a postcode"
+              too_long: "Enter a valid UK postcode"
+              no_results: "We couldn't find any addresses for that postcode. Check the postcode or enter the address manually."
+              os_places_error: "Our address finder isn't working."
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

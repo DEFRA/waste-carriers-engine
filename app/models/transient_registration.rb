@@ -9,6 +9,9 @@ class TransientRegistration
 
   after_initialize :copy_data_from_registration
 
+  # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
+  field :temp_postcode, type: String
+
   # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
   def registration_type_changed?
     original_registration_type = Registration.where(reg_identifier: reg_identifier).first.registration_type
@@ -37,7 +40,8 @@ class TransientRegistration
                                                      "otherBusinesses",
                                                      "isMainService",
                                                      "constructionWaste",
-                                                     "onlyAMF"))
+                                                     "onlyAMF",
+                                                     "addresses"))
   end
 
   # Check if a transient renewal already exists for this registration so we don't have

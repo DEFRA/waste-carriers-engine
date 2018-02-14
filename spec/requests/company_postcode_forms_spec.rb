@@ -56,29 +56,38 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              temp_postcode: "BS1 6AH"
             }
           }
 
-          it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+          it "returns a 302 response" do
+            VCR.use_cassette("company_postcode_form_modified_postcode") do
+              post company_postcode_forms_path, company_postcode_form: valid_params
+              expect(response).to have_http_status(302)
+            end
           end
 
-          it "returns a 302 response" do
-            post company_postcode_forms_path, company_postcode_form: valid_params
-            expect(response).to have_http_status(302)
+          it "updates the transient registration" do
+            VCR.use_cassette("company_postcode_form_modified_postcode") do
+              post company_postcode_forms_path, company_postcode_form: valid_params
+              expect(transient_registration.reload[:temp_postcode]).to eq(valid_params[:temp_postcode])
+            end
           end
 
           it "redirects to the company_address form" do
-            post company_postcode_forms_path, company_postcode_form: valid_params
-            expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+            VCR.use_cassette("company_postcode_form_modified_postcode") do
+              post company_postcode_forms_path, company_postcode_form: valid_params
+              expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
 
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              temp_postcode: "ABC123DEF456"
             }
           }
 
@@ -89,7 +98,7 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
 
           it "does not update the transient registration" do
             post company_postcode_forms_path, company_postcode_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:temp_postcode]).to_not eq(invalid_params[:temp_postcode])
           end
         end
       end
@@ -104,17 +113,19 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            temp_postcode: "BS1 5AH"
           }
         }
-
-        it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
-        end
 
         it "returns a 302 response" do
           post company_postcode_forms_path, company_postcode_form: valid_params
           expect(response).to have_http_status(302)
+        end
+
+        it "does not update the transient registration" do
+          post company_postcode_forms_path, company_postcode_form: valid_params
+          expect(transient_registration.reload[:temp_postcode]).to_not eq(valid_params[:temp_postcode])
         end
 
         it "redirects to the correct form for the state" do
