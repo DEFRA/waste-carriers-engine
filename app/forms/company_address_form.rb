@@ -17,7 +17,7 @@ class CompanyAddressForm < BaseForm
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    self.addresses = [add_address(params[:temp_address])].compact
+    self.addresses = add_or_replace_address(params[:temp_address])
     attributes = { addresses: addresses }
 
     super(attributes, params[:reg_identifier])
@@ -40,18 +40,23 @@ class CompanyAddressForm < BaseForm
   # If an address has already been assigned to the transient registration, pre-select it
   def preselect_existing_address
     return unless @transient_registration.addresses.present?
-    current_address = @transient_registration.addresses.where(address_type: "REGISTERED").first
+    current_address = @transient_registration.registered_address
     return unless current_address.uprn.present?
     selected_address = temp_addresses.detect { |address| address["uprn"] == current_address.uprn.to_s }
     self.temp_address = selected_address["uprn"] if selected_address.present?
   end
 
-  def add_address(selected_address_uprn)
+  def add_or_replace_address(selected_address_uprn)
     return if selected_address_uprn.blank?
 
     data = temp_addresses.detect { |address| address["uprn"] == selected_address_uprn }
     address = Address.create_from_os_places_data(data)
     address.assign_attributes(address_type: "REGISTERED")
-    address
+
+    # Update the transient object's nested addresses, replacing any existing registered address
+    updated_addresses = @transient_registration.addresses
+    updated_addresses.delete(@transient_registration.registered_address) if @transient_registration.registered_address
+    updated_addresses << address
+    updated_addresses
   end
 end
