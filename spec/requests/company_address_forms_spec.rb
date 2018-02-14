@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "CompanyAddressForms", type: :request do
+  # Stub the address search so we have JSON to use
+  before do
+    address_json = build(:company_address_form, :has_required_data).temp_addresses
+    allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(address_json)
+  end
+
   describe "GET new_company_address_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
@@ -12,6 +18,7 @@ RSpec.describe "CompanyAddressForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 :has_postcode,
                  account_email: user.email,
                  workflow_state: "company_address_form")
         end
@@ -26,6 +33,7 @@ RSpec.describe "CompanyAddressForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 :has_postcode,
                  account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
@@ -49,6 +57,7 @@ RSpec.describe "CompanyAddressForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 :has_postcode,
                  account_email: user.email,
                  workflow_state: "company_address_form")
         end
@@ -56,12 +65,15 @@ RSpec.describe "CompanyAddressForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              temp_address: "340116"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post company_address_forms_path, company_address_form: valid_params
+            registered_address = transient_registration.reload.addresses.where(address_type: "REGISTERED").first
+            expect(registered_address.uprn).to_not eq(valid_params[:addresses])
           end
 
           it "returns a 302 response" do
@@ -98,6 +110,7 @@ RSpec.describe "CompanyAddressForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 :has_postcode,
                  account_email: user.email,
                  workflow_state: "renewal_start_form")
         end
@@ -109,7 +122,8 @@ RSpec.describe "CompanyAddressForms", type: :request do
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post company_address_forms_path, company_address_form: valid_params
+          expect(transient_registration.reload.addresses.count).to eq(0)
         end
 
         it "returns a 302 response" do
@@ -136,6 +150,7 @@ RSpec.describe "CompanyAddressForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 :has_postcode,
                  account_email: user.email,
                  workflow_state: "company_address_form")
         end
@@ -157,6 +172,7 @@ RSpec.describe "CompanyAddressForms", type: :request do
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 :has_postcode,
                  account_email: user.email,
                  workflow_state: "renewal_start_form")
         end

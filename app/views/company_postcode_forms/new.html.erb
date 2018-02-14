@@ -1,19 +1,33 @@
 <%= render("shared/back", back_path: back_company_postcode_forms_path(@company_postcode_form.reg_identifier)) %>
 
-<% if @company_postcode_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @company_postcode_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@company_postcode_form) do |f| %>
     <%= render("shared/errors", object: @company_postcode_form) %>
 
     <h1 class="heading-large"><%= t(".heading_#{@company_postcode_form.business_type}") %></h1>
+
+    <% if @company_postcode_form.errors[:temp_postcode].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="temp_postcode">
+        <legend class="visuallyhidden">
+          <%= t(".heading_#{@company_postcode_form.business_type}") %>
+        </legend>
+
+        <% if @company_postcode_form.errors[:temp_postcode].any? %>
+        <span class="error-message"><%= @company_postcode_form.errors[:temp_postcode].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :temp_postcode, class: "form-label" do %>
+          <%= t(".temp_postcode_label") %>
+          <span class='form-hint'><%= t(".temp_postcode_hint") %></span>
+        <% end %>
+        <%= f.text_field :temp_postcode, value: @company_postcode_form.temp_postcode, class: "form-control" %>
+
+      </fieldset>
+    </div>
 
     <%= f.hidden_field :reg_identifier, value: @company_postcode_form.reg_identifier %>
     <div class="form-group">
@@ -21,4 +35,5 @@
     </div>
   <% end %>
 
-<% end %>
+  <%= render("shared/os_terms_footer") %>
+</div>

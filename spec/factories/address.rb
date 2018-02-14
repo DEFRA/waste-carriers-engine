@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :address do
     trait :has_required_data do
       address_line_1 "Foo Gardens"
+      uprn "340116"
     end
 
     trait :contact do

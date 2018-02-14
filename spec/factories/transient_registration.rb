@@ -8,5 +8,9 @@ FactoryBot.define do
     trait :has_addresses do
       addresses { [build(:address, :has_required_data, :registered), build(:address, :has_required_data, :contact)] }
     end
+
+    trait :has_postcode do
+      temp_postcode "BS1 5AH"
+    end
   end
 end
