@@ -27,7 +27,7 @@ class CompanyAddressManualForm < BaseForm
     self.town_city = params[:town_city]
     self.postcode = params[:postcode]
     self.country = params[:country]
-    attributes = { addresses: [add_address(params)] }
+    attributes = { addresses: add_or_replace_address(params) }
 
     super(attributes, params[:reg_identifier])
   end
@@ -54,9 +54,14 @@ class CompanyAddressManualForm < BaseForm
     self.country = @transient_registration.registered_address.country
   end
 
-  def add_address(params)
+  def add_or_replace_address(params)
     address = Address.create_from_manual_entry(params, business_type)
     address.assign_attributes(address_type: "REGISTERED")
-    address
+
+    # Update the transient object's nested addresses, replacing any existing registered address
+    updated_addresses = @transient_registration.addresses
+    updated_addresses.delete(@transient_registration.registered_address) if @transient_registration.registered_address
+    updated_addresses << address
+    updated_addresses
   end
 end

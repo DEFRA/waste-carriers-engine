@@ -38,6 +38,11 @@ module CanHaveRegistrationAttributes
     field :regIdentifier, as: :reg_identifier,              type: String
     field :expires_on,                                      type: DateTime
 
+    def contact_address
+      return nil unless addresses.present?
+      addresses.where(address_type: "CONTACT").first
+    end
+
     def registered_address
       return nil unless addresses.present?
       addresses.where(address_type: "REGISTERED").first

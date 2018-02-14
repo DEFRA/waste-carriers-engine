@@ -6,7 +6,7 @@ FactoryBot.define do
     end
 
     trait :has_addresses do
-      addresses { [build(:address, :has_required_data, :registered)] }
+      addresses { [build(:address, :has_required_data, :registered), build(:address, :has_required_data, :contact)] }
     end
   end
 end

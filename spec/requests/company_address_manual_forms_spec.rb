@@ -77,6 +77,39 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
             post company_address_manual_forms_path, company_address_manual_form: valid_params
             expect(response).to redirect_to(new_key_people_form_path(transient_registration[:reg_identifier]))
           end
+
+          context "when the transient registration already has addresses" do
+            let(:transient_registration) do
+              create(:transient_registration,
+                     :has_required_data,
+                     :has_addresses,
+                     account_email: user.email,
+                     workflow_state: "company_address_manual_form")
+            end
+
+            it "should have have the same number of addresses before and after submitting" do
+              number_of_addresses = transient_registration.addresses.count
+              post company_address_manual_forms_path, company_address_manual_form: valid_params
+              expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)
+            end
+
+            it "removes the old registered address" do
+              old_registered_address = transient_registration.registered_address
+              post company_address_manual_forms_path, company_address_manual_form: valid_params
+              expect(transient_registration.reload.registered_address).to_not eq(old_registered_address)
+            end
+
+            it "adds the new registered address" do
+              post company_address_manual_forms_path, company_address_manual_form: valid_params
+              expect(transient_registration.reload.registered_address.address_line_1).to eq(valid_params[:address_line_1])
+            end
+
+            it "does not modify the existing contact address" do
+              old_contact_address = transient_registration.contact_address
+              post company_address_manual_forms_path, company_address_manual_form: valid_params
+              expect(transient_registration.reload.contact_address).to eq(old_contact_address)
+            end
+          end
         end
 
         context "when invalid params are submitted" do
