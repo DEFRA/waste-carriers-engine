@@ -187,9 +187,22 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the company_name form" do
-            get back_company_address_manual_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+          context "when the business_type is 'overseas'" do
+            before(:each) { transient_registration.update_attributes(business_type: "overseas") }
+
+            it "redirects to the company_name form" do
+              get back_company_address_manual_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+            end
+          end
+
+          context "when the business_type is not 'overseas'" do
+            before(:each) { transient_registration.update_attributes(business_type: "limitedCompany") }
+
+            it "redirects to the company_postcode form" do
+              get back_company_address_manual_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_company_postcode_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
       end

@@ -9,8 +9,20 @@ RSpec.describe TransientRegistration, type: :model do
                workflow_state: "company_address_manual_form")
       end
 
-      it "changes to :company_name_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:company_address_manual_form).to(:company_name_form).on_event(:back)
+      context "when the business_type is 'overseas'" do
+        before(:each) { transient_registration.business_type = "overseas" }
+
+        it "changes to :company_name_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:company_address_manual_form).to(:company_name_form).on_event(:back)
+        end
+      end
+
+      context "when the business_type is not 'overseas'" do
+        before(:each) { transient_registration.business_type = "limitedCompany" }
+
+        it "changes to :company_postcode_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:company_address_manual_form).to(:company_postcode_form).on_event(:back)
+        end
       end
 
       it "changes to :key_people_form after the 'next' event" do

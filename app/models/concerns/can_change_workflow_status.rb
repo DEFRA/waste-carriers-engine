@@ -222,7 +222,11 @@ module CanChangeWorkflowStatus
                     to: :company_postcode_form
 
         transitions from: :company_address_manual_form,
-                    to: :company_name_form
+                    to: :company_name_form,
+                    if: :overseas_address?
+
+        transitions from: :company_address_manual_form,
+                    to: :company_postcode_form
 
         transitions from: :key_people_form,
                     to: :company_address_manual_form,
