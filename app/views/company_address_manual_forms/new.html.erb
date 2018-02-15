@@ -107,6 +107,8 @@
           <%= f.text_field :country, value: @company_address_manual_form.country, class: "form-control" %>
         </fieldset>
       </div>
+    <% else %>
+      <%= f.hidden_field :postcode, value: @company_address_manual_form.postcode %>
     <% end %>
 
     <%= f.hidden_field :reg_identifier, value: @company_address_manual_form.reg_identifier %>

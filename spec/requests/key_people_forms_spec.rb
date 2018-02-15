@@ -146,8 +146,8 @@ RSpec.describe "KeyPeopleForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          context "when the business type is not overseas" do
-            before(:each) { transient_registration.update_attributes(business_type: "limitedCompany") }
+          context "when the address was selected from OS places" do
+            before(:each) { transient_registration.update_attributes(addresses: [build(:address, :registered, :from_os_places)]) }
 
             it "redirects to the company_address form" do
               get back_key_people_forms_path(transient_registration[:reg_identifier])
@@ -155,8 +155,8 @@ RSpec.describe "KeyPeopleForms", type: :request do
             end
           end
 
-          context "when the business type is overseas" do
-            before(:each) { transient_registration.update_attributes(business_type: "overseas") }
+          context "when the address was manually entered" do
+            before(:each) { transient_registration.update_attributes(addresses: [build(:address, :registered, :manual_uk)]) }
 
             it "redirects to the company_address_manual form" do
               get back_key_people_forms_path(transient_registration[:reg_identifier])

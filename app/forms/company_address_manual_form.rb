@@ -9,13 +9,9 @@ class CompanyAddressManualForm < BaseForm
     # We use this for the correct microcopy and to determine what fields to show
     self.business_type = @transient_registration.business_type
 
-    # Prefill the existing address if overseas, if no temp_postcode is set or if the temp_postcode matches the address
-    # Otherwise, we want to use the temp_postcode set on a previous screen and ask user to fill in the rest
-    if address_based_on_temp_postcode?
-      self.postcode = @transient_registration.temp_postcode
-    else
-      prefill_existing_address
-    end
+    # Prefill the existing address unless the temp_postcode has changed from the saved postcode
+    # Otherwise, just fill in the temp_postcode
+    saved_address_still_valid? ? prefill_existing_address : self.postcode = @transient_registration.temp_postcode
   end
 
   def submit(params)
@@ -39,18 +35,18 @@ class CompanyAddressManualForm < BaseForm
   validates :town_city, presence: true, length: { maximum: 30 }
   validates :country, presence: true, if: :overseas?
 
-  def address_based_on_temp_postcode?
-    return if overseas?
-    return if @transient_registration.temp_postcode.blank?
-    return if @transient_registration.temp_postcode == @transient_registration.registered_address.postcode
-    true
-  end
-
   def overseas?
     business_type == "overseas"
   end
 
   private
+
+  def saved_address_still_valid?
+    return true if overseas?
+    return false unless @transient_registration.registered_address
+    return true if @transient_registration.temp_postcode == @transient_registration.registered_address.postcode
+    false
+  end
 
   def prefill_existing_address
     return unless @transient_registration.registered_address

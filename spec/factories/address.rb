@@ -12,5 +12,13 @@ FactoryBot.define do
     trait :registered do
       address_type "REGISTERED"
     end
+
+    trait :from_os_places do
+      address_mode "address-results"
+    end
+
+    trait :manual_uk do
+      address_mode "manual-uk"
+    end
   end
 end

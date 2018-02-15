@@ -76,4 +76,8 @@ class Address
     # Assign lines one at a time until we run out of lines to assign
     write_attribute(address_attributes.shift, lines.shift) until lines.empty?
   end
+
+  def manually_entered?
+    address_mode == "manual-foreign" || address_mode == "manual-uk"
+  end
 end

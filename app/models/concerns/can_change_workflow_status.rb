@@ -226,11 +226,15 @@ module CanChangeWorkflowStatus
                     if: :overseas_address?
 
         transitions from: :company_address_manual_form,
+                    to: :company_postcode_form,
+                    if: :registered_address_was_manually_entered?
+
+        transitions from: :company_address_manual_form,
                     to: :company_postcode_form
 
         transitions from: :key_people_form,
                     to: :company_address_manual_form,
-                    if: :overseas_address?
+                    if: :registered_address_was_manually_entered?
 
         transitions from: :key_people_form,
                     to: :company_address_form
@@ -285,6 +289,14 @@ module CanChangeWorkflowStatus
         transitions from: :cannot_renew_lower_tier_form,
                     to: :construction_demolition_form
       end
+
+      event :skip_to_manual_address do
+        transitions from: :company_postcode_form,
+                    to: :company_address_manual_form
+
+        transitions from: :company_address_form,
+                    to: :company_address_manual_form
+      end
     end
   end
 
@@ -324,5 +336,10 @@ module CanChangeWorkflowStatus
 
   def overseas_address?
     business_type == "overseas"
+  end
+
+  def registered_address_was_manually_entered?
+    return unless registered_address
+    registered_address.manually_entered?
   end
 end

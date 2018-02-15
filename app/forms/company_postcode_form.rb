@@ -12,7 +12,6 @@ class CompanyPostcodeForm < BaseForm
     # Assign the params for validation and pass them to the BaseForm method for updating
     self.temp_postcode = params[:temp_postcode]
     format_postcode
-    # TODO: Include attributes to update in the attributes hash, eg { field: field }
     attributes = { temp_postcode: temp_postcode }
 
     super(attributes, params[:reg_identifier])
