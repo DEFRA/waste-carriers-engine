@@ -93,9 +93,9 @@ RSpec.describe CompanyPostcodeForm, type: :model do
         end
       end
 
-      context "when a company_postcode is too long" do
+      context "when a company_postcode is in the wrong format" do
         before(:each) do
-          company_postcode_form.temp_postcode = "ABC123DEF567"
+          company_postcode_form.temp_postcode = "foo"
         end
 
         it "is not valid" do

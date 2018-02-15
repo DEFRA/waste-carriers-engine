@@ -1,6 +1,8 @@
+require "uk_postcode"
+
 class TempPostcodeValidator < ActiveModel::Validator
   def validate(record)
-    postcode_returns_results?(record) if value_is_present?(record) && value_is_valid_length?(record)
+    postcode_returns_results?(record) if value_is_present?(record) && value_uses_correct_format?(record)
   end
 
   private
@@ -11,9 +13,9 @@ class TempPostcodeValidator < ActiveModel::Validator
     false
   end
 
-  def value_is_valid_length?(record)
-    return true if record.temp_postcode.length < 11
-    record.errors.add(:temp_postcode, :too_long)
+  def value_uses_correct_format?(record)
+    return true if UKPostcode.parse(record.temp_postcode).full_valid?
+    record.errors.add(:temp_postcode, :wrong_format)
     false
   end
 

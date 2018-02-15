@@ -17,7 +17,7 @@ en:
           attributes:
             temp_postcode:
               blank: "Enter a postcode"
-              too_long: "Enter a valid UK postcode"
+              wrong_format: "Enter a valid UK postcode"
               no_results: "We couldn't find any addresses for that postcode. Check the postcode or enter the address manually."
               os_places_error: "Our address finder isn't working."
             reg_identifier:
