@@ -27,8 +27,7 @@
     </div>
 
     <div class="form-group">
-      <a href="#">
-      <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_address_forms_path(@company_address_form.reg_identifier)) %></a>
+      <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_address_forms_path(@company_address_form.reg_identifier)) %>
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @company_address_form.reg_identifier %>

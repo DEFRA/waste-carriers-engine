@@ -14,6 +14,9 @@ class CompanyPostcodeForm < BaseForm
     format_postcode
     attributes = { temp_postcode: temp_postcode }
 
+    # While we won't proceed if the postcode isn't valid, we should always save it in case it's needed for manual entry
+    @transient_registration.update_attributes(attributes)
+
     super(attributes, params[:reg_identifier])
   end
 

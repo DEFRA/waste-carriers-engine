@@ -10,6 +10,7 @@ en:
       temp_postcode_hint: For example, BS1 5AH
       error_heading: A problem to fix
       next_button: Find address
+      manual_address_link: "Enter address manually"
   activemodel:
     errors:
       models:
