@@ -1,6 +1,62 @@
 require "rails_helper"
 
 RSpec.describe CompanyAddressManualForm, type: :model do
+  describe "#initialize" do
+    context "when the transient registration has an address already" do
+      let(:transient_registration) do
+        build(:transient_registration,
+              :has_addresses,
+              workflow_state: "company_address_manual_form")
+      end
+      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+      let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
+
+      context "when the business type is overseas" do
+        before(:each) do
+          transient_registration.business_type = "overseas"
+        end
+
+        it "prefills the form with the existing address" do
+          expect(company_address_manual_form.house_number).to eq(transient_registration.registered_address.house_number)
+        end
+      end
+
+      context "when the temp_postcode doesn't exist" do
+        before(:each) do
+          transient_registration.temp_postcode = nil
+        end
+
+        it "prefills the form with the existing address" do
+          expect(company_address_manual_form.house_number).to eq(transient_registration.registered_address.house_number)
+        end
+      end
+
+      context "when the temp_postcode matches the existing address" do
+        before(:each) do
+          transient_registration.temp_postcode = transient_registration.registered_address.postcode
+        end
+
+        it "prefills the form with the existing address" do
+          expect(company_address_manual_form.house_number).to eq(transient_registration.registered_address.house_number)
+        end
+      end
+
+      context "when the temp_postcode is in use and doesn't match the registered address" do
+        before(:each) do
+          transient_registration.temp_postcode = "foo"
+        end
+
+        it "prefills the form with the temp_postcode" do
+          expect(company_address_manual_form.postcode).to eq(transient_registration.temp_postcode)
+        end
+
+        it "does not prefill the form with the existing address" do
+          expect(company_address_manual_form.address_line_1).to_not eq(transient_registration.registered_address.address_line_1)
+        end
+      end
+    end
+  end
+
   describe "#submit" do
     context "when the form is valid" do
       let(:company_address_manual_form) { build(:company_address_manual_form, :has_required_data) }
@@ -155,22 +211,6 @@ RSpec.describe CompanyAddressManualForm, type: :model do
             expect(company_address_manual_form).to_not be_valid
           end
         end
-      end
-    end
-  end
-
-  describe "#prefill_existing_address" do
-    context "when the transient registration has an address already" do
-      let(:transient_registration) do
-        build(:transient_registration,
-              :has_addresses,
-              workflow_state: "company_address_manual_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
-
-      it "prefills the form with the existing address" do
-        expect(company_address_manual_form.house_number).to eq(transient_registration.registered_address.house_number)
       end
     end
   end
