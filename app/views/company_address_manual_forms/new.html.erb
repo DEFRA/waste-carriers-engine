@@ -6,6 +6,14 @@
 
     <h1 class="heading-large"><%= t(".heading_#{@company_address_manual_form.business_type}") %></h1>
 
+    <% unless @company_address_manual_form.overseas? %>
+      <div class="form-group">
+        <label class="form-label"><%= t(".postcode_label") %></label>
+        <span><%= @company_address_manual_form.postcode %></span>
+        <%= link_to(t(".postcode_change_link"), back_company_address_manual_forms_path(@company_address_manual_form.reg_identifier)) %>
+      </div>
+    <% end %>
+
     <% if @company_address_manual_form.errors[:house_number].any? %>
     <div class="form-group form-group-error">
     <% else %>
@@ -69,22 +77,22 @@
       </fieldset>
     </div>
 
-    <% if @company_address_manual_form.errors[:postcode].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="postcode">
-        <% if @company_address_manual_form.errors[:postcode].any? %>
-        <span class="error-message"><%= @company_address_manual_form.errors[:postcode].join(", ") %></span>
-        <% end %>
-
-        <%= f.label :postcode, t(".postcode_label"), class: "form-label" %>
-        <%= f.text_field :postcode, value: @company_address_manual_form.postcode, class: "form-control" %>
-      </fieldset>
-    </div>
-
     <% if @company_address_manual_form.overseas? %>
+      <% if @company_address_manual_form.errors[:postcode].any? %>
+      <div class="form-group form-group-error">
+      <% else %>
+      <div class="form-group">
+      <% end %>
+        <fieldset id="postcode">
+          <% if @company_address_manual_form.errors[:postcode].any? %>
+          <span class="error-message"><%= @company_address_manual_form.errors[:postcode].join(", ") %></span>
+          <% end %>
+
+          <%= f.label :postcode, t(".postcode_label"), class: "form-label" %>
+          <%= f.text_field :postcode, value: @company_address_manual_form.postcode, class: "form-control" %>
+        </fieldset>
+      </div>
+
       <% if @company_address_manual_form.errors[:country].any? %>
       <div class="form-group form-group-error">
       <% else %>
