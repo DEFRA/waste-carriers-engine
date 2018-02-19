@@ -20,14 +20,15 @@ class TempPostcodeValidator < ActiveModel::Validator
   end
 
   def postcode_returns_results?(record)
+    return if record.transition_flag == :user_skips_to_manual_address
     address_finder = AddressFinderService.new(record.temp_postcode)
     case address_finder.search_by_postcode
     when :not_found
       record.errors.add(:temp_postcode, :no_results)
       false
     when :error
-      record.errors.add(:temp_postcode, :os_places_error)
-      false
+      record.transition_flag = :os_places_error
+      true
     else
       true
     end

@@ -121,14 +121,26 @@ module CanChangeWorkflowStatus
         transitions from: :company_name_form,
                     to: :company_postcode_form
 
+        # Registered address
+
+        transitions from: :company_postcode_form,
+                    to: :company_address_manual_form,
+                    if: :skip_to_manual_address?
+
         transitions from: :company_postcode_form,
                     to: :company_address_form
+
+        transitions from: :company_address_form,
+                    to: :company_address_manual_form,
+                    if: :skip_to_manual_address?
 
         transitions from: :company_address_form,
                     to: :key_people_form
 
         transitions from: :company_address_manual_form,
                     to: :key_people_form
+
+        # End registered address
 
         transitions from: :key_people_form,
                     to: :declare_convictions_form
@@ -215,6 +227,8 @@ module CanChangeWorkflowStatus
         transitions from: :company_name_form,
                     to: :registration_number_form
 
+        # Registered address
+
         transitions from: :company_postcode_form,
                     to: :company_name_form
 
@@ -238,6 +252,8 @@ module CanChangeWorkflowStatus
 
         transitions from: :key_people_form,
                     to: :company_address_form
+
+        # End registered address
 
         transitions from: :declare_convictions_form,
                     to: :key_people_form
@@ -341,5 +357,11 @@ module CanChangeWorkflowStatus
   def registered_address_was_manually_entered?
     return unless registered_address
     registered_address.manually_entered?
+  end
+
+  def skip_to_manual_address?(transition_flag = nil)
+    return true if transition_flag == :os_places_error
+    return true if transition_flag == :user_skips_to_manual_address
+    false
   end
 end

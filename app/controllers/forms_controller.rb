@@ -46,7 +46,8 @@ class FormsController < ApplicationController
   def submit_form(form, params)
     respond_to do |format|
       if form.submit(params)
-        @transient_registration.next!
+        transition_flag = form.transition_flag || nil
+        @transient_registration.next!(transition_flag)
         format.html { redirect_to_correct_form }
       else
         format.html { render :new }

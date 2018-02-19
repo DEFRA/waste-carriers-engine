@@ -1,6 +1,6 @@
 class BaseForm
   include ActiveModel::Model
-  attr_accessor :reg_identifier
+  attr_accessor :reg_identifier, :transition_flag
 
   def initialize(transient_registration)
     # Get values from transient registration so form will be pre-filled
