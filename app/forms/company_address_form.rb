@@ -20,8 +20,6 @@ class CompanyAddressForm < BaseForm
     self.addresses = add_or_replace_address(params[:temp_address])
     attributes = { addresses: addresses }
 
-    self.transition_flag = params[:transition_flag]
-
     super(attributes, params[:reg_identifier])
   end
 

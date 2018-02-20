@@ -1,6 +1,7 @@
 class CompanyAddressManualForm < BaseForm
   attr_accessor :business_type
   attr_accessor :addresses
+  attr_accessor :os_places_error
   # We pass the following attributes in to create a new Address
   attr_accessor :house_number, :address_line_1, :address_line_2, :town_city, :postcode, :country
 
@@ -8,6 +9,11 @@ class CompanyAddressManualForm < BaseForm
     super
     # We use this for the correct microcopy and to determine what fields to show
     self.business_type = @transient_registration.business_type
+
+    # Check if the user reached this page through an OS Places error
+    # Then wipe the temp attribute as we only need it for routing
+    self.os_places_error = @transient_registration.temp_os_places_error
+    @transient_registration.update_attributes(temp_os_places_error: nil)
 
     # Prefill the existing address unless the temp_postcode has changed from the saved postcode
     # Otherwise, just fill in the temp_postcode

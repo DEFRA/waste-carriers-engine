@@ -355,9 +355,7 @@ module CanChangeWorkflowStatus
     registered_address.manually_entered?
   end
 
-  def skip_to_manual_address?(transition_flag = nil)
-    return true if transition_flag == :os_places_error
-    return true if transition_flag == :user_skips_to_manual_address
-    false
+  def skip_to_manual_address?
+    temp_os_places_error
   end
 end

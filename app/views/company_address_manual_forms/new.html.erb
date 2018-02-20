@@ -4,6 +4,13 @@
   <%= form_for(@company_address_manual_form) do |f| %>
     <%= render("shared/errors", object: @company_address_manual_form) %>
 
+    <% if @company_address_manual_form.os_places_error %>
+    <div class="error-summary" role="alert">
+      <h2 class="heading-medium error-summary-heading"><%= t(".os_places_error_heading") %></h2>
+      <p><%= t(".os_places_error_text") %></p>
+    </div>
+    <% end %>
+
     <h1 class="heading-large"><%= t(".heading_#{@company_address_manual_form.business_type}") %></h1>
 
     <% unless @company_address_manual_form.overseas? %>
