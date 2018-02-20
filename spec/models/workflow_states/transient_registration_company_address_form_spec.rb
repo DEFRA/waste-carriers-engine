@@ -16,6 +16,10 @@ RSpec.describe TransientRegistration, type: :model do
       it "changes to :key_people_form after the 'next' event" do
         expect(transient_registration).to transition_from(:company_address_form).to(:key_people_form).on_event(:next)
       end
+
+      it "changes to :company_address_manual_form after the 'skip_to_manual_address' event" do
+        expect(transient_registration).to transition_from(:company_address_form).to(:company_address_manual_form).on_event(:skip_to_manual_address)
+      end
     end
   end
 end

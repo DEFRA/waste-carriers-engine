@@ -114,6 +114,16 @@ RSpec.describe CompanyPostcodeForm, type: :model do
           end
         end
       end
+
+      context "when a postcode search returns an error" do
+        before(:each) do
+          allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(:error)
+        end
+
+        it "is valid" do
+          expect(company_postcode_form).to be_valid
+        end
+      end
     end
   end
 

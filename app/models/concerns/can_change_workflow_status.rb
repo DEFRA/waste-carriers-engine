@@ -240,10 +240,6 @@ module CanChangeWorkflowStatus
                     if: :overseas_address?
 
         transitions from: :company_address_manual_form,
-                    to: :company_postcode_form,
-                    if: :registered_address_was_manually_entered?
-
-        transitions from: :company_address_manual_form,
                     to: :company_postcode_form
 
         transitions from: :key_people_form,

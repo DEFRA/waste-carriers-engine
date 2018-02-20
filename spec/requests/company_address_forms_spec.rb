@@ -224,8 +224,6 @@ RSpec.describe "CompanyAddressForms", type: :request do
     end
   end
 
-
-
   describe "GET skip_to_manual_address_company_address_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
