@@ -16,7 +16,7 @@
     <% unless @company_address_manual_form.overseas? %>
       <div class="form-group">
         <label class="form-label"><%= t(".postcode_label") %></label>
-        <span><%= @company_address_manual_form.postcode %></span>
+        <span class="postcode"><%= @company_address_manual_form.postcode %></span>
         <%= link_to(t(".postcode_change_link"), back_company_address_manual_forms_path(@company_address_manual_form.reg_identifier)) %>
       </div>
     <% end %>

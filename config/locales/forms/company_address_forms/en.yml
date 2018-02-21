@@ -5,7 +5,7 @@ en:
       heading_limitedCompany: What's the address of the company?
       heading_limitedLiabilityPartnership: What's the address of the limited liability partnership?
       heading_partnership: What's the address of the partnership?
-      heading_soleTrader: What's the address of the individual?
+      heading_soleTrader: What's the address of the business?
       postcode_label: Postcode
       postcode_change_link: Change
       address_label: Address
