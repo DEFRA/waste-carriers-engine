@@ -10,7 +10,7 @@ RSpec.describe TransientRegistration, type: :model do
       end
 
       context "when the tier change is due to the business type" do
-        before(:each) { transient_registration.business_type = "other" }
+        before(:each) { transient_registration.business_type = "charity" }
 
         it "changes to :business_type_form after the 'back' event" do
           expect(transient_registration).to transition_from(:cannot_renew_lower_tier_form).to(:business_type_form).on_event(:back)

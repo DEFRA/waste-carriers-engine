@@ -320,7 +320,7 @@ module CanChangeWorkflowStatus
 
   # Charity registrations should be lower tier
   def switch_to_lower_tier_based_on_business_type?
-    business_type == "other"
+    business_type == "charity"
   end
 
   def switch_to_lower_tier_based_on_smart_answers?

@@ -60,7 +60,7 @@ RSpec.describe "CannotRenewLowerTierForms", type: :request do
           end
 
           context "when the tier change is due to the business type" do
-            before(:each) { transient_registration.update_attributes(business_type: "other") }
+            before(:each) { transient_registration.update_attributes(business_type: "charity") }
 
             it "redirects to the business_type form" do
               get back_cannot_renew_lower_tier_forms_path(transient_registration[:reg_identifier])

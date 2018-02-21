@@ -14,7 +14,7 @@ module CanCheckBusinessTypeChanges
       when "authority"
         matches_allowed_types?(["localAuthority"])
       when "charity"
-        matches_allowed_types?(["other", "overseas"])
+        matches_allowed_types?(["overseas"])
       when "limitedCompany"
         matches_allowed_types?(["limitedLiabilityPartnership", "overseas"])
       when "partnership"

@@ -7,7 +7,7 @@ en:
       option_limited_liability_partnership: Limited liability partnership
       option_individual: Individual (eg a sole trader)
       option_partnership: Partnership
-      option_other: Other organisation (eg a trust, charity or club)
+      option_charity: Charity or trust
       option_overseas: Based overseas
       help: Not sure? Call our helpline on 03708 506 506.
       error_heading: Something is wrong

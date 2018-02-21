@@ -1,11 +1,11 @@
 {
   "tier": "UPPER",
   "registrationType": "carrier_broker_dealer",
-  "businessType": "other",
+  "businessType": "charity",
   "otherBusinesses": "yes",
   "isMainService": "yes",
   "onlyAMF": "no",
-  "companyName": "Other Seed",
+  "companyName": "Charity or Trust Seed",
   "firstName": "Test",
   "lastName": "User",
   "phoneNumber": "01234 567890",
