@@ -20,11 +20,11 @@ class AddressFinderService
       :not_found
     rescue RestClient::ExceptionWithResponse => e
       Airbrake.notify(e)
-      Rails.logger.error "OS Places error: " + e.to_s
+      Rails.logger.error "OS Places response error: " + e.to_s
       :error
     rescue SocketError => e
       Airbrake.notify(e)
-      Rails.logger.error "OS Places error: " + e.to_s
+      Rails.logger.error "OS Places socket error: " + e.to_s
       :error
     end
   end
