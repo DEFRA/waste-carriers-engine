@@ -14,7 +14,13 @@ class AddressFinderService
         url: @url
       )
 
-      JSON.parse(response)
+      begin
+        JSON.parse(response)
+      rescue JSON::ParserError => e
+        Airbrake.notify(e)
+        Rails.logger.error "OS Places JSON error: " + e.to_s
+        :error
+      end
     rescue RestClient::BadRequest
       Rails.logger.debug "OS Places: resource not found"
       :not_found
