@@ -186,6 +186,18 @@ RSpec.describe CompanyAddressManualForm, type: :model do
       end
     end
 
+    describe "#postcode" do
+      context "when the postcode is too long" do
+        before(:each) do
+          company_address_manual_form.postcode = "4jhjdq46425oqers8r0b0xejkl19bapc"
+        end
+
+        it "is not valid" do
+          expect(company_address_manual_form).to_not be_valid
+        end
+      end
+    end
+
     describe "#country" do
       context "when the country is blank" do
         before(:each) do
