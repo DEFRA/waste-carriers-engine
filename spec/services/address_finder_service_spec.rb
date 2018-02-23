@@ -30,24 +30,4 @@ RSpec.describe AddressFinderService do
       end
     end
   end
-
-  context "When OS Places returns an exception with response" do
-    before do
-      allow_any_instance_of(Rails.configuration).to receive(:execute).and_return(RestClient::ExceptionWithResponse)
-    end
-
-    skip "returns :error" do
-      expect(address_finder_service.search_by_postcode).to eq(:error)
-    end
-  end
-
-  context "When OS Places returns a socket error" do
-    before do
-      allow_any_instance_of(RestClient::Request).to receive(:execute).and_return(SocketError)
-    end
-
-    skip "returns :error" do
-      expect(address_finder_service.search_by_postcode).to eq(:error)
-    end
-  end
 end
