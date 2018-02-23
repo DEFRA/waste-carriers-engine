@@ -14,7 +14,8 @@ en:
       address_line_1_label: Address line 1
       address_line_2_label: Address line 2 (optional)
       town_city_label: Town or city
-      postcode_label: Postcode
+      postcode_label: Postcode (optional)
+      preset_postcode_label: Postcode
       postcode_change_link: Change
       country_label: Country
       error_heading: Something is wrong
