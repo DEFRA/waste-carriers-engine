@@ -7,6 +7,11 @@ en:
       heading_overseas: Business owner details
       heading_partnership: Partner details
       heading_soleTrader: Individual details
+      first_name: First name
+      last_name: Last name
+      dob_year: Year
+      dob_month: Month
+      dob_day: Day
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

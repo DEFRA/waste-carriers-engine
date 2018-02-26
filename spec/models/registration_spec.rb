@@ -315,61 +315,6 @@ RSpec.describe Registration, type: :model do
       end
     end
 
-    describe "#first_name" do
-      context "when a registration's key person does not have a first_name" do
-        let(:key_person) { build(:keyPerson, :has_required_data, first_name: nil) }
-        let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
-
-        it "is not valid" do
-          expect(registration).to_not be_valid
-        end
-      end
-    end
-
-    describe "#last_name" do
-      context "when a registration's key person does not have a last_name" do
-        let(:key_person) { build(:keyPerson, :has_required_data, last_name: nil) }
-        let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
-
-        it "is not valid" do
-          expect(registration).to_not be_valid
-        end
-      end
-    end
-
-    describe "#position" do
-      context "when a registration's key person does not have a position" do
-        let(:key_person) { build(:keyPerson, :has_required_data, position: nil) }
-        let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
-
-        it "is not valid" do
-          expect(registration).to_not be_valid
-        end
-      end
-    end
-
-    describe "#date_of_birth" do
-      context "when a registration's key person does not have a date_of_birth" do
-        let(:key_person) { build(:keyPerson, :has_required_data, date_of_birth: nil) }
-        let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
-
-        it "is not valid" do
-          expect(registration).to_not be_valid
-        end
-      end
-    end
-
-    describe "#person_type" do
-      context "when a registration's key person does not have a person_type" do
-        let(:key_person) { build(:keyPerson, :has_required_data, person_type: nil) }
-        let(:registration) { build(:registration, :has_required_data, keyPeople: [key_person]) }
-
-        it "is not valid" do
-          expect(registration).to_not be_valid
-        end
-      end
-    end
-
     describe "#convictionSearchResult" do
       context "when a registration's key person has a convictionSearchResult" do
         let(:conviction_search_result) { build(:convictionSearchResult) }

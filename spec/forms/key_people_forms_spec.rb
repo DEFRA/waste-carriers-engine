@@ -4,7 +4,14 @@ RSpec.describe KeyPeopleForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:key_people_form) { build(:key_people_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: key_people_form.reg_identifier } }
+      let(:valid_params) do
+        { reg_identifier: key_people_form.reg_identifier,
+          first_name: key_people_form.first_name,
+          last_name: key_people_form.last_name,
+          dob_year: key_people_form.dob_year,
+          dob_month: key_people_form.dob_month,
+          dob_day: key_people_form.dob_day }
+      end
 
       it "should submit" do
         expect(key_people_form.submit(valid_params)).to eq(true)

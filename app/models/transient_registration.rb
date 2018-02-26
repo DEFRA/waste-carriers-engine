@@ -42,7 +42,8 @@ class TransientRegistration
                                                      "isMainService",
                                                      "constructionWaste",
                                                      "onlyAMF",
-                                                     "addresses"))
+                                                     "addresses",
+                                                     "keyPeople"))
   end
 
   # Check if a transient renewal already exists for this registration so we don't have
