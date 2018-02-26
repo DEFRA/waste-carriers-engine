@@ -224,6 +224,16 @@ RSpec.describe CompanyAddressManualForm, type: :model do
           end
         end
       end
+
+      context "when the country is too long" do
+        before(:each) do
+          company_address_manual_form.country = "GTR9I5VBRXUA0YW081EV9Q3EKUT08L5MQAUJ6TAR0GXHS4DPGCS83S0J8NHJM4ZLWSPULG24707RAIB1A68UHNHKMB6GTC5O7QNGRB97RI2DD61G6TKU4YY8013HTDVILLM87QJXPJZNN3UWU7M9H3AI1CHVU4166K0UDNL1PF8FYNMVJHWXGK79RPIBRREKNJJOHTW3E6ZA2DA77PRQYFXWHOL2KXCO6QLBW9K8KC4LJNHZAJZT81CRM4IJKFY2"
+        end
+
+        it "is not valid" do
+          expect(company_address_manual_form).to_not be_valid
+        end
+      end
     end
   end
 

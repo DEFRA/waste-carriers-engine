@@ -41,6 +41,7 @@ class CompanyAddressManualForm < BaseForm
   validates :town_city, presence: true, length: { maximum: 30 }
   validates :postcode, length: { maximum: 30 }
   validates :country, presence: true, if: :overseas?
+  validates :country, length: { maximum: 255 }
 
   def overseas?
     business_type == "overseas"
