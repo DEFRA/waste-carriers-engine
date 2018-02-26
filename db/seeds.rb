@@ -5,10 +5,17 @@
 # remains in that state without having to manually update the dates.
 
 def registered_date(flag)
+  # Resetting variables here so it's easier to read calculations below
+  expires_after = Rails.configuration.expires_after
+  renewal_window = Rails.configuration.renewal_window
+
   dates = {
-    expired: 37.months.ago,
-    in_renewal_window: 35.months.ago,
-    outside_renewal_window: 12.months.ago
+    # Registration should have expired 1 month ago
+    expired: expires_after.years.ago - 1.month,
+    # Registration should be halfway through the renewal window
+    in_renewal_window: expires_after.years.ago + (renewal_window / 2).months,
+    # Registration is not yet in the renewal window
+    outside_renewal_window: expires_after.years.ago + (renewal_window * 2).months
   }
 
   dates[flag.to_sym] || Date.today
