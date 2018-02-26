@@ -36,8 +36,11 @@ en:
             town_city:
               blank: "Enter a town or city"
               too_long: "The town or city must be no longer than 30 characters"
+            postcode:
+              too_long: "The postcode must be no longer than 30 characters"
             country:
               blank: "Enter a country"
+              too_long: "The country must be no longer than 50 characters"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
