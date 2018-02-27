@@ -56,12 +56,18 @@ RSpec.describe "KeyPeopleForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              first_name: "Foo",
+              last_name: "Bar",
+              dob_day: "1",
+              dob_month: "1",
+              dob_year: "2000"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post key_people_forms_path, key_people_form: valid_params
+            expect(transient_registration.reload.keyPeople.first.first_name).to eq(valid_params[:first_name])
           end
 
           it "returns a 302 response" do
@@ -104,12 +110,18 @@ RSpec.describe "KeyPeopleForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            first_name: "Foo",
+            last_name: "Bar",
+            dob_day: "1",
+            dob_month: "1",
+            dob_year: "2000"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post key_people_forms_path, key_people_form: valid_params
+          expect(transient_registration.reload.keyPeople).to_not exist
         end
 
         it "returns a 302 response" do

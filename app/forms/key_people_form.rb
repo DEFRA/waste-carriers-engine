@@ -21,6 +21,10 @@ class KeyPeopleForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
+  validates :first_name, presence: true, length: { maximum: 35 }
+  validates :last_name, presence: true, length: { maximum: 35 }
+  validates_with DobValidator
+
   private
 
   def add_key_person

@@ -17,8 +17,26 @@ en:
   activemodel:
     errors:
       models:
-        key_people_director_form:
+        key_people_form:
           attributes:
+            first_name:
+              blank: "You must enter a first name"
+              too_long: "The first name must be no longer than 35 characters"
+            last_name:
+              blank: "You must enter a last name"
+              too_long: "The last name must be no longer than 35 characters"
+            dob_day:
+              blank: "You must enter a day"
+              integer: "The day must be a number"
+              range: "The day must be between 1 and 31"
+            dob_month:
+              blank: "You must enter a month"
+              integer: "The month must be a number"
+              range: "The month must be between 1 and 12"
+            dob_year:
+              blank: "You must enter a year"
+              integer: "The year must be a number"
+              range: "The year must be between 1900 and now"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

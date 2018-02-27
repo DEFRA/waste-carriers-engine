@@ -20,9 +20,12 @@ class KeyPerson
   private
 
   def set_date_of_birth
-    return unless dob_year.present? && dob_year.positive?
-    return unless dob_month.present? && dob_month.positive?
-    return unless dob_day.present? && dob_day.positive?
-    self.date_of_birth = Date.new(dob_year, dob_month, dob_day)
+    begin
+      self.date_of_birth = Date.new(dob_year, dob_month, dob_day)
+    rescue NoMethodError
+      errors.add(:date_of_birth, :invalid_date)
+    rescue ArgumentError
+      errors.add(:date_of_birth, :invalid_date)
+    end
   end
 end
