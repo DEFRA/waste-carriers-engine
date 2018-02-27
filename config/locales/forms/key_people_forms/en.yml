@@ -44,6 +44,7 @@ en:
               age_limit_overseas: "Business owners must be 17 or older"
               age_limit_partnership: "Partners must be 17 or older"
               age_limit_soleTrader: "Business owners must be 17 or older"
+              not_a_date: "You must enter a valid date"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

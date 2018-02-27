@@ -5,6 +5,8 @@ class DobValidator < ActiveModel::Validator
     fields.each do |type, field|
       validate_field(record, type, field)
     end
+
+    dob_is_a_date?(record)
   end
 
   private
@@ -34,5 +36,10 @@ class DobValidator < ActiveModel::Validator
 
     return true if ranges[type].include?(field)
     record.errors.add(type, :range)
+  end
+
+  def dob_is_a_date?(record)
+    return true if record.date_of_birth.is_a? Date
+    record.errors.add(:date_of_birth, :not_a_date)
   end
 end

@@ -226,6 +226,16 @@ RSpec.describe KeyPeopleForm, type: :model do
         end
       end
 
+      context "when a date of birth is not a valid date" do
+        before(:each) do
+          key_people_form.date_of_birth = nil
+        end
+
+        it "is not valid" do
+          expect(key_people_form).to_not be_valid
+        end
+      end
+
       shared_examples_for "age limits for key people" do |business_type, age_limit|
         before(:each) do
           key_people_form.business_type = business_type

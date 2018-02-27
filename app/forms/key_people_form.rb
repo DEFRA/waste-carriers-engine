@@ -1,6 +1,6 @@
 class KeyPeopleForm < BaseForm
   attr_accessor :business_type
-  attr_accessor :first_name, :last_name, :dob_day, :dob_month, :dob_year, :date_of_birth
+  attr_accessor :first_name, :last_name, :dob_day, :dob_month, :dob_year, :key_person, :date_of_birth
 
   def initialize(transient_registration)
     super
@@ -16,7 +16,7 @@ class KeyPeopleForm < BaseForm
     self.dob_month = params[:dob_month].to_i
     self.dob_year = params[:dob_year].to_i
 
-    key_person = add_key_person
+    self.key_person = add_key_person
     self.date_of_birth = key_person.date_of_birth
 
     attributes = { keyPeople: [key_person] }
