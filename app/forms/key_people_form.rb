@@ -27,7 +27,7 @@ class KeyPeopleForm < BaseForm
   validates :first_name, presence: true, length: { maximum: 35 }
   validates :last_name, presence: true, length: { maximum: 35 }
   validate :old_enough?
-  validates_with DobValidator
+  validates_with DateOfBirthValidator
 
   private
 

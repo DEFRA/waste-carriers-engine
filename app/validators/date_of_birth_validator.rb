@@ -1,4 +1,4 @@
-class DobValidator < ActiveModel::Validator
+class DateOfBirthValidator < ActiveModel::Validator
   def validate(record)
     fields = { day: record.dob_day, month: record.dob_month, year: record.dob_year }
 
