@@ -1,6 +1,6 @@
 class DobValidator < ActiveModel::Validator
   def validate(record)
-    fields = { dob_day: record.dob_day, dob_month: record.dob_month, dob_year: record.dob_year }
+    fields = { day: record.dob_day, month: record.dob_month, year: record.dob_year }
 
     fields.each do |type, field|
       validate_field(record, type, field)
@@ -19,23 +19,26 @@ class DobValidator < ActiveModel::Validator
 
   def field_present?(record, type, field)
     return true unless field.blank?
-    record.errors.add(type, :blank)
+    error_message = "#{type}_blank".to_sym
+    record.errors.add(:date_of_birth, error_message)
   end
 
   def field_is_integer?(record, type, field)
     return true if field.is_a? Integer
-    record.errors.add(type, :integer)
+    error_message = "#{type}_integer".to_sym
+    record.errors.add(:date_of_birth, error_message)
   end
 
   def field_is_in_correct_range?(record, type, field)
     ranges = {
-      dob_day: 1..31,
-      dob_month: 1..12,
-      dob_year: 1900..(Date.today.year.to_i)
+      day: 1..31,
+      month: 1..12,
+      year: 1900..(Date.today.year.to_i)
     }
 
     return true if ranges[type].include?(field)
-    record.errors.add(type, :range)
+    error_message = "#{type}_range".to_sym
+    record.errors.add(:date_of_birth, error_message)
   end
 
   def dob_is_a_date?(record)

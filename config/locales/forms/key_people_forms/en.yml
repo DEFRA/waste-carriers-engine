@@ -7,12 +7,21 @@ en:
       heading_overseas: Business owner details
       heading_partnership: Partner details
       heading_soleTrader: Business owner details
+      description_1_localAuthority: Provide the name and date of birth for each chief executive of this local authority or public body.
+      description_1_limitedCompany: Provide the name and date of birth for each director of this business.
+      description_1_limitedLiabilityPartnership: Provide the name and date of birth for each partner of this business.
+      description_1_overseas: Provide the name and date of birth for each owner of this business or organisation.
+      description_1_partnership: Provide the name and date of birth for each partner of this business.
+      description_1_soleTrader: Provide the name and date of birth for the owner of this business.
+      description_2: Add their details one person at a time. If you want to add more people, select 'add another person'.
       first_name: First name
       last_name: Last name
+      date_of_birth: Date of birth
+      date_of_birth_hint: For example, 26 5 1976
       dob_year: Year
       dob_month: Month
       dob_day: Day
-      error_heading: Something is wrong
+      add_another: Add another person
       next_button: Continue
   activemodel:
     errors:
@@ -25,18 +34,6 @@ en:
             last_name:
               blank: "You must enter a last name"
               too_long: "The last name must be no longer than 35 characters"
-            dob_day:
-              blank: "You must enter a day"
-              integer: "The day must be a number"
-              range: "The day must be between 1 and 31"
-            dob_month:
-              blank: "You must enter a month"
-              integer: "The month must be a number"
-              range: "The month must be between 1 and 12"
-            dob_year:
-              blank: "You must enter a year"
-              integer: "The year must be a number"
-              range: "The year must be between 1900 and now"
             date_of_birth:
               age_limit_localAuthority: "Chief executives must be 17 or older"
               age_limit_limitedCompany: "Directors must be 16 or older"
@@ -45,6 +42,15 @@ en:
               age_limit_partnership: "Partners must be 17 or older"
               age_limit_soleTrader: "Business owners must be 17 or older"
               not_a_date: "You must enter a valid date"
+              day_blank: "You must enter a day"
+              day_integer: "The day must be a number"
+              day_range: "The day must be between 1 and 31"
+              month_blank: "You must enter a month"
+              month_integer: "The month must be a number"
+              month_range: "The month must be between 1 and 12"
+              year_blank: "You must enter a year"
+              year_integer: "The year must be a number"
+              year_range: "The year must be between 1900 and now"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
