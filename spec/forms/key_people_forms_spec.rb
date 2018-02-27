@@ -218,6 +218,42 @@ RSpec.describe KeyPeopleForm, type: :model do
         end
       end
     end
+
+    describe "#date_of_birth" do
+      context "when a date_of_birth meets the requirements" do
+        it "is valid" do
+          expect(key_people_form).to be_valid
+        end
+      end
+
+      shared_examples_for "age limits for key people" do |business_type, age_limit|
+        before(:each) do
+          key_people_form.business_type = business_type
+        end
+
+        it "should not be valid when at the age limit" do
+          key_people_form.date_of_birth = Date.today - age_limit.years
+          expect(key_people_form).to be_valid
+        end
+
+        it "should not be valid when under the age limit" do
+          key_people_form.date_of_birth = Date.today - (age_limit.years - 1.year)
+          expect(key_people_form).to_not be_valid
+        end
+      end
+
+      {
+        # Permutation table of business_type and age limit
+        "localAuthority" => 17,
+        "limitedCompany" => 16,
+        "limitedLiabilityPartnership" => 17,
+        "overseas" => 17,
+        "partnership" => 17,
+        "soleTrader" => 17
+      }.each do |business_type, age_limit|
+        it_behaves_like "age limits for key people", business_type, age_limit
+      end
+    end
   end
 
   describe "#transient_registration" do

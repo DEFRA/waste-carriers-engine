@@ -6,7 +6,7 @@ en:
       heading_limitedLiabilityPartnership: Partner details
       heading_overseas: Business owner details
       heading_partnership: Partner details
-      heading_soleTrader: Individual details
+      heading_soleTrader: Business owner details
       first_name: First name
       last_name: Last name
       dob_year: Year
@@ -37,6 +37,13 @@ en:
               blank: "You must enter a year"
               integer: "The year must be a number"
               range: "The year must be between 1900 and now"
+            date_of_birth:
+              age_limit_localAuthority: "Chief executives must be 17 or older"
+              age_limit_limitedCompany: "Directors must be 16 or older"
+              age_limit_limitedLiabilityPartnership: "Partners must be 17 or older"
+              age_limit_overseas: "Business owners must be 17 or older"
+              age_limit_partnership: "Partners must be 17 or older"
+              age_limit_soleTrader: "Business owners must be 17 or older"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

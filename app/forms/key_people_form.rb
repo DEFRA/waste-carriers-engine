@@ -1,6 +1,6 @@
 class KeyPeopleForm < BaseForm
   attr_accessor :business_type
-  attr_accessor :first_name, :last_name, :dob_day, :dob_month, :dob_year
+  attr_accessor :first_name, :last_name, :dob_day, :dob_month, :dob_year, :date_of_birth
 
   def initialize(transient_registration)
     super
@@ -16,23 +16,46 @@ class KeyPeopleForm < BaseForm
     self.dob_month = params[:dob_month].to_i
     self.dob_year = params[:dob_year].to_i
 
-    attributes = { keyPeople: add_key_person }
+    key_person = add_key_person
+    self.date_of_birth = key_person.date_of_birth
+
+    attributes = { keyPeople: [key_person] }
 
     super(attributes, params[:reg_identifier])
   end
 
   validates :first_name, presence: true, length: { maximum: 35 }
   validates :last_name, presence: true, length: { maximum: 35 }
+  validate :old_enough?
   validates_with DobValidator
 
   private
 
   def add_key_person
-    [KeyPerson.new(first_name: first_name,
-                   last_name: last_name,
-                   dob_day: dob_day,
-                   dob_month: dob_month,
-                   dob_year: dob_year,
-                   person_type: "key")]
+    KeyPerson.new(first_name: first_name,
+                  last_name: last_name,
+                  dob_day: dob_day,
+                  dob_month: dob_month,
+                  dob_year: dob_year,
+                  person_type: "key")
+  end
+
+  def old_enough?
+    return unless date_of_birth.present?
+
+    age_limits = {
+      limitedCompany: 16.years,
+      limitedLiabilityPartnership: 17.years,
+      localAuthority: 17.years,
+      overseas: 17.years,
+      partnership: 17.years,
+      soleTrader: 17.years
+    }
+    age_cutoff_date = (Date.today - age_limits[business_type.to_sym]) + 1.day
+
+    return true if date_of_birth < age_cutoff_date
+
+    error_message = "age_limit_#{business_type}".to_sym
+    errors.add(:date_of_birth, error_message)
   end
 end
