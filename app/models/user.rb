@@ -10,6 +10,10 @@ class User
          :trackable,
          :validatable
 
+  ## Confirmable
+  # Any user confirmation happens in the frontend app - however we need this flag to seed confirmed users
+  field :confirmed_at, type: DateTime
+
   ## Database authenticatable
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
