@@ -6,6 +6,15 @@ class KeyPeopleForm < BaseForm
     super
     # We only use this for the correct microcopy
     self.business_type = @transient_registration.business_type
+
+    # If there's only one key person, we can pre-fill the fields so users can easily edit them
+    return unless maximum_key_people == 1
+    return unless @transient_registration.keyPeople.present?
+    self.first_name = @transient_registration.keyPeople.first.first_name
+    self.last_name = @transient_registration.keyPeople.first.last_name
+    self.dob_day = @transient_registration.keyPeople.first.dob_day
+    self.dob_month = @transient_registration.keyPeople.first.dob_month
+    self.dob_year = @transient_registration.keyPeople.first.dob_year
   end
 
   def submit(params)
@@ -30,10 +39,12 @@ class KeyPeopleForm < BaseForm
   validates_with DateOfBirthValidator
 
   def minimum_key_people
+    return unless business_type.present?
     number_of_key_people[business_type.to_sym][:minimum]
   end
 
   def maximum_key_people
+    return unless business_type.present?
     number_of_key_people[business_type.to_sym][:maximum]
   end
 

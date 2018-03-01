@@ -28,6 +28,43 @@ RSpec.describe KeyPeopleForm, type: :model do
     end
   end
 
+  describe "#initialize" do
+    context "when a key person already exists and it's a sole trader" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               business_type: "soleTrader",
+               keyPeople: [build(:key_person, :has_required_data)])
+      end
+      let(:key_people_form) { KeyPeopleForm.new(transient_registration) }
+
+      it "should prefill the first_name" do
+        first_name = transient_registration.keyPeople.first.first_name
+        expect(key_people_form.first_name).to eq(first_name)
+      end
+
+      it "should prefill the last_name" do
+        last_name = transient_registration.keyPeople.first.last_name
+        expect(key_people_form.last_name).to eq(last_name)
+      end
+
+      it "should prefill the dob_day" do
+        dob_day = transient_registration.keyPeople.first.dob_day
+        expect(key_people_form.dob_day).to eq(dob_day)
+      end
+
+      it "should prefill the dob_month" do
+        dob_month = transient_registration.keyPeople.first.dob_month
+        expect(key_people_form.dob_month).to eq(dob_month)
+      end
+
+      it "should prefill the dob_year" do
+        dob_year = transient_registration.keyPeople.first.dob_year
+        expect(key_people_form.dob_year).to eq(dob_year)
+      end
+    end
+  end
+
   context "when a valid transient registration exists" do
     let(:key_people_form) { build(:key_people_form, :has_required_data) }
 
