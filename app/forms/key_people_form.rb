@@ -29,6 +29,14 @@ class KeyPeopleForm < BaseForm
   validate :old_enough?
   validates_with DateOfBirthValidator
 
+  def minimum_key_people
+    number_of_key_people[business_type.to_sym][:minimum]
+  end
+
+  def maximum_key_people
+    number_of_key_people[business_type.to_sym][:maximum]
+  end
+
   private
 
   def add_key_person
@@ -38,6 +46,17 @@ class KeyPeopleForm < BaseForm
                   dob_month: dob_month,
                   dob_year: dob_year,
                   person_type: "key")
+  end
+
+  def number_of_key_people
+    {
+      limitedCompany: { minimum: 1, maximum: nil },
+      limitedLiabilityPartnership: { minimum: 1, maximum: nil },
+      localAuthority: { minimum: 1, maximum: nil },
+      overseas: { minimum: 1, maximum: nil },
+      partnership: { minimum: 2, maximum: nil },
+      soleTrader: { minimum: 1, maximum: 1 }
+    }
   end
 
   def old_enough?
