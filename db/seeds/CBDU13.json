@@ -1,5 +1,5 @@
 {
-  "date_flag": "in_renewal_window",
+  "date_flag": "expired",
   "tier": "UPPER",
   "registrationType": "carrier_broker_dealer",
   "businessType": "soleTrader",
@@ -53,7 +53,7 @@
   "regIdentifier": "CBDU13",
   "metaData": {
     "anotherString": "userDetailAddedAtRegistration",
-    "status": "ACTIVE",
+    "status": "EXPIRED",
     "route": "DIGITAL",
     "distance": "n/a"
   },

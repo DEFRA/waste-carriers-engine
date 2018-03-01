@@ -36,7 +36,8 @@ end
 if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
   User.find_or_create_by(
     email: "user@waste-exemplar.gov.uk",
-    password: ENV["WCR_TEST_USER_PASSWORD"] || "Secret123"
+    password: ENV["WCR_TEST_USER_PASSWORD"] || "Secret123",
+    confirmed_at: DateTime.new(2015, 1, 1)
   )
 
   seeds = []
