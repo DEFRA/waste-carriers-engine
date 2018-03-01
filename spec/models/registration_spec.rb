@@ -288,7 +288,7 @@ RSpec.describe Registration, type: :model do
 
   describe "#keyPeople" do
     context "when a registration has one key person" do
-      let(:key_person) { build(:keyPerson, :has_required_data) }
+      let(:key_person) { build(:key_person, :has_required_data) }
       let(:registration) do
         build(:registration,
               :has_required_data,
@@ -301,8 +301,8 @@ RSpec.describe Registration, type: :model do
     end
 
     context "when a registration has multiple key people" do
-      let(:key_person_a) { build(:keyPerson, :has_required_data) }
-      let(:key_person_b) { build(:keyPerson, :has_required_data) }
+      let(:key_person_a) { build(:key_person, :has_required_data) }
+      let(:key_person_b) { build(:key_person, :has_required_data) }
       let(:registration) do
         build(:registration,
               :has_required_data,
@@ -318,7 +318,7 @@ RSpec.describe Registration, type: :model do
     describe "#convictionSearchResult" do
       context "when a registration's key person has a convictionSearchResult" do
         let(:conviction_search_result) { build(:convictionSearchResult) }
-        let(:key_person) { build(:keyPerson, :has_required_data, convictionSearchResult: conviction_search_result) }
+        let(:key_person) { build(:key_person, :has_required_data, convictionSearchResult: conviction_search_result) }
         let(:registration) do
           build(:registration,
                 :has_required_data,

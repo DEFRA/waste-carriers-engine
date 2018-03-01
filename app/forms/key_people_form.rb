@@ -41,7 +41,7 @@ class KeyPeopleForm < BaseForm
   end
 
   def old_enough?
-    return unless date_of_birth.present?
+    return false unless date_of_birth.present?
 
     age_limits = {
       limitedCompany: 16.years,
@@ -57,5 +57,6 @@ class KeyPeopleForm < BaseForm
 
     error_message = "age_limit_#{business_type}".to_sym
     errors.add(:date_of_birth, error_message)
+    false
   end
 end

@@ -13,7 +13,7 @@ en:
       description_1_overseas: Provide the name and date of birth for each owner of this business or organisation.
       description_1_partnership: Provide the name and date of birth for each partner of this business.
       description_1_soleTrader: Provide the name and date of birth for the owner of this business.
-      description_2: Add their details one person at a time. If you want to add more people, select 'add another person'.
+      description_2: Add their details one person at a time. If you need to add more people, select 'add another person'.
       first_name: First name
       last_name: Last name
       date_of_birth: Date of birth

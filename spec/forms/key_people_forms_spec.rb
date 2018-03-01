@@ -241,7 +241,7 @@ RSpec.describe KeyPeopleForm, type: :model do
           key_people_form.business_type = business_type
         end
 
-        it "should not be valid when at the age limit" do
+        it "should be valid when at the age limit" do
           key_people_form.date_of_birth = Date.today - age_limit.years
           expect(key_people_form).to be_valid
         end
