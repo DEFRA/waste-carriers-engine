@@ -21,9 +21,7 @@ class KeyPeopleForm < BaseForm
     # Assign the params for validation and pass them to the BaseForm method for updating
     self.first_name = params[:first_name]
     self.last_name = params[:last_name]
-    self.dob_day = params[:dob_day].to_i
-    self.dob_month = params[:dob_month].to_i
-    self.dob_year = params[:dob_year].to_i
+    process_date_fields(params)
 
     self.key_person = add_key_person
     self.date_of_birth = key_person.date_of_birth
@@ -33,10 +31,8 @@ class KeyPeopleForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :first_name, presence: true, length: { maximum: 35 }
-  validates :last_name, presence: true, length: { maximum: 35 }
+  validates_with KeyPeopleValidator
   validate :old_enough?
-  validates_with DateOfBirthValidator
 
   def minimum_key_people
     return unless business_type.present?
@@ -49,6 +45,18 @@ class KeyPeopleForm < BaseForm
   end
 
   private
+
+  # If we can make the date fields positive integers, save those integers
+  # Otherwise, save as nil
+  def process_date_fields(params)
+    day = params[:dob_day].to_i
+    month = params[:dob_month].to_i
+    year = params[:dob_year].to_i
+
+    self.dob_day = day if day.positive?
+    self.dob_month = month if month.positive?
+    self.dob_year = year if year.positive?
+  end
 
   def add_key_person
     KeyPerson.new(first_name: first_name,

@@ -26,6 +26,8 @@ class KeyPerson
       errors.add(:date_of_birth, :invalid_date)
     rescue ArgumentError
       errors.add(:date_of_birth, :invalid_date)
+    rescue TypeError
+      errors.add(:date_of_birth, :invalid_date)
     end
   end
 end

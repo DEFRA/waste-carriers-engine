@@ -1,19 +1,39 @@
 class DateOfBirthValidator < ActiveModel::Validator
   def validate(record)
-    fields = { day: record.dob_day, month: record.dob_month, year: record.dob_year }
+    # Make sure we have any date fields to validate before proceeding
+    return false if all_fields_empty?(record)
 
-    fields.each do |type, field|
-      validate_field(record, type, field)
-    end
+    # Next, check the date fields one at a time
+    return false unless individual_fields_valid?(record)
 
+    # If individual fields are OK, check the validity of the date as a whole
     dob_is_a_date?(record)
   end
 
   private
 
-  def validate_field(record, type, field)
-    return unless field_present?(record, type, field)
-    return unless field_is_integer?(record, type, field)
+  def all_fields_empty?(record)
+    fields = [record.dob_day, record.dob_month, record.dob_year].compact
+    return false if fields.any?
+    record.errors.add(:date_of_birth, :not_a_date)
+    true
+  end
+
+  def individual_fields_valid?(record)
+    all_fields_valid = true
+
+    fields = { day: record.dob_day, month: record.dob_month, year: record.dob_year }
+    fields.each do |type, field|
+      next if field_is_valid?(record, type, field)
+      all_fields_valid = false
+    end
+
+    all_fields_valid
+  end
+
+  def field_is_valid?(record, type, field)
+    return false unless field_present?(record, type, field)
+    return false unless field_is_integer?(record, type, field)
     field_is_in_correct_range?(record, type, field)
   end
 
