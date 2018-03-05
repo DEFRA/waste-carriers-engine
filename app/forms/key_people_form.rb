@@ -33,9 +33,10 @@ class KeyPeopleForm < BaseForm
     day = params[:dob_day].to_i
     month = params[:dob_month].to_i
     year = params[:dob_year].to_i
-    self.dob_day = day.positive? ? day : nil
-    self.dob_month = month.positive? ? month : nil
-    self.dob_year = year.positive? ? year : nil
+
+    self.dob_day = day if day.positive?
+    self.dob_month = month if month.positive?
+    self.dob_year = year if year.positive?
   end
 
   def add_key_person
