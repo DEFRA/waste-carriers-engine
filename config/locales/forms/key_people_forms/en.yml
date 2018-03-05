@@ -6,7 +6,7 @@ en:
       heading_limitedLiabilityPartnership: Partner details
       heading_overseas: Business owner details
       heading_partnership: Partner details
-      heading_soleTrader: Business owner details
+      heading_soleTrader: Business or organisation owner details
       description_1_localAuthority: Provide the name and date of birth for each chief executive of this local authority or public body.
       description_1_limitedCompany: Provide the name and date of birth for each director of this business.
       description_1_limitedLiabilityPartnership: Provide the name and date of birth for each partner of this business.
@@ -27,6 +27,7 @@ en:
     errors:
       models:
         key_people_form:
+          not_enough_key_people: "You must add the details of at least one person"
           attributes:
             first_name:
               blank: "You must enter a first name"

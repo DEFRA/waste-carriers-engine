@@ -226,6 +226,18 @@ RSpec.describe KeyPeopleForm, type: :model do
         end
       end
 
+      context "when all the date of birth fields are empty" do
+        before(:each) do
+          key_people_form.dob_day = ""
+          key_people_form.dob_month = ""
+          key_people_form.dob_year = ""
+        end
+
+        it "is not valid" do
+          expect(key_people_form).to_not be_valid
+        end
+      end
+
       context "when a date of birth is not a valid date" do
         before(:each) do
           key_people_form.date_of_birth = nil
