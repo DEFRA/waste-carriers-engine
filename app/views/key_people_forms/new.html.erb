@@ -83,7 +83,7 @@
 
     <% unless @key_people_form.maximum_key_people == 1 %>
       <div class="form-group">
-        <a href="#"><%= t(".add_person_link") %></a>
+        <%= f.submit t(".add_person_link"), class: "button" %>
       </div>
     <% end %>
 

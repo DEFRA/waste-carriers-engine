@@ -8,13 +8,7 @@ class KeyPeopleForm < BaseForm
     self.business_type = @transient_registration.business_type
 
     # If there's only one key person, we can pre-fill the fields so users can easily edit them
-    return unless maximum_key_people == 1
-    return unless @transient_registration.keyPeople.present?
-    self.first_name = @transient_registration.keyPeople.first.first_name
-    self.last_name = @transient_registration.keyPeople.first.last_name
-    self.dob_day = @transient_registration.keyPeople.first.dob_day
-    self.dob_month = @transient_registration.keyPeople.first.dob_month
-    self.dob_year = @transient_registration.keyPeople.first.dob_year
+    prefill_form if maximum_key_people == 1 && @transient_registration.keyPeople.present?
   end
 
   def submit(params)
@@ -26,7 +20,7 @@ class KeyPeopleForm < BaseForm
     self.key_person = add_key_person
     self.date_of_birth = key_person.date_of_birth
 
-    attributes = { keyPeople: [key_person] }
+    attributes = { keyPeople: all_key_people }
 
     super(attributes, params[:reg_identifier])
   end
@@ -34,17 +28,20 @@ class KeyPeopleForm < BaseForm
   validates_with KeyPeopleValidator
   validate :old_enough?
 
-  def minimum_key_people
-    return unless business_type.present?
-    number_of_key_people[business_type.to_sym][:minimum]
-  end
-
   def maximum_key_people
     return unless business_type.present?
     number_of_key_people[business_type.to_sym][:maximum]
   end
 
   private
+
+  def prefill_form
+    self.first_name = @transient_registration.keyPeople.first.first_name
+    self.last_name = @transient_registration.keyPeople.first.last_name
+    self.dob_day = @transient_registration.keyPeople.first.dob_day
+    self.dob_month = @transient_registration.keyPeople.first.dob_month
+    self.dob_year = @transient_registration.keyPeople.first.dob_year
+  end
 
   # If we can make the date fields positive integers, save those integers
   # Otherwise, save as nil
@@ -65,6 +62,14 @@ class KeyPeopleForm < BaseForm
                   dob_month: dob_month,
                   dob_year: dob_year,
                   person_type: "key")
+  end
+
+  def all_key_people
+    existing_key_people = []
+    @transient_registration.keyPeople.each do |person|
+      existing_key_people << person
+    end
+    existing_key_people << key_person
   end
 
   def number_of_key_people
