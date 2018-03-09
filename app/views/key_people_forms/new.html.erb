@@ -87,9 +87,11 @@
       </div>
     <% end %>
 
+    <% unless @key_people_form.minimum_key_people > (@key_people_form.number_of_existing_key_people + 1) %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
+    <% end %>
   <% end %>
 
   <% unless @key_people_form.maximum_key_people == 1 %>

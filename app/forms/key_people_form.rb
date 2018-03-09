@@ -8,7 +8,7 @@ class KeyPeopleForm < BaseForm
     self.business_type = @transient_registration.business_type
 
     # If there's only one key person, we can pre-fill the fields so users can easily edit them
-    prefill_form if maximum_key_people == 1 && @transient_registration.keyPeople.present?
+    prefill_form if !can_have_multiple_key_people? && @transient_registration.keyPeople.present?
   end
 
   def submit(params)
@@ -20,7 +20,11 @@ class KeyPeopleForm < BaseForm
     self.key_person = add_key_person
     self.date_of_birth = key_person.date_of_birth
 
-    attributes = { keyPeople: all_key_people }
+    attributes = if fields_have_content?
+                   { keyPeople: all_key_people }
+                 else
+                   {}
+                 end
 
     super(attributes, params[:reg_identifier])
   end
@@ -30,7 +34,29 @@ class KeyPeopleForm < BaseForm
 
   def maximum_key_people
     return unless business_type.present?
-    number_of_key_people[business_type.to_sym][:maximum]
+    key_people_limits[business_type.to_sym][:maximum]
+  end
+
+  def minimum_key_people
+    return unless business_type.present?
+    key_people_limits[business_type.to_sym][:minimum]
+  end
+
+  def number_of_existing_key_people
+    @transient_registration.keyPeople.count
+  end
+
+  def can_have_multiple_key_people?
+    return true unless maximum_key_people.present?
+    maximum_key_people > 1
+  end
+
+  def fields_have_content?
+    fields = [first_name, last_name, dob_day, dob_month, dob_year]
+    fields.each do |field|
+      return true if field.present? && field.to_s.length.positive?
+    end
+    false
   end
 
   private
@@ -43,16 +69,18 @@ class KeyPeopleForm < BaseForm
     self.dob_year = @transient_registration.keyPeople.first.dob_year
   end
 
-  # If we can make the date fields positive integers, save those integers
-  # Otherwise, save as nil
   def process_date_fields(params)
-    day = params[:dob_day].to_i
-    month = params[:dob_month].to_i
-    year = params[:dob_year].to_i
+    self.dob_day = format_date_field_value(params[:dob_day])
+    self.dob_month = format_date_field_value(params[:dob_month])
+    self.dob_year = format_date_field_value(params[:dob_year])
+  end
 
-    self.dob_day = day if day.positive?
-    self.dob_month = month if month.positive?
-    self.dob_year = year if year.positive?
+  # If we can make the date fields positive integers, use those integers
+  # Otherwise, return nil
+  def format_date_field_value(value)
+    # If this isn't a valid integer, .to_i returns 0
+    integer_value = value.to_i
+    return integer_value if integer_value.positive?
   end
 
   def add_key_person
@@ -65,6 +93,9 @@ class KeyPeopleForm < BaseForm
   end
 
   def all_key_people
+    # If there's only one key person allowed, just replace existing data
+    return [key_person] if maximum_key_people == 1
+
     existing_key_people = []
     @transient_registration.keyPeople.each do |person|
       existing_key_people << person
@@ -72,7 +103,7 @@ class KeyPeopleForm < BaseForm
     existing_key_people << key_person
   end
 
-  def number_of_key_people
+  def key_people_limits
     {
       limitedCompany: { minimum: 1, maximum: nil },
       limitedLiabilityPartnership: { minimum: 1, maximum: nil },

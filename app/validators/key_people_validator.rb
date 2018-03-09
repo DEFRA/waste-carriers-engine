@@ -1,19 +1,21 @@
 class KeyPeopleValidator < ActiveModel::Validator
   def validate(record)
-    return false unless fields_have_content?(record)
-    validate_first_name(record)
-    validate_last_name(record)
-    DateOfBirthValidator.new.validate(record)
+    if record.fields_have_content?
+      validate_first_name(record)
+      validate_last_name(record)
+      DateOfBirthValidator.new.validate(record)
+    elsif already_has_enough_key_people?(record)
+      true
+    else
+      record.errors.add(:base, :not_enough_key_people)
+    end
   end
 
   private
 
-  def fields_have_content?(record)
-    fields = [record.first_name, record.last_name, record.dob_day, record.dob_month, record.dob_year]
-    fields.each do |field|
-      return true if field.present? && field.to_s.length.positive?
-    end
-    record.errors.add(:base, :not_enough_key_people)
+  def already_has_enough_key_people?(record)
+    return true unless record.minimum_key_people.present?
+    return true unless record.number_of_existing_key_people < record.minimum_key_people
     false
   end
 
