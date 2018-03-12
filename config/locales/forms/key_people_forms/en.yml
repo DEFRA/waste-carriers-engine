@@ -30,7 +30,9 @@ en:
     errors:
       models:
         key_people_form:
-          not_enough_key_people: "You must add the details of at least one person"
+          not_enough_key_people:
+            one: "You must add the details of at least one person"
+            other: "You must add the details of at least %{count} people"
           attributes:
             first_name:
               blank: "You must enter a first name"

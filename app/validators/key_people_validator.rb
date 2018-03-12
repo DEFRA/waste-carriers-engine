@@ -7,7 +7,7 @@ class KeyPeopleValidator < ActiveModel::Validator
     elsif already_has_enough_key_people?(record)
       true
     else
-      record.errors.add(:base, :not_enough_key_people)
+      record.errors.add(:base, :not_enough_key_people, count: record.minimum_key_people)
     end
   end
 
