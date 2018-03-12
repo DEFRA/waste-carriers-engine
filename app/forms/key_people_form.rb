@@ -8,7 +8,7 @@ class KeyPeopleForm < BaseForm
     self.business_type = @transient_registration.business_type
 
     # If there's only one key person, we can pre-fill the fields so users can easily edit them
-    prefill_form if !can_have_multiple_key_people? && @transient_registration.keyPeople.present?
+    prefill_form if can_only_have_one_key_person? && @transient_registration.keyPeople.present?
   end
 
   def submit(params)
@@ -46,9 +46,9 @@ class KeyPeopleForm < BaseForm
     @transient_registration.keyPeople.count
   end
 
-  def can_have_multiple_key_people?
-    return true unless maximum_key_people.present?
-    maximum_key_people > 1
+  def can_only_have_one_key_person?
+    return false unless maximum_key_people.present?
+    maximum_key_people == 1
   end
 
   def fields_have_content?
@@ -94,7 +94,7 @@ class KeyPeopleForm < BaseForm
 
   def all_key_people
     # If there's only one key person allowed, just replace existing data
-    return [key_person] if maximum_key_people == 1
+    return [key_person] if can_only_have_one_key_person?
 
     existing_key_people = []
     @transient_registration.keyPeople.each do |person|
