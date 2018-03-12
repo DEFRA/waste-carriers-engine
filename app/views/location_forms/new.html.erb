@@ -6,6 +6,17 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <div class="form-group">
+      <details>
+        <summary>
+          <span class="summary"><%= t(".location_detail_subheading") %></span>
+        </summary>
+        <div class="panel panel-border-narrow">
+          <p><%= t(".location_detail_paragraph") %></p>
+        </div>
+      </details>
+    </div>
+
     <% if @location_form.errors[:location].any? %>
     <div class="form-group form-group-error">
     <% else %>
@@ -20,7 +31,26 @@
         <span class="error-message"><%= @location_form.errors[:location].join(", ") %></span>
         <% end %>
 
-        <p>Form fields go here</p>
+        <div class="multiple-choice">
+          <%= f.radio_button :location, 'england' %>
+          <%= f.label :location, t(".option_england"), value: 'england' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :location, 'northern_ireland' %>
+          <%= f.label :location, t(".option_northern_ireland"), value: 'northern_ireland' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :location, 'scotland' %>
+          <%= f.label :location, t(".option_scotland"), value: 'scotland' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :location, 'wales' %>
+          <%= f.label :location, t(".option_wales"), value: 'wales' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :location, 'overseas' %>
+          <%= f.label :location, t(".option_overseas"), value: 'overseas' %>
+        </div>
       </fieldset>
     </div>
 

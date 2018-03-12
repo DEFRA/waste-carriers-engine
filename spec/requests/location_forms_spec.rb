@@ -56,12 +56,14 @@ RSpec.describe "LocationForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              location: "england"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post location_forms_path, location_form: valid_params
+            expect(transient_registration.reload[:location]).to eq(valid_params[:location])
           end
 
           it "returns a 302 response" do
@@ -78,7 +80,8 @@ RSpec.describe "LocationForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              location: "bar"
             }
           }
 
@@ -89,7 +92,7 @@ RSpec.describe "LocationForms", type: :request do
 
           it "does not update the transient registration" do
             post location_forms_path, location_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:location]).to_not eq(invalid_params[:location])
           end
         end
       end
@@ -104,12 +107,14 @@ RSpec.describe "LocationForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            location: "England"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post location_forms_path, location_form: valid_params
+          expect(transient_registration.reload[:location]).to_not eq(valid_params[:location])
         end
 
         it "returns a 302 response" do
