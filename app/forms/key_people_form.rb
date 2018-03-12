@@ -103,6 +103,8 @@ class KeyPeopleForm < BaseForm
     return [key_person] if can_only_have_one_key_person?
 
     existing_key_people = []
+    # Adding the new key person directly to @transient_registration.keyPeople immediately updates the object,
+    # regardless of validation. So instead we copy the existing key people into a new array and modify that.
     @transient_registration.keyPeople.each do |person|
       existing_key_people << person
     end
