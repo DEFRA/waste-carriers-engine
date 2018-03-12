@@ -38,7 +38,8 @@ class KeyPeopleForm < BaseForm
   end
 
   def minimum_key_people
-    return unless business_type.present?
+    # Business type should always be set, but use 1 as the default, just in case
+    return 1 unless business_type.present?
     key_people_limits[business_type.to_sym][:minimum]
   end
 
@@ -49,6 +50,11 @@ class KeyPeopleForm < BaseForm
   def can_only_have_one_key_person?
     return false unless maximum_key_people.present?
     maximum_key_people == 1
+  end
+
+  def enough_key_people?
+    return false if number_of_existing_key_people < minimum_key_people
+    true
   end
 
   def fields_have_content?
