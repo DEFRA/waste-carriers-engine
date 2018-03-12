@@ -13,4 +13,10 @@ class LocationForm < BaseForm
 
     super(attributes, params[:reg_identifier])
   end
+
+  validates :location, inclusion: { in: %w[england
+                                           northern_ireland
+                                           scotland
+                                           wales
+                                           overseas] }
 end
