@@ -1,13 +1,18 @@
 <%= render("shared/back", back_path: back_key_people_forms_path(@key_people_form.reg_identifier)) %>
 
-<div class="text">
+<% if @key_people_form.can_only_have_one_key_person? %>
+ <div class="text">
+<% else %>
+<div class="grid-row">
+  <div class="column-two-thirds">
+<% end %>
   <%= form_for(@key_people_form) do |f| %>
     <%= render("shared/errors", object: @key_people_form) %>
 
     <h1 class="heading-large"><%= t(".heading_#{@key_people_form.business_type}") %></h1>
 
     <p><%= t(".description_1_#{@key_people_form.business_type}") %></p>
-    <% unless @key_people_form.business_type == "soleTrader" %>
+    <% unless @key_people_form.can_only_have_one_key_person? %>
       <p><%= t(".description_2") %></p>
     <% end %>
 
@@ -76,14 +81,36 @@
 
     <%= f.hidden_field :reg_identifier, value: @key_people_form.reg_identifier %>
 
-    <% unless @key_people_form.business_type == "soleTrader" %>
+    <% if @key_people_form.can_only_have_one_key_person? %>
       <div class="form-group">
-        <a href="#"><%= t(".add_another") %></a>
+        <%= f.submit t(".next_button"), class: "button" %>
+      </div>
+    <% elsif @key_people_form.minimum_key_people > (@key_people_form.number_of_existing_key_people + 1) %>
+      <div class="form-group">
+        <%= f.submit t(".add_person_link"), class: "button" %>
+      </div>
+    <% else %>
+      <div class="form-group">
+        <%= f.submit t(".add_person_link"), class: "button-link" %>
+      </div>
+      <div class="form-group">
+        <%= f.submit t(".next_button"), class: "button" %>
       </div>
     <% end %>
+  <% end %>
 
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
+  <% unless @key_people_form.can_only_have_one_key_person? || @key_people_form.number_of_existing_key_people < 1 %>
+  </div>
+  <div class="column-one-third">
+    <h2 class="heading-small"><%= t(".list_of_people") %></h2>
+    <% @transient_registration.keyPeople.each do |person| %>
+      <ul>
+        <li>
+          <%= person.first_name %> <%= person.last_name %>
+          <a href="#"><%= t(".delete_person_link") %></a>
+        </li>
+      </ul>
+    <% end %>
+  </div>
   <% end %>
 </div>

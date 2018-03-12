@@ -2,8 +2,9 @@ require "rails_helper"
 
 RSpec.describe KeyPeopleForm, type: :model do
   describe "#submit" do
+    let(:key_people_form) { build(:key_people_form, :has_required_data) }
+
     context "when the form is valid" do
-      let(:key_people_form) { build(:key_people_form, :has_required_data) }
       let(:valid_params) do
         { reg_identifier: key_people_form.reg_identifier,
           first_name: key_people_form.first_name,
@@ -19,11 +20,80 @@ RSpec.describe KeyPeopleForm, type: :model do
     end
 
     context "when the form is not valid" do
-      let(:key_people_form) { build(:key_people_form, :has_required_data) }
       let(:invalid_params) { { reg_identifier: "foo" } }
 
       it "should not submit" do
         expect(key_people_form.submit(invalid_params)).to eq(false)
+      end
+    end
+
+    context "when the form is blank" do
+      let(:blank_params) do
+        { reg_identifier: key_people_form.reg_identifier,
+          first_name: "",
+          last_name: "",
+          dob_year: "",
+          dob_month: "",
+          dob_day: "" }
+      end
+
+      context "when the transient registration already has enough key people" do
+        before(:each) do
+          key_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data)])
+          key_people_form.business_type = "overseas"
+        end
+
+        it "should submit" do
+          expect(key_people_form.submit(blank_params)).to eq(true)
+        end
+      end
+
+      context "when the transient registration does not have enough key people" do
+        before(:each) do
+          key_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data)])
+          key_people_form.business_type = "partnership"
+        end
+
+        it "should not submit" do
+          expect(key_people_form.submit(blank_params)).to eq(false)
+        end
+      end
+    end
+  end
+
+  describe "#initialize" do
+    context "when a key person already exists and it's a sole trader" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               business_type: "soleTrader",
+               keyPeople: [build(:key_person, :has_required_data)])
+      end
+      let(:key_people_form) { KeyPeopleForm.new(transient_registration) }
+
+      it "should prefill the first_name" do
+        first_name = transient_registration.keyPeople.first.first_name
+        expect(key_people_form.first_name).to eq(first_name)
+      end
+
+      it "should prefill the last_name" do
+        last_name = transient_registration.keyPeople.first.last_name
+        expect(key_people_form.last_name).to eq(last_name)
+      end
+
+      it "should prefill the dob_day" do
+        dob_day = transient_registration.keyPeople.first.dob_day
+        expect(key_people_form.dob_day).to eq(dob_day)
+      end
+
+      it "should prefill the dob_month" do
+        dob_month = transient_registration.keyPeople.first.dob_month
+        expect(key_people_form.dob_month).to eq(dob_month)
+      end
+
+      it "should prefill the dob_year" do
+        dob_year = transient_registration.keyPeople.first.dob_year
+        expect(key_people_form.dob_year).to eq(dob_year)
       end
     end
   end

@@ -1,0 +1,11 @@
+// Button formatting
+
+// A button which looks like a link
+input.button-link {
+  @include inline-block;
+
+  border: none;
+  color: $link-colour;
+  padding: 0;
+  text-decoration: underline;
+}

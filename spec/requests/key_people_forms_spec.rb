@@ -65,9 +65,15 @@ RSpec.describe "KeyPeopleForms", type: :request do
             }
           }
 
+          it "increases the number of key people" do
+            key_people_count = transient_registration.keyPeople.count
+            post key_people_forms_path, key_people_form: valid_params
+            expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+          end
+
           it "updates the transient registration" do
             post key_people_forms_path, key_people_form: valid_params
-            expect(transient_registration.reload.keyPeople.first.first_name).to eq(valid_params[:first_name])
+            expect(transient_registration.reload.keyPeople.last.first_name).to eq(valid_params[:first_name])
           end
 
           it "returns a 302 response" do
@@ -79,12 +85,56 @@ RSpec.describe "KeyPeopleForms", type: :request do
             post key_people_forms_path, key_people_form: valid_params
             expect(response).to redirect_to(new_declare_convictions_form_path(transient_registration[:reg_identifier]))
           end
+
+          context "when there is already a key person" do
+            let(:existing_key_person) { build(:key_person) }
+
+            before(:each) do
+              transient_registration.update_attributes(keyPeople: [existing_key_person])
+            end
+
+            context "when there can be multiple key people" do
+              it "does not replace the existing key person" do
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.first.first_name).to eq(existing_key_person.first_name)
+              end
+            end
+
+            context "when there can only be one key person" do
+              before(:each) do
+                transient_registration.update_attributes(business_type: "soleTrader")
+              end
+
+              it "does not increase the number of key people" do
+                key_people_count = transient_registration.keyPeople.count
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
+              end
+
+              it "replaces the existing key person" do
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.first.first_name).to_not eq(existing_key_person.first_name)
+              end
+            end
+          end
+
+          context "when the submit params say to add another" do
+            it "redirects to the key_people form" do
+              post key_people_forms_path, key_people_form: valid_params, commit: I18n.t("key_people_forms.new.add_person_link")
+              expect(response).to redirect_to(new_key_people_form_path(transient_registration[:reg_identifier]))
+            end
+          end
         end
 
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              first_name: "",
+              last_name: "",
+              dob_day: "31",
+              dob_month: "02",
+              dob_year: "2000"
             }
           }
 
@@ -93,9 +143,49 @@ RSpec.describe "KeyPeopleForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "does not update the transient registration" do
+          it "does not increase the number of key people" do
+            key_people_count = transient_registration.keyPeople.count
             post key_people_forms_path, key_people_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
+          end
+
+          context "when there is already a key person" do
+            let(:existing_key_person) { build(:key_person) }
+
+            before(:each) do
+              transient_registration.update_attributes(keyPeople: [existing_key_person])
+            end
+
+            it "does not replace the existing key person" do
+              post key_people_forms_path, key_people_form: invalid_params
+              expect(transient_registration.reload.keyPeople.first.first_name).to eq(existing_key_person.first_name)
+            end
+          end
+
+          context "when the submit params say to add another" do
+            it "returns a 302 response" do
+              post key_people_forms_path, key_people_form: invalid_params, commit: I18n.t("key_people_forms.new.add_person_link")
+              expect(response).to have_http_status(302)
+            end
+          end
+        end
+
+        context "when blank params are submitted" do
+          let(:blank_params) {
+            {
+              reg_identifier: "foo",
+              first_name: "",
+              last_name: "",
+              dob_day: "",
+              dob_month: "",
+              dob_year: ""
+            }
+          }
+
+          it "does not increase the number of key people" do
+            key_people_count = transient_registration.keyPeople.count
+            post key_people_forms_path, key_people_form: blank_params
+            expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
           end
         end
       end

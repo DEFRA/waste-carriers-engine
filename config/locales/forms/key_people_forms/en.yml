@@ -21,13 +21,18 @@ en:
       dob_year: Year
       dob_month: Month
       dob_day: Day
-      add_another: Add another person
+      add_person_link: Add another person
+      next_button: Continue
+      list_of_people: You have added the following people
+      delete_person_link: Delete
       next_button: Continue
   activemodel:
     errors:
       models:
         key_people_form:
-          not_enough_key_people: "You must add the details of at least one person"
+          not_enough_key_people:
+            one: "You must add the details of at least one person"
+            other: "You must add the details of at least %{count} people"
           attributes:
             first_name:
               blank: "You must enter a first name"
