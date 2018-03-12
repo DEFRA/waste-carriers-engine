@@ -196,9 +196,9 @@ RSpec.describe "BusinessTypeForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the renewal start form" do
+          it "redirects to the location form" do
             get back_business_type_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_location_form_path(transient_registration[:reg_identifier]))
           end
         end
       end

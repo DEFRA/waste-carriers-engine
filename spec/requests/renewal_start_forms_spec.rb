@@ -54,12 +54,12 @@ RSpec.describe "RenewalStartForms", type: :request do
                 create(:transient_registration,
                        :has_required_data,
                        account_email: user.email,
-                       workflow_state: "business_type_form")
+                       workflow_state: "location_form")
               end
 
               it "redirects to the form for the current state" do
                 get new_renewal_start_form_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_business_type_form_path(transient_registration[:reg_identifier]))
+                expect(response).to redirect_to(new_location_form_path(transient_registration[:reg_identifier]))
               end
             end
           end
@@ -193,7 +193,7 @@ RSpec.describe "RenewalStartForms", type: :request do
 
               it "redirects to the business type form" do
                 post renewal_start_forms_path, renewal_start_form: valid_params
-                expect(response).to redirect_to(new_business_type_form_path(valid_params[:reg_identifier]))
+                expect(response).to redirect_to(new_location_form_path(valid_params[:reg_identifier]))
               end
             end
 
@@ -227,7 +227,7 @@ RSpec.describe "RenewalStartForms", type: :request do
 
           it "redirects to the business type form" do
             post renewal_start_forms_path, renewal_start_form: valid_params
-            expect(response).to redirect_to(new_business_type_form_path(valid_params[:reg_identifier]))
+            expect(response).to redirect_to(new_location_form_path(valid_params[:reg_identifier]))
           end
 
           it "does not create a new transient registration" do

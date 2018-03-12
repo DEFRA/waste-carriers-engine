@@ -13,8 +13,8 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to_not allow_event :back
       end
 
-      it "changes to :business_type_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:renewal_start_form).to(:business_type_form).on_event(:next)
+      it "changes to :location_form after the 'next' event" do
+        expect(transient_registration).to transition_from(:renewal_start_form).to(:location_form).on_event(:next)
       end
     end
   end

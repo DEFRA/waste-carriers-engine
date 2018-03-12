@@ -13,6 +13,16 @@ Rails.application.routes.draw do
             path: "renew",
             path_names: { new: "/:reg_identifier" }
 
+  resources :location_forms,
+            only: [:new, :create],
+            path: "location",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "location_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
   resources :business_type_forms,
             only: [:new, :create],
             path: "business-type",

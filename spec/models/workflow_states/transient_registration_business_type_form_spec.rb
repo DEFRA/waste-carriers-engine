@@ -10,8 +10,8 @@ RSpec.describe TransientRegistration, type: :model do
       end
 
       context "when the 'back' event happens" do
-        it "changes to :renewal_start_form" do
-          expect(transient_registration).to transition_from(:business_type_form).to(:renewal_start_form).on_event(:back)
+        it "changes to :location_form" do
+          expect(transient_registration).to transition_from(:business_type_form).to(:location_form).on_event(:back)
         end
       end
 

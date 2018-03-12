@@ -10,6 +10,7 @@ module CanChangeWorkflowStatus
     aasm column: :workflow_state do
       # States / forms
       state :renewal_start_form, initial: true
+      state :location_form
       state :business_type_form
 
       state :smart_answers_form
@@ -52,6 +53,9 @@ module CanChangeWorkflowStatus
       # Transitions
       event :next do
         transitions from: :renewal_start_form,
+                    to: :location_form
+
+        transitions from: :location_form,
                     to: :business_type_form
 
         transitions from: :business_type_form,
@@ -177,8 +181,11 @@ module CanChangeWorkflowStatus
       end
 
       event :back do
-        transitions from: :business_type_form,
+        transitions from: :location_form,
                     to: :renewal_start_form
+
+        transitions from: :business_type_form,
+                    to: :location_form
 
         # Smart answers
 

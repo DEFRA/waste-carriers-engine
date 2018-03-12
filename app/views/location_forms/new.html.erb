@@ -1,0 +1,32 @@
+<%= render("shared/back", back_path: back_location_forms_path(@location_form.reg_identifier)) %>
+
+<div class="text">
+  <%= form_for(@location_form) do |f| %>
+    <%= render("shared/errors", object: @location_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <% if @location_form.errors[:location].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="location">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
+        </legend>
+
+        <% if @location_form.errors[:location].any? %>
+        <span class="error-message"><%= @location_form.errors[:location].join(", ") %></span>
+        <% end %>
+
+        <p>Form fields go here</p>
+      </fieldset>
+    </div>
+
+    <%= f.hidden_field :reg_identifier, value: @location_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
