@@ -61,6 +61,22 @@ module CanChangeWorkflowStatus
         # Location
 
         transitions from: :location_form,
+                    to: :register_in_northern_ireland_form,
+                    if: :should_register_in_northern_ireland?
+
+        transitions from: :location_form,
+                    to: :register_in_scotland_form,
+                    if: :should_register_in_scotland?
+
+        transitions from: :location_form,
+                    to: :register_in_wales_form,
+                    if: :should_register_in_wales?
+
+        transitions from: :location_form,
+                    to: :other_businesses_form,
+                    if: :overseas_address?
+
+        transitions from: :location_form,
                     to: :business_type_form
 
         transitions from: :register_in_northern_ireland_form,
@@ -383,7 +399,7 @@ module CanChangeWorkflowStatus
   end
 
   def overseas_address?
-    business_type == "overseas"
+    business_type == "overseas" || location == "overseas"
   end
 
   def registered_address_was_manually_entered?
@@ -393,5 +409,17 @@ module CanChangeWorkflowStatus
 
   def skip_to_manual_address?
     temp_os_places_error
+  end
+
+  def should_register_in_northern_ireland?
+    location == "northern_ireland"
+  end
+
+  def should_register_in_scotland?
+    location == "scotland"
+  end
+
+  def should_register_in_wales?
+    location == "wales"
   end
 end
