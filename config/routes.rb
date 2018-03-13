@@ -23,6 +23,36 @@ Rails.application.routes.draw do
               on: :collection
             end
 
+  resources :register_in_northern_ireland_forms,
+            only: [:new, :create],
+            path: "register-in-northern-ireland",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "register_in_northern_ireland_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
+  resources :register_in_scotland_forms,
+            only: [:new, :create],
+            path: "register-in-scotland",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "register_in_scotland_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
+  resources :register_in_wales_forms,
+            only: [:new, :create],
+            path: "register-in-wales",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "register_in_wales_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
   resources :business_type_forms,
             only: [:new, :create],
             path: "business-type",

@@ -1,0 +1,15 @@
+en:
+  register_in_wales_forms:
+    new:
+      heading: You should register in Wales
+      text: Text goes here
+      next_button: I still want to register in England
+  activemodel:
+    errors:
+      models:
+        register_in_wales_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"

@@ -10,10 +10,13 @@ module CanChangeWorkflowStatus
     aasm column: :workflow_state do
       # States / forms
       state :renewal_start_form, initial: true
-      state :location_form
-      state :business_type_form
 
-      state :smart_answers_form
+      state :location_form
+      state :register_in_northern_ireland_form
+      state :register_in_scotland_form
+      state :register_in_wales_form
+
+      state :business_type_form
 
       state :other_businesses_form
       state :service_provided_form
@@ -55,8 +58,21 @@ module CanChangeWorkflowStatus
         transitions from: :renewal_start_form,
                     to: :location_form
 
+        # Location
+
         transitions from: :location_form,
                     to: :business_type_form
+
+        transitions from: :register_in_northern_ireland_form,
+                    to: :business_type_form
+
+        transitions from: :register_in_scotland_form,
+                    to: :business_type_form
+
+        transitions from: :register_in_wales_form,
+                    to: :business_type_form
+
+        # End location
 
         transitions from: :business_type_form,
                     to: :cannot_renew_lower_tier_form,
@@ -181,8 +197,21 @@ module CanChangeWorkflowStatus
       end
 
       event :back do
+        # Location
+
         transitions from: :location_form,
                     to: :renewal_start_form
+
+        transitions from: :register_in_northern_ireland_form,
+                    to: :location_form
+
+        transitions from: :register_in_scotland_form,
+                    to: :location_form
+
+        transitions from: :register_in_wales_form,
+                    to: :location_form
+
+        # End location
 
         transitions from: :business_type_form,
                     to: :location_form
