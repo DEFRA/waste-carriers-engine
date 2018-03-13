@@ -7,32 +7,28 @@ module CanCheckBusinessTypeChanges
       old_type = Registration.where(reg_identifier: reg_identifier).first.business_type
 
       case old_type
-      # If there's no change to the business type, it's valid
+      # If the old type and the new type are the same, it's valid
       when business_type
         true
-      # Otherwise, check based on what the previous type was
+      # Otherwise, check if the change is allowed based on the previous type
       when "authority"
-        matches_allowed_types?(["localAuthority"])
-      when "charity"
-        matches_allowed_types?(["overseas"])
+        changing_to?("localAuthority")
       when "limitedCompany"
-        matches_allowed_types?(["limitedLiabilityPartnership", "overseas"])
+        changing_to?("limitedLiabilityPartnership")
       when "partnership"
-        matches_allowed_types?(["limitedLiabilityPartnership", "overseas"])
+        changing_to?("limitedLiabilityPartnership")
       when "publicBody"
-        matches_allowed_types?(["localAuthority"])
-      when "soleTrader"
-        matches_allowed_types?(["overseas"])
-      # If the old type was none of the above, it's invalid
+        changing_to?("localAuthority")
+      # There are no valid changes for charity or soleTrader
       else
         false
       end
     end
-  end
 
-  private
+    private
 
-  def matches_allowed_types?(valid_types)
-    valid_types.include?(business_type)
+    def changing_to?(value)
+      business_type == value
+    end
   end
 end

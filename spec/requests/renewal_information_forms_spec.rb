@@ -60,10 +60,6 @@ RSpec.describe "RenewalInformationForms", type: :request do
             }
           }
 
-          it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
-          end
-
           it "returns a 302 response" do
             post renewal_information_forms_path, renewal_information_form: valid_params
             expect(response).to have_http_status(302)
@@ -96,8 +92,8 @@ RSpec.describe "RenewalInformationForms", type: :request do
             end
           end
 
-          context "when the business type is overseas" do
-            before(:each) { transient_registration.update_attributes(business_type: "overseas") }
+          context "when the location is overseas" do
+            before(:each) { transient_registration.update_attributes(location: "overseas") }
 
             it "redirects to the company_name form" do
               post renewal_information_forms_path, renewal_information_form: valid_params
@@ -156,10 +152,6 @@ RSpec.describe "RenewalInformationForms", type: :request do
             reg_identifier: transient_registration[:reg_identifier]
           }
         }
-
-        it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
-        end
 
         it "returns a 302 response" do
           post renewal_information_forms_path, renewal_information_form: valid_params

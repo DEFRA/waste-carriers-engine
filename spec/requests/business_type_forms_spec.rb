@@ -77,7 +77,7 @@ RSpec.describe "BusinessTypeForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              business_type: "overseas"
+              business_type: "limitedLiabilityPartnership"
             }
           }
 

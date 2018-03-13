@@ -48,5 +48,9 @@ module CanHaveRegistrationAttributes
       return nil unless addresses.present?
       addresses.where(address_type: "REGISTERED").first
     end
+
+    def overseas?
+      location == "overseas"
+    end
   end
 end

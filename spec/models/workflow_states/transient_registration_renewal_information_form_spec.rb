@@ -37,8 +37,8 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
-      context "when the business type is overseas" do
-        before(:each) { transient_registration.business_type = "overseas" }
+      context "when the location is overseas" do
+        before(:each) { transient_registration.location = "overseas" }
 
         it "changes to :company_name_form after the 'next' event" do
           expect(transient_registration).to transition_from(:renewal_information_form).to(:company_name_form).on_event(:next)

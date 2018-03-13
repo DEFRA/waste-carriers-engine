@@ -25,10 +25,10 @@ class Address
   field :firstOrOnlyEasting, as: :first_or_only_easting,              type: Integer
   field :firstOrOnlyNorthing, as: :first_or_only_northing,            type: Integer
 
-  def self.create_from_manual_entry(params, business_type)
+  def self.create_from_manual_entry(params, overseas)
     address = Address.new
 
-    address[:address_mode] = if business_type == "overseas"
+    address[:address_mode] = if overseas
                                "manual-foreign"
                              else
                                "manual-uk"

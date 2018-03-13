@@ -67,7 +67,7 @@ class CompanyAddressManualForm < BaseForm
   end
 
   def add_or_replace_address(params)
-    address = Address.create_from_manual_entry(params, business_type)
+    address = Address.create_from_manual_entry(params, @transient_registration.overseas?)
     address.assign_attributes(address_type: "REGISTERED")
 
     # Update the transient object's nested addresses, replacing any existing registered address

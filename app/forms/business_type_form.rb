@@ -18,7 +18,6 @@ class BusinessTypeForm < BaseForm
                                                 limitedCompany
                                                 limitedLiabilityPartnership
                                                 localAuthority
-                                                overseas
                                                 partnership
                                                 soleTrader] }
 end

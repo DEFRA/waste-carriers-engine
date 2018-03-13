@@ -11,6 +11,9 @@ class LocationForm < BaseForm
     self.location = params[:location]
     attributes = { location: location }
 
+    # Set the business type to overseas when required as we use this for microcopy
+    attributes[:business_type] = "overseas" if location == "overseas"
+
     super(attributes, params[:reg_identifier])
   end
 

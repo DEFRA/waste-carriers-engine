@@ -12,7 +12,7 @@ RSpec.describe TransientRegistration, type: :model do
       context "when the business type is localAuthority" do
         before(:each) { transient_registration.business_type = "localAuthority" }
 
-        it "changes to :renewal_infromation_form after the 'back' event" do
+        it "changes to :renewal_information_form after the 'back' event" do
           expect(transient_registration).to transition_from(:company_name_form).to(:renewal_information_form).on_event(:back)
         end
       end
@@ -33,18 +33,10 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
-      context "when the business type is overseas" do
-        before(:each) { transient_registration.business_type = "overseas" }
-
-        it "changes to :renewal_infromation_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:company_name_form).to(:renewal_information_form).on_event(:back)
-        end
-      end
-
       context "when the business type is partnership" do
         before(:each) { transient_registration.business_type = "partnership" }
 
-        it "changes to :renewal_infromation_form after the 'back' event" do
+        it "changes to :renewal_information_form after the 'back' event" do
           expect(transient_registration).to transition_from(:company_name_form).to(:renewal_information_form).on_event(:back)
         end
       end
@@ -52,24 +44,28 @@ RSpec.describe TransientRegistration, type: :model do
       context "when the business type is soleTrader" do
         before(:each) { transient_registration.business_type = "soleTrader" }
 
-        it "changes to :renewal_infromation_form after the 'back' event" do
+        it "changes to :renewal_information_form after the 'back' event" do
           expect(transient_registration).to transition_from(:company_name_form).to(:renewal_information_form).on_event(:back)
         end
       end
 
-      context "when the business type is not overseas" do
-        before(:each) { transient_registration.business_type = "limitedCompany" }
+      context "when the location is overseas" do
+        before(:each) { transient_registration.location = "overseas" }
 
-        it "changes to :company_postcode_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:company_name_form).to(:company_postcode_form).on_event(:next)
+        it "changes to :renewal_information_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:company_name_form).to(:renewal_information_form).on_event(:back)
         end
-      end
-
-      context "when the business type is overseas" do
-        before(:each) { transient_registration.business_type = "overseas" }
 
         it "changes to :company_address_manual_form after the 'next' event" do
           expect(transient_registration).to transition_from(:company_name_form).to(:company_address_manual_form).on_event(:next)
+        end
+      end
+
+      context "when the location is not overseas" do
+        before(:each) { transient_registration.location = "england" }
+
+        it "changes to :company_postcode_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:company_name_form).to(:company_postcode_form).on_event(:next)
         end
       end
     end
