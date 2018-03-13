@@ -10,8 +10,24 @@ RSpec.describe TransientRegistration, type: :model do
       end
 
       context "when the 'back' event happens" do
-        it "changes to :location_form" do
-          expect(transient_registration).to transition_from(:business_type_form).to(:location_form).on_event(:back)
+        shared_examples_for "'back' transition from business_type_form" do |location, back_state|
+          before(:each) do
+            transient_registration.location = location
+          end
+
+          it "should transition to the correct back state" do
+            expect(transient_registration).to transition_from(:business_type_form).to(back_state).on_event(:back)
+          end
+        end
+
+        {
+          # Permutation table of location and the state that should result
+          "england"          => :location_form,
+          "northern_ireland" => :register_in_northern_ireland_form,
+          "scotland"         => :register_in_scotland_form,
+          "wales"            => :register_in_wales_form
+        }.each do |location, back_form|
+          it_behaves_like "'back' transition from business_type_form", location, back_form
         end
       end
 

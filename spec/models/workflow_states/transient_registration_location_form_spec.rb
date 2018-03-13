@@ -13,43 +13,26 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:location_form).to(:renewal_start_form).on_event(:back)
       end
 
-      context "when the location is 'england'" do
-        before(:each) { transient_registration.location = "england" }
+      context "when the 'next' event happens" do
+        shared_examples_for "'next' transition from location_form" do |location, next_state|
+          before(:each) do
+            transient_registration.location = location
+          end
 
-        it "changes to :business_type_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:location_form).to(:business_type_form).on_event(:next)
+          it "should transition to the correct next state" do
+            expect(transient_registration).to transition_from(:location_form).to(next_state).on_event(:next)
+          end
         end
-      end
 
-      context "when the location is 'northern_ireland'" do
-        before(:each) { transient_registration.location = "northern_ireland" }
-
-        it "changes to :register_in_northern_ireland_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:location_form).to(:register_in_northern_ireland_form).on_event(:next)
-        end
-      end
-
-      context "when the location is 'scotland'" do
-        before(:each) { transient_registration.location = "scotland" }
-
-        it "changes to :register_in_scotland_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:location_form).to(:register_in_scotland_form).on_event(:next)
-        end
-      end
-
-      context "when the location is 'wales'" do
-        before(:each) { transient_registration.location = "wales" }
-
-        it "changes to :register_in_wales_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:location_form).to(:register_in_wales_form).on_event(:next)
-        end
-      end
-
-      context "when the location is 'overseas'" do
-        before(:each) { transient_registration.location = "overseas" }
-
-        it "changes to :other_businesses_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:location_form).to(:other_businesses_form).on_event(:next)
+        {
+          # Permutation table of location and the state that should result
+          "england"          => :business_type_form,
+          "northern_ireland" => :register_in_northern_ireland_form,
+          "scotland"         => :register_in_scotland_form,
+          "wales"            => :register_in_wales_form,
+          "overseas"         => :other_businesses_form
+        }.each do |location, next_form|
+          it_behaves_like "'next' transition from location_form", location, next_form
         end
       end
     end

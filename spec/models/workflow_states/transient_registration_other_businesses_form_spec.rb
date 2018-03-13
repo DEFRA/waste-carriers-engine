@@ -13,6 +13,14 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:other_businesses_form).to(:business_type_form).on_event(:back)
       end
 
+      context "when the business is overseas" do
+        before(:each) { transient_registration.location = "overseas" }
+
+        it "transitions to :location_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:other_businesses_form).to(:location_form).on_event(:back)
+        end
+      end
+
       context "when the business does not carry waste for other businesses or households" do
         before(:each) { transient_registration.other_businesses = false }
 

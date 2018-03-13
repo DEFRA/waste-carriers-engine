@@ -230,9 +230,25 @@ module CanChangeWorkflowStatus
         # End location
 
         transitions from: :business_type_form,
+                    to: :register_in_northern_ireland_form,
+                    if: :should_register_in_northern_ireland?
+
+        transitions from: :business_type_form,
+                    to: :register_in_scotland_form,
+                    if: :should_register_in_scotland?
+
+        transitions from: :business_type_form,
+                    to: :register_in_wales_form,
+                    if: :should_register_in_wales?
+
+        transitions from: :business_type_form,
                     to: :location_form
 
         # Smart answers
+
+        transitions from: :other_businesses_form,
+                    to: :location_form,
+                    if: :overseas_address?
 
         transitions from: :other_businesses_form,
                     to: :business_type_form
