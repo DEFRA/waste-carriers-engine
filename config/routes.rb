@@ -191,6 +191,11 @@ Rails.application.routes.draw do
               to: "key_people_forms#go_back",
               as: "back",
               on: :collection
+
+              delete "delete_person/:id",
+              to: "key_people_forms#delete_person",
+              as: "delete_person",
+              on: :collection
             end
 
   resources :declare_convictions_forms,

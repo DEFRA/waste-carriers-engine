@@ -22,4 +22,16 @@ class KeyPeopleFormsController < FormsController
       end
     end
   end
+
+  def delete_person
+    return unless set_up_form(KeyPeopleForm, "key_people_form", params[:reg_identifier])
+
+    respond_to do |format|
+      # Check if there are any matches first, to avoid a Mongoid error
+      people_with_id = @transient_registration.keyPeople.where(id: params[:id])
+      people_with_id.first.delete if people_with_id.any?
+
+      format.html { redirect_to_correct_form }
+    end
+  end
 end

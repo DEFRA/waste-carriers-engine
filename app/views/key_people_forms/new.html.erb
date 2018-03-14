@@ -107,7 +107,10 @@
       <ul>
         <li>
           <%= person.first_name %> <%= person.last_name %>
-          <a href="#"><%= t(".delete_person_link") %></a>
+          <%= button_to(t(".delete_person_link"),
+              delete_person_key_people_forms_path(person.id),
+              method: :delete,
+              params: { reg_identifier: @key_people_form.reg_identifier }) %>
         </li>
       </ul>
     <% end %>

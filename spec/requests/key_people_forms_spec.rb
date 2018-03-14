@@ -290,4 +290,59 @@ RSpec.describe "KeyPeopleForms", type: :request do
       end
     end
   end
+
+  describe "DELETE delete_person_key_people_forms_path" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
+      before(:each) do
+        sign_in(user)
+      end
+
+      context "when a valid transient registration exists" do
+        let(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 account_email: user.email,
+                 workflow_state: "key_people_form")
+        end
+
+        context "when the registration has key people" do
+          let(:key_person_a) { build(:key_person, :has_required_data) }
+          let(:key_person_b) { build(:key_person, :has_required_data) }
+
+          before(:each) do
+            transient_registration.update_attributes(keyPeople: [key_person_a, key_person_b])
+          end
+
+          context "when the delete person action is triggered" do
+            it "returns a 302 response" do
+              delete delete_person_key_people_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              expect(response).to have_http_status(302)
+            end
+
+            it "redirects to the key people form" do
+              delete delete_person_key_people_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              expect(response).to redirect_to(new_key_people_form_path(transient_registration[:reg_identifier]))
+            end
+
+            it "reduces the number of key people" do
+              key_people_count = transient_registration.keyPeople.count
+              delete delete_person_key_people_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              expect(transient_registration.reload.keyPeople.count).to eq(key_people_count - 1)
+            end
+
+            it "removes the key person" do
+              delete delete_person_key_people_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              expect(transient_registration.reload.keyPeople.where(id: key_person_a[:id]).count).to eq(0)
+            end
+
+            it "does not modify the other key people" do
+              delete delete_person_key_people_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              expect(transient_registration.reload.keyPeople.where(id: key_person_b[:id]).count).to eq(1)
+            end
+          end
+        end
+      end
+    end
+  end
 end
