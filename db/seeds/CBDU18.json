@@ -1,0 +1,64 @@
+{
+  "date_flag": "in_renewal_window",
+  "tier": "UPPER",
+  "registrationType": "carrier_broker_dealer",
+  "businessType": "soleTrader",
+  "otherBusinesses": "yes",
+  "isMainService": "yes",
+  "onlyAMF": "no",
+  "companyName": "Sole Trader Seed",
+  "firstName": "Test",
+  "lastName": "User",
+  "phoneNumber": "01234 567890",
+  "contactEmail": "user@waste-exemplar.gov.uk",
+  "addresses": [{
+      "addressType": "REGISTERED",
+      "addressMode": "manual-uk",
+      "houseNumber": "Unit 5",
+      "addressLine1": "Horizon House",
+      "addressLine2": "Deanery Road",
+      "townCity": "Bristol",
+      "postcode": "BS1 5AH",
+      "location": {
+        "lat": 0,
+        "lon": 0
+      }
+    },
+    {
+      "addressType": "POSTAL",
+      "houseNumber": "Richard Fairclough House",
+      "addressLine1": "Knutsford Road",
+      "addressLine2": "Latchford",
+      "addressLine3": "",
+      "addressLine4": "",
+      "townCity": "Warrington",
+      "postcode": "WA4 1HT",
+      "country": ""
+    }
+  ],
+  "keyPeople": [{
+    "firstName": "Test",
+    "lastName": "Employee",
+    "dateOfBirth": "1978-01-01",
+    "position": "Director",
+    "personType": "KEY",
+    "convictionSearchResult": {
+      "matchResult": "NO",
+      "confirmed": "no"
+    }
+  }],
+  "accountEmail": "user@waste-exemplar.gov.uk",
+  "declaredConvictions": "no",
+  "declaration": 1,
+  "regIdentifier": "CBDU18",
+  "metaData": {
+    "anotherString": "userDetailAddedAtRegistration",
+    "status": "ACTIVE",
+    "route": "DIGITAL",
+    "distance": "n/a"
+  },
+  "convictionSearchResult": {
+    "matchResult": "NO",
+    "confirmed": "no"
+  }
+}
