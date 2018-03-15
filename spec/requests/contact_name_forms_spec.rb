@@ -146,9 +146,9 @@ RSpec.describe "ContactNameForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the conviction_details form" do
+          it "redirects to the declare_convictions form" do
             get back_contact_name_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_declare_convictions_form_path(transient_registration[:reg_identifier]))
           end
         end
       end

@@ -182,7 +182,11 @@ module CanChangeWorkflowStatus
                     to: :declare_convictions_form
 
         transitions from: :declare_convictions_form,
-                    to: :conviction_details_form
+                    to: :conviction_details_form,
+                    if: :declared_convictions?
+
+        transitions from: :declare_convictions_form,
+                    to: :contact_name_form
 
         transitions from: :conviction_details_form,
                     to: :contact_name_form
@@ -326,7 +330,11 @@ module CanChangeWorkflowStatus
                     to: :declare_convictions_form
 
         transitions from: :contact_name_form,
-                    to: :conviction_details_form
+                    to: :conviction_details_form,
+                    if: :declared_convictions?
+
+        transitions from: :contact_name_form,
+                    to: :declare_convictions_form
 
         transitions from: :contact_phone_form,
                     to: :contact_name_form
@@ -438,5 +446,9 @@ module CanChangeWorkflowStatus
 
   def should_register_in_wales?
     location == "wales"
+  end
+
+  def declared_convictions?
+    declared_convictions == true
   end
 end

@@ -57,13 +57,13 @@ RSpec.describe "DeclareConvictionsForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              declared_convictions: "false"
+              declared_convictions: "true"
             }
           }
 
           it "updates the transient registration" do
             post declare_convictions_forms_path, declare_convictions_form: valid_params
-            expect(transient_registration.reload[:declared_convictions]).to eq(false)
+            expect(transient_registration.reload[:declared_convictions]).to eq(true)
           end
 
           it "returns a 302 response" do
@@ -108,7 +108,7 @@ RSpec.describe "DeclareConvictionsForms", type: :request do
         let(:valid_params) {
           {
             reg_identifier: transient_registration[:reg_identifier],
-            declared_convictions: "false"
+            declared_convictions: "true"
           }
         }
 
