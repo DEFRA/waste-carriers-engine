@@ -104,11 +104,12 @@
   <div class="column-one-third">
     <h2 class="heading-small"><%= t(".list_of_people") %></h2>
     <% @transient_registration.keyPeople.each do |person| %>
-      <ul>
+      <ul class="key-person-list">
         <li>
           <%= person.first_name %> <%= person.last_name %>
           <%= button_to(t(".delete_person_link"),
               delete_person_key_people_forms_path(person.id),
+              class: "button-link",
               method: :delete,
               params: { reg_identifier: @key_people_form.reg_identifier }) %>
         </li>
