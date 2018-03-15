@@ -33,6 +33,23 @@
       </fieldset>
     </div>
 
+    <div class="form-group">
+      <details>
+        <summary>
+          <span class="summary"><%= t(".conviction_types_subheading") %></span>
+        </summary>
+        <div class="panel panel-border-narrow font-xsmall">
+          <p><%= t(".conviction_types_paragraph_1") %></p>
+          <p class="strong"><%= t(".conviction_types_paragraph_2") %></p>
+          <ul class="list list-bullet">
+            <% t(".conviction_types").each do |conviction| %>
+            <li><%= conviction[:name] %></li>
+            <% end %>
+          </ul>
+        </div>
+      </details>
+    </div>
+
     <%= f.hidden_field :reg_identifier, value: @declare_convictions_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
