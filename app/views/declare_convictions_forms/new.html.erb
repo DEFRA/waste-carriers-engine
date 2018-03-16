@@ -1,24 +1,58 @@
 <%= render("shared/back", back_path: back_declare_convictions_forms_path(@declare_convictions_form.reg_identifier)) %>
 
-<% if @declare_convictions_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @declare_convictions_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@declare_convictions_form) do |f| %>
     <%= render("shared/errors", object: @declare_convictions_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <% if @declare_convictions_form.errors[:declared_convictions].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset class="inline" id="declared_convictions">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
+        </legend>
+
+        <% if @declare_convictions_form.errors[:declared_convictions].any? %>
+        <span class="error-message"><%= @declare_convictions_form.errors[:declared_convictions].join(", ") %></span>
+        <% end %>
+
+        <p><%= t(".paragraph_1") %></p>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :declared_convictions, "true" %>
+          <%= f.label :declared_convictions, t(".option_true"), value: "true" %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :declared_convictions, "false" %>
+          <%= f.label :declared_convictions, t(".option_false"), value: "false" %>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="form-group">
+      <details>
+        <summary>
+          <span class="summary"><%= t(".conviction_types_subheading") %></span>
+        </summary>
+        <div class="panel panel-border-narrow font-xsmall">
+          <p><%= t(".conviction_types_paragraph_1") %></p>
+          <p class="strong"><%= t(".conviction_types_paragraph_2") %></p>
+          <ul class="list list-bullet">
+            <% t(".conviction_types").each do |conviction| %>
+            <li><%= conviction[:name] %></li>
+            <% end %>
+          </ul>
+        </div>
+      </details>
+    </div>
 
     <%= f.hidden_field :reg_identifier, value: @declare_convictions_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
+</div>

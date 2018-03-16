@@ -43,7 +43,10 @@ class TransientRegistration
                                                      "constructionWaste",
                                                      "onlyAMF",
                                                      "addresses",
-                                                     "keyPeople"))
+                                                     "keyPeople",
+                                                     "declaredConvictions",
+                                                     "convictionSearchResult",
+                                                     "conviction_sign_offs"))
   end
 
   # Check if a transient renewal already exists for this registration so we don't have

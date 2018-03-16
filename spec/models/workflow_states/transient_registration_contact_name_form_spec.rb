@@ -9,8 +9,24 @@ RSpec.describe TransientRegistration, type: :model do
                workflow_state: "contact_name_form")
       end
 
-      it "changes to :conviction_details_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:contact_name_form).to(:conviction_details_form).on_event(:back)
+      context "when declared_convictions is false" do
+        before(:each) do
+          transient_registration.declared_convictions = false
+        end
+
+        it "changes to :declare_convictions_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:contact_name_form).to(:declare_convictions_form).on_event(:back)
+        end
+      end
+
+      context "when declared_convictions is true" do
+        before(:each) do
+          transient_registration.declared_convictions = true
+        end
+
+        it "changes to :conviction_details_form after the 'back' event" do
+          expect(transient_registration).to transition_from(:contact_name_form).to(:conviction_details_form).on_event(:back)
+        end
       end
 
       it "changes to :contact_phone_form after the 'next' event" do

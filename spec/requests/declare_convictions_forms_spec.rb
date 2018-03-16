@@ -56,12 +56,14 @@ RSpec.describe "DeclareConvictionsForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              declared_convictions: "true"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post declare_convictions_forms_path, declare_convictions_form: valid_params
+            expect(transient_registration.reload[:declared_convictions]).to eq(true)
           end
 
           it "returns a 302 response" do
@@ -78,7 +80,8 @@ RSpec.describe "DeclareConvictionsForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              declared_convictions: "bar"
             }
           }
 
@@ -89,7 +92,7 @@ RSpec.describe "DeclareConvictionsForms", type: :request do
 
           it "does not update the transient registration" do
             post declare_convictions_forms_path, declare_convictions_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:declared_convictions]).to_not eq(invalid_params[:declared_convictions])
           end
         end
       end
@@ -104,12 +107,14 @@ RSpec.describe "DeclareConvictionsForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            declared_convictions: "true"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post declare_convictions_forms_path, declare_convictions_form: valid_params
+          expect(transient_registration.reload[:declared_convictions]).to_not eq(valid_params[:declared_convictions])
         end
 
         it "returns a 302 response" do
