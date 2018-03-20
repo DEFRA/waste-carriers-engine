@@ -87,3 +87,4 @@ group :test do
   gem "vcr", "~> 4.0"
   gem "webmock", "~> 3.3"
 end
+gem "loofah", ">= 2.2.1"
