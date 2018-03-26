@@ -8,7 +8,7 @@ class KeyPeopleForm < BaseForm
     self.business_type = @transient_registration.business_type
 
     # If there's only one key person, we can pre-fill the fields so users can easily edit them
-    prefill_form if can_only_have_one_key_person? && @transient_registration.keyPeople.present?
+    prefill_form if can_only_have_one_key_person? && @transient_registration.key_people.present?
   end
 
   def submit(params)
@@ -44,7 +44,7 @@ class KeyPeopleForm < BaseForm
   end
 
   def number_of_existing_key_people
-    @transient_registration.keyPeople.count
+    @transient_registration.key_people.count
   end
 
   def can_only_have_one_key_person?
@@ -68,11 +68,11 @@ class KeyPeopleForm < BaseForm
   private
 
   def prefill_form
-    self.first_name = @transient_registration.keyPeople.first.first_name
-    self.last_name = @transient_registration.keyPeople.first.last_name
-    self.dob_day = @transient_registration.keyPeople.first.dob_day
-    self.dob_month = @transient_registration.keyPeople.first.dob_month
-    self.dob_year = @transient_registration.keyPeople.first.dob_year
+    self.first_name = @transient_registration.key_people.first.first_name
+    self.last_name = @transient_registration.key_people.first.last_name
+    self.dob_day = @transient_registration.key_people.first.dob_day
+    self.dob_month = @transient_registration.key_people.first.dob_month
+    self.dob_year = @transient_registration.key_people.first.dob_year
   end
 
   def process_date_fields(params)
@@ -99,16 +99,28 @@ class KeyPeopleForm < BaseForm
   end
 
   def all_key_people
-    # If there's only one key person allowed, just replace existing data
-    return [key_person] if can_only_have_one_key_person?
+    list_of_people_to_keep << key_person
+  end
 
-    existing_key_people = []
-    # Adding the new key person directly to @transient_registration.keyPeople immediately updates the object,
-    # regardless of validation. So instead we copy the existing key people into a new array and modify that.
-    @transient_registration.keyPeople.each do |person|
-      existing_key_people << person
+  # Adding the new key person directly to @transient_registration.keyPeople immediately updates the object,
+  # regardless of validation. So instead we copy all existing people into a new array and modify that.
+  def list_of_people_to_keep
+    people = []
+
+    # If there's only one key person allowed, we want to discard any existing key people, but keep people with
+    # relevant convictions. Otherwise, we copy all the keyPeople, regardless of type.
+    existing_people = if can_only_have_one_key_person?
+                        @transient_registration.relevant_conviction_people
+                      else
+                        @transient_registration.keyPeople
+                      end
+
+    existing_people.each do |person|
+      # We need to copy the person before adding to the array to avoid a 'conflicting modifications' Mongo error (10151)
+      people << person.clone
     end
-    existing_key_people << key_person
+
+    people
   end
 
   def key_people_limits

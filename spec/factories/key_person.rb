@@ -7,7 +7,14 @@ FactoryBot.define do
       dob_day 1
       dob_month 1
       dob_year 2000
-      person_type "Relevant"
+    end
+
+    trait :key do
+      person_type "key"
+    end
+
+    trait :relevant do
+      person_type "relevant"
     end
   end
 end
