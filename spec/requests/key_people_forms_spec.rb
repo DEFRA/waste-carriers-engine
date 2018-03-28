@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "KeyPeopleForms", type: :request do
-  describe "GET new_key_people_path" do
+  describe "GET new_key_people_form_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do

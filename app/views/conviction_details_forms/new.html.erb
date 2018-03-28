@@ -1,24 +1,116 @@
 <%= render("shared/back", back_path: back_conviction_details_forms_path(@conviction_details_form.reg_identifier)) %>
 
-<% if @conviction_details_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @conviction_details_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="grid-row">
+  <div class="column-two-thirds">
   <%= form_for(@conviction_details_form) do |f| %>
     <%= render("shared/errors", object: @conviction_details_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <% if @conviction_details_form.errors[:first_name].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="first_name">
+        <% if @conviction_details_form.errors[:first_name].any? %>
+        <span class="error-message"><%= @conviction_details_form.errors[:first_name].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :first_name, t(".first_name"), class: "form-label" %>
+        <%= f.text_field :first_name, value: @conviction_details_form.first_name, class: "form-control" %>
+      </fieldset>
+    </div>
+
+    <% if @conviction_details_form.errors[:last_name].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="last_name">
+        <% if @conviction_details_form.errors[:last_name].any? %>
+        <span class="error-message"><%= @conviction_details_form.errors[:last_name].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :last_name, t(".last_name"), class: "form-label" %>
+        <%= f.text_field :last_name, value: @conviction_details_form.last_name, class: "form-control" %>
+      </fieldset>
+    </div>
+
+    <% if @conviction_details_form.errors[:position].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="position">
+        <% if @conviction_details_form.errors[:position].any? %>
+        <span class="error-message"><%= @conviction_details_form.errors[:position].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :position, t(".position"), class: "form-label" %>
+        <%= f.text_field :position, value: @conviction_details_form.position, class: "form-control" %>
+      </fieldset>
+    </div>
+
+    <% if @conviction_details_form.errors[:date_of_birth].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="date_of_birth">
+        <% if @conviction_details_form.errors[:date_of_birth].any? %>
+          <span class="error-message"><%= @conviction_details_form.errors[:date_of_birth].join(". ") %></span>
+        <% end %>
+
+        <legend>
+          <%= t(".date_of_birth") %>
+          <span class="form-hint"><%= t(".date_of_birth_hint") %></span>
+        </legend>
+
+        <fieldset id="dob_day" class="inline-date">
+          <%= f.label :dob_day, t(".dob_day"), class: "form-label" %>
+          <%= f.text_field :dob_day, value: @conviction_details_form.dob_day, class: "form-control" %>
+        </fieldset>
+
+        <fieldset id="dob_month" class="inline-date">
+          <%= f.label :dob_month, t(".dob_month"), class: "form-label" %>
+          <%= f.text_field :dob_month, value: @conviction_details_form.dob_month, class: "form-control" %>
+        </fieldset>
+
+        <fieldset id="dob_year" class="inline-date">
+          <%= f.label :dob_year, t(".dob_year"), class: "form-label" %>
+          <%= f.text_field :dob_year, value: @conviction_details_form.dob_year, class: "form-control" %>
+        </fieldset>
+
+      </fieldset>
+    </div>
+
     <%= f.hidden_field :reg_identifier, value: @conviction_details_form.reg_identifier %>
+
+    <div class="form-group">
+      <%= f.submit t(".add_person_link"), class: "button-link" %>
+    </div>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
 
-<% end %>
+  <% if @conviction_details_form.number_of_existing_key_people > 0 %>
+  </div>
+  <div class="column-one-third">
+    <h2 class="heading-small"><%= t(".list_of_people") %></h2>
+    <% @transient_registration.relevant_conviction_people.each do |person| %>
+      <ul class="key-person-list">
+        <li>
+          <%= person.first_name %> <%= person.last_name %>
+          <%= button_to(t(".delete_person_link"),
+              delete_person_conviction_details_forms_path(person.id),
+              class: "button-link",
+              method: :delete,
+              params: { reg_identifier: @conviction_details_form.reg_identifier }) %>
+        </li>
+      </ul>
+    <% end %>
+  </div>
+  <% end %>
+</div>

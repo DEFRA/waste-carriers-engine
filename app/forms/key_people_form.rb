@@ -21,7 +21,7 @@ class KeyPeopleForm < BaseForm
     self.date_of_birth = key_person.date_of_birth
 
     attributes = if fields_have_content?
-                   { keyPeople: all_key_people }
+                   { keyPeople: all_people }
                  else
                    {}
                  end
@@ -98,7 +98,7 @@ class KeyPeopleForm < BaseForm
                   person_type: "key")
   end
 
-  def all_key_people
+  def all_people
     list_of_people_to_keep << key_person
   end
 
