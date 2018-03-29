@@ -2,14 +2,7 @@ en:
   conviction_details_forms:
     new:
       heading: Details of the person with a conviction
-      first_name: First name
-      last_name: Last name
       position: Job title
-      date_of_birth: Date of birth
-      date_of_birth_hint: For example, 26 5 1976
-      dob_year: Year
-      dob_month: Month
-      dob_day: Day
       add_person_link: Add another person
       next_button: Continue
       list_of_people: You have added the following people

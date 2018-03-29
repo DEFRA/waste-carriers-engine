@@ -7,35 +7,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% if @conviction_details_form.errors[:first_name].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="first_name">
-        <% if @conviction_details_form.errors[:first_name].any? %>
-        <span class="error-message"><%= @conviction_details_form.errors[:first_name].join(", ") %></span>
-        <% end %>
-
-        <%= f.label :first_name, t(".first_name"), class: "form-label" %>
-        <%= f.text_field :first_name, value: @conviction_details_form.first_name, class: "form-control" %>
-      </fieldset>
-    </div>
-
-    <% if @conviction_details_form.errors[:last_name].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="last_name">
-        <% if @conviction_details_form.errors[:last_name].any? %>
-        <span class="error-message"><%= @conviction_details_form.errors[:last_name].join(", ") %></span>
-        <% end %>
-
-        <%= f.label :last_name, t(".last_name"), class: "form-label" %>
-        <%= f.text_field :last_name, value: @conviction_details_form.last_name, class: "form-control" %>
-      </fieldset>
-    </div>
+    <%= render("shared/person_name", form: @conviction_details_form, f: f) %>
 
     <% if @conviction_details_form.errors[:position].any? %>
     <div class="form-group form-group-error">
@@ -52,38 +24,7 @@
       </fieldset>
     </div>
 
-    <% if @conviction_details_form.errors[:date_of_birth].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="date_of_birth">
-        <% if @conviction_details_form.errors[:date_of_birth].any? %>
-          <span class="error-message"><%= @conviction_details_form.errors[:date_of_birth].join(". ") %></span>
-        <% end %>
-
-        <legend>
-          <%= t(".date_of_birth") %>
-          <span class="form-hint"><%= t(".date_of_birth_hint") %></span>
-        </legend>
-
-        <fieldset id="dob_day" class="inline-date">
-          <%= f.label :dob_day, t(".dob_day"), class: "form-label" %>
-          <%= f.text_field :dob_day, value: @conviction_details_form.dob_day, class: "form-control" %>
-        </fieldset>
-
-        <fieldset id="dob_month" class="inline-date">
-          <%= f.label :dob_month, t(".dob_month"), class: "form-label" %>
-          <%= f.text_field :dob_month, value: @conviction_details_form.dob_month, class: "form-control" %>
-        </fieldset>
-
-        <fieldset id="dob_year" class="inline-date">
-          <%= f.label :dob_year, t(".dob_year"), class: "form-label" %>
-          <%= f.text_field :dob_year, value: @conviction_details_form.dob_year, class: "form-control" %>
-        </fieldset>
-
-      </fieldset>
-    </div>
+    <%= render("shared/date_of_birth", form: @conviction_details_form, f: f) %>
 
     <%= f.hidden_field :reg_identifier, value: @conviction_details_form.reg_identifier %>
 

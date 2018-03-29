@@ -49,6 +49,7 @@ class PersonForm < BaseForm
 
   def fields_have_content?
     fields = [first_name, last_name, dob_day, dob_month, dob_year]
+    fields << position if position?
     fields.each do |field|
       return true if field.present? && field.to_s.length.positive?
     end
