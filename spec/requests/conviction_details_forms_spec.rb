@@ -65,10 +65,10 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
             }
           }
 
-          it "increases the number of key people" do
-            key_people_count = transient_registration.keyPeople.count
+          it "increases the total number of people" do
+            total_people_count = transient_registration.keyPeople.count
             post conviction_details_forms_path, conviction_details_form: valid_params
-            expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+            expect(transient_registration.reload.keyPeople.count).to eq(total_people_count + 1)
           end
 
           it "updates the transient registration" do
@@ -93,10 +93,10 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
               transient_registration.update_attributes(keyPeople: [relevant_conviction_person])
             end
 
-            it "increases the number of key people" do
-              key_people_count = transient_registration.keyPeople.count
+            it "increases the total number of people" do
+              total_people_count = transient_registration.keyPeople.count
               post conviction_details_forms_path, conviction_details_form: valid_params
-              expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+              expect(transient_registration.reload.keyPeople.count).to eq(total_people_count + 1)
             end
 
             it "does not replace the existing relevant conviction person" do
@@ -112,10 +112,10 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
               transient_registration.update_attributes(keyPeople: [key_person])
             end
 
-            it "increases the number of key people" do
-              key_people_count = transient_registration.keyPeople.count
+            it "increases the total number of people" do
+              total_people_count = transient_registration.keyPeople.count
               post conviction_details_forms_path, conviction_details_form: valid_params
-              expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+              expect(transient_registration.reload.keyPeople.count).to eq(total_people_count + 1)
             end
 
             it "does not replace the existing key person" do
@@ -125,7 +125,7 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
           end
 
           context "when the submit params say to add another" do
-            it "redirects to the key_people form" do
+            it "redirects to the conviction_details form" do
               post conviction_details_forms_path, conviction_details_form: valid_params, commit: I18n.t("conviction_details_forms.new.add_person_link")
               expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:reg_identifier]))
             end
@@ -149,10 +149,10 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "does not increase the number of key people" do
-            key_people_count = transient_registration.keyPeople.count
+          it "does not increase the total number of people" do
+            total_people_count = transient_registration.keyPeople.count
             post conviction_details_forms_path, conviction_details_form: invalid_params
-            expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
+            expect(transient_registration.reload.keyPeople.count).to eq(total_people_count)
           end
 
           context "when there is already a key person" do
@@ -188,10 +188,10 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
             }
           }
 
-          it "does not increase the number of key people" do
-            key_people_count = transient_registration.keyPeople.count
+          it "does not increase the total number of people" do
+            total_people_count = transient_registration.keyPeople.count
             post conviction_details_forms_path, conviction_details_form: blank_params
-            expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
+            expect(transient_registration.reload.keyPeople.count).to eq(total_people_count)
           end
         end
       end
@@ -318,10 +318,10 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
               expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:reg_identifier]))
             end
 
-            it "reduces the number of key people" do
-              key_people_count = transient_registration.keyPeople.count
+            it "reduces the total number of people" do
+              total_people_count = transient_registration.keyPeople.count
               delete delete_person_conviction_details_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
-              expect(transient_registration.reload.keyPeople.count).to eq(key_people_count - 1)
+              expect(transient_registration.reload.keyPeople.count).to eq(total_people_count - 1)
             end
 
             it "removes the key person" do
