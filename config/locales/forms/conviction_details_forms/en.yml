@@ -19,7 +19,7 @@ en:
     errors:
       models:
         conviction_details_form:
-          not_enough_key_people:
+          not_enough_people_in_type:
             one: "You must add the details of at least one person"
           attributes:
             first_name:

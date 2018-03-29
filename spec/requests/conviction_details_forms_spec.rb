@@ -59,6 +59,7 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
               reg_identifier: transient_registration[:reg_identifier],
               first_name: "Foo",
               last_name: "Bar",
+              position: "Baz",
               dob_day: "1",
               dob_month: "1",
               dob_year: "2000"
@@ -182,6 +183,7 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
               reg_identifier: "foo",
               first_name: "",
               last_name: "",
+              position: "",
               dob_day: "",
               dob_month: "",
               dob_year: ""
@@ -209,6 +211,7 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
             reg_identifier: transient_registration[:reg_identifier],
             first_name: "Foo",
             last_name: "Bar",
+            position: "Baz",
             dob_day: "1",
             dob_month: "1",
             dob_year: "2000"

@@ -3,6 +3,7 @@ FactoryBot.define do
     trait :has_required_data do
       first_name "Foo"
       last_name "Bar"
+      position "Baz"
       dob_year 2000
       dob_month 1
       dob_day 1

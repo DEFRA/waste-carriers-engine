@@ -58,7 +58,7 @@ module CanHaveRegistrationAttributes
       keyPeople.where(person_type: "key")
     end
 
-    def relevant_conviction_people
+    def relevant_people
       return [] unless keyPeople.present?
       keyPeople.where(person_type: "relevant")
     end

@@ -17,6 +17,11 @@ RSpec.describe KeyPeopleForm, type: :model do
       it "should submit" do
         expect(key_people_form.submit(valid_params)).to eq(true)
       end
+
+      it "should set a person_type of 'key'" do
+        key_people_form.submit(valid_params)
+        expect(key_people_form.new_person.person_type).to eq("key")
+      end
     end
 
     context "when the form is not valid" do

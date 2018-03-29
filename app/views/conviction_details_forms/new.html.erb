@@ -95,11 +95,11 @@
     </div>
   <% end %>
 
-  <% if @conviction_details_form.number_of_existing_key_people > 0 %>
+  <% if @conviction_details_form.number_of_existing_people_in_type > 0 %>
   </div>
   <div class="column-one-third">
     <h2 class="heading-small"><%= t(".list_of_people") %></h2>
-    <% @transient_registration.relevant_conviction_people.each do |person| %>
+    <% @transient_registration.relevant_people.each do |person| %>
       <ul class="key-person-list">
         <li>
           <%= person.first_name %> <%= person.last_name %>

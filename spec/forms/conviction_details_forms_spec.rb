@@ -9,6 +9,7 @@ RSpec.describe ConvictionDetailsForm, type: :model do
         { reg_identifier: conviction_details_form.reg_identifier,
           first_name: conviction_details_form.first_name,
           last_name: conviction_details_form.last_name,
+          position: conviction_details_form.position,
           dob_year: conviction_details_form.dob_year,
           dob_month: conviction_details_form.dob_month,
           dob_day: conviction_details_form.dob_day }
@@ -16,6 +17,11 @@ RSpec.describe ConvictionDetailsForm, type: :model do
 
       it "should submit" do
         expect(conviction_details_form.submit(valid_params)).to eq(true)
+      end
+
+      it "should set a person_type of 'relevant'" do
+        conviction_details_form.submit(valid_params)
+        expect(conviction_details_form.new_person.person_type).to eq("relevant")
       end
     end
 
@@ -32,6 +38,7 @@ RSpec.describe ConvictionDetailsForm, type: :model do
         { reg_identifier: conviction_details_form.reg_identifier,
           first_name: "",
           last_name: "",
+          position: "",
           dob_year: "",
           dob_month: "",
           dob_day: "" }
@@ -128,6 +135,34 @@ RSpec.describe ConvictionDetailsForm, type: :model do
       context "when a last_name is too long" do
         before(:each) do
           conviction_details_form.last_name = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
+        end
+
+        it "is not valid" do
+          expect(conviction_details_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#position" do
+      context "when a position meets the requirements" do
+        it "is valid" do
+          expect(conviction_details_form).to be_valid
+        end
+      end
+
+      context "when a position is blank" do
+        before(:each) do
+          conviction_details_form.position = ""
+        end
+
+        it "is not valid" do
+          expect(conviction_details_form).to_not be_valid
+        end
+      end
+
+      context "when a position is too long" do
+        before(:each) do
+          conviction_details_form.position = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
         end
 
         it "is not valid" do
