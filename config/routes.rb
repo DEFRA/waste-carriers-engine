@@ -216,6 +216,11 @@ Rails.application.routes.draw do
               to: "conviction_details_forms#go_back",
               as: "back",
               on: :collection
+
+              delete "delete_person/:id",
+              to: "conviction_details_forms#delete_person",
+              as: "delete_person",
+              on: :collection
             end
 
   resources :contact_name_forms,

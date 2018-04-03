@@ -1,6 +1,6 @@
 <%= render("shared/back", back_path: back_key_people_forms_path(@key_people_form.reg_identifier)) %>
 
-<% if @key_people_form.can_only_have_one_key_person? %>
+<% if @key_people_form.can_only_have_one_person_in_type? %>
  <div class="text">
 <% else %>
 <div class="grid-row">
@@ -12,80 +12,21 @@
     <h1 class="heading-large"><%= t(".heading_#{@key_people_form.business_type}") %></h1>
 
     <p><%= t(".description_1_#{@key_people_form.business_type}") %></p>
-    <% unless @key_people_form.can_only_have_one_key_person? %>
+    <% unless @key_people_form.can_only_have_one_person_in_type? %>
       <p><%= t(".description_2") %></p>
     <% end %>
 
-    <% if @key_people_form.errors[:first_name].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="first_name">
-        <% if @key_people_form.errors[:first_name].any? %>
-        <span class="error-message"><%= @key_people_form.errors[:first_name].join(", ") %></span>
-        <% end %>
+    <%= render("shared/person_name", form: @key_people_form, f: f) %>
 
-        <%= f.label :first_name, t(".first_name"), class: "form-label" %>
-        <%= f.text_field :first_name, value: @key_people_form.first_name, class: "form-control" %>
-      </fieldset>
-    </div>
-
-    <% if @key_people_form.errors[:last_name].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="last_name">
-        <% if @key_people_form.errors[:last_name].any? %>
-        <span class="error-message"><%= @key_people_form.errors[:last_name].join(", ") %></span>
-        <% end %>
-
-        <%= f.label :last_name, t(".last_name"), class: "form-label" %>
-        <%= f.text_field :last_name, value: @key_people_form.last_name, class: "form-control" %>
-      </fieldset>
-    </div>
-
-    <% if @key_people_form.errors[:date_of_birth].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="date_of_birth">
-        <% if @key_people_form.errors[:date_of_birth].any? %>
-          <span class="error-message"><%= @key_people_form.errors[:date_of_birth].join(". ") %></span>
-        <% end %>
-
-        <legend>
-          <%= t(".date_of_birth") %>
-          <span class="form-hint"><%= t(".date_of_birth_hint") %></span>
-        </legend>
-
-        <fieldset id="dob_day" class="inline-date">
-          <%= f.label :dob_day, t(".dob_day"), class: "form-label" %>
-          <%= f.text_field :dob_day, value: @key_people_form.dob_day, class: "form-control" %>
-        </fieldset>
-
-        <fieldset id="dob_month" class="inline-date">
-          <%= f.label :dob_month, t(".dob_month"), class: "form-label" %>
-          <%= f.text_field :dob_month, value: @key_people_form.dob_month, class: "form-control" %>
-        </fieldset>
-
-        <fieldset id="dob_year" class="inline-date">
-          <%= f.label :dob_year, t(".dob_year"), class: "form-label" %>
-          <%= f.text_field :dob_year, value: @key_people_form.dob_year, class: "form-control" %>
-        </fieldset>
-
-      </fieldset>
-    </div>
+    <%= render("shared/date_of_birth", form: @key_people_form, f: f) %>
 
     <%= f.hidden_field :reg_identifier, value: @key_people_form.reg_identifier %>
 
-    <% if @key_people_form.can_only_have_one_key_person? %>
+    <% if @key_people_form.can_only_have_one_person_in_type? %>
       <div class="form-group">
         <%= f.submit t(".next_button"), class: "button" %>
       </div>
-    <% elsif @key_people_form.minimum_key_people > (@key_people_form.number_of_existing_key_people + 1) %>
+    <% elsif @key_people_form.minimum_people_in_type > (@key_people_form.number_of_existing_people_in_type + 1) %>
       <div class="form-group">
         <%= f.submit t(".add_person_link"), class: "button" %>
       </div>
@@ -99,11 +40,11 @@
     <% end %>
   <% end %>
 
-  <% unless @key_people_form.can_only_have_one_key_person? || @key_people_form.number_of_existing_key_people < 1 %>
+  <% unless @key_people_form.can_only_have_one_person_in_type? || @key_people_form.number_of_existing_people_in_type < 1 %>
   </div>
   <div class="column-one-third">
     <h2 class="heading-small"><%= t(".list_of_people") %></h2>
-    <% @transient_registration.keyPeople.each do |person| %>
+    <% @transient_registration.key_people.each do |person| %>
       <ul class="key-person-list">
         <li>
           <%= person.first_name %> <%= person.last_name %>

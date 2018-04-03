@@ -2,13 +2,40 @@ en:
   conviction_details_forms:
     new:
       heading: Details of the person with a conviction
-      error_heading: Something is wrong
+      position: Job title
+      add_person_link: Add another person
+      next_button: Continue
+      list_of_people: You have added the following people
+      delete_person_link: Delete
       next_button: Continue
   activemodel:
     errors:
       models:
         conviction_details_form:
+          not_enough_people_in_type:
+            one: "You must add the details of at least one person"
           attributes:
+            first_name:
+              blank: "You must enter a first name"
+              too_long: "The first name must be no longer than 35 characters"
+            last_name:
+              blank: "You must enter a last name"
+              too_long: "The last name must be no longer than 35 characters"
+            position:
+              blank: "You must enter a position"
+              too_long: "The position must be no longer than 35 characters"
+            date_of_birth:
+              age_limit: "You must be 16 or older to use this service"
+              not_a_date: "You must enter a valid date"
+              day_blank: "You must enter a day"
+              day_integer: "The day must be a number"
+              day_range: "The day must be between 1 and 31"
+              month_blank: "You must enter a month"
+              month_integer: "The month must be a number"
+              month_range: "The month must be between 1 and 12"
+              year_blank: "You must enter a year"
+              year_integer: "The year must be a number"
+              year_range: "The year must be between 1900 and now"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

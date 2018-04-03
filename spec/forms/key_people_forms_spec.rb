@@ -17,6 +17,11 @@ RSpec.describe KeyPeopleForm, type: :model do
       it "should submit" do
         expect(key_people_form.submit(valid_params)).to eq(true)
       end
+
+      it "should set a person_type of 'key'" do
+        key_people_form.submit(valid_params)
+        expect(key_people_form.new_person.person_type).to eq("key")
+      end
     end
 
     context "when the form is not valid" do
@@ -39,7 +44,7 @@ RSpec.describe KeyPeopleForm, type: :model do
 
       context "when the transient registration already has enough key people" do
         before(:each) do
-          key_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data)])
+          key_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :key)])
           key_people_form.business_type = "overseas"
         end
 
@@ -50,7 +55,7 @@ RSpec.describe KeyPeopleForm, type: :model do
 
       context "when the transient registration does not have enough key people" do
         before(:each) do
-          key_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data)])
+          key_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :key)])
           key_people_form.business_type = "partnership"
         end
 
@@ -67,7 +72,7 @@ RSpec.describe KeyPeopleForm, type: :model do
         create(:transient_registration,
                :has_required_data,
                business_type: "soleTrader",
-               keyPeople: [build(:key_person, :has_required_data)])
+               keyPeople: [build(:key_person, :has_required_data, :key)])
       end
       let(:key_people_form) { KeyPeopleForm.new(transient_registration) }
 

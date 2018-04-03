@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "KeyPeopleForms", type: :request do
-  describe "GET new_key_people_path" do
+  describe "GET new_key_people_form_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -87,7 +87,7 @@ RSpec.describe "KeyPeopleForms", type: :request do
           end
 
           context "when there is already a key person" do
-            let(:existing_key_person) { build(:key_person) }
+            let(:existing_key_person) { build(:key_person, :has_required_data, :key) }
 
             before(:each) do
               transient_registration.update_attributes(keyPeople: [existing_key_person])
@@ -114,6 +114,49 @@ RSpec.describe "KeyPeopleForms", type: :request do
               it "replaces the existing key person" do
                 post key_people_forms_path, key_people_form: valid_params
                 expect(transient_registration.reload.keyPeople.first.first_name).to_not eq(existing_key_person.first_name)
+              end
+            end
+          end
+
+          context "when there is a relevant conviction person" do
+            let(:relevant_conviction_person) { build(:key_person, :has_required_data, :relevant) }
+
+            before(:each) do
+              transient_registration.update_attributes(keyPeople: [relevant_conviction_person])
+            end
+
+            context "when there can be multiple key people" do
+              it "increases the number of key people" do
+                key_people_count = transient_registration.keyPeople.count
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+              end
+
+              it "does not replace the relevant conviction person" do
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.first.first_name).to eq(relevant_conviction_person.first_name)
+              end
+            end
+
+            context "when there can only be one key person" do
+              before(:each) do
+                transient_registration.update_attributes(business_type: "soleTrader")
+              end
+
+              it "increases the number of key people" do
+                key_people_count = transient_registration.keyPeople.count
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+              end
+
+              it "adds the new key person" do
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.last.first_name).to eq(valid_params[:first_name])
+              end
+
+              it "does not replace the relevant conviction person" do
+                post key_people_forms_path, key_people_form: valid_params
+                expect(transient_registration.reload.keyPeople.first.first_name).to eq(relevant_conviction_person.first_name)
               end
             end
           end
@@ -150,7 +193,7 @@ RSpec.describe "KeyPeopleForms", type: :request do
           end
 
           context "when there is already a key person" do
-            let(:existing_key_person) { build(:key_person) }
+            let(:existing_key_person) { build(:key_person, :has_required_data, :key) }
 
             before(:each) do
               transient_registration.update_attributes(keyPeople: [existing_key_person])
@@ -307,8 +350,8 @@ RSpec.describe "KeyPeopleForms", type: :request do
         end
 
         context "when the registration has key people" do
-          let(:key_person_a) { build(:key_person, :has_required_data) }
-          let(:key_person_b) { build(:key_person, :has_required_data) }
+          let(:key_person_a) { build(:key_person, :has_required_data, :key) }
+          let(:key_person_b) { build(:key_person, :has_required_data, :key) }
 
           before(:each) do
             transient_registration.update_attributes(keyPeople: [key_person_a, key_person_b])

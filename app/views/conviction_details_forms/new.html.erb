@@ -1,24 +1,57 @@
 <%= render("shared/back", back_path: back_conviction_details_forms_path(@conviction_details_form.reg_identifier)) %>
 
-<% if @conviction_details_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @conviction_details_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="grid-row">
+  <div class="column-two-thirds">
   <%= form_for(@conviction_details_form) do |f| %>
     <%= render("shared/errors", object: @conviction_details_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <%= render("shared/person_name", form: @conviction_details_form, f: f) %>
+
+    <% if @conviction_details_form.errors[:position].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="position">
+        <% if @conviction_details_form.errors[:position].any? %>
+        <span class="error-message"><%= @conviction_details_form.errors[:position].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :position, t(".position"), class: "form-label" %>
+        <%= f.text_field :position, value: @conviction_details_form.position, class: "form-control" %>
+      </fieldset>
+    </div>
+
+    <%= render("shared/date_of_birth", form: @conviction_details_form, f: f) %>
+
     <%= f.hidden_field :reg_identifier, value: @conviction_details_form.reg_identifier %>
+
+    <div class="form-group">
+      <%= f.submit t(".add_person_link"), class: "button-link" %>
+    </div>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
 
-<% end %>
+  <% if @conviction_details_form.number_of_existing_people_in_type > 0 %>
+  </div>
+  <div class="column-one-third">
+    <h2 class="heading-small"><%= t(".list_of_people") %></h2>
+    <% @transient_registration.relevant_people.each do |person| %>
+      <ul class="key-person-list">
+        <li>
+          <%= person.first_name %> <%= person.last_name %>
+          <%= button_to(t(".delete_person_link"),
+              delete_person_conviction_details_forms_path(person.id),
+              class: "button-link",
+              method: :delete,
+              params: { reg_identifier: @conviction_details_form.reg_identifier }) %>
+        </li>
+      </ul>
+    <% end %>
+  </div>
+  <% end %>
+</div>

@@ -14,13 +14,6 @@ en:
       description_1_partnership: Provide the name and date of birth for each partner of this business.
       description_1_soleTrader: Provide the name and date of birth for the owner of this business.
       description_2: Add their details one person at a time. If you need to add more people, select 'add another person'.
-      first_name: First name
-      last_name: Last name
-      date_of_birth: Date of birth
-      date_of_birth_hint: For example, 26 5 1976
-      dob_year: Year
-      dob_month: Month
-      dob_day: Day
       add_person_link: Add another person
       next_button: Continue
       list_of_people: You have added the following people
@@ -30,7 +23,7 @@ en:
     errors:
       models:
         key_people_form:
-          not_enough_key_people:
+          not_enough_people_in_type:
             one: "You must add the details of at least one person"
             other: "You must add the details of at least %{count} people"
           attributes:
