@@ -183,17 +183,17 @@ Rails.application.routes.draw do
               on: :collection
             end
 
-  resources :key_people_forms,
+  resources :main_people_forms,
             only: [:new, :create],
-            path: "key-people",
+            path: "main-people",
             path_names: { new: "/:reg_identifier" } do
               get "back/:reg_identifier",
-              to: "key_people_forms#go_back",
+              to: "main_people_forms#go_back",
               as: "back",
               on: :collection
 
               delete "delete_person/:id",
-              to: "key_people_forms#delete_person",
+              to: "main_people_forms#delete_person",
               as: "delete_person",
               on: :collection
             end

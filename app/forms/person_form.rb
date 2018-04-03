@@ -33,10 +33,6 @@ class PersonForm < BaseForm
     false
   end
 
-  def number_of_existing_people_in_type
-    @transient_registration.send("#{person_type}_people".to_sym).count
-  end
-
   def enough_people_in_type?
     return false if number_of_existing_people_in_type < minimum_people_in_type
     true
@@ -64,6 +60,10 @@ class PersonForm < BaseForm
   end
 
   def minimum_people_in_type
+    implemented_in_subclass
+  end
+
+  def number_of_existing_people_in_type
     implemented_in_subclass
   end
 

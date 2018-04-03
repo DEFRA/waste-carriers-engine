@@ -151,9 +151,9 @@ RSpec.describe "DeclareConvictionsForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the key_people form" do
+          it "redirects to the main_people form" do
             get back_declare_convictions_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_key_people_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_main_people_form_path(transient_registration[:reg_identifier]))
           end
         end
       end

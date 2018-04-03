@@ -9,7 +9,7 @@ FactoryBot.define do
       dob_year 2000
     end
 
-    trait :key do
+    trait :main do
       person_type "key"
     end
 

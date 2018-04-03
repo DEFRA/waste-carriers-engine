@@ -13,6 +13,10 @@ class ConvictionDetailsForm < PersonForm
     1
   end
 
+  def number_of_existing_people_in_type
+    @transient_registration.relevant_people.count
+  end
+
   private
 
   def person_type

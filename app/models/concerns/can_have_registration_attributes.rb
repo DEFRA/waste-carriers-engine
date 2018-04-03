@@ -53,7 +53,7 @@ module CanHaveRegistrationAttributes
       location == "overseas"
     end
 
-    def key_people
+    def main_people
       return [] unless keyPeople.present?
       keyPeople.where(person_type: "key")
     end

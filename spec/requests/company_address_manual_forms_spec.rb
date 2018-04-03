@@ -73,9 +73,9 @@ RSpec.describe "CompanyAddressManualForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the key_people form" do
+          it "redirects to the main_people form" do
             post company_address_manual_forms_path, company_address_manual_form: valid_params
-            expect(response).to redirect_to(new_key_people_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_main_people_form_path(transient_registration[:reg_identifier]))
           end
 
           context "when the transient registration already has addresses" do

@@ -32,7 +32,7 @@ module CanChangeWorkflowStatus
       state :company_address_form
       state :company_address_manual_form
 
-      state :key_people_form
+      state :main_people_form
 
       state :declare_convictions_form
       state :conviction_details_form
@@ -171,14 +171,14 @@ module CanChangeWorkflowStatus
                     if: :skip_to_manual_address?
 
         transitions from: :company_address_form,
-                    to: :key_people_form
+                    to: :main_people_form
 
         transitions from: :company_address_manual_form,
-                    to: :key_people_form
+                    to: :main_people_form
 
         # End registered address
 
-        transitions from: :key_people_form,
+        transitions from: :main_people_form,
                     to: :declare_convictions_form
 
         transitions from: :declare_convictions_form,
@@ -314,17 +314,17 @@ module CanChangeWorkflowStatus
         transitions from: :company_address_manual_form,
                     to: :company_postcode_form
 
-        transitions from: :key_people_form,
+        transitions from: :main_people_form,
                     to: :company_address_manual_form,
                     if: :registered_address_was_manually_entered?
 
-        transitions from: :key_people_form,
+        transitions from: :main_people_form,
                     to: :company_address_form
 
         # End registered address
 
         transitions from: :declare_convictions_form,
-                    to: :key_people_form
+                    to: :main_people_form
 
         transitions from: :conviction_details_form,
                     to: :declare_convictions_form

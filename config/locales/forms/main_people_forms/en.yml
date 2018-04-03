@@ -1,5 +1,5 @@
 en:
-  key_people_forms:
+  main_people_forms:
     new:
       heading_localAuthority: Chief executive details
       heading_limitedCompany: Director details
@@ -22,7 +22,7 @@ en:
   activemodel:
     errors:
       models:
-        key_people_form:
+        main_people_form:
           not_enough_people_in_type:
             one: "You must add the details of at least one person"
             other: "You must add the details of at least %{count} people"

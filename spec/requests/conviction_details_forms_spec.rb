@@ -106,11 +106,11 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
             end
           end
 
-          context "when there is already a key person" do
-            let(:key_person) { build(:key_person, :has_required_data, :key) }
+          context "when there is already a main person" do
+            let(:main_person) { build(:key_person, :has_required_data, :main) }
 
             before(:each) do
-              transient_registration.update_attributes(keyPeople: [key_person])
+              transient_registration.update_attributes(keyPeople: [main_person])
             end
 
             it "increases the total number of people" do
@@ -119,9 +119,9 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
               expect(transient_registration.reload.keyPeople.count).to eq(total_people_count + 1)
             end
 
-            it "does not replace the existing key person" do
+            it "does not replace the existing main person" do
               post conviction_details_forms_path, conviction_details_form: valid_params
-              expect(transient_registration.reload.keyPeople.first.first_name).to eq(key_person.first_name)
+              expect(transient_registration.reload.keyPeople.first.first_name).to eq(main_person.first_name)
             end
           end
 
@@ -156,16 +156,16 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
             expect(transient_registration.reload.keyPeople.count).to eq(total_people_count)
           end
 
-          context "when there is already a key person" do
-            let(:existing_key_person) { build(:key_person, :has_required_data, :key) }
+          context "when there is already a main person" do
+            let(:existing_main_person) { build(:key_person, :has_required_data, :main) }
 
             before(:each) do
-              transient_registration.update_attributes(keyPeople: [existing_key_person])
+              transient_registration.update_attributes(keyPeople: [existing_main_person])
             end
 
-            it "does not replace the existing key person" do
+            it "does not replace the existing main person" do
               post conviction_details_forms_path, conviction_details_form: invalid_params
-              expect(transient_registration.reload.keyPeople.first.first_name).to eq(existing_key_person.first_name)
+              expect(transient_registration.reload.keyPeople.first.first_name).to eq(existing_main_person.first_name)
             end
           end
 
@@ -302,39 +302,39 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
                  workflow_state: "conviction_details_form")
         end
 
-        context "when the registration has key people" do
-          let(:key_person_a) { build(:key_person, :has_required_data, :key) }
-          let(:key_person_b) { build(:key_person, :has_required_data, :key) }
+        context "when the registration has people with convictions" do
+          let(:relevant_person_a) { build(:key_person, :has_required_data, :relevant) }
+          let(:relevant_person_b) { build(:key_person, :has_required_data, :relevant) }
 
           before(:each) do
-            transient_registration.update_attributes(keyPeople: [key_person_a, key_person_b])
+            transient_registration.update_attributes(keyPeople: [relevant_person_a, relevant_person_b])
           end
 
           context "when the delete person action is triggered" do
             it "returns a 302 response" do
-              delete delete_person_conviction_details_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              delete delete_person_conviction_details_forms_path(relevant_person_a[:id]), reg_identifier: transient_registration.reg_identifier
               expect(response).to have_http_status(302)
             end
 
-            it "redirects to the key people form" do
-              delete delete_person_conviction_details_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+            it "redirects to the conviction details form" do
+              delete delete_person_conviction_details_forms_path(relevant_person_a[:id]), reg_identifier: transient_registration.reg_identifier
               expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:reg_identifier]))
             end
 
             it "reduces the total number of people" do
               total_people_count = transient_registration.keyPeople.count
-              delete delete_person_conviction_details_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              delete delete_person_conviction_details_forms_path(relevant_person_a[:id]), reg_identifier: transient_registration.reg_identifier
               expect(transient_registration.reload.keyPeople.count).to eq(total_people_count - 1)
             end
 
-            it "removes the key person" do
-              delete delete_person_conviction_details_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
-              expect(transient_registration.reload.keyPeople.where(id: key_person_a[:id]).count).to eq(0)
+            it "removes the person" do
+              delete delete_person_conviction_details_forms_path(relevant_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              expect(transient_registration.reload.keyPeople.where(id: relevant_person_a[:id]).count).to eq(0)
             end
 
-            it "does not modify the other key people" do
-              delete delete_person_conviction_details_forms_path(key_person_a[:id]), reg_identifier: transient_registration.reg_identifier
-              expect(transient_registration.reload.keyPeople.where(id: key_person_b[:id]).count).to eq(1)
+            it "does not modify the other people" do
+              delete delete_person_conviction_details_forms_path(relevant_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+              expect(transient_registration.reload.keyPeople.where(id: relevant_person_b[:id]).count).to eq(1)
             end
           end
         end

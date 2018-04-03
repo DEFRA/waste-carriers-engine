@@ -56,7 +56,7 @@ RSpec.describe ConvictionDetailsForm, type: :model do
 
       context "when the transient registration does not have enough people with convictions" do
         before(:each) do
-          conviction_details_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :key)])
+          conviction_details_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :main)])
         end
 
         it "should not submit" do

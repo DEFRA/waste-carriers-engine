@@ -1,0 +1,61 @@
+<%= render("shared/back", back_path: back_main_people_forms_path(@main_people_form.reg_identifier)) %>
+
+<% if @main_people_form.can_only_have_one_person_in_type? %>
+ <div class="text">
+<% else %>
+<div class="grid-row">
+  <div class="column-two-thirds">
+<% end %>
+  <%= form_for(@main_people_form) do |f| %>
+    <%= render("shared/errors", object: @main_people_form) %>
+
+    <h1 class="heading-large"><%= t(".heading_#{@main_people_form.business_type}") %></h1>
+
+    <p><%= t(".description_1_#{@main_people_form.business_type}") %></p>
+    <% unless @main_people_form.can_only_have_one_person_in_type? %>
+      <p><%= t(".description_2") %></p>
+    <% end %>
+
+    <%= render("shared/person_name", form: @main_people_form, f: f) %>
+
+    <%= render("shared/date_of_birth", form: @main_people_form, f: f) %>
+
+    <%= f.hidden_field :reg_identifier, value: @main_people_form.reg_identifier %>
+
+    <% if @main_people_form.can_only_have_one_person_in_type? %>
+      <div class="form-group">
+        <%= f.submit t(".next_button"), class: "button" %>
+      </div>
+    <% elsif @main_people_form.minimum_people_in_type > (@main_people_form.number_of_existing_people_in_type + 1) %>
+      <div class="form-group">
+        <%= f.submit t(".add_person_link"), class: "button" %>
+      </div>
+    <% else %>
+      <div class="form-group">
+        <%= f.submit t(".add_person_link"), class: "button-link" %>
+      </div>
+      <div class="form-group">
+        <%= f.submit t(".next_button"), class: "button" %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% unless @main_people_form.can_only_have_one_person_in_type? || @main_people_form.number_of_existing_people_in_type < 1 %>
+  </div>
+  <div class="column-one-third">
+    <h2 class="heading-small"><%= t(".list_of_people") %></h2>
+    <% @transient_registration.main_people.each do |person| %>
+      <ul class="main-person-list">
+        <li>
+          <%= person.first_name %> <%= person.last_name %>
+          <%= button_to(t(".delete_person_link"),
+              delete_person_main_people_forms_path(person.id),
+              class: "button-link",
+              method: :delete,
+              params: { reg_identifier: @main_people_form.reg_identifier }) %>
+        </li>
+      </ul>
+    <% end %>
+  </div>
+  <% end %>
+</div>

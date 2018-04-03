@@ -9,8 +9,8 @@ RSpec.describe TransientRegistration, type: :model do
                workflow_state: "declare_convictions_form")
       end
 
-      it "changes to :key_people_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:declare_convictions_form).to(:key_people_form).on_event(:back)
+      it "changes to :main_people_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:declare_convictions_form).to(:main_people_form).on_event(:back)
       end
 
       context "when declared_convictions is true" do
