@@ -25,7 +25,7 @@ en:
               blank: "You must enter a position"
               too_long: "The position must be no longer than 35 characters"
             date_of_birth:
-              age_limit: "You must be 17 or older to use this service"
+              age_limit: "You must be 16 or older to use this service"
               not_a_date: "You must enter a valid date"
               day_blank: "You must enter a day"
               day_integer: "The day must be a number"

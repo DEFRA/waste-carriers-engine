@@ -33,6 +33,6 @@ class ConvictionDetailsForm < PersonForm
   end
 
   def age_cutoff_date
-    (Date.today - 17.years) + 1.day
+    (Date.today - 16.years) + 1.day
   end
 end
