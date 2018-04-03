@@ -1,24 +1,46 @@
 <%= render("shared/back", back_path: back_contact_name_forms_path(@contact_name_form.reg_identifier)) %>
 
-<% if @contact_name_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @contact_name_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@contact_name_form) do |f| %>
     <%= render("shared/errors", object: @contact_name_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <p><%= t(".description") %></p>
+
+    <% if @contact_name_form.errors[:first_name].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="first_name">
+        <% if @contact_name_form.errors[:first_name].any? %>
+        <span class="error-message"><%= @contact_name_form.errors[:first_name].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :first_name, t(".first_name_label"), class: "form-label" %>
+        <%= f.text_field :first_name, value: @contact_name_form.first_name, class: "form-control" %>
+      </fieldset>
+    </div>
+
+    <% if @contact_name_form.errors[:last_name].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="last_name">
+        <% if @contact_name_form.errors[:last_name].any? %>
+        <span class="error-message"><%= @contact_name_form.errors[:last_name].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :last_name, t(".last_name_label"), class: "form-label" %>
+        <%= f.text_field :last_name, value: @contact_name_form.last_name, class: "form-control" %>
+      </fieldset>
+    </div>
 
     <%= f.hidden_field :reg_identifier, value: @contact_name_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
+</div>

@@ -2,6 +2,9 @@ en:
   contact_name_forms:
     new:
       heading: Who should we contact about this registration?
+      description: We’ll contact this person if we need to discuss the registration.
+      first_name_label: First name
+      last_name_label: Last name
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
@@ -9,6 +12,14 @@ en:
       models:
         contact_name_form:
           attributes:
+            first_name:
+              blank: "You must enter a first name"
+              invalid: "The first name must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+              too_long: "The first name must have no more than 70 characters"
+            last_name:
+              blank: "You must enter a last name"
+              invalid: "The last name must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+              too_long: "The last name must have no more than 70 characters"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

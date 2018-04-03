@@ -56,12 +56,15 @@ RSpec.describe "ContactNameForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              first_name: "Foo",
+              last_name: "Bar"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post contact_name_forms_path, contact_name_form: valid_params
+            expect(transient_registration.reload.first_name).to eq(valid_params[:first_name])
           end
 
           it "returns a 302 response" do
@@ -78,9 +81,16 @@ RSpec.describe "ContactNameForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              first_name: "bar",
+              last_name: ""
             }
           }
+
+          it "does not update the transient registration" do
+            post contact_name_forms_path, contact_name_form: invalid_params
+            expect(transient_registration.reload.first_name).to_not eq(invalid_params[:first_name])
+          end
 
           it "returns a 302 response" do
             post contact_name_forms_path, contact_name_form: invalid_params
@@ -104,12 +114,15 @@ RSpec.describe "ContactNameForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            first_name: "Foo",
+            last_name: "Bar"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post contact_name_forms_path, contact_name_form: valid_params
+          expect(transient_registration.reload.first_name).to_not eq(valid_params[:first_name])
         end
 
         it "returns a 302 response" do
