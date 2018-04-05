@@ -50,11 +50,14 @@ class BaseForm
   def strip_excess_whitespace(attributes)
     # Loop over each value and strip the whitespace, or strip the whitespace from values nested within it
     attributes.each_pair do |_key, value|
-      strip_string(value) if value.is_a?(String)
-      strip_hash(value) if value.is_a?(Hash)
-      strip_array(value) if value.is_a?(Array)
+      if value.is_a?(String)
+        strip_string(value)
+      elsif value.is_a?(Hash)
+        strip_hash(value)
+      elsif value.is_a?(Array)
+        strip_array(value)
+      end
     end
-    attributes
   end
 
   def strip_string(string)
