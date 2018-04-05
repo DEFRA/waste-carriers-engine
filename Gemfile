@@ -44,7 +44,7 @@ gem "airbrake", "5.8.1"
 gem "cancancan", "~> 1.10"
 
 # Use Devise for user authentication
-gem "devise", "~> 4.3.0"
+gem "devise", ">= 4.4.3"
 
 # GOV.UK styling
 gem "govuk_elements_rails", "~> 3.1"
