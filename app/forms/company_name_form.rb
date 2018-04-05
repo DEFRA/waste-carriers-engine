@@ -10,7 +10,6 @@ class CompanyNameForm < BaseForm
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    params[:company_name].strip! if params[:company_name].present?
     self.company_name = params[:company_name]
     attributes = { company_name: company_name }
 
