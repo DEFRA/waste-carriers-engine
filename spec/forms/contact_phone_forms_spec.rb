@@ -21,21 +21,11 @@ RSpec.describe ContactPhoneForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "contact_phone_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:contact_phone_form) { ContactPhoneForm.new(transient_registration) }
+  context "when a valid transient registration exists" do
+    let(:contact_phone_form) { build(:contact_phone_form, :has_required_data) }
 
+    describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
-        before(:each) do
-          contact_phone_form.reg_identifier = transient_registration.reg_identifier
-        end
-
         it "is valid" do
           expect(contact_phone_form).to be_valid
         end
@@ -48,6 +38,14 @@ RSpec.describe ContactPhoneForm, type: :model do
 
         it "is not valid" do
           expect(contact_phone_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#phone_number" do
+      context "when a phone_number meets the requirements" do
+        it "is valid" do
+          expect(contact_phone_form).to be_valid
         end
       end
     end

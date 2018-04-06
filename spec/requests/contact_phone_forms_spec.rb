@@ -56,12 +56,14 @@ RSpec.describe "ContactPhoneForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              phone_number: "01234 567890"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post contact_phone_forms_path, contact_phone_form: valid_params
+            expect(transient_registration.reload.phone_number).to eq(valid_params[:phone_number])
           end
 
           it "returns a 302 response" do
@@ -78,7 +80,8 @@ RSpec.describe "ContactPhoneForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              phone_number: "foo"
             }
           }
 
@@ -89,7 +92,7 @@ RSpec.describe "ContactPhoneForms", type: :request do
 
           it "does not update the transient registration" do
             post contact_phone_forms_path, contact_phone_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:phone_number]).to_not eq(invalid_params[:phone_number])
           end
         end
       end
@@ -104,12 +107,14 @@ RSpec.describe "ContactPhoneForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            phone_number: "01234 567890"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post contact_phone_forms_path, contact_phone_form: valid_params
+          expect(transient_registration.reload.phone_number).to_not eq(valid_params[:phone_number])
         end
 
         it "returns a 302 response" do
