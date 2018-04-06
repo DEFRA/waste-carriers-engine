@@ -1,6 +1,21 @@
 require "rails_helper"
 
 RSpec.describe TransientRegistration, type: :model do
+  describe "#initialize" do
+    context "when the source registration has whitespace in its attributes" do
+      let(:registration) do
+        create(:registration,
+               :has_required_data,
+               company_name: " test ")
+      end
+
+      it "strips the whitespace from the attributes" do
+        transient_registration = TransientRegistration.new(reg_identifier: registration.reg_identifier)
+        expect(transient_registration.company_name).to eq("test")
+      end
+    end
+  end
+
   describe "#reg_identifier" do
     context "when a TransientRegistration is created" do
       let(:transient_registration) do

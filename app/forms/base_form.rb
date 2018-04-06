@@ -1,5 +1,6 @@
 class BaseForm
   include ActiveModel::Model
+  include CanStripWhitespace
   attr_accessor :reg_identifier, :transient_registration
 
   def initialize(transient_registration)
@@ -12,7 +13,7 @@ class BaseForm
     # Additional attributes are set in individual form subclasses
     self.reg_identifier = reg_identifier
 
-    attributes = strip_excess_whitespace(attributes)
+    attributes = strip_whitespace(attributes)
 
     # Update the transient registration with params from the registration if valid
     if valid?
@@ -42,35 +43,6 @@ class BaseForm
     return if @transient_registration.valid?
     @transient_registration.errors.each do |_attribute, message|
       errors[:base] << message
-    end
-  end
-
-  # Whitespace stripping
-
-  def strip_excess_whitespace(attributes)
-    # Loop over each value and strip the whitespace, or strip the whitespace from values nested within it
-    attributes.each_pair do |_key, value|
-      if value.is_a?(String)
-        strip_string(value)
-      elsif value.is_a?(Hash)
-        strip_hash(value)
-      elsif value.is_a?(Array)
-        strip_array(value)
-      end
-    end
-  end
-
-  def strip_string(string)
-    string.strip!
-  end
-
-  def strip_hash(hash)
-    strip_excess_whitespace(hash)
-  end
-
-  def strip_array(array)
-    array.each do |nested_object|
-      strip_excess_whitespace(nested_object.attributes)
     end
   end
 end
