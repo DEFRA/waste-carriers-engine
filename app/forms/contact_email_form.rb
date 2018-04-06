@@ -1,3 +1,5 @@
+require "validates_email_format_of"
+
 class ContactEmailForm < BaseForm
   attr_accessor :contact_email, :confirmed_email
 
@@ -15,4 +17,6 @@ class ContactEmailForm < BaseForm
 
     super(attributes, params[:reg_identifier])
   end
+
+  validates_with ContactEmailValidator
 end

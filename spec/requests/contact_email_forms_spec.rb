@@ -57,8 +57,8 @@ RSpec.describe "ContactEmailForms", type: :request do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              contact_email: "foo@example.com",
-              confirmed_email: "foo@example.com"
+              contact_email: "bar.baz@example.com",
+              confirmed_email: "bar.baz@example.com"
             }
           }
 
@@ -110,8 +110,8 @@ RSpec.describe "ContactEmailForms", type: :request do
         let(:valid_params) {
           {
             reg_identifier: transient_registration[:reg_identifier],
-            contact_email: "foo@example.com",
-            confirmed_email: "foo@example.com"
+            contact_email: "bar.baz@example.com",
+            confirmed_email: "bar.baz@example.com"
           }
         }
 
