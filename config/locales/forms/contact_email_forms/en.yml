@@ -3,6 +3,9 @@ en:
     new:
       heading: What's the email address of the person we should contact?
       error_heading: Something is wrong
+      contact_email_label: Email address
+      contact_email_hint: We’ll send a confirmation to this address
+      confirmed_email_label: Confirm email address
       next_button: Continue
   activemodel:
     errors:
