@@ -20,7 +20,7 @@
           <%= t(".phone_number_label") %>
           <span class='form-hint'><%= t(".phone_number_hint") %></span>
         <% end %>
-        <%= f.text_field :phone_number, value: @contact_phone_form.phone_number, class: "form-control" %>
+        <%= f.telephone_field :phone_number, value: @contact_phone_form.phone_number, class: "form-control" %>
       </fieldset>
     </div>
 
