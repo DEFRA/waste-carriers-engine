@@ -58,6 +58,8 @@ gem "rest-client", "~> 2.0"
 
 gem "secure_headers", "~> 5.0"
 
+# Validations
+gem "phonelib", require: false
 gem "uk_postcode", require: false
 
 group :development, :test do
