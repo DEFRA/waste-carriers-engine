@@ -1,16 +1,20 @@
 require "uk_postcode"
 
-class TempPostcodeValidator < ActiveModel::Validator
+class PostcodeValidator < ActiveModel::Validator
   def validate(record)
     return unless options[:fields].any?
     options[:fields].each do |field|
-      next unless value_is_present?(record, field)
-      next unless value_uses_correct_format?(record, field)
-      postcode_returns_results?(record, field)
+      validate_postcode_field(record, field)
     end
   end
 
   private
+
+  def validate_postcode_field(record, field)
+    return unless value_is_present?(record, field)
+    return unless value_uses_correct_format?(record, field)
+    postcode_returns_results?(record, field)
+  end
 
   def value_is_present?(record, field)
     return true if record.send(field).present?

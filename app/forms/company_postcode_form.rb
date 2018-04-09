@@ -20,7 +20,7 @@ class CompanyPostcodeForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates_with TempPostcodeValidator, fields: [:temp_company_postcode]
+  validates_with PostcodeValidator, fields: [:temp_company_postcode]
 
   private
 
