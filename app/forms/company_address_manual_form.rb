@@ -15,9 +15,9 @@ class CompanyAddressManualForm < BaseForm
     self.os_places_error = @transient_registration.temp_os_places_error
     @transient_registration.update_attributes(temp_os_places_error: nil)
 
-    # Prefill the existing address unless the temp_postcode has changed from the saved postcode
-    # Otherwise, just fill in the temp_postcode
-    saved_address_still_valid? ? prefill_existing_address : self.postcode = @transient_registration.temp_postcode
+    # Prefill the existing address unless the temp_company_postcode has changed from the saved postcode
+    # Otherwise, just fill in the temp_company_postcode
+    saved_address_still_valid? ? prefill_existing_address : self.postcode = @transient_registration.temp_company_postcode
   end
 
   def submit(params)
@@ -52,7 +52,7 @@ class CompanyAddressManualForm < BaseForm
   def saved_address_still_valid?
     return true if overseas?
     return false unless @transient_registration.registered_address
-    return true if @transient_registration.temp_postcode == @transient_registration.registered_address.postcode
+    return true if @transient_registration.temp_company_postcode == @transient_registration.registered_address.postcode
     false
   end
 

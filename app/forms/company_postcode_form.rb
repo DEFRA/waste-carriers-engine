@@ -1,18 +1,18 @@
 class CompanyPostcodeForm < BaseForm
-  attr_accessor :business_type, :temp_postcode
+  attr_accessor :business_type, :temp_company_postcode
 
   def initialize(transient_registration)
     super
-    self.temp_postcode = @transient_registration.temp_postcode
+    self.temp_company_postcode = @transient_registration.temp_company_postcode
     # We only use this for the correct microcopy
     self.business_type = @transient_registration.business_type
   end
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    self.temp_postcode = params[:temp_postcode]
+    self.temp_company_postcode = params[:temp_company_postcode]
     format_postcode
-    attributes = { temp_postcode: temp_postcode }
+    attributes = { temp_company_postcode: temp_company_postcode }
 
     # While we won't proceed if the postcode isn't valid, we should always save it in case it's needed for manual entry
     @transient_registration.update_attributes(attributes)
@@ -20,13 +20,13 @@ class CompanyPostcodeForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates_with TempPostcodeValidator, fields: [:temp_postcode]
+  validates_with TempPostcodeValidator, fields: [:temp_company_postcode]
 
   private
 
   def format_postcode
-    return unless temp_postcode.present?
-    temp_postcode.upcase!
-    temp_postcode.strip!
+    return unless temp_company_postcode.present?
+    temp_company_postcode.upcase!
+    temp_company_postcode.strip!
   end
 end

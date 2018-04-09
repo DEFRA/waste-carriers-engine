@@ -21,9 +21,9 @@ RSpec.describe CompanyAddressManualForm, type: :model do
         end
       end
 
-      context "when the temp_postcode doesn't exist" do
+      context "when the temp_company_postcode doesn't exist" do
         before(:each) do
-          transient_registration.temp_postcode = nil
+          transient_registration.temp_company_postcode = nil
         end
 
         it "prefills the form with the existing address" do
@@ -31,9 +31,9 @@ RSpec.describe CompanyAddressManualForm, type: :model do
         end
       end
 
-      context "when the temp_postcode matches the existing address" do
+      context "when the temp_company_postcode matches the existing address" do
         before(:each) do
-          transient_registration.temp_postcode = transient_registration.registered_address.postcode
+          transient_registration.temp_company_postcode = transient_registration.registered_address.postcode
         end
 
         it "prefills the form with the existing address" do
@@ -41,13 +41,13 @@ RSpec.describe CompanyAddressManualForm, type: :model do
         end
       end
 
-      context "when the temp_postcode is in use and doesn't match the registered address" do
+      context "when the temp_company_postcode is in use and doesn't match the registered address" do
         before(:each) do
-          transient_registration.temp_postcode = "foo"
+          transient_registration.temp_company_postcode = "foo"
         end
 
-        it "prefills the form with the temp_postcode" do
-          expect(company_address_manual_form.postcode).to eq(transient_registration.temp_postcode)
+        it "prefills the form with the temp_company_postcode" do
+          expect(company_address_manual_form.postcode).to eq(transient_registration.temp_company_postcode)
         end
 
         it "does not prefill the form with the existing address" do
