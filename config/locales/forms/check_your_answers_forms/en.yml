@@ -3,6 +3,43 @@ en:
     new:
       heading: Check your details before renewing your registration
       error_heading: Something is wrong
+      location_label: Principal place of business
+      location:
+        england: England
+        northern_ireland: Northern Ireland
+        overseas: Not in the United Kingdom
+        scotland: Scotland
+        wales: Wales
+      business_type_label: Business type
+      business_type:
+        charity: charity or trust
+        individual: individual or sole trader
+        limitedCompany: limited company
+        limitedLiabilityPartnership: limited liability partnership
+        localAuthority: local authority or public body
+        partnership: partnership
+      tier_label: Tier
+      tier:
+        UPPER: upper
+        LOWER: lower
+      registration_type_label: Carrier type
+      registration_type:
+        carrier_dealer: We carry the waste ourselves (carrier and dealer)
+        broker_dealer: We arrange for others to carry it (broker and dealer)
+        carrier_broker_dealer: We carry waste ourselves and arrange for others to carry it (carrier, broker and dealer)
+      company_name_label: Business name
+      company_no_label: Companies House number
+      registered_address_label: Registered address
+      main_people_label: Main people
+      declared_convictions_label: Has anyone involved in managing your organisation been convicted of an environmental offence in the last 12 months?
+      declared_convictions:
+        yes: "yes"
+        no: "no"
+      relevant_people_label: People with relevant convictions
+      contact_name_label: Person to contact
+      phone_number_label: Contact telephone number
+      contact_email_label: Contact email
+      contact_address_label: Contact address
       next_button: Continue
   activemodel:
     errors:
