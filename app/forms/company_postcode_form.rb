@@ -1,4 +1,4 @@
-class CompanyPostcodeForm < BaseForm
+class CompanyPostcodeForm < PostcodeForm
   attr_accessor :business_type, :temp_company_postcode
 
   def initialize(transient_registration)
@@ -11,7 +11,7 @@ class CompanyPostcodeForm < BaseForm
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
     self.temp_company_postcode = params[:temp_company_postcode]
-    format_postcode
+    format_postcode(temp_company_postcode)
     attributes = { temp_company_postcode: temp_company_postcode }
 
     # While we won't proceed if the postcode isn't valid, we should always save it in case it's needed for manual entry
@@ -21,12 +21,4 @@ class CompanyPostcodeForm < BaseForm
   end
 
   validates_with PostcodeValidator, fields: [:temp_company_postcode]
-
-  private
-
-  def format_postcode
-    return unless temp_company_postcode.present?
-    temp_company_postcode.upcase!
-    temp_company_postcode.strip!
-  end
 end
