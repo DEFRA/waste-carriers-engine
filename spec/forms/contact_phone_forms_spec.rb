@@ -4,7 +4,12 @@ RSpec.describe ContactPhoneForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:contact_phone_form) { build(:contact_phone_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: contact_phone_form.reg_identifier } }
+      let(:valid_params) do
+        {
+          reg_identifier: contact_phone_form.reg_identifier,
+          phone_number: contact_phone_form.phone_number
+        }
+      end
 
       it "should submit" do
         expect(contact_phone_form.submit(valid_params)).to eq(true)
@@ -13,7 +18,12 @@ RSpec.describe ContactPhoneForm, type: :model do
 
     context "when the form is not valid" do
       let(:contact_phone_form) { build(:contact_phone_form, :has_required_data) }
-      let(:invalid_params) { { reg_identifier: "foo" } }
+      let(:invalid_params) do
+        {
+          reg_identifier: "foo",
+          phone_number: "foo"
+        }
+      end
 
       it "should not submit" do
         expect(contact_phone_form.submit(invalid_params)).to eq(false)
@@ -46,6 +56,56 @@ RSpec.describe ContactPhoneForm, type: :model do
       context "when a phone_number meets the requirements" do
         it "is valid" do
           expect(contact_phone_form).to be_valid
+        end
+      end
+
+      context "when a UK phone_number is formatted to include +44" do
+        before(:each) do
+          contact_phone_form.phone_number = "+44 1234 567890"
+        end
+
+        it "is valid" do
+          expect(contact_phone_form).to be_valid
+        end
+      end
+
+      context "when a phone_number is a valid international number" do
+        before(:each) do
+          contact_phone_form.phone_number = "+1-202-555-0109"
+        end
+
+        it "is valid" do
+          expect(contact_phone_form).to be_valid
+        end
+      end
+
+      context "when a phone_number is blank" do
+        before(:each) do
+          contact_phone_form.phone_number = ""
+        end
+
+        it "is not valid" do
+          expect(contact_phone_form).to_not be_valid
+        end
+      end
+
+      context "when a phone_number is too long" do
+        before(:each) do
+          contact_phone_form.phone_number = "01234 567 890 123"
+        end
+
+        it "is not valid" do
+          expect(contact_phone_form).to_not be_valid
+        end
+      end
+
+      context "when a phone_number is not a valid number" do
+        before(:each) do
+          contact_phone_form.phone_number = "foo"
+        end
+
+        it "is not valid" do
+          expect(contact_phone_form).to_not be_valid
         end
       end
     end
