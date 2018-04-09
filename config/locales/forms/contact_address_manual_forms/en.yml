@@ -4,15 +4,6 @@ en:
       heading: What's the address of the person we should contact?
       os_places_error_heading: Our address finder isn't working
       os_places_error_text: Please enter the address below.
-      house_number_label: Building name or number
-      house_number_hint: For example, a business premises name or house number
-      address_line_1_label: Address line 1
-      address_line_2_label: Address line 2 (optional)
-      town_city_label: Town or city
-      postcode_label: Postcode (optional)
-      preset_postcode_label: Postcode
-      postcode_change_link: Change
-      country_label: Country
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
