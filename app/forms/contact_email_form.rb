@@ -1,17 +1,22 @@
+require "validates_email_format_of"
+
 class ContactEmailForm < BaseForm
-  # TODO: Define accessible attributes, eg attr_accessor :field
+  attr_accessor :contact_email, :confirmed_email
 
   def initialize(transient_registration)
     super
-    # TODO: Define params to get from transient_registration, eg self.field = @transient_registration.field
+    self.contact_email = @transient_registration.contact_email
+    self.confirmed_email = @transient_registration.contact_email
   end
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    # TODO: Define allowed params, eg self.field = params[:field]
-    # TODO: Include attributes to update in the attributes hash, eg { field: field }
-    attributes = {}
+    self.contact_email = params[:contact_email]
+    self.confirmed_email = params[:confirmed_email]
+    attributes = { contact_email: contact_email }
 
     super(attributes, params[:reg_identifier])
   end
+
+  validates_with ContactEmailValidator
 end

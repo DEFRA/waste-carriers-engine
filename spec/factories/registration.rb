@@ -5,6 +5,8 @@ FactoryBot.define do
       company_name "Acme Waste"
       registration_type "carrier_broker_dealer"
       company_no "09360070" # We need to use a valid company number
+      contact_email "foo@example.com"
+      phone_number "03708 506506"
 
       metaData { build(:metaData) }
       addresses { [build(:address)] }

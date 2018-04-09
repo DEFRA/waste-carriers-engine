@@ -56,12 +56,15 @@ RSpec.describe "ContactEmailForms", type: :request do
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier]
+              reg_identifier: transient_registration[:reg_identifier],
+              contact_email: "bar.baz@example.com",
+              confirmed_email: "bar.baz@example.com"
             }
           }
 
           it "updates the transient registration" do
-            # TODO: Add test once data is submitted through the form
+            post contact_email_forms_path, contact_email_form: valid_params
+            expect(transient_registration.reload.contact_email).to eq(valid_params[:contact_email])
           end
 
           it "returns a 302 response" do
@@ -78,7 +81,9 @@ RSpec.describe "ContactEmailForms", type: :request do
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo"
+              reg_identifier: "foo",
+              contact_email: "bar",
+              confirmed_email: "baz"
             }
           }
 
@@ -89,7 +94,7 @@ RSpec.describe "ContactEmailForms", type: :request do
 
           it "does not update the transient registration" do
             post contact_email_forms_path, contact_email_form: invalid_params
-            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
+            expect(transient_registration.reload[:contact_email]).to_not eq(invalid_params[:contact_email])
           end
         end
       end
@@ -104,12 +109,15 @@ RSpec.describe "ContactEmailForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier]
+            reg_identifier: transient_registration[:reg_identifier],
+            contact_email: "bar.baz@example.com",
+            confirmed_email: "bar.baz@example.com"
           }
         }
 
         it "does not update the transient registration" do
-          # TODO: Add test once data is submitted through the form
+          post contact_email_forms_path, contact_email_form: valid_params
+          expect(transient_registration.reload.contact_email).to_not eq(valid_params[:contact_email])
         end
 
         it "returns a 302 response" do
