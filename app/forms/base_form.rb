@@ -1,5 +1,6 @@
 class BaseForm
   include ActiveModel::Model
+  include CanStripWhitespace
   attr_accessor :reg_identifier, :transient_registration
 
   def initialize(transient_registration)
@@ -11,6 +12,8 @@ class BaseForm
   def submit(attributes, reg_identifier)
     # Additional attributes are set in individual form subclasses
     self.reg_identifier = reg_identifier
+
+    attributes = strip_whitespace(attributes)
 
     # Update the transient registration with params from the registration if valid
     if valid?

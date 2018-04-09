@@ -3,6 +3,7 @@ class TransientRegistration
   include CanHaveRegistrationAttributes
   include CanChangeWorkflowStatus
   include CanCheckBusinessTypeChanges
+  include CanStripWhitespace
 
   validates_with RegIdentifierValidator
   validate :no_renewal_in_progress?, on: :create
@@ -37,16 +38,23 @@ class TransientRegistration
 
     # Don't copy object IDs as Mongo should generate new unique ones
     # Don't copy smart answers as we want users to use the latest version of the questions
-    assign_attributes(registration.attributes.except("_id",
-                                                     "otherBusinesses",
-                                                     "isMainService",
-                                                     "constructionWaste",
-                                                     "onlyAMF",
-                                                     "addresses",
-                                                     "keyPeople",
-                                                     "declaredConvictions",
-                                                     "convictionSearchResult",
-                                                     "conviction_sign_offs"))
+    attributes = registration.attributes.except("_id",
+                                                "otherBusinesses",
+                                                "isMainService",
+                                                "constructionWaste",
+                                                "onlyAMF",
+                                                "addresses",
+                                                "keyPeople",
+                                                "declaredConvictions",
+                                                "convictionSearchResult",
+                                                "conviction_sign_offs")
+
+    assign_attributes(strip_whitespace(attributes))
+    remove_invalid_attributes
+  end
+
+  def remove_invalid_attributes
+    self.phone_number = nil unless PhoneNumberValidator.new.validate(self)
   end
 
   # Check if a transient renewal already exists for this registration so we don't have
