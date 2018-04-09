@@ -2,28 +2,33 @@ require "uk_postcode"
 
 class TempPostcodeValidator < ActiveModel::Validator
   def validate(record)
-    postcode_returns_results?(record) if value_is_present?(record) && value_uses_correct_format?(record)
+    return unless options[:fields].any?
+    options[:fields].each do |field|
+      next unless value_is_present?(record, field)
+      next unless value_uses_correct_format?(record, field)
+      postcode_returns_results?(record, field)
+    end
   end
 
   private
 
-  def value_is_present?(record)
-    return true if record.temp_postcode.present?
-    record.errors.add(:temp_postcode, :blank)
+  def value_is_present?(record, field)
+    return true if record.send(field).present?
+    record.errors.add(field, :blank)
     false
   end
 
-  def value_uses_correct_format?(record)
-    return true if UKPostcode.parse(record.temp_postcode).full_valid?
-    record.errors.add(:temp_postcode, :wrong_format)
+  def value_uses_correct_format?(record, field)
+    return true if UKPostcode.parse(record.send(field)).full_valid?
+    record.errors.add(field, :wrong_format)
     false
   end
 
-  def postcode_returns_results?(record)
-    address_finder = AddressFinderService.new(record.temp_postcode)
+  def postcode_returns_results?(record, field)
+    address_finder = AddressFinderService.new(record.send(field))
     case address_finder.search_by_postcode
     when :not_found
-      record.errors.add(:temp_postcode, :no_results)
+      record.errors.add(field, :no_results)
       false
     when :error
       record.transient_registration.temp_os_places_error = true

@@ -146,9 +146,9 @@ RSpec.describe "ContactAddressForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the contact_email form" do
+          it "redirects to the contact_postcode form" do
             get back_contact_address_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_contact_email_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_contact_postcode_form_path(transient_registration[:reg_identifier]))
           end
         end
       end

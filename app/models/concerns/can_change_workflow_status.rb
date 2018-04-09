@@ -40,6 +40,7 @@ module CanChangeWorkflowStatus
       state :contact_name_form
       state :contact_phone_form
       state :contact_email_form
+      state :contact_postcode_form
       state :contact_address_form
 
       state :check_your_answers_form
@@ -198,10 +199,17 @@ module CanChangeWorkflowStatus
                     to: :contact_email_form
 
         transitions from: :contact_email_form,
+                    to: :contact_postcode_form
+
+        # Contact address
+
+        transitions from: :contact_postcode_form,
                     to: :contact_address_form
 
         transitions from: :contact_address_form,
                     to: :check_your_answers_form
+
+        # End contact address
 
         transitions from: :check_your_answers_form,
                     to: :declaration_form
@@ -342,11 +350,18 @@ module CanChangeWorkflowStatus
         transitions from: :contact_email_form,
                     to: :contact_phone_form
 
-        transitions from: :contact_address_form,
+        # Contact address
+
+        transitions from: :contact_postcode_form,
                     to: :contact_email_form
+
+        transitions from: :contact_address_form,
+                    to: :contact_postcode_form
 
         transitions from: :check_your_answers_form,
                     to: :contact_address_form
+
+        # End contact address
 
         transitions from: :declaration_form,
                     to: :check_your_answers_form

@@ -12,6 +12,7 @@ class TransientRegistration
 
   # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
   field :temp_postcode, type: String
+  field :temp_contact_postcode, type: String
   field :temp_os_places_error, type: Boolean
 
   # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
