@@ -3,43 +3,75 @@ en:
     new:
       heading: Check your details before renewing your registration
       error_heading: Something is wrong
-      location_label: Principal place of business
+      paragraph_1: You are about to renew your registration.
+      paragraph_2: Based on the information you provided, you require an upper tier registration.
+      paragraph_3: The renewal charge is £%{renewal_charge}, which will register you for 3 years.
+      paragraph_4: Due to a change in your registration type there will also be a £%{type_change_charge} charge.
+      tier_detail_subheading: What are upper and lower tier?
+      tier_detail_paragraph_1: TODO
+      subheading_1: "You told us:"
+      reg_identifier: Your registration number is %{reg_identifier}
       location:
-        england: England
-        northern_ireland: Northern Ireland
-        overseas: Not in the United Kingdom
-        scotland: Scotland
-        wales: Wales
-      business_type_label: Business type
+        england: Your principal place of business is in England
+        northern_ireland: Your principal place of business is in Northern Ireland
+        overseas: Your principal place of business is not in the United Kingdom
+        scotland: Your principal place of business is in Scotland
+        wales: Your principal place of business is in Wales
       business_type:
-        charity: charity or trust
-        individual: individual or sole trader
-        limitedCompany: limited company
-        limitedLiabilityPartnership: limited liability partnership
-        localAuthority: local authority or public body
-        partnership: partnership
+        charity: You are a charity or trust
+        individual: You are a individual or sole trader
+        limitedCompany: You are a limited company
+        limitedLiabilityPartnership: You are a limited liability partnership
+        localAuthority: You are a local authority or public body
+        partnership: You are a partnership
       tier_label: Tier
       tier:
         UPPER: upper
         LOWER: lower
-      registration_type_label: Carrier type
+      subheading_2: Registration type
       registration_type:
-        carrier_dealer: We carry the waste ourselves (carrier and dealer)
-        broker_dealer: We arrange for others to carry it (broker and dealer)
-        carrier_broker_dealer: We carry waste ourselves and arrange for others to carry it (carrier, broker and dealer)
-      company_name_label: Business name
-      company_no_label: Companies House number
-      registered_address_label: Registered address
-      main_people_label: Main people
-      declared_convictions_label: Has anyone involved in managing your organisation been convicted of an environmental offence in the last 12 months?
+        carrier_dealer: Your registration type is carrier dealer (you carry the waste yourselves)
+        broker_dealer: Your registration type is broker dealer (you arrange for others to carry the waste)
+        carrier_broker_dealer: Your registration type is carrier, broker and dealer (you carry waste yourselves and arrange for others to carry it)
+      subheading_3:
+        individual: Business or organisation name
+        limitedCompany: Company name
+        limitedLiabilityPartnership: Partnership name
+        localAuthority: Local authority or public body name
+        overseas: Business or organisation name
+        partnership: Partnership address
+      subheading_4: Companies House number
+      subheading_5:
+        individual: Business or organisation address
+        limitedCompany: Company address
+        limitedLiabilityPartnership: Partnership address
+        localAuthority: Local authority or public body address
+        overseas: Business or organisation address
+        partnership: Partnership address
+      subheading_6:
+        individual:
+          one: Business or organisation owner
+          other: Business or organisation owners
+        limitedCompany:
+          one: Director
+          other: Directors
+        limitedLiabilityPartnership:
+          one: Partner
+          other: Partners
+        localAuthority:
+          one: Chief executive
+          other: Chief executives
+        overseas:
+          one: Business or organisation owner
+          other: Business or organisation owners
+        partnership:
+          one: Partner
+          other: Partners
+      subheading_7: Relevant convictions
       declared_convictions:
-        yes: "yes"
-        no: "no"
-      relevant_people_label: People with relevant convictions
-      contact_name_label: Person to contact
-      phone_number_label: Contact telephone number
-      contact_email_label: Contact email
-      contact_address_label: Contact address
+        "yes": You told us you have relevant people with convictions in your business or organisation.
+        "no": You told us there are no relevant people with convictions in your business or organisation.
+      subheading_8: Contact details
       next_button: Continue
   activemodel:
     errors:

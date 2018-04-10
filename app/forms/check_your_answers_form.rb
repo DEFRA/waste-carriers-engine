@@ -32,6 +32,10 @@ class CheckYourAnswersForm < BaseForm
     "#{first_name} #{last_name}"
   end
 
+  def registration_type_changed?
+    @transient_registration.registration_type_changed?
+  end
+
   private
 
   def boolean_to_string(value)
