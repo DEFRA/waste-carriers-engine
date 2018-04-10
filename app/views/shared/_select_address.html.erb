@@ -1,0 +1,13 @@
+<% if form.errors[:addresses].any? %>
+<div class="form-group form-group-error">
+<% else %>
+<div class="form-group">
+<% end %>
+  <fieldset id="addresses">
+    <%= f.label :temp_address, t(".address_label"), class: "form-label" %>
+    <%= f.select(:temp_address,
+                 options_for_select(form.temp_addresses.map { |a| [a["partial"], a["uprn"]] }, form.temp_address),
+                 { include_blank: t(".address_blank_option", count: form.temp_addresses.length ) },
+                 { class: "form-control" }) %>
+  </fieldset>
+</div>

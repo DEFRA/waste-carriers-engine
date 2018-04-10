@@ -8,11 +8,6 @@ en:
       heading_soleTrader: What's the address of the business?
       postcode_label: Postcode
       postcode_change_link: Change
-      address_label: Address
-      address_blank_option:
-        zero: No addresses found
-        one: 1 address found
-        other: "%{count} addresses found"
       manual_address_link: "I can't find the address in the list"
       error_heading: Something is wrong
       next_button: Continue
