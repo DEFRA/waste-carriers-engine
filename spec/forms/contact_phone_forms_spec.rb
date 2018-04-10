@@ -99,9 +99,20 @@ RSpec.describe ContactPhoneForm, type: :model do
         end
       end
 
-      context "when a phone_number is not a valid number" do
+      context "when a phone_number is not a number" do
         before(:each) do
           contact_phone_form.phone_number = "foo"
+        end
+
+        it "is not valid" do
+          expect(contact_phone_form).to_not be_valid
+        end
+      end
+
+      context "when phone_number is not a valid number" do
+        before(:each) do
+          # It might look valid, but actually this is not a recognised number
+          contact_phone_form.phone_number = "0117 785 3149"
         end
 
         it "is not valid" do
