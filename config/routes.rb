@@ -276,6 +276,11 @@ Rails.application.routes.draw do
               to: "contact_address_forms#go_back",
               as: "back",
               on: :collection
+
+              get "skip_to_manual_address/:reg_identifier",
+              to: "contact_address_forms#skip_to_manual_address",
+              as: "skip_to_manual_address",
+              on: :collection
             end
 
   resources :contact_address_manual_forms,
