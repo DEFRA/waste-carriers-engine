@@ -17,9 +17,9 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:contact_postcode_form).to(:contact_address_form).on_event(:next)
       end
 
-      # it "changes to :contact_address_manual_form after the 'skip_to_manual_address' event" do
-      #   expect(transient_registration).to transition_from(:contact_postcode_form).to(:contact_address_manual_form).on_event(:skip_to_manual_address)
-      # end
+      it "changes to :contact_address_manual_form after the 'skip_to_manual_address' event" do
+        expect(transient_registration).to transition_from(:contact_postcode_form).to(:contact_address_manual_form).on_event(:skip_to_manual_address)
+      end
     end
   end
 end

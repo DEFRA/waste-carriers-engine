@@ -42,6 +42,7 @@ module CanChangeWorkflowStatus
       state :contact_email_form
       state :contact_postcode_form
       state :contact_address_form
+      state :contact_address_manual_form
 
       state :check_your_answers_form
       state :declaration_form
@@ -199,14 +200,29 @@ module CanChangeWorkflowStatus
                     to: :contact_email_form
 
         transitions from: :contact_email_form,
+                    to: :contact_address_manual_form,
+                    if: :based_overseas?
+
+        transitions from: :contact_email_form,
                     to: :contact_postcode_form
 
         # Contact address
 
         transitions from: :contact_postcode_form,
+                    to: :contact_address_manual_form,
+                    if: :skip_to_manual_address?
+
+        transitions from: :contact_postcode_form,
                     to: :contact_address_form
 
         transitions from: :contact_address_form,
+                    to: :contact_address_manual_form,
+                    if: :skip_to_manual_address?
+
+        transitions from: :contact_address_form,
+                    to: :check_your_answers_form
+
+        transitions from: :contact_address_manual_form,
                     to: :check_your_answers_form
 
         # End contact address
@@ -358,6 +374,17 @@ module CanChangeWorkflowStatus
         transitions from: :contact_address_form,
                     to: :contact_postcode_form
 
+        transitions from: :contact_address_manual_form,
+                    to: :contact_email_form,
+                    if: :based_overseas?
+
+        transitions from: :contact_address_manual_form,
+                    to: :contact_postcode_form
+
+        transitions from: :check_your_answers_form,
+                    to: :contact_address_manual_form,
+                    if: :contact_address_was_manually_entered?
+
         transitions from: :check_your_answers_form,
                     to: :contact_address_form
 
@@ -399,6 +426,12 @@ module CanChangeWorkflowStatus
 
         transitions from: :company_address_form,
                     to: :company_address_manual_form
+
+        transitions from: :contact_postcode_form,
+                    to: :contact_address_manual_form
+
+        transitions from: :contact_address_form,
+                    to: :contact_address_manual_form
       end
     end
   end
@@ -449,6 +482,11 @@ module CanChangeWorkflowStatus
 
   def skip_to_manual_address?
     temp_os_places_error
+  end
+
+  def contact_address_was_manually_entered?
+    return unless contact_address
+    contact_address.manually_entered?
   end
 
   def should_register_in_northern_ireland?

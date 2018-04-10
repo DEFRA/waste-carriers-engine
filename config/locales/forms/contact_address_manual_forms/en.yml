@@ -1,12 +1,7 @@
 en:
-  company_address_manual_forms:
+  contact_address_manual_forms:
     new:
-      heading_localAuthority: What's the address of the local authority or public body?
-      heading_limitedCompany: What's the address of the company?
-      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership?
-      heading_partnership: What's the address of the partnership?
-      heading_soleTrader: What's the address of the business?
-      heading_overseas: What's the address of the business or organisation?
+      heading: What's the address of the person we should contact?
       os_places_error_heading: Our address finder isn't working
       os_places_error_text: Please enter the address below.
       error_heading: Something is wrong
@@ -14,7 +9,7 @@ en:
   activemodel:
     errors:
       models:
-        company_address_manual_form:
+        contact_address_manual_form:
           attributes:
             house_number:
               blank: "Enter the building name or number"
