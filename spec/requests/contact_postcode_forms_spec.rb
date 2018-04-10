@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "CompanyPostcodeForms", type: :request do
-  describe "GET new_company_postcode_path" do
+RSpec.describe "ContactPostcodeForms", type: :request do
+  describe "GET new_contact_postcode_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -13,11 +13,11 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "company_postcode_form")
+                 workflow_state: "contact_postcode_form")
         end
 
         it "returns a success response" do
-          get new_company_postcode_form_path(transient_registration[:reg_identifier])
+          get new_contact_postcode_form_path(transient_registration[:reg_identifier])
           expect(response).to have_http_status(200)
         end
       end
@@ -31,14 +31,14 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
         end
 
         it "redirects to the form for the current state" do
-          get new_company_postcode_form_path(transient_registration[:reg_identifier])
+          get new_contact_postcode_form_path(transient_registration[:reg_identifier])
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "POST company_postcode_forms_path" do
+  describe "POST contact_postcode_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -50,35 +50,35 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "company_postcode_form")
+                 workflow_state: "contact_postcode_form")
         end
 
         context "when valid params are submitted" do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              temp_company_postcode: "BS1 6AH"
+              temp_contact_postcode: "BS1 6AH"
             }
           }
 
           it "returns a 302 response" do
-            VCR.use_cassette("company_postcode_form_modified_postcode") do
-              post company_postcode_forms_path, company_postcode_form: valid_params
+            VCR.use_cassette("contact_postcode_form_modified_postcode") do
+              post contact_postcode_forms_path, contact_postcode_form: valid_params
               expect(response).to have_http_status(302)
             end
           end
 
           it "updates the transient registration" do
-            VCR.use_cassette("company_postcode_form_modified_postcode") do
-              post company_postcode_forms_path, company_postcode_form: valid_params
-              expect(transient_registration.reload[:temp_company_postcode]).to eq(valid_params[:temp_company_postcode])
+            VCR.use_cassette("contact_postcode_form_modified_postcode") do
+              post contact_postcode_forms_path, contact_postcode_form: valid_params
+              expect(transient_registration.reload[:temp_contact_postcode]).to eq(valid_params[:temp_contact_postcode])
             end
           end
 
-          it "redirects to the company_address form" do
-            VCR.use_cassette("company_postcode_form_modified_postcode") do
-              post company_postcode_forms_path, company_postcode_form: valid_params
-              expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+          it "redirects to the contact_address form" do
+            VCR.use_cassette("contact_postcode_form_modified_postcode") do
+              post contact_postcode_forms_path, contact_postcode_form: valid_params
+              expect(response).to redirect_to(new_contact_address_form_path(transient_registration[:reg_identifier]))
             end
           end
 
@@ -87,9 +87,9 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
               allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(:error)
             end
 
-            it "redirects to the company_address_manual form" do
-              post company_postcode_forms_path, company_postcode_form: valid_params
-              expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:reg_identifier]))
+            it "redirects to the contact_address_manual form" do
+              post contact_postcode_forms_path, contact_postcode_form: valid_params
+              expect(response).to redirect_to(new_contact_address_manual_form_path(transient_registration[:reg_identifier]))
             end
           end
         end
@@ -98,18 +98,18 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
           let(:invalid_params) {
             {
               reg_identifier: "foo",
-              temp_company_postcode: "ABC123DEF456"
+              temp_contact_postcode: "ABC123DEF456"
             }
           }
 
           it "returns a 302 response" do
-            post company_postcode_forms_path, company_postcode_form: invalid_params
+            post contact_postcode_forms_path, contact_postcode_form: invalid_params
             expect(response).to have_http_status(302)
           end
 
           it "does not update the transient registration" do
-            post company_postcode_forms_path, company_postcode_form: invalid_params
-            expect(transient_registration.reload[:temp_company_postcode]).to_not eq(invalid_params[:temp_company_postcode])
+            post contact_postcode_forms_path, contact_postcode_form: invalid_params
+            expect(transient_registration.reload[:temp_contact_postcode]).to_not eq(invalid_params[:temp_contact_postcode])
           end
         end
       end
@@ -125,29 +125,29 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
         let(:valid_params) {
           {
             reg_identifier: transient_registration[:reg_identifier],
-            temp_company_postcode: "BS1 5AH"
+            temp_contact_postcode: "BS1 5AH"
           }
         }
 
         it "returns a 302 response" do
-          post company_postcode_forms_path, company_postcode_form: valid_params
+          post contact_postcode_forms_path, contact_postcode_form: valid_params
           expect(response).to have_http_status(302)
         end
 
         it "does not update the transient registration" do
-          post company_postcode_forms_path, company_postcode_form: valid_params
-          expect(transient_registration.reload[:temp_company_postcode]).to_not eq(valid_params[:temp_company_postcode])
+          post contact_postcode_forms_path, contact_postcode_form: valid_params
+          expect(transient_registration.reload[:temp_contact_postcode]).to_not eq(valid_params[:temp_contact_postcode])
         end
 
         it "redirects to the correct form for the state" do
-          post company_postcode_forms_path, company_postcode_form: valid_params
+          post contact_postcode_forms_path, contact_postcode_form: valid_params
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "GET back_company_postcode_forms_path" do
+  describe "GET back_contact_postcode_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -159,18 +159,18 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "company_postcode_form")
+                 workflow_state: "contact_postcode_form")
         end
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_company_postcode_forms_path(transient_registration[:reg_identifier])
+            get back_contact_postcode_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the company_name form" do
-            get back_company_postcode_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_company_name_form_path(transient_registration[:reg_identifier]))
+          it "redirects to the contact_email form" do
+            get back_contact_postcode_forms_path(transient_registration[:reg_identifier])
+            expect(response).to redirect_to(new_contact_email_form_path(transient_registration[:reg_identifier]))
           end
         end
       end
@@ -185,12 +185,12 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_company_postcode_forms_path(transient_registration[:reg_identifier])
+            get back_contact_postcode_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the correct form for the state" do
-            get back_company_postcode_forms_path(transient_registration[:reg_identifier])
+            get back_contact_postcode_forms_path(transient_registration[:reg_identifier])
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
           end
         end
@@ -198,7 +198,7 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
     end
   end
 
-  describe "GET skip_to_manual_address_company_postcode_forms_path" do
+  describe "GET skip_to_manual_address_contact_postcode_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -211,18 +211,18 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
                  :has_required_data,
                  :has_postcode,
                  account_email: user.email,
-                 workflow_state: "company_postcode_form")
+                 workflow_state: "contact_postcode_form")
         end
 
         context "when the skip_to_manual_address action is triggered" do
           it "returns a 302 response" do
-            get skip_to_manual_address_company_postcode_forms_path(transient_registration[:reg_identifier])
+            get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the company_address_manual form" do
-            get skip_to_manual_address_company_postcode_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:reg_identifier]))
+          it "redirects to the contact_address_manual form" do
+            get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:reg_identifier])
+            expect(response).to redirect_to(new_contact_address_manual_form_path(transient_registration[:reg_identifier]))
           end
         end
       end
@@ -238,12 +238,12 @@ RSpec.describe "CompanyPostcodeForms", type: :request do
 
         context "when the skip_to_manual_address action is triggered" do
           it "returns a 302 response" do
-            get skip_to_manual_address_company_postcode_forms_path(transient_registration[:reg_identifier])
+            get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the correct form for the state" do
-            get skip_to_manual_address_company_postcode_forms_path(transient_registration[:reg_identifier])
+            get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:reg_identifier])
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
           end
         end

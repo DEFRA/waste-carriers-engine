@@ -2,6 +2,8 @@ en:
   contact_phone_forms:
     new:
       heading: What's the telephone number of the person we should contact?
+      phone_number_label: Telephone number
+      phone_number_hint: This can be a landline or mobile
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
@@ -9,6 +11,10 @@ en:
       models:
         contact_phone_form:
           attributes:
+            phone_number:
+              blank: "Enter a telephone number"
+              invalid_format: "Enter a valid telephone number"
+              too_long: "Check the number you entered - it should have no more than than 15 characters"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

@@ -1,22 +1,21 @@
 en:
-  company_postcode_forms:
+  contact_postcode_forms:
     new:
-      heading_localAuthority: What's the address of the local authority or public body?
-      heading_limitedCompany: What's the address of the company?
-      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership?
-      heading_partnership: What's the address of the partnership?
-      heading_soleTrader: What's the address of the business?
-      temp_company_postcode_label: UK postcode
-      temp_company_postcode_hint: For example, BS1 5AH
+      heading: What's the address of the person we should contact?
+      detail_subheading: Why do you need to write to me?
+      detail_paragraph_1: We’ll only write to you in relation to your waste carrier account. For example, if you order copy cards of your registration.
+      detail_paragraph_2: Don’t worry, we won’t send junk mail to this address.
+      temp_contact_postcode_label: UK postcode
+      temp_contact_postcode_hint: For example, BS1 5AH
       error_heading: A problem to fix
       next_button: Find address
       manual_address_link: "Enter address manually"
   activemodel:
     errors:
       models:
-        company_postcode_form:
+        contact_postcode_form:
           attributes:
-            temp_company_postcode:
+            temp_contact_postcode:
               blank: "Enter a postcode"
               wrong_format: "Enter a valid UK postcode"
               no_results: "We couldn't find any addresses for that postcode. Check the postcode or enter the address manually."

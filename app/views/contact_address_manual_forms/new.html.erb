@@ -1,0 +1,23 @@
+<%= render("shared/back", back_path: back_contact_address_manual_forms_path(@contact_address_manual_form.reg_identifier)) %>
+
+<div class="text">
+  <%= form_for(@contact_address_manual_form) do |f| %>
+    <%= render("shared/errors", object: @contact_address_manual_form) %>
+
+    <% if @contact_address_manual_form.os_places_error %>
+    <div class="error-summary" role="alert">
+      <h2 class="heading-medium error-summary-heading"><%= t(".os_places_error_heading") %></h2>
+      <p><%= t(".os_places_error_text") %></p>
+    </div>
+    <% end %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <%= render("shared/manual_address", form: @contact_address_manual_form, f: f, overseas: @contact_address_manual_form.overseas?) %>
+
+    <%= f.hidden_field :reg_identifier, value: @contact_address_manual_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>

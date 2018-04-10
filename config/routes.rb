@@ -253,6 +253,21 @@ Rails.application.routes.draw do
               on: :collection
             end
 
+  resources :contact_postcode_forms,
+            only: [:new, :create],
+            path: "contact-postcode",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "contact_postcode_forms#go_back",
+              as: "back",
+              on: :collection
+
+              get "skip_to_manual_address/:reg_identifier",
+              to: "contact_postcode_forms#skip_to_manual_address",
+              as: "skip_to_manual_address",
+              on: :collection
+            end
+
   resources :contact_address_forms,
             only: [:new, :create],
             path: "contact-address",
@@ -262,6 +277,16 @@ Rails.application.routes.draw do
               as: "back",
               on: :collection
             end
+
+  resources :contact_address_manual_forms,
+    only: [:new, :create],
+    path: "contact-address-manual",
+    path_names: { new: "/:reg_identifier" } do
+      get "back/:reg_identifier",
+      to: "contact_address_manual_forms#go_back",
+      as: "back",
+      on: :collection
+    end
 
   resources :check_your_answers_forms,
             only: [:new, :create],
