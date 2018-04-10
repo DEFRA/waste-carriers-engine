@@ -207,7 +207,7 @@ module CanChangeWorkflowStatus
                     to: :contact_postcode_form
 
         # Contact address
-        
+
         transitions from: :contact_postcode_form,
                     to: :contact_address_manual_form,
                     if: :skip_to_manual_address?
@@ -218,7 +218,7 @@ module CanChangeWorkflowStatus
         transitions from: :contact_address_form,
                     to: :contact_address_manual_form,
                     if: :skip_to_manual_address?
-        
+
         transitions from: :contact_address_form,
                     to: :check_your_answers_form
 
@@ -426,6 +426,12 @@ module CanChangeWorkflowStatus
 
         transitions from: :company_address_form,
                     to: :company_address_manual_form
+
+        transitions from: :contact_postcode_form,
+                    to: :contact_address_manual_form
+
+        transitions from: :contact_address_form,
+                    to: :contact_address_manual_form
       end
     end
   end

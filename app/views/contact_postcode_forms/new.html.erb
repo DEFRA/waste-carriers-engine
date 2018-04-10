@@ -48,7 +48,7 @@
 
     <% if @contact_postcode_form.errors.added?(:temp_contact_postcode, :no_results) %>
     <div class="form-group">
-      <a href="#"><%= t(".manual_address_link") %></a>
+      <%= link_to(t(".manual_address_link"), skip_to_manual_address_contact_postcode_forms_path(@contact_postcode_form.reg_identifier)) %>
     </div>
     <% end %>
   <% end %>
