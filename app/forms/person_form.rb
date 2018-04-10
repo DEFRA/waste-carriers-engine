@@ -1,5 +1,5 @@
 class PersonForm < BaseForm
-  attr_accessor :first_name, :last_name, :dob_day, :dob_month, :dob_year, :date_of_birth
+  attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :date_of_birth
   attr_accessor :new_person
 
   def initialize(transient_registration)
@@ -70,12 +70,15 @@ class PersonForm < BaseForm
   private
 
   def set_up_new_person
-    KeyPerson.new(first_name: first_name,
-                  last_name: last_name,
-                  dob_day: dob_day,
-                  dob_month: dob_month,
-                  dob_year: dob_year,
-                  person_type: person_type)
+    person = KeyPerson.new(first_name: first_name,
+                           last_name: last_name,
+                           dob_day: dob_day,
+                           dob_month: dob_month,
+                           dob_year: dob_year,
+                           person_type: person_type)
+    person.position = position if position?
+
+    person
   end
 
   def all_people

@@ -74,7 +74,7 @@ RSpec.describe "ConvictionDetailsForms", type: :request do
 
           it "updates the transient registration" do
             post conviction_details_forms_path, conviction_details_form: valid_params
-            expect(transient_registration.reload.keyPeople.last.first_name).to eq(valid_params[:first_name])
+            expect(transient_registration.reload.keyPeople.last.position).to eq(valid_params[:position])
           end
 
           it "returns a 302 response" do
