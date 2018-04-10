@@ -2,7 +2,7 @@ class CompanyAddressManualForm < ManualAddressForm
   private
 
   def saved_temp_postcode
-    @transient_registration.temp_postcode
+    @transient_registration.temp_company_postcode
   end
 
   def existing_address

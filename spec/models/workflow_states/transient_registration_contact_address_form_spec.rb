@@ -9,8 +9,8 @@ RSpec.describe TransientRegistration, type: :model do
                workflow_state: "contact_address_form")
       end
 
-      it "changes to :contact_email_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:contact_address_form).to(:contact_email_form).on_event(:back)
+      it "changes to :contact_postcode_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:contact_address_form).to(:contact_postcode_form).on_event(:back)
       end
 
       it "changes to :check_your_answers_form after the 'next' event" do

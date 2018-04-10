@@ -40,6 +40,7 @@ module CanChangeWorkflowStatus
       state :contact_name_form
       state :contact_phone_form
       state :contact_email_form
+      state :contact_postcode_form
       state :contact_address_form
       state :contact_address_manual_form
 
@@ -203,10 +204,21 @@ module CanChangeWorkflowStatus
                     if: :based_overseas?
 
         transitions from: :contact_email_form,
-                    to: :contact_address_form
+                    to: :contact_postcode_form
 
         # Contact address
+        
+        transitions from: :contact_postcode_form,
+                    to: :contact_address_manual_form,
+                    if: :skip_to_manual_address?
 
+        transitions from: :contact_postcode_form,
+                    to: :contact_address_form
+
+        transitions from: :contact_address_form,
+                    to: :contact_address_manual_form,
+                    if: :skip_to_manual_address?
+        
         transitions from: :contact_address_form,
                     to: :check_your_answers_form
 
@@ -356,22 +368,22 @@ module CanChangeWorkflowStatus
 
         # Contact address
 
-        transitions from: :contact_address_form,
+        transitions from: :contact_postcode_form,
                     to: :contact_email_form
+
+        transitions from: :contact_address_form,
+                    to: :contact_postcode_form
 
         transitions from: :contact_address_manual_form,
                     to: :contact_email_form,
                     if: :based_overseas?
 
         transitions from: :contact_address_manual_form,
-                    to: :contact_address_form
+                    to: :contact_postcode_form
 
         transitions from: :check_your_answers_form,
                     to: :contact_address_manual_form,
                     if: :contact_address_was_manually_entered?
-
-        transitions from: :check_your_answers_form,
-                    to: :contact_address_form
 
         transitions from: :check_your_answers_form,
                     to: :contact_address_form

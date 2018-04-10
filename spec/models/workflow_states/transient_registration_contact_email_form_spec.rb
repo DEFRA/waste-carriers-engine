@@ -13,8 +13,8 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:contact_email_form).to(:contact_phone_form).on_event(:back)
       end
 
-      it "changes to :contact_address_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:contact_email_form).to(:contact_address_form).on_event(:next)
+      it "changes to :contact_postcode_form after the 'next' event" do
+        expect(transient_registration).to transition_from(:contact_email_form).to(:contact_postcode_form).on_event(:next)
       end
     end
   end

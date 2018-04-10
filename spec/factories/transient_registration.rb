@@ -10,7 +10,8 @@ FactoryBot.define do
     end
 
     trait :has_postcode do
-      temp_postcode "BS1 5AH"
+      temp_company_postcode "BS1 5AH"
+      temp_contact_postcode "BS1 5AH"
     end
   end
 end

@@ -1,6 +1,4 @@
 class ConvictionDetailsForm < PersonForm
-  attr_accessor :position
-
   def position?
     true
   end
