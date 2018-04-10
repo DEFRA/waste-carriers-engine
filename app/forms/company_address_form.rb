@@ -1,6 +1,6 @@
 class CompanyAddressForm < BaseForm
   attr_accessor :business_type
-  attr_accessor :temp_postcode
+  attr_accessor :temp_company_postcode
   attr_accessor :temp_addresses
   attr_accessor :temp_address
   attr_accessor :addresses
@@ -9,7 +9,7 @@ class CompanyAddressForm < BaseForm
     super
     # We only use this for the correct microcopy
     self.business_type = @transient_registration.business_type
-    self.temp_postcode = @transient_registration.temp_postcode
+    self.temp_company_postcode = @transient_registration.temp_company_postcode
 
     look_up_addresses
     preselect_existing_address
@@ -27,10 +27,10 @@ class CompanyAddressForm < BaseForm
 
   private
 
-  # Look up addresses based on the temp_postcode
+  # Look up addresses based on the temp_company_postcode
   def look_up_addresses
-    if temp_postcode.present?
-      address_finder = AddressFinderService.new(temp_postcode)
+    if temp_company_postcode.present?
+      address_finder = AddressFinderService.new(temp_company_postcode)
       self.temp_addresses = address_finder.search_by_postcode
     else
       self.temp_addresses = []

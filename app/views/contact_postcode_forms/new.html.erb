@@ -1,0 +1,57 @@
+<%= render("shared/back", back_path: back_contact_postcode_forms_path(@contact_postcode_form.reg_identifier)) %>
+
+<div class="text">
+  <%= form_for(@contact_postcode_form) do |f| %>
+    <%= render("shared/errors", object: @contact_postcode_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <div class="form-group">
+      <details>
+        <summary>
+          <span class="summary"><%= t(".detail_subheading") %></span>
+        </summary>
+        <div class="panel panel-border-narrow">
+          <p><%= t(".detail_paragraph_1") %></p>
+          <p><%= t(".detail_paragraph_2") %></p>
+        </div>
+      </details>
+    </div>
+
+    <% if @contact_postcode_form.errors[:temp_contact_postcode].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="temp_contact_postcode">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
+        </legend>
+
+        <% if @contact_postcode_form.errors[:temp_contact_postcode].any? %>
+        <span class="error-message"><%= @contact_postcode_form.errors[:temp_contact_postcode].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :temp_contact_postcode, class: "form-label" do %>
+          <%= t(".temp_contact_postcode_label") %>
+          <span class='form-hint'><%= t(".temp_contact_postcode_hint") %></span>
+        <% end %>
+        <%= f.text_field :temp_contact_postcode, value: @contact_postcode_form.temp_contact_postcode, class: "form-control" %>
+
+      </fieldset>
+    </div>
+
+    <%= f.hidden_field :reg_identifier, value: @contact_postcode_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+
+    <% if @contact_postcode_form.errors.added?(:temp_contact_postcode, :no_results) %>
+    <div class="form-group">
+      <a href="#"><%= t(".manual_address_link") %></a>
+    </div>
+    <% end %>
+  <% end %>
+
+  <%= render("shared/os_terms_footer") %>
+</div>

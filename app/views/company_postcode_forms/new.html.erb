@@ -6,25 +6,25 @@
 
     <h1 class="heading-large"><%= t(".heading_#{@company_postcode_form.business_type}") %></h1>
 
-    <% if @company_postcode_form.errors[:temp_postcode].any? %>
+    <% if @company_postcode_form.errors[:temp_company_postcode].any? %>
     <div class="form-group form-group-error">
     <% else %>
     <div class="form-group">
     <% end %>
-      <fieldset id="temp_postcode">
+      <fieldset id="temp_company_postcode">
         <legend class="visuallyhidden">
           <%= t(".heading_#{@company_postcode_form.business_type}") %>
         </legend>
 
-        <% if @company_postcode_form.errors[:temp_postcode].any? %>
-        <span class="error-message"><%= @company_postcode_form.errors[:temp_postcode].join(", ") %></span>
+        <% if @company_postcode_form.errors[:temp_company_postcode].any? %>
+        <span class="error-message"><%= @company_postcode_form.errors[:temp_company_postcode].join(", ") %></span>
         <% end %>
 
-        <%= f.label :temp_postcode, class: "form-label" do %>
-          <%= t(".temp_postcode_label") %>
-          <span class='form-hint'><%= t(".temp_postcode_hint") %></span>
+        <%= f.label :temp_company_postcode, class: "form-label" do %>
+          <%= t(".temp_company_postcode_label") %>
+          <span class='form-hint'><%= t(".temp_company_postcode_hint") %></span>
         <% end %>
-        <%= f.text_field :temp_postcode, value: @company_postcode_form.temp_postcode, class: "form-control" %>
+        <%= f.text_field :temp_company_postcode, value: @company_postcode_form.temp_company_postcode, class: "form-control" %>
 
       </fieldset>
     </div>
@@ -34,7 +34,7 @@
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
 
-    <% if @company_postcode_form.errors.added?(:temp_postcode, :no_results) %>
+    <% if @company_postcode_form.errors.added?(:temp_company_postcode, :no_results) %>
     <div class="form-group">
       <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_postcode_forms_path(@company_postcode_form.reg_identifier)) %>
     </div>
