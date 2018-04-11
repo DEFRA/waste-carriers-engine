@@ -3,11 +3,19 @@
 <div class="text">
   <% if @check_your_answers_form.errors.any? %>
 
-    <h1 class="heading-large"><%= t(".error_heading") %></h1>
+    <div class="error-summary" role="alert">
+      <h2 class="heading-medium error-summary-heading"><%= t(".error_heading") %></h2>
 
-    <% @check_your_answers_form.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
+      <p><%= t(".error_description_1") %></p>
+
+      <ul class="list list-bullet">
+      <% @check_your_answers_form.errors.each do |_field, message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+
+      <p><%= t(".error_description_2") %></p>
+    </div>
 
   <% else %>
 
@@ -17,10 +25,9 @@
       <h1 class="heading-large"><%= t(".heading") %></h1>
 
       <p><%= t(".paragraph_1") %></p>
-      <p><%= t(".paragraph_2") %></p>
-      <p><%= t(".paragraph_3", renewal_charge: Rails.configuration.renewal_charge) %></p>
+      <p><%= t(".paragraph_2", renewal_charge: Rails.configuration.renewal_charge) %></p>
       <% if @check_your_answers_form.registration_type_changed? %>
-      <p><%= t(".paragraph_4", type_change_charge: Rails.configuration.type_change_charge) %></p>
+      <p><%= t(".paragraph_3", type_change_charge: Rails.configuration.type_change_charge) %></p>
       <% end %>
 
       <hr>
@@ -33,6 +40,7 @@
         <% unless @check_your_answers_form.transient_registration.overseas? %>
           <li><%= t(".business_type.#{@check_your_answers_form.business_type}") %></li>
         <% end %>
+        <li><%= t(".tier.#{@check_your_answers_form.tier}") %></li>
       </ul>
 
       <hr>

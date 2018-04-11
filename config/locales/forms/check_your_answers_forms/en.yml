@@ -3,10 +3,11 @@ en:
     new:
       heading: Check your details before renewing your registration
       error_heading: Something is wrong
+      error_description_1: "We're missing some of the information we need to renew your registration:"
+      error_description_2: "Please go back and make sure all the required questions have been answered."
       paragraph_1: You are about to renew your registration.
-      paragraph_2: Based on the information you provided, you require an upper tier registration.
-      paragraph_3: The renewal charge is £%{renewal_charge}, which will register you for 3 years.
-      paragraph_4: Due to a change in your registration type there will also be a £%{type_change_charge} charge.
+      paragraph_2: The renewal charge is £%{renewal_charge}, which will register you for 3 years.
+      paragraph_3: Because your registration type has changed, there will also be a £%{type_change_charge} charge.
       tier_detail_subheading: What are upper and lower tier?
       tier_detail_paragraph_1: TODO
       subheading_1: "You told us:"
@@ -24,10 +25,9 @@ en:
         limitedLiabilityPartnership: You are a limited liability partnership
         localAuthority: You are a local authority or public body
         partnership: You are a partnership
-      tier_label: Tier
       tier:
-        UPPER: upper
-        LOWER: lower
+        UPPER: You require an upper tier registration
+        LOWER: You requre a lower tier registration
       subheading_2: Registration type
       registration_type:
         carrier_dealer: Your registration type is carrier dealer (you carry the waste yourselves)
@@ -69,8 +69,8 @@ en:
           other: Partners
       subheading_7: Relevant convictions
       declared_convictions:
-        "yes": You told us you have relevant people with convictions in your business or organisation.
-        "no": You told us there are no relevant people with convictions in your business or organisation.
+        "true": You told us you have relevant people with convictions in your business or organisation.
+        "false": You told us there are no relevant people with convictions in your business or organisation.
       subheading_8: Contact details
       next_button: Continue
   activemodel:
@@ -78,6 +78,30 @@ en:
       models:
         check_your_answers_form:
           attributes:
+            business_type:
+              missing: "Your business or organisation type"
+            company_name:
+              missing: "The name of the business or organisation"
+            contact_name:
+              missing: "The name of the person we should contact?"
+            contact_address:
+              missing: "The address of the person we should contact"
+            contact_email:
+              missing: "The email address of the person we should contact"
+            declared_convictions:
+              missing: "Has anyone involved in managing your organisation been convicted of an environmental offence in the last 12 months?"
+            location:
+              missing: "Your principal place of business"
+            main_people:
+              missing: "Details of the main people running your business or organisation (like directors or partners)"
+            phone_number:
+              missing: "The telephone number of the person we should contact"
+            registered_address:
+              missing: "The address of the business or organisation"
+            registration_type:
+              missing: "Do you carry the waste yourselves, or arrange for others to do it?"
+            tier:
+              missing: "Your tier (upper or lower)"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

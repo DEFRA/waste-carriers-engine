@@ -21,21 +21,11 @@ RSpec.describe CheckYourAnswersForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "check_your_answers_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:check_your_answers_form) { CheckYourAnswersForm.new(transient_registration) }
+  context "when a valid transient registration exists" do
+    let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
 
+    describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
-        before(:each) do
-          check_your_answers_form.reg_identifier = transient_registration.reg_identifier
-        end
-
         it "is valid" do
           expect(check_your_answers_form).to be_valid
         end
@@ -48,6 +38,76 @@ RSpec.describe CheckYourAnswersForm, type: :model do
 
         it "is not valid" do
           expect(check_your_answers_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#required_fields_filled_in?" do
+      context "when all the fields are present" do
+        it "is true" do
+          expect(check_your_answers_form.required_fields_filled_in?).to be(true)
+        end
+      end
+
+      context "when a field is missing" do
+        before(:each) do
+          check_your_answers_form.company_name = nil
+        end
+
+        it "is false" do
+          expect(check_your_answers_form.required_fields_filled_in?).to be(false)
+        end
+      end
+
+      context "when the company_no is missing" do
+        before(:each) do
+          check_your_answers_form.company_no = nil
+        end
+
+        context "when the business_type requires a company_no" do
+          before(:each) do
+            check_your_answers_form.business_type = "limitedLiabilityPartnership"
+          end
+
+          it "is false" do
+            expect(check_your_answers_form.required_fields_filled_in?).to be(false)
+          end
+        end
+
+        context "when the business_type does not require a company_no" do
+          before(:each) do
+            check_your_answers_form.business_type = "overseas"
+          end
+
+          it "is true" do
+            expect(check_your_answers_form.required_fields_filled_in?).to be(true)
+          end
+        end
+      end
+
+      context "when there are no relevant_people" do
+        before(:each) do
+          check_your_answers_form.relevant_people = nil
+        end
+
+        context "when declared_convictions expects there to be people" do
+          before(:each) do
+            check_your_answers_form.declared_convictions = true
+          end
+
+          it "is false" do
+            expect(check_your_answers_form.required_fields_filled_in?).to be(false)
+          end
+        end
+
+        context "when declared_convictions does not expect there to be people" do
+          before(:each) do
+            check_your_answers_form.declared_convictions = false
+          end
+
+          it "is true" do
+            expect(check_your_answers_form.required_fields_filled_in?).to be(true)
+          end
         end
       end
     end
