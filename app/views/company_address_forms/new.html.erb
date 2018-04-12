@@ -12,19 +12,7 @@
       <%= link_to(t(".postcode_change_link"), back_company_address_forms_path(@company_address_form.reg_identifier)) %>
     </div>
 
-    <% if @company_address_form.errors[:addresses].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
-      <fieldset id="addresses">
-        <%= f.label :temp_address, t(".address_label"), class: "form-label" %>
-        <%= f.select(:temp_address,
-                     options_for_select(@company_address_form.temp_addresses.map { |a| [a["partial"], a["uprn"]] }, @company_address_form.temp_address),
-                     { include_blank: t(".address_blank_option", count: @company_address_form.temp_addresses.length ) },
-                     { class: "form-control" }) %>
-      </fieldset>
-    </div>
+    <%= render("shared/select_address", form: @company_address_form, f: f) %>
 
     <div class="form-group">
       <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_address_forms_path(@company_address_form.reg_identifier)) %>

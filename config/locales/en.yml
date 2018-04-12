@@ -38,6 +38,12 @@ en:
     person_name:
       first_name: First name
       last_name: Last name
+    select_address:
+      address_label: Address
+      address_blank_option:
+        zero: No addresses found
+        one: 1 address found
+        other: "%{count} addresses found"
 
   # Custom error pages
   invalid_reg_identifier_heading: The registration number you entered is not valid

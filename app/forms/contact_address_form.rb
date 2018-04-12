@@ -1,17 +1,25 @@
-class ContactAddressForm < BaseForm
-  # TODO: Define accessible attributes, eg attr_accessor :field
+class ContactAddressForm < AddressForm
+  attr_accessor :temp_contact_postcode
 
   def initialize(transient_registration)
     super
-    # TODO: Define params to get from transient_registration, eg self.field = @transient_registration.field
+    self.temp_contact_postcode = @transient_registration.temp_contact_postcode
+
+    look_up_addresses
+    preselect_existing_address
   end
 
-  def submit(params)
-    # Assign the params for validation and pass them to the BaseForm method for updating
-    # TODO: Define allowed params, eg self.field = params[:field]
-    # TODO: Include attributes to update in the attributes hash, eg { field: field }
-    attributes = {}
+  private
 
-    super(attributes, params[:reg_identifier])
+  def temp_postcode
+    temp_contact_postcode
+  end
+
+  def saved_address
+    @transient_registration.contact_address
+  end
+
+  def address_type
+    "CONTACT"
   end
 end

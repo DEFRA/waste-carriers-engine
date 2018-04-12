@@ -2,6 +2,9 @@ en:
   contact_address_forms:
     new:
       heading: What's the address of the person we should contact?
+      postcode_label: Postcode
+      postcode_change_link: Change
+      manual_address_link: "I can't find the address in the list"
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
@@ -9,6 +12,8 @@ en:
       models:
         contact_address_form:
           attributes:
+            addresses:
+              blank: "You must select an address"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

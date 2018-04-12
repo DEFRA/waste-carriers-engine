@@ -1,4 +1,4 @@
-class ContactAddressFormsController < FormsController
+class ContactAddressFormsController < AddressFormsController
   def new
     super(ContactAddressForm, "contact_address_form")
   end
