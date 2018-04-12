@@ -28,6 +28,7 @@ class AddressForm < BaseForm
   # If an address has already been assigned to the transient registration, pre-select it
   def preselect_existing_address
     return unless @transient_registration.addresses.present?
+    return unless saved_address
     return unless saved_address.uprn.present?
     selected_address = temp_addresses.detect { |address| address["uprn"] == saved_address.uprn.to_s }
     self.temp_address = selected_address["uprn"] if selected_address.present?
