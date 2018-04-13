@@ -1,6 +1,7 @@
 en:
   cannot_renew_type_change_forms:
     new:
+      title: Your business type has changed
       heading: You cannot renew %{reg_identifier}
       paragraph_1: You've told us that your business type has changed.
       paragraph_2: Because of this change, you cannot renew %{reg_identifier} and instead must make a new registration.

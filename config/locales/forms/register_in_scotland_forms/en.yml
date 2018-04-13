@@ -1,6 +1,7 @@
 en:
   register_in_scotland_forms:
     new:
+      title: You should register in Scotland
       heading: You should register in Scotland
       paragraph_1: Each country has its own register of waste carriers and you are encouraged to register with the appropriate authority for it.
       paragraph_2: In Scotland you need to register with the Scottish Environment Protection Agency (SEPA). For details on how, visit

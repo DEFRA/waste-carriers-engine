@@ -1,6 +1,7 @@
 en:
   cannot_renew_lower_tier_forms:
     new:
+      title: You should register as a lower tier waste carrier
       heading: You should not renew %{reg_identifier}
       paragraph_1: Based on the answers to our questions, you are eligible to register as a lower tier waste carrier.
       paragraph_2: There is no charge to register as a lower tier waste carrier, but you will need to create a new registration.
