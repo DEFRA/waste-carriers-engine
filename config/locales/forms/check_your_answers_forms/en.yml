@@ -8,8 +8,6 @@ en:
       paragraph_1: You are about to renew your registration.
       paragraph_2: The renewal charge is £%{renewal_charge}, which will register you for 3 years.
       paragraph_3: Because your registration type has changed, there will also be a £%{type_change_charge} charge.
-      tier_detail_subheading: What are upper and lower tier?
-      tier_detail_paragraph_1: TODO
       subheading_1: "You told us:"
       reg_identifier: Your registration number is %{reg_identifier}
       location:
@@ -20,11 +18,11 @@ en:
         wales: Your principal place of business is in Wales
       business_type:
         charity: You are a charity or trust
-        individual: You are a individual or sole trader
         limitedCompany: You are a limited company
         limitedLiabilityPartnership: You are a limited liability partnership
         localAuthority: You are a local authority or public body
         partnership: You are a partnership
+        soleTrader: You are a individual or sole trader
       tier:
         UPPER: You require an upper tier registration
         LOWER: You requre a lower tier registration
@@ -34,24 +32,21 @@ en:
         broker_dealer: Your registration type is broker dealer (you arrange for others to carry the waste)
         carrier_broker_dealer: Your registration type is carrier, broker and dealer (you carry waste yourselves and arrange for others to carry it)
       subheading_3:
-        individual: Business or organisation name
         limitedCompany: Company name
         limitedLiabilityPartnership: Partnership name
         localAuthority: Local authority or public body name
         overseas: Business or organisation name
-        partnership: Partnership address
+        partnership: Partnership name
+        soleTrader: Business or organisation name
       subheading_4: Companies House number
       subheading_5:
-        individual: Business or organisation address
         limitedCompany: Company address
         limitedLiabilityPartnership: Partnership address
         localAuthority: Local authority or public body address
         overseas: Business or organisation address
         partnership: Partnership address
+        soleTrader: Business or organisation address
       subheading_6:
-        individual:
-          one: Business or organisation owner
-          other: Business or organisation owners
         limitedCompany:
           one: Director
           other: Directors
@@ -67,6 +62,9 @@ en:
         partnership:
           one: Partner
           other: Partners
+        soleTrader:
+          one: Business or organisation owner
+          other: Business or organisation owners
       subheading_7: Relevant convictions
       declared_convictions:
         "true": You told us you have relevant people with convictions in your business or organisation.
