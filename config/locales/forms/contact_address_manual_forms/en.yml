@@ -1,6 +1,7 @@
 en:
   contact_address_manual_forms:
     new:
+      title: Contact address
       heading: What's the address of the person we should contact?
       os_places_error_heading: Our address finder isn't working
       os_places_error_text: Please enter the address below.

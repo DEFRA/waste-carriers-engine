@@ -1,6 +1,7 @@
 en:
   waste_types_forms:
     new:
+      title: Types of waste
       heading: Do you only deal with the following waste?
       waste_type_1: Animal by-products
       waste_type_2: Waste from a mine or quarry

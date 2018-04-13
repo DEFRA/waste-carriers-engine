@@ -1,6 +1,7 @@
 en:
   renewal_start_forms:
     new:
+      title: You are about to renew your registration
       heading: You are about to renew %{reg_identifier}
       paragraph_1: Renewing this registration will extend its expiry date to %{date}. There is a charge of £%{renewal_charge} to do this, plus a £%{type_change_charge} charge if you change the registration type.
       paragraph_2: If your business type has changed, for example from sole trader to limited company, you cannot renew and instead must create a new registration.

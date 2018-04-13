@@ -1,6 +1,7 @@
 en:
   worldpay_forms:
     new:
+      title: Worldpay goes here
       heading: (Worldpay goes here)
       error_heading: Something is wrong
       next_button: Continue

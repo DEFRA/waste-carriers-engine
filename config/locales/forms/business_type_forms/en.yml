@@ -1,6 +1,7 @@
 en:
   business_type_forms:
     new:
+      title: Business type
       heading: What type of business or organisation are you?
       option_local_authority: Local authority or public body
       option_limited_company: Limited company (eg a registered company or plc)

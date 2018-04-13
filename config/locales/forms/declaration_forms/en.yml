@@ -1,6 +1,7 @@
 en:
   declaration_forms:
     new:
+      title: Declaration
       heading: Declaration
       error_heading: Something is wrong
       next_button: Continue
