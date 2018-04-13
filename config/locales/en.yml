@@ -49,7 +49,7 @@ en:
         other: "%{count} addresses found"
 
   # Custom error pages
-  invalid_reg_identifier_heading: Invalid registration number
+  invalid_reg_identifier_title: Invalid registration number
   invalid_reg_identifier_heading: The registration number you entered is not valid
   invalid_reg_identifier_text: Maybe you should try searching again.
 
