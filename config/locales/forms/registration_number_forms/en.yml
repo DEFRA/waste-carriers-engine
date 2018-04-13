@@ -1,6 +1,7 @@
 en:
   registration_number_forms:
     new:
+      title: Companies House registration number
       heading_limitedCompany: What's the registration number of the company?
       heading_limitedLiabilityPartnership: What's the registration number of the limited liability partnership?
       company_no_label: Registration number

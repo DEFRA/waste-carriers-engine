@@ -1,6 +1,7 @@
 en:
   construction_demolition_forms:
     new:
+      title: Building, construction and demolition waste
       heading: Do you ever deal with building, construction or demolition waste?
       option_true: "Yes"
       option_false: "No"

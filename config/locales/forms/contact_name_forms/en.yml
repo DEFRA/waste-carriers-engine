@@ -1,6 +1,7 @@
 en:
   contact_name_forms:
     new:
+      title: Person to contact
       heading: Who should we contact about this registration?
       description: We’ll contact this person if we need to discuss the registration.
       first_name_label: First name

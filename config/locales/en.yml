@@ -11,6 +11,9 @@ en:
       feedback: This is a new service – your %{link} will help us to improve it.
       feedback_link: feedback
       feedback_url: https://www.gov.uk/done/waste-carrier-or-broker-registration
+  registrations:
+    index:
+      title: Registrations
   shared:
     date_of_birth:
       date_of_birth: Date of birth
@@ -46,8 +49,10 @@ en:
         other: "%{count} addresses found"
 
   # Custom error pages
+  invalid_reg_identifier_title: Invalid registration number
   invalid_reg_identifier_heading: The registration number you entered is not valid
   invalid_reg_identifier_text: Maybe you should try searching again.
 
+  no_permissions_title: Cannot access registration
   no_permissions_heading: You don't have permission to access that registration
   no_permissions_text: Maybe you should try searching again.

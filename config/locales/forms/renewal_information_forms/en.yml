@@ -1,6 +1,7 @@
 en:
   renewal_information_forms:
     new:
+      title: Confirmation of your renewal so far
       heading: Confirmation of your renewal so far
       paragraph_1: Based on what you've told us so far, you still need an upper tier registration.
       paragraph_2: The renewal charge for %{reg_identifier} will be £%{renewal_charge}.

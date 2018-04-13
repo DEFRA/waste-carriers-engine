@@ -1,6 +1,7 @@
 en:
   contact_address_forms:
     new:
+      title: Contact address selection
       heading: What's the address of the person we should contact?
       postcode_label: Postcode
       postcode_change_link: Change

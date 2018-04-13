@@ -1,6 +1,7 @@
 en:
   conviction_details_forms:
     new:
+      title: Conviction details
       heading: Details of the person with a conviction
       position: Job title
       add_person_link: Add another person

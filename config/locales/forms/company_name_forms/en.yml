@@ -1,6 +1,7 @@
 en:
   company_name_forms:
     new:
+      title: Business or organisation name
       heading_localAuthority: What's the name of the local authority or public body?
       heading_limitedCompany: What's the name of the company?
       heading_limitedLiabilityPartnership: What's the name of the limited liability partnership?

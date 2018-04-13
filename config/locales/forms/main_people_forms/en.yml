@@ -1,6 +1,7 @@
 en:
   main_people_forms:
     new:
+      title: Main people
       heading_localAuthority: Chief executive details
       heading_limitedCompany: Director details
       heading_limitedLiabilityPartnership: Partner details
