@@ -19,7 +19,7 @@ class CompanyAddressForm < AddressForm
   end
 
   def saved_address
-    @transient_registration.contact_address
+    @transient_registration.registered_address
   end
 
   def address_type
