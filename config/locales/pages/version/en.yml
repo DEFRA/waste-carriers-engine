@@ -1,0 +1,7 @@
+en:
+  pages:
+    version:
+      heading: waste-carriers-renewals
+      app_version: "Application version:"
+      commit: "Commit hash:"
+      render_time: "Page rendered at:"

@@ -57,5 +57,10 @@ module WasteCarriersRenewals
     # Times
     config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
     config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
+
+    # Version info
+    config.application_version = "TODO"
+    config.git_commit = "TODO"
+    config.git_commit_url = "TODO"
   end
 end
