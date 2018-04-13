@@ -21,12 +21,32 @@ RSpec.describe AddressFinderService do
     end
   end
 
-  context "When OS Places returns a bad request error" do
+  context "when OS Places returns a bad request error" do
     let(:address_finder_service) { AddressFinderService.new("AA1 1AA") }
 
     it "returns :not_found" do
       VCR.use_cassette("company_postcode_form_no_matches_postcode") do
         expect(address_finder_service.search_by_postcode).to eq(:not_found)
+      end
+    end
+  end
+
+  context "when the request times out" do
+    it "returns :error" do
+      VCR.turned_off do
+        host = Rails.configuration.os_places_service_url
+        stub_request(:any, /.*#{host}.*/).to_timeout
+        expect(address_finder_service.search_by_postcode).to eq(:error)
+      end
+    end
+  end
+
+  context "when the request returns a socket error" do
+    it "returns :error" do
+      VCR.turned_off do
+        host = Rails.configuration.os_places_service_url
+        stub_request(:any, /.*#{host}.*/).to_raise(SocketError)
+        expect(address_finder_service.search_by_postcode).to eq(:error)
       end
     end
   end
