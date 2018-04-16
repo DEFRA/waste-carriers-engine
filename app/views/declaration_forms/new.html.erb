@@ -11,10 +11,12 @@
     </ul>
 
     <div class="form-group">
-      <div class="multiple-choice">
-        <%= f.check_box :declaration %>
-        <%= f.label :declaration, t(".declaration_text") %>
-      </div>
+      <fieldset id="declaration">
+        <div class="multiple-choice">
+          <%= f.check_box :declaration %>
+          <%= f.label :declaration, t(".declaration_text") %>
+        </div>
+      </fieldset>
     </div>
 
     <p><%= link_to t(".privacy_link_text"), page_path("privacy"),  target: "_blank" %></p>
