@@ -60,6 +60,7 @@ module WasteCarriersRenewals
 
     # Version info
     config.application_version = "0.0.1".freeze
-    config.git_repository_url = "https://github.com/DEFRA/waste-carriers-renewals"
+    config.application_name = "waste-carriers-renewals"
+    config.git_repository_url = "https://github.com/DEFRA/#{config.application_name}"
   end
 end

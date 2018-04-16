@@ -1,7 +1,7 @@
 <% content_for :title, "Version" %>
 
 <div class="text">
-  <h1 class="heading-large"><%= t(".heading") %></h1>
+  <h1 class="heading-large"><%= Rails.configuration.application_name %></h1>
   <p>
     <label><%= t(".app_version") %></label>
     <strong><%= Rails.configuration.application_version %></strong>
