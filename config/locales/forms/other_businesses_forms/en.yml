@@ -1,6 +1,7 @@
 en:
   other_businesses_forms:
     new:
+      title: Waste from other people
       heading: Do you ever deal with waste from other businesses or households?
       option_true: "Yes"
       option_false: "No"

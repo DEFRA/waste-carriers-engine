@@ -1,6 +1,7 @@
 en:
   contact_email_forms:
     new:
+      title: Contact email address
       heading: What's the email address of the person we should contact?
       error_heading: Something is wrong
       contact_email_label: Email address

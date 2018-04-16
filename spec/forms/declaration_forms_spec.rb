@@ -4,7 +4,12 @@ RSpec.describe DeclarationForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:declaration_form) { build(:declaration_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: declaration_form.reg_identifier } }
+      let(:valid_params) do
+        {
+          reg_identifier: declaration_form.reg_identifier,
+          declaration: 1
+        }
+      end
 
       it "should submit" do
         expect(declaration_form.submit(valid_params)).to eq(true)
@@ -13,7 +18,12 @@ RSpec.describe DeclarationForm, type: :model do
 
     context "when the form is not valid" do
       let(:declaration_form) { build(:declaration_form, :has_required_data) }
-      let(:invalid_params) { { reg_identifier: "foo" } }
+      let(:invalid_params) do
+        {
+          reg_identifier: "foo",
+          declaration: "foo"
+        }
+      end
 
       it "should not submit" do
         expect(declaration_form.submit(invalid_params)).to eq(false)
@@ -21,21 +31,11 @@ RSpec.describe DeclarationForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "declaration_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:declaration_form) { DeclarationForm.new(transient_registration) }
+  context "when a valid transient registration exists" do
+    let(:declaration_form) { build(:declaration_form, :has_required_data) }
 
+    describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
-        before(:each) do
-          declaration_form.reg_identifier = transient_registration.reg_identifier
-        end
-
         it "is valid" do
           expect(declaration_form).to be_valid
         end
@@ -44,6 +44,34 @@ RSpec.describe DeclarationForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           declaration_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(declaration_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#declaration" do
+      context "when a declaration meets the requirements" do
+        it "is valid" do
+          expect(declaration_form).to be_valid
+        end
+      end
+
+      context "when a declaration is blank" do
+        before(:each) do
+          declaration_form.declaration = ""
+        end
+
+        it "is not valid" do
+          expect(declaration_form).to_not be_valid
+        end
+      end
+
+      context "when a declaration is 0" do
+        before(:each) do
+          declaration_form.declaration = 0
         end
 
         it "is not valid" do

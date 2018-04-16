@@ -26,6 +26,10 @@ class CompaniesHouseService
       Airbrake.notify(e)
       Rails.logger.error "Companies House error: " + e.to_s
       :error
+    rescue SocketError => e
+      Airbrake.notify(e)
+      Rails.logger.error "Companies House error: " + e.to_s
+      :error
     end
   end
 

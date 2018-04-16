@@ -1,6 +1,7 @@
 en:
   renewal_complete_forms:
     new:
+      title: Renewal complete
       heading: Renewal complete
       error_heading: Something is wrong
       next_button: Continue

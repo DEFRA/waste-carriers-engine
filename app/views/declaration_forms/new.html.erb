@@ -1,24 +1,27 @@
 <%= render("shared/back", back_path: back_declaration_forms_path(@declaration_form.reg_identifier)) %>
 
-<% if @declaration_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @declaration_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
+<div class="text">
   <%= form_for(@declaration_form) do |f| %>
     <%= render("shared/errors", object: @declaration_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
+    <ul class="list list-bullet">
+      <li><%= t(".list_item_1") %></li>
+      <li><%= t(".list_item_2") %></li>
+    </ul>
+
+    <div class="form-group">
+      <div class="multiple-choice">
+        <%= f.check_box :declaration %>
+        <%= f.label :declaration, t(".declaration_text") %>
+      </div>
+    </div>
+
+    <p><%= link_to t(".privacy_link_text"), page_path("privacy"),  target: "_blank" %></p>
 
     <%= f.hidden_field :reg_identifier, value: @declaration_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
+</div>

@@ -1,6 +1,7 @@
 en:
   payment_summary_forms:
     new:
+      title: Payment summary
       heading: Payment summary
       error_heading: Something is wrong
       next_button: Continue

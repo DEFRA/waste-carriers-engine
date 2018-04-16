@@ -1,6 +1,7 @@
 en:
   company_address_manual_forms:
     new:
+      title: Business address
       heading_localAuthority: What's the address of the local authority or public body?
       heading_limitedCompany: What's the address of the company?
       heading_limitedLiabilityPartnership: What's the address of the limited liability partnership?
