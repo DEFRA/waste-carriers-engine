@@ -42,10 +42,10 @@ module CanChangeRegistrationStatus
       end
 
       event :renew do
-        transitions from: %i[active
-                             expired],
+        transitions from: :active,
                     to: :active,
-                    guard: :close_to_expiry_date?,
+                    guard: %i[close_to_expiry_date?
+                              should_not_be_expired?],
                     after: :extend_expiry_date
       end
     end
@@ -54,6 +54,11 @@ module CanChangeRegistrationStatus
     def close_to_expiry_date?
       expiry_day = registration.expires_on.to_date
       expiry_day < Rails.configuration.renewal_window.months.from_now
+    end
+
+    def should_not_be_expired?
+      expiry_day = registration.expires_on.to_date
+      Date.current < expiry_day
     end
 
     # Transition effects

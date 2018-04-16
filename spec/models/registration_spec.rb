@@ -450,6 +450,14 @@ RSpec.describe Registration, type: :model do
           end
         end
 
+        context "when the registration expiration date is today" do
+          let(:registration) { build(:registration, :is_active, expires_on: Date.today) }
+
+          it "cannot be renewed" do
+            expect(registration.metaData).to_not allow_event :renew
+          end
+        end
+
         context "when a registration is renewed" do
           let(:registration) { build(:registration, :is_active, expires_on: 1.month.from_now) }
 
@@ -501,11 +509,8 @@ RSpec.describe Registration, type: :model do
           expect(registration.metaData).to have_state(:expired)
         end
 
-        # Users are able to renew expired registration
-        # Probably with some limits... TODO find out about that!
-        it "can renew" do
-          expect(registration.metaData).to allow_event :renew
-          expect(registration.metaData).to transition_from(:expired).to(:active).on_event(:renew)
+        it "cannot be renewed" do
+          expect(registration.metaData).to_not allow_event :renew
         end
 
         it "cannot be revoked" do
