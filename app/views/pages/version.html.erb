@@ -9,8 +9,8 @@
   <p>
     <label><%= t(".commit") %></label>
     <strong>
-      <%= link_to(Rails.configuration.git_commit,
-                  Rails.configuration.git_commit_url,
+      <%= link_to(current_git_commit,
+                  "#{Rails.configuration.git_repository_url}\/commit\/#{current_git_commit}",
                   target: "_blank",
                   class: "btn-link") %>
     </strong>

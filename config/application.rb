@@ -59,8 +59,7 @@ module WasteCarriersRenewals
     config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
 
     # Version info
-    config.application_version = "TODO"
-    config.git_commit = "TODO"
-    config.git_commit_url = "TODO"
+    config.application_version = "0.0.1".freeze
+    config.git_repository_url = "https://github.com/DEFRA/waste-carriers-renewals"
   end
 end
