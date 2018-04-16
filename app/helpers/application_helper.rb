@@ -39,6 +39,9 @@ module ApplicationHelper
     return content_for :title if content_for?(:title)
     # Otherwise, look up translation key based on controller path, action name and .title
     # Solution from https://coderwall.com/p/a1pj7w/rails-page-titles-with-the-right-amount-of-magic
-    t("#{controller_path.tr('/', '.')}.#{action_name}.title", default: "")
+    title = t("#{controller_path.tr('/', '.')}.#{action_name}.title", default: "")
+    return title if title.present?
+    # Default to title for "new" action if the current action doesn't return anything
+    t("#{controller_path.tr('/', '.')}.new.title", default: "")
   end
 end
