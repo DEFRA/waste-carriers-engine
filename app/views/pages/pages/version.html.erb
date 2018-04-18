@@ -1,0 +1,22 @@
+<% content_for :title, "Version" %>
+
+<div class="text">
+  <h1 class="heading-large"><%= Rails.configuration.application_name %></h1>
+  <p>
+    <label><%= t(".app_version") %></label>
+    <strong><%= Rails.configuration.application_version %></strong>
+  </p>
+  <p>
+    <label><%= t(".commit") %></label>
+    <strong>
+      <%= link_to(current_git_commit,
+                  "#{Rails.configuration.git_repository_url}\/commit\/#{current_git_commit}",
+                  target: "_blank",
+                  class: "btn-link") %>
+    </strong>
+  </p>
+  <p>
+    <label><%= t(".render_time") %></label>
+    <strong><%= l Time.zone.now %></strong>
+  </p>
+</div>
