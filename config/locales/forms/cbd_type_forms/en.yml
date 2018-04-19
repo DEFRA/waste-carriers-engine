@@ -3,9 +3,10 @@ en:
     new:
       title: Registration type
       heading: Do you carry the waste yourselves, or arrange for others to do it?
-      option_carrier_dealer: We carry the waste ourselves (carrier and dealer)
-      option_broker_dealer: We arrange for others to carry it (broker and dealer)
-      option_carrier_broker_dealer: We do both (carrier, broker and dealer)
+      options:
+        carrier_dealer: We carry the waste ourselves (carrier and dealer)
+        broker_dealer: We arrange for others to carry it (broker and dealer)
+        carrier_broker_dealer: We do both (carrier, broker and dealer)
       cbd_detail_subheading: What is a carrier, broker or dealer?
       cbd_detail_paragraph_1: "Your carrier type can include any or all of the below:"
       cbd_detail_list_item_1: carriers transport commercial, industrial and household waste, known as controlled waste, as part of their business
