@@ -63,6 +63,16 @@ Rails.application.routes.draw do
               on: :collection
             end
 
+  resources :tier_check_forms,
+            only: [:new, :create],
+            path: "tier-check",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "tier_check_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
   resources :other_businesses_forms,
             only: [:new, :create],
             path: "other-businesses",

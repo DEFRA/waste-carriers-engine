@@ -18,6 +18,7 @@ module CanChangeWorkflowStatus
 
       state :business_type_form
 
+      state :tier_check_form
       state :other_businesses_form
       state :service_provided_form
       state :construction_demolition_form
