@@ -4,7 +4,7 @@
   <%= form_for(@company_postcode_form) do |f| %>
     <%= render("shared/errors", object: @company_postcode_form) %>
 
-    <h1 class="heading-large"><%= t(".heading_#{@company_postcode_form.business_type}") %></h1>
+    <h1 class="heading-large"><%= t(".heading.#{@company_postcode_form.business_type}") %></h1>
 
     <% if @company_postcode_form.errors[:temp_company_postcode].any? %>
     <div class="form-group form-group-error">
@@ -13,7 +13,7 @@
     <% end %>
       <fieldset id="temp_company_postcode">
         <legend class="visuallyhidden">
-          <%= t(".heading_#{@company_postcode_form.business_type}") %>
+          <%= t(".heading.#{@company_postcode_form.business_type}") %>
         </legend>
 
         <% if @company_postcode_form.errors[:temp_company_postcode].any? %>

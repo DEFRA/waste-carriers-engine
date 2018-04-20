@@ -20,7 +20,9 @@
     <p><%= t(".paragraph_4") %></p>
     <ul class="list list-bullet">
       <li><%= t(".list_item_1") %></li>
+      <% if @renewal_start_form.transient_registration.company_no.present? %>
       <li><%= t(".list_item_2") %></li>
+      <% end %>
       <li><%= t(".list_item_3") %></li>
     </ul>
 

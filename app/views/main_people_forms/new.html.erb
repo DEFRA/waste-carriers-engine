@@ -9,9 +9,9 @@
   <%= form_for(@main_people_form) do |f| %>
     <%= render("shared/errors", object: @main_people_form) %>
 
-    <h1 class="heading-large"><%= t(".heading_#{@main_people_form.business_type}") %></h1>
+    <h1 class="heading-large"><%= t(".heading.#{@main_people_form.business_type}") %></h1>
 
-    <p><%= t(".description_1_#{@main_people_form.business_type}") %></p>
+    <p><%= t(".description_1.#{@main_people_form.business_type}") %></p>
     <% unless @main_people_form.can_only_have_one_person_in_type? %>
       <p><%= t(".description_2") %></p>
     <% end %>
