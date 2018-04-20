@@ -470,12 +470,6 @@ RSpec.describe Registration, type: :model do
             Timecop.freeze(registration_time)
             # Touch registration to create it with the correct time
             registration.touch
-            puts "\n\n"
-            puts "==="
-            puts "REGISTERED AT:"
-            puts Time.now.in_time_zone("London")
-            puts Time.now.in_time_zone("UTC")
-            puts ""
           end
 
           after do
@@ -487,9 +481,6 @@ RSpec.describe Registration, type: :model do
             Timecop.freeze(Time.find_zone("London").local(2020, 3, 27, 23, 59))
             # GMT is now in effect (not BST)
             # UK local time & UTC are both 23:59 on 27 March 2020
-            puts "SHOULD RENEW AT:"
-            puts Time.now.in_time_zone("London")
-            puts Time.now.in_time_zone("UTC")
             expect(registration.metaData).to allow_event :renew
           end
 
@@ -498,9 +489,6 @@ RSpec.describe Registration, type: :model do
             Timecop.freeze(Time.find_zone("London").local(2020, 3, 28, 0, 1))
             # GMT is now in effect (not BST)
             # UK local time & UTC are both 00:01 on 28 March 2020
-            puts "SHOULD NOT RENEW AT:"
-            puts Time.now.in_time_zone("London")
-            puts Time.now.in_time_zone("UTC")
             expect(registration.metaData).to_not allow_event :renew
           end
         end
@@ -516,12 +504,6 @@ RSpec.describe Registration, type: :model do
             Timecop.freeze(registration_time)
             # Touch registration to create it with the correct time
             registration.touch
-            puts "\n\n"
-            puts "==="
-            puts "REGISTERED AT:"
-            puts Time.now.in_time_zone("London")
-            puts Time.now.in_time_zone("UTC")
-            puts ""
           end
 
           after do
@@ -534,9 +516,6 @@ RSpec.describe Registration, type: :model do
             # BST is now in effect (not GMT)
             # UK local time is 23:59 on 26 October 2018
             # UTC time is 22:59 on 26 October 2018
-            puts "SHOULD RENEW AT:"
-            puts Time.now.in_time_zone("London")
-            puts Time.now.in_time_zone("UTC")
             expect(registration.metaData).to allow_event :renew
           end
 
@@ -546,9 +525,6 @@ RSpec.describe Registration, type: :model do
             # BST is now in effect (not GMT)
             # UK local time is 00:01 on 27 October 2018
             # UTC time is 23:01 on 26 October 2018
-            puts "SHOULD NOT RENEW AT:"
-            puts Time.now.in_time_zone("London")
-            puts Time.now.in_time_zone("UTC")
             expect(registration.metaData).to_not allow_event :renew
           end
         end
