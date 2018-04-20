@@ -4,7 +4,7 @@
   <%= form_for(@registration_number_form) do |f| %>
     <%= render("shared/errors", object: @registration_number_form) %>
 
-    <h1 class="heading-large"><%= t(".heading_#{@registration_number_form.business_type}") %></h1>
+    <h1 class="heading-large"><%= t(".heading.#{@registration_number_form.business_type}") %></h1>
 
     <% if @registration_number_form.errors[:company_no].any? %>
     <div class="form-group form-group-error">
@@ -13,7 +13,7 @@
     <% end %>
       <fieldset id="company_no">
         <legend class="visuallyhidden">
-          <%= t(".heading_#{@registration_number_form.business_type}") %>
+          <%= t(".heading.#{@registration_number_form.business_type}") %>
         </legend>
 
         <% if @registration_number_form.errors[:company_no].any? %>
@@ -35,12 +35,12 @@
           <span class="summary"><%= t(".detail_subheading") %></span>
         </summary>
         <div class="panel panel-border-narrow">
-          <p><%= t(".detail_#{@registration_number_form.business_type}") %></p>
+          <p><%= t(".detail.#{@registration_number_form.business_type}") %></p>
         </div>
       </details>
     </div>
 
-    <p><%= t(".explanation") %></p>
+    <p><%= t(".explanation.#{@registration_number_form.business_type}") %></p>
 
     <%= f.hidden_field :reg_identifier, value: @registration_number_form.reg_identifier %>
     <div class="form-group">

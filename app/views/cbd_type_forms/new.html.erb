@@ -36,6 +36,23 @@
       </fieldset>
     </div>
 
+    <div class="form-group">
+      <details>
+        <summary>
+          <span class="summary"><%= t(".cbd_detail_subheading") %></span>
+        </summary>
+        <div class="panel panel-border-narrow">
+          <p><%= t(".cbd_detail_paragraph_1") %></p>
+          <ul class="list list-bullet">
+            <li><%= t(".cbd_detail_list_item_1") %></li>
+            <li><%= t(".cbd_detail_list_item_2") %></li>
+            <li><%= t(".cbd_detail_list_item_3") %></li>
+          </ul>
+          <p><%= t(".cbd_detail_paragraph_2") %></p>
+        </div>
+      </details>
+    </div>
+
     <%= f.hidden_field :reg_identifier, value: @cbd_type_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>

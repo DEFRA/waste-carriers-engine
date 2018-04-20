@@ -1,8 +1,9 @@
 class TransientRegistration
   include Mongoid::Document
-  include CanHaveRegistrationAttributes
+  include CanCalculateRenewalDates
   include CanChangeWorkflowStatus
   include CanCheckBusinessTypeChanges
+  include CanHaveRegistrationAttributes
   include CanStripWhitespace
 
   validates_with RegIdentifierValidator
@@ -27,6 +28,11 @@ class TransientRegistration
     else
       Rails.configuration.renewal_charge
     end
+  end
+
+  def projected_renewal_end_date
+    return unless expires_on.present?
+    expiry_date_after_renewal(expires_on.to_date)
   end
 
   private

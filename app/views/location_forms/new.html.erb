@@ -33,23 +33,23 @@
 
         <div class="multiple-choice">
           <%= f.radio_button :location, 'england' %>
-          <%= f.label :location, t(".option_england"), value: 'england' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :location, 'northern_ireland' %>
-          <%= f.label :location, t(".option_northern_ireland"), value: 'northern_ireland' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :location, 'scotland' %>
-          <%= f.label :location, t(".option_scotland"), value: 'scotland' %>
+          <%= f.label :location, t(".options.england"), value: 'england' %>
         </div>
         <div class="multiple-choice">
           <%= f.radio_button :location, 'wales' %>
-          <%= f.label :location, t(".option_wales"), value: 'wales' %>
+          <%= f.label :location, t(".options.wales"), value: 'wales' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :location, 'scotland' %>
+          <%= f.label :location, t(".options.scotland"), value: 'scotland' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :location, 'northern_ireland' %>
+          <%= f.label :location, t(".options.northern_ireland"), value: 'northern_ireland' %>
         </div>
         <div class="multiple-choice">
           <%= f.radio_button :location, 'overseas' %>
-          <%= f.label :location, t(".option_overseas"), value: 'overseas' %>
+          <%= f.label :location, t(".options.overseas"), value: 'overseas' %>
         </div>
       </fieldset>
     </div>
