@@ -22,16 +22,16 @@
 
         <div class="multiple-choice">
           <%= f.radio_button :registration_type, "carrier_dealer" %>
-          <%= f.label :registration_type, t(".option_carrier_dealer"), value: "carrier_dealer" %>
+          <%= f.label :registration_type, t(".options.carrier_dealer"), value: "carrier_dealer" %>
         </div>
         <div class="multiple-choice">
           <%= f.radio_button :registration_type, "broker_dealer" %>
-          <%= f.label :registration_type, t(".option_broker_dealer"), value: "broker_dealer" %>
+          <%= f.label :registration_type, t(".options.broker_dealer"), value: "broker_dealer" %>
         </div>
         <p class="form-block">or</p>
         <div class="multiple-choice">
           <%= f.radio_button :registration_type, "carrier_broker_dealer" %>
-          <%= f.label :registration_type, t(".option_carrier_broker_dealer"), value: "carrier_broker_dealer" %>
+          <%= f.label :registration_type, t(".options.carrier_broker_dealer"), value: "carrier_broker_dealer" %>
         </div>
       </fieldset>
     </div>

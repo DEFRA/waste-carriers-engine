@@ -2,11 +2,12 @@ en:
   company_postcode_forms:
     new:
       title: Business address postcode
-      heading_localAuthority: What's the address of the local authority or public body?
-      heading_limitedCompany: What's the address of the company?
-      heading_limitedLiabilityPartnership: What's the address of the limited liability partnership?
-      heading_partnership: What's the address of the partnership?
-      heading_soleTrader: What's the address of the business?
+      heading:
+        localAuthority: What's the address of the local authority or public body?
+        limitedCompany: What's the address of the company?
+        limitedLiabilityPartnership: What's the address of the limited liability partnership?
+        partnership: What's the address of the partnership?
+        soleTrader: What's the address of the business?
       temp_company_postcode_label: UK postcode
       temp_company_postcode_hint: For example, BS1 5AH
       error_heading: A problem to fix

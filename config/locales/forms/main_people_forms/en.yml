@@ -2,18 +2,20 @@ en:
   main_people_forms:
     new:
       title: Main people
-      heading_localAuthority: Chief executive details
-      heading_limitedCompany: Director details
-      heading_limitedLiabilityPartnership: Partner details
-      heading_overseas: Business or organisation owner details
-      heading_partnership: Partner details
-      heading_soleTrader: Business owner details
-      description_1_localAuthority: Provide the name and date of birth for each chief executive of this local authority or public body.
-      description_1_limitedCompany: Provide the name and date of birth for each director of this business.
-      description_1_limitedLiabilityPartnership: Provide the name and date of birth for each partner of this business.
-      description_1_overseas: Provide the name and date of birth for each owner of this business or organisation.
-      description_1_partnership: Provide the name and date of birth for each partner of this business.
-      description_1_soleTrader: Provide the name and date of birth for the owner of this business.
+      heading:
+        localAuthority: Chief executive details
+        limitedCompany: Director details
+        limitedLiabilityPartnership: Partner details
+        overseas: Business or organisation owner details
+        partnership: Partner details
+        soleTrader: Business owner details
+      description_1:
+        localAuthority: Provide the name and date of birth for each chief executive of this local authority or public body.
+        limitedCompany: Provide the name and date of birth for each director of this business.
+        limitedLiabilityPartnership: Provide the name and date of birth for each partner of this business.
+        overseas: Provide the name and date of birth for each owner of this business or organisation.
+        partnership: Provide the name and date of birth for each partner of this business.
+        soleTrader: Provide the name and date of birth for the owner of this business.
       description_2: Add their details one person at a time. If you need to add more people, select 'Add another person'.
       add_person_link: Add another person
       next_button: Continue
