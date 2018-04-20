@@ -6,6 +6,12 @@ en:
       option_carrier_dealer: We carry the waste ourselves (carrier and dealer)
       option_broker_dealer: We arrange for others to carry it (broker and dealer)
       option_carrier_broker_dealer: We do both (carrier, broker and dealer)
+      cbd_detail_subheading: What is a carrier, broker or dealer?
+      cbd_detail_paragraph_1: "Your carrier type can include any or all of the below:"
+      cbd_detail_list_item_1: carriers transport commercial, industrial and household waste, known as controlled waste, as part of their business
+      cbd_detail_list_item_2: brokers arrange for other businesses' controlled waste to be handled, transported, disposed of or recovered
+      cbd_detail_list_item_3: dealers buy and sell waste, either for their own business or on behalf of another organisation
+      cbd_detail_paragraph_2: You should select the option that covers all of your activities (for example, carrier-dealer or carrier-broker-dealer) even if you rarely do some of them (for example, you are usually a carrier but occasionally arrange for someone else to carry waste for you).
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

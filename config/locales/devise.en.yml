@@ -50,17 +50,17 @@ en:
       already_signed_out: "Signed out successfully."
     shared:
       links:
-        password_reset_summary: I'm having trouble with my sign-in details
-        password_reset_paragraph_1: If your sign-in details are not working, you will need to
+        password_reset_summary: I've forgotten my password
+        password_reset_paragraph_1: You can
         password_reset_link_text: reset your password
         unknown_email_summary: I don't know the email address for my account
         unknown_email_paragraph_1: If you don’t know the email address belonging to your account, contact our helpline on 03708 506506.
-        other_problems_summary: I'm having other problems signing in
-        unconfirmed_paragraph_1: Have you confirmed your email address?
-        unconfirmed_paragraph_2: After you've registered as a waste carrier, you must confirm your email address to access your account.
-        unconfirmed_link_text: I need to confirm my email address
+        unconfirmed_email_summary: I need to confirm my email address
+        unconfirmed_email_paragraph_1: After you've registered as a waste carrier, you must confirm your email address to access your account.
+        unconfirmed_email_link_text: Resend a confirmation email
+        locked_summary: My account is locked
         locked_paragraph_1: If you or someone else tries to sign in too many times using incorrect details, the account may be temporarily locked.
-        locked_link_text: I need to unlock my account
+        locked_link_text: Unlock your account
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."

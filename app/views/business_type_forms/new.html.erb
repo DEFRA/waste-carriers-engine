@@ -21,28 +21,28 @@
         <% end %>
 
         <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'localAuthority' %>
-          <%= f.label :business_type, t(".option_local_authority"), value: 'localAuthority' %>
+          <%= f.radio_button :business_type, 'soleTrader' %>
+          <%= f.label :business_type, t(".options.individual"), value: 'soleTrader' %>
         </div>
         <div class="multiple-choice">
           <%= f.radio_button :business_type, 'limitedCompany' %>
-          <%= f.label :business_type, t(".option_limited_company"), value: 'limitedCompany' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'limitedLiabilityPartnership' %>
-          <%= f.label :business_type, t(".option_limited_liability_partnership"), value: 'limitedLiabilityPartnership' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'soleTrader' %>
-          <%= f.label :business_type, t(".option_individual"), value: 'soleTrader' %>
+          <%= f.label :business_type, t(".options.limited_company"), value: 'limitedCompany' %>
         </div>
         <div class="multiple-choice">
           <%= f.radio_button :business_type, 'partnership' %>
-          <%= f.label :business_type, t(".option_partnership"), value: 'partnership' %>
+          <%= f.label :business_type, t(".options.partnership"), value: 'partnership' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'limitedLiabilityPartnership' %>
+          <%= f.label :business_type, t(".options.limited_liability_partnership"), value: 'limitedLiabilityPartnership' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :business_type, 'localAuthority' %>
+          <%= f.label :business_type, t(".options.local_authority"), value: 'localAuthority' %>
         </div>
         <div class="multiple-choice">
           <%= f.radio_button :business_type, 'charity' %>
-          <%= f.label :business_type, t(".option_charity"), value: 'charity' %>
+          <%= f.label :business_type, t(".options.charity"), value: 'charity' %>
         </div>
       </fieldset>
     </div>

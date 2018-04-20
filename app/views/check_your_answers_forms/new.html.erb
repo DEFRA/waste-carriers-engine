@@ -24,7 +24,7 @@
 
       <h1 class="heading-large"><%= t(".heading") %></h1>
 
-      <p><%= t(".paragraph_1") %></p>
+      <p><%= t(".paragraph_1_html", expiry_date: @check_your_answers_form.transient_registration.projected_renewal_end_date) %></p>
       <p><%= t(".paragraph_2", renewal_charge: Rails.configuration.renewal_charge) %></p>
       <% if @check_your_answers_form.registration_type_changed? %>
       <p><%= t(".paragraph_3", type_change_charge: Rails.configuration.type_change_charge) %></p>
@@ -35,19 +35,18 @@
       <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
 
       <ul class="list list-bullet">
-        <li><%= t(".reg_identifier", reg_identifier: @check_your_answers_form.reg_identifier) %></li>
-        <li><%= t(".location.#{@check_your_answers_form.location}") %></li>
+        <li><%= t(".reg_identifier_html", reg_identifier: @check_your_answers_form.reg_identifier) %></li>
+        <li><%= t(".location.#{@check_your_answers_form.location}_html") %></li>
         <% unless @check_your_answers_form.transient_registration.overseas? %>
-          <li><%= t(".business_type.#{@check_your_answers_form.business_type}") %></li>
+          <li><%= t(".business_type.#{@check_your_answers_form.business_type}_html") %></li>
         <% end %>
-        <li><%= t(".tier.#{@check_your_answers_form.tier}") %></li>
       </ul>
 
       <hr>
 
       <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
 
-      <p><%= t(".registration_type.#{@check_your_answers_form.registration_type}") %></p>
+      <p><%= t(".registration_type.#{@check_your_answers_form.registration_type}_html") %></p>
 
       <hr>
 

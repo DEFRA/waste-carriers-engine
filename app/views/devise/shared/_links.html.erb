@@ -24,15 +24,18 @@
   </details>
 <% end %>
 
+<details>
+  <summary><span class="summary"><%= t(".unconfirmed_email_summary") %></span></summary>
+  <div class="panel panel-border-narrow">
+    <p><%= t(".unconfirmed_email_paragraph_1") %> <a href="<%= Rails.configuration.wcrs_frontend_url %>/users/confirmation/new"><%= t(".unconfirmed_email_link_text") %></a>.</p>
+  </div>
+</details>
+
 <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
   <details>
-    <summary><span class="summary"><%= t(".other_problems_summary") %></span></summary>
+    <summary><span class="summary"><%= t(".locked_summary") %></span></summary>
     <div class="panel panel-border-narrow">
-      <p><%= t(".unconfirmed_paragraph_1") %></p>
-      <p><%= t(".unconfirmed_paragraph_2") %></p>
-      <p><a href="<%= Rails.configuration.wcrs_frontend_url %>/users/confirmation/new"><%= t(".unconfirmed_link_text") %></a></p>
-      <p><%= t(".locked_paragraph_1") %></p>
-      <p><%= link_to t(".locked_link_text"), new_unlock_path(resource_name) %></p>
+      <p><%= t(".locked_paragraph_1") %> <%= link_to t(".locked_link_text"), new_unlock_path(resource_name) %>.</p>
     </div>
   </details>
 <% end %>

@@ -6,32 +6,29 @@ en:
       error_heading: Something is wrong
       error_description_1: "We're missing some of the information we need to renew your registration:"
       error_description_2: "Please go back and make sure all the required questions have been answered."
-      paragraph_1: You are about to renew your registration.
-      paragraph_2: The renewal charge is £%{renewal_charge}, which will register you for 3 years.
+      paragraph_1_html: "Renewing this <span class=\"strong\">upper tier registration</span> will extend its expiry date to %{expiry_date}."
+      paragraph_2: The renewal charge is £%{renewal_charge}.
       paragraph_3: Because your registration type has changed, there will also be a £%{type_change_charge} charge.
       subheading_1: "You told us:"
-      reg_identifier: Your registration number is %{reg_identifier}
+      reg_identifier_html: "your registration number is <span class=\"strong\">%{reg_identifier}</span>"
       location:
-        england: Your principal place of business is in England
-        northern_ireland: Your principal place of business is in Northern Ireland
-        overseas: Your principal place of business is not in the United Kingdom
-        scotland: Your principal place of business is in Scotland
-        wales: Your principal place of business is in Wales
+        england_html: "your principal place of business is in <span class=\"strong\">England</span>"
+        northern_ireland_html: "your principal place of business is in <span class=\"strong\">Northern Ireland</span>"
+        overseas_html: "your principal place of business is not in the <span class=\"strong\">United Kingdom</span>"
+        scotland_html: "your principal place of business is in <span class=\"strong\">Scotland</span>"
+        wales_html: "your principal place of business is in <span class=\"strong\">Wales</span>"
       business_type:
-        charity: You are a charity or trust
-        limitedCompany: You are a limited company
-        limitedLiabilityPartnership: You are a limited liability partnership
-        localAuthority: You are a local authority or public body
-        partnership: You are a partnership
-        soleTrader: You are a individual or sole trader
-      tier:
-        UPPER: You require an upper tier registration
-        LOWER: You requre a lower tier registration
+        charity_html: "you are a <span class=\"strong\">charity or trust</span>"
+        limitedCompany_html: "you are a <span class=\"strong\">limited company</span>"
+        limitedLiabilityPartnership_html: "you are a <span class=\"strong\">limited liability partnership</span>"
+        localAuthority_html: "you are a <span class=\"strong\">local authority or public body</span>"
+        partnership_html: "you are a <span class=\"strong\">partnership</span>"
+        soleTrader_html: "you are a <span class=\"strong\">individual or sole trader</span>"
       subheading_2: Registration type
       registration_type:
-        carrier_dealer: Your registration type is carrier dealer (you carry the waste yourselves)
-        broker_dealer: Your registration type is broker dealer (you arrange for others to carry the waste)
-        carrier_broker_dealer: Your registration type is carrier, broker and dealer (you carry waste yourselves and arrange for others to carry it)
+        carrier_dealer_html: "Your registration type is <span class=\"strong\">carrier and dealer</span> (you carry the waste yourselves)"
+        broker_dealer_html: "Your registration type is <span class=\"strong\">broker and dealer</span> (you arrange for others to carry the waste)"
+        carrier_broker_dealer_html: "Your registration type is <span class=\"strong\">carrier, broker and dealer</span> (you carry waste yourselves and arrange for others to carry it)"
       subheading_3:
         limitedCompany: Company name
         limitedLiabilityPartnership: Partnership name
