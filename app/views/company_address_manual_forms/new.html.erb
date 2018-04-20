@@ -11,7 +11,7 @@
     </div>
     <% end %>
 
-    <h1 class="heading-large"><%= t(".heading_#{@company_address_manual_form.business_type}") %></h1>
+    <h1 class="heading-large"><%= t(".heading.#{@company_address_manual_form.business_type}") %></h1>
 
     <%= render("shared/manual_address", form: @company_address_manual_form, f: f, overseas: @company_address_manual_form.overseas?) %>
 

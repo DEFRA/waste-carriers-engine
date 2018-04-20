@@ -4,7 +4,7 @@
   <%= form_for(@company_name_form) do |f| %>
     <%= render("shared/errors", object: @company_name_form) %>
 
-    <h1 class="heading-large"><%= t(".heading_#{@company_name_form.business_type}") %></h1>
+    <h1 class="heading-large"><%= t(".heading.#{@company_name_form.business_type}") %></h1>
 
     <% if @company_name_form.errors[:company_name].any? %>
     <div class="form-group form-group-error">
@@ -13,14 +13,14 @@
     <% end %>
       <fieldset id="company_name">
         <legend class="visuallyhidden">
-          <%= t(".heading_#{@company_name_form.business_type}") %>
+          <%= t(".heading.#{@company_name_form.business_type}") %>
         </legend>
 
         <% if @company_name_form.errors[:company_name].any? %>
         <span class="error-message"><%= @company_name_form.errors[:company_name].join(", ") %></span>
         <% end %>
 
-        <%= f.label :company_name, t(".company_name_label_#{@company_name_form.business_type}"), class: "form-label" %>
+        <%= f.label :company_name, t(".company_name_label.#{@company_name_form.business_type}"), class: "form-label" %>
         <%= f.text_field :company_name, value: @company_name_form.company_name, class: "form-control" %>
 
       </fieldset>

@@ -2,18 +2,20 @@ en:
   company_name_forms:
     new:
       title: Business or organisation name
-      heading_localAuthority: What's the name of the local authority or public body?
-      heading_limitedCompany: What's the name of the company?
-      heading_limitedLiabilityPartnership: What's the name of the limited liability partnership?
-      heading_overseas: What's the name of the business or organisation?
-      heading_partnership: What's the name of the partnership?
-      heading_soleTrader: What's the name of the business?
-      company_name_label_localAuthority: Local authority or public body name
-      company_name_label_limitedCompany: Company trading name
-      company_name_label_limitedLiabilityPartnership: Partnership trading name
-      company_name_label_overseas: Trading name
-      company_name_label_partnership: Partnership trading name
-      company_name_label_soleTrader: Business trading name
+      heading:
+        localAuthority: What's the name of the local authority or public body?
+        limitedCompany: What's the name of the company?
+        limitedLiabilityPartnership: What's the name of the limited liability partnership?
+        overseas: What's the name of the business or organisation?
+        partnership: What's the name of the partnership?
+        soleTrader: What's the name of the business?
+      company_name_label:
+        localAuthority: Local authority or public body name
+        limitedCompany: Company trading name
+        limitedLiabilityPartnership: Partnership trading name
+        overseas: Trading name
+        partnership: Partnership trading name
+        soleTrader: Business trading name
       error_heading: Something is wrong
       next_button: Continue
   activemodel:
