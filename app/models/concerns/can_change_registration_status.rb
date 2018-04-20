@@ -85,15 +85,21 @@ module CanChangeRegistrationStatus
   # there is a risk that the UTC date will not be the same as the UK date.
   # So we should check for this and compensate to avoid expiring them on the wrong date.
   def expiry_time_adjusted_for_daylight_savings
-    # If registered in BST and expiring in GMT, add an hour
-    if registered_in_daylight_savings? && !expires_in_daylight_savings?
+    if registered_in_bst_and_expires_in_gmt?
       registration.expires_on + 1.hour
-    # If registered in GMT and expiring in BST, subtract an hour
-    elsif !registered_in_daylight_savings? && expires_in_daylight_savings?
+    elsif registered_in_gmt_and_expires_in_bst?
       registration.expires_on - 1.hour
     else
       registration.expires_on
     end
+  end
+
+  def registered_in_bst_and_expires_in_gmt?
+    registered_in_daylight_savings? && !expires_in_daylight_savings?
+  end
+
+  def registered_in_gmt_and_expires_in_bst?
+    !registered_in_daylight_savings? && expires_in_daylight_savings?
   end
 
   def registered_in_daylight_savings?
