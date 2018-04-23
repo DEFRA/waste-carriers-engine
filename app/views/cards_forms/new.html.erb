@@ -6,6 +6,27 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <p><%= t(".paragraph_1") %></p>
+    <p>[image of card goes here]</p>
+    <p><%= t(".paragraph_2") %></p>
+    <p><%= t(".paragraph_3") %></p>
+    <p><%= t(".paragraph_4") %></p>
+
+    <% if @cards_form.errors[:temp_cards].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="temp_cards">
+        <% if @cards_form.errors[:temp_cards].any? %>
+        <span class="error-message"><%= @cards_form.errors[:temp_cards].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :temp_cards, t(".temp_cards_label"), class: "form-label" %>
+        <%= f.text_field :temp_cards, value: @cards_form.temp_cards, class: "form-control" %>
+      </fieldset>
+    </div>
+
     <%= f.hidden_field :reg_identifier, value: @cards_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>

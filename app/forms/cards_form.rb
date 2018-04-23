@@ -1,9 +1,9 @@
 class CardsForm < BaseForm
-  # TODO: Define accessible attributes, eg attr_accessor :field
+  attr_accessor :temp_cards
 
   def initialize(transient_registration)
     super
-    # TODO: Define params to get from transient_registration, eg self.field = @transient_registration.field
+    self.temp_cards = 0
   end
 
   def submit(params)
