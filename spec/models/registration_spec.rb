@@ -450,6 +450,85 @@ RSpec.describe Registration, type: :model do
           end
         end
 
+        context "when the registration expiration date is today" do
+          let(:registration) { build(:registration, :is_active, expires_on: Date.today) }
+
+          it "cannot be renewed" do
+            expect(registration.metaData).to_not allow_event :renew
+          end
+        end
+
+        context "when the registration was created in BST and expires in GMT" do
+          let(:registration) { create(:registration, :has_required_data, :is_active, expires_on: 3.years.from_now) }
+          # Registration is made during British Summer Time (BST)
+          # UK local time is 00:30 on 28 March 2017
+          # UTC time is 23:30 on 27 March 2017
+          # Registration should expire on 28 March 2020
+          let(:registration_time) { Time.find_zone("London").local(2017, 3, 28, 0, 30) }
+
+          before do
+            Timecop.freeze(registration_time)
+            # Touch registration to create it with the correct time
+            registration.touch
+          end
+
+          after do
+            Timecop.return
+          end
+
+          it "does not expire a day early due to the time difference" do
+            # Skip ahead to the end of the last day the reg should be active
+            Timecop.freeze(Time.find_zone("London").local(2020, 3, 27, 23, 59))
+            # GMT is now in effect (not BST)
+            # UK local time & UTC are both 23:59 on 27 March 2020
+            expect(registration.metaData).to allow_event :renew
+          end
+
+          it "expires when it reaches the expiry date in the UK" do
+            # Skip ahead to the start of the day a reg should expire
+            Timecop.freeze(Time.find_zone("London").local(2020, 3, 28, 0, 1))
+            # GMT is now in effect (not BST)
+            # UK local time & UTC are both 00:01 on 28 March 2020
+            expect(registration.metaData).to_not allow_event :renew
+          end
+        end
+
+        context "when the registration was created in GMT and expires in BST" do
+          let(:registration) { create(:registration, :has_required_data, :is_active, expires_on: 3.years.from_now) }
+          # Registration is made in during Greenwich Mean Time (GMT)
+          # UK local time & UTC are both 23:30 on 27 October 2015
+          # Registration should expire on 27 October 2018
+          let(:registration_time) { Time.find_zone("London").local(2015, 10, 27, 23, 30) }
+
+          before do
+            Timecop.freeze(registration_time)
+            # Touch registration to create it with the correct time
+            registration.touch
+          end
+
+          after do
+            Timecop.return
+          end
+
+          it "does not expire a day early due to the time difference" do
+            # Skip ahead to the end of the last day the reg should be active
+            Timecop.freeze(Time.find_zone("London").local(2018, 10, 26, 23, 59))
+            # BST is now in effect (not GMT)
+            # UK local time is 23:59 on 26 October 2018
+            # UTC time is 22:59 on 26 October 2018
+            expect(registration.metaData).to allow_event :renew
+          end
+
+          it "expires when it reaches the expiry date in the UK" do
+            # Skip ahead to the start of the day a reg should expire
+            Timecop.freeze(Time.find_zone("London").local(2018, 10, 27, 0, 1))
+            # BST is now in effect (not GMT)
+            # UK local time is 00:01 on 27 October 2018
+            # UTC time is 23:01 on 26 October 2018
+            expect(registration.metaData).to_not allow_event :renew
+          end
+        end
+
         context "when a registration is renewed" do
           let(:registration) { build(:registration, :is_active, expires_on: 1.month.from_now) }
 
@@ -501,11 +580,8 @@ RSpec.describe Registration, type: :model do
           expect(registration.metaData).to have_state(:expired)
         end
 
-        # Users are able to renew expired registration
-        # Probably with some limits... TODO find out about that!
-        it "can renew" do
-          expect(registration.metaData).to allow_event :renew
-          expect(registration.metaData).to transition_from(:expired).to(:active).on_event(:renew)
+        it "cannot be renewed" do
+          expect(registration.metaData).to_not allow_event :renew
         end
 
         it "cannot be revoked" do

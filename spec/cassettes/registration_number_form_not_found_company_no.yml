@@ -58,7 +58,7 @@ http_interactions:
       - CompaniesHouse
     body:
       encoding: UTF-8
-      string: '{"errors":[{"type":"ch:service","error":"company-profile-not-found"}]}'
+      string: '{"errors":[{"error":"company-profile-not-found","type":"ch:service"}]}'
     http_version: 
   recorded_at: Thu, 19 Apr 2018 09:58:29 GMT
 recorded_with: VCR 4.0.0
