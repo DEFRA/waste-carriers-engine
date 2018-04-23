@@ -11,10 +11,11 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
-# Ignore all logfiles and tempfiles.
+# Ignore logfiles, tempfiles and OS-specific files
 /log/*
 !/log/.keep
 /tmp
+.DS_Store
 
 # Ignore test coverage reports
 /coverage

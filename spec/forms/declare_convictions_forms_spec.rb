@@ -65,7 +65,7 @@ RSpec.describe DeclareConvictionsForm, type: :model do
 
       context "when a declared_convictions is false" do
         before(:each) do
-          declare_convictions_form.declared_convictions = true
+          declare_convictions_form.declared_convictions = false
         end
 
         it "is valid" do
