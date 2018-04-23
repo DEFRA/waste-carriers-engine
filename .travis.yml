@@ -23,6 +23,8 @@ git:
   depth: 3
 services:
   - mongodb
+before_install:
+  - export TZ=UTC
 before_script:
   # Setup to support the CodeClimate test coverage submission
   # As per CodeClimate's documentation, they suggest only running

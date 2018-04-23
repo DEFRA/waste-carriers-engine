@@ -10,7 +10,7 @@ FactoryBot.define do
       registration_type "carrier_broker_dealer"
       phone_number "03708 506506"
 
-      metaData { build(:metaData) }
+      metaData { build(:metaData, :has_required_data) }
       addresses { [build(:address)] }
       tier "UPPER"
     end
@@ -24,23 +24,23 @@ FactoryBot.define do
     end
 
     trait :is_pending do
-      metaData { build(:metaData, status: :pending) }
+      metaData { build(:metaData, :has_required_data, status: :pending) }
     end
 
     trait :is_active do
-      metaData { build(:metaData, status: :active) }
+      metaData { build(:metaData, :has_required_data, status: :active) }
     end
 
     trait :is_revoked do
-      metaData { build(:metaData, status: :revoked) }
+      metaData { build(:metaData, :has_required_data, status: :revoked) }
     end
 
     trait :is_refused do
-      metaData { build(:metaData, status: :refused) }
+      metaData { build(:metaData, :has_required_data, status: :refused) }
     end
 
     trait :is_expired do
-      metaData { build(:metaData, status: :expired) }
+      metaData { build(:metaData, :has_required_data, status: :expired) }
     end
   end
 end
