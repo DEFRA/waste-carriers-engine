@@ -163,9 +163,9 @@ RSpec.describe "OtherBusinessesForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the business_type form" do
+          it "redirects to the tier_check form" do
             get back_other_businesses_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_business_type_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_tier_check_form_path(transient_registration[:reg_identifier]))
           end
         end
       end

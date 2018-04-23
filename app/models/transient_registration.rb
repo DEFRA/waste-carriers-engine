@@ -15,6 +15,7 @@ class TransientRegistration
   field :temp_company_postcode, type: String
   field :temp_contact_postcode, type: String
   field :temp_os_places_error, type: Boolean
+  field :temp_tier_check, type: Boolean
 
   # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
   def registration_type_changed?

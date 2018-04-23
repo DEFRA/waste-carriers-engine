@@ -98,13 +98,16 @@ module CanChangeWorkflowStatus
                     if: :switch_to_lower_tier_based_on_business_type?
 
         transitions from: :business_type_form,
-                    to: :other_businesses_form,
+                    to: :tier_check_form,
                     if: :business_type_change_valid?
 
         transitions from: :business_type_form,
                     to: :cannot_renew_type_change_form
 
         # Smart answers
+
+        transitions from: :tier_check_form,
+                    to: :other_businesses_form
 
         transitions from: :other_businesses_form,
                     to: :construction_demolition_form,
@@ -275,12 +278,15 @@ module CanChangeWorkflowStatus
 
         # Smart answers
 
-        transitions from: :other_businesses_form,
+        transitions from: :tier_check_form,
                     to: :location_form,
                     if: :based_overseas?
 
-        transitions from: :other_businesses_form,
+        transitions from: :tier_check_form,
                     to: :business_type_form
+
+        transitions from: :other_businesses_form,
+                    to: :tier_check_form
 
         transitions from: :service_provided_form,
                     to: :other_businesses_form
