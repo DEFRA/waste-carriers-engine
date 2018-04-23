@@ -146,9 +146,9 @@ RSpec.describe "PaymentSummaryForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the declaration form" do
+          it "redirects to the cards form" do
             get back_payment_summary_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_declaration_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_cards_form_path(transient_registration[:reg_identifier]))
           end
         end
       end

@@ -46,6 +46,7 @@ module CanChangeWorkflowStatus
 
       state :check_your_answers_form
       state :declaration_form
+      state :cards_form
       state :payment_summary_form
       state :worldpay_form
 
@@ -231,6 +232,9 @@ module CanChangeWorkflowStatus
                     to: :declaration_form
 
         transitions from: :declaration_form,
+                    to: :cards_form
+
+        transitions from: :cards_form,
                     to: :payment_summary_form
 
         transitions from: :payment_summary_form,
@@ -393,8 +397,11 @@ module CanChangeWorkflowStatus
         transitions from: :declaration_form,
                     to: :check_your_answers_form
 
-        transitions from: :payment_summary_form,
+        transitions from: :cards_form,
                     to: :declaration_form
+
+        transitions from: :payment_summary_form,
+                    to: :cards_form
 
         transitions from: :worldpay_form,
                     to: :payment_summary_form

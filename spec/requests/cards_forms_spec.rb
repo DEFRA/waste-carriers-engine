@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "DeclarationForms", type: :request do
-  describe "GET new_declaration_path" do
+RSpec.describe "CardsForms", type: :request do
+  describe "GET new_cards_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -13,11 +13,11 @@ RSpec.describe "DeclarationForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "declaration_form")
+                 workflow_state: "cards_form")
         end
 
         it "returns a success response" do
-          get new_declaration_form_path(transient_registration[:reg_identifier])
+          get new_cards_form_path(transient_registration[:reg_identifier])
           expect(response).to have_http_status(200)
         end
       end
@@ -31,14 +31,14 @@ RSpec.describe "DeclarationForms", type: :request do
         end
 
         it "redirects to the form for the current state" do
-          get new_declaration_form_path(transient_registration[:reg_identifier])
+          get new_cards_form_path(transient_registration[:reg_identifier])
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "POST declaration_forms_path" do
+  describe "POST cards_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -50,49 +50,46 @@ RSpec.describe "DeclarationForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "declaration_form")
+                 workflow_state: "cards_form")
         end
 
         context "when valid params are submitted" do
           let(:valid_params) {
             {
-              reg_identifier: transient_registration[:reg_identifier],
-              declaration: 1
+              reg_identifier: transient_registration[:reg_identifier]
             }
           }
 
           it "updates the transient registration" do
-            post declaration_forms_path, declaration_form: valid_params
-            expect(transient_registration.reload[:declaration]).to eq(valid_params[:declaration])
+            # TODO: Add test once data is submitted through the form
           end
 
           it "returns a 302 response" do
-            post declaration_forms_path, declaration_form: valid_params
+            post cards_forms_path, cards_form: valid_params
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the cards form" do
-            post declaration_forms_path, declaration_form: valid_params
-            expect(response).to redirect_to(new_cards_form_path(transient_registration[:reg_identifier]))
+          it "redirects to the payment_summary form" do
+            post cards_forms_path, cards_form: valid_params
+            expect(response).to redirect_to(new_payment_summary_form_path(transient_registration[:reg_identifier]))
           end
         end
 
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              reg_identifier: "foo",
-              declaration: "foo"
+              reg_identifier: "foo"
             }
           }
 
           it "returns a 302 response" do
-            post declaration_forms_path, declaration_form: invalid_params
+            post cards_forms_path, cards_form: invalid_params
             expect(response).to have_http_status(302)
           end
 
           it "does not update the transient registration" do
-            post declaration_forms_path, declaration_form: invalid_params
-            expect(transient_registration.reload[:declaration]).to_not eq(invalid_params[:declaration])
+            post cards_forms_path, cards_form: invalid_params
+            expect(transient_registration.reload[:reg_identifier]).to_not eq(invalid_params[:reg_identifier])
           end
         end
       end
@@ -107,30 +104,28 @@ RSpec.describe "DeclarationForms", type: :request do
 
         let(:valid_params) {
           {
-            reg_identifier: transient_registration[:reg_identifier],
-            declaration: 1
+            reg_identifier: transient_registration[:reg_identifier]
           }
         }
 
         it "does not update the transient registration" do
-          post declaration_forms_path, declaration_form: valid_params
-          expect(transient_registration.reload[:declaration]).to_not eq(valid_params[:declaration])
+          # TODO: Add test once data is submitted through the form
         end
 
         it "returns a 302 response" do
-          post declaration_forms_path, declaration_form: valid_params
+          post cards_forms_path, cards_form: valid_params
           expect(response).to have_http_status(302)
         end
 
         it "redirects to the correct form for the state" do
-          post declaration_forms_path, declaration_form: valid_params
+          post cards_forms_path, cards_form: valid_params
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "GET back_declaration_forms_path" do
+  describe "GET back_cards_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -142,18 +137,18 @@ RSpec.describe "DeclarationForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "declaration_form")
+                 workflow_state: "cards_form")
         end
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
+            get back_cards_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the check_your_answers form" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:reg_identifier]))
+          it "redirects to the declaration form" do
+            get back_cards_forms_path(transient_registration[:reg_identifier])
+            expect(response).to redirect_to(new_declaration_form_path(transient_registration[:reg_identifier]))
           end
         end
       end
@@ -168,12 +163,12 @@ RSpec.describe "DeclarationForms", type: :request do
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
+            get back_cards_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the correct form for the state" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
+            get back_cards_forms_path(transient_registration[:reg_identifier])
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
           end
         end
