@@ -21,8 +21,20 @@ RSpec.describe TransientRegistration, type: :model do
         end
       end
 
-      it "transitions to :other_businesses_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:tier_check_form).to(:other_businesses_form).on_event(:next)
+      context "when temp_tier_check is true" do
+        before(:each) { transient_registration.temp_tier_check = true }
+
+        it "transitions to :other_businesses_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:tier_check_form).to(:other_businesses_form).on_event(:next)
+        end
+      end
+
+      context "when temp_tier_check is false" do
+        before(:each) { transient_registration.temp_tier_check = false }
+
+        it "transitions to :cbd_type_form after the 'next' event" do
+          expect(transient_registration).to transition_from(:tier_check_form).to(:cbd_type_form).on_event(:next)
+        end
       end
     end
   end

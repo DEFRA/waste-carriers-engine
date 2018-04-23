@@ -107,6 +107,10 @@ module CanChangeWorkflowStatus
         # Smart answers
 
         transitions from: :tier_check_form,
+                    to: :cbd_type_form,
+                    if: :skip_tier_check?
+
+        transitions from: :tier_check_form,
                     to: :other_businesses_form
 
         transitions from: :other_businesses_form,
@@ -302,6 +306,10 @@ module CanChangeWorkflowStatus
                     to: :service_provided_form
 
         transitions from: :cbd_type_form,
+                    to: :tier_check_form,
+                    if: :skip_tier_check?
+
+        transitions from: :cbd_type_form,
                     to: :construction_demolition_form,
                     if: :only_carries_own_waste?
 
@@ -468,6 +476,10 @@ module CanChangeWorkflowStatus
     # The form prepends 0s to make up the length, so we should do this for the old number to match
     old_company_no = "0#{old_company_no}" while old_company_no.length < 8
     old_company_no != company_no
+  end
+
+  def skip_tier_check?
+    temp_tier_check == false
   end
 
   def only_carries_own_waste?
