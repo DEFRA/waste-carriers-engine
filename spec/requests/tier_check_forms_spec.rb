@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "OtherBusinessesForms", type: :request do
-  describe "GET new_other_businesses_path" do
+RSpec.describe "TierCheckForms", type: :request do
+  describe "GET new_tier_check_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -13,11 +13,11 @@ RSpec.describe "OtherBusinessesForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "other_businesses_form")
+                 workflow_state: "tier_check_form")
         end
 
         it "returns a success response" do
-          get new_other_businesses_form_path(transient_registration[:reg_identifier])
+          get new_tier_check_form_path(transient_registration[:reg_identifier])
           expect(response).to have_http_status(200)
         end
       end
@@ -31,14 +31,14 @@ RSpec.describe "OtherBusinessesForms", type: :request do
         end
 
         it "redirects to the form for the current state" do
-          get new_other_businesses_form_path(transient_registration[:reg_identifier])
+          get new_tier_check_form_path(transient_registration[:reg_identifier])
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "POST other_businesses_forms_path" do
+  describe "POST tier_check_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -50,61 +50,49 @@ RSpec.describe "OtherBusinessesForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "other_businesses_form")
+                 workflow_state: "tier_check_form")
         end
 
         context "when valid params are submitted" do
           let(:valid_params) {
             {
               reg_identifier: transient_registration[:reg_identifier],
-              other_businesses: "true"
+              temp_tier_check: "true"
             }
           }
 
           it "updates the transient registration" do
-            post other_businesses_forms_path, other_businesses_form: valid_params
-            expect(transient_registration.reload[:other_businesses]).to eq(true)
+            post tier_check_forms_path, tier_check_form: valid_params
+            expect(transient_registration.reload[:temp_tier_check]).to eq(true)
           end
 
           it "returns a 302 response" do
-            post other_businesses_forms_path, other_businesses_form: valid_params
+            post tier_check_forms_path, tier_check_form: valid_params
             expect(response).to have_http_status(302)
           end
 
-          context "when the business carries waste for other business and households" do
-            before(:each) { valid_params[:other_businesses] = "true" }
-
-            it "redirects to the service_provided form" do
-              post other_businesses_forms_path, other_businesses_form: valid_params
-              expect(response).to redirect_to(new_service_provided_form_path(transient_registration[:reg_identifier]))
-            end
-          end
-
-          context "when the business does not carry waste for other business and households" do
-            before(:each) { valid_params[:other_businesses] = "false" }
-
-            it "redirects to the construction_demolition form" do
-              post other_businesses_forms_path, other_businesses_form: valid_params
-              expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
-            end
+          it "redirects to the other_businesses form" do
+            post tier_check_forms_path, tier_check_form: valid_params
+            expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:reg_identifier]))
           end
         end
 
         context "when invalid params are submitted" do
           let(:invalid_params) {
             {
-              other_businesses: "foo"
+              reg_identifier: "foo",
+              temp_tier_check: "bar"
             }
           }
 
           it "returns a 302 response" do
-            post other_businesses_forms_path, other_businesses_form: invalid_params
+            post tier_check_forms_path, tier_check_form: invalid_params
             expect(response).to have_http_status(302)
           end
 
           it "does not update the transient registration" do
-            post other_businesses_forms_path, other_businesses_form: invalid_params
-            expect(transient_registration.reload[:other_businesses]).to_not eq(invalid_params[:other_businesses])
+            post tier_check_forms_path, tier_check_form: invalid_params
+            expect(transient_registration.reload[:temp_tier_check]).to_not eq(invalid_params[:temp_tier_check])
           end
         end
       end
@@ -120,29 +108,29 @@ RSpec.describe "OtherBusinessesForms", type: :request do
         let(:valid_params) {
           {
             reg_identifier: transient_registration[:reg_identifier],
-            other_businesses: "false"
+            temp_tier_check: "true"
           }
         }
 
         it "does not update the transient registration" do
-          post other_businesses_forms_path, other_businesses_form: valid_params
-          expect(transient_registration.reload[:other_businesses]).to_not eq(false)
+          post tier_check_forms_path, tier_check_form: valid_params
+          expect(transient_registration.reload[:temp_tier_check]).to_not eq(true)
         end
 
         it "returns a 302 response" do
-          post other_businesses_forms_path, other_businesses_form: valid_params
+          post tier_check_forms_path, tier_check_form: valid_params
           expect(response).to have_http_status(302)
         end
 
         it "redirects to the correct form for the state" do
-          post other_businesses_forms_path, other_businesses_form: valid_params
+          post tier_check_forms_path, tier_check_form: valid_params
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
         end
       end
     end
   end
 
-  describe "GET back_other_businesses_forms_path" do
+  describe "GET back_tier_check_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -154,18 +142,18 @@ RSpec.describe "OtherBusinessesForms", type: :request do
           create(:transient_registration,
                  :has_required_data,
                  account_email: user.email,
-                 workflow_state: "other_businesses_form")
+                 workflow_state: "tier_check_form")
         end
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_other_businesses_forms_path(transient_registration[:reg_identifier])
+            get back_tier_check_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the tier_check form" do
-            get back_other_businesses_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_tier_check_form_path(transient_registration[:reg_identifier]))
+          it "redirects to the business_type form" do
+            get back_tier_check_forms_path(transient_registration[:reg_identifier])
+            expect(response).to redirect_to(new_business_type_form_path(transient_registration[:reg_identifier]))
           end
         end
       end
@@ -180,12 +168,12 @@ RSpec.describe "OtherBusinessesForms", type: :request do
 
         context "when the back action is triggered" do
           it "returns a 302 response" do
-            get back_other_businesses_forms_path(transient_registration[:reg_identifier])
+            get back_tier_check_forms_path(transient_registration[:reg_identifier])
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the correct form for the state" do
-            get back_other_businesses_forms_path(transient_registration[:reg_identifier])
+            get back_tier_check_forms_path(transient_registration[:reg_identifier])
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
           end
         end

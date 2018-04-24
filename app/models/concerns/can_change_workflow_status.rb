@@ -18,6 +18,7 @@ module CanChangeWorkflowStatus
 
       state :business_type_form
 
+      state :tier_check_form
       state :other_businesses_form
       state :service_provided_form
       state :construction_demolition_form
@@ -97,13 +98,20 @@ module CanChangeWorkflowStatus
                     if: :switch_to_lower_tier_based_on_business_type?
 
         transitions from: :business_type_form,
-                    to: :other_businesses_form,
+                    to: :tier_check_form,
                     if: :business_type_change_valid?
 
         transitions from: :business_type_form,
                     to: :cannot_renew_type_change_form
 
         # Smart answers
+
+        transitions from: :tier_check_form,
+                    to: :cbd_type_form,
+                    if: :skip_tier_check?
+
+        transitions from: :tier_check_form,
+                    to: :other_businesses_form
 
         transitions from: :other_businesses_form,
                     to: :construction_demolition_form,
@@ -274,12 +282,15 @@ module CanChangeWorkflowStatus
 
         # Smart answers
 
-        transitions from: :other_businesses_form,
+        transitions from: :tier_check_form,
                     to: :location_form,
                     if: :based_overseas?
 
-        transitions from: :other_businesses_form,
+        transitions from: :tier_check_form,
                     to: :business_type_form
+
+        transitions from: :other_businesses_form,
+                    to: :tier_check_form
 
         transitions from: :service_provided_form,
                     to: :other_businesses_form
@@ -293,6 +304,10 @@ module CanChangeWorkflowStatus
 
         transitions from: :construction_demolition_form,
                     to: :service_provided_form
+
+        transitions from: :cbd_type_form,
+                    to: :tier_check_form,
+                    if: :skip_tier_check?
 
         transitions from: :cbd_type_form,
                     to: :construction_demolition_form,
@@ -461,6 +476,10 @@ module CanChangeWorkflowStatus
     # The form prepends 0s to make up the length, so we should do this for the old number to match
     old_company_no = "0#{old_company_no}" while old_company_no.length < 8
     old_company_no != company_no
+  end
+
+  def skip_tier_check?
+    temp_tier_check == false
   end
 
   def only_carries_own_waste?
