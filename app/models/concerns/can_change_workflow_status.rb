@@ -76,7 +76,7 @@ module CanChangeWorkflowStatus
                     if: :should_register_in_wales?
 
         transitions from: :location_form,
-                    to: :other_businesses_form,
+                    to: :tier_check_form,
                     if: :based_overseas?
 
         transitions from: :location_form,
