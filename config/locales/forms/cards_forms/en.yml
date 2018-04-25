@@ -15,6 +15,10 @@ en:
       models:
         cards_form:
           attributes:
+            temp_cards:
+              not_a_number: "You must enter a number"
+              greater_than_or_equal_to: "You cannot order a negative number of cards"
+              not_an_integer: "You must enter a whole number, not a fraction"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
