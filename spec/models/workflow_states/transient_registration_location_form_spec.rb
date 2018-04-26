@@ -30,7 +30,7 @@ RSpec.describe TransientRegistration, type: :model do
           "northern_ireland" => :register_in_northern_ireland_form,
           "scotland"         => :register_in_scotland_form,
           "wales"            => :register_in_wales_form,
-          "overseas"         => :other_businesses_form
+          "overseas"         => :tier_check_form
         }.each do |location, next_form|
           it_behaves_like "'next' transition from location_form", location, next_form
         end
