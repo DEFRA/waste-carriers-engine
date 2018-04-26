@@ -15,10 +15,13 @@ class TransientRegistration
   field :temp_company_postcode, type: String
   field :temp_contact_postcode, type: String
   field :temp_os_places_error, type: Boolean
+  field :temp_payment_method, type: String
   field :temp_tier_check, type: Boolean
 
   # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
   def registration_type_changed?
+    # Don't compare registration types if the new one hasn't been set
+    return false unless registration_type
     original_registration_type = Registration.where(reg_identifier: reg_identifier).first.registration_type
     original_registration_type != registration_type
   end
