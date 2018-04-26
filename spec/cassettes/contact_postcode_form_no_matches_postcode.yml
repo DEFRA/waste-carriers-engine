@@ -12,7 +12,7 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - rest-client/2.0.2 (darwin16.7.0 x86_64) ruby/2.4.2p198
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.2p198
       Host:
       - localhost:9190
   response:
@@ -28,7 +28,7 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"Parameters are not valid","statuscode":400}}'
+      string: '{"error":{"statuscode":400,"message":"Parameters are not valid"}}'
     http_version: 
   recorded_at: Mon, 23 Apr 2018 12:36:24 GMT
 recorded_with: VCR 4.0.0
