@@ -1,5 +1,6 @@
 <%= render("shared/back", back_path: back_worldpay_forms_path(@worldpay_form.reg_identifier)) %>
 
+<div class="text">
 <% if @worldpay_form.errors.any? %>
 
   <h1 class="heading-large"><%= t(".error_heading") %></h1>
@@ -15,6 +16,11 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <p><%= t(".paragraph_1") %></p>
+    <p><%= t(".paragraph_2") %></p>
+    <p><%= t(".paragraph_3") %></p>
+    <p><%= t(".paragraph_4") %></p>
+
     <%= f.hidden_field :reg_identifier, value: @worldpay_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
@@ -22,3 +28,4 @@
   <% end %>
 
 <% end %>
+</div>

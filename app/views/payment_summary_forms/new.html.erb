@@ -31,13 +31,13 @@
           <% end %>
           <% if @payment_summary_form.registration_cards > 0 %>
           <tr>
-            <td><%= t(".cards_fee") %></td>
+            <td><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></td>
             <td>£<%= @payment_summary_form.registration_card_charge %></td>
           </tr>
           <% end %>
           <tr>
-            <td><%= t(".total_fee") %></td>
-            <td>£<%= @payment_summary_form.total_charge %></td>
+            <td><span class="strong"><%= t(".total_fee") %></span></td>
+            <td><span class="strong">£<%= @payment_summary_form.total_charge %></span></td>
           </tr>
         </tbody>
       </table>

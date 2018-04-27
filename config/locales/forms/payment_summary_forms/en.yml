@@ -5,7 +5,9 @@ en:
       heading: Payment summary
       renewal_fee: Renewal of registration
       cbd_fee: Additional charge for changing registration type
-      cards_fee: Registration cards
+      cards_fee:
+        one: "%{count} registration card"
+        other: "%{count} registration cards"
       total_fee: Total charge
       vat_statement: All charges are outside the scope of VAT.
       make_payment_subheading: Make a payment
