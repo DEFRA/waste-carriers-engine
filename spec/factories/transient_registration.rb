@@ -3,6 +3,7 @@ FactoryBot.define do
     trait :has_required_data do
       location "england"
       declared_convictions "false"
+      temp_cards 1
 
       # Create a new registration when initializing so we can copy its data
       initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_soon).reg_identifier) }

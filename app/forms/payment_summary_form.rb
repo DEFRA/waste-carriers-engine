@@ -7,8 +7,8 @@ class PaymentSummaryForm < BaseForm
 
     self.type_change = @transient_registration.registration_type_changed?
     self.registration_cards = @transient_registration.temp_cards || 0
-    self.registration_card_charge = determine_total_card_charge
-    self.total_charge = determine_total_charge
+    self.registration_card_charge = @transient_registration.total_registration_card_charge
+    self.total_charge = @transient_registration.total_to_pay
   end
 
   def submit(params)
@@ -20,17 +20,4 @@ class PaymentSummaryForm < BaseForm
   end
 
   validates :temp_payment_method, inclusion: { in: %w[card bank_transfer] }
-
-  private
-
-  def determine_total_charge
-    charges = [Rails.configuration.renewal_charge]
-    charges << Rails.configuration.type_change_charge if type_change
-    charges << registration_card_charge
-    charges.sum
-  end
-
-  def determine_total_card_charge
-    registration_cards * Rails.configuration.card_charge
-  end
 end

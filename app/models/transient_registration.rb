@@ -43,13 +43,13 @@ class TransientRegistration
   def total_to_pay
     charges = [Rails.configuration.renewal_charge]
     charges << Rails.configuration.type_change_charge if registration_type_changed?
-    charges << registration_card_charge
+    charges << total_registration_card_charge
     charges.sum
   end
 
-  def registration_card_charge
+  def total_registration_card_charge
     return 0 unless temp_cards.present?
-    temp_cards * 5
+    temp_cards * Rails.configuration.card_charge
   end
 
   private
