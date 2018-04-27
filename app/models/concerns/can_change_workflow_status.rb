@@ -247,7 +247,11 @@ module CanChangeWorkflowStatus
                     to: :payment_summary_form
 
         transitions from: :payment_summary_form,
-                    to: :worldpay_form
+                    to: :worldpay_form,
+                    if: :paying_by_card?
+
+        transitions from: :payment_summary_form,
+                    to: :bank_transfer_form
 
         transitions from: :worldpay_form,
                     to: :renewal_complete_form
@@ -536,5 +540,9 @@ module CanChangeWorkflowStatus
 
   def declared_convictions?
     declared_convictions == true
+  end
+
+  def paying_by_card?
+    temp_payment_method == "card"
   end
 end

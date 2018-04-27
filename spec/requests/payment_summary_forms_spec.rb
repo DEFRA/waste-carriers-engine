@@ -69,9 +69,11 @@ RSpec.describe "PaymentSummaryForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the worldpay form" do
+          # TODO: Add test for worldpay from once https://github.com/DEFRA/waste-carriers-renewals/pull/145 is merged
+
+          it "redirects to the bank_transfer form" do
             post payment_summary_forms_path, payment_summary_form: valid_params
-            expect(response).to redirect_to(new_worldpay_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_bank_transfer_form_path(transient_registration[:reg_identifier]))
           end
         end
 
