@@ -323,6 +323,16 @@ Rails.application.routes.draw do
               on: :collection
             end
 
+  resources :cards_forms,
+            only: [:new, :create],
+            path: "cards",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "cards_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
   resources :payment_summary_forms,
             only: [:new, :create],
             path: "payment-summary",

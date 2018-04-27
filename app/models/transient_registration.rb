@@ -12,6 +12,7 @@ class TransientRegistration
   after_initialize :copy_data_from_registration
 
   # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
+  field :temp_cards, type: Integer
   field :temp_company_postcode, type: String
   field :temp_contact_postcode, type: String
   field :temp_os_places_error, type: Boolean

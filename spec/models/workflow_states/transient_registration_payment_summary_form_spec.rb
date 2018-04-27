@@ -9,8 +9,8 @@ RSpec.describe TransientRegistration, type: :model do
                workflow_state: "payment_summary_form")
       end
 
-      it "changes to :declaration_form after the 'back' event" do
-        expect(transient_registration).to transition_from(:payment_summary_form).to(:declaration_form).on_event(:back)
+      it "changes to :cards_form after the 'back' event" do
+        expect(transient_registration).to transition_from(:payment_summary_form).to(:cards_form).on_event(:back)
       end
 
       it "changes to :worldpay_form after the 'next' event" do
