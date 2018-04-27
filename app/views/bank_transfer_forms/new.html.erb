@@ -13,9 +13,11 @@
       <li><%= t(".list_item_2") %></li>
     </ol>
 
+    <p><%= t(".paragraph_2") %></p>
+
     <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
 
-    <p><%= t(".paragraph_2") %></p>
+    <p><%= t(".paragraph_3") %></p>
 
     <div class="form-group">
       <table>
@@ -38,7 +40,7 @@
           </tr>
           <tr>
             <td><%= t(".uk_payment_table.bank_address.label") %></td>
-            <td><%= t(".uk_payment_table.bank_address.value") %></td>
+            <td><%= t(".uk_payment_table.bank_address.value").join("<br>").html_safe %></td>
           </tr>
           <tr>
             <td><%= t(".uk_payment_table.sort_code.label") %></td>
@@ -52,7 +54,7 @@
       </table>
     </div>
 
-    <p><%= t(".paragraph_3") %></p>
+    <p><%= t(".paragraph_4") %></p>
 
     <div class="form-group">
       <table>
@@ -69,11 +71,11 @@
       </table>
     </div>
 
-    <p><%= t(".paragraph_4") %></p>
+    <p><%= t(".paragraph_5") %></p>
 
     <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
 
-    <p><%= t(".paragraph_5") %></p>
+    <p><%= t(".paragraph_6") %></p>
 
     <div class="form-group">
       <table>
@@ -88,7 +90,7 @@
           </tr>
           <tr>
             <td><%= t(".send_confirmation_table.post.label") %></td>
-            <td><%= t(".send_confirmation_table.post.value") %></td>
+            <td><%= t(".send_confirmation_table.post.value").join("<br>").html_safe %></td>
           </tr>
         </tbody>
       </table>
@@ -99,7 +101,7 @@
         <span class="visually-hidden">Warning</span>
       </i>
       <strong class="bold-small">
-        <%= t(".paragraph_6") %>
+        <%= t(".paragraph_7") %>
       </strong>
     </div>
 
