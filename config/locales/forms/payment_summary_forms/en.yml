@@ -3,13 +3,28 @@ en:
     new:
       title: Payment summary
       heading: Payment summary
+      renewal_fee: Renewal of registration
+      cbd_fee: Additional charge for changing registration type
+      cards_fee:
+        one: "%{count} registration card"
+        other: "%{count} registration cards"
+      total_fee: Total charge
+      vat_statement: All charges are outside the scope of VAT.
+      make_payment_subheading: Make a payment
+      options:
+        card: Pay by credit card or debit card
+        bank_transfer: Pay by bank transfer
+      hint_pay_by_card: You will be transferred to the secure Worldpay site for you to enter your credit or debit card details. We accept Mastercard, Maestro and Visa.
+      hint_pay_by_bank_transfer: Paying by bank transfer requires 2 steps. Both must be done to complete your registration.
       error_heading: Something is wrong
-      next_button: Continue
+      next_button: Proceed to payment
   activemodel:
     errors:
       models:
         payment_summary_form:
           attributes:
+            temp_payment_method:
+              inclusion: "You must select a payment method"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

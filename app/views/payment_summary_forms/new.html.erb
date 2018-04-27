@@ -1,5 +1,6 @@
 <%= render("shared/back", back_path: back_payment_summary_forms_path(@payment_summary_form.reg_identifier)) %>
 
+<div class="text">
 <% if @payment_summary_form.errors.any? %>
 
   <h1 class="heading-large"><%= t(".error_heading") %></h1>
@@ -15,6 +16,66 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td><%= t(".renewal_fee") %></td>
+            <td>£<%= Rails.configuration.renewal_charge %></td>
+          </tr>
+          <% if @payment_summary_form.type_change %>
+          <tr>
+            <td><%= t(".cbd_fee") %></td>
+            <td>£<%= Rails.configuration.type_change_charge %></td>
+          </tr>
+          <% end %>
+          <% if @payment_summary_form.registration_cards > 0 %>
+          <tr>
+            <td><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></td>
+            <td>£<%= @payment_summary_form.registration_card_charge %></td>
+          </tr>
+          <% end %>
+          <tr>
+            <td><span class="strong"><%= t(".total_fee") %></span></td>
+            <td><span class="strong">£<%= @payment_summary_form.total_charge %></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="font-xsmall"><%= t(".vat_statement") %></p>
+
+    <h2 class="heading-medium"><%= t(".make_payment_subheading") %></h2>
+
+    <% if @payment_summary_form.errors[:temp_payment_method].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+      <fieldset id="temp_payment_method">
+
+        <% if @payment_summary_form.errors[:temp_payment_method].any? %>
+        <span class="error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
+        <% end %>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_payment_method, "card" %>
+          <%= f.label :temp_payment_method, value: "card", class: "form-label" do %>
+            <%= t(".options.card") %>
+            <span class='form-hint'><%= t(".hint_pay_by_card") %></span>
+          <% end %>
+        </div>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_payment_method, "bank_transfer" %>
+          <%= f.label :temp_payment_method, value: "bank_transfer", class: "form-label" do %>
+            <%= t(".options.bank_transfer") %>
+            <span class='form-hint'><%= t(".hint_pay_by_bank_transfer") %></span>
+          <% end %>
+        </div>
+      </fieldset>
+    </div>
+
     <%= f.hidden_field :reg_identifier, value: @payment_summary_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
@@ -22,3 +83,4 @@
   <% end %>
 
 <% end %>
+</div>

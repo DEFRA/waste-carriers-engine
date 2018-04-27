@@ -4,7 +4,12 @@ RSpec.describe PaymentSummaryForm, type: :model do
   describe "#submit" do
     context "when the form is valid" do
       let(:payment_summary_form) { build(:payment_summary_form, :has_required_data) }
-      let(:valid_params) { { reg_identifier: payment_summary_form.reg_identifier } }
+      let(:valid_params) do
+        {
+          reg_identifier: payment_summary_form.reg_identifier,
+          temp_payment_method: payment_summary_form.temp_payment_method
+        }
+      end
 
       it "should submit" do
         expect(payment_summary_form.submit(valid_params)).to eq(true)
@@ -21,21 +26,10 @@ RSpec.describe PaymentSummaryForm, type: :model do
     end
   end
 
-  describe "#reg_identifier" do
-    context "when a valid transient registration exists" do
-      let(:transient_registration) do
-        create(:transient_registration,
-               :has_required_data,
-               workflow_state: "payment_summary_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:payment_summary_form) { PaymentSummaryForm.new(transient_registration) }
-
+  context "when a valid transient registration exists" do
+    let(:payment_summary_form) { build(:payment_summary_form, :has_required_data) }
+    describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
-        before(:each) do
-          payment_summary_form.reg_identifier = transient_registration.reg_identifier
-        end
-
         it "is valid" do
           expect(payment_summary_form).to be_valid
         end
@@ -44,6 +38,34 @@ RSpec.describe PaymentSummaryForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           payment_summary_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(payment_summary_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#temp_payment_method" do
+      context "when a temp_payment_method meets the requirements" do
+        it "is valid" do
+          expect(payment_summary_form).to be_valid
+        end
+      end
+
+      context "when a temp_payment_method is blank" do
+        before(:each) do
+          payment_summary_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(payment_summary_form).to_not be_valid
+        end
+      end
+
+      context "when a temp_payment_method not an allowed string" do
+        before(:each) do
+          payment_summary_form.reg_identifier = "foo"
         end
 
         it "is not valid" do

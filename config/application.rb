@@ -53,6 +53,7 @@ module WasteCarriersRenewals
     # Fees
     config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i || 0
     config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i || 0
+    config.card_charge = ENV["WCRS_CARD_CHARGE"].to_i || 0
 
     # Times
     config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
