@@ -1,15 +1,13 @@
 class BankTransferForm < BaseForm
-  # TODO: Define accessible attributes, eg attr_accessor :field
+  attr_accessor :total_to_pay
 
   def initialize(transient_registration)
     super
-    # TODO: Define params to get from transient_registration, eg self.field = @transient_registration.field
+    self.total_to_pay = @transient_registration.total_to_pay
   end
 
   def submit(params)
     # Assign the params for validation and pass them to the BaseForm method for updating
-    # TODO: Define allowed params, eg self.field = params[:field]
-    # TODO: Include attributes to update in the attributes hash, eg { field: field }
     attributes = {}
 
     super(attributes, params[:reg_identifier])

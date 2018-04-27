@@ -21,11 +21,13 @@ class TransientRegistration
 
   # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
   def registration_type_changed?
+    # Don't compare registration types if the new one hasn't been set
+    return false unless registration_type
     original_registration_type = Registration.where(reg_identifier: reg_identifier).first.registration_type
     original_registration_type != registration_type
   end
 
-  def total_fee
+  def fee_including_possible_type_change
     if registration_type_changed?
       Rails.configuration.renewal_charge + Rails.configuration.type_change_charge
     else
@@ -36,6 +38,18 @@ class TransientRegistration
   def projected_renewal_end_date
     return unless expires_on.present?
     expiry_date_after_renewal(expires_on.to_date)
+  end
+
+  def total_to_pay
+    charges = [Rails.configuration.renewal_charge]
+    charges << Rails.configuration.type_change_charge if registration_type_changed?
+    charges << registration_card_charge
+    charges.sum
+  end
+
+  def registration_card_charge
+    return 0 unless temp_cards.present?
+    temp_cards * 5
   end
 
   private
