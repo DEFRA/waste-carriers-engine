@@ -353,6 +353,16 @@ Rails.application.routes.draw do
               on: :collection
             end
 
+  resources :bank_transfer_forms,
+            only: [:new, :create],
+            path: "bank-transfer",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "bank_transfer_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
   resources :renewal_complete_forms,
             only: [:new, :create],
             path: "renewal-complete",

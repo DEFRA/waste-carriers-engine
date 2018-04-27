@@ -50,6 +50,7 @@ module CanChangeWorkflowStatus
       state :cards_form
       state :payment_summary_form
       state :worldpay_form
+      state :bank_transfer_form
 
       state :renewal_complete_form
 
@@ -250,6 +251,9 @@ module CanChangeWorkflowStatus
 
         transitions from: :worldpay_form,
                     to: :renewal_complete_form
+
+        transitions from: :bank_transfer_form,
+                    to: :renewal_complete_form
       end
 
       event :back do
@@ -419,6 +423,9 @@ module CanChangeWorkflowStatus
                     to: :cards_form
 
         transitions from: :worldpay_form,
+                    to: :payment_summary_form
+
+        transitions from: :bank_transfer_form,
                     to: :payment_summary_form
 
         # Exit routes from renewals process
