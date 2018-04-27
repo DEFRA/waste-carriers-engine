@@ -6,10 +6,8 @@ class PaymentSummaryForm < BaseForm
     self.temp_payment_method = @transient_registration.temp_payment_method
 
     self.type_change = @transient_registration.registration_type_changed?
-    # TODO: Uncomment this once https://github.com/DEFRA/waste-carriers-renewals/pull/139/ is merged in
-    # self.registration_cards = @transient_registration.temp_cards || 0
-    self.registration_cards = 2 # Temp value for testing
-    self.registration_card_charge = determine_registration_card_charge
+    self.registration_cards = @transient_registration.temp_cards || 0
+    self.registration_card_charge = determine_total_card_charge
     self.total_charge = determine_total_charge
   end
 
@@ -32,7 +30,7 @@ class PaymentSummaryForm < BaseForm
     charges.sum
   end
 
-  def determine_registration_card_charge
-    registration_cards * 5
+  def determine_total_card_charge
+    registration_cards * Rails.configuration.card_charge
   end
 end

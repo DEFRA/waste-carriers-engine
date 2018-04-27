@@ -6,7 +6,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <p><%= t(".paragraph_1") %></p>
+    <p><%= t(".paragraph_1", card_charge: Rails.configuration.card_charge) %></p>
     <%= image_tag "example_card.jpg", alt: t(".card_alt_text") %>
     <p><%= t(".paragraph_2") %></p>
     <p><%= t(".paragraph_3") %></p>
