@@ -6,6 +6,103 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <p><%= t(".paragraph_1") %></p>
+
+    <ol class="list list-number">
+      <li><%= t(".list_item_1") %></li>
+      <li><%= t(".list_item_2") %></li>
+    </ol>
+
+    <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
+
+    <p><%= t(".paragraph_2") %></p>
+
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td><%= t(".uk_payment_table.reference_number.label") %></td>
+            <td><%= @bank_transfer_form.reg_identifier %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.total_cost.label") %></td>
+            <td>TODO</td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.account_name.label") %></td>
+            <td><%= t(".uk_payment_table.account_name.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.bank_name.label") %></td>
+            <td><%= t(".uk_payment_table.bank_name.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.bank_address.label") %></td>
+            <td><%= t(".uk_payment_table.bank_address.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.sort_code.label") %></td>
+            <td><%= t(".uk_payment_table.sort_code.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.account_number.label") %></td>
+            <td><%= t(".uk_payment_table.account_number.value") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><%= t(".paragraph_3") %></p>
+
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td><%= t(".international_payment_table.iban.label") %></td>
+            <td><%= t(".international_payment_table.iban.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".international_payment_table.swift.label") %></td>
+            <td><%= t(".international_payment_table.swift.value") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><%= t(".paragraph_4") %></p>
+
+    <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
+
+    <p><%= t(".paragraph_5") %></p>
+
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td><%= t(".send_confirmation_table.email.label") %></td>
+            <td><%= mail_to(t(".send_confirmation_table.email.value")) %></td>
+          </tr>
+          <tr>
+            <td><%= t(".send_confirmation_table.fax.label") %></td>
+            <td><%= t(".send_confirmation_table.fax.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".send_confirmation_table.post.label") %></td>
+            <td><%= t(".send_confirmation_table.post.value") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-group notice">
+      <i class="icon icon-important">
+        <span class="visually-hidden">Warning</span>
+      </i>
+      <strong class="bold-small">
+        <%= t(".paragraph_6") %>
+      </strong>
+    </div>
+
     <%= f.hidden_field :reg_identifier, value: @bank_transfer_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
