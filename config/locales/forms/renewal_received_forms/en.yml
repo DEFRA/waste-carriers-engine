@@ -4,11 +4,14 @@ en:
       title: Renewal application received
       heading: Application received
       highlight_text: "Your registration number is still"
-      paragraph_1: "Details of how to pay have been emailed to %{email}."
-      subheading_1: "Next step: pay the renewal charge"
-      paragraph_2: We've sent an email telling you how to pay the charge.
-      paragraph_3: Please allow 5 working days for your payment to reach us.
-      paragraph_4: Call our helpline on 03708 506 506 if you have any questions about your renewal.
+      paragraph_1: "We have sent a confirmation email to to %{email}."
+      awaiting_payment_subheading: "Next step: pay the renewal charge"
+      awaiting_payment_paragraph_1: We've sent an email telling you how to pay the charge.
+      awaiting_payment_paragraph_2: Please allow 5 working days for your payment to reach us.
+      conviction_check_subheading: What happens next
+      conviction_check_paragraph_1: We'll check your details and let you know whether your application has been successful. We aim to do this within 10 working days.
+      paragraph_2: Your registration will not be renewed until we have received your payment and confirmed your registration.
+      paragraph_3: Call our helpline on 03708 506 506 if you have any questions about your renewal.
       survey_link_text: What do you think of this service?
       survey_link_hint: (takes 30 seconds)
       error_heading: Something is wrong

@@ -62,5 +62,9 @@ module CanHaveRegistrationAttributes
       return [] unless keyPeople.present?
       keyPeople.where(person_type: "relevant")
     end
+
+    def conviction_check_required?
+      declared_convictions == true
+    end
   end
 end

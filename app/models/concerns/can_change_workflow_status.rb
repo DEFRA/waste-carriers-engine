@@ -255,6 +255,10 @@ module CanChangeWorkflowStatus
                     to: :bank_transfer_form
 
         transitions from: :worldpay_form,
+                    to: :renewal_received_form,
+                    if: :pending_convictions_check?
+
+        transitions from: :worldpay_form,
                     to: :renewal_complete_form
 
         transitions from: :bank_transfer_form,
@@ -545,5 +549,9 @@ module CanChangeWorkflowStatus
 
   def paying_by_card?
     temp_payment_method == "card"
+  end
+
+  def pending_convictions_check?
+    conviction_check_required?
   end
 end
