@@ -4,7 +4,7 @@ en:
       title: Renewal application received
       heading: Application received
       highlight_text: "Your registration number is still"
-      paragraph_1: "We have sent a confirmation email to to %{email}."
+      paragraph_1: "We have sent a confirmation email to %{email}."
       awaiting_payment_subheading: "Next step: pay the renewal charge"
       awaiting_payment_paragraph_1: We've sent an email telling you how to pay the charge.
       awaiting_payment_paragraph_2: Please allow 5 working days for your payment to reach us.
