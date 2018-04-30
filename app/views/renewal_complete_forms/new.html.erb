@@ -17,10 +17,11 @@
       <p class="font-large"><%= t(".highlight_text") %><br><span class="strong"><%= @renewal_complete_form.reg_identifier %></span></p>
     </div>
 
-    <p><%= t(".paragraph_1", email: @renewal_complete_form.contact_email) %></p>
+    <p><%= t(".paragraph_1", date: @renewal_complete_form.projected_renewal_end_date) %></p>
+    <p><%= t(".paragraph_2", email: @renewal_complete_form.contact_email) %></p>
 
     <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
-    <p><%= link_to(t(".paragraph_2"), @renewal_complete_form.certificate_link,
+    <p><%= link_to(t(".certificate_link_text"), @renewal_complete_form.certificate_link,
     target: "_blank") %></p>
 
     <h2 class="heading-medium"><%= t(".subheading_2") %></h2>

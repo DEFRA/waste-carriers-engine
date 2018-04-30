@@ -4,9 +4,10 @@ en:
       title: Renewal complete
       heading: Renewal complete
       highlight_text: "Your registration number is still"
-      paragraph_1: "We have sent a confirmation email to %{email}."
+      paragraph_1: "Your registration has been renewed until %{date}."
+      paragraph_2: "We have sent a confirmation email to %{email}."
       subheading_1: Your registration certificate
-      paragraph_2: Download and print your certificate
+      certificate_link_text: Download and print your certificate
       subheading_2: What happens next
       paragraph_3:
         carrier_dealer: Based on what you told us about your organisation and what it does, we have renewed your registration as an upper tier waste carrier and dealer.

@@ -1,11 +1,12 @@
 class RenewalCompleteForm < BaseForm
-  attr_accessor :contact_email, :registration_type, :certificate_link
+  attr_accessor :certificate_link, :contact_email, :projected_renewal_end_date, :registration_type
 
   def initialize(transient_registration)
     super
-    self.contact_email = @transient_registration.contact_email
-    self.registration_type = @transient_registration.registration_type
     self.certificate_link = build_certificate_link
+    self.contact_email = @transient_registration.contact_email
+    self.projected_renewal_end_date = @transient_registration.projected_renewal_end_date
+    self.registration_type = @transient_registration.registration_type
   end
 
   # Override BaseForm method as users shouldn't be able to submit this form
