@@ -1,6 +1,9 @@
 # Waste Carriers renewals
 
-[![Build Status](https://travis-ci.org/DEFRA/waste-carriers-renewals.svg?branch=master)](https://travis-ci.org/DEFRA/waste-carriers-renewals) [![Maintainability](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/maintainability)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/test_coverage)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/test_coverage) [![security](https://hakiri.io/github/DEFRA/waste-carriers-renewals/master.svg)](https://hakiri.io/github/DEFRA/waste-carriers-renewals/master)
+[![Build Status](https://travis-ci.org/DEFRA/waste-carriers-renewals.svg?branch=master)](https://travis-ci.org/DEFRA/waste-carriers-renewals)
+[![Maintainability](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/maintainability)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/test_coverage)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/test_coverage)
+[![security](https://hakiri.io/github/DEFRA/waste-carriers-renewals/master.svg)](https://hakiri.io/github/DEFRA/waste-carriers-renewals/master)
 
 The 'Register as a waste carrier' service allows businesses, who deal with waste and have to register according to the regulations, to register online. Once registered, businesses can sign in again to edit their registrations if needed.
 
@@ -14,57 +17,53 @@ Make sure you already have:
 
 - Git
 - Ruby 2.4.2
-- Rails 4.2.10
 - [Bundler](http://bundler.io/) – for installing Ruby gems
-- MongoDb
+- MongoDb 3.6
 
 ## Installation
 
-A Vagrantfile has been created allowing easy setup of the waste carriers applications, databases and dependencies. This is located within Gitlab.
+Clone the repo and drop into the project:
 
-Download the Vagrantfile and run the VM using `vagrant up`. Once the VM is set up and has installed all the other elements of the Waste Carriers service, you can install the renewals application.
+```bash
+git clone https://github.com/DEFRA/waste-carriers-renewals.git && cd waste-carriers-renewals`
+```
 
-You can do this on your local machine, but make sure the VM is also up and running.
+Then install the dependencies with `bundle install`.
 
-Clone the repo:
+## Running locally
 
-`git clone git@gitlab-dev.aws-int.defra.cloud:waste-carriers/waste-carriers-renewals.git`
+A [Vagrant](https://www.vagrantup.com/) instance has been created allowing easy setup of the waste carriers service. It includes installing all applications, databases and dependencies. This is located within GitLab (speak to the Ruby team).
 
-Change to the directory:
+Download the Vagrant project and create the VM using the instructions in its README. It includes installing and running a version of the renewals app.
 
-`cd waste-carriers-renewals`
+However, if you intend to work with the renewals app locally (as opposed to on the Vagrant instance) and just use the box for dependencies, you'll need to:
 
-And install the dependencies:
+- Log in into the Vagrant instance
+- Using `ps ax`, identify the pid of the running renewals app
+- Kill it using `kill [pid id]`
+- Exit the vagrant instance
 
-`bundle install`
+Once you've created a `.env` file (see below) you should be ready to work with and run the project locally.
 
 ## .env
 
-The project uses the dotenv gem to load environment variables when the app starts. Dotenv expects to find a .env file in the project root.
+The project uses the [Dotenv gem](https://github.com/bkeepers/dotenv) to load environment variables when the app starts. Dotenv expects to find a .env file in the project root.
 
 Duplicate .env.example and rename the copy as .env
 
 Open it and update the settings as required.
 
-### Databases
+## Databases
 
-Registration data and user data for the Waste Carriers service are held in 2 MongoDb databases. Multiple applications for the service use these databases, including this one.
+If you are running the waste carriers Vagrant VM, you have nothing to do! All databases are already created and the appropriate ports opened for access from the host to the VM.
 
-If you are using the Vagrant image, running `vagrant up` should set up the development databases for registrations and users.
-
-The renewals application also has 2 separate test databases. Currently you will need to create these yourself. Create these on the VM.
-
-`mongo waste-carriers-test --eval 'db.addUser({user: "mongoUser", pwd: "password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'`
-
-`mongo waste-carriers-users-test --eval 'db.addUser({user: "mongoUser", pwd: "password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'`
-
-If you get a permissions error when trying to create the databases, you may need to remove the auth requirements in `/etc/mongodb.conf`. Restart Mongo after doing this for changes to take effect.
+If you intend to run it standalone, you'll need to create databases for the develop and test environments. There are 2 separate MongoDb databases for registration data and user data, so you'll need to create 4 databases in total. Multiple applications for the service use these databases, including this one.
 
 ### Seed data
 
 The renewals application relies on users being created as part of waste-carriers-frontend. You should not be able to create a new user as part of a renewal.
 
-However, you can seed the database with a test user so you can log in and access the features. (This won't work in production.)
+However, you can seed the database with a test user so you can log in and access the features (this won't work in production).
 
 Seed the databases with:
 
@@ -76,7 +75,7 @@ Make sure the Vagrant image with the databases is up and running.
 
 Start the application with:
 
-`bundle exec rails s -p 3001`
+`bundle exec rails s -p 3002`
 
 The port change is to avoid a clash with waste-carriers-frontend.
 
