@@ -3,7 +3,7 @@ en:
     new:
       title: Renewal application received
       heading: Application received
-      highlight_text: "Please use this reference number if you contact us:"
+      highlight_text: "Your registration number is still"
       paragraph_1: "Details of how to pay have been emailed to %{email}."
       subheading_1: "Next step: pay the renewal charge"
       paragraph_2: We've sent an email telling you how to pay the charge.
