@@ -32,15 +32,18 @@ Then install the dependencies with `bundle install`.
 
 ## Running locally
 
-A [Vagrant instance](https://www.vagrantup.com/) has been created allowing easy setup of the waste carriers service. It includes installing all applications, databases and dependencies. This is located within Gitlab (speak to the ruby team).
+A [Vagrant](https://www.vagrantup.com/) instance has been created allowing easy setup of the waste carriers service. It includes installing all applications, databases and dependencies. This is located within GitLab (speak to the Ruby team).
 
-Download the vagrant project and create the VM using the instructions in its README. It includes installing and running a version of the renewals app, however if you intend to work with it locally and just use the box for dependencies you'll need to:
+Download the Vagrant project and create the VM using the instructions in its README. It includes installing and running a version of the renewals app.
 
-- Login into the vagrant instance then using `ps ax` identify the pid of the running renewals app
+However, if you intend to work with the renewals app locally (as opposed to on the Vagrant instance) and just use the box for dependencies, you'll need to:
+
+- Log in into the Vagrant instance
+- Using `ps ax`, identify the pid of the running renewals app
 - Kill it using `kill [pid id]`
 - Exit the vagrant instance
 
-Once you've created a `.env` file (see below) you should be reading to work with and run the project locally.
+Once you've created a `.env` file (see below) you should be ready to work with and run the project locally.
 
 ## .env
 
@@ -52,9 +55,9 @@ Open it and update the settings as required.
 
 ## Databases
 
-If you are running the waste carriers Vagrant VM you have nothing to do! All databases are already created and the appropriate ports opened for access from the host to the VM.
+If you are running the waste carriers Vagrant VM, you have nothing to do! All databases are already created and the appropriate ports opened for access from the host to the VM.
 
-If you intend to run it standalone you'll need to create both develop and test databases. Registration data and user data for the Waste Carriers service is held in 2 MongoDb databases. Multiple applications for the service use these databases, including this one.
+If you intend to run it standalone, you'll need to create databases for the develop and test environments. There are 2 separate MongoDb databases for registration data and user data, so you'll need to create 4 databases in total. Multiple applications for the service use these databases, including this one.
 
 ### Seed data
 
