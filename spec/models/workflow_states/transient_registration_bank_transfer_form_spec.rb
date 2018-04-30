@@ -13,8 +13,8 @@ RSpec.describe TransientRegistration, type: :model do
         expect(transient_registration).to transition_from(:bank_transfer_form).to(:payment_summary_form).on_event(:back)
       end
 
-      it "changes to :renewal_complete_form after the 'next' event" do
-        expect(transient_registration).to transition_from(:bank_transfer_form).to(:renewal_complete_form).on_event(:next)
+      it "changes to :renewal_received_form after the 'next' event" do
+        expect(transient_registration).to transition_from(:bank_transfer_form).to(:renewal_received_form).on_event(:next)
       end
     end
   end

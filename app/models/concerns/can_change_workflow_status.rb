@@ -53,6 +53,7 @@ module CanChangeWorkflowStatus
       state :bank_transfer_form
 
       state :renewal_complete_form
+      state :renewal_received_form
 
       state :cannot_renew_lower_tier_form
       state :cannot_renew_type_change_form
@@ -257,7 +258,7 @@ module CanChangeWorkflowStatus
                     to: :renewal_complete_form
 
         transitions from: :bank_transfer_form,
-                    to: :renewal_complete_form
+                    to: :renewal_received_form
       end
 
       event :back do

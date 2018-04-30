@@ -373,6 +373,16 @@ Rails.application.routes.draw do
               on: :collection
             end
 
+  resources :renewal_received_forms,
+            only: [:new, :create],
+            path: "renewal-received",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+              to: "renewal_received_forms#go_back",
+              as: "back",
+              on: :collection
+            end
+
   resources :cannot_renew_lower_tier_forms,
             only: [:new, :create],
             path: "cannot-renew-lower-tier",

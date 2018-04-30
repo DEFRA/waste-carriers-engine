@@ -69,9 +69,9 @@ RSpec.describe "BankTransferForms", type: :request do
             expect(response).to have_http_status(302)
           end
 
-          it "redirects to the renewal_complete form" do
+          it "redirects to the renewal_received form" do
             post bank_transfer_forms_path, bank_transfer_form: valid_params
-            expect(response).to redirect_to(new_renewal_complete_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_renewal_received_form_path(transient_registration[:reg_identifier]))
           end
         end
 
