@@ -16,9 +16,11 @@
 !/log/.keep
 /tmp
 .DS_Store
-
+*.log
 # Ignore test coverage reports
 /coverage
 
 # Ignore environment variables
 .env
+
+
