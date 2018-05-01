@@ -32,16 +32,22 @@ def parse_dates(seed, date)
   end
 end
 
-# Only seed if not running in production or we specifically require it, eg. for Heroku
-if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
-  User.find_or_create_by(
-    email: "user@waste-exemplar.gov.uk",
-    password: ENV["WCR_TEST_USER_PASSWORD"] || "Secret123",
-    confirmed_at: DateTime.new(2015, 1, 1)
-  )
+def seed_users
+  seeds = JSON.parse(File.read("#{Rails.root}/db/seeds/users.json"))
+  users = seeds["users"]
 
+  users.each do |user|
+    User.find_or_create_by(
+      email: user["email"],
+      password: ENV["WCR_TEST_USER_PASSWORD"] || "Secret123",
+      confirmed_at: DateTime.new(2015, 1, 1)
+    )
+  end
+end
+
+def seed_registrations
   seeds = []
-  Dir.glob("#{Rails.root}/db/seeds/*.json").each do |file|
+  Dir.glob("#{Rails.root}/db/seeds/CBD*.json").each do |file|
     seeds << JSON.parse(File.read(file))
   end
 
@@ -57,4 +63,10 @@ if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
   sorted_seeds.each do |seed|
     Registration.find_or_create_by(seed.except("_id"))
   end
+end
+
+# Only seed if not running in production or we specifically require it, eg. for Heroku
+if !Rails.env.production? || ENV["WCR_ALLOW_SEED"]
+  seed_users
+  seed_registrations
 end
