@@ -1,3 +1,4 @@
+<div class="column-two-thirds">
 <% if @renewal_complete_form.errors.any? %>
 
   <h1 class="heading-large"><%= t(".error_heading") %></h1>
@@ -11,9 +12,48 @@
   <%= form_for(@renewal_complete_form) do |f| %>
     <%= render("shared/errors", object: @renewal_complete_form) %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+    <div class="govuk-box-highlight">
+      <h1 class="heading-xlarge"><%= t(".heading") %></h1>
+      <p class="font-large"><%= t(".highlight_text") %><br><span class="strong"><%= @renewal_complete_form.reg_identifier %></span></p>
+    </div>
+
+    <p><%= t(".paragraph_1", date: @renewal_complete_form.projected_renewal_end_date) %></p>
+    <p><%= t(".paragraph_2", email: @renewal_complete_form.contact_email) %></p>
+
+    <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
+    <p><%= link_to(t(".certificate_link_text"), @renewal_complete_form.certificate_link,
+    target: "_blank") %></p>
+
+    <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
+    <p><%= t(".paragraph_3.#{@renewal_complete_form.registration_type}") %></p>
+    <p><%= t(".paragraph_4.#{@renewal_complete_form.registration_type}") %></p>
+
+    <ul class="list list-bullet">
+      <% t(".list_1").each do |list_item| %>
+      <li><%= list_item %></li>
+      <% end %>
+    </ul>
+
+    <p><%= t(".paragraph_5") %></p>
+
+    <ul class="list list-bullet">
+      <% t(".list_2").each do |list_item| %>
+      <li><%= list_item %></li>
+      <% end %>
+    </ul>
+
+    <h2 class="heading-medium"><%= t(".subheading_3") %></h2>
+    <p><%= t(".paragraph_6") %></p>
+    <p><%= t(".paragraph_7") %></p>
+
+    <div class="panel panel-border-wide">
+      <p><%= t(".paragraph_8") %></p>
+    </div>
+
+    <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
 
     <%= f.hidden_field :reg_identifier, value: @renewal_complete_form.reg_identifier %>
   <% end %>
 
 <% end %>
+</div>
