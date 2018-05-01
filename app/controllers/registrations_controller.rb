@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   # GET /registrations
   # GET /registrations.json
   def index
-    # Only loading 50 for now
-    @registrations = Registration.all.limit(50)
+    # Only load the first 50 accessible by the current user
+    @registrations = Registration.accessible_by(current_ability).limit(50)
   end
 end
