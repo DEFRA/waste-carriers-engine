@@ -16,7 +16,7 @@ class RenewalCompleteForm < BaseForm
     return unless current_user.present?
     id = current_user.id
     root = Rails.configuration.wcrs_frontend_url
-    "#{root}/user/#{id}/registrations?locale=en"
+    "#{root}/user/#{id}/registrations"
   end
 
   private
@@ -26,6 +26,6 @@ class RenewalCompleteForm < BaseForm
     return unless registration.present?
     id = registration.id
     root = Rails.configuration.wcrs_frontend_url
-    "#{root}/registrations/#{id}/view?locale=en"
+    "#{root}/registrations/#{id}/view"
   end
 end

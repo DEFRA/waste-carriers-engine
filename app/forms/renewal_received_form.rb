@@ -15,6 +15,6 @@ class RenewalReceivedForm < BaseForm
     return unless current_user.present?
     id = current_user.id
     root = Rails.configuration.wcrs_frontend_url
-    "#{root}/user/#{id}/registrations?locale=en"
+    "#{root}/user/#{id}/registrations"
   end
 end
