@@ -2,6 +2,7 @@ class FormsController < ApplicationController
   include ActionView::Helpers::UrlHelper
 
   before_action :authenticate_user!
+  before_action :back_button_cache_buster
 
   # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
   def new(form_class, form)
@@ -94,5 +95,12 @@ class FormsController < ApplicationController
     return true if registration.metaData.may_renew?
     redirect_to page_path("errors/unrenewable")
     false
+  end
+
+  # http://jacopretorius.net/2014/01/force-page-to-reload-on-browser-back-in-rails.html
+  def back_button_cache_buster
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 end
