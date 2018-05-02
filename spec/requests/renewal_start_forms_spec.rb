@@ -32,6 +32,15 @@ RSpec.describe "RenewalStartForms", type: :request do
               get new_renewal_start_form_path(registration[:reg_identifier])
               expect(response).to have_http_status(200)
             end
+
+            context "when the registration cannot be renewed" do
+              before(:each) { registration.metaData.expire! }
+
+              it "redirects to the unrenewable error page" do
+                get new_renewal_start_form_path(registration[:reg_identifier])
+                expect(response).to redirect_to(page_path("errors/unrenewable"))
+              end
+            end
           end
 
           context "when a renewal is in progress" do
@@ -163,6 +172,7 @@ RSpec.describe "RenewalStartForms", type: :request do
             let(:registration) do
               create(:registration,
                      :has_required_data,
+                     :expires_soon,
                      account_email: user.email,
                      company_name: "Correct Name")
             end
@@ -194,6 +204,15 @@ RSpec.describe "RenewalStartForms", type: :request do
               it "redirects to the business type form" do
                 post renewal_start_forms_path, renewal_start_form: valid_params
                 expect(response).to redirect_to(new_location_form_path(valid_params[:reg_identifier]))
+              end
+
+              context "when the registration cannot be renewed" do
+                before(:each) { registration.metaData.expire! }
+
+                it "redirects to the unrenewable error page" do
+                  get new_renewal_start_form_path(registration[:reg_identifier])
+                  expect(response).to redirect_to(page_path("errors/unrenewable"))
+                end
               end
             end
 

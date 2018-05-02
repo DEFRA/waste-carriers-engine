@@ -16,10 +16,12 @@ FactoryBot.define do
     end
 
     trait :expires_soon do
+      metaData { build(:metaData, :has_required_data, status: :active) }
       expires_on 2.months.from_now
     end
 
     trait :expires_later do
+      metaData { build(:metaData, :has_required_data, status: :active) }
       expires_on 2.years.from_now
     end
 
