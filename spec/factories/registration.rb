@@ -16,31 +16,33 @@ FactoryBot.define do
     end
 
     trait :expires_soon do
+      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
       expires_on 2.months.from_now
     end
 
     trait :expires_later do
+      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
       expires_on 2.years.from_now
     end
 
     trait :is_pending do
-      metaData { build(:metaData, :has_required_data, status: :pending) }
+      metaData { build(:metaData, :has_required_data, status: :PENDING) }
     end
 
     trait :is_active do
-      metaData { build(:metaData, :has_required_data, status: :active) }
+      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
     end
 
     trait :is_revoked do
-      metaData { build(:metaData, :has_required_data, status: :revoked) }
+      metaData { build(:metaData, :has_required_data, status: :REVOKED) }
     end
 
     trait :is_refused do
-      metaData { build(:metaData, :has_required_data, status: :refused) }
+      metaData { build(:metaData, :has_required_data, status: :REFUSED) }
     end
 
     trait :is_expired do
-      metaData { build(:metaData, :has_required_data, status: :expired) }
+      metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
     end
   end
 end

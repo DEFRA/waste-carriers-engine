@@ -9,41 +9,40 @@ module CanChangeRegistrationStatus
     field :status, type: String
 
     aasm column: :status do
-      # States
-      state :pending, initial: true
-      state :active
-      state :revoked
-      state :refused
-      state :expired
+      # States must be capitalised to match what waste-carriers-service adds to the database
+      state :PENDING, initial: true
+      state :ACTIVE
+      state :REVOKED
+      state :REFUSED
+      state :EXPIRED
 
       # Transitions
       after_all_transitions :log_status_change
 
-      # TODO: Confirm what this workflow actually is
       event :activate do
-        transitions from: :pending,
-                    to: :active,
+        transitions from: :PENDING,
+                    to: :ACTIVE,
                     after: :set_expiry_date
       end
 
       event :revoke do
-        transitions from: :active,
-                    to: :revoked
+        transitions from: :ACTIVE,
+                    to: :REVOKED
       end
 
       event :refuse do
-        transitions from: :pending,
-                    to: :refused
+        transitions from: :PENDING,
+                    to: :REFUSED
       end
 
       event :expire do
-        transitions from: :active,
-                    to: :expired
+        transitions from: :ACTIVE,
+                    to: :EXPIRED
       end
 
       event :renew do
-        transitions from: :active,
-                    to: :active,
+        transitions from: :ACTIVE,
+                    to: :ACTIVE,
                     guard: %i[close_to_expiry_date?
                               should_not_be_expired?],
                     after: :extend_expiry_date

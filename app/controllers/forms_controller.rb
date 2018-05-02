@@ -37,7 +37,8 @@ class FormsController < ApplicationController
 
     return false unless transient_registration_is_valid? &&
                         user_has_permission? &&
-                        state_is_correct?
+                        state_is_correct? &&
+                        can_be_renewed?
 
     # Set an instance variable for the form (eg. @business_type_form) using the provided class (eg. BusinessTypeForm)
     instance_variable_set("@#{form}", form_class.new(@transient_registration))
@@ -86,5 +87,12 @@ class FormsController < ApplicationController
 
   def form_matches_state?
     controller_name == "#{@transient_registration.workflow_state}s"
+  end
+
+  def can_be_renewed?
+    registration = Registration.where(reg_identifier: @transient_registration.reg_identifier).first
+    return true if registration.metaData.may_renew?
+    redirect_to page_path("errors/unrenewable")
+    false
   end
 end

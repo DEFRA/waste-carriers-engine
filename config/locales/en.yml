@@ -56,3 +56,7 @@ en:
   no_permissions_title: Cannot access registration
   no_permissions_heading: You don't have permission to access that registration
   no_permissions_text: Maybe you should try searching again.
+
+  unrenewable_title: Cannot renew registration
+  unrenewable_heading: This registration cannot be renewed
+  unrenewable_text: You can only renew registrations which are currently active and are due to expire within the next %{months} months.

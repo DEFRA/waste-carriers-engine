@@ -347,7 +347,7 @@ RSpec.describe Registration, type: :model do
         let(:registration) { build(:registration, :has_required_data, metaData: meta_data) }
 
         it "has 'pending' status" do
-          expect(registration.metaData).to have_state(:pending)
+          expect(registration.metaData).to have_state(:PENDING)
         end
 
         it "is not valid without a status" do
@@ -360,17 +360,17 @@ RSpec.describe Registration, type: :model do
         let(:registration) { build(:registration, :is_pending) }
 
         it "has 'pending' status" do
-          expect(registration.metaData).to have_state(:pending)
+          expect(registration.metaData).to have_state(:PENDING)
         end
 
         it "can be activated" do
           expect(registration.metaData).to allow_event :activate
-          expect(registration.metaData).to transition_from(:pending).to(:active).on_event(:activate)
+          expect(registration.metaData).to transition_from(:PENDING).to(:ACTIVE).on_event(:activate)
         end
 
         it "can be refused" do
           expect(registration.metaData).to allow_event :refuse
-          expect(registration.metaData).to transition_from(:pending).to(:refused).on_event(:refuse)
+          expect(registration.metaData).to transition_from(:PENDING).to(:REFUSED).on_event(:refuse)
         end
 
         it "cannot be revoked" do
@@ -386,9 +386,9 @@ RSpec.describe Registration, type: :model do
         end
 
         it "cannot transition to 'revoked', 'renewed' or 'expired'" do
-          expect(registration.metaData).to_not allow_transition_to(:revoked)
+          expect(registration.metaData).to_not allow_transition_to(:REVOKED)
           expect(registration.metaData).to_not allow_transition_to(:renewed)
-          expect(registration.metaData).to_not allow_transition_to(:expired)
+          expect(registration.metaData).to_not allow_transition_to(:EXPIRED)
         end
       end
 
@@ -407,17 +407,17 @@ RSpec.describe Registration, type: :model do
         let(:registration) { build(:registration, :expires_later, :is_active) }
 
         it "has 'active' status" do
-          expect(registration.metaData).to have_state(:active)
+          expect(registration.metaData).to have_state(:ACTIVE)
         end
 
         it "can be revoked" do
           expect(registration.metaData).to allow_event :revoke
-          expect(registration.metaData).to transition_from(:active).to(:revoked).on_event(:revoke)
+          expect(registration.metaData).to transition_from(:ACTIVE).to(:REVOKED).on_event(:revoke)
         end
 
         it "can expire" do
           expect(registration.metaData).to allow_event :expire
-          expect(registration.metaData).to transition_from(:active).to(:expired).on_event(:expire)
+          expect(registration.metaData).to transition_from(:ACTIVE).to(:EXPIRED).on_event(:expire)
         end
 
         it "cannot be refused" do
@@ -429,8 +429,8 @@ RSpec.describe Registration, type: :model do
         end
 
         it "cannot transition to 'pending' or 'refused'" do
-          expect(registration.metaData).to_not allow_transition_to(:pending)
-          expect(registration.metaData).to_not allow_transition_to(:refused)
+          expect(registration.metaData).to_not allow_transition_to(:PENDING)
+          expect(registration.metaData).to_not allow_transition_to(:REFUSED)
         end
 
         context "when the registration expiration date is more than 6 months away" do
@@ -446,7 +446,7 @@ RSpec.describe Registration, type: :model do
 
           it "can be renewed" do
             expect(registration.metaData).to allow_event :renew
-            expect(registration.metaData).to transition_from(:active).to(:active).on_event(:renew)
+            expect(registration.metaData).to transition_from(:ACTIVE).to(:ACTIVE).on_event(:renew)
           end
         end
 
@@ -547,14 +547,14 @@ RSpec.describe Registration, type: :model do
         let(:registration) { build(:registration, :is_refused) }
 
         it "has 'refused' status" do
-          expect(registration.metaData).to have_state(:refused)
+          expect(registration.metaData).to have_state(:REFUSED)
         end
 
         it "cannot transition to other states" do
-          expect(registration.metaData).to_not allow_transition_to(:pending)
-          expect(registration.metaData).to_not allow_transition_to(:active)
-          expect(registration.metaData).to_not allow_transition_to(:refused)
-          expect(registration.metaData).to_not allow_transition_to(:revoked)
+          expect(registration.metaData).to_not allow_transition_to(:PENDING)
+          expect(registration.metaData).to_not allow_transition_to(:ACTIVE)
+          expect(registration.metaData).to_not allow_transition_to(:REFUSED)
+          expect(registration.metaData).to_not allow_transition_to(:REVOKED)
         end
       end
 
@@ -562,14 +562,14 @@ RSpec.describe Registration, type: :model do
         let(:registration) { build(:registration, :is_revoked) }
 
         it "has 'revoked' status" do
-          expect(registration.metaData).to have_state(:revoked)
+          expect(registration.metaData).to have_state(:REVOKED)
         end
 
         it "cannot transition to other states" do
-          expect(registration.metaData).to_not allow_transition_to(:pending)
-          expect(registration.metaData).to_not allow_transition_to(:active)
-          expect(registration.metaData).to_not allow_transition_to(:refused)
-          expect(registration.metaData).to_not allow_transition_to(:revoked)
+          expect(registration.metaData).to_not allow_transition_to(:PENDING)
+          expect(registration.metaData).to_not allow_transition_to(:ACTIVE)
+          expect(registration.metaData).to_not allow_transition_to(:REFUSED)
+          expect(registration.metaData).to_not allow_transition_to(:REVOKED)
         end
       end
 
@@ -577,7 +577,7 @@ RSpec.describe Registration, type: :model do
         let(:registration) { build(:registration, :is_expired, expires_on: 1.month.ago) }
 
         it "has 'expired' status" do
-          expect(registration.metaData).to have_state(:expired)
+          expect(registration.metaData).to have_state(:EXPIRED)
         end
 
         it "cannot be renewed" do
@@ -597,9 +597,9 @@ RSpec.describe Registration, type: :model do
         end
 
         it "cannot transition to 'pending', 'refused', 'revoked'" do
-          expect(registration.metaData).to_not allow_transition_to(:pending)
-          expect(registration.metaData).to_not allow_transition_to(:refused)
-          expect(registration.metaData).to_not allow_transition_to(:revoked)
+          expect(registration.metaData).to_not allow_transition_to(:PENDING)
+          expect(registration.metaData).to_not allow_transition_to(:REFUSED)
+          expect(registration.metaData).to_not allow_transition_to(:REVOKED)
         end
       end
     end
