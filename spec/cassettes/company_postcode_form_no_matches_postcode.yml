@@ -21,14 +21,14 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Thu, 19 Apr 2018 09:52:00 GMT
+      - Thu, 03 May 2018 11:07:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"Parameters are not valid","statuscode":400}}'
+      string: '{"error":{"statuscode":400,"message":"Parameters are not valid"}}'
     http_version: 
-  recorded_at: Thu, 19 Apr 2018 09:58:21 GMT
+  recorded_at: Thu, 03 May 2018 11:09:58 GMT
 recorded_with: VCR 4.0.0
