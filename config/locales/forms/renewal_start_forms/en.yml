@@ -9,7 +9,7 @@ en:
       paragraph_4: "If certain details about your business have changed since you registered, you will have to create a new registration rather than renew. These include:"
       list_item_1: if your business type has changed (e.g. from sole trader to limited company)
       list_item_2: if your business activities have changed, and you should have a lower tier registration
-      list_item_3: if your registration number with Companies House has changed
+      list_item_3: if your Companies House number has changed
       error_heading: You cannot renew this registration
       next_button: Continue
   activemodel:
