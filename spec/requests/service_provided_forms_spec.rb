@@ -4,109 +4,12 @@ require "support/shared_examples/request_get_locked_in_form"
 RSpec.describe "ServiceProvidedForms", type: :request do
   include_examples "GET locked-in form", form = "service_provided_form"
 
-  describe "POST service_provided_forms_path" do
-    context "when a valid user is signed in" do
-      let(:user) { create(:user) }
-      before(:each) do
-        sign_in(user)
-      end
-
-      context "when a valid transient registration exists" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "service_provided_form")
-        end
-
-        context "when valid params are submitted" do
-          let(:valid_params) {
-            {
-              reg_identifier: transient_registration[:reg_identifier],
-              is_main_service: "true"
-            }
-          }
-
-          it "updates the transient registration" do
-            post service_provided_forms_path, service_provided_form: valid_params
-            expect(transient_registration.reload[:is_main_service]).to eq(true)
-          end
-
-          it "returns a 302 response" do
-            post service_provided_forms_path, service_provided_form: valid_params
-            expect(response).to have_http_status(302)
-          end
-
-          context "when the business only carries waste it produces" do
-            before(:each) { valid_params[:is_main_service] = "false" }
-
-            it "redirects to the construction_demolition form" do
-              post service_provided_forms_path, service_provided_form: valid_params
-              expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
-            end
-          end
-
-          context "when the business carries waste produced by others" do
-            before(:each) { valid_params[:is_main_service] = "true" }
-
-            it "redirects to the waste_types form" do
-              post service_provided_forms_path, service_provided_form: valid_params
-              expect(response).to redirect_to(new_waste_types_form_path(transient_registration[:reg_identifier]))
-            end
-          end
-        end
-
-        context "when invalid params are submitted" do
-          let(:invalid_params) {
-            {
-              is_main_service: "foo"
-            }
-          }
-
-          it "returns a 302 response" do
-            post service_provided_forms_path, service_provided_form: invalid_params
-            expect(response).to have_http_status(302)
-          end
-
-          it "does not update the transient registration" do
-            post service_provided_forms_path, service_provided_form: invalid_params
-            expect(transient_registration.reload[:is_main_service]).to_not eq(invalid_params[:is_main_service])
-          end
-        end
-      end
-
-      context "when the transient registration is in the wrong state" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "renewal_start_form")
-        end
-
-        let(:valid_params) {
-          {
-            reg_identifier: transient_registration[:reg_identifier],
-            is_main_service: "false"
-          }
-        }
-
-        it "does not update the transient registration" do
-          post service_provided_forms_path, service_provided_form: valid_params
-          expect(transient_registration.reload[:is_main_service]).to_not eq(false)
-        end
-
-        it "returns a 302 response" do
-          post service_provided_forms_path, service_provided_form: valid_params
-          expect(response).to have_http_status(302)
-        end
-
-        it "redirects to the correct form for the state" do
-          post service_provided_forms_path, service_provided_form: valid_params
-          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
-        end
-      end
-    end
-  end
+  include_examples "POST form",
+                   form = "service_provided_form",
+                   valid_params = { is_main_service: "true" },
+                   invalid_params = { is_main_service: "foo" },
+                   test_attribute = :is_main_service,
+                   expected_value = true
 
   describe "GET back_service_provided_forms_path" do
     context "when a valid user is signed in" do
