@@ -1,100 +1,15 @@
 require "rails_helper"
 require "support/shared_examples/request_get_locked_in_form"
+require "support/shared_examples/request_post_form"
 
 RSpec.describe "CbdTypeForms", type: :request do
   include_examples "GET locked-in form", form = "cbd_type_form"
 
-  describe "POST cbd_type_forms_path" do
-    context "when a valid user is signed in" do
-      let(:user) { create(:user) }
-      before(:each) do
-        sign_in(user)
-      end
-
-      context "when a valid transient registration exists" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "cbd_type_form")
-        end
-
-        context "when valid params are submitted" do
-          let(:valid_params) {
-            {
-              reg_identifier: transient_registration[:reg_identifier],
-              registration_type: "broker_dealer"
-            }
-          }
-
-          it "updates the transient registration" do
-            post cbd_type_forms_path, cbd_type_form: valid_params
-            expect(transient_registration.reload[:registration_type]).to eq(valid_params[:registration_type])
-          end
-
-          it "returns a 302 response" do
-            post cbd_type_forms_path, cbd_type_form: valid_params
-            expect(response).to have_http_status(302)
-          end
-
-          it "redirects to the renewal_information form" do
-            post cbd_type_forms_path, cbd_type_form: valid_params
-            expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:reg_identifier]))
-          end
-        end
-
-        context "when invalid params are submitted" do
-          let(:invalid_params) {
-            {
-              reg_identifier: "foo",
-              registration_type: "bar"
-            }
-          }
-
-          it "returns a 302 response" do
-            post cbd_type_forms_path, cbd_type_form: invalid_params
-            expect(response).to have_http_status(302)
-          end
-
-          it "does not update the transient registration" do
-            post cbd_type_forms_path, cbd_type_form: invalid_params
-            expect(transient_registration.reload[:registration_type]).to_not eq(invalid_params[:registration_type])
-          end
-        end
-      end
-
-      context "when the transient registration is in the wrong state" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "renewal_start_form")
-        end
-
-        let(:valid_params) {
-          {
-            reg_identifier: transient_registration[:reg_identifier],
-            registration_type: "broker_dealer"
-          }
-        }
-
-        it "does not update the transient registration" do
-          post business_type_forms_path, business_type_form: valid_params
-          expect(transient_registration.reload[:registration_type]).to_not eq(valid_params[:registration_type])
-        end
-
-        it "returns a 302 response" do
-          post cbd_type_forms_path, cbd_type_form: valid_params
-          expect(response).to have_http_status(302)
-        end
-
-        it "redirects to the correct form for the state" do
-          post cbd_type_forms_path, cbd_type_form: valid_params
-          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
-        end
-      end
-    end
-  end
+  include_examples "POST form",
+                   form = "cbd_type_form",
+                   valid_params = { registration_type: "broker_dealer" },
+                   invalid_params = { registration_type: "foo" },
+                   test_attribute = :registration_type
 
   describe "GET back_cbd_type_forms_path" do
     context "when a valid user is signed in" do

@@ -1,6 +1,10 @@
 # When a user submits a form, that form must match the expected workflow_state.
 # We don't adjust the state to match what the user is doing like we do for viewing forms.
-RSpec.shared_examples "POST form" do |form, valid_params, invalid_params|
+
+# We expect to receive the name of the form (for example, location_form),
+# a set of valid params, a set of invalid params, and an attribute to test persistence
+# Default to :reg_identifier for forms which don't submit new data
+RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_attribute = :reg_identifier|
   context "when a valid user is signed in" do
     let(:user) { create(:user) }
     before(:each) do
@@ -49,7 +53,7 @@ RSpec.shared_examples "POST form" do |form, valid_params, invalid_params|
 
           it "updates the transient registration" do
             post_with_params(form, valid_params)
-            expect(transient_registration.reload[:location]).to eq(valid_params[:location])
+            expect(transient_registration.reload[test_attribute]).to eq(valid_params[test_attribute])
           end
 
           it "changes the workflow_state" do

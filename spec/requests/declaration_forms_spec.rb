@@ -1,100 +1,15 @@
 require "rails_helper"
 require "support/shared_examples/request_get_locked_in_form"
+require "support/shared_examples/request_post_form"
 
 RSpec.describe "DeclarationForms", type: :request do
   include_examples "GET locked-in form", form = "declaration_form"
 
-  describe "POST declaration_forms_path" do
-    context "when a valid user is signed in" do
-      let(:user) { create(:user) }
-      before(:each) do
-        sign_in(user)
-      end
-
-      context "when a valid transient registration exists" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "declaration_form")
-        end
-
-        context "when valid params are submitted" do
-          let(:valid_params) {
-            {
-              reg_identifier: transient_registration[:reg_identifier],
-              declaration: 1
-            }
-          }
-
-          it "updates the transient registration" do
-            post declaration_forms_path, declaration_form: valid_params
-            expect(transient_registration.reload[:declaration]).to eq(valid_params[:declaration])
-          end
-
-          it "returns a 302 response" do
-            post declaration_forms_path, declaration_form: valid_params
-            expect(response).to have_http_status(302)
-          end
-
-          it "redirects to the cards form" do
-            post declaration_forms_path, declaration_form: valid_params
-            expect(response).to redirect_to(new_cards_form_path(transient_registration[:reg_identifier]))
-          end
-        end
-
-        context "when invalid params are submitted" do
-          let(:invalid_params) {
-            {
-              reg_identifier: "foo",
-              declaration: "foo"
-            }
-          }
-
-          it "returns a 302 response" do
-            post declaration_forms_path, declaration_form: invalid_params
-            expect(response).to have_http_status(302)
-          end
-
-          it "does not update the transient registration" do
-            post declaration_forms_path, declaration_form: invalid_params
-            expect(transient_registration.reload[:declaration]).to_not eq(invalid_params[:declaration])
-          end
-        end
-      end
-
-      context "when the transient registration is in the wrong state" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "renewal_start_form")
-        end
-
-        let(:valid_params) {
-          {
-            reg_identifier: transient_registration[:reg_identifier],
-            declaration: 1
-          }
-        }
-
-        it "does not update the transient registration" do
-          post declaration_forms_path, declaration_form: valid_params
-          expect(transient_registration.reload[:declaration]).to_not eq(valid_params[:declaration])
-        end
-
-        it "returns a 302 response" do
-          post declaration_forms_path, declaration_form: valid_params
-          expect(response).to have_http_status(302)
-        end
-
-        it "redirects to the correct form for the state" do
-          post declaration_forms_path, declaration_form: valid_params
-          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
-        end
-      end
-    end
-  end
+  include_examples "POST form",
+                   form = "declaration_form",
+                   valid_params = { declaration: 1 },
+                   invalid_params = { declaration: "foo" },
+                   test_attribute = :declaration
 
   describe "GET back_declaration_forms_path" do
     context "when a valid user is signed in" do

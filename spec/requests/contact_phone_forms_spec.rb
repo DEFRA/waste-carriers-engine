@@ -1,100 +1,15 @@
 require "rails_helper"
 require "support/shared_examples/request_get_locked_in_form"
+require "support/shared_examples/request_post_form"
 
 RSpec.describe "ContactPhoneForms", type: :request do
   include_examples "GET locked-in form", form = "contact_phone_form"
 
-  describe "POST contact_phone_forms_path" do
-    context "when a valid user is signed in" do
-      let(:user) { create(:user) }
-      before(:each) do
-        sign_in(user)
-      end
-
-      context "when a valid transient registration exists" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "contact_phone_form")
-        end
-
-        context "when valid params are submitted" do
-          let(:valid_params) {
-            {
-              reg_identifier: transient_registration[:reg_identifier],
-              phone_number: "01234 567890"
-            }
-          }
-
-          it "updates the transient registration" do
-            post contact_phone_forms_path, contact_phone_form: valid_params
-            expect(transient_registration.reload.phone_number).to eq(valid_params[:phone_number])
-          end
-
-          it "returns a 302 response" do
-            post contact_phone_forms_path, contact_phone_form: valid_params
-            expect(response).to have_http_status(302)
-          end
-
-          it "redirects to the contact_email form" do
-            post contact_phone_forms_path, contact_phone_form: valid_params
-            expect(response).to redirect_to(new_contact_email_form_path(transient_registration[:reg_identifier]))
-          end
-        end
-
-        context "when invalid params are submitted" do
-          let(:invalid_params) {
-            {
-              reg_identifier: "foo",
-              phone_number: "foo"
-            }
-          }
-
-          it "returns a 302 response" do
-            post contact_phone_forms_path, contact_phone_form: invalid_params
-            expect(response).to have_http_status(302)
-          end
-
-          it "does not update the transient registration" do
-            post contact_phone_forms_path, contact_phone_form: invalid_params
-            expect(transient_registration.reload[:phone_number]).to_not eq(invalid_params[:phone_number])
-          end
-        end
-      end
-
-      context "when the transient registration is in the wrong state" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "renewal_start_form")
-        end
-
-        let(:valid_params) {
-          {
-            reg_identifier: transient_registration[:reg_identifier],
-            phone_number: "01234 567890"
-          }
-        }
-
-        it "does not update the transient registration" do
-          post contact_phone_forms_path, contact_phone_form: valid_params
-          expect(transient_registration.reload.phone_number).to_not eq(valid_params[:phone_number])
-        end
-
-        it "returns a 302 response" do
-          post contact_phone_forms_path, contact_phone_form: valid_params
-          expect(response).to have_http_status(302)
-        end
-
-        it "redirects to the correct form for the state" do
-          post contact_phone_forms_path, contact_phone_form: valid_params
-          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
-        end
-      end
-    end
-  end
+  include_examples "POST form",
+                   form = "contact_phone_form",
+                   valid_params = { phone_number: "01234 567890" },
+                   invalid_params = { phone_number: "foo" },
+                   test_attribute = :phone_number
 
   describe "GET back_contact_phone_forms_path" do
     context "when a valid user is signed in" do
