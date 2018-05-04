@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe "RegisterInWalesForms", type: :request do
   include_examples "GET locked-in form", form = "register_in_wales_form"
 
+  include_examples "POST without params form", form = "register_in_wales_form"
+
   describe "POST register_in_wales_forms_path" do
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
