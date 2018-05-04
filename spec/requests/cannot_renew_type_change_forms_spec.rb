@@ -1,5 +1,4 @@
 require "rails_helper"
-require "support/shared_examples/request_get_locked_in_form"
 
 RSpec.describe "CannotRenewTypeChangeForms", type: :request do
   include_examples "GET locked-in form", form = "cannot_renew_type_change_form"

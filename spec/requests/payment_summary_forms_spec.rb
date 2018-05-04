@@ -1,5 +1,4 @@
 require "rails_helper"
-require "support/shared_examples/request_get_locked_in_form"
 
 RSpec.describe "PaymentSummaryForms", type: :request do
   include_examples "GET locked-in form", form = "payment_summary_form"

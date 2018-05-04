@@ -1,5 +1,4 @@
 require "rails_helper"
-require "support/shared_examples/request_get_locked_in_form"
 
 RSpec.describe "CompanyAddressForms", type: :request do
   # Stub the address search so we have JSON to use

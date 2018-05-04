@@ -1,6 +1,4 @@
 require "rails_helper"
-require "support/shared_examples/request_post_form"
-require "support/shared_examples/request_get_locked_in_form"
 
 RSpec.describe "CardsForms", type: :request do
   include_examples "GET locked-in form", form = "cards_form"

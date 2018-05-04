@@ -1,5 +1,4 @@
 require "rails_helper"
-require "support/shared_examples/request_get_locked_in_form"
 
 RSpec.describe "DeclareConvictionsForms", type: :request do
   include_examples "GET locked-in form", form = "declare_convictions_form"
