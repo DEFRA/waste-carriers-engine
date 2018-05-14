@@ -15,6 +15,7 @@ RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_a
       let(:registration) do
         create(:registration,
                :has_required_data,
+               :expires_soon,
                account_email: user.email)
       end
 

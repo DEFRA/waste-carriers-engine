@@ -1,7 +1,3 @@
-# ----
-# This behaviour has not yet been implemented, so these tests are just an indication of what will happen.
-# ----
-
 # A 'flexible' form is a form that we don't mind users getting to via the back button.
 # Getting to this form too early by URL-hacking might cause problems for the user,
 # but we know that we will be validating the entire transient_registration later in the
@@ -19,6 +15,7 @@ RSpec.shared_examples "GET flexible form" do |form|
       let(:registration) do
         create(:registration,
                :has_required_data,
+               :expires_soon,
                account_email: user.email)
       end
 
@@ -32,50 +29,52 @@ RSpec.shared_examples "GET flexible form" do |form|
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
-               account_email: user.email)
+               account_email: user.email,
+               workflow_state: form)
       end
 
-      context "when the workflow_state is not a locked_in page" do
-        let(:requested_state) do
+      context "when the workflow_state matches the request" do
+        it "loads the requested page" do
+          get new_path_for(form, transient_registration)
+          expect(response).to render_template("#{form}s/new")
+        end
+      end
+
+      context "when the workflow_state is a flexible form" do
+        let(:saved_state) do
           # We need to pick a different but also valid state for the transient_registration
-          # 'waste_types_forms' is the default, unless this would actually match!
-          if form == "waste_types_forms"
+          # 'waste_types_form' is the default, unless this would actually match!
+          if form == "waste_types_form"
             "other_businesses_form"
           else
-            "waste_types_forms"
+            "waste_types_form"
           end
         end
 
         before do
-          transient_registration.update_attributes(workflow_state: requested_state)
+          transient_registration.update_attributes(workflow_state: saved_state)
         end
 
         it "updates the workflow_state to match the requested page" do
           get new_path_for(form, transient_registration)
-          expect(transient_registration.reload[:workflow_state]).to eq(requested_state)
+          expect(transient_registration.reload[:workflow_state]).to eq(form)
         end
 
         it "loads the requested page" do
           get new_path_for(form, transient_registration)
-          expect(response).to redirect_to(new_path_for(requested_state, transient_registration))
+          expect(response).to render_template("#{form}s/new")
         end
       end
 
       # Once users are in a locked-in workflow state, for example, the end of the journey,
       # we don't want them to be able to skip back to an earlier page any more.
-      context "when the workflow_state is a locked-in page" do
-        let(:requested_state) do
-          # We need to pick a different but also valid state for the transient_registration
-          # 'payment_summary_form' is the default, unless this would actually match!
-          if form == "payment_summary_form"
-            "bank_transfer_form"
-          else
-            "payment_summary_form"
-          end
+      context "when the workflow_state is a locked-in form" do
+        let(:saved_state) do
+          "payment_summary_form"
         end
 
         before do
-          transient_registration.update_attributes(workflow_state: requested_state)
+          transient_registration.update_attributes(workflow_state: saved_state)
         end
 
         it "redirects to the saved workflow_state" do
@@ -85,9 +84,8 @@ RSpec.shared_examples "GET flexible form" do |form|
         end
 
         it "does not change the workflow_state" do
-          state_before_request = transient_registration[:workflow_state]
           get new_path_for(form, transient_registration)
-          expect(transient_registration.reload[:workflow_state]).to eq(state_before_request)
+          expect(transient_registration.reload[:workflow_state]).to eq(saved_state)
         end
       end
     end

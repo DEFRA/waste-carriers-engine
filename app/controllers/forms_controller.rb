@@ -1,12 +1,13 @@
 class FormsController < ApplicationController
   include ActionView::Helpers::UrlHelper
+  include BaseFormsHelper
 
   before_action :authenticate_user!
   before_action :back_button_cache_buster
 
   # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
   def new(form_class, form)
-    set_up_form(form_class, form, params[:reg_identifier])
+    set_up_form(form_class, form, params[:reg_identifier], true)
   end
 
   # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
@@ -33,13 +34,11 @@ class FormsController < ApplicationController
 
   # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
   # and the reg_identifier param
-  def set_up_form(form_class, form, reg_identifier)
+  def set_up_form(form_class, form, reg_identifier, get_request = false)
     set_transient_registration(reg_identifier)
+    set_workflow_state if get_request
 
-    return false unless transient_registration_is_valid? &&
-                        user_has_permission? &&
-                        state_is_correct? &&
-                        can_be_renewed?
+    return false unless setup_checks_pass?
 
     # Set an instance variable for the form (eg. @business_type_form) using the provided class (eg. BusinessTypeForm)
     instance_variable_set("@#{form}", form_class.new(@transient_registration))
@@ -64,6 +63,26 @@ class FormsController < ApplicationController
   # new_state_name_path/:reg_identifier
   def form_path
     send("new_#{@transient_registration.workflow_state}_path".to_sym, @transient_registration.reg_identifier)
+  end
+
+  def setup_checks_pass?
+    transient_registration_is_valid? && user_has_permission? && can_be_renewed? && state_is_correct?
+  end
+
+  def set_workflow_state
+    return unless flexible_state?(@transient_registration.workflow_state.to_sym)
+    return unless flexible_state?(requested_state.to_sym)
+
+    @transient_registration.update_attributes(workflow_state: requested_state)
+  end
+
+  def flexible_state?(state)
+    flexible_states.include?(state)
+  end
+
+  def requested_state
+    # Get the controller_name, excluding the last character (for example, changing location_forms to location_form)
+    controller_name[0..-2]
   end
 
   # Guards

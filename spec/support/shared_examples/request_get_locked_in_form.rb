@@ -15,6 +15,7 @@ RSpec.shared_examples "GET locked-in form" do |form|
       let(:registration) do
         create(:registration,
                :has_required_data,
+               :expires_soon,
                account_email: user.email)
       end
 
@@ -48,12 +49,30 @@ RSpec.shared_examples "GET locked-in form" do |form|
         end
       end
 
-      context "when the workflow_state does not match the requested form" do
+      context "when the workflow_state is a flexible form" do
+        before do
+          transient_registration.update_attributes(workflow_state: "other_businesses_form")
+        end
+
+        it "redirects to the saved workflow_state" do
+          workflow_state = transient_registration[:workflow_state]
+          get new_path_for(form, transient_registration)
+          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
+        end
+
+        it "does not change the workflow_state" do
+          state_before_request = transient_registration[:workflow_state]
+          get new_path_for(form, transient_registration)
+          expect(transient_registration.reload[:workflow_state]).to eq(state_before_request)
+        end
+      end
+
+      context "when the workflow_state is a locked-in form" do
         before do
           # We need to pick a different but also valid state for the transient_registration
           # 'payment_summary_form' is the default, unless this would actually match!
           different_state = if form == "payment_summary_form"
-                              "other_businesses_form"
+                              "cards_form"
                             else
                               "payment_summary_form"
                             end

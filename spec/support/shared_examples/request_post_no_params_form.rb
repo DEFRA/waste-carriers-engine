@@ -15,6 +15,7 @@ RSpec.shared_examples "POST without params form" do |form|
       let(:registration) do
         create(:registration,
                :has_required_data,
+               :expires_soon,
                account_email: user.email)
       end
 
