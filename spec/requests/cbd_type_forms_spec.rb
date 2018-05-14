@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "CbdTypeForms", type: :request do
-  include_examples "GET locked-in form", form = "cbd_type_form"
+  include_examples "GET flexible form", form = "cbd_type_form"
 
   include_examples "POST form",
                    form = "cbd_type_form",

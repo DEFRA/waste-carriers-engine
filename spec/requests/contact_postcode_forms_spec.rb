@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "ContactPostcodeForms", type: :request do
-  include_examples "GET locked-in form", form = "contact_postcode_form"
+  include_examples "GET flexible form", form = "contact_postcode_form"
 
   describe "POST contact_postcode_forms_path" do
     context "when a valid user is signed in" do

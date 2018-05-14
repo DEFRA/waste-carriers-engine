@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "RegistrationNumberForms", type: :request do
-  include_examples "GET locked-in form", form = "registration_number_form"
+  include_examples "GET flexible form", form = "registration_number_form"
 
   describe "POST registration_number_forms_path" do
     context "when a valid user is signed in" do

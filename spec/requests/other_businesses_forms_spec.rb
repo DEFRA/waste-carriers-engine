@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "OtherBusinessesForms", type: :request do
-  include_examples "GET locked-in form", form = "other_businesses_form"
+  include_examples "GET flexible form", form = "other_businesses_form"
 
   include_examples "POST form",
                    form = "other_businesses_form",

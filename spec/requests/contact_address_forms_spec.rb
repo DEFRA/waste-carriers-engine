@@ -7,7 +7,7 @@ RSpec.describe "ContactAddressForms", type: :request do
     allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(address_json)
   end
 
-  include_examples "GET locked-in form", form = "contact_address_form"
+  include_examples "GET flexible form", form = "contact_address_form"
 
   describe "POST contact_address_forms_path" do
     context "when a valid user is signed in" do

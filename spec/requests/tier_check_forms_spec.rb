@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "TierCheckForms", type: :request do
-  include_examples "GET locked-in form", form = "tier_check_form"
+  include_examples "GET flexible form", form = "tier_check_form"
 
   include_examples "POST form",
                    form = "tier_check_form",

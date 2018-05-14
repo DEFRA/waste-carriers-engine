@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "LocationForms", type: :request do
-  include_examples "GET locked-in form", form = "location_form"
+  include_examples "GET flexible form", form = "location_form"
 
   include_examples "POST form",
                    form = "location_form",

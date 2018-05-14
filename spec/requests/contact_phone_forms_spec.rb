@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "ContactPhoneForms", type: :request do
-  include_examples "GET locked-in form", form = "contact_phone_form"
+  include_examples "GET flexible form", form = "contact_phone_form"
 
   include_examples "POST form",
                    form = "contact_phone_form",

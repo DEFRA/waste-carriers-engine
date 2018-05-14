@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "RegisterInNorthernIrelandForms", type: :request do
-  include_examples "GET locked-in form", form = "register_in_northern_ireland_form"
+  include_examples "GET flexible form", form = "register_in_northern_ireland_form"
 
   include_examples "POST without params form", form = "register_in_northern_ireland_form"
 

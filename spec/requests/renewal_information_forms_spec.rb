@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "RenewalInformationForms", type: :request do
-  include_examples "GET locked-in form", form = "renewal_information_form"
+  include_examples "GET flexible form", form = "renewal_information_form"
 
   include_examples "POST without params form", form = "renewal_information_form"
 

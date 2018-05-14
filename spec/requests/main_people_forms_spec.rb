@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "MainPeopleForms", type: :request do
-  include_examples "GET locked-in form", form = "main_people_form"
+  include_examples "GET flexible form", form = "main_people_form"
 
   describe "POST main_people_forms_path" do
     context "when a valid user is signed in" do

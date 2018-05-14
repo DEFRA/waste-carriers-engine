@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "WasteTypesForms", type: :request do
-  include_examples "GET locked-in form", form = "waste_types_form"
+  include_examples "GET flexible form", form = "waste_types_form"
 
   include_examples "POST form",
                    form = "waste_types_form",

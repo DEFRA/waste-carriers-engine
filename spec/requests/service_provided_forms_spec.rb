@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "ServiceProvidedForms", type: :request do
-  include_examples "GET locked-in form", form = "service_provided_form"
+  include_examples "GET flexible form", form = "service_provided_form"
 
   include_examples "POST form",
                    form = "service_provided_form",

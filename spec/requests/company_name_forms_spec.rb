@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "CompanyNameForms", type: :request do
-  include_examples "GET locked-in form", form = "company_name_form"
+  include_examples "GET flexible form", form = "company_name_form"
 
   include_examples "POST form",
                    form = "company_name_form",

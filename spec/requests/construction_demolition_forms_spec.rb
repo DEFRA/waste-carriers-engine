@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "ConstructionDemolitionForms", type: :request do
-  include_examples "GET locked-in form", form = "construction_demolition_form"
+  include_examples "GET flexible form", form = "construction_demolition_form"
 
   include_examples "POST form",
                    form = "construction_demolition_form",

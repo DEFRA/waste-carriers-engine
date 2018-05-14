@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "CheckYourAnswersForms", type: :request do
-  include_examples "GET locked-in form", form = "check_your_answers_form"
+  include_examples "GET flexible form", form = "check_your_answers_form"
 
   include_examples "POST without params form", form = "check_your_answers_form"
 
