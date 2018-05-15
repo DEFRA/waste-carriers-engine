@@ -20,7 +20,7 @@ class RegistrationNumberForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates_with CompanyNoValidator
+  validates :company_no, company_no: true
 
   private
 

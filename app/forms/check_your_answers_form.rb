@@ -47,6 +47,7 @@ class CheckYourAnswersForm < BaseForm
     valid
   end
 
+  validates :company_no, company_no: true
   validates :phone_number, phone_number: true
 
   private

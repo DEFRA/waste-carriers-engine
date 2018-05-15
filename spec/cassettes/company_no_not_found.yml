@@ -23,7 +23,7 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Fri, 18 May 2018 11:28:24 GMT
+      - Tue, 15 May 2018 13:10:33 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,9 +49,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '600'
       X-Ratelimit-Remain:
-      - '597'
+      - '598'
       X-Ratelimit-Reset:
-      - '1526643203'
+      - '1526390133'
       X-Ratelimit-Window:
       - 5m
       Server:
@@ -59,6 +59,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"errors":[{"error":"company-profile-not-found","type":"ch:service"}]}'
-    http_version: 
-  recorded_at: Fri, 18 May 2018 11:28:23 GMT
+    http_version:
+  recorded_at: Tue, 15 May 2018 13:10:31 GMT
 recorded_with: VCR 4.0.0

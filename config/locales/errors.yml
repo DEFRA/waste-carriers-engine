@@ -6,3 +6,9 @@ en:
         blank: "Enter a telephone number"
         invalid_format: "Enter a valid telephone number"
         too_long: "Check the number you entered - it should have no more than than 15 characters"
+      company_no:
+        invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
+        inactive: "Your company must be registered as an active company"
+        not_found: "Companies House couldn't find a company with this number"
+        error: "There was an error with Companies House"
+        blank: "Enter a company registration number"

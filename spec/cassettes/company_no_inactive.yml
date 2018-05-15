@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.companieshouse.gov.uk/company/09360070
+    uri: https://api.companieshouse.gov.uk/company/07281919
     body:
       encoding: US-ASCII
       string: ''
@@ -23,11 +23,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 May 2018 11:28:23 GMT
+      - Tue, 15 May 2018 13:10:34 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1178'
+      - '979'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,17 +49,19 @@ http_interactions:
       X-Ratelimit-Limit:
       - '600'
       X-Ratelimit-Remain:
-      - '599'
+      - '597'
       X-Ratelimit-Reset:
-      - '1526643203'
+      - '1526390133'
       X-Ratelimit-Window:
       - 5m
       Server:
       - CompaniesHouse
     body:
       encoding: UTF-8
-      string: '{"type":"ltd","company_name":"0800 WASTE LTD.","has_insolvency_history":false,"accounts":{"next_made_up_to":"2017-12-31","overdue":false,"next_accounts":{"period_end_on":"2017-12-31","due_on":"2018-09-30","period_start_on":"2017-01-01","overdue":false},"last_accounts":{"made_up_to":"2016-12-31","period_start_on":"2016-01-01","period_end_on":"2016-12-31"},"accounting_reference_date":{"day":"31","month":"12"},"next_due":"2018-09-30"},"undeliverable_registered_office_address":false,"etag":"d1aac62a36df9712e7ef94c383439a6fa001fa84","company_number":"09360070","registered_office_address":{"address_line_1":"21
-        Haslam Avenue","postal_code":"SM3 9ND","region":"Surrey","locality":"Sutton"},"jurisdiction":"england-wales","date_of_creation":"2014-12-18","company_status":"active","has_charges":false,"sic_codes":["38110"],"last_full_members_list_date":"2015-12-18","confirmation_statement":{"last_made_up_to":"2017-12-15","overdue":false,"next_made_up_to":"2018-12-15","next_due":"2018-12-29"},"links":{"self":"/company/09360070","filing_history":"/company/09360070/filing-history","officers":"/company/09360070/officers"},"registered_office_is_in_dispute":false,"can_file":true}'
-    http_version: 
-  recorded_at: Fri, 18 May 2018 11:28:22 GMT
+      string: '{"sic_codes":["82990"],"company_number":"07281919","has_been_liquidated":false,"accounts":{"last_accounts":{"made_up_to":"2013-06-30","type":"total-exemption-small"},"accounting_reference_date":{"day":"30","month":"06"}},"last_full_members_list_date":"2014-06-11","status":"active","type":"ltd","date_of_creation":"2010-06-11","registered_office_address":{"postal_code":"HA8
+        7EJ","locality":"Edgware","region":"Middlesex","address_line_1":"8th Floor
+        Elizabeth House","address_line_2":"54-58 High Street"},"undeliverable_registered_office_address":false,"company_name":"DIRECT
+        SKIPS UK LTD","annual_return":{"last_made_up_to":"2014-06-11"},"jurisdiction":"england-wales","etag":"1cdef5bc2a020b3e9003b086033b64b78bcb28f6","company_status":"dissolved","has_insolvency_history":false,"has_charges":false,"links":{"self":"/company/07281919","filing_history":"/company/07281919/filing-history","officers":"/company/07281919/officers"},"date_of_cessation":"2016-01-05","can_file":false}'
+    http_version:
+  recorded_at: Tue, 15 May 2018 13:10:31 GMT
 recorded_with: VCR 4.0.0

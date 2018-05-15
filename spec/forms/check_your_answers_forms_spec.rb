@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe CheckYourAnswersForm, type: :model do
+  before do
+    allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:active)
+  end
+
   describe "#submit" do
     context "when the form is valid" do
       let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
@@ -134,6 +138,8 @@ RSpec.describe CheckYourAnswersForm, type: :model do
       end
     end
   end
+
+  include_examples "CompanyNoValidator", form = :registration_number_form
 
   describe "#transient_registration" do
     context "when the transient registration is invalid" do

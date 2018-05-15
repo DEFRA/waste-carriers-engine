@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "CheckYourAnswersForms", type: :request do
+  before do
+    allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:active)
+  end
+
   include_examples "GET flexible form", form = "check_your_answers_form"
 
   include_examples "POST without params form", form = "check_your_answers_form"
