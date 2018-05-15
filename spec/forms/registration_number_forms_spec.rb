@@ -1,31 +1,29 @@
 require "rails_helper"
 
 RSpec.describe RegistrationNumberForm, type: :model do
+  before do
+    allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:active)
+  end
+
   describe "#submit" do
     context "when the form is valid" do
       let(:registration_number_form) { build(:registration_number_form, :has_required_data) }
       let(:valid_params) { { reg_identifier: registration_number_form.reg_identifier, company_no: "09360070" } }
 
       it "should submit" do
-        VCR.use_cassette("registration_number_form_valid_company_no") do
-          expect(registration_number_form.submit(valid_params)).to eq(true)
-        end
+        expect(registration_number_form.submit(valid_params)).to eq(true)
       end
 
       context "when the reg_identifier is less than 8 characters" do
         before(:each) { valid_params[:company_no] = "946107" }
 
         it "should increase the length" do
-          VCR.use_cassette("company_no_short") do
-            registration_number_form.submit(valid_params)
-            expect(registration_number_form.company_no).to eq("00946107")
-          end
+          registration_number_form.submit(valid_params)
+          expect(registration_number_form.company_no).to eq("00946107")
         end
 
         it "should submit" do
-          VCR.use_cassette("company_no_short") do
-            expect(registration_number_form.submit(valid_params)).to eq(true)
-          end
+          expect(registration_number_form.submit(valid_params)).to eq(true)
         end
       end
     end
@@ -40,27 +38,15 @@ RSpec.describe RegistrationNumberForm, type: :model do
     end
   end
 
-  include_examples "CompanyNoValidator", form = :registration_number_form
+  include_examples "validate company_no", form = :registration_number_form
 
   context "when a valid transient registration exists" do
-    let(:transient_registration) do
-      create(:transient_registration,
-             :has_required_data,
-             workflow_state: "registration_number_form")
-    end
-    # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-    let(:registration_number_form) { RegistrationNumberForm.new(transient_registration) }
+    let(:registration_number_form) { build(:registration_number_form, :has_required_data) }
 
     describe "#reg_identifier" do
       context "when a reg_identifier meets the requirements" do
-        before(:each) do
-          registration_number_form.reg_identifier = transient_registration.reg_identifier
-        end
-
         it "is valid" do
-          VCR.use_cassette("registration_number_form_valid_company_no") do
-            expect(registration_number_form).to be_valid
-          end
+          expect(registration_number_form).to be_valid
         end
       end
 
@@ -70,9 +56,7 @@ RSpec.describe RegistrationNumberForm, type: :model do
         end
 
         it "is not valid" do
-          VCR.use_cassette("registration_number_form_valid_company_no") do
-            expect(registration_number_form).to_not be_valid
-          end
+          expect(registration_number_form).to_not be_valid
         end
       end
     end
@@ -95,16 +79,12 @@ RSpec.describe RegistrationNumberForm, type: :model do
       end
 
       it "is not valid" do
-        VCR.use_cassette("registration_number_form_valid_company_no") do
-          expect(registration_number_form).to_not be_valid
-        end
+        expect(registration_number_form).to_not be_valid
       end
 
       it "inherits the errors from the transient_registration" do
-        VCR.use_cassette("registration_number_form_valid_company_no") do
-          registration_number_form.valid?
-          expect(registration_number_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
-        end
+        registration_number_form.valid?
+        expect(registration_number_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
       end
     end
   end

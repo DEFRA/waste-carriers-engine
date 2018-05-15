@@ -1,5 +1,5 @@
 # Tests for fields using the CompanyNoValidator
-RSpec.shared_examples "CompanyNoValidator" do |form_factory|
+RSpec.shared_examples "validate company_no" do |form_factory|
   before do
     allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:active)
   end

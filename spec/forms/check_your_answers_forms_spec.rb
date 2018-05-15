@@ -25,6 +25,9 @@ RSpec.describe CheckYourAnswersForm, type: :model do
     end
   end
 
+  include_examples "validate company_no", form = :check_your_answers_form
+  include_examples "validate phone_number", form = :check_your_answers_form
+
   context "when a valid transient registration exists" do
     let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
 
@@ -38,28 +41,6 @@ RSpec.describe CheckYourAnswersForm, type: :model do
       context "when a reg_identifier is blank" do
         before(:each) do
           check_your_answers_form.reg_identifier = ""
-        end
-
-        it "is not valid" do
-          expect(check_your_answers_form).to_not be_valid
-        end
-      end
-    end
-
-    describe "#phone_number" do
-      context "when a phone_number is blank" do
-        before(:each) do
-          check_your_answers_form.phone_number = ""
-        end
-
-        it "is not valid" do
-          expect(check_your_answers_form).to_not be_valid
-        end
-      end
-
-      context "when a phone_number is not in the correct format" do
-        before(:each) do
-          check_your_answers_form.phone_number = "foo"
         end
 
         it "is not valid" do
@@ -138,8 +119,6 @@ RSpec.describe CheckYourAnswersForm, type: :model do
       end
     end
   end
-
-  include_examples "CompanyNoValidator", form = :registration_number_form
 
   describe "#transient_registration" do
     context "when the transient registration is invalid" do
