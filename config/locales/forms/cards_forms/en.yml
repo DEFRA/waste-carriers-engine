@@ -3,8 +3,8 @@ en:
     new:
       title: Certificate and registration cards
       heading: Certificate and registration cards
-      paragraph_1: A registration card (copy card) is a convenient way of keeping your waste carrier registration details to hand. A card costs £%{card_charge}, and you can buy more through your online account after you’ve registered.
-      paragraph_2: You automatically get a certificate with your registration details, which can be shown to the relevant authorities. You’ll get a link to download this after payment.
+      paragraph_1: You automatically get a certificate with your registration details, which can be shown to the relevant authorities. You’ll get a link to download this after payment.
+      paragraph_2: A registration card (copy card) is a convenient way of keeping your waste carrier registration details to hand. A card costs £%{card_charge}, and you can buy more through your online account after you’ve registered.
       card_alt_text: A photo of an example registration card, showing the details of the registered business
       temp_cards_label: Cards to order
       error_heading: Something is wrong
