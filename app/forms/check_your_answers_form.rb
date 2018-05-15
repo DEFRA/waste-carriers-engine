@@ -47,6 +47,8 @@ class CheckYourAnswersForm < BaseForm
     valid
   end
 
+  validates :phone_number, phone_number: true
+
   private
 
   # These are fields which must have been filled in by this point for this to be a valid renewal

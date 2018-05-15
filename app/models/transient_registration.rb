@@ -79,7 +79,9 @@ class TransientRegistration
   end
 
   def remove_invalid_attributes
-    self.phone_number = nil unless PhoneNumberValidator.new.validate(self)
+    validator = PhoneNumberValidator.new(attributes: :phone_number)
+    return if validator.validate_each(self, :phone_number, phone_number)
+    self.phone_number = nil
   end
 
   # Check if a transient renewal already exists for this registration so we don't have

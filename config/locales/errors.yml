@@ -1,0 +1,8 @@
+en:
+  errors:
+    messages:
+      weak_password: Your password is not strong enough. It must include at least one lowercase letter, uppercase letter and number
+      phone_number:
+        blank: "Enter a telephone number"
+        invalid_format: "Enter a valid telephone number"
+        too_long: "Check the number you entered - it should have no more than than 15 characters"

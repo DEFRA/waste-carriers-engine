@@ -16,5 +16,5 @@ class ContactPhoneForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates_with PhoneNumberValidator
+  validates :phone_number, phone_number: true
 end

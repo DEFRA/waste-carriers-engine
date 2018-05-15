@@ -24,16 +24,38 @@ RSpec.describe CheckYourAnswersForm, type: :model do
   context "when a valid transient registration exists" do
     let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
 
-    describe "#reg_identifier" do
-      context "when a reg_identifier meets the requirements" do
-        it "is valid" do
-          expect(check_your_answers_form).to be_valid
-        end
+    context "when all fields meet the requirements" do
+      it "is valid" do
+        expect(check_your_answers_form).to be_valid
       end
+    end
 
+    describe "#reg_identifier" do
       context "when a reg_identifier is blank" do
         before(:each) do
           check_your_answers_form.reg_identifier = ""
+        end
+
+        it "is not valid" do
+          expect(check_your_answers_form).to_not be_valid
+        end
+      end
+    end
+
+    describe "#phone_number" do
+      context "when a phone_number is blank" do
+        before(:each) do
+          check_your_answers_form.phone_number = ""
+        end
+
+        it "is not valid" do
+          expect(check_your_answers_form).to_not be_valid
+        end
+      end
+
+      context "when a phone_number is not in the correct format" do
+        before(:each) do
+          check_your_answers_form.phone_number = "foo"
         end
 
         it "is not valid" do
