@@ -2,6 +2,9 @@
 en:
   global_proposition_header: Register as a waste carrier
   back_link: Back
+  errors:
+    messages:
+      weak_password: Your password is not strong enough. It must include at least one lowercase letter, uppercase letter and number
   layouts:
     application:
       beta: BETA

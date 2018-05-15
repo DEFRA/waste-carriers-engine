@@ -11,13 +11,13 @@ class CompanyNoValidator < ActiveModel::EachValidator
 
   def value_is_present?(record, attribute, value)
     return true if value.present?
-    record.errors[attribute] << I18n.t("errors.messages.company_no.blank")
+    record.errors[attribute] << error_message(record, attribute, "blank")
     false
   end
 
   def format_is_valid?(record, attribute, value)
     return true if value.match?(VALID_COMPANIES_HOUSE_REGISTRATION_NUMBER_REGEX)
-    record.errors[attribute] << I18n.t("errors.messages.company_no.invalid_format")
+    record.errors[attribute] << error_message(record, attribute, "invalid_format")
     false
   end
 
@@ -26,11 +26,16 @@ class CompanyNoValidator < ActiveModel::EachValidator
     when :active
       true
     when :inactive
-      record.errors[attribute] << I18n.t("errors.messages.company_no.inactive")
+      record.errors[attribute] << error_message(record, attribute, "inactive")
     when :not_found
-      record.errors[attribute] << I18n.t("errors.messages.company_no.not_found")
+      record.errors[attribute] << error_message(record, attribute, "not_found")
     when :error
-      record.errors[attribute] << I18n.t("errors.messages.company_no.error")
+      record.errors[attribute] << error_message(record, attribute, "error")
     end
+  end
+
+  def error_message(record, attribute, error)
+    class_name = record.class.to_s.underscore
+    I18n.t("activemodel.errors.models.#{class_name}.attributes.#{attribute}.#{error}")
   end
 end

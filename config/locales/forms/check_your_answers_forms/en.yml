@@ -78,6 +78,12 @@ en:
               missing: "Your business or organisation type"
             company_name:
               missing: "The name of the business or organisation"
+            company_no:
+              invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
+              inactive: "Your company must be registered as an active company"
+              not_found: "Companies House couldn't find a company with this number"
+              error: "There was an error with Companies House"
+              blank: "Enter a company registration number"
             contact_name:
               missing: "The name of the person we should contact?"
             contact_address:
@@ -91,6 +97,9 @@ en:
             main_people:
               missing: "Details of the main people running your business or organisation (like directors or partners)"
             phone_number:
+              blank: "Enter a telephone number"
+              invalid_format: "Enter a valid telephone number"
+              too_long: "Check the number you entered - it should have no more than than 15 characters"
               missing: "The telephone number of the person we should contact"
             registered_address:
               missing: "The address of the business or organisation"
