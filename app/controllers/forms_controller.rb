@@ -1,6 +1,5 @@
 class FormsController < ApplicationController
   include ActionView::Helpers::UrlHelper
-  include BaseFormsHelper
 
   before_action :authenticate_user!
   before_action :back_button_cache_buster
@@ -70,14 +69,15 @@ class FormsController < ApplicationController
   end
 
   def set_workflow_state
-    return unless flexible_state?(@transient_registration.workflow_state.to_sym)
-    return unless flexible_state?(requested_state.to_sym)
+    return unless state_can_navigate_flexibly?(@transient_registration.workflow_state)
+    return unless state_can_navigate_flexibly?(requested_state)
 
     @transient_registration.update_attributes(workflow_state: requested_state)
   end
 
-  def flexible_state?(state)
-    flexible_states.include?(state)
+  def state_can_navigate_flexibly?(state)
+    form_class = state.camelize.constantize
+    form_class.included_modules.include?(CanNavigateFlexibly)
   end
 
   def requested_state

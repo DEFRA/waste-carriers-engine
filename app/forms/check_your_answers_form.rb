@@ -1,4 +1,6 @@
 class CheckYourAnswersForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_email, :declared_convictions,
                 :contact_name, :location, :main_people, :phone_number, :registered_address, :registration_type,
                 :relevant_people, :tier

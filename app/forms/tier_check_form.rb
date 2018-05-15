@@ -1,4 +1,6 @@
 class TierCheckForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :temp_tier_check
 
   def initialize(transient_registration)

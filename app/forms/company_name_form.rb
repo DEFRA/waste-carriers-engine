@@ -1,4 +1,6 @@
 class CompanyNameForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :business_type, :company_name
 
   def initialize(transient_registration)

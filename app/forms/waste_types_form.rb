@@ -1,4 +1,6 @@
 class WasteTypesForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :only_amf
 
   def initialize(transient_registration)

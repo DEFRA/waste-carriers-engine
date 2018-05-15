@@ -1,4 +1,6 @@
 class LocationForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :location
 
   def initialize(transient_registration)

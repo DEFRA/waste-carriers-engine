@@ -1,4 +1,6 @@
 class MainPeopleForm < PersonForm
+  include CanNavigateFlexibly
+
   attr_accessor :business_type
 
   def initialize(transient_registration)

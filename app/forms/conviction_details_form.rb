@@ -1,4 +1,6 @@
 class ConvictionDetailsForm < PersonForm
+  include CanNavigateFlexibly
+
   def position?
     true
   end

@@ -1,4 +1,6 @@
 class ContactPhoneForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :phone_number
 
   def initialize(transient_registration)

@@ -1,4 +1,6 @@
 class ContactAddressManualForm < ManualAddressForm
+  include CanNavigateFlexibly
+
   private
 
   def saved_temp_postcode

@@ -1,6 +1,8 @@
 require "validates_email_format_of"
 
 class ContactEmailForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :contact_email, :confirmed_email
 
   def initialize(transient_registration)

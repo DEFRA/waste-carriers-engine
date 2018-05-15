@@ -1,4 +1,6 @@
 class ContactNameForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :first_name, :last_name
 
   def initialize(transient_registration)

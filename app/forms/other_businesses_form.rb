@@ -1,4 +1,6 @@
 class OtherBusinessesForm < BaseForm
+  include CanNavigateFlexibly
+
   attr_accessor :other_businesses
 
   def initialize(transient_registration)

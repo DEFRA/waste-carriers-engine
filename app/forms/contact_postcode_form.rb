@@ -1,4 +1,6 @@
 class ContactPostcodeForm < PostcodeForm
+  include CanNavigateFlexibly
+
   attr_accessor :temp_contact_postcode
 
   def initialize(transient_registration)

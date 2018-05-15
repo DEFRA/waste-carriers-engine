@@ -1,5 +1,5 @@
 class RegisterInWalesForm < BaseForm
-  # TODO: Define accessible attributes, eg attr_accessor :field
+  include CanNavigateFlexibly
 
   def initialize(transient_registration)
     super
