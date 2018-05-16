@@ -15,10 +15,12 @@ class ContactEmailForm < BaseForm
     # Assign the params for validation and pass them to the BaseForm method for updating
     self.contact_email = params[:contact_email]
     self.confirmed_email = params[:confirmed_email]
+
     attributes = { contact_email: contact_email }
 
     super(attributes, params[:reg_identifier])
   end
 
-  validates_with ContactEmailValidator
+  validates :contact_email, :confirmed_email, email: true
+  validates :confirmed_email, matching_email: { compare_to: :contact_email }
 end

@@ -18,6 +18,7 @@ en:
               invalid_format: "Enter a valid email address - there’s a mistake in that one"
             confirmed_email:
               blank: "Enter your email address again to confirm it"
+              invalid_format: "Enter a valid confirmed email address - there’s a mistake in that one"
               does_not_match: "The email addresses you’ve entered don’t match"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"

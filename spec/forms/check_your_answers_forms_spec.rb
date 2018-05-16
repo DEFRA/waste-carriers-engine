@@ -26,6 +26,7 @@ RSpec.describe CheckYourAnswersForm, type: :model do
   end
 
   include_examples "validate company_no", form = :check_your_answers_form
+  include_examples "validate email", form = :check_your_answers_form, field = :contact_email
   include_examples "validate phone_number", form = :check_your_answers_form
 
   context "when a valid transient registration exists" do

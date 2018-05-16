@@ -89,6 +89,8 @@ en:
             contact_address:
               missing: "The address of the person we should contact"
             contact_email:
+              blank: "Enter an email address"
+              invalid_format: "Enter a valid email address - there’s a mistake in that one"
               missing: "The email address of the person we should contact"
             declared_convictions:
               missing: "Has anyone involved in managing your organisation been convicted of an environmental offence in the last 12 months?"
