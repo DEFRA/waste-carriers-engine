@@ -76,6 +76,7 @@ en:
           attributes:
             business_type:
               missing: "Your business or organisation type"
+              inclusion: "You must select a valid business or organisation type"
             company_name:
               missing: "The name of the business or organisation"
             company_no:

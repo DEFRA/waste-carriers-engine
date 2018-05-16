@@ -16,10 +16,12 @@ class BusinessTypeForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :business_type, inclusion: { in: %w[charity
-                                                limitedCompany
-                                                limitedLiabilityPartnership
-                                                localAuthority
-                                                partnership
-                                                soleTrader] }
+  validates :business_type, business_type: true
+  #
+  # validates :business_type, inclusion: { in: %w[charity
+  #                                               limitedCompany
+  #                                               limitedLiabilityPartnership
+  #                                               localAuthority
+  #                                               partnership
+  #                                               soleTrader] }
 end

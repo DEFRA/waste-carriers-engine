@@ -47,6 +47,7 @@ class CheckYourAnswersForm < BaseForm
     valid
   end
 
+  validates :business_type, business_type: true
   validates :company_no, company_no: true
   validates :contact_email, email: true
   validates :phone_number, phone_number: true
