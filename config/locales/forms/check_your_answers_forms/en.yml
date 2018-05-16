@@ -89,6 +89,14 @@ en:
               blank: "Enter a company registration number"
             contact_name:
               missing: "The name of the person we should contact?"
+            first_name:
+              blank: "You must enter a first name for the contact person"
+              invalid: "The first name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+              too_long: "The first name for the contact person must have no more than 70 characters"
+            last_name:
+              blank: "You must enter a last name for the contact person"
+              invalid: "The last name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+              too_long: "The last name for the contact person must have no more than 70 characters"
             contact_address:
               missing: "The address of the person we should contact"
             contact_email:

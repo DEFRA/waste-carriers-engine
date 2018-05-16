@@ -21,8 +21,5 @@ class ContactNameForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :first_name, :last_name, presence: true
-  validates :first_name, :last_name, length: { maximum: 70 }
-  # Name fields must contain only letters, spaces, commas, full stops, hyphens and apostrophes
-  validates_format_of :first_name, :last_name, with: /\A[-a-z\s,.']+\z/i, allow_blank: true
+  validates :first_name, :last_name, person_name: true
 end

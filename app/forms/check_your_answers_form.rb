@@ -2,18 +2,19 @@ class CheckYourAnswersForm < BaseForm
   include CanNavigateFlexibly
 
   attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_email, :declared_convictions,
-                :contact_name, :location, :main_people, :phone_number, :registered_address, :registration_type,
-                :relevant_people, :tier
+                :first_name, :last_name, :location, :main_people, :phone_number, :registered_address,
+                :registration_type, :relevant_people, :tier
 
   def initialize(transient_registration)
     super
     self.business_type = @transient_registration.business_type
     self.company_name = @transient_registration.company_name
     self.company_no = @transient_registration.company_no
-    self.contact_name = format_contact_name
     self.contact_address = displayable_address(@transient_registration.contact_address)
     self.contact_email = @transient_registration.contact_email
     self.declared_convictions = @transient_registration.declared_convictions
+    self.first_name = @transient_registration.first_name
+    self.last_name = @transient_registration.last_name
     self.location = @transient_registration.location
     self.main_people = @transient_registration.main_people
     self.phone_number = @transient_registration.phone_number
@@ -47,10 +48,15 @@ class CheckYourAnswersForm < BaseForm
     valid
   end
 
+  def contact_name
+    "#{first_name} #{last_name}"
+  end
+
   validates :business_type, business_type: true
   validates :company_name, company_name: true
   validates :company_no, company_no: true
   validates :contact_email, email: true
+  validates :first_name, :last_name, person_name: true
   validates :phone_number, phone_number: true
 
   private
@@ -83,10 +89,6 @@ class CheckYourAnswersForm < BaseForm
 
   def relevant_people_required?
     declared_convictions
-  end
-
-  def format_contact_name
-    "#{@transient_registration.first_name} #{@transient_registration.last_name}"
   end
 
   def displayable_address(address)
