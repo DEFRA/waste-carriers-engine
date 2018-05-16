@@ -2,12 +2,26 @@ class CompanyNoValidator < ActiveModel::EachValidator
   VALID_COMPANIES_HOUSE_REGISTRATION_NUMBER_REGEX = Regexp.new(/\A(\d{8,8}$)|([a-zA-Z]{2}\d{6}$)\z/i).freeze
 
   def validate_each(record, attribute, value)
+    if company_no_required?(record)
+      valid_company_no?(record, attribute, value)
+    else
+      value_is_blank?(record, attribute, value)
+    end
+  end
+
+  private
+
+  # Some business types should not have a company_no
+  def company_no_required?(record)
+    return false if record.transient_registration.overseas?
+    %w[limitedCompany limitedLiabilityPartnership].include?(record.business_type)
+  end
+
+  def valid_company_no?(record, attribute, value)
     return false unless value_is_present?(record, attribute, value)
     return false unless format_is_valid?(record, attribute, value)
     validate_with_companies_house(record, attribute, value)
   end
-
-  private
 
   def value_is_present?(record, attribute, value)
     return true if value.present?
@@ -32,6 +46,12 @@ class CompanyNoValidator < ActiveModel::EachValidator
     when :error
       record.errors[attribute] << error_message(record, attribute, "error")
     end
+  end
+
+  def value_is_blank?(record, attribute, value)
+    return true if value.blank?
+    record.errors[attribute] << error_message(record, attribute, "not_blank")
+    false
   end
 
   def error_message(record, attribute, error)

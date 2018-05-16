@@ -14,7 +14,7 @@ RSpec.shared_examples "validate company_no" do |form_factory|
     end
 
     context "when a company_no is blank" do
-      before(:each) do
+      before do
         form.company_no = ""
       end
 
@@ -24,7 +24,7 @@ RSpec.shared_examples "validate company_no" do |form_factory|
     end
 
     context "when a company_no is not in a valid format" do
-      before(:each) do
+      before do
         form.company_no = "foo"
       end
 
@@ -34,7 +34,7 @@ RSpec.shared_examples "validate company_no" do |form_factory|
     end
 
     context "when a company_no is not found" do
-      before(:each) do
+      before do
         allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:not_found)
         form.company_no = "99999999"
       end
@@ -45,13 +45,35 @@ RSpec.shared_examples "validate company_no" do |form_factory|
     end
 
     context "when a company_no is inactive" do
-      before(:each) do
+      before do
         allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:inactive)
         form.company_no = "07281919"
       end
 
       it "is not valid" do
         expect(form).to_not be_valid
+      end
+    end
+
+    context "when the business_type doesn't require a company_no" do
+      before do
+        form.business_type = "soleTrader"
+      end
+
+      context "when the company_no is not blank" do
+        it "is not valid" do
+          expect(form).to_not be_valid
+        end
+      end
+
+      context "when the company_no is blank" do
+        before do
+          form.company_no = ""
+        end
+
+        it "is valid" do
+          expect(form).to be_valid
+        end
       end
     end
   end
