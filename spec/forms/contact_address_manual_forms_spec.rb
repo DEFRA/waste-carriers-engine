@@ -96,18 +96,6 @@ RSpec.describe ContactAddressManualForm, type: :model do
       end
     end
 
-    describe "#reg_identifier" do
-      context "when a reg_identifier is blank" do
-        before(:each) do
-          contact_address_manual_form.reg_identifier = ""
-        end
-
-        it "is not valid" do
-          expect(contact_address_manual_form).to_not be_valid
-        end
-      end
-    end
-
     describe "#house_number" do
       context "when the house_number is blank" do
         before(:each) do
@@ -233,32 +221,6 @@ RSpec.describe ContactAddressManualForm, type: :model do
         it "is not valid" do
           expect(contact_address_manual_form).to_not be_valid
         end
-      end
-    end
-  end
-
-  describe "#transient_registration" do
-    context "when the transient registration is invalid" do
-      let(:transient_registration) do
-        build(:transient_registration,
-              workflow_state: "contact_address_manual_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:contact_address_manual_form) { ContactAddressManualForm.new(transient_registration) }
-
-      before(:each) do
-        # Make reg_identifier valid for the form, but not the transient object
-        contact_address_manual_form.reg_identifier = transient_registration.reg_identifier
-        transient_registration.reg_identifier = "foo"
-      end
-
-      it "is not valid" do
-        expect(contact_address_manual_form).to_not be_valid
-      end
-
-      it "inherits the errors from the transient_registration" do
-        contact_address_manual_form.valid?
-        expect(contact_address_manual_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
       end
     end
   end

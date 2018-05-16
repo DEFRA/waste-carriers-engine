@@ -1,5 +1,5 @@
 en:
-  mongoid:
+  activemodel:
     errors:
       models:
         transient_registration:

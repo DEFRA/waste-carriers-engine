@@ -37,18 +37,6 @@ RSpec.describe CheckYourAnswersForm, type: :model do
       end
     end
 
-    describe "#reg_identifier" do
-      context "when a reg_identifier is blank" do
-        before(:each) do
-          check_your_answers_form.reg_identifier = ""
-        end
-
-        it "is not valid" do
-          expect(check_your_answers_form).to_not be_valid
-        end
-      end
-    end
-
     describe "#required_fields_filled_in?" do
       context "when all the fields are present" do
         it "is true" do
@@ -116,32 +104,6 @@ RSpec.describe CheckYourAnswersForm, type: :model do
             expect(check_your_answers_form.required_fields_filled_in?).to be(true)
           end
         end
-      end
-    end
-  end
-
-  describe "#transient_registration" do
-    context "when the transient registration is invalid" do
-      let(:transient_registration) do
-        build(:transient_registration,
-              workflow_state: "check_your_answers_form")
-      end
-      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:check_your_answers_form) { CheckYourAnswersForm.new(transient_registration) }
-
-      before(:each) do
-        # Make reg_identifier valid for the form, but not the transient object
-        check_your_answers_form.reg_identifier = transient_registration.reg_identifier
-        transient_registration.reg_identifier = "foo"
-      end
-
-      it "is not valid" do
-        expect(check_your_answers_form).to_not be_valid
-      end
-
-      it "inherits the errors from the transient_registration" do
-        check_your_answers_form.valid?
-        expect(check_your_answers_form.errors[:base]).to include(I18n.t("mongoid.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
       end
     end
   end

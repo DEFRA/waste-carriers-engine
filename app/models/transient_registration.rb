@@ -6,7 +6,7 @@ class TransientRegistration
   include CanHaveRegistrationAttributes
   include CanStripWhitespace
 
-  validates_with RegIdentifierValidator
+  validates :reg_identifier, reg_identifier: true
   validate :no_renewal_in_progress?, on: :create
 
   after_initialize :copy_data_from_registration

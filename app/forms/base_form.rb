@@ -25,9 +25,8 @@ class BaseForm
     end
   end
 
-  validates_with RegIdentifierValidator
+  validates :reg_identifier, reg_identifier: true
   validate :transient_registration_valid?
-  validates :reg_identifier, presence: true
 
   private
 
