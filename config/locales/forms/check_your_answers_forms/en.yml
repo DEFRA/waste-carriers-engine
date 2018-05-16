@@ -78,6 +78,8 @@ en:
               missing: "Your business or organisation type"
               inclusion: "You must select a valid business or organisation type"
             company_name:
+              blank: "You must enter a trading name"
+              too_long: "Enter a shorter trading name with no more than 255 characters"
               missing: "The name of the business or organisation"
             company_no:
               invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
