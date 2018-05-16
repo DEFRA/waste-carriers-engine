@@ -1,38 +1,31 @@
 require "uk_postcode"
 
-class PostcodeValidator < ActiveModel::Validator
-  def validate(record)
-    return unless options[:fields].any?
-    options[:fields].each do |field|
-      validate_postcode_field(record, field)
-    end
+class PostcodeValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    return unless value_is_present?(record, attribute, value)
+    return unless value_uses_correct_format?(record, attribute, value)
+    postcode_returns_results?(record, attribute, value)
   end
 
   private
 
-  def validate_postcode_field(record, field)
-    return unless value_is_present?(record, field)
-    return unless value_uses_correct_format?(record, field)
-    postcode_returns_results?(record, field)
-  end
-
-  def value_is_present?(record, field)
-    return true if record.send(field).present?
-    record.errors.add(field, :blank)
+  def value_is_present?(record, attribute, value)
+    return true if value.present?
+    record.errors[attribute] << error_message(record, attribute, "blank")
     false
   end
 
-  def value_uses_correct_format?(record, field)
-    return true if UKPostcode.parse(record.send(field)).full_valid?
-    record.errors.add(field, :wrong_format)
+  def value_uses_correct_format?(record, attribute, value)
+    return true if UKPostcode.parse(value).full_valid?
+    record.errors[attribute] << error_message(record, attribute, "wrong_format")
     false
   end
 
-  def postcode_returns_results?(record, field)
-    address_finder = AddressFinderService.new(record.send(field))
+  def postcode_returns_results?(record, attribute, value)
+    address_finder = AddressFinderService.new(value)
     case address_finder.search_by_postcode
     when :not_found
-      record.errors.add(field, :no_results)
+      record.errors[attribute] << error_message(record, attribute, "no_results")
       false
     when :error
       record.transient_registration.temp_os_places_error = true
@@ -40,5 +33,10 @@ class PostcodeValidator < ActiveModel::Validator
     else
       true
     end
+  end
+
+  def error_message(record, attribute, error)
+    class_name = record.class.to_s.underscore
+    I18n.t("activemodel.errors.models.#{class_name}.attribute.#{attribute}.#{error}")
   end
 end

@@ -21,7 +21,11 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
+<<<<<<< HEAD:spec/cassettes/contact_postcode_form_no_matches_postcode.yml
       - Fri, 18 May 2018 11:20:48 GMT
+=======
+      - Wed, 16 May 2018 11:43:43 GMT
+>>>>>>> 3a3fa2b... Update PostcodeValidator and add shared example tests:spec/cassettes/postcode_no_matches.yml
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -30,5 +34,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"error":{"statuscode":400,"message":"Parameters are not valid"}}'
     http_version: 
+<<<<<<< HEAD:spec/cassettes/contact_postcode_form_no_matches_postcode.yml
   recorded_at: Fri, 18 May 2018 11:28:17 GMT
+=======
+  recorded_at: Wed, 16 May 2018 11:52:09 GMT
+>>>>>>> 3a3fa2b... Update PostcodeValidator and add shared example tests:spec/cassettes/postcode_no_matches.yml
 recorded_with: VCR 4.0.0

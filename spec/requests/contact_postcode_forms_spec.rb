@@ -26,25 +26,24 @@ RSpec.describe "ContactPostcodeForms", type: :request do
             }
           }
 
+          before do
+            example_json = { postcode: "BS1 6AH" }
+            allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(example_json)
+          end
+
           it "returns a 302 response" do
-            VCR.use_cassette("contact_postcode_form_modified_postcode") do
-              post contact_postcode_forms_path, contact_postcode_form: valid_params
-              expect(response).to have_http_status(302)
-            end
+            post contact_postcode_forms_path, contact_postcode_form: valid_params
+            expect(response).to have_http_status(302)
           end
 
           it "updates the transient registration" do
-            VCR.use_cassette("contact_postcode_form_modified_postcode") do
-              post contact_postcode_forms_path, contact_postcode_form: valid_params
-              expect(transient_registration.reload[:temp_contact_postcode]).to eq(valid_params[:temp_contact_postcode])
-            end
+            post contact_postcode_forms_path, contact_postcode_form: valid_params
+            expect(transient_registration.reload[:temp_contact_postcode]).to eq(valid_params[:temp_contact_postcode])
           end
 
           it "redirects to the contact_address form" do
-            VCR.use_cassette("contact_postcode_form_modified_postcode") do
-              post contact_postcode_forms_path, contact_postcode_form: valid_params
-              expect(response).to redirect_to(new_contact_address_form_path(transient_registration[:reg_identifier]))
-            end
+            post contact_postcode_forms_path, contact_postcode_form: valid_params
+            expect(response).to redirect_to(new_contact_address_form_path(transient_registration[:reg_identifier]))
           end
 
           context "when a postcode search returns an error" do
