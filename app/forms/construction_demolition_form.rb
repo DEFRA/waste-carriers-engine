@@ -16,5 +16,5 @@ class ConstructionDemolitionForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :construction_waste, inclusion: { in: [true, false] }
+  validates :construction_waste, boolean: true
 end

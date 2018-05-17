@@ -16,5 +16,5 @@ class DeclareConvictionsForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :declared_convictions, inclusion: { in: [true, false] }
+  validates :declared_convictions, boolean: true
 end

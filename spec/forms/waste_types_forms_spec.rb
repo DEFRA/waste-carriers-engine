@@ -26,49 +26,5 @@ RSpec.describe WasteTypesForm, type: :model do
     end
   end
 
-  context "when a valid transient registration exists" do
-    let(:waste_types_form) { build(:waste_types_form, :has_required_data) }
-
-    describe "#only_amf" do
-      context "when only_amf is true" do
-        before(:each) do
-          waste_types_form.only_amf = true
-        end
-
-        it "is valid" do
-          expect(waste_types_form).to be_valid
-        end
-      end
-
-      context "when only_amf is false" do
-        before(:each) do
-          waste_types_form.only_amf = false
-        end
-
-        it "is valid" do
-          expect(waste_types_form).to be_valid
-        end
-      end
-
-      context "when only_amf is a non-boolean value" do
-        before(:each) do
-          waste_types_form.only_amf = "foo"
-        end
-
-        it "is not valid" do
-          expect(waste_types_form).to_not be_valid
-        end
-      end
-
-      context "when only_amf is nil" do
-        before(:each) do
-          waste_types_form.only_amf = nil
-        end
-
-        it "is not valid" do
-          expect(waste_types_form).to_not be_valid
-        end
-      end
-    end
-  end
+  include_examples "validate boolean", form = :waste_types_form, field = :only_amf
 end

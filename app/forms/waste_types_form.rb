@@ -16,5 +16,5 @@ class WasteTypesForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :only_amf, inclusion: { in: [true, false] }
+  validates :only_amf, boolean: true
 end

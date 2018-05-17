@@ -16,5 +16,5 @@ class ServiceProvidedForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :is_main_service, inclusion: { in: [true, false] }
+  validates :is_main_service, boolean: true
 end

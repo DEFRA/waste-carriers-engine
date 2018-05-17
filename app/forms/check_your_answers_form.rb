@@ -56,6 +56,7 @@ class CheckYourAnswersForm < BaseForm
   validates :company_name, company_name: true
   validates :company_no, company_no: true
   validates :contact_email, email: true
+  validates :declared_convictions, boolean: true
   validates :first_name, :last_name, person_name: true
   validates :location, location: true
   validates :phone_number, phone_number: true

@@ -26,49 +26,5 @@ RSpec.describe ServiceProvidedForm, type: :model do
     end
   end
 
-  context "when a valid transient registration exists" do
-    let(:service_provided_form) { build(:service_provided_form, :has_required_data) }
-
-    describe "#is_main_service" do
-      context "when is_main_service is true" do
-        before(:each) do
-          service_provided_form.is_main_service = true
-        end
-
-        it "is valid" do
-          expect(service_provided_form).to be_valid
-        end
-      end
-
-      context "when is_main_service is false" do
-        before(:each) do
-          service_provided_form.is_main_service = false
-        end
-
-        it "is valid" do
-          expect(service_provided_form).to be_valid
-        end
-      end
-
-      context "when is_main_service is a non-boolean value" do
-        before(:each) do
-          service_provided_form.is_main_service = "foo"
-        end
-
-        it "is not valid" do
-          expect(service_provided_form).to_not be_valid
-        end
-      end
-
-      context "when is_main_service is nil" do
-        before(:each) do
-          service_provided_form.is_main_service = nil
-        end
-
-        it "is not valid" do
-          expect(service_provided_form).to_not be_valid
-        end
-      end
-    end
-  end
+  include_examples "validate boolean", form = :service_provided_form, field = :is_main_service
 end

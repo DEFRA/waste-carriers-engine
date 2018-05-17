@@ -104,6 +104,7 @@ en:
               invalid_format: "Enter a valid email address - there’s a mistake in that one"
               missing: "The email address of the person we should contact"
             declared_convictions:
+              inclusion: "You must answer whether you have any convictions to declare"
               missing: "Has anyone involved in managing your organisation been convicted of an environmental offence in the last 12 months?"
             location:
               inclusion: "You must select a valid principal place of business"

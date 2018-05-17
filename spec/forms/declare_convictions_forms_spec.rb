@@ -31,49 +31,5 @@ RSpec.describe DeclareConvictionsForm, type: :model do
     end
   end
 
-  context "when a valid transient registration exists" do
-    let(:declare_convictions_form) { build(:declare_convictions_form, :has_required_data) }
-
-    describe "#declared_convictions" do
-      context "when a declared_convictions is true" do
-        before(:each) do
-          declare_convictions_form.declared_convictions = true
-        end
-
-        it "is valid" do
-          expect(declare_convictions_form).to be_valid
-        end
-      end
-
-      context "when a declared_convictions is false" do
-        before(:each) do
-          declare_convictions_form.declared_convictions = false
-        end
-
-        it "is valid" do
-          expect(declare_convictions_form).to be_valid
-        end
-      end
-
-      context "when a declared_convictions is not a boolean" do
-        before(:each) do
-          declare_convictions_form.declared_convictions = "foo"
-        end
-
-        it "is not valid" do
-          expect(declare_convictions_form).to_not be_valid
-        end
-      end
-
-      context "when a declared_convictions is blank" do
-        before(:each) do
-          declare_convictions_form.declared_convictions = ""
-        end
-
-        it "is not valid" do
-          expect(declare_convictions_form).to_not be_valid
-        end
-      end
-    end
-  end
+  include_examples "validate boolean", form = :declare_convictions_form, field = :declared_convictions
 end

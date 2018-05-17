@@ -26,49 +26,5 @@ RSpec.describe TierCheckForm, type: :model do
     end
   end
 
-  context "when a valid transient registration exists" do
-    let(:tier_check_form) { build(:tier_check_form, :has_required_data) }
-
-    describe "#temp_tier_check" do
-      context "when a temp_tier_check is true" do
-        before(:each) do
-          tier_check_form.temp_tier_check = true
-        end
-
-        it "is valid" do
-          expect(tier_check_form).to be_valid
-        end
-      end
-
-      context "when a temp_tier_check is false" do
-        before(:each) do
-          tier_check_form.temp_tier_check = false
-        end
-
-        it "is valid" do
-          expect(tier_check_form).to be_valid
-        end
-      end
-
-      context "when a temp_tier_check is not a boolean" do
-        before(:each) do
-          tier_check_form.temp_tier_check = "foo"
-        end
-
-        it "is not valid" do
-          expect(tier_check_form).to_not be_valid
-        end
-      end
-
-      context "when a temp_tier_check is blank" do
-        before(:each) do
-          tier_check_form.temp_tier_check = ""
-        end
-
-        it "is not valid" do
-          expect(tier_check_form).to_not be_valid
-        end
-      end
-    end
-  end
+  include_examples "validate boolean", form = :tier_check_form, field = :temp_tier_check
 end

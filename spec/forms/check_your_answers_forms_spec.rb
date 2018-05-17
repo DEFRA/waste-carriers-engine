@@ -25,6 +25,7 @@ RSpec.describe CheckYourAnswersForm, type: :model do
     end
   end
 
+  include_examples "validate boolean", form = :check_your_answers_form, field = :declared_convictions
   include_examples "validate business_type", form = :check_your_answers_form
   include_examples "validate company_name", form = :check_your_answers_form
   include_examples "validate company_no", form = :check_your_answers_form

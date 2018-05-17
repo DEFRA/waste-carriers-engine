@@ -16,5 +16,5 @@ class OtherBusinessesForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates :other_businesses, inclusion: { in: [true, false] }
+  validates :other_businesses, boolean: true
 end
