@@ -118,6 +118,7 @@ en:
             registered_address:
               missing: "The address of the business or organisation"
             registration_type:
+              inclusion: "You must select a valid registration type"
               missing: "Do you carry the waste yourselves, or arrange for others to do it?"
             tier:
               missing: "Your tier (upper or lower)"

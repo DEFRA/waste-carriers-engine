@@ -21,35 +21,5 @@ RSpec.describe CbdTypeForm, type: :model do
     end
   end
 
-  context "when a valid transient registration exists" do
-    let(:cbd_type_form) { build(:cbd_type_form, :has_required_data) }
-
-    describe "#registration_type" do
-      context "when a registration_type meets the requirements" do
-        it "is valid" do
-          expect(cbd_type_form).to be_valid
-        end
-      end
-
-      context "when a registration_type is blank" do
-        before(:each) do
-          cbd_type_form.registration_type = ""
-        end
-
-        it "is not valid" do
-          expect(cbd_type_form).to_not be_valid
-        end
-      end
-
-      context "when a registration_type is not in the allowed list" do
-        before(:each) do
-          cbd_type_form.registration_type = "foo"
-        end
-
-        it "is not valid" do
-          expect(cbd_type_form).to_not be_valid
-        end
-      end
-    end
-  end
+  include_examples "validate registration_type", form = :cbd_type_form
 end

@@ -33,6 +33,7 @@ RSpec.describe CheckYourAnswersForm, type: :model do
   include_examples "validate person name", form = :check_your_answers_form, field = :first_name
   include_examples "validate person name", form = :check_your_answers_form, field = :last_name
   include_examples "validate phone_number", form = :check_your_answers_form
+  include_examples "validate registration_type", form = :check_your_answers_form
 
   context "when a valid transient registration exists" do
     let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
