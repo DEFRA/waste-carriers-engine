@@ -26,35 +26,5 @@ RSpec.describe LocationForm, type: :model do
     end
   end
 
-  context "when a valid transient registration exists" do
-    let(:location_form) { build(:location_form, :has_required_data) }
-
-    describe "#location" do
-      context "when a location meets the requirements" do
-        it "is valid" do
-          expect(location_form).to be_valid
-        end
-      end
-
-      context "when a location is blank" do
-        before(:each) do
-          location_form.location = ""
-        end
-
-        it "is not valid" do
-          expect(location_form).to_not be_valid
-        end
-      end
-
-      context "when a location is not in the allowed list" do
-        before(:each) do
-          location_form.location = "foo"
-        end
-
-        it "is not valid" do
-          expect(location_form).to_not be_valid
-        end
-      end
-    end
-  end
+  include_examples "validate location", form = :location_form
 end

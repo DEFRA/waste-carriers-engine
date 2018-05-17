@@ -106,6 +106,7 @@ en:
             declared_convictions:
               missing: "Has anyone involved in managing your organisation been convicted of an environmental offence in the last 12 months?"
             location:
+              inclusion: "You must select a valid principal place of business"
               missing: "Your principal place of business"
             main_people:
               missing: "Details of the main people running your business or organisation (like directors or partners)"
