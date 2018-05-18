@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 03 May 2018 14:17:45 GMT
+      - Fri, 18 May 2018 11:29:13 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -51,7 +51,7 @@ http_interactions:
       X-Ratelimit-Remain:
       - '595'
       X-Ratelimit-Reset:
-      - '1525357324'
+      - '1526643203'
       X-Ratelimit-Window:
       - 5m
       Server:
@@ -62,5 +62,5 @@ http_interactions:
         House Woodland Road","postal_code":"CT18 8DL","address_line_2":"Lyminge"},"accounts":{"last_accounts":{"period_end_on":"2017-02-28","period_start_on":"2016-03-01","made_up_to":"2017-02-28"},"accounting_reference_date":{"day":"28","month":"02"},"overdue":false,"next_due":"2018-11-30","next_made_up_to":"2018-02-28","next_accounts":{"overdue":false,"due_on":"2018-11-30","period_end_on":"2018-02-28","period_start_on":"2017-03-01"}},"company_name":"JIM
         GARRAHY''S FUDGE KITCHEN LIMITED","date_of_creation":"1983-03-24","sic_codes":["10822"],"undeliverable_registered_office_address":false,"last_full_members_list_date":"2015-11-20","type":"ltd","has_been_liquidated":false,"company_number":"01709418","jurisdiction":"england-wales","has_insolvency_history":false,"etag":"079ea458cdac90941922af7f7742f1d7cdf14cd1","has_charges":true,"company_status":"active","confirmation_statement":{"next_due":"2018-12-04","next_made_up_to":"2018-11-20","overdue":false,"last_made_up_to":"2017-11-20"},"links":{"self":"/company/01709418","filing_history":"/company/01709418/filing-history","officers":"/company/01709418/officers","charges":"/company/01709418/charges","persons_with_significant_control_statements":"/company/01709418/persons-with-significant-control-statements"},"registered_office_is_in_dispute":false,"can_file":true}'
     http_version: 
-  recorded_at: Thu, 03 May 2018 14:17:39 GMT
+  recorded_at: Fri, 18 May 2018 11:29:12 GMT
 recorded_with: VCR 4.0.0

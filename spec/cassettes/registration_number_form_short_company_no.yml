@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 03 May 2018 14:17:04 GMT
+      - Fri, 18 May 2018 11:28:23 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -51,7 +51,7 @@ http_interactions:
       X-Ratelimit-Remain:
       - '598'
       X-Ratelimit-Reset:
-      - '1525357324'
+      - '1526643203'
       X-Ratelimit-Window:
       - 5m
       Server:
@@ -64,5 +64,5 @@ http_interactions:
         Wycombe","region":"Bucks"},"jurisdiction":"england-wales","type":"ltd","undeliverable_registered_office_address":false,"sic_codes":["38110","38120","38210","38220"],"accounts":{"next_due":"2018-12-29","accounting_reference_date":{"day":"29","month":"03"},"next_accounts":{"due_on":"2018-12-29","period_start_on":"2017-03-25","overdue":false,"period_end_on":"2018-03-29"},"last_accounts":{"period_end_on":"2017-03-24","type":"full","made_up_to":"2017-03-24","period_start_on":"2016-03-26"},"next_made_up_to":"2018-03-29","overdue":false},"date_of_creation":"1969-01-16","has_insolvency_history":false,"etag":"71e17f2aaec9b698b7ff73a1cbf996dc9c88b933","has_charges":true,"company_status":"active","previous_company_names":[{"name":"BIFFA
         LIMITED","effective_from":"1969-01-16","ceased_on":"1986-04-22"}],"confirmation_statement":{"next_due":"2019-01-18","next_made_up_to":"2019-01-04","overdue":false,"last_made_up_to":"2018-01-04"},"links":{"self":"/company/00946107","filing_history":"/company/00946107/filing-history","officers":"/company/00946107/officers","charges":"/company/00946107/charges"},"registered_office_is_in_dispute":false,"can_file":true}'
     http_version: 
-  recorded_at: Thu, 03 May 2018 14:16:58 GMT
+  recorded_at: Fri, 18 May 2018 11:28:22 GMT
 recorded_with: VCR 4.0.0
