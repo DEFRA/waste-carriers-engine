@@ -39,6 +39,7 @@ RSpec.shared_examples "POST without params form" do |form|
       let(:transient_registration) do
         create(:transient_registration,
                :has_required_data,
+               :has_key_people,
                account_email: user.email)
       end
 

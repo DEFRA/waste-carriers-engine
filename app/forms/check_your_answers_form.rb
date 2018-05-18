@@ -1,4 +1,5 @@
 class CheckYourAnswersForm < BaseForm
+  include CanLimitNumberOfPeople
   include CanNavigateFlexibly
 
   attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_email, :declared_convictions,
@@ -61,6 +62,8 @@ class CheckYourAnswersForm < BaseForm
   validates :location, location: true
   validates :phone_number, phone_number: true
   validates :registration_type, registration_type: true
+
+  validates_with KeyPeopleValidator
 
   private
 

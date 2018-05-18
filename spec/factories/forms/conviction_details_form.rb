@@ -9,7 +9,7 @@ FactoryBot.define do
       dob_day 1
       date_of_birth Date.new(2000, 1, 1)
 
-      initialize_with { new(create(:transient_registration, :has_required_data, workflow_state: "conviction_details_form")) }
+      initialize_with { new(create(:transient_registration, :has_required_data, :declared_convictions, workflow_state: "conviction_details_form")) }
     end
   end
 end

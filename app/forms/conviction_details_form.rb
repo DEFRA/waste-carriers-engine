@@ -5,23 +5,13 @@ class ConvictionDetailsForm < PersonForm
     true
   end
 
-  def maximum_people_in_type
-    nil
+  def person_type
+    :relevant
   end
 
-  def minimum_people_in_type
-    1
-  end
-
-  def number_of_existing_people_in_type
-    @transient_registration.relevant_people.count
-  end
+  validates_with PersonValidator, type: :relevant
 
   private
-
-  def person_type
-    "relevant"
-  end
 
   # Adding the new person directly to @transient_registration.keyPeople immediately updates the object,
   # regardless of validation. So instead we copy all existing people into a new array and modify that.

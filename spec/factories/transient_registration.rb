@@ -21,5 +21,9 @@ FactoryBot.define do
       temp_company_postcode "BS1 5AH"
       temp_contact_postcode "BS1 5AH"
     end
+
+    trait :declared_convictions do
+      declared_convictions "true"
+    end
   end
 end

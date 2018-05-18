@@ -9,29 +9,16 @@ class MainPeopleForm < PersonForm
     self.business_type = @transient_registration.business_type
 
     # If there's only one main person, we can pre-fill the fields so users can easily edit them
-    prefill_form if can_only_have_one_person_in_type? && @transient_registration.main_people.present?
+    prefill_form if can_only_have_one_person?(person_type) && @transient_registration.main_people.present?
   end
-
-  def maximum_people_in_type
-    return unless business_type.present?
-    main_people_limits[business_type.to_sym][:maximum]
-  end
-
-  def minimum_people_in_type
-    # Business type should always be set, but use 1 as the default, just in case
-    return 1 unless business_type.present?
-    main_people_limits[business_type.to_sym][:minimum]
-  end
-
-  def number_of_existing_people_in_type
-    @transient_registration.main_people.count
-  end
-
-  private
 
   def person_type
-    "key"
+    :key
   end
+
+  validates_with PersonValidator, type: :key
+
+  private
 
   def prefill_form
     self.first_name = @transient_registration.main_people.first.first_name
@@ -48,7 +35,7 @@ class MainPeopleForm < PersonForm
 
     # If there's only one main person allowed, we want to discard any existing main people, but keep people with
     # relevant convictions. Otherwise, we copy all the keyPeople, regardless of type.
-    existing_people = if can_only_have_one_person_in_type?
+    existing_people = if can_only_have_one_person?(person_type)
                         @transient_registration.relevant_people
                       else
                         @transient_registration.keyPeople
@@ -60,17 +47,6 @@ class MainPeopleForm < PersonForm
     end
 
     people
-  end
-
-  def main_people_limits
-    {
-      limitedCompany: { minimum: 1, maximum: nil },
-      limitedLiabilityPartnership: { minimum: 1, maximum: nil },
-      localAuthority: { minimum: 1, maximum: nil },
-      overseas: { minimum: 1, maximum: nil },
-      partnership: { minimum: 2, maximum: nil },
-      soleTrader: { minimum: 1, maximum: 1 }
-    }
   end
 
   def age_cutoff_date

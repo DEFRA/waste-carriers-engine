@@ -1,9 +1,9 @@
 class PersonValidator < ActiveModel::Validator
   def validate(record)
-    if record.fields_have_content?
+    if options[:validate_fields] || record.fields_have_content?
       validate_individual_fields(record)
     else
-      validate_number_of_people_in_type(record)
+      validate_number_of_people_in_type(record, options[:type])
     end
   end
 
@@ -16,9 +16,9 @@ class PersonValidator < ActiveModel::Validator
     DateOfBirthValidator.new.validate(record)
   end
 
-  def validate_number_of_people_in_type(record)
-    return if record.enough_people_in_type?
-    record.errors.add(:base, :not_enough_people_in_type, count: record.minimum_people_in_type)
+  def validate_number_of_people_in_type(record, type)
+    return if record.enough_people?(type)
+    record.errors.add(:base, :not_enough_people_in_type, count: record.minimum_people(type))
   end
 
   def validate_first_name(record)

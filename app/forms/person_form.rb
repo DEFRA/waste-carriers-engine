@@ -1,4 +1,6 @@
 class PersonForm < BaseForm
+  include CanLimitNumberOfPeople
+
   attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :date_of_birth
   attr_accessor :new_person
 
@@ -25,22 +27,11 @@ class PersonForm < BaseForm
     super(attributes, params[:reg_identifier])
   end
 
-  validates_with PersonValidator
   validate :old_enough?
 
   # Used to switch on usage of the :position attribute for validation and form-filling
   def position?
     false
-  end
-
-  def enough_people_in_type?
-    return false if number_of_existing_people_in_type < minimum_people_in_type
-    true
-  end
-
-  def can_only_have_one_person_in_type?
-    return false unless maximum_people_in_type.present?
-    maximum_people_in_type == 1
   end
 
   def fields_have_content?
@@ -55,15 +46,7 @@ class PersonForm < BaseForm
   # Methods which are called in this class but defined in subclasses
   # We should throw descriptive errors in case an additional subclass of PersonForm is ever added
 
-  def maximum_people_in_type
-    implemented_in_subclass
-  end
-
-  def minimum_people_in_type
-    implemented_in_subclass
-  end
-
-  def number_of_existing_people_in_type
+  def person_type
     implemented_in_subclass
   end
 
@@ -114,10 +97,6 @@ class PersonForm < BaseForm
 
   # Methods which are called in this class but defined in subclasses
   # We should throw descriptive errors in case an additional subclass of PersonForm is ever added
-
-  def person_type
-    implemented_in_subclass
-  end
 
   def list_of_people_to_keep
     implemented_in_subclass
