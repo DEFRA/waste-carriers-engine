@@ -52,6 +52,25 @@ class TransientRegistration
     temp_cards * Rails.configuration.card_charge
   end
 
+  def charity?
+    business_type == "charity"
+  end
+
+  # Some business types should not have a company_no
+  def company_no_required?
+    return false if overseas?
+    %w[limitedCompany limitedLiabilityPartnership].include?(business_type)
+  end
+
+  def company_no_changed?
+    return false unless company_no_required?
+    old_company_no = Registration.where(reg_identifier: reg_identifier).first.company_no.to_s
+    # It was previously valid to have company_nos with less than 8 digits
+    # The form prepends 0s to make up the length, so we should do this for the old number to match
+    old_company_no = "0#{old_company_no}" while old_company_no.length < 8
+    old_company_no != company_no
+  end
+
   private
 
   def copy_data_from_registration

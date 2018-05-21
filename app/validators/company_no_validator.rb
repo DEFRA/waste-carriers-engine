@@ -11,10 +11,8 @@ class CompanyNoValidator < ActiveModel::EachValidator
 
   private
 
-  # Some business types should not have a company_no
   def company_no_required?(record)
-    return false if record.transient_registration.overseas?
-    %w[limitedCompany limitedLiabilityPartnership].include?(record.business_type)
+    record.transient_registration.company_no_required?
   end
 
   def valid_company_no?(record, attribute, value)

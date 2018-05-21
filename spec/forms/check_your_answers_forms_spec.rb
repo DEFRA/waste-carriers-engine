@@ -123,7 +123,6 @@ RSpec.describe CheckYourAnswersForm, type: :model do
       end
     end
 
-
     describe "#contact_address" do
       context "when there is no contact_address" do
         before do
@@ -335,6 +334,39 @@ RSpec.describe CheckYourAnswersForm, type: :model do
         it "is not valid" do
           expect(check_your_answers_form).to_not be_valid
         end
+      end
+    end
+
+    context "when the business type has an invalid change" do
+      before(:each) do
+        check_your_answers_form.transient_registration.business_type = "soleTrader"
+        check_your_answers_form.business_type = "limitedCompany"
+      end
+
+      it "is not valid" do
+        expect(check_your_answers_form).to_not be_valid
+      end
+    end
+
+    context "when the business type has changed to charity" do
+      before(:each) do
+        check_your_answers_form.transient_registration.business_type = "charity"
+        check_your_answers_form.business_type = "charity"
+      end
+
+      it "is not valid" do
+        expect(check_your_answers_form).to_not be_valid
+      end
+    end
+
+    context "when the company_no has changed" do
+      before(:each) do
+        check_your_answers_form.transient_registration.company_no = "01234567"
+        check_your_answers_form.company_no = "12345678"
+      end
+
+      it "is not valid" do
+        expect(check_your_answers_form).to_not be_valid
       end
     end
   end

@@ -54,6 +54,7 @@ class CheckYourAnswersForm < BaseForm
   validates :phone_number, phone_number: true
   validates :registered_address, address: true
   validates :registration_type, registration_type: true
+  validate :should_be_renewed
 
   validates_with KeyPeopleValidator
 
@@ -70,5 +71,21 @@ class CheckYourAnswersForm < BaseForm
      address.town_city,
      address.postcode,
      address.country].reject
+  end
+
+  def should_be_renewed
+    no_invalid_business_type_change? && same_company_no?
+  end
+
+  def no_invalid_business_type_change?
+    return true if @transient_registration.business_type_change_valid?
+    errors.add(:business_type, :invalid_change)
+    false
+  end
+
+  def same_company_no?
+    return true unless @transient_registration.company_no_changed?
+    errors.add(:company_no, :changed)
+    false
   end
 end

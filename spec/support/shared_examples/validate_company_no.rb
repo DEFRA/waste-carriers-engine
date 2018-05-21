@@ -57,6 +57,9 @@ RSpec.shared_examples "validate company_no" do |form_factory|
 
     context "when the business_type doesn't require a company_no" do
       before do
+        registration = Registration.where(reg_identifier: form.transient_registration.reg_identifier).first
+        registration.update(business_type: "soleTrader")
+        form.transient_registration.business_type = "soleTrader"
         form.business_type = "soleTrader"
       end
 

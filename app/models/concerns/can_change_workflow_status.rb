@@ -477,13 +477,12 @@ module CanChangeWorkflowStatus
   private
 
   def skip_registration_number?
-    return true if overseas?
-    %w[localAuthority partnership soleTrader].include?(business_type)
+    !company_no_required?
   end
 
   # Charity registrations should be lower tier
   def switch_to_lower_tier_based_on_business_type?
-    business_type == "charity"
+    charity?
   end
 
   def switch_to_lower_tier_based_on_smart_answers?
@@ -494,11 +493,7 @@ module CanChangeWorkflowStatus
   end
 
   def require_new_registration_based_on_company_no?
-    old_company_no = Registration.where(reg_identifier: reg_identifier).first.company_no.to_s
-    # It was previously valid to have company_nos with less than 8 digits
-    # The form prepends 0s to make up the length, so we should do this for the old number to match
-    old_company_no = "0#{old_company_no}" while old_company_no.length < 8
-    old_company_no != company_no
+    company_no_changed?
   end
 
   def skip_tier_check?
