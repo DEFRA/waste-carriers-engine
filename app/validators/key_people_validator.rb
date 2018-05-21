@@ -9,31 +9,13 @@ class KeyPeopleValidator < ActiveModel::Validator
   def valid_main_people?(record)
     return false unless valid_number_of_people?(record, :key)
     return true unless record.main_people.present? && record.main_people.count.positive?
-
-    valid = true
-
-    record.main_people.each do |person|
-      next if valid_person?(person, :key)
-      record.errors.add(:base, :invalid_main_person)
-      valid = false
-    end
-
-    valid
+    valid_people?(record, record.main_people, :main)
   end
 
   def valid_relevant_people?(record)
     return false unless valid_number_of_people?(record, :relevant)
     return true unless record.relevant_people.present? && record.relevant_people.count.positive?
-
-    valid = true
-
-    record.relevant_people.each do |person|
-      next if valid_person?(person, :relevant)
-      record.errors.add(:base, :invalid_relevant_person)
-      valid = false
-    end
-
-    valid
+    valid_people?(record, record.relevant_people, :relevant)
   end
 
   def valid_number_of_people?(record, type)
@@ -41,6 +23,17 @@ class KeyPeopleValidator < ActiveModel::Validator
     message = "not_enough_#{type}_people".to_sym
     record.errors.add(:base, message, count: record.minimum_people(type))
     false
+  end
+
+  def valid_people?(record, people, type)
+    valid = true
+    people.each do |person|
+      next if valid_person?(person, :relevant)
+      message = "invalid_#{type}_person".to_sym
+      record.errors.add(:base, message)
+      valid = false
+    end
+    valid
   end
 
   def valid_person?(person, type)
