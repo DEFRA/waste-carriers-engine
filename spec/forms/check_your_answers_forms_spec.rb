@@ -45,6 +45,163 @@ RSpec.describe CheckYourAnswersForm, type: :model do
       end
     end
 
+    describe "#registered_address" do
+      context "when there is no registered_address" do
+        before do
+          check_your_answers_form.registered_address = nil
+        end
+
+        it "is not valid" do
+          expect(check_your_answers_form).to_not be_valid
+        end
+      end
+
+      context "when the location is in the uk" do
+        context "when the registered_address mode is manual-uk" do
+          before do
+            check_your_answers_form.registered_address = build(:address, :registered, :manual_uk)
+          end
+
+          it "is valid" do
+            expect(check_your_answers_form).to be_valid
+          end
+        end
+
+        context "when the registered_address mode is address-lookup" do
+          before do
+            check_your_answers_form.registered_address = build(:address, :registered, :from_os_places)
+          end
+
+          it "is valid" do
+            expect(check_your_answers_form).to be_valid
+          end
+        end
+
+        context "when the registered_address mode is manual-foreign" do
+          before do
+            check_your_answers_form.registered_address = build(:address, :registered, :manual_foreign)
+          end
+
+          it "is not valid" do
+            expect(check_your_answers_form).to_not be_valid
+          end
+        end
+      end
+
+      context "when the location is overseas" do
+        let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_overseas_data) }
+
+        context "when the registered_address mode is manual-foreign" do
+          before do
+            check_your_answers_form.registered_address = build(:address, :registered, :manual_foreign)
+          end
+
+          it "is valid" do
+            expect(check_your_answers_form).to be_valid
+          end
+        end
+
+        context "when the registered_address mode is manual-uk" do
+          before do
+            check_your_answers_form.registered_address = build(:address, :registered, :manual_uk)
+          end
+
+          it "is not valid" do
+            expect(check_your_answers_form).to_not be_valid
+          end
+        end
+
+        context "when the registered_address mode is address-lookup" do
+          before do
+            check_your_answers_form.registered_address = build(:address, :registered, :from_os_places)
+          end
+
+          it "is not valid" do
+            expect(check_your_answers_form).to_not be_valid
+          end
+        end
+      end
+    end
+
+
+    describe "#contact_address" do
+      context "when there is no contact_address" do
+        before do
+          check_your_answers_form.contact_address = nil
+        end
+
+        it "is not valid" do
+          expect(check_your_answers_form).to_not be_valid
+        end
+      end
+
+      context "when the location is in the uk" do
+        context "when the contact_address mode is manual-uk" do
+          before do
+            check_your_answers_form.contact_address = build(:address, :contact, :manual_uk)
+          end
+
+          it "is valid" do
+            expect(check_your_answers_form).to be_valid
+          end
+        end
+
+        context "when the contact_address mode is address-lookup" do
+          before do
+            check_your_answers_form.contact_address = build(:address, :contact, :from_os_places)
+          end
+
+          it "is valid" do
+            expect(check_your_answers_form).to be_valid
+          end
+        end
+
+        context "when the contact_address mode is manual-foreign" do
+          before do
+            check_your_answers_form.contact_address = build(:address, :contact, :manual_foreign)
+          end
+
+          it "is not valid" do
+            expect(check_your_answers_form).to_not be_valid
+          end
+        end
+      end
+
+      context "when the location is overseas" do
+        let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_overseas_data) }
+
+        context "when the contact_address mode is manual-foreign" do
+          before do
+            check_your_answers_form.contact_address = build(:address, :contact, :manual_foreign)
+          end
+
+          it "is valid" do
+            expect(check_your_answers_form).to be_valid
+          end
+        end
+
+        context "when the contact_address mode is manual-uk" do
+          before do
+            check_your_answers_form.contact_address = build(:address, :contact, :manual_uk)
+          end
+
+          it "is not valid" do
+            expect(check_your_answers_form).to_not be_valid
+          end
+        end
+
+        context "when the contact_address mode is address-lookup" do
+          before do
+            check_your_answers_form.contact_address = build(:address, :contact, :from_os_places)
+          end
+
+          it "is not valid" do
+            expect(check_your_answers_form).to_not be_valid
+          end
+        end
+      end
+    end
+
     describe "#main_people" do
       context "when there are no main_people" do
         before do

@@ -20,5 +20,9 @@ FactoryBot.define do
     trait :manual_uk do
       address_mode "manual-uk"
     end
+
+    trait :manual_foreign do
+      address_mode "manual-foreign"
+    end
   end
 end

@@ -15,6 +15,20 @@ FactoryBot.define do
       tier "UPPER"
     end
 
+    trait :has_required_overseas_data do
+      business_type "overseas"
+      company_name "Acme Waste"
+      contact_email "foo@example.com"
+      first_name "Jane"
+      last_name "Doe"
+      registration_type "carrier_broker_dealer"
+      phone_number "03708 506506"
+
+      metaData { build(:metaData, :has_required_data) }
+      addresses { [build(:address)] }
+      tier "UPPER"
+    end
+
     trait :expires_soon do
       metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
       expires_on 2.months.from_now

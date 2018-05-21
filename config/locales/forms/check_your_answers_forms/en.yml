@@ -83,8 +83,8 @@ en:
             other: "You must add the details of at least %{count} people with a relevant conviction"
           attributes:
             business_type:
-              missing: "Your business or organisation type"
               inclusion: "You must select a valid business or organisation type"
+              missing: "Your business or organisation type"
             company_name:
               blank: "You must enter a trading name"
               too_long: "Enter a shorter trading name with no more than 255 characters"
@@ -97,6 +97,11 @@ en:
               blank: "Enter a company registration number"
             contact_name:
               missing: "The name of the person we should contact?"
+            contact_address:
+              blank: "You must provide a contact address"
+              should_be_overseas: "You must provide an overseas contact address"
+              should_be_uk: "You must provide a UK contact address"
+              missing: "The contact address of the person to contact"
             first_name:
               blank: "You must enter a first name for the contact person"
               invalid: "The first name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
@@ -105,8 +110,6 @@ en:
               blank: "You must enter a last name for the contact person"
               invalid: "The last name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
               too_long: "The last name for the contact person must have no more than 70 characters"
-            contact_address:
-              missing: "The address of the person we should contact"
             contact_email:
               blank: "Enter an email address"
               invalid_format: "Enter a valid email address - there’s a mistake in that one"
@@ -125,6 +128,9 @@ en:
               too_long: "Check the number you entered - it should have no more than than 15 characters"
               missing: "The telephone number of the person we should contact"
             registered_address:
+              blank: "You must provide an address"
+              should_be_overseas: "You must provide an overseas address"
+              should_be_uk: "You must provide a UK address"
               missing: "The address of the business or organisation"
             registration_type:
               inclusion: "You must select a valid registration type"

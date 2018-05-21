@@ -67,7 +67,7 @@
       <h2 class="heading-medium"><%= t(".subheading_5.#{@check_your_answers_form.business_type}") %></h2>
 
       <ul class="list">
-        <% @check_your_answers_form.registered_address.each do |line| %>
+        <% @check_your_answers_form.registered_address_display.each do |line| %>
           <li><%= line %></li>
         <% end %>
       </ul>
@@ -110,7 +110,7 @@
       </ul>
 
       <ul class="list">
-        <% @check_your_answers_form.contact_address.each do |line| %>
+        <% @check_your_answers_form.contact_address_display.each do |line| %>
           <li><%= line %></li>
         <% end %>
       </ul>
