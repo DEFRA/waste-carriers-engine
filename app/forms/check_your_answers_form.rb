@@ -26,7 +26,7 @@ class CheckYourAnswersForm < BaseForm
     self.relevant_people = @transient_registration.relevant_people
     self.tier = @transient_registration.tier
 
-    required_fields_filled_in?
+    valid?
   end
 
   def submit(params)
@@ -37,18 +37,6 @@ class CheckYourAnswersForm < BaseForm
 
   def registration_type_changed?
     @transient_registration.registration_type_changed?
-  end
-
-  def required_fields_filled_in?
-    valid = true
-    required_fields.each do |field|
-      # Field must be present or equal to 'false' to be valid
-      # This is to allow for booleans - false is fine, nil is not
-      next if send(field).present? || send(field).to_s == "false"
-      errors.add(field, :missing)
-      valid = false
-    end
-    valid
   end
 
   def contact_name
@@ -70,36 +58,6 @@ class CheckYourAnswersForm < BaseForm
   validates_with KeyPeopleValidator
 
   private
-
-  # These are fields which must have been filled in by this point for this to be a valid renewal
-  def required_fields
-    fields = %i[business_type
-                company_name
-                contact_name
-                contact_address
-                contact_email
-                declared_convictions
-                location
-                main_people
-                phone_number
-                registered_address
-                registration_type
-                tier]
-    fields << :company_no if company_no_required?
-    fields << :relevant_people if relevant_people_required?
-
-    fields
-  end
-
-  def company_no_required?
-    return true if business_type == "limitedCompany"
-    return true if business_type == "limitedLiabilityPartnership"
-    false
-  end
-
-  def relevant_people_required?
-    declared_convictions
-  end
 
   def displayable_address(address)
     return [] unless address.present?
