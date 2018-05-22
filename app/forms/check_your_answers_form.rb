@@ -74,10 +74,10 @@ class CheckYourAnswersForm < BaseForm
   end
 
   def should_be_renewed
-    no_invalid_business_type_change? && same_company_no?
+    business_type_change_valid? && same_company_no?
   end
 
-  def no_invalid_business_type_change?
+  def business_type_change_valid?
     return true if @transient_registration.business_type_change_valid?
     errors.add(:business_type, :invalid_change)
     false
