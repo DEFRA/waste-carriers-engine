@@ -64,8 +64,8 @@ RSpec.shared_examples "validate company_no" do |form_factory|
       end
 
       context "when the company_no is not blank" do
-        it "is not valid" do
-          expect(form).to_not be_valid
+        it "is valid" do
+          expect(form).to be_valid
         end
       end
 

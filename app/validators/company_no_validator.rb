@@ -2,11 +2,7 @@ class CompanyNoValidator < ActiveModel::EachValidator
   VALID_COMPANIES_HOUSE_REGISTRATION_NUMBER_REGEX = Regexp.new(/\A(\d{8,8}$)|([a-zA-Z]{2}\d{6}$)\z/i).freeze
 
   def validate_each(record, attribute, value)
-    if company_no_required?(record)
-      valid_company_no?(record, attribute, value)
-    else
-      value_is_blank?(record, attribute, value)
-    end
+    valid_company_no?(record, attribute, value) if company_no_required?(record)
   end
 
   private
@@ -44,12 +40,6 @@ class CompanyNoValidator < ActiveModel::EachValidator
     when :error
       record.errors[attribute] << error_message(record, attribute, "error")
     end
-  end
-
-  def value_is_blank?(record, attribute, value)
-    return true if value.blank?
-    record.errors[attribute] << error_message(record, attribute, "not_blank")
-    false
   end
 
   def error_message(record, attribute, error)
