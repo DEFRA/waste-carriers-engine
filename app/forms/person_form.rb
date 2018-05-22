@@ -1,6 +1,4 @@
 class PersonForm < BaseForm
-  include CanLimitNumberOfPeople
-
   attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :date_of_birth
   attr_accessor :new_person
 

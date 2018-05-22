@@ -75,7 +75,7 @@ en:
         check_your_answers_form:
           invalid_main_person: "Enter a valid main person"
           invalid_relevant_person: "Enter a valid person with a relevant conviction"
-          not_enough_key_people:
+          not_enough_main_people:
             one: "You must add the details of at least one main person"
             other: "You must add the details of at least %{count} main people"
           not_enough_relevant_people:

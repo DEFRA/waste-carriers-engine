@@ -1,4 +1,5 @@
 class ConvictionDetailsForm < PersonForm
+  include CanLimitNumberOfRelevantPeople
   include CanNavigateFlexibly
 
   def position?
@@ -9,7 +10,7 @@ class ConvictionDetailsForm < PersonForm
     :relevant
   end
 
-  validates_with PersonValidator, type: :relevant
+  validates_with RelevantPersonValidator
 
   private
 

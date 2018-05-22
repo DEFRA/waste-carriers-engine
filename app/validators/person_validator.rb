@@ -3,7 +3,7 @@ class PersonValidator < ActiveModel::Validator
     if options[:validate_fields] || record.fields_have_content?
       validate_individual_fields(record)
     else
-      validate_number_of_people_in_type(record, options[:type])
+      validate_number_of_people(record)
     end
   end
 
@@ -16,9 +16,8 @@ class PersonValidator < ActiveModel::Validator
     DateOfBirthValidator.new.validate(record)
   end
 
-  def validate_number_of_people_in_type(record, type)
-    return if record.enough_people?(type)
-    record.errors.add(:base, :not_enough_people_in_type, count: record.minimum_people(type))
+  def validate_number_of_people(_record)
+    implemented_in_subclass
   end
 
   def validate_first_name(record)
@@ -46,5 +45,9 @@ class PersonValidator < ActiveModel::Validator
     return true if record.send(field).length < length
     record.errors.add(field, :too_long)
     false
+  end
+
+  def implemented_in_subclass
+    raise NotImplementedError, "This #{self.class} cannot respond to:"
   end
 end

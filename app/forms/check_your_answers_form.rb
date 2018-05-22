@@ -1,5 +1,6 @@
 class CheckYourAnswersForm < BaseForm
-  include CanLimitNumberOfPeople
+  include CanLimitNumberOfMainPeople
+  include CanLimitNumberOfRelevantPeople
   include CanNavigateFlexibly
 
   attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_address_display, :contact_email,

@@ -26,7 +26,7 @@ en:
     errors:
       models:
         main_people_form:
-          not_enough_people_in_type:
+          not_enough_main_people:
             one: "You must add the details of at least one person"
             other: "You must add the details of at least %{count} people"
           attributes:

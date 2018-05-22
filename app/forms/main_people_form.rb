@@ -1,4 +1,5 @@
 class MainPeopleForm < PersonForm
+  include CanLimitNumberOfMainPeople
   include CanNavigateFlexibly
 
   attr_accessor :business_type
@@ -9,14 +10,14 @@ class MainPeopleForm < PersonForm
     self.business_type = @transient_registration.business_type
 
     # If there's only one main person, we can pre-fill the fields so users can easily edit them
-    prefill_form if can_only_have_one_person?(person_type) && @transient_registration.main_people.present?
+    prefill_form if can_only_have_one_main_person? && @transient_registration.main_people.present?
   end
 
   def person_type
     :key
   end
 
-  validates_with PersonValidator, type: :key
+  validates_with MainPersonValidator
 
   private
 
@@ -35,7 +36,7 @@ class MainPeopleForm < PersonForm
 
     # If there's only one main person allowed, we want to discard any existing main people, but keep people with
     # relevant convictions. Otherwise, we copy all the keyPeople, regardless of type.
-    existing_people = if can_only_have_one_person?(person_type)
+    existing_people = if can_only_have_one_main_person?
                         @transient_registration.relevant_people
                       else
                         @transient_registration.keyPeople
