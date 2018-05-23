@@ -59,6 +59,12 @@ module WasteCarriersRenewals
     config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
     config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
 
+    # Worldpay
+    config.worldpay_merchantcode = ENV["WCRS_WORLDPAY_ECOM_MERCHANTCODE"]
+    config.worldpay_username =  ENV["WCRS_WORLDPAY_ECOM_USERNAME"]
+    config.worldpay_password = ENV["WCRS_WORLDPAY_ECOM_PASSWORD"]
+    config.worldpay_macsecret =  ENV["WCRS_WORLDPAY_ECOM_MACSECRET"]
+
     # Version info
     config.application_version = "0.0.1".freeze
     config.application_name = "waste-carriers-renewals"

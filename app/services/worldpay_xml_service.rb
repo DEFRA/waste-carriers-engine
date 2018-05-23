@@ -7,10 +7,12 @@ class WorldpayXmlService
   end
 
   def build_xml
+    merchant_code = Rails.configuration.worldpay_merchantcode
+
     builder = Nokogiri::XML::Builder.new do |xml|
       build_doctype(xml)
 
-      xml.paymentService(version: "1.4", merchantCode: "[tbd]") do
+      xml.paymentService(version: "1.4", merchantCode: merchant_code) do
         xml.submit do
           build_order(xml)
         end
