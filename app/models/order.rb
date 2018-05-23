@@ -23,4 +23,20 @@ class Order
   field :exception,                                type: String
   field :manualOrder, as: :manual_order,           type: String
   field :order_item_reference,                     type: String
+
+  def self.new_order(transient_registration)
+    order = Order.new
+
+    card_count = transient_registration.temp_cards
+
+    order[:currency] = "GBP"
+
+    order[:order_items] = [OrderItem.new_renewal_item]
+    order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?
+    order[:order_items] << OrderItem.new_copy_cards_item(card_count) if card_count.positive?
+
+    order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
+
+    order
+  end
 end
