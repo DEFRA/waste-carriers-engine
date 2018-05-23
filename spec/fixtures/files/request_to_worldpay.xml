@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
+<paymentService version="1.4" merchantCode="[tbd]">
+  <submit>
+    <order orderCode="[tbd]">
+      <description>Your Waste Carrier Registration [reg_identifier]</description>
+      <amount currencyCode="GBP" value="[total_cost]" exponent="2"/>
+      <orderContent>New Waste Carrier Registration: [reg_identifier] for [company_name]</orderContent>
+      <paymentMethodMask>
+        <include code="VISA-SSL"/>
+        <include code="MAESTRO-SSL"/>
+        <include code="ECMC-SSL"/>
+      </paymentMethodMask>
+      <shopper>
+        <shopperEmailAddress>[email]</shopperEmailAddress>
+      </shopper>
+      <billingAddress>
+        <address>
+          <firstName>[first_name]</firstName>
+          <lastName>[last_name]</lastName>
+          <address1>[address_line_1]</address1>
+          <address2>[address_line_2]</address2>
+          <postalCode>[postcode]</postalCode>
+          <city>[city]</city>
+          <countryCode>[countrycode]</countryCode>
+        </address>
+      </billingAddress>
+    </order>
+  </submit>
+</paymentService>
