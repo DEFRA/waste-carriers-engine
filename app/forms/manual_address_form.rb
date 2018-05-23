@@ -54,6 +54,7 @@ class ManualAddressForm < BaseForm
   def saved_address_still_valid?
     return true if overseas?
     return false unless existing_address
+    return true if saved_temp_postcode.blank?
     return true if saved_temp_postcode == existing_address.postcode
     false
   end

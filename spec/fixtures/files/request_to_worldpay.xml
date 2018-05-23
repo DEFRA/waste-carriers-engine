@@ -3,26 +3,26 @@
 <paymentService version="1.4" merchantCode="[tbd]">
   <submit>
     <order orderCode="[tbd]">
-      <description>Your Waste Carrier Registration [reg_identifier]</description>
+      <description>Your Waste Carrier Registration CBDU9999</description>
       <amount currencyCode="GBP" value="[total_cost]" exponent="2"/>
-      <orderContent>New Waste Carrier Registration: [reg_identifier] for [company_name]</orderContent>
+      <orderContent>Waste Carrier Registration renewal: CBDU9999 for Acme Waste</orderContent>
       <paymentMethodMask>
         <include code="VISA-SSL"/>
         <include code="MAESTRO-SSL"/>
         <include code="ECMC-SSL"/>
       </paymentMethodMask>
       <shopper>
-        <shopperEmailAddress>[email]</shopperEmailAddress>
+        <shopperEmailAddress>foo@example.com</shopperEmailAddress>
       </shopper>
       <billingAddress>
         <address>
-          <firstName>[first_name]</firstName>
-          <lastName>[last_name]</lastName>
-          <address1>[address_line_1]</address1>
-          <address2>[address_line_2]</address2>
-          <postalCode>[postcode]</postalCode>
-          <city>[city]</city>
-          <countryCode>[countrycode]</countryCode>
+          <firstName>Jane</firstName>
+          <lastName>Doe</lastName>
+          <address1>42 Foo Gardens</address1>
+          <address2/>
+          <postalCode>FA1 1KE</postalCode>
+          <city>Baz City</city>
+          <countryCode>SK</countryCode>
         </address>
       </billingAddress>
     </order>
