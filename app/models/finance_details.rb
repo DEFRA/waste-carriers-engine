@@ -8,8 +8,21 @@ class FinanceDetails
   accepts_nested_attributes_for :orders, :payments
 
   # TODO: Confirm types
-  field :balance, type: BigDecimal
+  field :balance, type: Integer
 
   validates :balance,
             presence: true
+
+  def self.new_finance_details(transient_registration)
+    finance_details = FinanceDetails.new
+    finance_details[:orders] = [Order.new_order(transient_registration)]
+    finance_details.update_balance
+    finance_details
+  end
+
+  def update_balance
+    order_balance = orders.sum { |item| item[:total_amount] }
+    payment_balance = payments.sum { |item| item[:amount] }
+    self.balance = order_balance - payment_balance
+  end
 end
