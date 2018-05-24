@@ -4,7 +4,7 @@
   <submit>
     <order orderCode="1234567890">
       <description>Your Waste Carrier Registration CBDU9999</description>
-      <amount currencyCode="GBP" value="110" exponent="2"/>
+      <amount currencyCode="GBP" value="100" exponent="2"/>
       <orderContent>Waste Carrier Registration renewal: CBDU9999 for Acme Waste</orderContent>
       <paymentMethodMask>
         <include code="VISA-SSL"/>
