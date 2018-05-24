@@ -9,7 +9,7 @@ class Order
   # TODO: Confirm types
   # TODO: Confirm if all of these are actually required
   field :orderId, as: :order_id,                   type: String
-  field :orderCode, as: :order_code,               type: Integer
+  field :orderCode, as: :order_code,               type: String
   field :paymentMethod, as: :payment_method,       type: String
   field :merchantId, as: :merchant_id,             type: String
   field :totalAmount, as: :total_amount,           type: Integer # TODO: Confirm
@@ -29,7 +29,10 @@ class Order
 
     card_count = transient_registration.temp_cards
 
+    order[:order_id] = order.generate_id
+    order[:order_code] = order[:order_id]
     order[:currency] = "GBP"
+    order[:payment_method] = "ONLINE"
 
     order[:order_items] = [OrderItem.new_renewal_item]
     order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?
@@ -38,5 +41,9 @@ class Order
     order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
 
     order
+  end
+
+  def generate_id
+    Time.now.to_i.to_s
   end
 end

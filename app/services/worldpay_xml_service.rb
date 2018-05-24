@@ -34,11 +34,12 @@ class WorldpayXmlService
   end
 
   def build_order(xml)
+    order_code = @order.order_code
     reg_identifier = @transient_registration.reg_identifier
     company_name = @transient_registration.company_name
     value = @order.total_amount
 
-    xml.order(orderCode: "[tbd]") do
+    xml.order(orderCode: order_code) do
       xml.description "Your Waste Carrier Registration #{reg_identifier}"
 
       xml.amount(currencyCode: "GBP", value: value, exponent: "2")

@@ -17,6 +17,10 @@ RSpec.describe WorldpayXmlService do
 
     allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
     allow(Rails.configuration).to receive(:renewal_charge).and_return(100)
+    allow(Rails.configuration).to receive(:card_charge).and_return(5)
+
+    # This is generated based on the time, so to avoid any millisecond malarky, let's just stub it
+    allow_any_instance_of(Order).to receive(:order_code).and_return("1234567890")
   end
 
   describe "build_xml" do

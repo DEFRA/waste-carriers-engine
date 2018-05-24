@@ -2,7 +2,7 @@
 <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
 <paymentService version="1.4" merchantCode="MERCHANTCODE">
   <submit>
-    <order orderCode="[tbd]">
+    <order orderCode="1234567890">
       <description>Your Waste Carrier Registration CBDU9999</description>
       <amount currencyCode="GBP" value="110" exponent="2"/>
       <orderContent>Waste Carrier Registration renewal: CBDU9999 for Acme Waste</orderContent>

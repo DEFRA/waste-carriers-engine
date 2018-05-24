@@ -12,6 +12,16 @@ RSpec.describe Order, type: :model do
   describe "new_order" do
     let(:order) { Order.new_order(transient_registration) }
 
+    it "should have a valid order_id" do
+      Timecop.freeze(Time.new(2018, 1, 1)) do
+        expect(order[:order_id]).to eq("1514764800")
+      end
+    end
+
+    it "should have a matching order_id and order_code" do
+      expect(order[:order_id]).to eq(order[:order_code])
+    end
+
     it "should include 1 renewal item" do
       matching_item = order[:order_items].find { |item| item[:type] == "RENEW" }
       expect(matching_item).to_not be_nil
