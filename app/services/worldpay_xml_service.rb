@@ -2,8 +2,9 @@ require "countries"
 require "nokogiri"
 
 class WorldpayXmlService
-  def initialize(transient_registration)
+  def initialize(transient_registration, order)
     @transient_registration = transient_registration
+    @order = order
   end
 
   def build_xml
@@ -35,11 +36,12 @@ class WorldpayXmlService
   def build_order(xml)
     reg_identifier = @transient_registration.reg_identifier
     company_name = @transient_registration.company_name
+    value = @order.total_amount
 
     xml.order(orderCode: "[tbd]") do
       xml.description "Your Waste Carrier Registration #{reg_identifier}"
 
-      xml.amount(currencyCode: "GBP", value: "[total_cost]", exponent: "2")
+      xml.amount(currencyCode: "GBP", value: value, exponent: "2")
 
       xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_name}"
 
