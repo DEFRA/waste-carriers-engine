@@ -1,16 +1,6 @@
 <%= render("shared/back", back_path: back_payment_summary_forms_path(@payment_summary_form.reg_identifier)) %>
 
 <div class="text">
-<% if @payment_summary_form.errors.any? %>
-
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
-
-  <% @payment_summary_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
   <%= form_for(@payment_summary_form) do |f| %>
     <%= render("shared/errors", object: @payment_summary_form) %>
 
@@ -81,6 +71,4 @@
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
   <% end %>
-
-<% end %>
 </div>
