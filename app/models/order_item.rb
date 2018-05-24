@@ -11,10 +11,9 @@ class OrderItem
   field :type,                            type: String
 
   def self.new_renewal_item
-    order_item = OrderItem.new
+    order_item = OrderItem.base_order_item
 
     order_item[:amount] = Rails.configuration.renewal_charge
-    order_item[:currency] = "GBP"
     order_item[:description] = "Renewal of registration"
     order_item[:type] = "RENEW"
 
@@ -22,10 +21,9 @@ class OrderItem
   end
 
   def self.new_type_change_item
-    order_item = OrderItem.new
+    order_item = OrderItem.base_order_item
 
     order_item[:amount] = Rails.configuration.type_change_charge
-    order_item[:currency] = "GBP"
     order_item[:description] = "Changing carrier type during renewal"
     order_item[:type] = "CHARGE_ADJUST"
 
@@ -33,13 +31,18 @@ class OrderItem
   end
 
   def self.new_copy_cards_item(cards)
-    order_item = OrderItem.new
+    order_item = OrderItem.base_order_item
 
     order_item[:amount] = cards * Rails.configuration.card_charge
-    order_item[:currency] = "GBP"
     order_item[:description] = "#{cards}x registration cards"
     order_item[:type] = "COPY_CARDS"
 
+    order_item
+  end
+
+  def self.base_order_item
+    order_item = OrderItem.new
+    order_item[:currency] = "GBP"
     order_item
   end
 end
