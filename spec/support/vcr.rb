@@ -7,7 +7,9 @@ VCR.configure do |c|
   c.default_cassette_options = { re_record_interval: 14.days }
 
   # Strip out authorization info
-  c.filter_sensitive_data("Basic <COMPANIES_HOUSE_API_KEY>") do |interaction|
+  c.filter_sensitive_data("Basic <API_KEY>") do |interaction|
     interaction.request.headers["Authorization"].first if interaction.request.headers["Authorization"].present?
   end
+
+  c.filter_sensitive_data("MERCHANT_CODE") { Rails.configuration.worldpay_merchantcode }
 end
