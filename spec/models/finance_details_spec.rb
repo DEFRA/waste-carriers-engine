@@ -18,7 +18,7 @@ RSpec.describe FinanceDetails, type: :model do
     end
 
     it "should have the correct balance" do
-      expect(finance_details.balance).to eq(100)
+      expect(finance_details.balance).to eq(10_000)
     end
   end
 
@@ -37,29 +37,29 @@ RSpec.describe FinanceDetails, type: :model do
 
       it "should have the correct balance" do
         finance_details.update_balance
-        expect(finance_details.balance).to eq(100)
+        expect(finance_details.balance).to eq(10_000)
       end
 
       context "when there is also a payment" do
         before do
-          finance_details.payments = [build(:payment, amount: 50)]
+          finance_details.payments = [build(:payment, amount: 5_000)]
         end
 
         it "should have the correct balance" do
           finance_details.update_balance
-          expect(finance_details.balance).to eq(50)
+          expect(finance_details.balance).to eq(5_000)
         end
       end
     end
 
     context "when there is a payment only" do
       before do
-        finance_details.payments = [build(:payment, amount: 50)]
+        finance_details.payments = [build(:payment, amount: 5_000)]
       end
 
       it "should have the correct balance" do
         finance_details.update_balance
-        expect(finance_details.balance).to eq(-50)
+        expect(finance_details.balance).to eq(-5_000)
       end
     end
   end

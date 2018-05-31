@@ -28,7 +28,7 @@ RSpec.describe Order, type: :model do
     end
 
     it "should have the correct total_amount" do
-      expect(order.total_amount).to eq(100)
+      expect(order.total_amount).to eq(10_000)
     end
 
     context "when the registration type has not changed" do
@@ -49,7 +49,7 @@ RSpec.describe Order, type: :model do
       end
 
       it "should have the correct total_amount" do
-        expect(order.total_amount).to eq(125)
+        expect(order.total_amount).to eq(12_500)
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe Order, type: :model do
       end
 
       it "should have the correct total_amount" do
-        expect(order.total_amount).to eq(130)
+        expect(order.total_amount).to eq(13_000)
       end
     end
   end

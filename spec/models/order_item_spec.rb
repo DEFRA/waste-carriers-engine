@@ -17,7 +17,7 @@ RSpec.describe OrderItem, type: :model do
     end
 
     it "should set the correct amount" do
-      expect(order_item.amount).to eq(100)
+      expect(order_item.amount).to eq(10_000)
     end
 
     it "should set the correct description" do
@@ -33,7 +33,7 @@ RSpec.describe OrderItem, type: :model do
     end
 
     it "should set the correct amount" do
-      expect(order_item.amount).to eq(25)
+      expect(order_item.amount).to eq(2_500)
     end
 
     it "should set the correct description" do
@@ -49,7 +49,7 @@ RSpec.describe OrderItem, type: :model do
     end
 
     it "should set the correct amount" do
-      expect(order_item.amount).to eq(30)
+      expect(order_item.amount).to eq(3_000)
     end
 
     it "should set the correct description" do
