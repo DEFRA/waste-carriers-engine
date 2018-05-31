@@ -31,7 +31,7 @@ FactoryBot.define do
 
     trait :has_finance_details do
       after(:build, :create) do |transient_registration|
-        transient_registration[:financeDetails] = FinanceDetails.new_finance_details(transient_registration)
+        FinanceDetails.new_finance_details(transient_registration)
       end
     end
 

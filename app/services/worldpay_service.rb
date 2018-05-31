@@ -11,7 +11,7 @@ class WorldpayService
     response = send_request
     reference = parse_response(response)
     return :error unless reference.present?
-    reference[:link]
+    format_link(reference[:link])
   end
 
   private
@@ -50,5 +50,46 @@ class WorldpayService
       Rails.logger.error "Could not parse Worldpay response: #{response}"
       return nil
     end
+  end
+
+  def format_link(url)
+    [url,
+     success_url,
+     pending_url,
+     failure_url,
+     cancel_url,
+     error_url].join
+  end
+
+  def success_url
+    ["&successURL=", success_path].join
+  end
+
+  def pending_url
+    ["&pendingURL=", failure_path].join
+  end
+
+  def failure_url
+    ["&failureURL=", failure_path].join
+  end
+
+  def cancel_url
+    ["&cancelURL=", failure_path].join
+  end
+
+  def error_url
+    ["&errorURL=", failure_path].join
+  end
+
+  def success_path
+    url = [Rails.configuration.wcrs_renewals_url,
+           Rails.application.routes.url_helpers.success_worldpay_forms_path(@transient_registration.reg_identifier)]
+    CGI.escape(url.join)
+  end
+
+  def failure_path
+    url = [Rails.configuration.wcrs_renewals_url,
+           Rails.application.routes.url_helpers.failure_worldpay_forms_path(@transient_registration.reg_identifier)]
+    CGI.escape(url.join)
   end
 end

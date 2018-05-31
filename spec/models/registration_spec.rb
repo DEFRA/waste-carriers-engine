@@ -161,13 +161,13 @@ RSpec.describe Registration, type: :model do
     end
   end
 
-  describe "#financeDetails" do
-    context "when a registration has a financeDetails" do
-      let(:finance_details) { build(:financeDetails, :has_required_data) }
+  describe "#finance_details" do
+    context "when a registration has a finance_details" do
+      let(:finance_details) { build(:finance_details, :has_required_data) }
       let(:registration) do
         build(:registration,
               :has_required_data,
-              financeDetails: finance_details)
+              finance_details: finance_details)
       end
 
       it "is valid" do
@@ -176,12 +176,12 @@ RSpec.describe Registration, type: :model do
     end
 
     describe "#balance" do
-      context "when a registration has a financeDetails which has no balance" do
-        let(:finance_details) { build(:financeDetails, balance: nil) }
+      context "when a registration has a finance_details which has no balance" do
+        let(:finance_details) { build(:finance_details, balance: nil) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: finance_details)
+                finance_details: finance_details)
         end
 
         it "is not valid" do
@@ -191,13 +191,13 @@ RSpec.describe Registration, type: :model do
     end
 
     describe "#orders" do
-      context "when a registration has a financeDetails which has one order" do
+      context "when a registration has a finance_details which has one order" do
         let(:order) { build(:order) }
-        let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order]) }
+        let(:finance_details) { build(:finance_details, :has_required_data, orders: [order]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: finance_details)
+                finance_details: finance_details)
         end
 
         it "is valid" do
@@ -205,14 +205,14 @@ RSpec.describe Registration, type: :model do
         end
       end
 
-      context "when a registration has a financeDetails which has multiple orders" do
+      context "when a registration has a finance_details which has multiple orders" do
         let(:order_a) { build(:order) }
         let(:order_b) { build(:order) }
-        let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order_a, order_b]) }
+        let(:finance_details) { build(:finance_details, :has_required_data, orders: [order_a, order_b]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: finance_details)
+                finance_details: finance_details)
         end
 
         it "is valid" do
@@ -220,15 +220,15 @@ RSpec.describe Registration, type: :model do
         end
       end
 
-      describe "#orderItems" do
-        context "when a registration has a financeDetails which has an order which has an orderItem" do
-          let(:order_item) { build(:orderItem) }
-          let(:order) { build(:order, orderItems: [order_item]) }
-          let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order]) }
+      describe "#order_items" do
+        context "when a registration has a finance_details which has an order which has an order_item" do
+          let(:order_item) { build(:order_item) }
+          let(:order) { build(:order, order_items: [order_item]) }
+          let(:finance_details) { build(:finance_details, :has_required_data, orders: [order]) }
           let(:registration) do
             build(:registration,
                   :has_required_data,
-                  financeDetails: finance_details)
+                  finance_details: finance_details)
           end
 
           it "is valid" do
@@ -236,15 +236,15 @@ RSpec.describe Registration, type: :model do
           end
         end
 
-        context "when a registration has a financeDetails which has an order which has multiple orderItems" do
-          let(:order_item_a) { build(:orderItem) }
-          let(:order_item_b) { build(:orderItem) }
-          let(:order) { build(:order, orderItems: [order_item_a, order_item_b]) }
-          let(:finance_details) { build(:financeDetails, :has_required_data, orders: [order]) }
+        context "when a registration has a finance_details which has an order which has multiple order_items" do
+          let(:order_item_a) { build(:order_item) }
+          let(:order_item_b) { build(:order_item) }
+          let(:order) { build(:order, order_items: [order_item_a, order_item_b]) }
+          let(:finance_details) { build(:finance_details, :has_required_data, orders: [order]) }
           let(:registration) do
             build(:registration,
                   :has_required_data,
-                  financeDetails: finance_details)
+                  finance_details: finance_details)
           end
 
           it "is valid" do
@@ -255,13 +255,13 @@ RSpec.describe Registration, type: :model do
     end
 
     describe "#payments" do
-      context "when a registration has a financeDetails which has one payment" do
+      context "when a registration has a finance_details which has one payment" do
         let(:payment) { build(:payment) }
-        let(:finance_details) { build(:financeDetails, :has_required_data, payments: [payment]) }
+        let(:finance_details) { build(:finance_details, :has_required_data, payments: [payment]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: finance_details)
+                finance_details: finance_details)
         end
 
         it "is valid" do
@@ -269,14 +269,14 @@ RSpec.describe Registration, type: :model do
         end
       end
 
-      context "when a registration has a financeDetails which has multiple payments" do
+      context "when a registration has a finance_details which has multiple payments" do
         let(:payment_a) { build(:payment) }
         let(:payment_b) { build(:payment) }
-        let(:finance_details) { build(:financeDetails, :has_required_data, payments: [payment_a, payment_b]) }
+        let(:finance_details) { build(:finance_details, :has_required_data, payments: [payment_a, payment_b]) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                financeDetails: finance_details)
+                finance_details: finance_details)
         end
 
         it "is valid" do

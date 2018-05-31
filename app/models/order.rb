@@ -1,10 +1,10 @@
 class Order
   include Mongoid::Document
 
-  embedded_in :financeDetails
-  embeds_many :orderItems
+  embedded_in :finance_details
+  embeds_many :order_items, store_as: "orderItems"
 
-  accepts_nested_attributes_for :orderItems
+  accepts_nested_attributes_for :order_items
 
   # TODO: Confirm types
   # TODO: Confirm if all of these are actually required

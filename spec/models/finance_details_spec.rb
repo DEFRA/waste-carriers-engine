@@ -12,8 +12,8 @@ RSpec.describe FinanceDetails, type: :model do
   describe "new_finance_details" do
     let(:finance_details) { FinanceDetails.new_finance_details(transient_registration) }
 
-    it "should include 1 order item" do
-      order_count = finance_details[:orders].count
+    it "should include 1 order" do
+      order_count = finance_details.orders.length
       expect(order_count).to eq(1)
     end
 
@@ -23,7 +23,7 @@ RSpec.describe FinanceDetails, type: :model do
   end
 
   describe "update_balance" do
-    let(:finance_details) { build(:financeDetails) }
+    let(:finance_details) { build(:finance_details) }
 
     it "should have the correct balance" do
       finance_details.update_balance
@@ -32,7 +32,7 @@ RSpec.describe FinanceDetails, type: :model do
 
     context "when there is an order" do
       before do
-        finance_details[:orders] = [Order.new_order(transient_registration)]
+        finance_details.orders = [Order.new_order(transient_registration)]
       end
 
       it "should have the correct balance" do
@@ -42,7 +42,7 @@ RSpec.describe FinanceDetails, type: :model do
 
       context "when there is also a payment" do
         before do
-          finance_details[:payments] = [build(:payment, amount: 50)]
+          finance_details.payments = [build(:payment, amount: 50)]
         end
 
         it "should have the correct balance" do
@@ -54,7 +54,7 @@ RSpec.describe FinanceDetails, type: :model do
 
     context "when there is a payment only" do
       before do
-        finance_details[:payments] = [build(:payment, amount: 50)]
+        finance_details.payments = [build(:payment, amount: 50)]
       end
 
       it "should have the correct balance" do

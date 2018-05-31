@@ -347,9 +347,14 @@ Rails.application.routes.draw do
             only: [:new, :create],
             path: "worldpay",
             path_names: { new: "/:reg_identifier" } do
-              get "back/:reg_identifier",
-              to: "worldpay_forms#go_back",
-              as: "back",
+              get "success/:reg_identifier",
+              to: "worldpay_forms#success",
+              as: "success",
+              on: :collection
+
+              get "failure/:reg_identifier",
+              to: "worldpay_forms#failure",
+              as: "failure",
               on: :collection
             end
 

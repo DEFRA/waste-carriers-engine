@@ -9,7 +9,7 @@ RSpec.describe WorldpayXmlService do
            :has_finance_details,
            temp_cards: 0)
   end
-  let(:order) { transient_registration[:financeDetails][:orders].first }
+  let(:order) { transient_registration.finance_details.orders.first }
   let(:worldpay_xml_service) { WorldpayXmlService.new(transient_registration, order) }
 
   before do
