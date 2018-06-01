@@ -2,12 +2,12 @@ class WorldpayFormsController < FormsController
   def new
     super(WorldpayForm, "worldpay_form")
 
-    worldpay_url = set_up_worldpay_url
-    if worldpay_url == :error
+    payment_info = prepare_for_payment
+    if payment_info == :error
       flash[:error] = "Error setting up WorldPay"
       go_back
     else
-      redirect_to worldpay_url
+      redirect_to payment_info[:url]
     end
   end
 
@@ -27,10 +27,10 @@ class WorldpayFormsController < FormsController
 
   private
 
-  def set_up_worldpay_url
+  def prepare_for_payment
     FinanceDetails.new_finance_details(@transient_registration)
     order = @transient_registration.finance_details.orders.first
     worldpay_service = WorldpayService.new(@transient_registration, order)
-    worldpay_service.set_up_payment_link
+    worldpay_service.prepare_for_payment
   end
 end

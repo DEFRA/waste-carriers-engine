@@ -28,7 +28,7 @@ RSpec.describe "WorldpayForms", type: :request do
 
         context "when there is an error setting up the worldpay url" do
           before do
-            allow_any_instance_of(WorldpayService).to receive(:set_up_payment_link).and_return(:error)
+            allow_any_instance_of(WorldpayService).to receive(:prepare_for_payment).and_return(:error)
           end
 
           it "redirects to payment_summary_form" do

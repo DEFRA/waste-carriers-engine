@@ -7,11 +7,18 @@ class WorldpayService
     @password = Rails.configuration.worldpay_password
   end
 
-  def set_up_payment_link
+  def prepare_for_payment
     response = send_request
     reference = parse_response(response)
-    return :error unless reference.present?
-    format_link(reference[:link])
+
+    if reference.present?
+      {
+        payment: new_payment_object(@order),
+        url: format_link(reference[:link])
+      }
+    else
+      :error
+    end
   end
 
   private
@@ -50,6 +57,12 @@ class WorldpayService
       Rails.logger.error "Could not parse Worldpay response: #{response}"
       return nil
     end
+  end
+
+  def new_payment_object(order)
+    payment = Payment.new_from_worldpay(order)
+    @transient_registration.finance_details.payments = [payment]
+    payment
   end
 
   def format_link(url)

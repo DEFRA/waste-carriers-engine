@@ -5,7 +5,7 @@ class Payment
 
   # TODO: Confirm types
   # TODO: Confirm if all of these are needed
-  field :orderKey, as: :order_key,                              type: Integer
+  field :orderKey, as: :order_key,                              type: String
   field :amount,                                                type: Integer
   field :currency,                                              type: String
   field :mac_code,                                              type: String
@@ -20,4 +20,15 @@ class Payment
   field :comment,                                               type: String
   field :paymentType, as: :payment_type,                        type: String
   field :manualPayment, as: :manual_payment,                    type: String
+
+  def self.new_from_worldpay(order)
+    payment = Payment.new
+
+    payment[:order_key] = order[:order_code]
+    payment[:amount] = order[:total_amount]
+    payment[:currency] = "GBP"
+    payment[:payment_type] = "WORLDPAY"
+
+    payment
+  end
 end
