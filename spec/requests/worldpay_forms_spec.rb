@@ -46,19 +46,86 @@ RSpec.describe "WorldpayForms", type: :request do
       end
 
       describe "#success" do
-        it "redirects to renewal_complete_form" do
-          get success_worldpay_forms_path(reg_id)
-          expect(response).to redirect_to(new_renewal_complete_form_path(reg_id))
+        before do
+          FinanceDetails.new_finance_details(transient_registration)
         end
 
-        context "when it has been flagged for conviction checks" do
-          before do
-            transient_registration.update_attributes(declared_convictions: true)
+        let(:order) do
+          transient_registration.finance_details.orders.first
+        end
+
+        let(:params) do
+          {
+            orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
+            paymentStatus: "AUTHORISED",
+            paymentAmount: order.total_amount,
+            paymentCurrency: "GBP",
+            mac: "5r2zsonhn2t69s1q9jsub90l0ljrs59r",
+            source: "WP",
+            reg_identifier: reg_id
+          }
+        end
+
+        context "when the params are valid" do
+          it "redirects to renewal_complete_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_renewal_complete_form_path(reg_id))
           end
 
-          it "redirects to renewal_received_form" do
-            get success_worldpay_forms_path(reg_id)
-            expect(response).to redirect_to(new_renewal_received_form_path(reg_id))
+          context "when it has been flagged for conviction checks" do
+            before do
+              transient_registration.update_attributes(declared_convictions: true)
+            end
+
+            it "redirects to renewal_received_form" do
+              get success_worldpay_forms_path(reg_id), params
+              expect(response).to redirect_to(new_renewal_received_form_path(reg_id))
+            end
+          end
+        end
+
+        context "when the orderKey is invalid" do
+          before { params[:orderKey] = "foo" }
+
+          it "redirects to payment_summary_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+          end
+        end
+
+        context "when the paymentStatus is invalid" do
+          before { params[:paymentStatus] = "foo" }
+
+          it "redirects to payment_summary_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+          end
+        end
+
+        context "when the paymentAmount is invalid" do
+          before { params[:paymentAmount] = 42 }
+
+          it "redirects to payment_summary_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+          end
+        end
+
+        context "when the paymentCurrency is invalid" do
+          before { params[:paymentCurrency] = "foo" }
+
+          it "redirects to payment_summary_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+          end
+        end
+
+        context "when the source is invalid" do
+          before { params[:source] = "foo" }
+
+          it "redirects to payment_summary_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
           end
         end
       end
