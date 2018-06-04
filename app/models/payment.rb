@@ -36,6 +36,6 @@ class Payment
 
   def update_after_worldpay(params)
     self.world_pay_payment_status = params[:paymentStatus]
-    save!
+    save
   end
 end
