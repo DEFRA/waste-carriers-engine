@@ -55,13 +55,12 @@ class WorldpayFormsController < FormsController
   end
 
   def valid_params?(params, order_key, order)
-    return false unless valid_mac?(params[:mac])
-    return false unless valid_order_key_format?(params[:orderKey], order_key)
-    return false unless valid_payment_status?(params[:paymentStatus])
-    return false unless valid_payment_amount?(params[:paymentAmount], order)
-    return false unless valid_currency?(params[:paymentCurrency], order)
-    return false unless valid_source?(params[:source])
-    true
+    valid_mac?(params[:mac]) &&
+      valid_order_key_format?(params[:orderKey], order_key) &&
+      valid_payment_status?(params[:paymentStatus]) &&
+      valid_payment_amount?(params[:paymentAmount], order) &&
+      valid_currency?(params[:paymentCurrency], order) &&
+      valid_source?(params[:source])
   end
 
   def get_order_key(order_key)

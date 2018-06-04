@@ -84,8 +84,17 @@ RSpec.describe "WorldpayForms", type: :request do
           end
         end
 
-        context "when the orderKey is invalid" do
-          before { params[:orderKey] = "foo" }
+        context "when the orderKey doesn't match an existing order" do
+          before { params[:orderKey] = "0123456789" }
+
+          it "redirects to payment_summary_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+          end
+        end
+
+        context "when the orderKey is in the wrong format" do
+          before { params[:orderKey] = "foo#{order.order_code}" }
 
           it "redirects to payment_summary_form" do
             get success_worldpay_forms_path(reg_id), params
