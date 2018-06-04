@@ -1,7 +1,7 @@
 class Payment
   include Mongoid::Document
 
-  embedded_in :financeDetails
+  embedded_in :finance_details
 
   # TODO: Confirm types
   # TODO: Confirm if all of these are needed
@@ -28,7 +28,14 @@ class Payment
     payment[:amount] = order[:total_amount]
     payment[:currency] = "GBP"
     payment[:payment_type] = "WORLDPAY"
+    payment.finance_details = order.finance_details
+    payment.save
 
     payment
+  end
+
+  def update_after_worldpay(params)
+    self.world_pay_payment_status = params[:paymentStatus]
+    save!
   end
 end

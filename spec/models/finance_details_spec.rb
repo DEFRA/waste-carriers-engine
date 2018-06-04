@@ -46,7 +46,7 @@ RSpec.describe FinanceDetails, type: :model do
 
       context "when there is also a payment" do
         before do
-          finance_details.payments = [build(:payment, amount: 5_000)]
+          finance_details.payments = [build(:payment, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
         end
 
         it "should have the correct balance" do
@@ -54,11 +54,22 @@ RSpec.describe FinanceDetails, type: :model do
           expect(finance_details.balance).to eq(5_000)
         end
       end
+
+      context "when the payment is not authorised" do
+        before do
+          finance_details.payments = [build(:payment, amount: 5_000, world_pay_payment_status: "REFUSED")]
+        end
+
+        it "should not include it when calculating the balance" do
+          finance_details.update_balance
+          expect(finance_details.balance).to eq(10_000)
+        end
+      end
     end
 
     context "when there is a payment only" do
       before do
-        finance_details.payments = [build(:payment, amount: 5_000)]
+        finance_details.payments = [build(:payment, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
       end
 
       it "should have the correct balance" do

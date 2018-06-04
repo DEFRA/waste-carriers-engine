@@ -25,7 +25,7 @@ class FinanceDetails
 
   def update_balance
     order_balance = orders.sum { |item| item[:total_amount] }
-    payment_balance = payments.sum { |item| item[:amount] }
+    payment_balance = payments.where(world_pay_payment_status: "AUTHORISED").sum { |item| item[:amount] }
     self.balance = order_balance - payment_balance
   end
 end

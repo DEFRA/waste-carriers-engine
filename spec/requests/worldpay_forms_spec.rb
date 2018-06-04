@@ -48,6 +48,7 @@ RSpec.describe "WorldpayForms", type: :request do
       describe "#success" do
         before do
           FinanceDetails.new_finance_details(transient_registration)
+          Payment.new_from_worldpay(order)
         end
 
         let(:order) do
@@ -70,6 +71,11 @@ RSpec.describe "WorldpayForms", type: :request do
           it "redirects to renewal_complete_form" do
             get success_worldpay_forms_path(reg_id), params
             expect(response).to redirect_to(new_renewal_complete_form_path(reg_id))
+          end
+
+          it "updates the payment status" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(transient_registration.reload.finance_details.payments.first.world_pay_payment_status).to eq("AUTHORISED")
           end
 
           context "when it has been flagged for conviction checks" do

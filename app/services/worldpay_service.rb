@@ -60,9 +60,7 @@ class WorldpayService
   end
 
   def new_payment_object(order)
-    payment = Payment.new_from_worldpay(order)
-    @transient_registration.finance_details.payments = [payment]
-    payment
+    Payment.new_from_worldpay(order)
   end
 
   def format_link(url)

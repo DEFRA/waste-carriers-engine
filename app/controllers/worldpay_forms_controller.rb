@@ -16,7 +16,10 @@ class WorldpayFormsController < FormsController
   def success
     return unless set_up_form(WorldpayForm, "worldpay_form", params[:reg_identifier])
 
-    if valid_worldpay_response?(params)
+    order_key = get_order_key(params[:orderKey])
+
+    if order_key && valid_worldpay_response?(params, order_key)
+      update_payment(order_key)
       @transient_registration.next!
       redirect_to_correct_form
     else
@@ -39,11 +42,7 @@ class WorldpayFormsController < FormsController
     worldpay_service.prepare_for_payment
   end
 
-  def valid_worldpay_response?(params)
-    # Extract the 10 digits at the end of the order key param
-    order_key = get_order_key(params[:orderKey])
-    return false unless order_key.present?
-
+  def valid_worldpay_response?(params, order_key)
     order = find_order(order_key)
 
     if order.present?
@@ -52,6 +51,11 @@ class WorldpayFormsController < FormsController
       Rails.logger.error "Invalid WorldPay response: could not find matching order"
       false
     end
+  end
+
+  def update_payment(order_key)
+    payment = @transient_registration.finance_details.payments.where(order_key: order_key).first
+    payment.update_after_worldpay(params)
   end
 
   def valid_params?(params, order_key, order)
@@ -64,7 +68,7 @@ class WorldpayFormsController < FormsController
   end
 
   def get_order_key(order_key)
-    order_key.match(/[0-9]{10}$/)
+    order_key.match(/[0-9]{10}$/).to_s
   end
 
   def find_order(order_key)
