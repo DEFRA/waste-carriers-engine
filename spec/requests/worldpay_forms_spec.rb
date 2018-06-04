@@ -26,6 +26,13 @@ RSpec.describe "WorldpayForms", type: :request do
           end
         end
 
+        it "creates a new finance_details" do
+          VCR.use_cassette("worldpay_redirect") do
+            get new_worldpay_form_path(reg_id)
+            expect(transient_registration.reload.finance_details).to_not eq(nil)
+          end
+        end
+
         context "when there is an error setting up the worldpay url" do
           before do
             allow_any_instance_of(WorldpayService).to receive(:prepare_for_payment).and_return(:error)

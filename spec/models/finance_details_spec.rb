@@ -20,6 +20,10 @@ RSpec.describe FinanceDetails, type: :model do
     it "should have the correct balance" do
       expect(finance_details.balance).to eq(10_000)
     end
+
+    it "should persist" do
+      expect(finance_details.persisted?).to eq(true)
+    end
   end
 
   describe "update_balance" do

@@ -19,6 +19,7 @@ class FinanceDetails
     finance_details.transient_registration = transient_registration
     finance_details[:orders] = [Order.new_order(transient_registration)]
     finance_details.update_balance
+    finance_details.save!
     finance_details
   end
 
