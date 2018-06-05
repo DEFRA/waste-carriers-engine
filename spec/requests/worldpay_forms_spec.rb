@@ -78,6 +78,11 @@ RSpec.describe "WorldpayForms", type: :request do
             expect(transient_registration.reload.finance_details.payments.first.world_pay_payment_status).to eq("AUTHORISED")
           end
 
+          it "updates the balance" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(transient_registration.reload.finance_details.balance).to eq(0)
+          end
+
           context "when it has been flagged for conviction checks" do
             before do
               transient_registration.update_attributes(declared_convictions: true)
@@ -175,6 +180,12 @@ RSpec.describe "WorldpayForms", type: :request do
         it "updates the payment status" do
           get failure_worldpay_forms_path(reg_id), params
           expect(transient_registration.reload.finance_details.payments.first.world_pay_payment_status).to eq("REFUSED")
+        end
+
+        it "does not update the balance" do
+          unmodified_balance = transient_registration.finance_details.balance
+          get success_worldpay_forms_path(reg_id), params
+          expect(transient_registration.reload.finance_details.balance).to eq(unmodified_balance)
         end
 
         context "when the orderKey doesn't match an existing order" do

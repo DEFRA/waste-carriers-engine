@@ -20,6 +20,7 @@ class WorldpayFormsController < FormsController
 
     if order_key && valid_worldpay_success_response?(params, order_key)
       update_payment(order_key)
+      @transient_registration.finance_details.update_balance
       @transient_registration.next!
       redirect_to_correct_form
     else
