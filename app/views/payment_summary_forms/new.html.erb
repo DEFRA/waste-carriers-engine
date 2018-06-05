@@ -4,7 +4,7 @@
   <%= form_for(@payment_summary_form) do |f| %>
     <% if flash[:error].present? %>
       <div class="error-summary" role="alert">
-        <h2 class="heading-medium error-summary-heading">Payment failure heading</h2>
+        <h2 class="heading-medium error-summary-heading"><%= t(".payment_error_heading") %></h2>
 
         <ul class="error-summary-list">
           <p><%= flash[:error] %></p>

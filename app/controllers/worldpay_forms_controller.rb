@@ -4,7 +4,7 @@ class WorldpayFormsController < FormsController
 
     payment_info = prepare_for_payment
     if payment_info == :error
-      flash[:error] = "Error setting up WorldPay"
+      flash[:error] = I18n.t(".worldpay_forms.new.setup_error")
       go_back
     else
       redirect_to payment_info[:url]
@@ -24,7 +24,7 @@ class WorldpayFormsController < FormsController
       @transient_registration.next!
       redirect_to_correct_form
     else
-      flash[:error] = "Invalid response from WorldPay"
+      flash[:error] = I18n.t(".worldpay_forms.success.invalid_response")
       go_back
     end
   end
@@ -36,9 +36,9 @@ class WorldpayFormsController < FormsController
 
     if order_key && valid_worldpay_failure_response?(params, order_key)
       update_payment(order_key)
-      flash[:error] = "Payment failure"
+      flash[:error] = I18n.t(".worldpay_forms.failure.message.#{params[:paymentStatus]}")
     else
-      flash[:error] = "Invalid response from WorldPay"
+      flash[:error] = I18n.t(".worldpay_forms.failure.invalid_response")
     end
 
     go_back
@@ -59,6 +59,7 @@ class WorldpayFormsController < FormsController
   end
 
   def get_order_key(order_key)
+    return nil unless order_key
     order_key.match(/[0-9]{10}$/).to_s
   end
 
