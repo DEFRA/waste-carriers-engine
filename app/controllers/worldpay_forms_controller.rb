@@ -14,11 +14,11 @@ class WorldpayFormsController < FormsController
   def create; end
 
   def success
-    return unless set_up_form(WorldpayForm, "worldpay_form", params[:reg_identifier])
+    return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
     order_key = get_order_key(params[:orderKey])
 
-    if order_key && valid_worldpay_response?(params, order_key)
+    if order_key && valid_worldpay_success_response?(params, order_key)
       update_payment(order_key)
       @transient_registration.next!
       redirect_to_correct_form
@@ -29,7 +29,17 @@ class WorldpayFormsController < FormsController
   end
 
   def failure
-    flash[:error] = "Payment failure"
+    return unless set_up_valid_transient_registration?(params[:reg_identifier])
+
+    order_key = get_order_key(params[:orderKey])
+
+    if order_key && valid_worldpay_failure_response?(params, order_key)
+      update_payment(order_key)
+      flash[:error] = "Payment failure"
+    else
+      flash[:error] = "Invalid response from WorldPay"
+    end
+
     go_back
   end
 
@@ -42,15 +52,13 @@ class WorldpayFormsController < FormsController
     worldpay_service.prepare_for_payment
   end
 
-  def valid_worldpay_response?(params, order_key)
-    order = find_order(order_key)
+  def set_up_valid_transient_registration?(reg_identifier)
+    set_transient_registration(reg_identifier)
+    setup_checks_pass?
+  end
 
-    if order.present?
-      valid_params?(params, order_key, order)
-    else
-      Rails.logger.error "Invalid WorldPay response: could not find matching order"
-      false
-    end
+  def get_order_key(order_key)
+    order_key.match(/[0-9]{10}$/).to_s
   end
 
   def update_payment(order_key)
@@ -58,21 +66,40 @@ class WorldpayFormsController < FormsController
     payment.update_after_worldpay(params)
   end
 
+  def find_order(order_key)
+    @transient_registration.finance_details.orders.where(order_code: order_key).first
+  end
+
+  # Validating WorldPay responses
+
+  def valid_worldpay_success_response?(params, order_key)
+    order = find_order(order_key)
+
+    if order.present?
+      valid_params?(params, order_key, order) && valid_success_payment_status?(params[:paymentStatus])
+    else
+      Rails.logger.error "Invalid WorldPay success response: could not find matching order"
+      false
+    end
+  end
+
+  def valid_worldpay_failure_response?(params, order_key)
+    order = find_order(order_key)
+
+    if order.present?
+      valid_params?(params, order_key, order) && valid_failure_payment_status?(params[:paymentStatus])
+    else
+      Rails.logger.error "Invalid WorldPay failure response: could not find matching order"
+      false
+    end
+  end
+
   def valid_params?(params, order_key, order)
     valid_mac?(params[:mac]) &&
       valid_order_key_format?(params[:orderKey], order_key) &&
-      valid_payment_status?(params[:paymentStatus]) &&
       valid_payment_amount?(params[:paymentAmount], order) &&
       valid_currency?(params[:paymentCurrency], order) &&
       valid_source?(params[:source])
-  end
-
-  def get_order_key(order_key)
-    order_key.match(/[0-9]{10}$/).to_s
-  end
-
-  def find_order(order_key)
-    @transient_registration.finance_details.orders.where(order_code: order_key).first
   end
 
   # TODO
@@ -89,9 +116,19 @@ class WorldpayFormsController < FormsController
     false
   end
 
-  def valid_payment_status?(status)
+  def valid_success_payment_status?(status)
     return true if status == "AUTHORISED"
     Rails.logger.error "Invalid WorldPay response: #{status} is not valid payment status for success"
+    false
+  end
+
+  def valid_failure_payment_status?(status)
+    statuses = %w[CANCELLED
+                  ERROR
+                  EXPIRED
+                  REFUSED]
+    return true if statuses.include?(status)
+    Rails.logger.error "Invalid WorldPay response: #{status} is not valid payment status for failure"
     false
   end
 
