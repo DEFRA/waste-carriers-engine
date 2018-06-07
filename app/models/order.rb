@@ -37,6 +37,7 @@ class Order
 
     order[:date_created] = Time.current
     order[:date_last_updated] = order[:date_created]
+    order[:updated_by_user] = transient_registration.account_email
 
     order[:order_items] = [OrderItem.new_renewal_item]
     order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?

@@ -36,6 +36,10 @@ RSpec.describe Order, type: :model do
       expect(order.merchant_id).to eq("MERCHANTCODE")
     end
 
+    it "should have the correct updated_by_user" do
+      expect(order.updated_by_user).to eq("foo@example.com")
+    end
+
     it "updates the date_created" do
       Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
         expect(order.date_created).to eq(Time.new(2004, 8, 15, 16, 23, 42))

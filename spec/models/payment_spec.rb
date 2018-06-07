@@ -14,27 +14,31 @@ RSpec.describe Payment, type: :model do
     let(:payment) { Payment.new_from_worldpay(order) }
 
     it "should set the correct order_key" do
-      expect(payment[:order_key]).to eq("1514764800")
+      expect(payment.order_key).to eq("1514764800")
     end
 
     it "should set the correct amount" do
-      expect(payment[:amount]).to eq(11_000)
+      expect(payment.amount).to eq(11_000)
     end
 
     it "should set the correct currency" do
-      expect(payment[:currency]).to eq("GBP")
+      expect(payment.currency).to eq("GBP")
     end
 
     it "should set the correct payment_type" do
-      expect(payment[:payment_type]).to eq("WORLDPAY")
+      expect(payment.payment_type).to eq("WORLDPAY")
     end
 
     it "should set the correct registration_reference" do
-      expect(payment[:registration_reference]).to eq("Worldpay")
+      expect(payment.registration_reference).to eq("Worldpay")
+    end
+
+    it "should have the correct updated_by_user" do
+      expect(payment.updated_by_user).to eq("foo@example.com")
     end
 
     it "should set the correct comment" do
-      expect(payment[:comment]).to eq("Paid via Worldpay")
+      expect(payment.comment).to eq("Paid via Worldpay")
     end
   end
 

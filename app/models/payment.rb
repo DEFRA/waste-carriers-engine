@@ -30,6 +30,7 @@ class Payment
     payment[:payment_type] = "WORLDPAY"
     payment[:registration_reference] = "Worldpay"
     payment[:comment] = "Paid via Worldpay"
+    payment[:updated_by_user] = order.finance_details.transient_registration.account_email
     payment.finance_details = order.finance_details
     payment.save
 
