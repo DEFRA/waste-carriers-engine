@@ -28,5 +28,13 @@ RSpec.describe Payment, type: :model do
     it "should set the correct payment_type" do
       expect(payment[:payment_type]).to eq("WORLDPAY")
     end
+
+    it "should set the correct registration_reference" do
+      expect(payment[:registration_reference]).to eq("Worldpay")
+    end
+
+    it "should set the correct comment" do
+      expect(payment[:comment]).to eq("Paid via Worldpay")
+    end
   end
 end

@@ -28,6 +28,8 @@ class Payment
     payment[:amount] = order[:total_amount]
     payment[:currency] = "GBP"
     payment[:payment_type] = "WORLDPAY"
+    payment[:registration_reference] = "Worldpay"
+    payment[:comment] = "Paid via Worldpay"
     payment.finance_details = order.finance_details
     payment.save
 
