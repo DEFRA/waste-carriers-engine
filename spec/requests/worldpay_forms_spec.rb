@@ -276,34 +276,6 @@ RSpec.describe "WorldpayForms", type: :request do
           expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("REFUSED")
         end
 
-        it "updates the payment date_received" do
-          Timecop.freeze(Time.new(2018, 3, 4)) do
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first.date_received).to eq(Date.current)
-          end
-        end
-
-        it "updates the payment date_received_year" do
-          Timecop.freeze(Time.new(2018, 3, 4)) do
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first.date_received_year).to eq(2018)
-          end
-        end
-
-        it "updates the payment date_received_month" do
-          Timecop.freeze(Time.new(2018, 3, 4)) do
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first.date_received_month).to eq(3)
-          end
-        end
-
-        it "updates the payment date_received_day" do
-          Timecop.freeze(Time.new(2018, 3, 4)) do
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first.date_received_day).to eq(4)
-          end
-        end
-
         it "does not update the balance" do
           unmodified_balance = transient_registration.finance_details.balance
           get success_worldpay_forms_path(reg_id), params

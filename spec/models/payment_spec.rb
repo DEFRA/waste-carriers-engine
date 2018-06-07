@@ -37,4 +37,40 @@ RSpec.describe Payment, type: :model do
       expect(payment[:comment]).to eq("Paid via Worldpay")
     end
   end
+
+  describe "update_after_worldpay" do
+    let(:order) { transient_registration.finance_details.orders.first }
+    let(:payment) { Payment.new_from_worldpay(order) }
+
+    before do
+      Timecop.freeze(Time.new(2018, 3, 4)) do
+        FinanceDetails.new_finance_details(transient_registration)
+        payment.update_after_worldpay(paymentStatus: "AUTHORISED")
+      end
+    end
+
+    it "updates the payment status" do
+      expect(payment.world_pay_payment_status).to eq("AUTHORISED")
+    end
+
+    it "updates the payment date_received" do
+      expect(payment.date_received).to eq(Date.new(2018, 3, 4))
+    end
+
+    it "updates the payment date_entered" do
+      expect(payment.date_entered).to eq(Date.new(2018, 3, 4))
+    end
+
+    it "updates the payment date_received_year" do
+      expect(payment.date_received_year).to eq(2018)
+    end
+
+    it "updates the payment date_received_month" do
+      expect(payment.date_received_month).to eq(3)
+    end
+
+    it "updates the payment date_received_day" do
+      expect(payment.date_received_day).to eq(4)
+    end
+  end
 end

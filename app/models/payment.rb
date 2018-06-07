@@ -39,6 +39,7 @@ class Payment
   def update_after_worldpay(params)
     self.world_pay_payment_status = params[:paymentStatus]
     self.date_received = Date.current
+    self.date_entered = date_received
     self.date_received_year = date_received.strftime("%Y").to_i
     self.date_received_month = date_received.strftime("%-m").to_i
     self.date_received_day = date_received.strftime("%-d").to_i
