@@ -4,6 +4,8 @@ module CanCheckBusinessTypeChanges
 
   included do
     def business_type_change_valid?
+      return true if business_type == "overseas"
+
       old_type = Registration.where(reg_identifier: reg_identifier).first.business_type
 
       case old_type
