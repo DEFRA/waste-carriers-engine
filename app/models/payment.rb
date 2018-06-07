@@ -38,6 +38,8 @@ class Payment
 
   def update_after_worldpay(params)
     self.world_pay_payment_status = params[:paymentStatus]
+    self.mac_code = params[:mac]
+
     self.date_received = Date.current
     self.date_entered = date_received
     self.date_received_year = date_received.strftime("%Y").to_i

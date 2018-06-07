@@ -45,12 +45,16 @@ RSpec.describe Payment, type: :model do
     before do
       Timecop.freeze(Time.new(2018, 3, 4)) do
         FinanceDetails.new_finance_details(transient_registration)
-        payment.update_after_worldpay(paymentStatus: "AUTHORISED")
+        payment.update_after_worldpay(paymentStatus: "AUTHORISED", mac: "foo")
       end
     end
 
     it "updates the payment status" do
       expect(payment.world_pay_payment_status).to eq("AUTHORISED")
+    end
+
+    it "updates the payment mac_code" do
+      expect(payment.mac_code).to eq("foo")
     end
 
     it "updates the payment date_received" do
