@@ -33,6 +33,7 @@ class Order
     order[:order_code] = order[:order_id]
     order[:currency] = "GBP"
     order[:payment_method] = "ONLINE"
+    order[:merchant_id] = Rails.configuration.worldpay_merchantcode
 
     order[:order_items] = [OrderItem.new_renewal_item]
     order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?

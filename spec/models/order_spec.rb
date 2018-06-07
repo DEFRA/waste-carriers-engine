@@ -5,6 +5,7 @@ RSpec.describe Order, type: :model do
     allow(Rails.configuration).to receive(:renewal_charge).and_return(100)
     allow(Rails.configuration).to receive(:type_change_charge).and_return(25)
     allow(Rails.configuration).to receive(:card_charge).and_return(10)
+    allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
   end
 
   let(:transient_registration) { create(:transient_registration, :has_required_data, temp_cards: 0) }
@@ -29,6 +30,10 @@ RSpec.describe Order, type: :model do
 
     it "should have the correct total_amount" do
       expect(order.total_amount).to eq(10_000)
+    end
+
+    it "should have the correct merchant_id" do
+      expect(order.merchant_id).to eq("MERCHANTCODE")
     end
 
     context "when the registration type has not changed" do
