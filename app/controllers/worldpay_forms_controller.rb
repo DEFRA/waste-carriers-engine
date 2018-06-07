@@ -19,7 +19,7 @@ class WorldpayFormsController < FormsController
     order_key = get_order_key(params[:orderKey])
 
     if order_key && valid_worldpay_success_response?(params, order_key)
-      update_payment(order_key)
+      update_payment_and_order(order_key)
       @transient_registration.finance_details.update_balance
       @transient_registration.next!
       redirect_to_correct_form
@@ -35,7 +35,7 @@ class WorldpayFormsController < FormsController
     order_key = get_order_key(params[:orderKey])
 
     if order_key && valid_worldpay_failure_response?(params, order_key)
-      update_payment(order_key)
+      update_payment_and_order(order_key)
       flash[:error] = I18n.t(".worldpay_forms.failure.message.#{params[:paymentStatus]}")
     else
       flash[:error] = I18n.t(".worldpay_forms.failure.invalid_response")
@@ -63,9 +63,12 @@ class WorldpayFormsController < FormsController
     order_key.match(/[0-9]{10}$/).to_s
   end
 
-  def update_payment(order_key)
+  def update_payment_and_order(order_key)
     payment = @transient_registration.finance_details.payments.where(order_key: order_key).first
     payment.update_after_worldpay(params)
+
+    order = @transient_registration.finance_details.orders.where(order_code: order_key).first
+    order.update_after_worldpay
   end
 
   def find_order(order_key)

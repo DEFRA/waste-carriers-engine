@@ -7,7 +7,7 @@ RSpec.describe Order, type: :model do
     allow(Rails.configuration).to receive(:card_charge).and_return(10)
   end
 
-  let(:transient_registration) { build(:transient_registration, :has_required_data, temp_cards: 0) }
+  let(:transient_registration) { create(:transient_registration, :has_required_data, temp_cards: 0) }
 
   describe "new_order" do
     let(:order) { Order.new_order(transient_registration) }
@@ -72,6 +72,31 @@ RSpec.describe Order, type: :model do
 
       it "should have the correct total_amount" do
         expect(order.total_amount).to eq(13_000)
+      end
+    end
+  end
+
+  describe "update_after_worldpay" do
+    let(:finance_details) { FinanceDetails.new_finance_details(transient_registration) }
+    let(:order) { finance_details.orders.first }
+
+    context "when there is a matching payment" do
+      before do
+        payment = Payment.new_from_worldpay(order)
+        payment.update_attributes(world_pay_payment_status: "AUTHORISED")
+      end
+
+      it "copies the worldpay status to the order" do
+        order.update_after_worldpay
+        expect(order.world_pay_status).to eq("AUTHORISED")
+      end
+    end
+
+    context "when there is no matching payment" do
+      it "does not modify the order" do
+        unmodified_order = order
+        order.update_after_worldpay
+        expect(order.reload).to eq(unmodified_order)
       end
     end
   end

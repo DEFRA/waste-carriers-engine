@@ -46,4 +46,11 @@ class Order
   def generate_id
     Time.now.to_i.to_s
   end
+
+  def update_after_worldpay
+    payment = finance_details.payments.where(order_key: order_code).first
+    return unless payment.present?
+    self.world_pay_status = payment.world_pay_payment_status
+    save
+  end
 end

@@ -86,6 +86,11 @@ RSpec.describe "WorldpayForms", type: :request do
             expect(transient_registration.reload.finance_details.payments.first.world_pay_payment_status).to eq("AUTHORISED")
           end
 
+          it "updates the order status" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("AUTHORISED")
+          end
+
           it "updates the balance" do
             get success_worldpay_forms_path(reg_id), params
             expect(transient_registration.reload.finance_details.balance).to eq(0)
@@ -264,6 +269,11 @@ RSpec.describe "WorldpayForms", type: :request do
         it "updates the payment status" do
           get failure_worldpay_forms_path(reg_id), params
           expect(transient_registration.reload.finance_details.payments.first.world_pay_payment_status).to eq("REFUSED")
+        end
+
+        it "updates the order status" do
+          get failure_worldpay_forms_path(reg_id), params
+          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("REFUSED")
         end
 
         it "updates the payment date_received" do
