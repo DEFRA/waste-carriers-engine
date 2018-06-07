@@ -36,6 +36,18 @@ RSpec.describe Order, type: :model do
       expect(order.merchant_id).to eq("MERCHANTCODE")
     end
 
+    it "updates the date_created" do
+      Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
+        expect(order.date_created).to eq(Time.new(2004, 8, 15, 16, 23, 42))
+      end
+    end
+
+    it "updates the date_last_updated" do
+      Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
+        expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
+      end
+    end
+
     context "when the registration type has not changed" do
       it "should not include a type change item" do
         matching_item = order[:order_items].find { |item| item[:type] == "CHARGE_ADJUST" }
@@ -94,6 +106,16 @@ RSpec.describe Order, type: :model do
       it "copies the worldpay status to the order" do
         order.update_after_worldpay
         expect(order.world_pay_status).to eq("AUTHORISED")
+      end
+
+      it "updates the date_last_updated" do
+        Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
+          # Wipe the date first so we know the value has been added
+          order.update_attributes(date_last_updated: nil)
+
+          order.update_after_worldpay
+          expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
+        end
       end
     end
 

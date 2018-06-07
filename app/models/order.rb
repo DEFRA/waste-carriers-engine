@@ -35,6 +35,9 @@ class Order
     order[:payment_method] = "ONLINE"
     order[:merchant_id] = Rails.configuration.worldpay_merchantcode
 
+    order[:date_created] = Time.current
+    order[:date_last_updated] = order[:date_created]
+
     order[:order_items] = [OrderItem.new_renewal_item]
     order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?
     order[:order_items] << OrderItem.new_copy_cards_item(card_count) if card_count.positive?
@@ -51,7 +54,9 @@ class Order
   def update_after_worldpay
     payment = finance_details.payments.where(order_key: order_code).first
     return unless payment.present?
+
     self.world_pay_status = payment.world_pay_payment_status
+    self.date_last_updated = Time.current
     save
   end
 end
