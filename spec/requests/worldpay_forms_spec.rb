@@ -55,7 +55,6 @@ RSpec.describe "WorldpayForms", type: :request do
           # We need to set a specific time so we know what order code to expect
           Timecop.freeze(Time.new(2018, 1, 1)) do
             FinanceDetails.new_finance_details(transient_registration)
-            Payment.new_from_worldpay(order)
           end
         end
 
@@ -266,11 +265,6 @@ RSpec.describe "WorldpayForms", type: :request do
           expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
         end
 
-        it "updates the payment status" do
-          get failure_worldpay_forms_path(reg_id), params
-          expect(transient_registration.reload.finance_details.payments.first.world_pay_payment_status).to eq("REFUSED")
-        end
-
         it "updates the order status" do
           get failure_worldpay_forms_path(reg_id), params
           expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("REFUSED")
@@ -278,100 +272,13 @@ RSpec.describe "WorldpayForms", type: :request do
 
         it "does not update the balance" do
           unmodified_balance = transient_registration.finance_details.balance
-          get success_worldpay_forms_path(reg_id), params
+          get failure_worldpay_forms_path(reg_id), params
           expect(transient_registration.reload.finance_details.balance).to eq(unmodified_balance)
         end
 
-        context "when the orderKey doesn't match an existing order" do
-          before do
-            params[:orderKey] = "0123456789"
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the orderKey is in the wrong format" do
-          before do
-            params[:orderKey] = "foo#{order.order_code}"
-            # Change the MAC param to still be valid as this relies on the orderKey
-            params[:mac] = "ccebed8b4f3b53a9ed6a9e27b0a353a9"
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the paymentStatus is invalid" do
-          before do
-            params[:paymentStatus] = "foo"
-            # Change the MAC param to still be valid as this relies on the paymentStatus
-            params[:mac] = "796daa4118411ff7a901883f5628a9be"
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the paymentAmount is invalid" do
-          before do
-            params[:paymentAmount] = 42
-            # Change the MAC param to still be valid as this relies on the paymentAmount
-            params[:mac] = "05d4ef2cb316d3ce6c7402863f65be7f"
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the paymentCurrency is invalid" do
-          before do
-            params[:paymentCurrency] = "foo"
-            # Change the MAC param to still be valid as this relies on the paymentCurrency
-            params[:mac] = "29a27f59b3695e82487e1d4f827c364b"
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the mac is invalid" do
-          before do
-            params[:mac] = "foo"
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the source is invalid" do
-          before do
-            params[:source] = "foo"
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get failure_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
+        it "does not create a payment" do
+          get failure_worldpay_forms_path(reg_id), params
+          expect(transient_registration.reload.finance_details.payments.length).to eq(0)
         end
       end
     end

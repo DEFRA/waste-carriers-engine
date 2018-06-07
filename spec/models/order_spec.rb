@@ -101,33 +101,18 @@ RSpec.describe Order, type: :model do
     let(:finance_details) { FinanceDetails.new_finance_details(transient_registration) }
     let(:order) { finance_details.orders.first }
 
-    context "when there is a matching payment" do
-      before do
-        payment = Payment.new_from_worldpay(order)
-        payment.update_attributes(world_pay_payment_status: "AUTHORISED")
-      end
-
-      it "copies the worldpay status to the order" do
-        order.update_after_worldpay
-        expect(order.world_pay_status).to eq("AUTHORISED")
-      end
-
-      it "updates the date_last_updated" do
-        Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
-          # Wipe the date first so we know the value has been added
-          order.update_attributes(date_last_updated: nil)
-
-          order.update_after_worldpay
-          expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
-        end
-      end
+    it "copies the worldpay status to the order" do
+      order.update_after_worldpay("AUTHORISED")
+      expect(order.world_pay_status).to eq("AUTHORISED")
     end
 
-    context "when there is no matching payment" do
-      it "does not modify the order" do
-        unmodified_order = order
-        order.update_after_worldpay
-        expect(order.reload).to eq(unmodified_order)
+    it "updates the date_last_updated" do
+      Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
+        # Wipe the date first so we know the value has been added
+        order.update_attributes(date_last_updated: nil)
+
+        order.update_after_worldpay("AUTHORISED")
+        expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
       end
     end
   end

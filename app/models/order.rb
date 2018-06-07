@@ -33,6 +33,7 @@ class Order
     order[:order_code] = order[:order_id]
     order[:currency] = "GBP"
     order[:payment_method] = "ONLINE"
+    order[:world_pay_status] = "IN_PROGRESS"
     order[:merchant_id] = Rails.configuration.worldpay_merchantcode
 
     order[:date_created] = Time.current
@@ -52,11 +53,8 @@ class Order
     Time.now.to_i.to_s
   end
 
-  def update_after_worldpay
-    payment = finance_details.payments.where(order_key: order_code).first
-    return unless payment.present?
-
-    self.world_pay_status = payment.world_pay_payment_status
+  def update_after_worldpay(status)
+    self.world_pay_status = status
     self.date_last_updated = Time.current
     save
   end
