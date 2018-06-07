@@ -37,7 +37,7 @@ RSpec.describe OrderItem, type: :model do
     end
 
     it "should set the correct description" do
-      expect(order_item.description).to eq("Changing carrier type during renewal")
+      expect(order_item.description).to eq("changing carrier type during renewal")
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe OrderItem, type: :model do
     end
 
     it "should set the correct description" do
-      expect(order_item.description).to eq("3x registration cards")
+      expect(order_item.description).to eq("3 registration cards")
     end
   end
 end

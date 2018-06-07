@@ -24,7 +24,7 @@ class OrderItem
     order_item = OrderItem.base_order_item
 
     order_item[:amount] = Rails.configuration.type_change_charge * 100
-    order_item[:description] = "Changing carrier type during renewal"
+    order_item[:description] = "changing carrier type during renewal"
     order_item[:type] = "CHARGE_ADJUST"
 
     order_item
@@ -34,7 +34,7 @@ class OrderItem
     order_item = OrderItem.base_order_item
 
     order_item[:amount] = cards * Rails.configuration.card_charge * 100
-    order_item[:description] = "#{cards}x registration cards"
+    order_item[:description] = "#{cards} registration cards"
     order_item[:type] = "COPY_CARDS"
 
     order_item

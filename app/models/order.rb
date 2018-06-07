@@ -44,6 +44,8 @@ class Order
     order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?
     order[:order_items] << OrderItem.new_copy_cards_item(card_count) if card_count.positive?
 
+    order.generate_description
+
     order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
 
     order
@@ -51,6 +53,10 @@ class Order
 
   def generate_id
     Time.now.to_i.to_s
+  end
+
+  def generate_description
+    self.description = order_items.map(&:description).join(", plus ")
   end
 
   def update_after_worldpay(status)

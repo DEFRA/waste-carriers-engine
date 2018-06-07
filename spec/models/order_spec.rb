@@ -52,6 +52,10 @@ RSpec.describe Order, type: :model do
       end
     end
 
+    it "should have the correct description" do
+      expect(order.description).to eq("Renewal of registration")
+    end
+
     context "when the registration type has not changed" do
       it "should not include a type change item" do
         matching_item = order[:order_items].find { |item| item[:type] == "CHARGE_ADJUST" }
@@ -71,6 +75,10 @@ RSpec.describe Order, type: :model do
 
       it "should have the correct total_amount" do
         expect(order.total_amount).to eq(12_500)
+      end
+
+      it "should have the correct description" do
+        expect(order.description).to eq("Renewal of registration, plus changing carrier type during renewal")
       end
     end
 
@@ -93,6 +101,10 @@ RSpec.describe Order, type: :model do
 
       it "should have the correct total_amount" do
         expect(order.total_amount).to eq(13_000)
+      end
+
+      it "should have the correct description" do
+        expect(order.description).to eq("Renewal of registration, plus 3 registration cards")
       end
     end
   end
