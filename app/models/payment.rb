@@ -45,6 +45,6 @@ class Payment
     self.date_received_year = date_received.strftime("%Y").to_i
     self.date_received_month = date_received.strftime("%-m").to_i
     self.date_received_day = date_received.strftime("%-d").to_i
-    save
+    save!
   end
 end

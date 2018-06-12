@@ -62,6 +62,6 @@ class Order
   def update_after_worldpay(status)
     self.world_pay_status = status
     self.date_last_updated = Time.current
-    save
+    save!
   end
 end
