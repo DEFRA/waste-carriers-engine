@@ -52,10 +52,7 @@ RSpec.describe "WorldpayForms", type: :request do
 
       describe "#success" do
         before do
-          # We need to set a specific time so we know what order code to expect
-          Timecop.freeze(Time.new(2018, 1, 1)) do
-            FinanceDetails.new_finance_details(transient_registration)
-          end
+          FinanceDetails.new_finance_details(transient_registration)
         end
 
         let(:order) do
@@ -65,34 +62,18 @@ RSpec.describe "WorldpayForms", type: :request do
         let(:params) do
           {
             orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-            paymentStatus: "AUTHORISED",
-            paymentAmount: order.total_amount,
-            paymentCurrency: "GBP",
-            mac: "2a8d84f7642a44d53464329f65bc00c8",
-            source: "WP",
             reg_identifier: reg_id
           }
         end
 
         context "when the params are valid" do
+          before do
+            allow_any_instance_of(WorldpayService).to receive(:valid_success?).and_return(true)
+          end
+
           it "redirects to renewal_complete_form" do
             get success_worldpay_forms_path(reg_id), params
             expect(response).to redirect_to(new_renewal_complete_form_path(reg_id))
-          end
-
-          it "updates the payment status" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first.world_pay_payment_status).to eq("AUTHORISED")
-          end
-
-          it "updates the order status" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("AUTHORISED")
-          end
-
-          it "updates the balance" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.balance).to eq(0)
           end
 
           context "when it has been flagged for conviction checks" do
@@ -104,6 +85,17 @@ RSpec.describe "WorldpayForms", type: :request do
               get success_worldpay_forms_path(reg_id), params
               expect(response).to redirect_to(new_renewal_received_form_path(reg_id))
             end
+          end
+        end
+
+        context "when the params are invalid" do
+          before do
+            allow_any_instance_of(WorldpayService).to receive(:valid_success?).and_return(false)
+          end
+
+          it "redirects to payment_summary_form" do
+            get success_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
           end
         end
 
@@ -123,125 +115,11 @@ RSpec.describe "WorldpayForms", type: :request do
             expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
           end
         end
-
-        context "when the orderKey is in the wrong format" do
-          before do
-            params[:orderKey] = "foo#{order.order_code}"
-            # Change the MAC param to still be valid as this relies on the orderKey
-            params[:mac] = "b6a6743451bf925ecb564da496413ff6"
-          end
-
-          it "redirects to payment_summary_form" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the paymentStatus is invalid" do
-          before do
-            params[:paymentStatus] = "foo"
-            # Change the MAC param to still be valid as this relies on the paymentStatus
-            params[:mac] = "df56c36305b6360db3f9178fd4683073"
-          end
-
-          it "redirects to payment_summary_form" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the paymentAmount is invalid" do
-          before do
-            params[:paymentAmount] = 42
-            # Change the MAC param to still be valid as this relies on the paymentAmount
-            params[:mac] = "926883e7cf68b253503446d9cc50f60d"
-          end
-
-          it "redirects to payment_summary_form" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the paymentCurrency is invalid" do
-          before do
-            params[:paymentCurrency] = "foo"
-            # Change the MAC param to still be valid as this relies on the paymentCurrency
-            params[:mac] = "8bbd0a859b749c1d4e22198c166c632f"
-          end
-
-          it "redirects to payment_summary_form" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the mac is invalid" do
-          before do
-            params[:mac] = "foo"
-          end
-
-          it "redirects to payment_summary_form" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
-
-        context "when the source is invalid" do
-          before do
-            params[:source] = "foo"
-          end
-
-          it "redirects to payment_summary_form" do
-            get success_worldpay_forms_path(reg_id), params
-            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
-          end
-
-          it "does not update the payment" do
-            unmodified_payment = transient_registration.finance_details.payments.first
-            get success_worldpay_forms_path(reg_id), params
-            expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
-          end
-        end
       end
 
       describe "#failure" do
         before do
-          # We need to set a specific time so we know what order code to expect
-          Timecop.freeze(Time.new(2018, 1, 2)) do
-            FinanceDetails.new_finance_details(transient_registration)
-            Payment.new_from_worldpay(order)
-          end
+          FinanceDetails.new_finance_details(transient_registration)
         end
 
         let(:order) do
@@ -251,34 +129,30 @@ RSpec.describe "WorldpayForms", type: :request do
         let(:params) do
           {
             orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-            paymentStatus: "REFUSED",
-            paymentAmount: order.total_amount,
-            paymentCurrency: "GBP",
-            mac: "8e4496d6db44f2de4de0d3acfd372c47",
-            source: "WP",
             reg_identifier: reg_id
           }
         end
 
-        it "redirects to payment_summary_form" do
-          get failure_worldpay_forms_path(reg_id), params
-          expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+        context "when the params are valid" do
+          before do
+            allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(true)
+          end
+
+          it "redirects to payment_summary_form" do
+            get failure_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+          end
         end
 
-        it "updates the order status" do
-          get failure_worldpay_forms_path(reg_id), params
-          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("REFUSED")
-        end
+        context "when the params are not valid" do
+          before do
+            allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(false)
+          end
 
-        it "does not update the balance" do
-          unmodified_balance = transient_registration.finance_details.balance
-          get failure_worldpay_forms_path(reg_id), params
-          expect(transient_registration.reload.finance_details.balance).to eq(unmodified_balance)
-        end
-
-        it "does not create a payment" do
-          get failure_worldpay_forms_path(reg_id), params
-          expect(transient_registration.reload.finance_details.payments.length).to eq(0)
+          it "redirects to payment_summary_form" do
+            get failure_worldpay_forms_path(reg_id), params
+            expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+          end
         end
       end
     end
