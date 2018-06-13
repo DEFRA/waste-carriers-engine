@@ -29,6 +29,12 @@ FactoryBot.define do
       declared_convictions "true"
     end
 
+    trait :has_finance_details do
+      after(:build, :create) do |transient_registration|
+        FinanceDetails.new_finance_details(transient_registration)
+      end
+    end
+
     # Overseas registrations
 
     trait :has_required_overseas_data do

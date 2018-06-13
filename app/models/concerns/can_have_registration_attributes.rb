@@ -7,14 +7,14 @@ module CanHaveRegistrationAttributes
     embeds_one :metaData
     embeds_many :addresses
     embeds_many :keyPeople
-    embeds_one :financeDetails
+    embeds_one :finance_details, store_as: "financeDetails"
     embeds_one :convictionSearchResult
     embeds_many :conviction_sign_offs
 
     accepts_nested_attributes_for :metaData,
                                   :addresses,
                                   :keyPeople,
-                                  :financeDetails,
+                                  :finance_details,
                                   :convictionSearchResult,
                                   :conviction_sign_offs
 

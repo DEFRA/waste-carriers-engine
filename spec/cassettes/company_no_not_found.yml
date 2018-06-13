@@ -16,14 +16,14 @@ http_interactions:
       Host:
       - api.companieshouse.gov.uk
       Authorization:
-      - Basic <COMPANIES_HOUSE_API_KEY>
+      - Basic <API_KEY>
   response:
     status:
       code: 404
       message: Not Found
     headers:
       Date:
-      - Thu, 07 Jun 2018 14:31:28 GMT
+      - Wed, 13 Jun 2018 11:02:55 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -51,14 +51,14 @@ http_interactions:
       X-Ratelimit-Remain:
       - '598'
       X-Ratelimit-Reset:
-      - '1528382187'
+      - '1528888075'
       X-Ratelimit-Window:
       - 5m
       Server:
       - CompaniesHouse
     body:
       encoding: UTF-8
-      string: '{"errors":[{"error":"company-profile-not-found","type":"ch:service"}]}'
+      string: '{"errors":[{"type":"ch:service","error":"company-profile-not-found"}]}'
     http_version: 
-  recorded_at: Thu, 07 Jun 2018 14:31:23 GMT
+  recorded_at: Wed, 13 Jun 2018 11:02:55 GMT
 recorded_with: VCR 4.0.0

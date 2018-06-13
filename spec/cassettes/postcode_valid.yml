@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:9190/addresses.json?postcode=BS15AH
+    uri: http://localhost:8006/addresses.json?postcode=BS15AH
     body:
       encoding: US-ASCII
       string: ''
@@ -14,26 +14,26 @@ http_interactions:
       User-Agent:
       - rest-client/2.0.2 (darwin16.7.0 x86_64) ruby/2.4.2p198
       Host:
-      - localhost:9190
+      - localhost:8006
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 07 Jun 2018 14:31:21 GMT
+      - Wed, 13 Jun 2018 11:02:54 GMT
       Content-Type:
       - application/json
-      Content-Encoding:
-      - gzip
       Vary:
       - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '458'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         H4sIAAAAAAAAAOWUUW+bMBDHv4rlZx6gaULWN1NQE42aypBNXdUHJziJNbCRMduqad+9x8JSIN1LlU2T9oDA/7PvfP/7iYfvuNRKfhYGX2HPdd95/sydXbrYwU1l1IlYSCVqfPWAF4TdphFFNyxZ3UEgjAiN2D1iCQnxo4Ot/tqeDtgyzZIYNlS6thudi1ZMPTQlCxAFr61UO9Am07k3aSsobez+oHn+xWzug7bRjbLmCSRY5KISKhfKxnrDC2nHcrY3utntt9yIQ4TnpVSytoZb+UUQI/jgYkWbhjR2rw0kW1U5tyKE53DY6Cde3HJZjAMVN1byAhYDKxyUsWUSJikKCH3voL4vDuqqwsfRgrpZB40scmiZ8rJLvh4q/ZQQba/6q8Vux8B+B2uz49AyNKxVt2M8sGOJplz/nH43o2S7lRsR6G/9AJgL7Zbg7ssdc92sCxG+No0fTh+ryaXrebMXoo7rI0yUZCtGYhTRm5jQ8Dw4XbjTE5x8d/7P4zQyw0GLhC0/JRTeqzQ6E1GDnG9F6nRsfxkqfwSV34cqW7DlhwixiEYfSRBHKbqLr//vP9WrlpyJqLdC9Lsx/VGUHp8B5v82jvgGAAA=
     http_version: 
-  recorded_at: Thu, 07 Jun 2018 14:31:22 GMT
+  recorded_at: Wed, 13 Jun 2018 11:02:54 GMT
 recorded_with: VCR 4.0.0

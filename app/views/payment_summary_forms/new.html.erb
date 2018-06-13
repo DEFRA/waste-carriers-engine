@@ -2,6 +2,16 @@
 
 <div class="text">
   <%= form_for(@payment_summary_form) do |f| %>
+    <% if flash[:error].present? %>
+      <div class="error-summary" role="alert">
+        <h2 class="heading-medium error-summary-heading"><%= t(".payment_error_heading") %></h2>
+
+        <ul class="error-summary-list">
+          <p><%= flash[:error] %></p>
+        </ul>
+      </div>
+    <% end %>
+
     <%= render("shared/errors", object: @payment_summary_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
@@ -11,23 +21,23 @@
         <tbody>
           <tr>
             <td><%= t(".renewal_fee") %></td>
-            <td>£<%= Rails.configuration.renewal_charge %></td>
+            <td>£<%= display_pence_as_pounds(Rails.configuration.renewal_charge) %></td>
           </tr>
           <% if @payment_summary_form.type_change %>
           <tr>
             <td><%= t(".cbd_fee") %></td>
-            <td>£<%= Rails.configuration.type_change_charge %></td>
+            <td>£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
           </tr>
           <% end %>
           <% if @payment_summary_form.registration_cards > 0 %>
           <tr>
             <td><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></td>
-            <td>£<%= @payment_summary_form.registration_card_charge %></td>
+            <td>£<%= display_pence_as_pounds(@payment_summary_form.registration_card_charge) %></td>
           </tr>
           <% end %>
           <tr>
             <td><span class="strong"><%= t(".total_fee") %></span></td>
-            <td><span class="strong">£<%= @payment_summary_form.total_charge %></span></td>
+            <td><span class="strong">£<%= display_pence_as_pounds(@payment_summary_form.total_charge) %></span></td>
           </tr>
         </tbody>
       </table>

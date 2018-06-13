@@ -47,8 +47,9 @@ module WasteCarriersRenewals
     config.companies_house_api_key = ENV["WCRS_RENEWALS_COMPANIES_HOUSE_API_KEY"]
 
     # Paths
+    config.wcrs_renewals_url = ENV["WCRS_RENEWALS_PUBLIC_APP_DOMAIN"] || "localhost:3002"
     config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"] || "localhost:3000"
-    config.os_places_service_url = ENV["WCRS_RENEWALS_OS_PLACES_SERVICE_DOMAIN"] || "localhost:9190"
+    config.os_places_service_url = ENV["WCRS_RENEWALS_OS_PLACES_SERVICE_DOMAIN"] || "localhost:8006"
 
     # Fees
     config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i || 0
@@ -58,6 +59,13 @@ module WasteCarriersRenewals
     # Times
     config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
     config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
+
+    # Worldpay
+    config.worldpay_admin_code = ENV["WCRS_WORLDPAY_ADMIN_CODE"]
+    config.worldpay_merchantcode = ENV["WCRS_WORLDPAY_ECOM_MERCHANTCODE"]
+    config.worldpay_username =  ENV["WCRS_WORLDPAY_ECOM_USERNAME"]
+    config.worldpay_password = ENV["WCRS_WORLDPAY_ECOM_PASSWORD"]
+    config.worldpay_macsecret =  ENV["WCRS_WORLDPAY_ECOM_MACSECRET"]
 
     # Version info
     config.application_version = "0.0.1".freeze

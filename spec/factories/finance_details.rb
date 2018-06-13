@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :financeDetails do
+  factory :finance_details do
     trait :has_required_data do
-      balance 100
+      balance 10_000
     end
   end
 end

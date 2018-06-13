@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp
+    body:
+      encoding: UTF-8
+      string: foo
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin16.7.0 x86_64) ruby/2.4.2p198
+      Authorization:
+      - Basic <API_KEY>
+      Content-Length:
+      - '3'
+      Host:
+      - secure-test.worldpay.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 13 Jun 2018 11:02:56 GMT
+      Content-Length:
+      - '352'
+      P3p:
+      - CP="NON"
+      Set-Cookie:
+      - machine=0aa20016;path=/
+      X-Xss-Protection:
+      - '1'
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=86400; preload
+      X-Cnection:
+      - close
+      Content-Type:
+      - text/plain
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
+                                        "http://dtd.worldpay.com/paymentService_v1.dtd">
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><error code="2"><![CDATA[Premature end of file.]]></error></reply></paymentService>
+    http_version: 
+  recorded_at: Wed, 13 Jun 2018 11:02:56 GMT
+recorded_with: VCR 4.0.0

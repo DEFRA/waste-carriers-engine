@@ -2,6 +2,7 @@ en:
   payment_summary_forms:
     new:
       title: Payment summary
+      payment_error_heading: A problem with your payment
       heading: Payment summary
       renewal_fee: Renewal of registration
       cbd_fee: Additional charge for changing registration type
@@ -16,7 +17,6 @@ en:
         bank_transfer: Pay by bank transfer
       hint_pay_by_card: You will be transferred to the secure Worldpay site for you to enter your credit or debit card details. We accept Mastercard, Maestro and Visa.
       hint_pay_by_bank_transfer: Paying by bank transfer requires 2 steps. Both must be done to complete your registration.
-      error_heading: Something is wrong
       next_button: Proceed to payment
   activemodel:
     errors:

@@ -1,14 +1,14 @@
 en:
   worldpay_forms:
+    failure:
+      invalid_response: "Invalid WorldPay failure response"
+      message:
+        REFUSED: "Your payment has been refused. Please try again or select a different payment method."
+        ERROR: "An error has occurred with WorldPay and your payment has not been processed. Please try again or select a different payment method."
     new:
-      title: Worldpay goes here
-      heading: Pay by card
-      paragraph_1: This is a substitute page for paying by credit or debit card.
-      paragraph_2: At this point, you would be redirected to our secure payment service (Worldpay).
-      paragraph_3: You would enter your card details and make the payment online.
-      paragraph_4: During testing, we will skip this stage and continue to what happens after you pay by card.
-      error_heading: Something is wrong
-      next_button: Continue
+      setup_error: "An error has occurred when preparing for your WorldPay payment. Please try again or select a different payment method."
+    success:
+      invalid_response: "Invalid WorldPay success response"
   activemodel:
     errors:
       models:
