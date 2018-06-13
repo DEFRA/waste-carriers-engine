@@ -2,10 +2,10 @@ en:
   contact_email_forms:
     new:
       title: Contact email address
-      heading: What's the email address of the person we should contact?
+      heading: What’s the contact email address?
       error_heading: Something is wrong
       contact_email_label: Email address
-      contact_email_hint: We’ll send a confirmation to this address
+      contact_email_hint: We’ll send a confirmation email to this address
       confirmed_email_label: Confirm email address
       next_button: Continue
   activemodel:
