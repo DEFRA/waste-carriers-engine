@@ -3,7 +3,7 @@ en:
     new:
       title: Person to contact
       heading: Who should we contact about this registration?
-      description: Tell us who to contact if we need to confirm any details
+      description: Tell us who to contact if we need to confirm any details.
       first_name_label: First name
       last_name_label: Last name
       error_heading: Something is wrong
