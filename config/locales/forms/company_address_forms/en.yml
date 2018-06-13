@@ -4,7 +4,7 @@ en:
       title: Business address selection
       heading:
         localAuthority: What's the address of the local authority or public body?
-        limitedCompany: What's the address of the company?
+        limitedCompany: What's the company address?
         limitedLiabilityPartnership: What's the address of the limited liability partnership?
         partnership: What's the address of the partnership?
         soleTrader: What's the address of the business?
