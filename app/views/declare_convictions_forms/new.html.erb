@@ -20,7 +20,7 @@
         <span class="error-message"><%= @declare_convictions_form.errors[:declared_convictions].join(", ") %></span>
         <% end %>
         
-        <p><%= t(".paragraph_1") %></p>
+        <p class="strong"><%= t(".paragraph_1") %></p>
 
         <div class="multiple-choice">
           <%= f.radio_button :declared_convictions, "true" %>
