@@ -12,9 +12,6 @@
     <h1 class="heading-large"><%= t(".heading.#{@main_people_form.business_type}") %></h1>
 
     <p><%= t(".description_1.#{@main_people_form.business_type}") %></p>
-    <% unless @main_people_form.can_only_have_one_main_person? %>
-      <p><%= t(".description_2") %></p>
-    <% end %>
 
     <%= render("shared/person_name", form: @main_people_form, f: f) %>
 
