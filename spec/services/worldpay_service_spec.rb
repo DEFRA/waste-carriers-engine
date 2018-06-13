@@ -32,45 +32,14 @@ RSpec.describe WorldpayService do
       let(:reg_id) { transient_registration.reg_identifier }
       let(:url) { worldpay_service.prepare_for_payment[:url] }
 
+      # Stub the WorldpayUrlService as we're testing that separately
+      before do
+        allow_any_instance_of(WorldpayUrlService).to receive(:format_link).and_return("LINK GOES HERE")
+      end
+
       it "returns a link" do
         VCR.use_cassette("worldpay_initial_request") do
-          link_base = "https://secure-test.worldpay.com/wcc/dispatcher?OrderKey="
-          expect(url).to include(link_base)
-        end
-      end
-
-      it "includes the success URL" do
-        VCR.use_cassette("worldpay_initial_request") do
-          success_url = "&successURL=" + CGI.escape("#{root}/worldpay/success/#{reg_id}")
-          expect(url).to include(success_url)
-        end
-      end
-
-      it "includes the pending URL" do
-        VCR.use_cassette("worldpay_initial_request") do
-          pending_url = "&pendingURL=" + CGI.escape("#{root}/worldpay/failure/#{reg_id}")
-          expect(url).to include(pending_url)
-        end
-      end
-
-      it "includes the failure URL" do
-        VCR.use_cassette("worldpay_initial_request") do
-          failure_url = "&failureURL=" + CGI.escape("#{root}/worldpay/failure/#{reg_id}")
-          expect(url).to include(failure_url)
-        end
-      end
-
-      it "includes the cancel URL" do
-        VCR.use_cassette("worldpay_initial_request") do
-          cancel_url = "&cancelURL=" + CGI.escape("#{root}/worldpay/failure/#{reg_id}")
-          expect(url).to include(cancel_url)
-        end
-      end
-
-      it "includes the error URL" do
-        VCR.use_cassette("worldpay_initial_request") do
-          error_url = "&errorURL=" + CGI.escape("#{root}/worldpay/failure/#{reg_id}")
-          expect(url).to include(error_url)
+          expect(url).to eq("LINK GOES HERE")
         end
       end
 
