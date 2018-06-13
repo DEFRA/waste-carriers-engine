@@ -13,7 +13,7 @@ RSpec.describe WorldpayValidatorService do
     allow(Rails.configuration).to receive(:worldpay_admin_code).and_return("ADMIN_CODE")
     allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
     allow(Rails.configuration).to receive(:worldpay_macsecret).and_return("5r2zsonhn2t69s1q9jsub90l0ljrs59r")
-    allow(Rails.configuration).to receive(:renewal_charge).and_return(105)
+    allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
     # We need to set a specific time so we know what order code to expect
     Timecop.freeze(Time.new(2018, 1, 1)) do

@@ -8,7 +8,7 @@
 
     <div class="form-group">
       <p><%= t(".paragraph_1") %></p>
-      <p><%= t(".paragraph_2", card_charge: Rails.configuration.card_charge) %></p>
+      <p><%= t(".paragraph_2", card_charge: display_pence_as_pounds(Rails.configuration.card_charge)) %></p>
       <%= image_tag "example_card.jpg", alt: t(".card_alt_text") %>
     </div>
 

@@ -14,8 +14,8 @@
 
     <h1 class="heading-large"><%= t(".heading", reg_identifier: @renewal_start_form.reg_identifier) %></h1>
 
-    <p><%= t(".paragraph_1_html", date: @renewal_start_form.transient_registration.projected_renewal_end_date, renewal_charge: Rails.configuration.renewal_charge) %></p>
-    <p><%= t(".paragraph_2_html", type_change_charge: Rails.configuration.type_change_charge) %></p>
+    <p><%= t(".paragraph_1_html", date: @renewal_start_form.transient_registration.projected_renewal_end_date, renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
+    <p><%= t(".paragraph_2_html", type_change_charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
     <p><%= t(".paragraph_3") %></p>
     <p><%= t(".paragraph_4") %></p>
 

@@ -10,7 +10,7 @@ RSpec.describe WorldpayService do
   end
 
   before do
-    allow(Rails.configuration).to receive(:renewal_charge).and_return(105)
+    allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
     FinanceDetails.new_finance_details(transient_registration)
   end

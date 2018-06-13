@@ -32,6 +32,17 @@ module ApplicationHelper
     end
   end
 
+  def display_pence_as_pounds(value_in_pence)
+    value_in_pounds = value_in_pence.to_d / 100
+
+    # Check if the value in pounds is a whole number - does dividing it by 1 have a remainder?
+    if (value_in_pounds % 1).zero?
+      number_with_precision(value_in_pounds, precision: 0).to_s
+    else
+      number_with_precision(value_in_pounds, precision: 2).to_s
+    end
+  end
+
   private
 
   def title_text

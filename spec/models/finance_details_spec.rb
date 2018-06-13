@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe FinanceDetails, type: :model do
   before do
-    allow(Rails.configuration).to receive(:renewal_charge).and_return(100)
-    allow(Rails.configuration).to receive(:type_change_charge).and_return(25)
-    allow(Rails.configuration).to receive(:card_charge).and_return(10)
+    allow(Rails.configuration).to receive(:renewal_charge).and_return(10_000)
+    allow(Rails.configuration).to receive(:type_change_charge).and_return(2_500)
+    allow(Rails.configuration).to receive(:card_charge).and_return(1_000)
   end
 
   let(:transient_registration) { build(:transient_registration, :has_required_data, temp_cards: 0) }

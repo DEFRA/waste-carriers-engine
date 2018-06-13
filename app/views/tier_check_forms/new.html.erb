@@ -8,7 +8,7 @@
 
     <p><%= t(".paragraph_1") %></p>
     <p><%= t(".paragraph_2") %></p>
-    <p><%= t(".paragraph_3", renewal_charge: Rails.configuration.renewal_charge) %></p>
+    <p><%= t(".paragraph_3", renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
 
     <div class="form-group">
       <details>
