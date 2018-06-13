@@ -6,7 +6,7 @@ en:
       detail_subheading: Why do you need to write to me?
       detail_paragraph_1: We’ll only write to you in relation to your waste carrier account. For example, if you order copy cards of your registration.
       detail_paragraph_2: Don’t worry, we won’t send junk mail to this address.
-      temp_contact_postcode_label: UK postcode
+      temp_contact_postcode_label: Please enter a UK postcode
       temp_contact_postcode_hint: For example, BS1 5AH
       error_heading: A problem to fix
       next_button: Find address
