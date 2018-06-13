@@ -1,12 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "WorldpayForms", type: :request do
-  before do
-    allow(Rails.configuration).to receive(:worldpay_admin_code).and_return("ADMIN_CODE")
-    allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
-    allow(Rails.configuration).to receive(:worldpay_macsecret).and_return("5r2zsonhn2t69s1q9jsub90l0ljrs59r")
-  end
-
   context "when a valid user is signed in" do
     let(:user) { create(:user) }
     before(:each) do

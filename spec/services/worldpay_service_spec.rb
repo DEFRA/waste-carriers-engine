@@ -10,8 +10,6 @@ RSpec.describe WorldpayService do
   end
 
   before do
-    allow(Rails.configuration).to receive(:worldpay_admin_code).and_return("ADMIN_CODE")
-    allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
     allow(Rails.configuration).to receive(:renewal_charge).and_return(105)
 
     FinanceDetails.new_finance_details(transient_registration)
@@ -26,7 +24,6 @@ RSpec.describe WorldpayService do
     context "when the request is valid" do
       let(:root) { Rails.configuration.wcrs_renewals_url }
       let(:reg_id) { transient_registration.reg_identifier }
-      let(:url) { worldpay_service.prepare_for_payment[:url] }
 
       # Stub the WorldpayUrlService as we're testing that separately
       before do
@@ -35,6 +32,7 @@ RSpec.describe WorldpayService do
 
       it "returns a link" do
         VCR.use_cassette("worldpay_initial_request") do
+          url = worldpay_service.prepare_for_payment[:url]
           expect(url).to eq("LINK GOES HERE")
         end
       end
