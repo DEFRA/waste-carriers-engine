@@ -47,9 +47,9 @@ module WasteCarriersRenewals
     config.companies_house_api_key = ENV["WCRS_RENEWALS_COMPANIES_HOUSE_API_KEY"]
 
     # Paths
-    config.wcrs_renewals_url = ENV["WCRS_RENEWALS_PUBLIC_APP_DOMAIN"] || "localhost:3002"
-    config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"] || "localhost:3000"
-    config.os_places_service_url = ENV["WCRS_RENEWALS_OS_PLACES_SERVICE_DOMAIN"] || "localhost:8006"
+    config.wcrs_renewals_url = ENV["WCRS_RENEWALS_PUBLIC_APP_DOMAIN"] || "http://localhost:3002"
+    config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"] || "http://localhost:3000"
+    config.os_places_service_url = ENV["WCRS_RENEWALS_OS_PLACES_SERVICE_DOMAIN"] || "http://localhost:8006"
 
     # Fees
     config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i || 0
