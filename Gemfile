@@ -94,7 +94,7 @@ group :test do
   gem "simplecov", require: false
   gem "timecop"
   gem "vcr", "~> 4.0"
-  gem "webmock", "~> 3.3"
+  gem "webmock", "~> 3.4"
 end
 gem "loofah", ">= 2.2.1"
 gem "rails-html-sanitizer", ">= 1.0.4"
