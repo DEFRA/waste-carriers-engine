@@ -36,7 +36,7 @@ gem "aasm", "~> 4.12"
 
 # Use Airbrake for error reporting to Errbit
 # Version 6 and above cause errors with Errbit, so use 5.8.1 for now
-gem "airbrake", "5.8.1"
+gem "airbrake", "7.3.4"
 
 # Use CanCanCan for user roles and permissions
 # Version 2.0 doesn't support Mongoid, so we're locked to an earlier one
