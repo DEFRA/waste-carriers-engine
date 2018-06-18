@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8006/addresses.json?postcode=AA11AA
+    uri: http://localhost:8005/addresses.json?postcode=AA11AA
     body:
       encoding: US-ASCII
       string: ''
@@ -14,7 +14,7 @@ http_interactions:
       User-Agent:
       - rest-client/2.0.2 (darwin16.7.0 x86_64) ruby/2.4.2p198
       Host:
-      - localhost:8006
+      - localhost:8005
   response:
     status:
       code: 400
@@ -29,6 +29,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"statuscode":400,"message":"Parameters are not valid"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 13 Jun 2018 11:02:55 GMT
 recorded_with: VCR 4.0.0
