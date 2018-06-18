@@ -15,7 +15,7 @@ RSpec.describe PastRegistration, type: :model do
     end
 
     it "copies nested objects from the registration" do
-      expect(past_registration.keyPeople).to eq(registration.keyPeople)
+      expect(past_registration.registered_address).to eq(registration.registered_address)
     end
   end
 end

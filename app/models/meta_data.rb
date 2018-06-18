@@ -3,6 +3,7 @@ class MetaData
   include CanChangeRegistrationStatus
 
   embedded_in :registration
+  embedded_in :past_registration
 
   field :route,                                 type: String
   field :dateRegistered, as: :date_registered,  type: DateTime

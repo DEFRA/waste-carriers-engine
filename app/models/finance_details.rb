@@ -2,6 +2,7 @@ class FinanceDetails
   include Mongoid::Document
 
   embedded_in :registration
+  embedded_in :past_registration
   embedded_in :transient_registration
   embeds_many :orders
   embeds_many :payments

@@ -4,6 +4,7 @@ class Registration
   include CanGenerateRegIdentifier
 
   embeds_many :past_registrations
+  accepts_nested_attributes_for :past_registrations
 
   before_validation :generate_reg_identifier, on: :create
 
