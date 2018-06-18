@@ -21,7 +21,7 @@ en:
             temp_company_postcode:
               blank: "Enter a postcode"
               wrong_format: "Enter a valid UK postcode"
-              no_results: "We couldn't find any addresses for that postcode. Check the postcode or enter the address manually."
+              no_results: "We cannot find any addresses for that postcode. Check the postcode or enter the address manually."
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
