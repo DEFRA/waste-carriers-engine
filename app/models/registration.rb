@@ -3,6 +3,8 @@ class Registration
   include CanHaveRegistrationAttributes
   include CanGenerateRegIdentifier
 
+  embeds_many :past_registrations
+
   before_validation :generate_reg_identifier, on: :create
 
   validates :reg_identifier,

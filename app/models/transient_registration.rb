@@ -91,7 +91,8 @@ class TransientRegistration
                                                 "declaredConvictions",
                                                 "convictionSearchResult",
                                                 "conviction_sign_offs",
-                                                "declaration")
+                                                "declaration",
+                                                "past_registrations")
 
     assign_attributes(strip_whitespace(attributes))
     remove_invalid_attributes
