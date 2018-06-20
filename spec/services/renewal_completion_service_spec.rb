@@ -25,15 +25,13 @@ RSpec.describe RenewalCompletionService do
         pending("To be implemented")
 
         renewal_completion_service.complete_renewal
-        expect(registration.company_name).to eq(transient_registration.company_name)
+        expect(registration.reload.company_name).to eq(transient_registration.company_name)
       end
 
       it "updates the registration's expiry date" do
-        pending("To be implemented")
-
         old_expiry_date = registration.expires_on
         renewal_completion_service.complete_renewal
-        expect(registration.expires_on).to eq(old_expiry_date + 3.years)
+        expect(registration.reload.expires_on).to eq(old_expiry_date + 3.years)
       end
 
       it "deletes the transient registration" do

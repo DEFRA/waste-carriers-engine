@@ -64,12 +64,12 @@ module CanChangeRegistrationStatus
 
     # Transition effects
     def set_expiry_date
-      registration.set(expires_on: Rails.configuration.expires_after.years.from_now)
+      registration.expires_on = Rails.configuration.expires_after.years.from_now
     end
 
     def extend_expiry_date
       new_expiry_date = expiry_date_after_renewal(registration.expires_on)
-      registration.set(expires_on: new_expiry_date)
+      registration.expires_on = new_expiry_date
     end
 
     def log_status_change

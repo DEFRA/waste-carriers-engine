@@ -26,8 +26,8 @@ class RenewalCompletionService
   end
 
   def update_registration
-    # Copy data from transient_registration
-    # Extend expires_on
+    # TODO: Copy data from transient_registration
+    @registration.metaData.renew
     @registration.save!
   end
 
