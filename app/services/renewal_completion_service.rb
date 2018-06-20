@@ -45,5 +45,13 @@ class RenewalCompletionService
                                                            "temp_payment_method",
                                                            "temp_tier_check")
     @registration.write_attributes(attributes)
+
+    # If attributes aren't included in the transient_registration, for example if the user skipped the tier check,
+    # update those attributes to be nil for the registration
+    registration_attributes = @registration.attributes.except("_id", "past_registrations").keys
+    registration_attributes.each do |attribute|
+      next if attributes.keys.include?(attribute)
+      @registration[attribute] = nil
+    end
   end
 end

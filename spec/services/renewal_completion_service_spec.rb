@@ -26,6 +26,18 @@ RSpec.describe RenewalCompletionService do
         expect(registration.reload.company_name).to eq(transient_registration.company_name)
       end
 
+      # This only applies to attributes where a value could be set, but not always - for example, smart answers
+      context "if the registration has an attribute which is not in the transient_registration" do
+        before do
+          registration.update_attributes(construction_waste: true)
+        end
+
+        it "updates the attribute to be nil in the registration" do
+          renewal_completion_service.complete_renewal
+          expect(registration.reload.construction_waste).to eq(nil)
+        end
+      end
+
       it "updates the registration's expiry date" do
         old_expiry_date = registration.expires_on
         renewal_completion_service.complete_renewal
