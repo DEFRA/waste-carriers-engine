@@ -58,7 +58,8 @@ class RenewalCompletionService
   end
 
   def merge_finance_details
-    set_up_finance_details
+    set_up_finance_details(@registration)
+    set_up_finance_details(@transient_registration)
 
     @transient_registration.finance_details.orders.each do |order|
       @registration.finance_details.orders << order
@@ -72,9 +73,9 @@ class RenewalCompletionService
   end
 
   # If for some reason we have no existing finance info, create empty objects
-  def set_up_finance_details
-    @registration.finance_details = FinanceDetails.new unless @registration.finance_details.present?
-    @registration.finance_details.payments = [] unless @registration.finance_details.payments.present?
-    @registration.finance_details.orders = [] unless @registration.finance_details.orders.present?
+  def set_up_finance_details(registration)
+    registration.finance_details = FinanceDetails.new unless registration.finance_details.present?
+    registration.finance_details.payments = [] unless registration.finance_details.payments.present?
+    registration.finance_details.orders = [] unless registration.finance_details.orders.present?
   end
 end
