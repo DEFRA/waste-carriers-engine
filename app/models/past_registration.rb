@@ -8,8 +8,8 @@ class PastRegistration
 
   def self.build_past_registration(registration)
     past_registration = PastRegistration.new
+    return if past_registration.version_already_backed_up?(registration)
     past_registration.registration = registration
-    return if past_registration.version_already_backed_up?
 
     attributes = registration.attributes.except("_id", "past_registrations")
     past_registration.assign_attributes(attributes)
@@ -18,7 +18,7 @@ class PastRegistration
     past_registration
   end
 
-  def version_already_backed_up?
+  def version_already_backed_up?(registration)
     # Collect all expires_on dates from past registrations
     matching_expires_on = registration.past_registrations.map(&:expires_on)
     # Check if the current expires_on is included - this indicates that this version of
