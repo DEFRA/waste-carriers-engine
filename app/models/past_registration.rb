@@ -11,7 +11,7 @@ class PastRegistration
     past_registration.registration = registration
     return if past_registration.version_already_backed_up?
 
-    attributes = registration.attributes.except(:_id, :past_registrations)
+    attributes = registration.attributes.except("_id", "past_registrations")
     past_registration.assign_attributes(attributes)
 
     past_registration.save!

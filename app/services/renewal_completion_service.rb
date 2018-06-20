@@ -26,12 +26,24 @@ class RenewalCompletionService
   end
 
   def update_registration
-    # TODO: Copy data from transient_registration
+    copy_data_from_transient_registration
     @registration.metaData.renew
     @registration.save!
   end
 
   def delete_transient_registration
     @transient_registration.delete
+  end
+
+  def copy_data_from_transient_registration
+    attributes = @transient_registration.attributes.except("_id",
+                                                           "workflow_state",
+                                                           "temp_cards",
+                                                           "temp_company_postcode",
+                                                           "temp_contact_postcode",
+                                                           "temp_os_places_error",
+                                                           "temp_payment_method",
+                                                           "temp_tier_check")
+    @registration.write_attributes(attributes)
   end
 end

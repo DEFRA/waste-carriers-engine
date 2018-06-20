@@ -22,8 +22,6 @@ RSpec.describe RenewalCompletionService do
       end
 
       it "copies data from the transient_registration to the registration" do
-        pending("To be implemented")
-
         renewal_completion_service.complete_renewal
         expect(registration.reload.company_name).to eq(transient_registration.company_name)
       end
