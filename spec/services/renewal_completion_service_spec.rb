@@ -16,11 +16,9 @@ RSpec.describe RenewalCompletionService do
   describe "complete_renewal" do
     context "when the renewal is valid" do
       it "creates a new past_registration" do
-        pending("To be implemented")
-
-        number_of_past_registrations = registration.past_registrations.length
+        number_of_past_registrations = registration.past_registrations.count
         renewal_completion_service.complete_renewal
-        expect(registration.past_registrations.length).to eq(number_of_past_registrations + 1)
+        expect(registration.reload.past_registrations.count).to eq(number_of_past_registrations + 1)
       end
 
       it "copies data from the transient_registration to the registration" do
