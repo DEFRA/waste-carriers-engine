@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PastRegistration, type: :model do
-  let(:registration) { build(:registration, :has_required_data, :expires_soon) }
+  let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
   describe "build_past_registration" do
     let(:past_registration) { PastRegistration.build_past_registration(registration) }

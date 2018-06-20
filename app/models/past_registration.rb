@@ -10,10 +10,7 @@ class PastRegistration
     past_registration = PastRegistration.new
     past_registration.registration = registration
 
-    # Horrible fudge to make sure all nested attributes are copied
-    # TODO: Unfudge!
-    json_attributes = registration.to_json
-    attributes = JSON.parse(json_attributes).except("_id", "past_registrations")
+    attributes = registration.attributes.except(:_id, :past_registrations)
     past_registration.assign_attributes(attributes)
 
     past_registration
