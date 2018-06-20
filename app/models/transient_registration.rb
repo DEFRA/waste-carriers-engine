@@ -88,6 +88,7 @@ class TransientRegistration
                                                 "onlyAMF",
                                                 "addresses",
                                                 "keyPeople",
+                                                "financeDetails",
                                                 "declaredConvictions",
                                                 "convictionSearchResult",
                                                 "conviction_sign_offs",

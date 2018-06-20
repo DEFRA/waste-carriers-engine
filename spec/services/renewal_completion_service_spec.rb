@@ -13,6 +13,14 @@ RSpec.describe RenewalCompletionService do
 
   let(:renewal_completion_service) { RenewalCompletionService.new(transient_registration) }
 
+  before do
+    FinanceDetails.new_finance_details(transient_registration)
+    Payment.new_from_worldpay(transient_registration.finance_details.orders.first)
+    registration.update_attributes(finance_details: build(:finance_details,
+                                                          :has_required_data,
+                                                          :has_order_and_payment))
+  end
+
   describe "complete_renewal" do
     context "when the renewal is valid" do
       it "creates a new past_registration" do
@@ -30,6 +38,36 @@ RSpec.describe RenewalCompletionService do
         registration.registered_address.update_attributes(postcode: "FOO")
         renewal_completion_service.complete_renewal
         expect(registration.reload.registered_address.postcode).to eq(transient_registration.registered_address.postcode)
+      end
+
+      it "adds the order from the transient_registration" do
+        new_order = transient_registration.finance_details.orders.first
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.finance_details.orders).to include(new_order)
+      end
+
+      it "adds the payment from the transient_registration" do
+        new_payment = transient_registration.finance_details.payments.first
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.finance_details.payments).to include(new_payment)
+      end
+
+      it "keeps existing orders" do
+        old_order = registration.finance_details.orders.first
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.finance_details.orders).to include(old_order)
+      end
+
+      it "keeps existing payments" do
+        old_payment = registration.finance_details.payments.first
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.finance_details.payments).to include(old_payment)
+      end
+
+      it "updates the balance" do
+        old_balance = registration.finance_details.balance
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.finance_details.balance).to_not eq(old_balance)
       end
 
       # This only applies to attributes where a value could be set, but not always - for example, smart answers
