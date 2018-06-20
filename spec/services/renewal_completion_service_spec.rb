@@ -21,9 +21,15 @@ RSpec.describe RenewalCompletionService do
         expect(registration.reload.past_registrations.count).to eq(number_of_past_registrations + 1)
       end
 
-      it "copies data from the transient_registration to the registration" do
+      it "copies attributes from the transient_registration to the registration" do
         renewal_completion_service.complete_renewal
         expect(registration.reload.company_name).to eq(transient_registration.company_name)
+      end
+
+      it "copies nested attributes from the transient_registration to the registration" do
+        registration.registered_address.update_attributes(postcode: "FOO")
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.registered_address.postcode).to eq(transient_registration.registered_address.postcode)
       end
 
       # This only applies to attributes where a value could be set, but not always - for example, smart answers
