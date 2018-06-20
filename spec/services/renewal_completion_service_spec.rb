@@ -35,8 +35,6 @@ RSpec.describe RenewalCompletionService do
       end
 
       it "deletes the transient registration" do
-        pending("To be implemented")
-
         renewal_completion_service.complete_renewal
         expect(TransientRegistration.where(reg_identifier: transient_registration.reg_identifier).count).to eq(0)
       end

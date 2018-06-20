@@ -32,5 +32,6 @@ class RenewalCompletionService
   end
 
   def delete_transient_registration
+    @transient_registration.delete
   end
 end
