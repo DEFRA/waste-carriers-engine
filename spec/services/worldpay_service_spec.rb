@@ -12,7 +12,7 @@ RSpec.describe WorldpayService do
   before do
     allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
-    FinanceDetails.new_finance_details(transient_registration)
+    FinanceDetails.new_finance_details(transient_registration, :worldpay)
   end
 
   let(:order) { transient_registration.finance_details.orders.first }

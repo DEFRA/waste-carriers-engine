@@ -11,7 +11,7 @@ RSpec.describe Order, type: :model do
   let(:transient_registration) { create(:transient_registration, :has_required_data, temp_cards: 0) }
 
   describe "new_order" do
-    let(:order) { Order.new_order(transient_registration) }
+    let(:order) { Order.new_order(transient_registration, :worldpay) }
 
     it "should have a valid order_id" do
       Timecop.freeze(Time.new(2018, 1, 1)) do
@@ -30,10 +30,6 @@ RSpec.describe Order, type: :model do
 
     it "should have the correct total_amount" do
       expect(order.total_amount).to eq(10_000)
-    end
-
-    it "should have the correct merchant_id" do
-      expect(order.merchant_id).to eq("MERCHANTCODE")
     end
 
     it "should have the correct updated_by_user" do
@@ -107,10 +103,40 @@ RSpec.describe Order, type: :model do
         expect(order.description).to eq("Renewal of registration, plus 3 registration cards")
       end
     end
+
+    context "when it is a Worldpay order" do
+      it "should have the correct payment_method" do
+        expect(order.payment_method).to eq("ONLINE")
+      end
+
+      it "should have the correct merchant_id" do
+        expect(order.merchant_id).to eq("MERCHANTCODE")
+      end
+
+      it "should have the correct world_pay_status" do
+        expect(order.world_pay_status).to eq("IN_PROGRESS")
+      end
+    end
+
+    context "when it is a bank transfer order" do
+      let(:order) { Order.new_order(transient_registration, :bank_transfer) }
+
+      it "should have the correct payment_method" do
+        expect(order.payment_method).to eq("OFFLINE")
+      end
+
+      it "should have the correct merchant_id" do
+        expect(order.merchant_id).to eq(nil)
+      end
+
+      it "should have the correct world_pay_status" do
+        expect(order.world_pay_status).to eq(nil)
+      end
+    end
   end
 
   describe "update_after_worldpay" do
-    let(:finance_details) { FinanceDetails.new_finance_details(transient_registration) }
+    let(:finance_details) { FinanceDetails.new_finance_details(transient_registration, :worldpay) }
     let(:order) { finance_details.orders.first }
 
     it "copies the worldpay status to the order" do
