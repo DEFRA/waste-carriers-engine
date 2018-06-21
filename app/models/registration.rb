@@ -7,6 +7,7 @@ class Registration
   accepts_nested_attributes_for :past_registrations
 
   before_validation :generate_reg_identifier, on: :create
+  before_validation :update_last_modified
 
   validates :reg_identifier,
             :addresses,

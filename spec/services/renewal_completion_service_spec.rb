@@ -88,6 +88,17 @@ RSpec.describe RenewalCompletionService do
         expect(registration.reload.expires_on).to eq(old_expiry_date + 3.years)
       end
 
+      it "updates the registration's last_modified" do
+        old_last_modified = registration.metaData.last_modified
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.metaData.last_modified).to_not eq(old_last_modified)
+      end
+
+      it "updates the registration's route" do
+        renewal_completion_service.complete_renewal
+        expect(registration.reload.metaData.route).to eq("DIGITAL")
+      end
+
       it "deletes the transient registration" do
         renewal_completion_service.complete_renewal
         expect(TransientRegistration.where(reg_identifier: transient_registration.reg_identifier).count).to eq(0)

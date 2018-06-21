@@ -28,6 +28,7 @@ class RenewalCompletionService
   def update_registration
     copy_data_from_transient_registration
     merge_finance_details
+    @registration.metaData.route = "DIGITAL"
     @registration.metaData.renew
     @registration.save!
   end
