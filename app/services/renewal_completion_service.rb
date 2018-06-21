@@ -75,7 +75,15 @@ class RenewalCompletionService
   # If for some reason we have no existing finance info, create empty objects
   def set_up_finance_details(registration)
     registration.finance_details = FinanceDetails.new unless registration.finance_details.present?
-    registration.finance_details.payments = [] unless registration.finance_details.payments.present?
+    set_up_orders(registration)
+    set_up_payments(registration)
+  end
+
+  def set_up_orders(registration)
     registration.finance_details.orders = [] unless registration.finance_details.orders.present?
+  end
+
+  def set_up_payments(registration)
+    registration.finance_details.payments = [] unless registration.finance_details.payments.present?
   end
 end
