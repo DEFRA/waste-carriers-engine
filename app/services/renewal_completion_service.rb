@@ -38,7 +38,7 @@ class RenewalCompletionService
 
   def copy_data_from_transient_registration
     attributes = @transient_registration.attributes.except("_id",
-                                                           "finance_details",
+                                                           "financeDetails",
                                                            "temp_cards",
                                                            "temp_company_postcode",
                                                            "temp_contact_postcode",
