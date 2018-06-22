@@ -52,5 +52,14 @@ FactoryBot.define do
          build(:address, :has_required_data, :contact, :manual_foreign)]
       end
     end
+
+    trait :has_matching_convictions do
+      company_name "Test Waste Services Ltd."
+      company_no "12345678"
+
+      keyPeople do
+        [build(:key_person, :has_matching_conviction, :main)]
+      end
+    end
   end
 end
