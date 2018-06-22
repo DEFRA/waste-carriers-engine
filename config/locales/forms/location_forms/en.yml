@@ -4,7 +4,7 @@ en:
       title: Business location
       heading: Where is your principal place of business?
       location_detail_subheading: What is the principal place of business?
-      location_detail_paragraph: "Usually this is the place where orders are received and dealt with, and where the day-to-day business takes place. If your business is registered, it’ll be the registered address."
+      location_detail_paragraph: "For companies and LLPs this is where your business is registered. For others, this is where the day-to-day business is run."
       options:
         england: England
         wales: Wales

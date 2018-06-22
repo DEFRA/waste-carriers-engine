@@ -24,7 +24,7 @@ class Order
   field :manualOrder, as: :manual_order,           type: String
   field :order_item_reference,                     type: String
 
-  def self.new_order(transient_registration)
+  def self.new_order(transient_registration, method)
     order = Order.new
 
     card_count = transient_registration.temp_cards
@@ -32,9 +32,6 @@ class Order
     order[:order_id] = order.generate_id
     order[:order_code] = order[:order_id]
     order[:currency] = "GBP"
-    order[:payment_method] = "ONLINE"
-    order[:world_pay_status] = "IN_PROGRESS"
-    order[:merchant_id] = Rails.configuration.worldpay_merchantcode
 
     order[:date_created] = Time.current
     order[:date_last_updated] = order[:date_created]
@@ -48,7 +45,20 @@ class Order
 
     order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
 
+    order.add_bank_transfer_attributes if method == :bank_transfer
+    order.add_worldpay_attributes if method == :worldpay
+
     order
+  end
+
+  def add_bank_transfer_attributes
+    self.payment_method = "OFFLINE"
+  end
+
+  def add_worldpay_attributes
+    self.payment_method = "ONLINE"
+    self.world_pay_status = "IN_PROGRESS"
+    self.merchant_id = Rails.configuration.worldpay_merchantcode
   end
 
   def generate_id
