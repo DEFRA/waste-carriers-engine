@@ -12,9 +12,9 @@ en:
       description_1:
         localAuthority: Enter the name and date of birth for each chief executive of the business.
         limitedCompany: Enter the name and date of birth for each director of the business.
-        limitedLiabilityPartnership: Enter the name and date of birth for each business partner.
+        limitedLiabilityPartnership: Enter the name and date of birth for each partner of the business.
         overseas: Enter the name and date of birth for each owner of the business.
-        partnership:  Enter the name and date of birth for each business partner.
+        partnership:  Enter the name and date of birth for each partner of the business.
         soleTrader: Enter the name and date of birth for the business owner.
       add_person_link: Add another person
       next_button: Continue
