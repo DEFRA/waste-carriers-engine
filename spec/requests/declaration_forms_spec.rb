@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "DeclarationForms", type: :request do
+  before do
+    allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
+  end
+
   include_examples "GET locked-in form", form = "declaration_form"
 
   include_examples "POST form",
@@ -8,6 +12,42 @@ RSpec.describe "DeclarationForms", type: :request do
                    valid_params = { declaration: 1 },
                    invalid_params = { declaration: "foo" },
                    test_attribute = :declaration
+
+  describe "POST declaration_forms_path" do
+    context "when a valid user is signed in" do
+      let(:user) { create(:user) }
+      before(:each) do
+        sign_in(user)
+      end
+
+      context "when a valid transient registration exists" do
+        let!(:transient_registration) do
+          create(:transient_registration,
+                 :has_required_data,
+                 :has_key_people,
+                 account_email: user.email,
+                 workflow_state: "declaration_form")
+        end
+
+        let(:params) do
+          {
+            reg_identifier: transient_registration.reg_identifier,
+            declaration: 1
+          }
+        end
+
+        it "creates a new convictionSearchResult for the registration" do
+          post declaration_forms_path, declaration_form: params
+          expect(transient_registration.reload.convictionSearchResult).to_not eq(nil)
+        end
+
+        it "creates a new convictionSearchResult for the key people" do
+          post declaration_forms_path, declaration_form: params
+          expect(transient_registration.reload.keyPeople.first.convictionSearchResult).to_not eq(nil)
+        end
+      end
+    end
+  end
 
   describe "GET back_declaration_forms_path" do
     context "when a valid user is signed in" do

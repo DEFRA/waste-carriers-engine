@@ -11,7 +11,7 @@ class FormsController < ApplicationController
 
   # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
   def create(form_class, form)
-    return unless set_up_form(form_class, form, params[form][:reg_identifier])
+    return false unless set_up_form(form_class, form, params[form][:reg_identifier])
 
     # Submit the form by getting the instance variable we just set
     submit_form(instance_variable_get("@#{form}"), params[form])
@@ -48,8 +48,10 @@ class FormsController < ApplicationController
       if form.submit(params)
         @transient_registration.next!
         format.html { redirect_to_correct_form }
+        true
       else
         format.html { render :new }
+        false
       end
     end
   end
