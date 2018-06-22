@@ -4,18 +4,16 @@ class EntityMatchingService
   end
 
   def check_business_for_matches
-    query_service(company_no_url) if @transient_registration.company_no.present?
-    query_service(company_name_url)
+    data = query_service(company_url)
+    store_match_result(@transient_registration, data)
   end
 
   def check_people_for_matches
-    result = ""
     @transient_registration.keyPeople.each do |person|
       url = person_url(person)
-      result = query_service(url)
+      data = query_service(url)
+      store_match_result(person, data)
     end
-    # Temporarily return this so we have something to test
-    result
   end
 
   private
@@ -31,29 +29,34 @@ class EntityMatchingService
       rescue JSON::ParserError => e
         Airbrake.notify(e)
         Rails.logger.error "Entity Matching JSON error: " + e.to_s
-        error_data
+        unknown_result_data
       end
     rescue RestClient::ExceptionWithResponse => e
       Airbrake.notify(e)
       Rails.logger.error "Entity Matching response error: " + e.to_s
-      error_data
+      unknown_result_data
     rescue Errno::ECONNREFUSED => e
       Airbrake.notify(e)
       Rails.logger.error "Entity Matching connection error: " + e.to_s
-      error_data
+      unknown_result_data
     rescue SocketError => e
       Airbrake.notify(e)
       Rails.logger.error "Entity Matching socket error: " + e.to_s
-      error_data
+      unknown_result_data
     end
   end
 
-  def error_data
+  def store_match_result(entity, data)
+    entity.convictionSearchResult = ConvictionSearchResult.new_from_entity_matching_service(data)
+    entity.save!
+  end
+
+  def unknown_result_data
     {
-      match_result: "UNKNOWN",
-      matching_system: "ERROR",
-      searched_at: Time.now.to_i,
-      confirmed: "no"
+      "match_result" => "UNKNOWN",
+      "matching_system" => "ERROR",
+      "searched_at" => Time.now.to_i,
+      "confirmed" => "no"
     }
   end
 
@@ -63,12 +66,8 @@ class EntityMatchingService
     "#{Rails.configuration.wcrs_services_url}/match/"
   end
 
-  def company_name_url
-    "#{base_url}company?name=#{@transient_registration.company_name}"
-  end
-
-  def company_no_url
-    "#{base_url}company?number=#{@transient_registration.company_no}"
+  def company_url
+    "#{base_url}company?name=#{@transient_registration.company_name}&number=#{@transient_registration.company_no}"
   end
 
   def person_url(person)
