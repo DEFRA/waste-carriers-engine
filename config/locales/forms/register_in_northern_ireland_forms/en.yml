@@ -1,14 +1,13 @@
 en:
   register_in_northern_ireland_forms:
     new:
-      title: You should register in Northern Ireland
-      heading: You should register in Northern Ireland
-      paragraph_1: Each country has its own register of waste carriers, and you should register with the appropriate authority.
-      paragraph_2: In Northern Ireland, you need to register with the Northern Ireland Environment Agency (NIEA).
+      title: You can register in Northern Ireland
+      heading: You can register in Northern Ireland
+      paragraph_1: You can continue to renew in England, but you are encouraged to register with the appropriate authority for your region. This allows customers to verify that you’re a registered waste carrier.
+      paragraph_2: In Northern Ireland, you need to register with the Northern Ireland Environment Agency (NIEA). For details on how, visit
       service_link: Register or renew as a waste carrier, broker or dealer (Northern Ireland)
-      paragraph_3: You can still continue to register with the Environment Agency in England, but this will make it harder for your customers to check that you’re a registered waste carrier.
-      paragraph_4: If you have any questions about this, please contact our helpline on 03708 506 506.
-      next_button: Continue registering in England
+      paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506.
+      next_button: Continue to register in England
   activemodel:
     errors:
       models:

@@ -4,7 +4,7 @@ en:
       title: Main people
       heading:
         localAuthority: Chief executive details
-        limitedCompany: Director details
+        limitedCompany: Company director details
         limitedLiabilityPartnership: Partner details
         overseas: Business owner details
         partnership: Partner details
@@ -14,8 +14,8 @@ en:
         limitedCompany: Enter the name and date of birth for each director of the business.
         limitedLiabilityPartnership: Enter the name and date of birth for each business partner.
         overseas: Enter the name and date of birth for each owner of the business.
-        partnership:  Enter the name and date of birth for each business partner.
-        soleTrader: Enter the name and date of birth for the business owner.
+        partnership:  Enter the name and date of birth for each partner of the business.
+        soleTrader: Enter the name and date of birth of the business owner.
       add_person_link: Add another person
       next_button: Continue
       list_of_people: You have added the following people
