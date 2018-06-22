@@ -9,6 +9,15 @@ RSpec.describe EntityMatchingService do
 
   let(:entity_matching_service) { EntityMatchingService.new(transient_registration) }
 
+  let(:error_data) do
+    {
+      match_result: "UNKNOWN",
+      matching_system: "ERROR",
+      searched_at: Time.now.to_i,
+      confirmed: "no"
+    }
+  end
+
   describe "check_business_for_matches" do
     context "when there is no company_no" do
       before do
@@ -61,37 +70,37 @@ RSpec.describe EntityMatchingService do
         allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
       end
 
-      it "returns :error" do
-        expect(entity_matching_service.check_people_for_matches).to eq(:error)
+      it "returns error_data" do
+        expect(entity_matching_service.check_people_for_matches).to eq(error_data)
       end
     end
 
     context "when the request times out" do
-      it "returns :error" do
+      it "returns error_data" do
         VCR.turned_off do
           host = Rails.configuration.wcrs_services_url
           stub_request(:any, /.*#{host}.*/).to_timeout
-          expect(entity_matching_service.check_people_for_matches).to eq(:error)
+          expect(entity_matching_service.check_people_for_matches).to eq(error_data)
         end
       end
     end
 
     context "when the request returns a connection refused error" do
-      it "returns :error" do
+      it "returns error_data" do
         VCR.turned_off do
           host = Rails.configuration.wcrs_services_url
           stub_request(:any, /.*#{host}.*/).to_raise(Errno::ECONNREFUSED)
-          expect(entity_matching_service.check_people_for_matches).to eq(:error)
+          expect(entity_matching_service.check_people_for_matches).to eq(error_data)
         end
       end
     end
 
     context "when the request returns a socket error" do
-      it "returns :error" do
+      it "returns error_data" do
         VCR.turned_off do
           host = Rails.configuration.wcrs_services_url
           stub_request(:any, /.*#{host}.*/).to_raise(SocketError)
-          expect(entity_matching_service.check_people_for_matches).to eq(:error)
+          expect(entity_matching_service.check_people_for_matches).to eq(error_data)
         end
       end
     end

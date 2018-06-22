@@ -31,21 +31,30 @@ class EntityMatchingService
       rescue JSON::ParserError => e
         Airbrake.notify(e)
         Rails.logger.error "Entity Matching JSON error: " + e.to_s
-        :error
+        error_data
       end
     rescue RestClient::ExceptionWithResponse => e
       Airbrake.notify(e)
       Rails.logger.error "Entity Matching response error: " + e.to_s
-      :error
+      error_data
     rescue Errno::ECONNREFUSED => e
       Airbrake.notify(e)
       Rails.logger.error "Entity Matching connection error: " + e.to_s
-      :error
+      error_data
     rescue SocketError => e
       Airbrake.notify(e)
       Rails.logger.error "Entity Matching socket error: " + e.to_s
-      :error
+      error_data
     end
+  end
+
+  def error_data
+    {
+      match_result: "UNKNOWN",
+      matching_system: "ERROR",
+      searched_at: Time.now.to_i,
+      confirmed: "no"
+    }
   end
 
   # URLs
