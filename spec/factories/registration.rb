@@ -10,10 +10,19 @@ FactoryBot.define do
       last_name "Doe"
       registration_type "carrier_broker_dealer"
       phone_number "03708 506506"
+      tier "UPPER"
 
       metaData { build(:metaData, :has_required_data) }
-      addresses { [build(:address)] }
-      tier "UPPER"
+
+      addresses do
+        [build(:address, :has_required_data, :contact, :from_os_places),
+         build(:address, :has_required_data, :registered, :from_os_places)]
+      end
+
+      keyPeople do
+        [build(:key_person, :has_required_data, :main),
+         build(:key_person, :has_required_data, :relevant)]
+      end
     end
 
     trait :has_required_overseas_data do
@@ -25,10 +34,19 @@ FactoryBot.define do
       last_name "Doe"
       registration_type "carrier_broker_dealer"
       phone_number "03708 506506"
+      tier "UPPER"
 
       metaData { build(:metaData, :has_required_data) }
-      addresses { [build(:address)] }
-      tier "UPPER"
+
+      addresses do
+        [build(:address, :has_required_data, :contact, :manual_foreign),
+         build(:address, :has_required_data, :registered, :manual_foreign)]
+      end
+
+      keyPeople do
+        [build(:key_person, :has_required_data, :main),
+         build(:key_person, :has_required_data, :relevant)]
+      end
     end
 
     trait :expires_soon do

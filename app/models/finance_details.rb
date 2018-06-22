@@ -2,6 +2,7 @@ class FinanceDetails
   include Mongoid::Document
 
   embedded_in :registration
+  embedded_in :past_registration
   embedded_in :transient_registration
   embeds_many :orders
   embeds_many :payments
@@ -14,10 +15,10 @@ class FinanceDetails
   validates :balance,
             presence: true
 
-  def self.new_finance_details(transient_registration)
+  def self.new_finance_details(transient_registration, method)
     finance_details = FinanceDetails.new
     finance_details.transient_registration = transient_registration
-    finance_details[:orders] = [Order.new_order(transient_registration)]
+    finance_details[:orders] = [Order.new_order(transient_registration, method)]
     finance_details.update_balance
     finance_details.save!
     finance_details

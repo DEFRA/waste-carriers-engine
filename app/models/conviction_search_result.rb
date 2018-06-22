@@ -2,6 +2,7 @@ class ConvictionSearchResult
   include Mongoid::Document
 
   embedded_in :registration
+  embedded_in :past_registration
   embedded_in :keyPerson
 
   field :matchResult, as: :match_result,        type: String

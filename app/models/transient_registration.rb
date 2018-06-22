@@ -10,6 +10,7 @@ class TransientRegistration
   validate :no_renewal_in_progress?, on: :create
 
   after_initialize :copy_data_from_registration
+  before_validation :update_last_modified
 
   # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
   field :temp_cards, type: Integer
@@ -88,10 +89,12 @@ class TransientRegistration
                                                 "onlyAMF",
                                                 "addresses",
                                                 "keyPeople",
+                                                "financeDetails",
                                                 "declaredConvictions",
                                                 "convictionSearchResult",
                                                 "conviction_sign_offs",
-                                                "declaration")
+                                                "declaration",
+                                                "past_registrations")
 
     assign_attributes(strip_whitespace(attributes))
     remove_invalid_attributes

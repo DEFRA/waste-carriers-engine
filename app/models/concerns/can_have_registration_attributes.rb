@@ -66,5 +66,10 @@ module CanHaveRegistrationAttributes
     def conviction_check_required?
       declared_convictions == true
     end
+
+    def update_last_modified
+      return unless metaData.present?
+      metaData.last_modified = Time.current
+    end
   end
 end

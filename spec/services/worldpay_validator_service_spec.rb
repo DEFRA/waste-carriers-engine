@@ -17,7 +17,7 @@ RSpec.describe WorldpayValidatorService do
 
     # We need to set a specific time so we know what order code to expect
     Timecop.freeze(Time.new(2018, 1, 1)) do
-      FinanceDetails.new_finance_details(transient_registration)
+      FinanceDetails.new_finance_details(transient_registration, :worldpay)
     end
   end
 

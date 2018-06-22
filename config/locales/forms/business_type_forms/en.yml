@@ -4,8 +4,8 @@ en:
       title: Business type
       heading: What type of business or organisation are you?
       options:
-        individual: Individual (e.g. sole trader)
-        limited_company: Limited company (e.g. registered company or plc)
+        individual: Individual or sole trader
+        limited_company: Limited company
         partnership: Partnership
         limited_liability_partnership: Limited liability partnership
         local_authority: Local authority or public body

@@ -6,7 +6,7 @@ RSpec.describe Payment, type: :model do
   describe "new_from_worldpay" do
     before do
       Timecop.freeze(Time.new(2018, 1, 1)) do
-        FinanceDetails.new_finance_details(transient_registration)
+        FinanceDetails.new_finance_details(transient_registration, :worldpay)
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe Payment, type: :model do
 
     before do
       Timecop.freeze(Time.new(2018, 3, 4)) do
-        FinanceDetails.new_finance_details(transient_registration)
+        FinanceDetails.new_finance_details(transient_registration, :worldpay)
         payment.update_after_worldpay(paymentStatus: "AUTHORISED", mac: "foo")
       end
     end
