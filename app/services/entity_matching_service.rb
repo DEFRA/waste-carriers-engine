@@ -24,10 +24,7 @@ class EntityMatchingService
     Rails.logger.debug "Sending request to Entity Matching service"
 
     begin
-      response = RestClient::Request.execute(
-        method: :get,
-        url: url
-      )
+      response = RestClient::Request.execute(method: :get, url: url)
 
       begin
         JSON.parse(response)
@@ -36,16 +33,13 @@ class EntityMatchingService
         Rails.logger.error "Entity Matching JSON error: " + e.to_s
         :error
       end
-    rescue RestClient::BadRequest
-      Rails.logger.debug "Entity Matching: resource not found"
-      :not_found
     rescue RestClient::ExceptionWithResponse => e
       Airbrake.notify(e)
       Rails.logger.error "Entity Matching response error: " + e.to_s
       :error
     rescue Errno::ECONNREFUSED => e
       Airbrake.notify(e)
-      Rails.logger.error "Entity Matching response error: " + e.to_s
+      Rails.logger.error "Entity Matching connection error: " + e.to_s
       :error
     rescue SocketError => e
       Airbrake.notify(e)

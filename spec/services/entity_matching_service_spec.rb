@@ -55,5 +55,45 @@ RSpec.describe EntityMatchingService do
         end
       end
     end
+
+    context "when the response cannot be parsed as JSON" do
+      before do
+        allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
+      end
+
+      it "returns :error" do
+        expect(entity_matching_service.check_people_for_matches).to eq(:error)
+      end
+    end
+
+    context "when the request times out" do
+      it "returns :error" do
+        VCR.turned_off do
+          host = Rails.configuration.wcrs_services_url
+          stub_request(:any, /.*#{host}.*/).to_timeout
+          expect(entity_matching_service.check_people_for_matches).to eq(:error)
+        end
+      end
+    end
+
+    context "when the request returns a connection refused error" do
+      it "returns :error" do
+        VCR.turned_off do
+          host = Rails.configuration.wcrs_services_url
+          stub_request(:any, /.*#{host}.*/).to_raise(Errno::ECONNREFUSED)
+          expect(entity_matching_service.check_people_for_matches).to eq(:error)
+        end
+      end
+    end
+
+    context "when the request returns a socket error" do
+      it "returns :error" do
+        VCR.turned_off do
+          host = Rails.configuration.wcrs_services_url
+          stub_request(:any, /.*#{host}.*/).to_raise(SocketError)
+          expect(entity_matching_service.check_people_for_matches).to eq(:error)
+        end
+      end
+    end
   end
 end
