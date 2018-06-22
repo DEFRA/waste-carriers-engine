@@ -65,6 +65,32 @@ RSpec.describe EntityMatchingService do
       end
     end
 
+    context "when there is no match" do
+      let(:transient_registration) do
+        create(:transient_registration,
+               :has_required_data,
+               :has_key_people)
+      end
+
+      let(:match_data) do
+        {
+          "confirmed" => "no",
+          "confirmed_at" => nil,
+          "confirmed_by" => nil,
+          "match_result" => "NO",
+          "matched_name" => nil,
+          "matching_system" => nil,
+          "reference" => nil
+        }
+      end
+
+      it "returns the correct data" do
+        VCR.use_cassette("entity_matching_person_no_matches") do
+          expect(entity_matching_service.check_people_for_matches).to include(match_data)
+        end
+      end
+    end
+
     context "when the response cannot be parsed as JSON" do
       before do
         allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
