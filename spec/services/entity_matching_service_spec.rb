@@ -29,10 +29,11 @@ RSpec.describe EntityMatchingService do
           "confirmed" => "no",
           "confirmed_at" => nil,
           "confirmed_by" => nil,
-          "match_result" => "NO",
-          "matched_name" => nil,
-          "matching_system" => nil,
-          "reference" => nil
+          "match_result" => "YES",
+          "matched_name" => "Test Waste Services Ltd.",
+          "matching_system" => "PQR",
+          "reference" => "7766",
+          "searched_at" => 1529667048440
         }
       end
 

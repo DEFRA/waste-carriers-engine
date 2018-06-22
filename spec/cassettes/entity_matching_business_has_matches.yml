@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8003/match/company?name=Test%20Waste%20Services%20Ltd.
+    uri: http://localhost:8003/match/company?name=Test%20Waste%20Services
     body:
       encoding: US-ASCII
       string: ''
@@ -21,16 +21,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 22 Jun 2018 09:41:29 GMT
+      - Fri, 22 Jun 2018 11:30:48 GMT
       Content-Type:
       - application/json
       Vary:
       - Accept-Encoding
       Content-Length:
-      - '166'
+      - '192'
     body:
       encoding: UTF-8
-      string: '{"match_result":"NO","matching_system":null,"reference":null,"matched_name":null,"searched_at":1529660489635,"confirmed":"no","confirmed_at":null,"confirmed_by":null}'
+      string: '{"match_result":"YES","matching_system":"PQR","reference":"7766","matched_name":"Test
+        Waste Services Ltd.","searched_at":1529667048440,"confirmed":"no","confirmed_at":null,"confirmed_by":null}'
     http_version: 
-  recorded_at: Fri, 22 Jun 2018 09:50:16 GMT
+  recorded_at: Fri, 22 Jun 2018 11:39:31 GMT
 recorded_with: VCR 4.0.0
