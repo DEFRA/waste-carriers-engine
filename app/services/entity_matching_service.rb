@@ -4,8 +4,8 @@ class EntityMatchingService
   end
 
   def check_business_for_matches
-    query_service(company_name_url)
     query_service(company_no_url) if @transient_registration.company_no.present?
+    query_service(company_name_url)
   end
 
   def check_people_for_matches
@@ -21,8 +21,37 @@ class EntityMatchingService
   private
 
   def query_service(url)
-    # TODO: Implement query. For now, just return the URL so we can test it.
-    url
+    Rails.logger.debug "Sending request to Entity Matching service"
+
+    begin
+      response = RestClient::Request.execute(
+        method: :get,
+        url: url
+      )
+
+      begin
+        JSON.parse(response)
+      rescue JSON::ParserError => e
+        Airbrake.notify(e)
+        Rails.logger.error "Entity Matching JSON error: " + e.to_s
+        :error
+      end
+    rescue RestClient::BadRequest
+      Rails.logger.debug "Entity Matching: resource not found"
+      :not_found
+    rescue RestClient::ExceptionWithResponse => e
+      Airbrake.notify(e)
+      Rails.logger.error "Entity Matching response error: " + e.to_s
+      :error
+    rescue Errno::ECONNREFUSED => e
+      Airbrake.notify(e)
+      Rails.logger.error "Entity Matching response error: " + e.to_s
+      :error
+    rescue SocketError => e
+      Airbrake.notify(e)
+      Rails.logger.error "Entity Matching socket error: " + e.to_s
+      :error
+    end
   end
 
   # URLs

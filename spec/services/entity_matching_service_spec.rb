@@ -10,16 +10,50 @@ RSpec.describe EntityMatchingService do
   let(:entity_matching_service) { EntityMatchingService.new(transient_registration) }
 
   describe "check_business_for_matches" do
-    it "returns the correct url" do
-      url = "http://localhost:3003/match/company?number=12345678"
-      expect(entity_matching_service.check_business_for_matches).to eq(url)
+    context "when there is no company_no" do
+      before do
+        transient_registration.company_no = nil
+      end
+
+      let(:match_data) do
+        {
+          "confirmed" => "no",
+          "confirmed_at" => nil,
+          "confirmed_by" => nil,
+          "match_result" => "NO",
+          "matched_name" => nil,
+          "matching_system" => nil,
+          "reference" => nil
+        }
+      end
+
+      it "returns the correct data" do
+        VCR.use_cassette("entity_matching_business_has_matches") do
+          expect(entity_matching_service.check_business_for_matches).to include(match_data)
+        end
+      end
     end
   end
 
   describe "check_people_for_matches" do
-    it "returns the correct url" do
-      url = "http://localhost:3003/match/person?firstname=Fred&lastname=Blogs&dateofbirth=01-01-1981"
-      expect(entity_matching_service.check_people_for_matches).to eq(url)
+    context "when there is a match" do
+      let(:match_data) do
+        {
+          "confirmed" => "no",
+          "confirmed_at" => nil,
+          "confirmed_by" => nil,
+          "match_result" => "YES",
+          "matched_name" => "Blogs, Fred",
+          "matching_system" => "ABC",
+          "reference" => "1234"
+        }
+      end
+
+      it "returns the correct data" do
+        VCR.use_cassette("entity_matching_person_has_matches") do
+          expect(entity_matching_service.check_people_for_matches).to include(match_data)
+        end
+      end
     end
   end
 end
