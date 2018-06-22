@@ -14,7 +14,7 @@ RSpec.describe RenewalCompletionService do
   let(:renewal_completion_service) { RenewalCompletionService.new(transient_registration) }
 
   before do
-    FinanceDetails.new_finance_details(transient_registration)
+    FinanceDetails.new_finance_details(transient_registration, :worldpay)
     Payment.new_from_worldpay(transient_registration.finance_details.orders.first)
     registration.update_attributes(finance_details: build(:finance_details,
                                                           :has_required_data,
