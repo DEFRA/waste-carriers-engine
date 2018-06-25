@@ -12,6 +12,8 @@ RSpec.describe "WorldpayForms", type: :request do
         create(:transient_registration,
                :has_required_data,
                :has_addresses,
+               :has_conviction_search_result,
+               :has_key_people,
                account_email: user.email,
                workflow_state: "worldpay_form")
       end

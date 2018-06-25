@@ -31,5 +31,13 @@ FactoryBot.define do
       # Initialise with attributes so we can set the date of birth
       initialize_with { new(attributes) }
     end
+
+    trait :matched_conviction_search_result do
+      convictionSearchResult { build(:convictionSearchResult, :match_result_yes) }
+    end
+
+    trait :unmatched_conviction_search_result do
+      convictionSearchResult { build(:convictionSearchResult, :match_result_no) }
+    end
   end
 end

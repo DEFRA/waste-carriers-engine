@@ -15,8 +15,8 @@ FactoryBot.define do
 
     trait :has_key_people do
       keyPeople do
-        [build(:key_person, :has_required_data, :main),
-         build(:key_person, :has_required_data, :relevant)]
+        [build(:key_person, :has_required_data, :unmatched_conviction_search_result, :main),
+         build(:key_person, :has_required_data, :unmatched_conviction_search_result, :relevant)]
       end
     end
 
@@ -33,6 +33,10 @@ FactoryBot.define do
       after(:build, :create) do |transient_registration|
         FinanceDetails.new_finance_details(transient_registration)
       end
+    end
+
+    trait :has_conviction_search_result do
+      convictionSearchResult { build(:convictionSearchResult, :match_result_no) }
     end
 
     # Overseas registrations

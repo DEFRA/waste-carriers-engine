@@ -64,7 +64,23 @@ module CanHaveRegistrationAttributes
     end
 
     def conviction_check_required?
-      declared_convictions == true
+      return true if declared_convictions == true
+      business_has_matching_or_unknown_conviction? || key_person_has_matching_or_unknown_conviction?
+    end
+
+    def business_has_matching_or_unknown_conviction?
+      return true unless convictionSearchResult.present?
+      return false if convictionSearchResult.match_result == "NO"
+      true
+    end
+
+    def key_person_has_matching_or_unknown_conviction?
+      return true unless keyPeople.present?
+
+      conviction_search_results = keyPeople.map(&:convictionSearchResult)
+      match_results = conviction_search_results.map(&:match_result)
+
+      match_results.include?("YES") || match_results.include?("UNKNOWN")
     end
   end
 end
