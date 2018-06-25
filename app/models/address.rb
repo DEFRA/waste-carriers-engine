@@ -19,7 +19,7 @@ class Address
   field :postcode,                                                    type: String
   field :country,                                                     type: String
   field :dependentLocality, as: :dependent_locality,                  type: String
-  field :administrativeArea,                                          type: String
+  field :administrativeArea, as: :administrative_area,                type: String
   field :localAuthorityUpdateDate, as: :local_authority_update_date,  type: String
   field :easting,                                                     type: Integer
   field :northing,                                                    type: Integer
