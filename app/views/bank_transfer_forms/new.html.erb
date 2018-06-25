@@ -28,7 +28,7 @@
           </tr>
           <tr>
             <td><%= t(".uk_payment_table.total_cost.label") %></td>
-            <td>£<%= @bank_transfer_form.total_to_pay %></td>
+            <td>£<%= display_pence_as_pounds(@bank_transfer_form.total_to_pay) %></td>
           </tr>
           <tr>
             <td><%= t(".uk_payment_table.account_name.label") %></td>
