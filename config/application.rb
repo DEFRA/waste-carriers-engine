@@ -54,7 +54,7 @@ module WasteCarriersRenewals
 
     # Paths
     config.wcrs_renewals_url = ENV["WCRS_RENEWALS_DOMAIN"] || "http://localhost:3002"
-    config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"] || "http://localhost:3000"
+    config.wcrs_frontend_url = ENV["WCRS_FRONTEND_DOMAIN"] || "http://localhost:3000"
     config.wcrs_services_url = ENV["WCRS_SERVICES_PUBLIC_APP_DOMAIN"] || "http://localhost:8003"
     config.os_places_service_url = ENV["WCRS_OS_PLACES_DOMAIN"]       || "http://localhost:8005"
 
