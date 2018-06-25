@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8005/addresses.json?postcode=AA11AA
+    uri: http://localhost:8005/addresses?postcode=AA11AA
     body:
       encoding: US-ASCII
       string: ''

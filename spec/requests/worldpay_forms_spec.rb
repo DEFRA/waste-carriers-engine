@@ -48,7 +48,7 @@ RSpec.describe "WorldpayForms", type: :request do
 
       describe "#success" do
         before do
-          FinanceDetails.new_finance_details(transient_registration)
+          FinanceDetails.new_finance_details(transient_registration, :worldpay)
         end
 
         let(:order) do
@@ -115,7 +115,7 @@ RSpec.describe "WorldpayForms", type: :request do
 
       describe "#failure" do
         before do
-          FinanceDetails.new_finance_details(transient_registration)
+          FinanceDetails.new_finance_details(transient_registration, :worldpay)
         end
 
         let(:order) do

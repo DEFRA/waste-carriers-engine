@@ -2,6 +2,7 @@ class KeyPerson
   include Mongoid::Document
 
   embedded_in :registration
+  embedded_in :past_registration
   embeds_one :convictionSearchResult
 
   accepts_nested_attributes_for :convictionSearchResult

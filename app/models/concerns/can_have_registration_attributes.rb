@@ -82,5 +82,10 @@ module CanHaveRegistrationAttributes
 
       match_results.include?("YES") || match_results.include?("UNKNOWN")
     end
+
+    def update_last_modified
+      return unless metaData.present?
+      metaData.last_modified = Time.current
+    end
   end
 end

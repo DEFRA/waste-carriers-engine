@@ -2,13 +2,13 @@ en:
   waste_types_forms:
     new:
       title: Types of waste
-      heading: Do you deal with the following waste?
+      heading: "Do you ever deal with:"
       waste_types:
         - Farm or agricultural waste
         - Animal by-products
         - Waste from mines or quarries
-      option_true_html: "Yes, I <span class=\"strong\">ONLY</span> deal with the waste listed above"
-      option_false: "No, I deal with more than just the waste listed above"
+      option_true_html: "We only deal with these types of waste"
+      option_false: "We deal with more than just the waste listed above"
       error_heading: Something is wrong
       next_button: Continue
   activemodel:

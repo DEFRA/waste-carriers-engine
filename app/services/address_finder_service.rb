@@ -2,7 +2,7 @@ class AddressFinderService
   def initialize(postcode)
     # Strip out non-alphanumeric characters
     @postcode = postcode.gsub(/[^a-z0-9]/i, "")
-    @url = Rails.configuration.os_places_service_url + "/addresses.json?postcode=" + @postcode
+    @url = Rails.configuration.os_places_service_url + "/addresses?postcode=" + @postcode
   end
 
   def search_by_postcode
