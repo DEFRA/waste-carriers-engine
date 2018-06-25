@@ -1,7 +1,7 @@
 class CompaniesHouseService
   def initialize(company_no)
     @company_no = company_no
-    @url = "https://api.companieshouse.gov.uk/company/#{@company_no}"
+    @url = "#{Rails.configuration.companies_house_host}#{@company_no}"
     @api_key = Rails.configuration.companies_house_api_key
   end
 
