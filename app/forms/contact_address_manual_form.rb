@@ -12,6 +12,6 @@ class ContactAddressManualForm < ManualAddressForm
   end
 
   def address_type
-    "CONTACT"
+    "POSTAL"
   end
 end
