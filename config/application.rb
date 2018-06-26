@@ -39,7 +39,7 @@ module WasteCarriersRenewals
 
     # Errbit config
     config.airbrake_on = ENV["WCRS_USE_AIRBRAKE"] == "true" ? true : false
-    config.airbrake_host = ENV["WCRS_RENEWALS_AIRBRAKE_HOST"]
+    config.airbrake_host = ENV["WCRS_AIRBRAKE_URL"]
     # Even though we may not want to enable airbrake, its initializer requires
     # a value for project ID and key else it errors.
     # Furthermore Errbit (which we send the exceptions to) doesn't make use of
