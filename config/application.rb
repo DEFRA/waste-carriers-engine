@@ -68,6 +68,7 @@ module WasteCarriersRenewals
     config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
 
     # Worldpay
+    config.worldpay_url = ENV["WCRS_WORLDPAY_DOMAIN"] || "https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp"
     config.worldpay_admin_code = ENV["WCRS_WORLDPAY_ADMIN_CODE"]
     config.worldpay_merchantcode = ENV["WCRS_WORLDPAY_ECOM_MERCHANTCODE"]
     config.worldpay_username =  ENV["WCRS_WORLDPAY_ECOM_USERNAME"]
