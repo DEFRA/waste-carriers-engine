@@ -39,7 +39,7 @@ def seed_users
   users.each do |user|
     User.find_or_create_by(
       email: user["email"],
-      password: ENV["WCR_TEST_USER_PASSWORD"] || "Secret123",
+      password: ENV["WCRS_DEFAULT_PASSWORD"] || "Secret123",
       confirmed_at: DateTime.new(2015, 1, 1)
     )
   end
