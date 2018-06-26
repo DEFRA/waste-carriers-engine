@@ -59,7 +59,7 @@ RSpec.describe ContactAddressForm, type: :model do
 
     describe "#temp_address" do
       it "pre-selects the address" do
-        expect(contact_address_form.temp_address).to eq(transient_registration.addresses.where(address_type: "CONTACT").first.uprn.to_s)
+        expect(contact_address_form.temp_address).to eq(transient_registration.contact_address.uprn.to_s)
       end
     end
   end

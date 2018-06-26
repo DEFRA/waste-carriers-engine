@@ -41,7 +41,7 @@ module CanHaveRegistrationAttributes
 
     def contact_address
       return nil unless addresses.present?
-      addresses.where(address_type: "CONTACT").first
+      addresses.where(address_type: "POSTAL").first
     end
 
     def registered_address
