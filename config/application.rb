@@ -59,9 +59,9 @@ module WasteCarriersRenewals
     config.os_places_service_url = ENV["WCRS_OS_PLACES_DOMAIN"] || "http://localhost:8005"
 
     # Fees
-    config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i || 10500
-    config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i || 4000
-    config.card_charge = ENV["WCRS_CARD_CHARGE"].to_i || 500
+    config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i
+    config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i
+    config.card_charge = ENV["WCRS_CARD_CHARGE"].to_i
 
     # Times
     config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
