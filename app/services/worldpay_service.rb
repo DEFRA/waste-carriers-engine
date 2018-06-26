@@ -2,7 +2,7 @@ class WorldpayService
   def initialize(transient_registration, order, params = nil)
     @transient_registration = transient_registration
     @order = order
-    @url = "https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp"
+    @url = Rails.configuration.worldpay_url
     @username = Rails.configuration.worldpay_username
     @password = Rails.configuration.worldpay_password
     @params = params

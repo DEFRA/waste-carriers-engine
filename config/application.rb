@@ -38,30 +38,37 @@ module WasteCarriersRenewals
     }
 
     # Errbit config
-    config.airbrake_on = ENV["WCRS_RENEWALS_USE_AIRBRAKE"] == "true" ? true : false
-    config.airbrake_host = ENV["WCRS_RENEWALS_AIRBRAKE_HOST"]
-    config.airbrake_id = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_ID"]
-    config.airbrake_key = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_KEY"]
+    config.airbrake_on = ENV["WCRS_USE_AIRBRAKE"] == "true" ? true : false
+    config.airbrake_host = ENV["WCRS_AIRBRAKE_URL"]
+    # Even though we may not want to enable airbrake, its initializer requires
+    # a value for project ID and key else it errors.
+    # Furthermore Errbit (which we send the exceptions to) doesn't make use of
+    # the project ID, but it still has to be set to a positive integer or
+    # Airbrake errors. Hence we just set it to 1.
+    config.airbrake_id = 1
+    config.airbrake_key = ENV["WCRS_RENEWALS_AIRBRAKE_PROJECT_KEY"] || "dummy"
 
     # Companies House config
-    config.companies_house_api_key = ENV["WCRS_RENEWALS_COMPANIES_HOUSE_API_KEY"]
+    config.companies_house_host = ENV["WCRS_COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk/company/"
+    config.companies_house_api_key = ENV["WCRS_COMPANIES_HOUSE_API_KEY"]
 
     # Paths
-    config.wcrs_renewals_url = ENV["WCRS_RENEWALS_PUBLIC_APP_DOMAIN"] || "http://localhost:3002"
-    config.wcrs_frontend_url = ENV["WCRS_FRONTEND_PUBLIC_APP_DOMAIN"] || "http://localhost:3000"
-    config.wcrs_services_url = ENV["WCRS_SERVICES_PUBLIC_APP_DOMAIN"] || "http://localhost:8003"
-    config.os_places_service_url = ENV["WCRS_RENEWALS_OS_PLACES_SERVICE_DOMAIN"] || "http://localhost:8005"
+    config.wcrs_renewals_url = ENV["WCRS_RENEWALS_DOMAIN"] || "http://localhost:3002"
+    config.wcrs_frontend_url = ENV["WCRS_FRONTEND_DOMAIN"] || "http://localhost:3000"
+    config.wcrs_services_url = ENV["WCRS_SERVICES_DOMAIN"] || "http://localhost:8003"
+    config.os_places_service_url = ENV["WCRS_OS_PLACES_DOMAIN"] || "http://localhost:8005"
 
     # Fees
-    config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i || 0
-    config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i || 0
-    config.card_charge = ENV["WCRS_CARD_CHARGE"].to_i || 0
+    config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i || 10500
+    config.type_change_charge = ENV["WCRS_TYPE_CHANGE_CHARGE"].to_i || 4000
+    config.card_charge = ENV["WCRS_CARD_CHARGE"].to_i || 500
 
     # Times
     config.renewal_window = ENV["WCRS_REGISTRATION_RENEWAL_WINDOW"].to_i
     config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
 
     # Worldpay
+    config.worldpay_url = ENV["WCRS_WORLDPAY_URL"] || "https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp"
     config.worldpay_admin_code = ENV["WCRS_WORLDPAY_ADMIN_CODE"]
     config.worldpay_merchantcode = ENV["WCRS_WORLDPAY_ECOM_MERCHANTCODE"]
     config.worldpay_username =  ENV["WCRS_WORLDPAY_ECOM_USERNAME"]
