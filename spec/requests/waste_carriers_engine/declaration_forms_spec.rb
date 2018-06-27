@@ -1,99 +1,103 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe "DeclarationForms", type: :request do
-  before do
-    allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
-  end
+module WasteCarriersEngine
+  RSpec.describe "DeclarationForms", type: :request do
+    before do
+      allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
+    end
 
-  include_examples "GET locked-in form", form = "declaration_form"
+    include_examples "GET locked-in form", form = "declaration_form"
 
-  include_examples "POST form",
-                   form = "declaration_form",
-                   valid_params = { declaration: 1 },
-                   invalid_params = { declaration: "foo" },
-                   test_attribute = :declaration
+    include_examples "POST form",
+                     form = "declaration_form",
+                     valid_params = { declaration: 1 },
+                     invalid_params = { declaration: "foo" },
+                     test_attribute = :declaration
 
-  describe "POST declaration_forms_path" do
-    context "when a valid user is signed in" do
-      let(:user) { create(:user) }
-      before(:each) do
-        sign_in(user)
-      end
-
-      context "when a valid transient registration exists" do
-        let!(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 :has_key_people,
-                 account_email: user.email,
-                 workflow_state: "declaration_form")
+    describe "POST declaration_forms_path" do
+      context "when a valid user is signed in" do
+        let(:user) { create(:user) }
+        before(:each) do
+          sign_in(user)
         end
 
-        let(:params) do
-          {
-            reg_identifier: transient_registration.reg_identifier,
-            declaration: 1
-          }
-        end
+        context "when a valid transient registration exists" do
+          let!(:transient_registration) do
+            create(:transient_registration,
+                   :has_required_data,
+                   :has_key_people,
+                   account_email: user.email,
+                   workflow_state: "declaration_form")
+          end
 
-        it "creates a new convictionSearchResult for the registration" do
-          post declaration_forms_path, declaration_form: params
-          expect(transient_registration.reload.convictionSearchResult).to_not eq(nil)
-        end
+          let(:params) do
+            {
+              reg_identifier: transient_registration.reg_identifier,
+              declaration: 1
+            }
+          end
 
-        it "creates a new convictionSearchResult for the key people" do
-          post declaration_forms_path, declaration_form: params
-          expect(transient_registration.reload.keyPeople.first.convictionSearchResult).to_not eq(nil)
+          it "creates a new convictionSearchResult for the registration" do
+            post declaration_forms_path, declaration_form: params
+            expect(transient_registration.reload.convictionSearchResult).to_not eq(nil)
+          end
+
+          it "creates a new convictionSearchResult for the key people" do
+            post declaration_forms_path, declaration_form: params
+            expect(transient_registration.reload.keyPeople.first.convictionSearchResult).to_not eq(nil)
+          end
         end
       end
     end
-  end
 
-  describe "GET back_declaration_forms_path" do
-    context "when a valid user is signed in" do
-      let(:user) { create(:user) }
-      before(:each) do
-        sign_in(user)
-      end
-
-      context "when a valid transient registration exists" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "declaration_form")
+    describe "GET back_declaration_forms_path" do
+      context "when a valid user is signed in" do
+        let(:user) { create(:user) }
+        before(:each) do
+          sign_in(user)
         end
 
-        context "when the back action is triggered" do
-          it "returns a 302 response" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
-            expect(response).to have_http_status(302)
+        context "when a valid transient registration exists" do
+          let(:transient_registration) do
+            create(:transient_registration,
+                   :has_required_data,
+                   account_email: user.email,
+                   workflow_state: "declaration_form")
           end
 
-          it "redirects to the check_your_answers form" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:reg_identifier]))
+          context "when the back action is triggered" do
+            it "returns a 302 response" do
+              get back_declaration_forms_path(transient_registration[:reg_identifier])
+              expect(response).to have_http_status(302)
+            end
+
+            it "redirects to the check_your_answers form" do
+              get back_declaration_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
-      end
 
-      context "when the transient registration is in the wrong state" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data,
-                 account_email: user.email,
-                 workflow_state: "renewal_start_form")
-        end
-
-        context "when the back action is triggered" do
-          it "returns a 302 response" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
-            expect(response).to have_http_status(302)
+        context "when the transient registration is in the wrong state" do
+          let(:transient_registration) do
+            create(:transient_registration,
+                   :has_required_data,
+                   account_email: user.email,
+                   workflow_state: "renewal_start_form")
           end
 
-          it "redirects to the correct form for the state" do
-            get back_declaration_forms_path(transient_registration[:reg_identifier])
-            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+          context "when the back action is triggered" do
+            it "returns a 302 response" do
+              get back_declaration_forms_path(transient_registration[:reg_identifier])
+              expect(response).to have_http_status(302)
+            end
+
+            it "redirects to the correct form for the state" do
+              get back_declaration_forms_path(transient_registration[:reg_identifier])
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+            end
           end
         end
       end

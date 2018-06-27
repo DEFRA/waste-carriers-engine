@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe CannotRenewCompanyNoChangeForm, type: :model do
+module WasteCarriersEngine
+  RSpec.describe CannotRenewCompanyNoChangeForm, type: :model do
+  end
 end

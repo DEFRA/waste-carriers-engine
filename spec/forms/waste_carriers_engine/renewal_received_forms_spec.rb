@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe RenewalReceivedForm, type: :model do
+module WasteCarriersEngine
+  RSpec.describe RenewalReceivedForm, type: :model do
+  end
 end
