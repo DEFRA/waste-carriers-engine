@@ -1,9 +1,13 @@
-class RegistrationNumberFormsController < FormsController
-  def new
-    super(RegistrationNumberForm, "registration_number_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(RegistrationNumberForm, "registration_number_form")
+module WasteCarriersEngine
+  class RegistrationNumberFormsController < FormsController
+    def new
+      super(RegistrationNumberForm, "registration_number_form")
+    end
+
+    def create
+      super(RegistrationNumberForm, "registration_number_form")
+    end
   end
 end

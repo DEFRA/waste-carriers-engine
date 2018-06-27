@@ -1,9 +1,13 @@
-class RegisterInNorthernIrelandFormsController < FormsController
-  def new
-    super(RegisterInNorthernIrelandForm, "register_in_northern_ireland_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(RegisterInNorthernIrelandForm, "register_in_northern_ireland_form")
+module WasteCarriersEngine
+  class RegisterInNorthernIrelandFormsController < FormsController
+    def new
+      super(RegisterInNorthernIrelandForm, "register_in_northern_ireland_form")
+    end
+
+    def create
+      super(RegisterInNorthernIrelandForm, "register_in_northern_ireland_form")
+    end
   end
 end

@@ -1,14 +1,18 @@
-class RegisterInNorthernIrelandForm < BaseForm
-  include CanNavigateFlexibly
+# frozen_string_literal: true
 
-  def initialize(transient_registration)
-    super
-  end
+module WasteCarriersEngine
+  class RegisterInNorthernIrelandForm < BaseForm
+    include CanNavigateFlexibly
 
-  def submit(params)
-    # Assign the params for validation and pass them to the BaseForm method for updating
-    attributes = {}
+    def initialize(transient_registration)
+      super
+    end
 
-    super(attributes, params[:reg_identifier])
+    def submit(params)
+      # Assign the params for validation and pass them to the BaseForm method for updating
+      attributes = {}
+
+      super(attributes, params[:reg_identifier])
+    end
   end
 end

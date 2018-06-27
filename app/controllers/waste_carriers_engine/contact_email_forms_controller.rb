@@ -1,9 +1,13 @@
-class ContactEmailFormsController < FormsController
-  def new
-    super(ContactEmailForm, "contact_email_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(ContactEmailForm, "contact_email_form")
+module WasteCarriersEngine
+  class ContactEmailFormsController < FormsController
+    def new
+      super(ContactEmailForm, "contact_email_form")
+    end
+
+    def create
+      super(ContactEmailForm, "contact_email_form")
+    end
   end
 end

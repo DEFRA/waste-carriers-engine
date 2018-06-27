@@ -1,30 +1,34 @@
-class CompanyAddressForm < AddressForm
-  include CanNavigateFlexibly
+# frozen_string_literal: true
 
-  attr_accessor :business_type
-  attr_accessor :temp_company_postcode
+module WasteCarriersEngine
+  class CompanyAddressForm < AddressForm
+    include CanNavigateFlexibly
 
-  def initialize(transient_registration)
-    super
-    # We only use this for the correct microcopy
-    self.business_type = @transient_registration.business_type
-    self.temp_company_postcode = @transient_registration.temp_company_postcode
+    attr_accessor :business_type
+    attr_accessor :temp_company_postcode
 
-    look_up_addresses
-    preselect_existing_address
-  end
+    def initialize(transient_registration)
+      super
+      # We only use this for the correct microcopy
+      self.business_type = @transient_registration.business_type
+      self.temp_company_postcode = @transient_registration.temp_company_postcode
 
-  private
+      look_up_addresses
+      preselect_existing_address
+    end
 
-  def temp_postcode
-    temp_company_postcode
-  end
+    private
 
-  def saved_address
-    @transient_registration.registered_address
-  end
+    def temp_postcode
+      temp_company_postcode
+    end
 
-  def address_type
-    "REGISTERED"
+    def saved_address
+      @transient_registration.registered_address
+    end
+
+    def address_type
+      "REGISTERED"
+    end
   end
 end

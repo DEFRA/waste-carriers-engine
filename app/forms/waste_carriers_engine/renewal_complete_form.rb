@@ -1,31 +1,35 @@
-class RenewalCompleteForm < BaseForm
-  attr_accessor :certificate_link, :contact_email, :projected_renewal_end_date, :registration_type
+# frozen_string_literal: true
 
-  def initialize(transient_registration)
-    super
-    self.certificate_link = build_certificate_link
-    self.contact_email = @transient_registration.contact_email
-    self.projected_renewal_end_date = @transient_registration.projected_renewal_end_date
-    self.registration_type = @transient_registration.registration_type
-  end
+module WasteCarriersEngine
+  class RenewalCompleteForm < BaseForm
+    attr_accessor :certificate_link, :contact_email, :projected_renewal_end_date, :registration_type
 
-  # Override BaseForm method as users shouldn't be able to submit this form
-  def submit; end
+    def initialize(transient_registration)
+      super
+      self.certificate_link = build_certificate_link
+      self.contact_email = @transient_registration.contact_email
+      self.projected_renewal_end_date = @transient_registration.projected_renewal_end_date
+      self.registration_type = @transient_registration.registration_type
+    end
 
-  def dashboard_link(current_user)
-    return unless current_user.present?
-    id = current_user.id
-    root = Rails.configuration.wcrs_frontend_url
-    "#{root}/user/#{id}/registrations"
-  end
+    # Override BaseForm method as users shouldn't be able to submit this form
+    def submit; end
 
-  private
+    def dashboard_link(current_user)
+      return unless current_user.present?
+      id = current_user.id
+      root = Rails.configuration.wcrs_frontend_url
+      "#{root}/user/#{id}/registrations"
+    end
 
-  def build_certificate_link
-    registration = Registration.where(reg_identifier: reg_identifier).first
-    return unless registration.present?
-    id = registration.id
-    root = Rails.configuration.wcrs_frontend_url
-    "#{root}/registrations/#{id}/view"
+    private
+
+    def build_certificate_link
+      registration = Registration.where(reg_identifier: reg_identifier).first
+      return unless registration.present?
+      id = registration.id
+      root = Rails.configuration.wcrs_frontend_url
+      "#{root}/registrations/#{id}/view"
+    end
   end
 end

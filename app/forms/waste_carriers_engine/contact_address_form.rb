@@ -1,27 +1,31 @@
-class ContactAddressForm < AddressForm
-  include CanNavigateFlexibly
+# frozen_string_literal: true
 
-  attr_accessor :temp_contact_postcode
+module WasteCarriersEngine
+  class ContactAddressForm < AddressForm
+    include CanNavigateFlexibly
 
-  def initialize(transient_registration)
-    super
-    self.temp_contact_postcode = @transient_registration.temp_contact_postcode
+    attr_accessor :temp_contact_postcode
 
-    look_up_addresses
-    preselect_existing_address
-  end
+    def initialize(transient_registration)
+      super
+      self.temp_contact_postcode = @transient_registration.temp_contact_postcode
 
-  private
+      look_up_addresses
+      preselect_existing_address
+    end
 
-  def temp_postcode
-    temp_contact_postcode
-  end
+    private
 
-  def saved_address
-    @transient_registration.contact_address
-  end
+    def temp_postcode
+      temp_contact_postcode
+    end
 
-  def address_type
-    "POSTAL"
+    def saved_address
+      @transient_registration.contact_address
+    end
+
+    def address_type
+      "POSTAL"
+    end
   end
 end

@@ -1,10 +1,14 @@
-class ConvictionSignOff
-  include Mongoid::Document
+# frozen_string_literal: true
 
-  embedded_in :registration
-  embedded_in :past_registration
+module WasteCarriersEngine
+  class ConvictionSignOff
+    include Mongoid::Document
 
-  field :confirmed,                       type: Boolean
-  field :confirmedAt, as: :confirmed_at,  type: DateTime
-  field :confirmedBy, as: :confirmed_by,  type: String
+    embedded_in :registration
+    embedded_in :past_registration
+
+    field :confirmed,                       type: Boolean
+    field :confirmedAt, as: :confirmed_at,  type: DateTime
+    field :confirmedBy, as: :confirmed_by,  type: String
+  end
 end

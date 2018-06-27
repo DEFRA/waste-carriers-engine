@@ -1,12 +1,16 @@
-class RenewalStartForm < BaseForm
+# frozen_string_literal: true
 
-  def initialize(transient_registration)
-    super
-  end
+module WasteCarriersEngine
+  class RenewalStartForm < BaseForm
 
-  def submit(params)
-    attributes = {}
+    def initialize(transient_registration)
+      super
+    end
 
-    super(attributes, params[:reg_identifier])
+    def submit(params)
+      attributes = {}
+
+      super(attributes, params[:reg_identifier])
+    end
   end
 end

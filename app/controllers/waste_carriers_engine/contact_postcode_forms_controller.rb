@@ -1,9 +1,13 @@
-class ContactPostcodeFormsController < PostcodeFormsController
-  def new
-    super(ContactPostcodeForm, "contact_postcode_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(ContactPostcodeForm, "contact_postcode_form")
+module WasteCarriersEngine
+  class ContactPostcodeFormsController < PostcodeFormsController
+    def new
+      super(ContactPostcodeForm, "contact_postcode_form")
+    end
+
+    def create
+      super(ContactPostcodeForm, "contact_postcode_form")
+    end
   end
 end

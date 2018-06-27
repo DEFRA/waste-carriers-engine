@@ -1,32 +1,35 @@
-class FinanceDetails
-  include Mongoid::Document
+# frozen_string_literal: true
 
-  embedded_in :registration
-  embedded_in :past_registration
-  embedded_in :transient_registration
-  embeds_many :orders
-  embeds_many :payments
+module WasteCarriersEngine
+  class FinanceDetails
+    include Mongoid::Document
 
-  accepts_nested_attributes_for :orders, :payments
+    embedded_in :registration
+    embedded_in :past_registration
+    embedded_in :transient_registration
+    embeds_many :orders
+    embeds_many :payments
 
-  # TODO: Confirm types
-  field :balance, type: Integer
+    accepts_nested_attributes_for :orders, :payments
 
-  validates :balance,
-            presence: true
+    field :balance, type: Integer
 
-  def self.new_finance_details(transient_registration, method)
-    finance_details = FinanceDetails.new
-    finance_details.transient_registration = transient_registration
-    finance_details[:orders] = [Order.new_order(transient_registration, method)]
-    finance_details.update_balance
-    finance_details.save!
-    finance_details
-  end
+    validates :balance,
+              presence: true
 
-  def update_balance
-    order_balance = orders.sum { |item| item[:total_amount] }
-    payment_balance = payments.where(world_pay_payment_status: "AUTHORISED").sum { |item| item[:amount] }
-    self.balance = order_balance - payment_balance
+    def self.new_finance_details(transient_registration, method)
+      finance_details = FinanceDetails.new
+      finance_details.transient_registration = transient_registration
+      finance_details[:orders] = [Order.new_order(transient_registration, method)]
+      finance_details.update_balance
+      finance_details.save!
+      finance_details
+    end
+
+    def update_balance
+      order_balance = orders.sum { |item| item[:total_amount] }
+      payment_balance = payments.where(world_pay_payment_status: "AUTHORISED").sum { |item| item[:amount] }
+      self.balance = order_balance - payment_balance
+    end
   end
 end

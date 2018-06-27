@@ -1,9 +1,13 @@
-class CheckYourAnswersFormsController < FormsController
-  def new
-    super(CheckYourAnswersForm, "check_your_answers_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(CheckYourAnswersForm, "check_your_answers_form")
+module WasteCarriersEngine
+  class CheckYourAnswersFormsController < FormsController
+    def new
+      super(CheckYourAnswersForm, "check_your_answers_form")
+    end
+
+    def create
+      super(CheckYourAnswersForm, "check_your_answers_form")
+    end
   end
 end

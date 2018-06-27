@@ -1,8 +1,12 @@
-class Location
-  include Mongoid::Document
+# frozen_string_literal: true
 
-  embedded_in :address
+module WasteCarriersEngine
+  class Location
+    include Mongoid::Document
 
-  field :lat, type: BigDecimal # TODO: Confirm
-  field :lon, type: BigDecimal # TODO: Confirm
+    embedded_in :address
+
+    field :lat, type: BigDecimal
+    field :lon, type: BigDecimal
+  end
 end

@@ -1,34 +1,38 @@
-class KeyPerson
-  include Mongoid::Document
+# frozen_string_literal: true
 
-  embedded_in :registration
-  embedded_in :past_registration
-  embeds_one :convictionSearchResult
+module WasteCarriersEngine
+  class KeyPerson
+    include Mongoid::Document
 
-  accepts_nested_attributes_for :convictionSearchResult
+    embedded_in :registration
+    embedded_in :past_registration
+    embeds_one :convictionSearchResult
 
-  after_initialize :set_date_of_birth
+    accepts_nested_attributes_for :convictionSearchResult
 
-  field :firstName, as: :first_name,       type: String
-  field :lastName, as: :last_name,         type: String
-  field :position,                         type: String
-  field :dob_day,                          type: Integer
-  field :dob_month,                        type: Integer
-  field :dob_year,                         type: Integer
-  field :dateOfBirth, as: :date_of_birth,  type: DateTime
-  field :personType, as: :person_type,     type: String
+    after_initialize :set_date_of_birth
 
-  private
+    field :firstName, as: :first_name,       type: String
+    field :lastName, as: :last_name,         type: String
+    field :position,                         type: String
+    field :dob_day,                          type: Integer
+    field :dob_month,                        type: Integer
+    field :dob_year,                         type: Integer
+    field :dateOfBirth, as: :date_of_birth,  type: DateTime
+    field :personType, as: :person_type,     type: String
 
-  def set_date_of_birth
-    begin
-      self.date_of_birth = Date.new(dob_year, dob_month, dob_day)
-    rescue NoMethodError
-      errors.add(:date_of_birth, :invalid_date)
-    rescue ArgumentError
-      errors.add(:date_of_birth, :invalid_date)
-    rescue TypeError
-      errors.add(:date_of_birth, :invalid_date)
+    private
+
+    def set_date_of_birth
+      begin
+        self.date_of_birth = Date.new(dob_year, dob_month, dob_day)
+      rescue NoMethodError
+        errors.add(:date_of_birth, :invalid_date)
+      rescue ArgumentError
+        errors.add(:date_of_birth, :invalid_date)
+      rescue TypeError
+        errors.add(:date_of_birth, :invalid_date)
+      end
     end
   end
 end

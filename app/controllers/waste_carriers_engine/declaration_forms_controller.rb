@@ -1,13 +1,17 @@
-class DeclarationFormsController < FormsController
-  def new
-    super(DeclarationForm, "declaration_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    return unless super(DeclarationForm, "declaration_form")
+module WasteCarriersEngine
+  class DeclarationFormsController < FormsController
+    def new
+      super(DeclarationForm, "declaration_form")
+    end
 
-    entity_matching_service = EntityMatchingService.new(@transient_registration)
-    entity_matching_service.check_business_for_matches
-    entity_matching_service.check_people_for_matches
+    def create
+      return unless super(DeclarationForm, "declaration_form")
+
+      entity_matching_service = EntityMatchingService.new(@transient_registration)
+      entity_matching_service.check_business_for_matches
+      entity_matching_service.check_people_for_matches
+    end
   end
 end

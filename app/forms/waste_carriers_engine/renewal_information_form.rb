@@ -1,18 +1,22 @@
-class RenewalInformationForm < BaseForm
-  include CanNavigateFlexibly
+# frozen_string_literal: true
 
-  attr_accessor :type_change, :total_fee
+module WasteCarriersEngine
+  class RenewalInformationForm < BaseForm
+    include CanNavigateFlexibly
 
-  def initialize(transient_registration)
-    super
-    self.type_change = @transient_registration.registration_type_changed?
-    self.total_fee = @transient_registration.fee_including_possible_type_change
-  end
+    attr_accessor :type_change, :total_fee
 
-  def submit(params)
-    # Assign the params for validation and pass them to the BaseForm method for updating
-    attributes = {}
+    def initialize(transient_registration)
+      super
+      self.type_change = @transient_registration.registration_type_changed?
+      self.total_fee = @transient_registration.fee_including_possible_type_change
+    end
 
-    super(attributes, params[:reg_identifier])
+    def submit(params)
+      # Assign the params for validation and pass them to the BaseForm method for updating
+      attributes = {}
+
+      super(attributes, params[:reg_identifier])
+    end
   end
 end

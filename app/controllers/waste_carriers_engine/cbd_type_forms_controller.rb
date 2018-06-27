@@ -1,9 +1,13 @@
-class CbdTypeFormsController < FormsController
-  def new
-    super(CbdTypeForm, "cbd_type_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(CbdTypeForm, "cbd_type_form")
+module WasteCarriersEngine
+  class CbdTypeFormsController < FormsController
+    def new
+      super(CbdTypeForm, "cbd_type_form")
+    end
+
+    def create
+      super(CbdTypeForm, "cbd_type_form")
+    end
   end
 end

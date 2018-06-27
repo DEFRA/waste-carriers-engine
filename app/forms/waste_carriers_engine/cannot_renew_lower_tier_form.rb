@@ -1,10 +1,14 @@
-class CannotRenewLowerTierForm < BaseForm
-  include CanNavigateFlexibly
+# frozen_string_literal: true
 
-  def initialize(transient_registration)
-    super
+module WasteCarriersEngine
+  class CannotRenewLowerTierForm < BaseForm
+    include CanNavigateFlexibly
+
+    def initialize(transient_registration)
+      super
+    end
+
+    # Override BaseForm method as users shouldn't be able to submit this form
+    def submit; end
   end
-
-  # Override BaseForm method as users shouldn't be able to submit this form
-  def submit; end
 end

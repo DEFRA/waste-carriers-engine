@@ -1,9 +1,13 @@
-class BusinessTypeFormsController < FormsController
-  def new
-    super(BusinessTypeForm, "business_type_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(BusinessTypeForm, "business_type_form")
+module WasteCarriersEngine
+  class BusinessTypeFormsController < FormsController
+    def new
+      super(BusinessTypeForm, "business_type_form")
+    end
+
+    def create
+      super(BusinessTypeForm, "business_type_form")
+    end
   end
 end

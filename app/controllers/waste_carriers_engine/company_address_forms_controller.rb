@@ -1,9 +1,13 @@
-class CompanyAddressFormsController < AddressFormsController
-  def new
-    super(CompanyAddressForm, "company_address_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(CompanyAddressForm, "company_address_form")
+module WasteCarriersEngine
+  class CompanyAddressFormsController < AddressFormsController
+    def new
+      super(CompanyAddressForm, "company_address_form")
+    end
+
+    def create
+      super(CompanyAddressForm, "company_address_form")
+    end
   end
 end

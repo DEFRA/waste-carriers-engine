@@ -1,13 +1,17 @@
-class MainPeopleFormsController < PersonFormsController
-  def new
-    super(MainPeopleForm, "main_people_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(MainPeopleForm, "main_people_form")
-  end
+module WasteCarriersEngine
+  class MainPeopleFormsController < PersonFormsController
+    def new
+      super(MainPeopleForm, "main_people_form")
+    end
 
-  def delete_person
-    super(MainPeopleForm, "main_people_form")
+    def create
+      super(MainPeopleForm, "main_people_form")
+    end
+
+    def delete_person
+      super(MainPeopleForm, "main_people_form")
+    end
   end
 end

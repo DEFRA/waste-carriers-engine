@@ -1,9 +1,13 @@
-class PostcodeForm < BaseForm
-  private
+# frozen_string_literal: true
 
-  def format_postcode(postcode)
-    return unless postcode.present?
-    postcode.upcase!
-    postcode.strip!
+module WasteCarriersEngine
+  class PostcodeForm < BaseForm
+    private
+
+    def format_postcode(postcode)
+      return unless postcode.present?
+      postcode.upcase!
+      postcode.strip!
+    end
   end
 end

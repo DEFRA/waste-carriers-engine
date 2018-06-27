@@ -1,11 +1,15 @@
-class Counter
-  include Mongoid::Document
+# frozen_string_literal: true
 
-  field :_id, type: String
-  field :seq, type: Integer
+module WasteCarriersEngine
+  class Counter
+    include Mongoid::Document
 
-  def increment
-    new_seq = seq + 1
-    update_attributes(seq: new_seq)
+    field :_id, type: String
+    field :seq, type: Integer
+
+    def increment
+      new_seq = seq + 1
+      update_attributes(seq: new_seq)
+    end
   end
 end

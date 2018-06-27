@@ -1,9 +1,13 @@
-class TierCheckFormsController < FormsController
-  def new
-    super(TierCheckForm, "tier_check_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(TierCheckForm, "tier_check_form")
+module WasteCarriersEngine
+  class TierCheckFormsController < FormsController
+    def new
+      super(TierCheckForm, "tier_check_form")
+    end
+
+    def create
+      super(TierCheckForm, "tier_check_form")
+    end
   end
 end

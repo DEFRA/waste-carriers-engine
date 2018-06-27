@@ -1,9 +1,13 @@
-class PaymentSummaryFormsController < FormsController
-  def new
-    super(PaymentSummaryForm, "payment_summary_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(PaymentSummaryForm, "payment_summary_form")
+module WasteCarriersEngine
+  class PaymentSummaryFormsController < FormsController
+    def new
+      super(PaymentSummaryForm, "payment_summary_form")
+    end
+
+    def create
+      super(PaymentSummaryForm, "payment_summary_form")
+    end
   end
 end

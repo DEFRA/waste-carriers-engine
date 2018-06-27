@@ -1,33 +1,37 @@
-class RegistrationNumberForm < BaseForm
-  include CanNavigateFlexibly
+# frozen_string_literal: true
 
-  attr_accessor :company_no, :business_type
+module WasteCarriersEngine
+  class RegistrationNumberForm < BaseForm
+    include CanNavigateFlexibly
 
-  def initialize(transient_registration)
-    super
-    self.company_no = @transient_registration.company_no
-    # We only use this for the correct microcopy
-    self.business_type = @transient_registration.business_type
-  end
+    attr_accessor :company_no, :business_type
 
-  def submit(params)
-    # Assign the params for validation and pass them to the BaseForm method for updating
-    # If param isn't set, use a blank string instead to avoid errors with the validator
-    self.company_no = params[:company_no] || ""
-    self.company_no = process_company_no(company_no) if company_no.present?
-    attributes = { company_no: company_no }
+    def initialize(transient_registration)
+      super
+      self.company_no = @transient_registration.company_no
+      # We only use this for the correct microcopy
+      self.business_type = @transient_registration.business_type
+    end
 
-    super(attributes, params[:reg_identifier])
-  end
+    def submit(params)
+      # Assign the params for validation and pass them to the BaseForm method for updating
+      # If param isn't set, use a blank string instead to avoid errors with the validator
+      self.company_no = params[:company_no] || ""
+      self.company_no = process_company_no(company_no) if company_no.present?
+      attributes = { company_no: company_no }
 
-  validates :company_no, company_no: true
+      super(attributes, params[:reg_identifier])
+    end
 
-  private
+    validates :company_no, company_no: true
 
-  def process_company_no(company_no)
-    number = company_no.to_s
-    # Should be 8 characters, so if it's not, add 0s to the start
-    number = "0#{number}" while number.length < 8
-    number
+    private
+
+    def process_company_no(company_no)
+      number = company_no.to_s
+      # Should be 8 characters, so if it's not, add 0s to the start
+      number = "0#{number}" while number.length < 8
+      number
+    end
   end
 end

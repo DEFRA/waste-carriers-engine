@@ -1,9 +1,13 @@
-class RenewalInformationFormsController < FormsController
-  def new
-    super(RenewalInformationForm, "renewal_information_form")
-  end
+# frozen_string_literal: true
 
-  def create
-    super(RenewalInformationForm, "renewal_information_form")
+module WasteCarriersEngine
+  class RenewalInformationFormsController < FormsController
+    def new
+      super(RenewalInformationForm, "renewal_information_form")
+    end
+
+    def create
+      super(RenewalInformationForm, "renewal_information_form")
+    end
   end
 end

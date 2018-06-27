@@ -1,23 +1,27 @@
-class LocationForm < BaseForm
-  include CanNavigateFlexibly
+# frozen_string_literal: true
 
-  attr_accessor :location
+module WasteCarriersEngine
+  class LocationForm < BaseForm
+    include CanNavigateFlexibly
 
-  def initialize(transient_registration)
-    super
-    self.location = @transient_registration.location
+    attr_accessor :location
+
+    def initialize(transient_registration)
+      super
+      self.location = @transient_registration.location
+    end
+
+    def submit(params)
+      # Assign the params for validation and pass them to the BaseForm method for updating
+      self.location = params[:location]
+      attributes = { location: location }
+
+      # Set the business type to overseas when required as we use this for microcopy
+      attributes[:business_type] = "overseas" if location == "overseas"
+
+      super(attributes, params[:reg_identifier])
+    end
+
+    validates :location, location: true
   end
-
-  def submit(params)
-    # Assign the params for validation and pass them to the BaseForm method for updating
-    self.location = params[:location]
-    attributes = { location: location }
-
-    # Set the business type to overseas when required as we use this for microcopy
-    attributes[:business_type] = "overseas" if location == "overseas"
-
-    super(attributes, params[:reg_identifier])
-  end
-
-  validates :location, location: true
 end
