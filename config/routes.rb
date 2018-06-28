@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
 
-  Blorgh::Engine.routes.draw do
+  WasteCarriersEngine::Engine.routes.draw do
     root "registrations#index"
 
     resources :registrations, only: [:index]

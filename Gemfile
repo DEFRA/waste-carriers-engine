@@ -6,6 +6,27 @@ ruby "2.4.2"
 # development dependencies will be added by default to the :development group.
 gemspec
 
+# Use Airbrake for error reporting to Errbit
+# Version 6 and above cause errors with Errbit, so use 5.8.1 for now
+gem "airbrake", "5.8.1"
+
+# Use CanCanCan for user roles and permissions
+# Version 2.0 doesn't support Mongoid, so we're locked to an earlier one
+gem "cancancan", "~> 1.10"
+
+# Use Devise for user authentication
+gem "devise", ">= 4.4.3"
+
+# GOV.UK styling
+gem "govuk_elements_rails", "~> 3.1"
+gem "govuk_template", "~> 0.23"
+
+# Use High Voltage for static pages
+gem "high_voltage", "~> 3.0"
+
+# Use MongoDB as the database - we need to support 2.4
+gem "mongoid", "~> 5.2"
+
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug"
