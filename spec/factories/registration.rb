@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :registration do
+  factory :registration, class: WasteCarriersEngine::Registration do
     trait :has_required_data do
       account_email "foo@example.com"
       business_type "limitedCompany"

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :address do
+  factory :address, class: WasteCarriersEngine::Address do
     trait :has_required_data do
       house_number "42"
       address_line_1 "Foo Gardens"

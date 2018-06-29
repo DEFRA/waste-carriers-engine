@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :finance_details do
+  factory :finance_details, class: WasteCarriersEngine::FinanceDetails do
     trait :has_required_data do
       balance 10_000
       orders {[]}

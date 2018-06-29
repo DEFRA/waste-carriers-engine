@@ -49,7 +49,7 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "factory_bot_rails"
+  gem "factory_bot_rails", require: false
   gem "simplecov", require: false
   gem "timecop"
   gem "vcr", "~> 4.0"
