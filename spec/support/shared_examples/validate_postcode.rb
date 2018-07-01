@@ -6,7 +6,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
     context "when a postcode meets the requirements" do
       before do
         example_json = { postcode: "BS1 5AH" }
-        allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(example_json)
+        allow_any_instance_of(WasteCarriersEngine::AddressFinderService).to receive(:search_by_postcode).and_return(example_json)
       end
 
       it "is valid" do
@@ -38,7 +38,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
 
     context "when a postcode has no matches" do
       before do
-        allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(:not_found)
+        allow_any_instance_of(WasteCarriersEngine::AddressFinderService).to receive(:search_by_postcode).and_return(:not_found)
       end
 
       it "is not valid" do
@@ -48,7 +48,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
 
     context "when a postcode search returns an error" do
       before do
-        allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(:error)
+        allow_any_instance_of(WasteCarriersEngine::AddressFinderService).to receive(:search_by_postcode).and_return(:error)
       end
 
       it "is valid" do
