@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 22 Jun 2018 11:57:53 GMT
+      - Sun, 01 Jul 2018 15:36:56 GMT
       Content-Type:
       - application/json
       Vary:
@@ -31,7 +31,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"match_result":"YES","matching_system":"PQR","reference":"7766","matched_name":"Test
-        Waste Services Ltd.","searched_at":1529668673220,"confirmed":"no","confirmed_at":null,"confirmed_by":null}'
+        Waste Services Ltd.","searched_at":1530459416633,"confirmed":"no","confirmed_at":null,"confirmed_by":null}'
     http_version: 
-  recorded_at: Fri, 22 Jun 2018 12:06:35 GMT
+  recorded_at: Sun, 01 Jul 2018 15:36:56 GMT
 recorded_with: VCR 4.0.0
