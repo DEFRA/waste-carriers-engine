@@ -32,6 +32,10 @@ RSpec.configure do |config|
   config.include RequestSpecHelper, type: :request
   config.include Devise::Test::ControllerHelpers, type: :controller
 
+  config.before :each, type: :request do
+    config.include WasteCarriersEngine::Engine.routes.url_helpers
+  end
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

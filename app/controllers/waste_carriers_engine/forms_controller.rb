@@ -79,7 +79,7 @@ module WasteCarriersEngine
     end
 
     def state_can_navigate_flexibly?(state)
-      form_class = state.camelize.constantize
+      form_class = WasteCarriersEngine.const_get(state.camelize)
       form_class.included_modules.include?(CanNavigateFlexibly)
     end
 

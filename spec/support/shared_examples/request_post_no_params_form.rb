@@ -30,7 +30,7 @@ RSpec.shared_examples "POST without params form" do |form|
 
       it "does not create a transient registration" do
         post_with_params(form, params)
-        matching_transient_regs = TransientRegistration.where(reg_identifier: registration.reg_identifier)
+        matching_transient_regs = WasteCarriersEngine::TransientRegistration.where(reg_identifier: registration.reg_identifier)
         expect(matching_transient_regs.length).to eq(0)
       end
     end
@@ -86,7 +86,7 @@ RSpec.shared_examples "POST without params form" do |form|
         context "when the registration cannot be renewed" do
           before do
             # Params are otherwise valid, but the registration is now expired
-            registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+            registration = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier).first
             registration.metaData.expire!
           end
 
