@@ -282,6 +282,7 @@ DEPENDENCIES
   govuk_elements_rails (~> 3.1)
   govuk_template (~> 0.23)
   high_voltage (~> 3.0)
+  jquery-rails
   loofah (>= 2.2.1)
   mongoid (~> 5.2)
   rails-html-sanitizer (>= 1.0.4)
@@ -290,6 +291,7 @@ DEPENDENCIES
   simplecov
   spring
   timecop
+  turbolinks
   vcr (~> 4.0)
   waste_carriers_engine!
   web-console (~> 2.0)

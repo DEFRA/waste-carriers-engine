@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "4.2.10"
-  # Use MongoDB as the database - we need to support 2.4
+  # Use MongoDB as the database
   s.add_dependency "mongoid", "~> 5.2.0"
   # Use jquery as the JavaScript library
   s.add_dependency "jquery-rails"

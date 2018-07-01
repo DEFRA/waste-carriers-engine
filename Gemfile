@@ -27,8 +27,14 @@ gem "govuk_template", "~> 0.23"
 # Use High Voltage for static pages
 gem "high_voltage", "~> 3.0"
 
-# Use MongoDB as the database - we need to support 2.4
+# Use jquery as the JavaScript library
+gem "jquery-rails"
+
+# Use MongoDB as the database
 gem "mongoid", "~> 5.2"
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem "turbolinks"
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
