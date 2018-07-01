@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :service_provided_form do
+  factory :service_provided_form, class: WasteCarriersEngine::ServiceProvidedForm do
     trait :has_required_data do
       is_main_service "true"
 

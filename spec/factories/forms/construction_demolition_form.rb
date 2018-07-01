@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :construction_demolition_form do
+  factory :construction_demolition_form, class: WasteCarriersEngine::ConstructionDemolitionForm do
     trait :has_required_data do
       construction_waste "true"
 

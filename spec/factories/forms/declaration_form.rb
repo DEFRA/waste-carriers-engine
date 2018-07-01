@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :declaration_form do
+  factory :declaration_form, class: WasteCarriersEngine::DeclarationForm do
     trait :has_required_data do
       declaration 1
 

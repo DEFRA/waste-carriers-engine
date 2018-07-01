@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :tier_check_form do
+  factory :tier_check_form, class: WasteCarriersEngine::TierCheckForm do
     trait :has_required_data do
       temp_tier_check false
 

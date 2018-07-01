@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :main_people_form do
+  factory :main_people_form, class: WasteCarriersEngine::MainPeopleForm do
     trait :has_required_data do
       first_name "Foo"
       last_name "Bar"

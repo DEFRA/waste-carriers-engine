@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :cards_form do
+  factory :cards_form, class: WasteCarriersEngine::CardsForm do
     trait :has_required_data do
       temp_cards 1
 

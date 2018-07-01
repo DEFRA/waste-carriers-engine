@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :contact_address_manual_form do
+  factory :contact_address_manual_form, class: WasteCarriersEngine::ContactAddressManualForm do
     trait :has_required_data do
       house_number "Business Building"
       address_line_1 "Foo Terrace"

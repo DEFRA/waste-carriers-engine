@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :declare_convictions_form do
+  factory :declare_convictions_form, class: WasteCarriersEngine::DeclareConvictionsForm do
     trait :has_required_data do
       declared_convictions false
 

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :company_postcode_form do
+  factory :company_postcode_form, class: WasteCarriersEngine::CompanyPostcodeForm do
     trait :has_required_data do
       temp_company_postcode "BS1 5AH"
 

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :payment_summary_form do
+  factory :payment_summary_form, class: WasteCarriersEngine::PaymentSummaryForm do
     trait :has_required_data do
       temp_payment_method "card"
 

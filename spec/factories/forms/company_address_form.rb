@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :company_address_form do
+  factory :company_address_form, class: WasteCarriersEngine::CompanyAddressForm do
     trait :has_required_data do
       temp_address "340116"
       temp_addresses [{

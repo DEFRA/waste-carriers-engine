@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :check_your_answers_form do
+  factory :check_your_answers_form, class: WasteCarriersEngine::CheckYourAnswersForm do
     trait :has_required_data do
       initialize_with { new(create(:transient_registration,
                                    :has_required_data,

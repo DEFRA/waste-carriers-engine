@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :contact_email_form do
+  factory :contact_email_form, class: WasteCarriersEngine::ContactEmailForm do
     trait :has_required_data do
       contact_email "foo@example.com"
       confirmed_email "foo@example.com"

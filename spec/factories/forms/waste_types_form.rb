@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :waste_types_form do
+  factory :waste_types_form, class: WasteCarriersEngine::WasteTypesForm do
     trait :has_required_data do
       only_amf "true"
 
