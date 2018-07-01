@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   class CbdTypeFormsController < FormsController
     def new

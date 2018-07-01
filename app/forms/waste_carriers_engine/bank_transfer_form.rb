@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   class BankTransferForm < BaseForm
     attr_accessor :total_to_pay

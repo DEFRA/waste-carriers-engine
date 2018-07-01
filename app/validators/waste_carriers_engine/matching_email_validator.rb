@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   class MatchingEmailValidator < ActiveModel::EachValidator
     # Expects to be passed an attribute on the same record to confirm against,

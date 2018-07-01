@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   # Builds the URL we use to redirect users to Worldpay.
   # This should include URLs for our own service, which Worldpay will redirect users to after payment.

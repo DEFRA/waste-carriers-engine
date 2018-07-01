@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   # Validates requests to record a successful or failed Worldpay payment.
 

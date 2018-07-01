@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   # A record of a previous version of the registration. For example, before it was renewed.
   # We store this so we can have a record of each renewal.

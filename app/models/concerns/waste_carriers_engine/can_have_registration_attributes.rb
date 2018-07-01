@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   # Define the attributes a registration or a renewal has
   module CanHaveRegistrationAttributes

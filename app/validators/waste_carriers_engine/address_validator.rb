@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   class AddressValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)

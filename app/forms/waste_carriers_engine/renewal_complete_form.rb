@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   class RenewalCompleteForm < BaseForm
     attr_accessor :certificate_link, :contact_email, :projected_renewal_end_date, :registration_type

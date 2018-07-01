@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   class RegisterInScotlandFormsController < FormsController
     def new

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module WasteCarriersEngine
   # Used to clean up excess whitespace from the start and end of fields
   module CanStripWhitespace
