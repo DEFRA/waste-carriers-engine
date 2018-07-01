@@ -5,6 +5,7 @@ PATH
       aasm (~> 4.12)
       airbrake (= 5.8.1)
       countries
+      high_voltage (~> 3.0)
       jbuilder (~> 2.0)
       jquery-rails
       mongoid (~> 5.2.0)
@@ -281,7 +282,6 @@ DEPENDENCIES
   factory_bot_rails
   govuk_elements_rails (~> 3.1)
   govuk_template (~> 0.23)
-  high_voltage (~> 3.0)
   jquery-rails
   loofah (>= 2.2.1)
   mongoid (~> 5.2)

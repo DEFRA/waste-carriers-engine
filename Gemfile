@@ -24,9 +24,6 @@ gem "devise", ">= 4.4.3"
 gem "govuk_elements_rails", "~> 3.1"
 gem "govuk_template", "~> 0.23"
 
-# Use High Voltage for static pages
-gem "high_voltage", "~> 3.0"
-
 # Use jquery as the JavaScript library
 gem "jquery-rails"
 

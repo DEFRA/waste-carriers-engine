@@ -39,6 +39,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency "secure_headers", "~> 5.0"
 
+  # Use High Voltage for static pages
+  s.add_dependency "high_voltage", "~> 3.0"
+
   # Validations
   s.add_dependency "phonelib"
   s.add_dependency "uk_postcode"
