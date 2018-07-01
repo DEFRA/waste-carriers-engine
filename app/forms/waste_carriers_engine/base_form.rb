@@ -28,7 +28,7 @@ module WasteCarriersEngine
       end
     end
 
-    validates :reg_identifier, reg_identifier: true
+    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
     validate :transient_registration_valid?
 
     private

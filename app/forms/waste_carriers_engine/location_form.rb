@@ -22,6 +22,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :location, location: true
+    validates :location, "waste_carriers_engine/location": true
   end
 end

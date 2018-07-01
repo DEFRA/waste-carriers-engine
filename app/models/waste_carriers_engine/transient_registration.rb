@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include CanHaveRegistrationAttributes
     include CanStripWhitespace
 
-    validates :reg_identifier, reg_identifier: true
+    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
     validate :no_renewal_in_progress?, on: :create
 
     after_initialize :copy_data_from_registration

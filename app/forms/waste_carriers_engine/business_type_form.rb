@@ -19,6 +19,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :business_type, business_type: true
+    validates :business_type, "waste_carriers_engine/business_type": true
   end
 end

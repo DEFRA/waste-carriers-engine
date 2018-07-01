@@ -25,6 +25,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :temp_company_postcode, postcode: true
+    validates :temp_company_postcode, "waste_carriers_engine/postcode": true
   end
 end

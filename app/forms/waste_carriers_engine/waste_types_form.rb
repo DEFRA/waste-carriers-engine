@@ -19,6 +19,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :only_amf, boolean: true
+    validates :only_amf, "waste_carriers_engine/boolean": true
   end
 end

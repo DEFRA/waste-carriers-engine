@@ -23,7 +23,7 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :company_no, company_no: true
+    validates :company_no, "waste_carriers_engine/company_no": true
 
     private
 

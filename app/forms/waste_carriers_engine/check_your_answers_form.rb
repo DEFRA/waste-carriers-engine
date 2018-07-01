@@ -47,17 +47,17 @@ module WasteCarriersEngine
       "#{first_name} #{last_name}"
     end
 
-    validates :business_type, business_type: true
-    validates :company_name, company_name: true
-    validates :company_no, company_no: true
-    validates :contact_address, address: true
-    validates :contact_email, email: true
-    validates :declared_convictions, boolean: true
-    validates :first_name, :last_name, person_name: true
-    validates :location, location: true
-    validates :phone_number, phone_number: true
-    validates :registered_address, address: true
-    validates :registration_type, registration_type: true
+    validates :business_type, "waste_carriers_engine/business_type": true
+    validates :company_name, "waste_carriers_engine/company_name": true
+    validates :company_no, "waste_carriers_engine/company_no": true
+    validates :contact_address, "waste_carriers_engine/address": true
+    validates :contact_email, "waste_carriers_engine/email": true
+    validates :declared_convictions, "waste_carriers_engine/boolean": true
+    validates :first_name, :last_name, "waste_carriers_engine/person_name": true
+    validates :location, "waste_carriers_engine/location": true
+    validates :phone_number, "waste_carriers_engine/phone_number": true
+    validates :registered_address, "waste_carriers_engine/address": true
+    validates :registration_type, "waste_carriers_engine/registration_type": true
     validate :should_be_renewed
 
     validates_with KeyPeopleValidator

@@ -19,6 +19,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :registration_type, registration_type: true
+    validates :registration_type, "waste_carriers_engine/registration_type": true
   end
 end

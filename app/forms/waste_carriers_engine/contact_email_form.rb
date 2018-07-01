@@ -22,7 +22,7 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :contact_email, :confirmed_email, email: true
-    validates :confirmed_email, matching_email: { compare_to: :contact_email }
+    validates :contact_email, :confirmed_email, "waste_carriers_engine/email": true
+    validates :confirmed_email, "waste_carriers_engine/matching_email": { compare_to: :contact_email }
   end
 end

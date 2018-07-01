@@ -19,6 +19,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :other_businesses, boolean: true
+    validates :other_businesses, "waste_carriers_engine/boolean": true
   end
 end
