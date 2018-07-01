@@ -1,17 +1,19 @@
 en:
-  cannot_renew_type_change_forms:
-    new:
-      title: Your business type has changed
-      heading: You cannot renew registration %{reg_identifier}
-      paragraph_1: Because your business type has changed, you will need to create a new registration rather than renew.
-      paragraph_2: If you have any questions about this, please contact our helpline on 03708 506 506.
-      next_button: Start a new registration
+  waste_carriers_engine:
+    cannot_renew_type_change_forms:
+      new:
+        title: Your business type has changed
+        heading: You cannot renew registration %{reg_identifier}
+        paragraph_1: Because your business type has changed, you will need to create a new registration rather than renew.
+        paragraph_2: If you have any questions about this, please contact our helpline on 03708 506 506.
+        next_button: Start a new registration
   activemodel:
     errors:
       models:
-        cannot_renew_type_change_form:
-          attributes:
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          cannot_renew_type_change_form:
+            attributes:
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"

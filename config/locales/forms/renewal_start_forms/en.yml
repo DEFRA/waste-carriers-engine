@@ -1,23 +1,25 @@
 en:
-  renewal_start_forms:
-    new:
-      title: You are about to renew your registration
-      heading: You are about to renew registration %{reg_identifier}
-      paragraph_1_html: "Renewing will extend this <span class=\"strong\">upper tier registration</span> to %{date}. Renewal costs £%{renewal_charge}."
-      paragraph_2_html: "If your <span class=\"strong\">carrier type</span> changes, for example from carrier-dealer to broker-dealer, you can continue to renew but must pay an additional £%{type_change_charge} charge."
-      paragraph_3: During the renewal process, we will ask you to confirm your details and update some of your information.
-      paragraph_4: "If certain details about your business have changed since you registered, you will have to create a new registration rather than renew. These include:"
-      list_item_1: if your business type has changed (e.g. from sole trader to limited company)
-      list_item_2: if your business activities have changed, and you should have a lower tier registration
-      list_item_3: if your Companies House number has changed
-      error_heading: You cannot renew this registration
-      next_button: Continue
+  waste_carriers_engine:
+    renewal_start_forms:
+      new:
+        title: You are about to renew your registration
+        heading: You are about to renew registration %{reg_identifier}
+        paragraph_1_html: "Renewing will extend this <span class=\"strong\">upper tier registration</span> to %{date}. Renewal costs £%{renewal_charge}."
+        paragraph_2_html: "If your <span class=\"strong\">carrier type</span> changes, for example from carrier-dealer to broker-dealer, you can continue to renew but must pay an additional £%{type_change_charge} charge."
+        paragraph_3: During the renewal process, we will ask you to confirm your details and update some of your information.
+        paragraph_4: "If certain details about your business have changed since you registered, you will have to create a new registration rather than renew. These include:"
+        list_item_1: if your business type has changed (e.g. from sole trader to limited company)
+        list_item_2: if your business activities have changed, and you should have a lower tier registration
+        list_item_3: if your Companies House number has changed
+        error_heading: You cannot renew this registration
+        next_button: Continue
   activemodel:
     errors:
       models:
-        renewal_start_form:
-          attributes:
-            reg_identifier:
-              invalid_format: "is not in a valid format"
-              no_registration: "doesn't match any registrations"
-              renewal_in_progress: "already has a renewal is already in progress"
+        waste_carriers_engine:
+          renewal_start_form:
+            attributes:
+              reg_identifier:
+                invalid_format: "is not in a valid format"
+                no_registration: "doesn't match any registrations"
+                renewal_in_progress: "already has a renewal is already in progress"

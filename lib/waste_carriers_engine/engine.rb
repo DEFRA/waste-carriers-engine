@@ -8,5 +8,10 @@ module WasteCarriersEngine
       g.assets false
       g.helper false
     end
+
+    # Load I18n translation files
+    config.before_initialize do
+      config.i18n.load_path += Dir["#{config.root}/config/locales/**/*.yml"]
+    end
   end
 end

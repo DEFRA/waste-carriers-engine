@@ -1,19 +1,21 @@
 en:
-  register_in_northern_ireland_forms:
-    new:
-      title: You can register in Northern Ireland
-      heading: You can register in Northern Ireland
-      paragraph_1: You can continue to renew in England, but you are encouraged to register with the appropriate authority for your region. This allows customers to verify that you’re a registered waste carrier.
-      paragraph_2: In Northern Ireland, you need to register with the Northern Ireland Environment Agency (NIEA). For details on how, visit
-      service_link: Register or renew as a waste carrier, broker or dealer (Northern Ireland)
-      paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506.
-      next_button: Continue to register in England
+  waste_carriers_engine:
+    register_in_northern_ireland_forms:
+      new:
+        title: You can register in Northern Ireland
+        heading: You can register in Northern Ireland
+        paragraph_1: You can continue to renew in England, but you are encouraged to register with the appropriate authority for your region. This allows customers to verify that you’re a registered waste carrier.
+        paragraph_2: In Northern Ireland, you need to register with the Northern Ireland Environment Agency (NIEA). For details on how, visit
+        service_link: Register or renew as a waste carrier, broker or dealer (Northern Ireland)
+        paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506.
+        next_button: Continue to register in England
   activemodel:
     errors:
       models:
-        register_in_northern_ireland_form:
-          attributes:
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          register_in_northern_ireland_form:
+            attributes:
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"

@@ -1,32 +1,34 @@
 en:
-  company_name_forms:
-    new:
-      title: Business or organisation name
-      heading:
-        localAuthority: What's the name of the local authority or public body?
-        limitedCompany: What's the name of the company?
-        limitedLiabilityPartnership: What's the name of the limited liability partnership?
-        overseas: What's the name of the business or organisation?
-        partnership: What's the name of the partnership?
-        soleTrader: What's the name of the business?
-      company_name_label:
-        localAuthority: Local authority or public body name
-        limitedCompany: Company trading name
-        limitedLiabilityPartnership: Partnership trading name
-        overseas: Trading name
-        partnership: Partnership trading name
-        soleTrader: Business trading name
-      error_heading: Something is wrong
-      next_button: Continue
+  waste_carriers_engine:
+    company_name_forms:
+      new:
+        title: Business or organisation name
+        heading:
+          localAuthority: What's the name of the local authority or public body?
+          limitedCompany: What's the name of the company?
+          limitedLiabilityPartnership: What's the name of the limited liability partnership?
+          overseas: What's the name of the business or organisation?
+          partnership: What's the name of the partnership?
+          soleTrader: What's the name of the business?
+        company_name_label:
+          localAuthority: Local authority or public body name
+          limitedCompany: Company trading name
+          limitedLiabilityPartnership: Partnership trading name
+          overseas: Trading name
+          partnership: Partnership trading name
+          soleTrader: Business trading name
+        error_heading: Something is wrong
+        next_button: Continue
   activemodel:
     errors:
       models:
-        company_name_form:
-          attributes:
-            company_name:
-              blank: "You must enter a trading name"
-              too_long: "Enter a shorter trading name with no more than 255 characters"
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          company_name_form:
+            attributes:
+              company_name:
+                blank: "You must enter a trading name"
+                too_long: "Enter a shorter trading name with no more than 255 characters"
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"

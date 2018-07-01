@@ -1,18 +1,20 @@
 en:
-  cannot_renew_lower_tier_forms:
-    new:
-      title: You should register as a lower tier waste carrier
-      heading: You should register as a lower tier waste carrier
-      paragraph_1: Based on the information you’ve given us, you are eligible to register as a lower tier waste carrier.
-      paragraph_2: There is no charge, but you will need to create a new registration.
-      paragraph_3: If you have any questions, call our helpline on 03708 506 506.
-      next_button: Start a new registration
+  waste_carriers_engine:
+    cannot_renew_lower_tier_forms:
+      new:
+        title: You should register as a lower tier waste carrier
+        heading: You should register as a lower tier waste carrier
+        paragraph_1: Based on the information you’ve given us, you are eligible to register as a lower tier waste carrier.
+        paragraph_2: There is no charge, but you will need to create a new registration.
+        paragraph_3: If you have any questions, call our helpline on 03708 506 506.
+        next_button: Start a new registration
   activemodel:
     errors:
       models:
-        cannot_renew_lower_tier_form:
-          attributes:
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          cannot_renew_lower_tier_form:
+            attributes:
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"

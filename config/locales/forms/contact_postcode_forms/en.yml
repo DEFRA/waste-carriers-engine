@@ -1,25 +1,27 @@
 en:
-  contact_postcode_forms:
-    new:
-      title: Contact address postcode
-      heading: What's the contact address?
-      detail_subheading: Why do you need to write to me?
-      detail_paragraph: We’ll only write to you about your waste carrier account, for example if you order copy cards.
-      temp_contact_postcode_label: Please enter a UK postcode
-      temp_contact_postcode_hint: For example, BS1 5AH
-      error_heading: A problem to fix
-      next_button: Find address
-      manual_address_link: "Enter address manually"
+  waste_carriers_engine:
+    contact_postcode_forms:
+      new:
+        title: Contact address postcode
+        heading: What's the contact address?
+        detail_subheading: Why do you need to write to me?
+        detail_paragraph: We’ll only write to you about your waste carrier account, for example if you order copy cards.
+        temp_contact_postcode_label: Please enter a UK postcode
+        temp_contact_postcode_hint: For example, BS1 5AH
+        error_heading: A problem to fix
+        next_button: Find address
+        manual_address_link: "Enter address manually"
   activemodel:
     errors:
       models:
-        contact_postcode_form:
-          attributes:
-            temp_contact_postcode:
-              blank: "Enter a postcode"
-              wrong_format: "Enter a valid UK postcode"
-              no_results: "We cannot find any addresses for that postcode. Check the postcode or enter the address manually."
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          contact_postcode_form:
+            attributes:
+              temp_contact_postcode:
+                blank: "Enter a postcode"
+                wrong_format: "Enter a valid UK postcode"
+                no_results: "We cannot find any addresses for that postcode. Check the postcode or enter the address manually."
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"

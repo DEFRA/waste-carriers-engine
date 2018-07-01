@@ -1,24 +1,26 @@
 en:
-  waste_types_forms:
-    new:
-      title: Types of waste
-      heading: "Do you ever deal with:"
-      waste_types:
-        - Farm or agricultural waste
-        - Animal by-products
-        - Waste from mines or quarries
-      option_true_html: "We only deal with these types of waste"
-      option_false: "We deal with more than just the waste listed above"
-      error_heading: Something is wrong
-      next_button: Continue
+  waste_carriers_engine:
+    waste_types_forms:
+      new:
+        title: Types of waste
+        heading: "Do you ever deal with:"
+        waste_types:
+          - Farm or agricultural waste
+          - Animal by-products
+          - Waste from mines or quarries
+        option_true_html: "We only deal with these types of waste"
+        option_false: "We deal with more than just the waste listed above"
+        error_heading: Something is wrong
+        next_button: Continue
   activemodel:
     errors:
       models:
-        waste_types_form:
-          attributes:
-            only_amf:
-              inclusion: "You must answer this question"
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          waste_types_form:
+            attributes:
+              only_amf:
+                inclusion: "You must answer this question"
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"

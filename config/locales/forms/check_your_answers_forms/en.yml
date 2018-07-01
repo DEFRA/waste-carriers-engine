@@ -1,130 +1,132 @@
 en:
-  check_your_answers_forms:
-    new:
-      title: Check your details
-      heading: Check your details before renewing your registration
-      error_heading: Something is wrong
-      error_description_1: "We're missing some of the information we need to renew your registration:"
-      error_description_2: "Please go back and make sure all the required questions have been answered."
-      paragraph_1_html: "Renewing this <span class=\"strong\">upper tier registration</span> will extend its expiry date to %{expiry_date}."
-      paragraph_2: The renewal charge is £%{renewal_charge}.
-      paragraph_3: Because your registration type has changed, there will also be a £%{type_change_charge} charge.
-      subheading_1: "You told us:"
-      reg_identifier_html: "your registration number is <span class=\"strong\">%{reg_identifier}</span>"
-      location:
-        england_html: "your principal place of business is in <span class=\"strong\">England</span>"
-        northern_ireland_html: "your principal place of business is in <span class=\"strong\">Northern Ireland</span>"
-        overseas_html: "your principal place of business is not in the <span class=\"strong\">United Kingdom</span>"
-        scotland_html: "your principal place of business is in <span class=\"strong\">Scotland</span>"
-        wales_html: "your principal place of business is in <span class=\"strong\">Wales</span>"
-      business_type:
-        charity_html: "you are a <span class=\"strong\">charity or trust</span>"
-        limitedCompany_html: "you are a <span class=\"strong\">limited company</span>"
-        limitedLiabilityPartnership_html: "you are a <span class=\"strong\">limited liability partnership</span>"
-        localAuthority_html: "you are a <span class=\"strong\">local authority or public body</span>"
-        partnership_html: "you are a <span class=\"strong\">partnership</span>"
-        soleTrader_html: "you are a <span class=\"strong\">individual or sole trader</span>"
-      subheading_2: Registration type
-      registration_type:
-        carrier_dealer_html: "Your registration type is <span class=\"strong\">carrier and dealer</span> (you carry the waste yourselves)"
-        broker_dealer_html: "Your registration type is <span class=\"strong\">broker and dealer</span> (you arrange for others to carry the waste)"
-        carrier_broker_dealer_html: "Your registration type is <span class=\"strong\">carrier, broker and dealer</span> (you carry waste yourselves and arrange for others to carry it)"
-      subheading_3:
-        limitedCompany: Company name
-        limitedLiabilityPartnership: Partnership name
-        localAuthority: Local authority or public body name
-        overseas: Business or organisation name
-        partnership: Partnership name
-        soleTrader: Business or organisation name
-      subheading_4: Companies House number
-      subheading_5:
-        limitedCompany: Company address
-        limitedLiabilityPartnership: Partnership address
-        localAuthority: Local authority or public body address
-        overseas: Business or organisation address
-        partnership: Partnership address
-        soleTrader: Business or organisation address
-      subheading_6:
-        limitedCompany:
-          one: Director
-          other: Directors
-        limitedLiabilityPartnership:
-          one: Partner
-          other: Partners
-        localAuthority:
-          one: Chief executive
-          other: Chief executives
-        overseas:
-          one: Business or organisation owner
-          other: Business or organisation owners
-        partnership:
-          one: Partner
-          other: Partners
-        soleTrader:
-          one: Business or organisation owner
-          other: Business or organisation owners
-      subheading_7: Relevant convictions
-      declared_convictions:
-        "true": You told us you have relevant people with convictions in your business or organisation.
-        "false": You told us there are no relevant people with convictions in your business or organisation.
-      subheading_8: Contact details
-      next_button: Continue
+  waste_carriers_engine:
+    check_your_answers_forms:
+      new:
+        title: Check your details
+        heading: Check your details before renewing your registration
+        error_heading: Something is wrong
+        error_description_1: "We're missing some of the information we need to renew your registration:"
+        error_description_2: "Please go back and make sure all the required questions have been answered."
+        paragraph_1_html: "Renewing this <span class=\"strong\">upper tier registration</span> will extend its expiry date to %{expiry_date}."
+        paragraph_2: The renewal charge is £%{renewal_charge}.
+        paragraph_3: Because your registration type has changed, there will also be a £%{type_change_charge} charge.
+        subheading_1: "You told us:"
+        reg_identifier_html: "your registration number is <span class=\"strong\">%{reg_identifier}</span>"
+        location:
+          england_html: "your principal place of business is in <span class=\"strong\">England</span>"
+          northern_ireland_html: "your principal place of business is in <span class=\"strong\">Northern Ireland</span>"
+          overseas_html: "your principal place of business is not in the <span class=\"strong\">United Kingdom</span>"
+          scotland_html: "your principal place of business is in <span class=\"strong\">Scotland</span>"
+          wales_html: "your principal place of business is in <span class=\"strong\">Wales</span>"
+        business_type:
+          charity_html: "you are a <span class=\"strong\">charity or trust</span>"
+          limitedCompany_html: "you are a <span class=\"strong\">limited company</span>"
+          limitedLiabilityPartnership_html: "you are a <span class=\"strong\">limited liability partnership</span>"
+          localAuthority_html: "you are a <span class=\"strong\">local authority or public body</span>"
+          partnership_html: "you are a <span class=\"strong\">partnership</span>"
+          soleTrader_html: "you are a <span class=\"strong\">individual or sole trader</span>"
+        subheading_2: Registration type
+        registration_type:
+          carrier_dealer_html: "Your registration type is <span class=\"strong\">carrier and dealer</span> (you carry the waste yourselves)"
+          broker_dealer_html: "Your registration type is <span class=\"strong\">broker and dealer</span> (you arrange for others to carry the waste)"
+          carrier_broker_dealer_html: "Your registration type is <span class=\"strong\">carrier, broker and dealer</span> (you carry waste yourselves and arrange for others to carry it)"
+        subheading_3:
+          limitedCompany: Company name
+          limitedLiabilityPartnership: Partnership name
+          localAuthority: Local authority or public body name
+          overseas: Business or organisation name
+          partnership: Partnership name
+          soleTrader: Business or organisation name
+        subheading_4: Companies House number
+        subheading_5:
+          limitedCompany: Company address
+          limitedLiabilityPartnership: Partnership address
+          localAuthority: Local authority or public body address
+          overseas: Business or organisation address
+          partnership: Partnership address
+          soleTrader: Business or organisation address
+        subheading_6:
+          limitedCompany:
+            one: Director
+            other: Directors
+          limitedLiabilityPartnership:
+            one: Partner
+            other: Partners
+          localAuthority:
+            one: Chief executive
+            other: Chief executives
+          overseas:
+            one: Business or organisation owner
+            other: Business or organisation owners
+          partnership:
+            one: Partner
+            other: Partners
+          soleTrader:
+            one: Business or organisation owner
+            other: Business or organisation owners
+        subheading_7: Relevant convictions
+        declared_convictions:
+          "true": You told us you have relevant people with convictions in your business or organisation.
+          "false": You told us there are no relevant people with convictions in your business or organisation.
+        subheading_8: Contact details
+        next_button: Continue
   activemodel:
     errors:
       models:
-        check_your_answers_form:
-          invalid_main_person: "Enter a valid main person"
-          invalid_relevant_person: "Enter a valid person with a relevant conviction"
-          not_enough_main_people:
-            one: "You must add the details of at least one main person"
-            other: "You must add the details of at least %{count} main people"
-          not_enough_relevant_people:
-            one: "You must add the details of at least one person with a relevant conviction"
-            other: "You must add the details of at least %{count} people with a relevant conviction"
-          attributes:
-            business_type:
-              inclusion: "Select a valid business or organisation type"
-              invalid_change: "Because your business type has changed, you cannot renew and must make a new registration instead"
-            company_name:
-              blank: "Enter a trading name"
-              too_long: "Enter a shorter trading name with no more than 255 characters"
-            company_no:
-              blank: "Enter a company registration number"
-              changed: "If your Companies House number has changed, you cannot renew and must make a new registration"
-              inactive: "Your company must be registered as an active company"
-              error: "There was an error with Companies House"
-              invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
-              not_found: "Companies House couldn't find a company with this number"
-            contact_address:
-              blank: "Provide a contact address"
-              should_be_overseas: "Provide an overseas contact address"
-              should_be_uk: "Provide a UK contact address"
-            first_name:
-              blank: "Enter a first name for the contact person"
-              invalid: "The first name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
-              too_long: "The first name for the contact person must have no more than 70 characters"
-            last_name:
-              blank: "Enter a last name for the contact person"
-              invalid: "The last name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
-              too_long: "The last name for the contact person must have no more than 70 characters"
-            contact_email:
-              blank: "Enter a contact email address"
-              invalid_format: "Enter a valid contact email address - there’s a mistake in that one"
-            declared_convictions:
-              inclusion: "State whether you have any convictions to declare"
-            location:
-              inclusion: "Select a valid principal place of business"
-            phone_number:
-              blank: "Enter a contact telephone number"
-              invalid_format: "Enter a valid contact telephone number"
-              too_long: "Check the number you entered - it should have no more than than 15 characters"
-            registered_address:
-              blank: "Provide an address for the business or organisation"
-              should_be_overseas: "Provide an overseas address for the business or organisation"
-              should_be_uk: "Provide a UK address for the business or organisation"
-            registration_type:
-              inclusion: "Select a valid registration type"
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          check_your_answers_form:
+            invalid_main_person: "Enter a valid main person"
+            invalid_relevant_person: "Enter a valid person with a relevant conviction"
+            not_enough_main_people:
+              one: "You must add the details of at least one main person"
+              other: "You must add the details of at least %{count} main people"
+            not_enough_relevant_people:
+              one: "You must add the details of at least one person with a relevant conviction"
+              other: "You must add the details of at least %{count} people with a relevant conviction"
+            attributes:
+              business_type:
+                inclusion: "Select a valid business or organisation type"
+                invalid_change: "Because your business type has changed, you cannot renew and must make a new registration instead"
+              company_name:
+                blank: "Enter a trading name"
+                too_long: "Enter a shorter trading name with no more than 255 characters"
+              company_no:
+                blank: "Enter a company registration number"
+                changed: "If your Companies House number has changed, you cannot renew and must make a new registration"
+                inactive: "Your company must be registered as an active company"
+                error: "There was an error with Companies House"
+                invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
+                not_found: "Companies House couldn't find a company with this number"
+              contact_address:
+                blank: "Provide a contact address"
+                should_be_overseas: "Provide an overseas contact address"
+                should_be_uk: "Provide a UK contact address"
+              first_name:
+                blank: "Enter a first name for the contact person"
+                invalid: "The first name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+                too_long: "The first name for the contact person must have no more than 70 characters"
+              last_name:
+                blank: "Enter a last name for the contact person"
+                invalid: "The last name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+                too_long: "The last name for the contact person must have no more than 70 characters"
+              contact_email:
+                blank: "Enter a contact email address"
+                invalid_format: "Enter a valid contact email address - there’s a mistake in that one"
+              declared_convictions:
+                inclusion: "State whether you have any convictions to declare"
+              location:
+                inclusion: "Select a valid principal place of business"
+              phone_number:
+                blank: "Enter a contact telephone number"
+                invalid_format: "Enter a valid contact telephone number"
+                too_long: "Check the number you entered - it should have no more than than 15 characters"
+              registered_address:
+                blank: "Provide an address for the business or organisation"
+                should_be_overseas: "Provide an overseas address for the business or organisation"
+                should_be_uk: "Provide a UK address for the business or organisation"
+              registration_type:
+                inclusion: "Select a valid registration type"
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"

@@ -1,28 +1,30 @@
 en:
-  company_postcode_forms:
-    new:
-      title: Business address postcode
-      heading:
-        localAuthority: What's the address of the local authority or public body?
-        limitedCompany: What's the company address?
-        limitedLiabilityPartnership: What's the address of the limited liability partnership?
-        partnership: What's the address of the partnership?
-        soleTrader: What's the address of the business?
-      temp_company_postcode_label: Please enter a UK postcode
-      temp_company_postcode_hint: For example, BS1 5AH
-      error_heading: A problem to fix
-      next_button: Find address
-      manual_address_link: "Enter address manually"
+  waste_carriers_engine:
+    company_postcode_forms:
+      new:
+        title: Business address postcode
+        heading:
+          localAuthority: What's the address of the local authority or public body?
+          limitedCompany: What's the company address?
+          limitedLiabilityPartnership: What's the address of the limited liability partnership?
+          partnership: What's the address of the partnership?
+          soleTrader: What's the address of the business?
+        temp_company_postcode_label: Please enter a UK postcode
+        temp_company_postcode_hint: For example, BS1 5AH
+        error_heading: A problem to fix
+        next_button: Find address
+        manual_address_link: "Enter address manually"
   activemodel:
     errors:
       models:
-        company_postcode_form:
-          attributes:
-            temp_company_postcode:
-              blank: "Enter a postcode"
-              wrong_format: "Enter a valid UK postcode"
-              no_results: "We cannot find any addresses for that postcode. Check the postcode or enter the address manually."
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine:
+          company_postcode_form:
+            attributes:
+              temp_company_postcode:
+                blank: "Enter a postcode"
+                wrong_format: "Enter a valid UK postcode"
+                no_results: "We cannot find any addresses for that postcode. Check the postcode or enter the address manually."
+              reg_identifier:
+                invalid_format: "The registration ID is not in a valid format"
+                no_registration: "There is no registration matching this ID"
+                renewal_in_progress: "This renewal is already in progress"
