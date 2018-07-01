@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "uk_postcode"
+
 module WasteCarriersEngine
   class PostcodeValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)

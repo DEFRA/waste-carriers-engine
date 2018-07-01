@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "rest-client"
+
 module WasteCarriersEngine
   class AddressFinderService
     def initialize(postcode)

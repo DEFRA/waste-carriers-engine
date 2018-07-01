@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "validates_email_format_of"
+
 module WasteCarriersEngine
   class EmailValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)

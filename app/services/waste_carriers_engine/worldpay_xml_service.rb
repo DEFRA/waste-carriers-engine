@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "countries"
+
 module WasteCarriersEngine
   class WorldpayXmlService
     def initialize(transient_registration, order)
