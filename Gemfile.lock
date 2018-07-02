@@ -277,9 +277,7 @@ DEPENDENCIES
   aasm (~> 4.12)
   airbrake (= 5.8.1)
   byebug
-  cancancan (~> 1.10)
   database_cleaner
-  devise (>= 4.4.3)
   dotenv-rails
   factory_bot_rails
   govuk_elements_rails (~> 3.1)

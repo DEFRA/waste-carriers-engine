@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
-  devise_scope :user do
-    get "/users/sign_out" => "devise/sessions#destroy"
-  end
-
-
   WasteCarriersEngine::Engine.routes.draw do
-    root "registrations#index"
+    devise_for :users, class_name: "WasteCarriersEngine::User", module: :devise
+    devise_scope :user do
+      get "/users/sign_out" => "devise/sessions#destroy"
+    end
 
     resources :registrations, only: [:index]
 

@@ -1,3 +1,5 @@
+require "cancancan"
+require "devise"
 require "high_voltage"
 
 module WasteCarriersEngine
