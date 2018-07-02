@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :users
   devise_scope :user do
     get "/users/sign_out" => "devise/sessions#destroy"
@@ -297,14 +296,14 @@ Rails.application.routes.draw do
               end
 
     resources :contact_address_manual_forms,
-      only: [:new, :create],
-      path: "contact-address-manual",
-      path_names: { new: "/:reg_identifier" } do
-        get "back/:reg_identifier",
-        to: "contact_address_manual_forms#go_back",
-        as: "back",
-        on: :collection
-      end
+              only: [:new, :create],
+              path: "contact-address-manual",
+              path_names: { new: "/:reg_identifier" } do
+                get "back/:reg_identifier",
+                to: "contact_address_manual_forms#go_back",
+                as: "back",
+                on: :collection
+              end
 
     resources :check_your_answers_forms,
               only: [:new, :create],
@@ -410,5 +409,9 @@ Rails.application.routes.draw do
                 as: "back",
                 on: :collection
               end
+
+    # Static pages with HighVoltage - don't include "/pages/" in the path
+    resources :pages, only: [:show], path: ""
+    resources :errors, only: [:show]
   end
 end

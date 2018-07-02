@@ -1,3 +1,5 @@
+require "high_voltage"
+
 module WasteCarriersEngine
   class Engine < ::Rails::Engine
     isolate_namespace WasteCarriersEngine
