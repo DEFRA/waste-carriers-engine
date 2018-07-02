@@ -1,8 +1,8 @@
-<%= render("shared/back", back_path: back_company_address_forms_path(@company_address_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_company_address_forms_path(@company_address_form.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@company_address_form) do |f| %>
-    <%= render("shared/errors", object: @company_address_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @company_address_form) %>
 
     <h1 class="heading-large"><%= t(".heading.#{@company_address_form.business_type}") %></h1>
 
@@ -12,7 +12,7 @@
       <%= link_to(t(".postcode_change_link"), back_company_address_forms_path(@company_address_form.reg_identifier)) %>
     </div>
 
-    <%= render("shared/select_address", form: @company_address_form, f: f) %>
+    <%= render("waste_carriers_engine/shared/select_address", form: @company_address_form, f: f) %>
 
     <div class="form-group">
       <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_address_forms_path(@company_address_form.reg_identifier)) %>
@@ -24,5 +24,5 @@
     </div>
   <% end %>
 
-  <%= render("shared/os_terms_footer") %>
+  <%= render("waste_carriers_engine/shared/os_terms_footer") %>
 </div>

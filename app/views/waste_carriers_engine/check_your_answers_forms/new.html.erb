@@ -1,4 +1,4 @@
-<%= render("shared/back", back_path: back_check_your_answers_forms_path(@check_your_answers_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_check_your_answers_forms_path(@check_your_answers_form.reg_identifier)) %>
 
 <div class="text">
   <% if @check_your_answers_form.errors.any? %>
@@ -20,7 +20,7 @@
   <% else %>
 
     <%= form_for(@check_your_answers_form) do |f| %>
-      <%= render("shared/errors", object: @check_your_answers_form) %>
+      <%= render("waste_carriers_engine/shared/errors", object: @check_your_answers_form) %>
 
       <h1 class="heading-large"><%= t(".heading") %></h1>
 

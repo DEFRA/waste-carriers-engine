@@ -9,7 +9,7 @@
   <% end %>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= render("shared/errors", object: resource) %>
+      <%= render("waste_carriers_engine/shared/errors", object: resource) %>
 
     <div class="form-group">
       <%= f.label :email, class: "form-label" %>

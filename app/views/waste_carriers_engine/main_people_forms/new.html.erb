@@ -1,4 +1,4 @@
-<%= render("shared/back", back_path: back_main_people_forms_path(@main_people_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_main_people_forms_path(@main_people_form.reg_identifier)) %>
 
 <% if @main_people_form.can_only_have_one_main_person? %>
  <div class="text">
@@ -7,15 +7,15 @@
   <div class="column-two-thirds">
 <% end %>
   <%= form_for(@main_people_form) do |f| %>
-    <%= render("shared/errors", object: @main_people_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @main_people_form) %>
 
     <h1 class="heading-large"><%= t(".heading.#{@main_people_form.business_type}") %></h1>
 
     <p><%= t(".description_1.#{@main_people_form.business_type}") %></p>
 
-    <%= render("shared/person_name", form: @main_people_form, f: f) %>
+    <%= render("waste_carriers_engine/shared/person_name", form: @main_people_form, f: f) %>
 
-    <%= render("shared/date_of_birth", form: @main_people_form, f: f) %>
+    <%= render("waste_carriers_engine/shared/date_of_birth", form: @main_people_form, f: f) %>
 
     <%= f.hidden_field :reg_identifier, value: @main_people_form.reg_identifier %>
 

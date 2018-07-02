@@ -1,8 +1,8 @@
-<%= render("shared/back", back_path: back_company_address_manual_forms_path(@company_address_manual_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_company_address_manual_forms_path(@company_address_manual_form.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@company_address_manual_form) do |f| %>
-    <%= render("shared/errors", object: @company_address_manual_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @company_address_manual_form) %>
 
     <% if @company_address_manual_form.os_places_error %>
     <div class="error-summary" role="alert">
@@ -13,7 +13,7 @@
 
     <h1 class="heading-large"><%= t(".heading.#{@company_address_manual_form.business_type}") %></h1>
 
-    <%= render("shared/manual_address", form: @company_address_manual_form, f: f, overseas: @company_address_manual_form.overseas?) %>
+    <%= render("waste_carriers_engine/shared/manual_address", form: @company_address_manual_form, f: f, overseas: @company_address_manual_form.overseas?) %>
 
     <%= f.hidden_field :reg_identifier, value: @company_address_manual_form.reg_identifier %>
     <div class="form-group">

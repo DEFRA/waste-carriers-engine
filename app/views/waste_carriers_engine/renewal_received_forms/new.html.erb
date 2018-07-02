@@ -10,7 +10,7 @@
 <% else %>
 
   <%= form_for(@renewal_received_form) do |f| %>
-    <%= render("shared/errors", object: @renewal_received_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @renewal_received_form) %>
 
     <div class="govuk-box-highlight">
       <h1 class="heading-xlarge"><%= t(".heading") %></h1>

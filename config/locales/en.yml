@@ -1,62 +1,55 @@
 ---
 en:
-  global_proposition_header: Register as a waste carrier
-  back_link: Back
-  errors:
-    messages:
-      weak_password: Your password is not strong enough. It must include at least one lowercase letter, uppercase letter and number
-  layouts:
-    application:
-      beta: BETA
-      feedback: This is a new service – your %{link} will help us to improve it.
-      feedback_link: feedback
-      feedback_url: https://www.gov.uk/done/waste-carrier-or-broker-registration
-  registrations:
-    index:
-      title: Registrations
-  shared:
-    date_of_birth:
-      date_of_birth: Date of birth
-      date_of_birth_hint: For example, 26 5 1976
-      dob_year: Year
-      dob_month: Month
-      dob_day: Day
+  waste_carriers_engine:
     errors:
-      heading: A problem to fix
-    footer:
-      support_text: 'Environment Agency (England) helpline: 03708 506 506'
-    manual_address:
-      house_number_label: Building name or number
-      house_number_hint: For example, a business premises name or house number
-      address_line_1_label: Address line 1
-      address_line_2_label: Address line 2 (optional)
-      town_city_label: Town or city
-      postcode_label: Postcode (optional)
-      preset_postcode_label: Postcode
-      postcode_change_link: Change
-      country_label: Country
-    os_terms_footer:
-      text: © Crown copyright and database rights 2018 Ordnance Survey 100024198. Use of this addressing data is subject to the
-      link_text: address data terms and conditions (opens new tab)
-    person_name:
-      first_name: First name
-      last_name: Last name
-    select_address:
-      address_label: Address
-      address_blank_option:
-        zero: No addresses found
-        one: 1 address found
-        other: "%{count} addresses found"
+      messages:
+        weak_password: Your password is not strong enough. It must include at least one lowercase letter, uppercase letter and number
+    registrations:
+      index:
+        title: Registrations
+    shared:
+      back:
+        back_link: Back
+      date_of_birth:
+        date_of_birth: Date of birth
+        date_of_birth_hint: For example, 26 5 1976
+        dob_year: Year
+        dob_month: Month
+        dob_day: Day
+      errors:
+        heading: A problem to fix
+      manual_address:
+        house_number_label: Building name or number
+        house_number_hint: For example, a business premises name or house number
+        address_line_1_label: Address line 1
+        address_line_2_label: Address line 2 (optional)
+        town_city_label: Town or city
+        postcode_label: Postcode (optional)
+        preset_postcode_label: Postcode
+        postcode_change_link: Change
+        country_label: Country
+      os_terms_footer:
+        text: © Crown copyright and database rights 2018 Ordnance Survey 100024198. Use of this addressing data is subject to the
+        link_text: address data terms and conditions (opens new tab)
+      person_name:
+        first_name: First name
+        last_name: Last name
+      select_address:
+        address_label: Address
+        address_blank_option:
+          zero: No addresses found
+          one: 1 address found
+          other: "%{count} addresses found"
 
-  # Custom error pages
-  invalid_reg_identifier_title: Invalid registration number
-  invalid_reg_identifier_heading: The registration number you entered is not valid
-  invalid_reg_identifier_text: Maybe you should try searching again.
+    # Custom error pages
+    invalid_reg_identifier_title: Invalid registration number
+    invalid_reg_identifier_heading: The registration number you entered is not valid
+    invalid_reg_identifier_text: Maybe you should try searching again.
 
-  no_permissions_title: Cannot access registration
-  no_permissions_heading: You don't have permission to access that registration
-  no_permissions_text: Maybe you should try searching again.
+    no_permissions_title: Cannot access registration
+    no_permissions_heading: You don't have permission to access that registration
+    no_permissions_text: Maybe you should try searching again.
 
-  unrenewable_title: Cannot renew registration
-  unrenewable_heading: This registration cannot be renewed
-  unrenewable_text: You can only renew registrations which are currently active and are due to expire within the next %{months} months.
+    unrenewable_title: Cannot renew registration
+    unrenewable_heading: This registration cannot be renewed
+    unrenewable_text: You can only renew registrations which are currently active and are due to expire within the next %{months} months.

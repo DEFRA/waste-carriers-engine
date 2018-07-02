@@ -1,4 +1,4 @@
-<%= render("shared/back", back_path: new_user_session_path) %>
+<%= render("waste_carriers_engine/shared/back", back_path: new_user_session_path) %>
 
 <h1 class="heading-large">Locked account</h1>
 
@@ -7,7 +7,7 @@
 <p class="text">Tell us which email address was used to register and we’ll send unlock instructions.</p>
 
 <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-    <%= render("shared/errors", object: resource) %>
+    <%= render("waste_carriers_engine/shared/errors", object: resource) %>
 
   <div class="form-group">
     <%= f.label :email, class: "form-label" %>

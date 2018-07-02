@@ -1,8 +1,8 @@
-<%= render("shared/back", back_path: back_registration_number_forms_path(@registration_number_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_registration_number_forms_path(@registration_number_form.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@registration_number_form) do |f| %>
-    <%= render("shared/errors", object: @registration_number_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @registration_number_form) %>
 
     <h1 class="heading-large"><%= t(".heading.#{@registration_number_form.business_type}") %></h1>
 

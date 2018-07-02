@@ -1,8 +1,8 @@
-<%= render("shared/back", back_path: back_tier_check_forms_path(@tier_check_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_tier_check_forms_path(@tier_check_form.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@tier_check_form) do |f| %>
-    <%= render("shared/errors", object: @tier_check_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @tier_check_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 

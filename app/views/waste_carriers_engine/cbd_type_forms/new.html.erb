@@ -1,8 +1,8 @@
-<%= render("shared/back", back_path: back_cbd_type_forms_path(@cbd_type_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_cbd_type_forms_path(@cbd_type_form.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@cbd_type_form) do |f| %>
-    <%= render("shared/errors", object: @cbd_type_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @cbd_type_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 

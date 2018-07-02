@@ -1,4 +1,4 @@
-<%= render("shared/back", back_path: back_worldpay_forms_path(@worldpay_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_worldpay_forms_path(@worldpay_form.reg_identifier)) %>
 
 <div class="text">
 <% if @worldpay_form.errors.any? %>
@@ -12,7 +12,7 @@
 <% else %>
 
   <%= form_for(@worldpay_form) do |f| %>
-    <%= render("shared/errors", object: @worldpay_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @worldpay_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 

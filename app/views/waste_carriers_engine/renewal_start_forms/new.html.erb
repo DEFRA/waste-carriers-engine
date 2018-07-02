@@ -10,7 +10,7 @@
 <% else %>
 
   <%= form_for(@renewal_start_form) do |f| %>
-    <%= render("shared/errors", object: @renewal_start_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @renewal_start_form) %>
 
     <h1 class="heading-large"><%= t(".heading", reg_identifier: @renewal_start_form.reg_identifier) %></h1>
 

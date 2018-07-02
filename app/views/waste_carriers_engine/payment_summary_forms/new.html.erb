@@ -1,4 +1,4 @@
-<%= render("shared/back", back_path: back_payment_summary_forms_path(@payment_summary_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_payment_summary_forms_path(@payment_summary_form.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@payment_summary_form) do |f| %>
@@ -12,7 +12,7 @@
       </div>
     <% end %>
 
-    <%= render("shared/errors", object: @payment_summary_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @payment_summary_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 

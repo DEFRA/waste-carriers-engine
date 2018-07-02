@@ -1,14 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Dummy</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+<% content_for(:head) do %>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <!--[if IE 8]><%= stylesheet_link_tag "ie8" %><![endif]-->
   <%= csrf_meta_tags %>
-</head>
-<body>
+<% end %>
 
-<%= yield %>
+<% content_for :page_title, title %>
 
-</body>
-</html>
+<% content_for :header_class, "with-proposition" %>
+<% content_for :proposition_header do %>
+  <div class="header-proposition">
+    <div class="content">
+      <nav id="proposition-menu">
+        <%= link_to t(:global_proposition_header), "/", id: "proposition-name" %>
+      </nav>
+    </div>
+  </div>
+<% end %>
+
+<% content_for(:content) do %>
+  <main id="content" role="main">
+    <div class="phase-banner-beta">
+      <p>
+        <strong class="phase-tag"><%= t(".beta")  %></strong>
+        <span>
+          <%= t(
+                ".feedback",
+                link: link_to(
+                  t(".feedback_link"),
+                  t(".feedback_url"),
+                  target: "_blank"
+                )
+              ).html_safe
+          %>
+        </span>
+      </p>
+    </div>
+
+    <%= yield %>
+  </main>
+<% end %>
+
+<% content_for :footer_top do %>
+  <%= render("shared/footer") %>
+<% end %>
+
+<%= render file: "layouts/govuk_template" %>

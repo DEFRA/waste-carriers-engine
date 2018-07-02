@@ -1,8 +1,8 @@
-<%= render("shared/back", back_path: back_other_businesses_forms_path(@other_businesses_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_other_businesses_forms_path(@other_businesses_form.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@other_businesses_form) do |f| %>
-    <%= render("shared/errors", object: @other_businesses_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @other_businesses_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 

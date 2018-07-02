@@ -1,4 +1,4 @@
-<%= render("shared/back", back_path: back_renewal_information_forms_path(@renewal_information_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_renewal_information_forms_path(@renewal_information_form.reg_identifier)) %>
 
 <div class="text">
 <% if @renewal_information_form.errors.any? %>
@@ -12,7 +12,7 @@
 <% else %>
 
   <%= form_for(@renewal_information_form) do |f| %>
-    <%= render("shared/errors", object: @renewal_information_form) %>
+    <%= render("waste_carriers_engine/shared/errors", object: @renewal_information_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
