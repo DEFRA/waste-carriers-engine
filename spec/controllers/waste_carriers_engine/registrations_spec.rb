@@ -1,7 +1,9 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RegistrationsController, type: :controller do
+  RSpec.describe WasteCarriersEngine::RegistrationsController, type: :controller do
+    routes { WasteCarriersEngine::Engine.routes }
+
     describe "index" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
