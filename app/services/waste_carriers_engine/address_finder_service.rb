@@ -20,7 +20,7 @@ module WasteCarriersEngine
         begin
           JSON.parse(response)
         rescue JSON::ParserError => e
-          Airbrake.notify(e)
+          Airbrake.notify(e) if defined?(Airbrake)
           Rails.logger.error "OS Places JSON error: " + e.to_s
           :error
         end
@@ -28,11 +28,11 @@ module WasteCarriersEngine
         Rails.logger.debug "OS Places: resource not found"
         :not_found
       rescue RestClient::ExceptionWithResponse => e
-        Airbrake.notify(e)
+        Airbrake.notify(e) if defined?(Airbrake)
         Rails.logger.error "OS Places response error: " + e.to_s
         :error
       rescue SocketError => e
-        Airbrake.notify(e)
+        Airbrake.notify(e) if defined?(Airbrake)
         Rails.logger.error "OS Places socket error: " + e.to_s
         :error
       end

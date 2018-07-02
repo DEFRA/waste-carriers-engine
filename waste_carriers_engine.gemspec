@@ -30,10 +30,6 @@ Gem::Specification.new do |s|
   # Use AASM to manage states and transitions
   s.add_dependency "aasm", "~> 4.12"
 
-  # Use Airbrake for error reporting to Errbit
-  # Version 6 and above cause errors with Errbit, so use 5.8.1 for now
-  s.add_dependency "airbrake", "5.8.1"
-
   # Use CanCanCan for user roles and permissions
   # Version 2.0 doesn't support Mongoid, so we're locked to an earlier one
   s.add_dependency "cancancan", "~> 1.10"

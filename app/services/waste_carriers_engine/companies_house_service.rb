@@ -26,11 +26,11 @@ module WasteCarriersEngine
         Rails.logger.debug "Companies House: resource not found"
         :not_found
       rescue RestClient::ExceptionWithResponse => e
-        Airbrake.notify(e)
+        Airbrake.notify(e) if defined?(Airbrake)
         Rails.logger.error "Companies House error: " + e.to_s
         :error
       rescue SocketError => e
-        Airbrake.notify(e)
+        Airbrake.notify(e) if defined?(Airbrake)
         Rails.logger.error "Companies House error: " + e.to_s
         :error
       end

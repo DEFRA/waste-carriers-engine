@@ -3,7 +3,6 @@ PATH
   specs:
     waste_carriers_engine (1.0.0)
       aasm (~> 4.12)
-      airbrake (= 5.8.1)
       cancancan (~> 1.10)
       countries
       devise (>= 4.4.3)

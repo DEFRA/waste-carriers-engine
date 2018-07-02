@@ -30,20 +30,20 @@ module WasteCarriersEngine
         begin
           JSON.parse(response)
         rescue JSON::ParserError => e
-          Airbrake.notify(e)
+          Airbrake.notify(e) if defined?(Airbrake)
           Rails.logger.error "Entity Matching JSON error: " + e.to_s
           unknown_result_data
         end
       rescue RestClient::ExceptionWithResponse => e
-        Airbrake.notify(e)
+        Airbrake.notify(e) if defined?(Airbrake)
         Rails.logger.error "Entity Matching response error: " + e.to_s
         unknown_result_data
       rescue Errno::ECONNREFUSED => e
-        Airbrake.notify(e)
+        Airbrake.notify(e) if defined?(Airbrake)
         Rails.logger.error "Entity Matching connection error: " + e.to_s
         unknown_result_data
       rescue SocketError => e
-        Airbrake.notify(e)
+        Airbrake.notify(e) if defined?(Airbrake)
         Rails.logger.error "Entity Matching socket error: " + e.to_s
         unknown_result_data
       end
