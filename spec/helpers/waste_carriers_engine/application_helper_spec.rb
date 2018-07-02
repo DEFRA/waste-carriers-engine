@@ -1,10 +1,29 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ApplicationHelper, type: :helper do
+  RSpec.describe WasteCarriersEngine::ApplicationHelper, type: :helper do
     describe "feedback_survey_url" do
       it "returns a correctly-formatted URL" do
-        expect(ApplicationHelper.feedback_survey_url("foo")).to eq("https://www.smartsurvey.co.uk/s/waste-carriers/?referringpage=foo")
+        expect(WasteCarriersEngine::ApplicationHelper.feedback_survey_url("foo")).to eq("https://www.smartsurvey.co.uk/s/waste-carriers/?referringpage=foo")
+      end
+    end
+
+    describe "title" do
+      context "when a specific title is provided" do
+        before do
+          allow(helper).to receive(:content_for?).and_return(true)
+          allow(helper).to receive(:content_for).and_return("Foo")
+        end
+
+        it "returns the correct full title" do
+          expect(helper.title).to eq("Foo - Register as a waste carrier - GOV.UK")
+        end
+      end
+
+      context "when no specific title is provided" do
+        it "returns the correct full title" do
+          expect(helper.title).to eq("Register as a waste carrier - GOV.UK")
+        end
       end
     end
 
