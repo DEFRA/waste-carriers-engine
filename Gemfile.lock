@@ -274,7 +274,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm (~> 4.12)
   airbrake (= 5.8.1)
   byebug
   database_cleaner

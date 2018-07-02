@@ -1,3 +1,4 @@
+require "aasm"
 require "mongoid"
 # Must require Mongoid before CanCanCan for adaptors to work
 require "cancancan"
