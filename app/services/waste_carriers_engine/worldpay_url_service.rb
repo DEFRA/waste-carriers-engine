@@ -40,13 +40,13 @@ module WasteCarriersEngine
 
     def success_path
       url = [Rails.configuration.wcrs_renewals_url,
-             Rails.application.routes.url_helpers.success_worldpay_forms_path(@reg_identifier)]
+             WasteCarriersEngine::Engine.routes.url_helpers.success_worldpay_forms_path(@reg_identifier)]
       CGI.escape(url.join)
     end
 
     def failure_path
       url = [Rails.configuration.wcrs_renewals_url,
-             Rails.application.routes.url_helpers.failure_worldpay_forms_path(@reg_identifier)]
+             WasteCarriersEngine::Engine.routes.url_helpers.failure_worldpay_forms_path(@reg_identifier)]
       CGI.escape(url.join)
     end
   end
