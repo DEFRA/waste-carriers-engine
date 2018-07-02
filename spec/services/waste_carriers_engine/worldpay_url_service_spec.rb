@@ -12,7 +12,7 @@ module WasteCarriersEngine
 
     describe "format_url" do
       let(:url) { worldpay_url_service.format_link }
-      let(:root) { "#{Rails.configuration.wcrs_renewals_url}/engine" }
+      let(:root) { Rails.configuration.wcrs_renewals_url }
 
       it "returns a link" do
         expect(url).to include(link_base)

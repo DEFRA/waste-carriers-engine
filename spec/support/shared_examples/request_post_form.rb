@@ -103,7 +103,7 @@ RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_a
 
           it "redirects to the invalid reg_identifier error page" do
             post_with_params(form, valid_params)
-            expect(response).to redirect_to("/engine/errors/invalid")
+            expect(response).to redirect_to(error_path("invalid"))
           end
         end
 
@@ -124,7 +124,7 @@ RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_a
 
           it "redirects to the unrenewable error page" do
             post_with_params(form, valid_params)
-            expect(response).to redirect_to("/engine/errors/unrenewable")
+            expect(response).to redirect_to(error_path("unrenewable"))
           end
         end
       end
