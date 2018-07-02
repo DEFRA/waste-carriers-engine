@@ -4,7 +4,9 @@ PATH
     waste_carriers_engine (1.0.0)
       aasm (~> 4.12)
       airbrake (= 5.8.1)
+      cancancan (~> 1.10)
       countries
+      devise (>= 4.4.3)
       high_voltage (~> 3.0)
       jbuilder (~> 2.0)
       jquery-rails
@@ -282,7 +284,6 @@ DEPENDENCIES
   factory_bot_rails
   govuk_elements_rails (~> 3.1)
   govuk_template (~> 0.23)
-  high_voltage (~> 3.0)
   jquery-rails
   loofah (>= 2.2.1)
   mongoid (~> 5.2)

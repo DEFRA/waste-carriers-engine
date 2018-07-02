@@ -34,6 +34,13 @@ Gem::Specification.new do |s|
   # Version 6 and above cause errors with Errbit, so use 5.8.1 for now
   s.add_dependency "airbrake", "5.8.1"
 
+  # Use CanCanCan for user roles and permissions
+  # Version 2.0 doesn't support Mongoid, so we're locked to an earlier one
+  s.add_dependency "cancancan", "~> 1.10"
+
+  # Use Devise for user authentication
+  s.add_dependency "devise", ">= 4.4.3"
+
   # Use rest-client for external requests, eg. to Companies House
   s.add_dependency "rest-client", "~> 2.0"
 
