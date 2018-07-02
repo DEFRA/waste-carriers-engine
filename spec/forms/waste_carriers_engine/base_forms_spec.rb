@@ -78,7 +78,7 @@ module WasteCarriersEngine
 
         it "inherits the errors from the transient_registration" do
           form.valid?
-          expect(form.errors[:base]).to include(I18n.t("activemodel.errors.models.transient_registration.attributes.reg_identifier.invalid_format"))
+          expect(form.errors[:base]).to include(I18n.t("activemodel.errors.models.waste_carriers_engine.transient_registration.attributes.reg_identifier.invalid_format"))
         end
       end
     end
