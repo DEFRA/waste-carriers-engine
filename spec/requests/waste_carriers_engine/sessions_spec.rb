@@ -42,17 +42,17 @@ module WasteCarriersEngine
         end
 
         it "signs the user out" do
-          delete destroy_user_session_path
+          get destroy_user_session_path
           expect(controller.current_user).to be_nil
         end
 
         it "returns a 302 response" do
-          delete destroy_user_session_path
+          get destroy_user_session_path
           expect(response).to have_http_status(302)
         end
 
         it "redirects to the root path" do
-          delete destroy_user_session_path
+          get destroy_user_session_path
           expect(response).to redirect_to(root_path)
         end
       end
