@@ -3,7 +3,7 @@ module WasteCarriersEngine
     include Mongoid::Document
 
     # Use the User database
-    store_in client: "users"
+    store_in client: "users", collection: "users"
 
     devise :database_authenticatable,
            :lockable,

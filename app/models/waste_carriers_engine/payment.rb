@@ -2,7 +2,7 @@ module WasteCarriersEngine
   class Payment
     include Mongoid::Document
 
-    embedded_in :finance_details
+    embedded_in :finance_details, class_name: "WasteCarriersEngine::FinanceDetails"
 
     field :orderKey, as: :order_key,                              type: String
     field :amount,                                                type: Integer

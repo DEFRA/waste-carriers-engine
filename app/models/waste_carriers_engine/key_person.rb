@@ -2,9 +2,9 @@ module WasteCarriersEngine
   class KeyPerson
     include Mongoid::Document
 
-    embedded_in :registration
-    embedded_in :past_registration
-    embeds_one :convictionSearchResult
+    embedded_in :registration,          class_name: "WasteCarriersEngine::Registration"
+    embedded_in :past_registration,     class_name: "WasteCarriersEngine::PastRegistration"
+    embeds_one :convictionSearchResult, class_name: "WasteCarriersEngine::ConvictionSearchResult"
 
     accepts_nested_attributes_for :convictionSearchResult
 

@@ -2,7 +2,7 @@ module WasteCarriersEngine
   class OrderItem
     include Mongoid::Document
 
-    embedded_in :order
+    embedded_in :order, class_name: "WasteCarriersEngine::Order"
 
     field :amount,                          type: Integer
     field :currency,                        type: String

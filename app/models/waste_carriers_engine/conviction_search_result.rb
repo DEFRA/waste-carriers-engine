@@ -2,9 +2,9 @@ module WasteCarriersEngine
   class ConvictionSearchResult
     include Mongoid::Document
 
-    embedded_in :registration
-    embedded_in :past_registration
-    embedded_in :keyPerson
+    embedded_in :registration,      class_name: "WasteCarriersEngine::Registration"
+    embedded_in :past_registration, class_name: "WasteCarriersEngine::PastRegistration"
+    embedded_in :keyPerson,         class_name: "WasteCarriersEngine::KeyPerson"
 
     field :matchResult, as: :match_result,        type: String
     field :matchingSystem, as: :matching_system,  type: String

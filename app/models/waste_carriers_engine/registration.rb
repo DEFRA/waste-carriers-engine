@@ -4,7 +4,9 @@ module WasteCarriersEngine
     include CanHaveRegistrationAttributes
     include CanGenerateRegIdentifier
 
-    embeds_many :past_registrations
+    store_in collection: "registrations"
+
+    embeds_many :past_registrations, class_name: "WasteCarriersEngine::PastRegistration"
     accepts_nested_attributes_for :past_registrations
 
     before_validation :generate_reg_identifier, on: :create

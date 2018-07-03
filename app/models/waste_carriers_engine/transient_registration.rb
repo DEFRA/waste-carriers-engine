@@ -7,6 +7,8 @@ module WasteCarriersEngine
     include CanHaveRegistrationAttributes
     include CanStripWhitespace
 
+    store_in collection: "transient_registrations"
+
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
     validate :no_renewal_in_progress?, on: :create
 

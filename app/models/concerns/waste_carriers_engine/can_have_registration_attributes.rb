@@ -5,12 +5,12 @@ module WasteCarriersEngine
     include Mongoid::Document
 
     included do
-      embeds_one :metaData
-      embeds_many :addresses
-      embeds_many :keyPeople
-      embeds_one :finance_details, store_as: "financeDetails"
-      embeds_one :convictionSearchResult
-      embeds_many :conviction_sign_offs
+      embeds_one :metaData,               class_name: "WasteCarriersEngine::MetaData"
+      embeds_many :addresses,             class_name: "WasteCarriersEngine::Address"
+      embeds_many :keyPeople,             class_name: "WasteCarriersEngine::KeyPerson"
+      embeds_one :finance_details,        class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
+      embeds_one :convictionSearchResult, class_name: "WasteCarriersEngine::ConvictionSearchResult"
+      embeds_many :conviction_sign_offs,  class_name: "WasteCarriersEngine::ConvictionSignOff"
 
       accepts_nested_attributes_for :metaData,
                                     :addresses,

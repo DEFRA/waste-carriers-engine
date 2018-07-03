@@ -5,7 +5,7 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanHaveRegistrationAttributes
 
-    embedded_in :registration
+    embedded_in :registration, class_name: "WasteCarriersEngine::Registration"
 
     def self.build_past_registration(registration)
       past_registration = PastRegistration.new

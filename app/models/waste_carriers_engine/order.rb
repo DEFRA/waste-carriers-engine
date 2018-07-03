@@ -2,8 +2,8 @@ module WasteCarriersEngine
   class Order
     include Mongoid::Document
 
-    embedded_in :finance_details
-    embeds_many :order_items, store_as: "orderItems"
+    embedded_in :finance_details, class_name: "WasteCarriersEngine::FinanceDetails"
+    embeds_many :order_items,     class_name: "WasteCarriersEngine::OrderItem", store_as: "orderItems"
 
     accepts_nested_attributes_for :order_items
 
