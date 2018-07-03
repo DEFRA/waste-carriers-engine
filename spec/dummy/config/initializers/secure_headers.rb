@@ -1,4 +1,4 @@
-require 'secure_headers'
+require "secure_headers"
 
 # A CSP is delivered via a HTTP response header, much like HSTS, and defines
 # approved sources of content that the browser may load. It can be an

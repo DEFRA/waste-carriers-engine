@@ -14,7 +14,6 @@ PATH
       phonelib
       rails (= 4.2.10)
       rest-client (~> 2.0)
-      secure_headers (~> 5.0)
       turbolinks
       uk_postcode
       validates_email_format_of
@@ -286,6 +285,7 @@ DEPENDENCIES
   rails-html-sanitizer (>= 1.0.4)
   rails_12factor
   rspec-rails (~> 3.6)
+  secure_headers (~> 5.0)
   simplecov
   spring
   timecop

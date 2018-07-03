@@ -40,8 +40,6 @@ Gem::Specification.new do |s|
   # Use rest-client for external requests, eg. to Companies House
   s.add_dependency "rest-client", "~> 2.0"
 
-  s.add_dependency "secure_headers", "~> 5.0"
-
   # Use High Voltage for static pages
   s.add_dependency "high_voltage", "~> 3.0"
 

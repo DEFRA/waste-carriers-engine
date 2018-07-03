@@ -20,6 +20,8 @@ gem "jquery-rails"
 # Use MongoDB as the database
 gem "mongoid", "~> 5.2"
 
+gem "secure_headers", "~> 5.0"
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
 
