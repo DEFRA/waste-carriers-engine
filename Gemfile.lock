@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    waste_carriers_engine (1.0.0)
+    waste_carriers_engine (0.0.1)
       aasm (~> 4.12)
       cancancan (~> 1.10)
       countries
