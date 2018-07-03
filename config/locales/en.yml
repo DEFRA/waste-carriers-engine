@@ -41,15 +41,15 @@ en:
           one: 1 address found
           other: "%{count} addresses found"
 
-    # Custom error pages
-    invalid_reg_identifier_title: Invalid registration number
-    invalid_reg_identifier_heading: The registration number you entered is not valid
-    invalid_reg_identifier_text: Maybe you should try searching again.
+  # Custom error pages
+  invalid_reg_identifier_title: Invalid registration number
+  invalid_reg_identifier_heading: The registration number you entered is not valid
+  invalid_reg_identifier_text: Maybe you should try searching again.
 
-    no_permissions_title: Cannot access registration
-    no_permissions_heading: You don't have permission to access that registration
-    no_permissions_text: Maybe you should try searching again.
+  no_permissions_title: Cannot access registration
+  no_permissions_heading: You don't have permission to access that registration
+  no_permissions_text: Maybe you should try searching again.
 
-    unrenewable_title: Cannot renew registration
-    unrenewable_heading: This registration cannot be renewed
-    unrenewable_text: You can only renew registrations which are currently active and are due to expire within the next %{months} months.
+  unrenewable_title: Cannot renew registration
+  unrenewable_heading: This registration cannot be renewed
+  unrenewable_text: You can only renew registrations which are currently active and are due to expire within the next %{months} months.

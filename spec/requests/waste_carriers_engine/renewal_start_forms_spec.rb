@@ -13,14 +13,14 @@ module WasteCarriersEngine
         context "when no matching registration exists" do
           it "redirects to the invalid reg_identifier error page" do
             get new_renewal_start_form_path("CBDU999999999")
-            expect(response).to redirect_to(error_path("invalid"))
+            expect(response).to redirect_to(page_path("invalid"))
           end
         end
 
         context "when the reg_identifier doesn't match the format" do
           it "redirects to the invalid reg_identifier error page" do
             get new_renewal_start_form_path("foo")
-            expect(response).to redirect_to(error_path("invalid"))
+            expect(response).to redirect_to(page_path("invalid"))
           end
         end
 
@@ -39,7 +39,7 @@ module WasteCarriersEngine
 
                 it "redirects to the unrenewable error page" do
                   get new_renewal_start_form_path(registration[:reg_identifier])
-                  expect(response).to redirect_to(error_path("unrenewable"))
+                  expect(response).to redirect_to(page_path("unrenewable"))
                 end
               end
             end
@@ -86,7 +86,7 @@ module WasteCarriersEngine
 
               it "redirects to the permissions error page" do
                 get new_renewal_start_form_path(registration[:reg_identifier])
-                expect(response).to redirect_to(error_path("permission"))
+                expect(response).to redirect_to(page_path("permission"))
               end
             end
 
@@ -100,7 +100,7 @@ module WasteCarriersEngine
 
               it "redirects to the permissions error page" do
                 get new_renewal_start_form_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(error_path("permission"))
+                expect(response).to redirect_to(page_path("permission"))
               end
             end
           end
@@ -138,7 +138,7 @@ module WasteCarriersEngine
 
           it "redirects to the invalid reg_identifier error page" do
             post renewal_start_forms_path, renewal_start_form: invalid_params
-            expect(response).to redirect_to(error_path("invalid"))
+            expect(response).to redirect_to(page_path("invalid"))
           end
 
           it "does not create a new transient registration" do
@@ -155,7 +155,7 @@ module WasteCarriersEngine
 
           it "redirects to the invalid reg_identifier error page" do
             post renewal_start_forms_path, renewal_start_form: invalid_params
-            expect(response).to redirect_to(error_path("invalid"))
+            expect(response).to redirect_to(page_path("invalid"))
           end
 
           it "does not create a new transient registration" do
@@ -212,7 +212,7 @@ module WasteCarriersEngine
 
                   it "redirects to the unrenewable error page" do
                     get new_renewal_start_form_path(registration[:reg_identifier])
-                    expect(response).to redirect_to(error_path("unrenewable"))
+                    expect(response).to redirect_to(page_path("unrenewable"))
                   end
                 end
               end
@@ -307,7 +307,7 @@ module WasteCarriersEngine
 
             it "redirects to the permissions error page" do
               post renewal_start_forms_path, renewal_start_form: valid_params
-              expect(response).to redirect_to(error_path("permission"))
+              expect(response).to redirect_to(page_path("permission"))
             end
           end
 
@@ -322,7 +322,7 @@ module WasteCarriersEngine
 
             it "redirects to the permissions error page" do
               post renewal_start_forms_path, renewal_start_form: valid_params
-              expect(response).to redirect_to(error_path("permission"))
+              expect(response).to redirect_to(page_path("permission"))
             end
           end
         end

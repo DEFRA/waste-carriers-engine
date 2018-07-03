@@ -92,13 +92,13 @@ module WasteCarriersEngine
 
     def transient_registration_is_valid?
       return true if @transient_registration.valid?
-      redirect_to error_path("invalid")
+      redirect_to page_path("invalid")
       false
     end
 
     def user_has_permission?
       return true if can? :update, @transient_registration
-      redirect_to error_path("permission")
+      redirect_to page_path("permission")
       false
     end
 
@@ -115,7 +115,7 @@ module WasteCarriersEngine
     def can_be_renewed?
       registration = Registration.where(reg_identifier: @transient_registration.reg_identifier).first
       return true if registration.metaData.may_renew?
-      redirect_to error_path("unrenewable")
+      redirect_to page_path("unrenewable")
       false
     end
 
