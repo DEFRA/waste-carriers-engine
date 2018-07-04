@@ -10,17 +10,17 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1528887772">
-              <description>Your Waste Carrier Registration CBDU1373</description>
+            <order orderCode="1530693744">
+              <description>Your Waste Carrier Registration CBDU1336</description>
               <amount currencyCode="GBP" value="11000" exponent="2"/>
-              <orderContent>Waste Carrier Registration renewal: CBDU1373 for Acme Waste</orderContent>
+              <orderContent>Waste Carrier Registration renewal: CBDU1336 for Acme Waste</orderContent>
               <paymentMethodMask>
                 <include code="VISA-SSL"/>
                 <include code="MAESTRO-SSL"/>
                 <include code="ECMC-SSL"/>
               </paymentMethodMask>
               <shopper>
-                <shopperEmailAddress>user835@example.com</shopperEmailAddress>
+                <shopperEmailAddress>user751@example.com</shopperEmailAddress>
               </shopper>
               <billingAddress>
                 <address>
@@ -55,13 +55,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 13 Jun 2018 11:02:53 GMT
+      - Wed, 04 Jul 2018 08:42:30 GMT
+      Server:
+      - Apache
       Content-Length:
       - '466'
       P3p:
       - CP="NON"
       Set-Cookie:
       - machine=0aa20016;path=/
+      Content-Type:
+      - text/plain
       X-Xss-Protection:
       - '1'
       X-Content-Type-Options:
@@ -70,15 +74,13 @@ http_interactions:
       - max-age=86400; preload
       X-Cnection:
       - close
-      Content-Type:
-      - text/plain
     body:
       encoding: UTF-8
       string: |
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1528887772"><reference id="3101590085">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1528887772</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1530693744"><reference id="3103672130">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1530693744</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Wed, 13 Jun 2018 11:02:53 GMT
+  recorded_at: Wed, 04 Jul 2018 08:42:24 GMT
 recorded_with: VCR 4.0.0
