@@ -6,7 +6,7 @@
   "otherBusinesses": "yes",
   "isMainService": "yes",
   "onlyAMF": "no",
-  "companyName": "Limited Company Seed",
+  "companyName": "Waste Not Want Not, UK",
   "companyNo": "00946107",
   "firstName": "Test",
   "lastName": "User",
@@ -51,7 +51,7 @@
   "accountEmail": "user@waste-exemplar.gov.uk",
   "declaredConvictions": "no",
   "declaration": 1,
-  "regIdentifier": "CBDU22",
+  "regIdentifier": "CBDU222",
   "expires_on": "2018-07-15 00:00:00Z",
   "metaData": {
     "anotherString": "userDetailAddedAtRegistration",

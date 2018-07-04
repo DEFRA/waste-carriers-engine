@@ -2,11 +2,12 @@
   "date_flag": "in_renewal_window",
   "tier": "UPPER",
   "registrationType": "carrier_broker_dealer",
-  "businessType": "soleTrader",
+  "businessType": "limitedLiabilityPartnership",
   "otherBusinesses": "yes",
   "isMainService": "yes",
   "onlyAMF": "no",
-  "companyName": "Sole Trader Seed",
+  "companyName": "Limited Liability Partnership Seed",
+  "companyNo": "00946107",
   "firstName": "Test",
   "lastName": "User",
   "phoneNumber": "01234 567890",
@@ -37,20 +38,32 @@
     }
   ],
   "keyPeople": [{
-    "firstName": "Test",
-    "lastName": "Employee",
-    "dateOfBirth": "1978-01-01",
-    "position": "Director",
-    "personType": "KEY",
-    "convictionSearchResult": {
-      "matchResult": "NO",
-      "confirmed": "no"
+      "firstName": "Test",
+      "lastName": "Employee",
+      "dateOfBirth": "1978-01-01",
+      "position": "Partner",
+      "personType": "KEY",
+      "convictionSearchResult": {
+        "matchResult": "NO",
+        "confirmed": "no"
+      }
+    },
+    {
+      "firstName": "Another",
+      "lastName": "Employee",
+      "dateOfBirth": "1968-01-01",
+      "position": "Partner",
+      "personType": "KEY",
+      "convictionSearchResult": {
+        "matchResult": "NO",
+        "confirmed": "no"
+      }
     }
-  }],
+  ],
   "accountEmail": "user@waste-exemplar.gov.uk",
   "declaredConvictions": "no",
   "declaration": 1,
-  "regIdentifier": "CBDU27",
+  "regIdentifier": "CBDU214",
   "metaData": {
     "anotherString": "userDetailAddedAtRegistration",
     "status": "ACTIVE",
