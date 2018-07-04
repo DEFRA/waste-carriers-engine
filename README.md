@@ -66,18 +66,6 @@ git clone https://github.com/DEFRA/waste-carriers-renewals.git && cd waste-carri
 
 Then install the dependencies with `bundle install`.
 
-## Seed data
-
-The renewals process relies on users being created as part of waste-carriers-frontend. You should not be able to create a new user as part of a renewal.
-
-However, you can seed the database with a test user so you can log in and access the features (this won't work in production).
-
-The seed script also creates registrations to test the renewals process with.
-
-Seed the databases with:
-
-`bundle exec rake db:seed`
-
 ## Testing the engine
 
 The engine is mounted in a dummy Rails 4 app (in /spec/dummy) so we can properly test its behaviour.
