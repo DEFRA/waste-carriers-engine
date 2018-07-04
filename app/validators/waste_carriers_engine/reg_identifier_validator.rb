@@ -22,8 +22,8 @@ module WasteCarriersEngine
     end
 
     def error_message(record, attribute, error)
-      class_name = record.class.name.demodulize.underscore
-      I18n.t("activemodel.errors.models.waste_carriers_engine.#{class_name}.attributes.#{attribute}.#{error}")
+      class_name = record.class.to_s.underscore
+      I18n.t("activemodel.errors.models.#{class_name}.attributes.#{attribute}.#{error}")
     end
   end
 end

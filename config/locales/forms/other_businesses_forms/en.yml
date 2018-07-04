@@ -11,12 +11,11 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine:
-          other_businesses_form:
-            attributes:
-              other_businesses:
-                inclusion: "You must answer this question"
-              reg_identifier:
-                invalid_format: "The registration ID is not in a valid format"
-                no_registration: "There is no registration matching this ID"
-                renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine/other_businesses_form:
+          attributes:
+            other_businesses:
+              inclusion: "You must answer this question"
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"

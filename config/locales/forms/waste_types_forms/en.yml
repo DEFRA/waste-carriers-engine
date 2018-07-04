@@ -15,12 +15,11 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine:
-          waste_types_form:
-            attributes:
-              only_amf:
-                inclusion: "You must answer this question"
-              reg_identifier:
-                invalid_format: "The registration ID is not in a valid format"
-                no_registration: "There is no registration matching this ID"
-                renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine/waste_types_form:
+          attributes:
+            only_amf:
+              inclusion: "You must answer this question"
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"

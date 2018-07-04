@@ -16,10 +16,9 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine:
-          renewal_start_form:
-            attributes:
-              reg_identifier:
-                invalid_format: "is not in a valid format"
-                no_registration: "doesn't match any registrations"
-                renewal_in_progress: "already has a renewal is already in progress"
+        waste_carriers_engine/renewal_start_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "is not in a valid format"
+              no_registration: "doesn't match any registrations"
+              renewal_in_progress: "already has a renewal is already in progress"

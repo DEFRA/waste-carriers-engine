@@ -73,60 +73,59 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine:
-          check_your_answers_form:
-            invalid_main_person: "Enter a valid main person"
-            invalid_relevant_person: "Enter a valid person with a relevant conviction"
-            not_enough_main_people:
-              one: "You must add the details of at least one main person"
-              other: "You must add the details of at least %{count} main people"
-            not_enough_relevant_people:
-              one: "You must add the details of at least one person with a relevant conviction"
-              other: "You must add the details of at least %{count} people with a relevant conviction"
-            attributes:
-              business_type:
-                inclusion: "Select a valid business or organisation type"
-                invalid_change: "Because your business type has changed, you cannot renew and must make a new registration instead"
-              company_name:
-                blank: "Enter a trading name"
-                too_long: "Enter a shorter trading name with no more than 255 characters"
-              company_no:
-                blank: "Enter a company registration number"
-                changed: "If your Companies House number has changed, you cannot renew and must make a new registration"
-                inactive: "Your company must be registered as an active company"
-                error: "There was an error with Companies House"
-                invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
-                not_found: "Companies House couldn't find a company with this number"
-              contact_address:
-                blank: "Provide a contact address"
-                should_be_overseas: "Provide an overseas contact address"
-                should_be_uk: "Provide a UK contact address"
-              first_name:
-                blank: "Enter a first name for the contact person"
-                invalid: "The first name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
-                too_long: "The first name for the contact person must have no more than 70 characters"
-              last_name:
-                blank: "Enter a last name for the contact person"
-                invalid: "The last name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
-                too_long: "The last name for the contact person must have no more than 70 characters"
-              contact_email:
-                blank: "Enter a contact email address"
-                invalid_format: "Enter a valid contact email address - there’s a mistake in that one"
-              declared_convictions:
-                inclusion: "State whether you have any convictions to declare"
-              location:
-                inclusion: "Select a valid principal place of business"
-              phone_number:
-                blank: "Enter a contact telephone number"
-                invalid_format: "Enter a valid contact telephone number"
-                too_long: "Check the number you entered - it should have no more than than 15 characters"
-              registered_address:
-                blank: "Provide an address for the business or organisation"
-                should_be_overseas: "Provide an overseas address for the business or organisation"
-                should_be_uk: "Provide a UK address for the business or organisation"
-              registration_type:
-                inclusion: "Select a valid registration type"
-              reg_identifier:
-                invalid_format: "The registration ID is not in a valid format"
-                no_registration: "There is no registration matching this ID"
-                renewal_in_progress: "This renewal is already in progress"
+        waste_carriers_engine/check_your_answers_form:
+          invalid_main_person: "Enter a valid main person"
+          invalid_relevant_person: "Enter a valid person with a relevant conviction"
+          not_enough_main_people:
+            one: "You must add the details of at least one main person"
+            other: "You must add the details of at least %{count} main people"
+          not_enough_relevant_people:
+            one: "You must add the details of at least one person with a relevant conviction"
+            other: "You must add the details of at least %{count} people with a relevant conviction"
+          attributes:
+            business_type:
+              inclusion: "Select a valid business or organisation type"
+              invalid_change: "Because your business type has changed, you cannot renew and must make a new registration instead"
+            company_name:
+              blank: "Enter a trading name"
+              too_long: "Enter a shorter trading name with no more than 255 characters"
+            company_no:
+              blank: "Enter a company registration number"
+              changed: "If your Companies House number has changed, you cannot renew and must make a new registration"
+              inactive: "Your company must be registered as an active company"
+              error: "There was an error with Companies House"
+              invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
+              not_found: "Companies House couldn't find a company with this number"
+            contact_address:
+              blank: "Provide a contact address"
+              should_be_overseas: "Provide an overseas contact address"
+              should_be_uk: "Provide a UK contact address"
+            first_name:
+              blank: "Enter a first name for the contact person"
+              invalid: "The first name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+              too_long: "The first name for the contact person must have no more than 70 characters"
+            last_name:
+              blank: "Enter a last name for the contact person"
+              invalid: "The last name for the contact person must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
+              too_long: "The last name for the contact person must have no more than 70 characters"
+            contact_email:
+              blank: "Enter a contact email address"
+              invalid_format: "Enter a valid contact email address - there’s a mistake in that one"
+            declared_convictions:
+              inclusion: "State whether you have any convictions to declare"
+            location:
+              inclusion: "Select a valid principal place of business"
+            phone_number:
+              blank: "Enter a contact telephone number"
+              invalid_format: "Enter a valid contact telephone number"
+              too_long: "Check the number you entered - it should have no more than than 15 characters"
+            registered_address:
+              blank: "Provide an address for the business or organisation"
+              should_be_overseas: "Provide an overseas address for the business or organisation"
+              should_be_uk: "Provide a UK address for the business or organisation"
+            registration_type:
+              inclusion: "Select a valid registration type"
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"
