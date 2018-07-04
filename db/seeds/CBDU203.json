@@ -1,5 +1,5 @@
 {
-  "date_flag": "in_renewal_window",
+  "date_flag": "expired",
   "tier": "UPPER",
   "registrationType": "carrier_broker_dealer",
   "businessType": "soleTrader",
@@ -50,10 +50,10 @@
   "accountEmail": "user@waste-exemplar.gov.uk",
   "declaredConvictions": "no",
   "declaration": 1,
-  "regIdentifier": "CBDU20",
+  "regIdentifier": "CBDU203",
   "metaData": {
     "anotherString": "userDetailAddedAtRegistration",
-    "status": "ACTIVE",
+    "status": "EXPIRED",
     "route": "DIGITAL",
     "distance": "n/a"
   },

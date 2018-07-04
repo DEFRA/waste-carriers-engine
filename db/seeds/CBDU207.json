@@ -1,5 +1,5 @@
 {
-  "date_flag": "in_renewal_window",
+  "date_flag": "expired",
   "tier": "UPPER",
   "registrationType": "carrier_broker_dealer",
   "businessType": "limitedCompany",
@@ -7,7 +7,7 @@
   "isMainService": "yes",
   "onlyAMF": "no",
   "companyName": "Limited Company Seed",
-  "companyNo": "00946107",
+  "companyNo": "946107",
   "firstName": "Test",
   "lastName": "User",
   "phoneNumber": "01234 567890",
@@ -51,10 +51,10 @@
   "accountEmail": "user@waste-exemplar.gov.uk",
   "declaredConvictions": "no",
   "declaration": 1,
-  "regIdentifier": "CBDU16",
+  "regIdentifier": "CBDU207",
   "metaData": {
     "anotherString": "userDetailAddedAtRegistration",
-    "status": "ACTIVE",
+    "status": "EXPIRED",
     "route": "DIGITAL",
     "distance": "n/a"
   },

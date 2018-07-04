@@ -1,18 +1,18 @@
 {
-  "date_flag": "outside_renewal_window",
+  "date_flag": "in_renewal_window",
   "tier": "UPPER",
   "registrationType": "carrier_broker_dealer",
-  "businessType": "overseas",
+  "businessType": "limitedCompany",
   "otherBusinesses": "yes",
   "isMainService": "yes",
   "onlyAMF": "no",
-  "companyName": "Overseas Seed",
+  "companyName": "Limited Company Seed",
+  "companyNo": "00946107",
   "firstName": "Test",
   "lastName": "User",
   "phoneNumber": "01234 567890",
   "contactEmail": "user@waste-exemplar.gov.uk",
-  "addresses": [
-    {
+  "addresses": [{
       "addressType": "REGISTERED",
       "addressMode": "manual-uk",
       "houseNumber": "Unit 5",
@@ -20,7 +20,6 @@
       "addressLine2": "Deanery Road",
       "townCity": "Bristol",
       "postcode": "BS1 5AH",
-      "country": "Brazil",
       "location": {
         "lat": 0,
         "lon": 0
@@ -35,26 +34,24 @@
       "addressLine4": "",
       "townCity": "Warrington",
       "postcode": "WA4 1HT",
-      "country": "Brazil"
+      "country": ""
     }
   ],
-  "keyPeople": [
-    {
-      "firstName": "Test",
-      "lastName": "Employee",
-      "dateOfBirth": "1978-01-01",
-      "position": "Director",
-      "personType": "KEY",
-      "convictionSearchResult": {
-        "matchResult": "NO",
-        "confirmed": "no"
-      }
+  "keyPeople": [{
+    "firstName": "Test",
+    "lastName": "Employee",
+    "dateOfBirth": "1978-01-01",
+    "position": "Director",
+    "personType": "KEY",
+    "convictionSearchResult": {
+      "matchResult": "NO",
+      "confirmed": "no"
     }
-  ],
+  }],
   "accountEmail": "user@waste-exemplar.gov.uk",
   "declaredConvictions": "no",
   "declaration": 1,
-  "regIdentifier": "CBDU12",
+  "regIdentifier": "CBDU206",
   "metaData": {
     "anotherString": "userDetailAddedAtRegistration",
     "status": "ACTIVE",
