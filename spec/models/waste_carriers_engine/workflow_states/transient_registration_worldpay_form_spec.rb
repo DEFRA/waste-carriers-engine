@@ -34,7 +34,7 @@ module WasteCarriersEngine
           end
 
           context "when a keyPerson's convictionSearchResult has a match" do
-            before(:each) { transient_registration.keyPeople << build(:key_person, :main, :matched_conviction_search_result) }
+            before(:each) { transient_registration.key_people << build(:key_person, :main, :matched_conviction_search_result) }
 
             it "changes to :renewal_received_form after the 'next' event" do
               expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_received_form).on_event(:next)

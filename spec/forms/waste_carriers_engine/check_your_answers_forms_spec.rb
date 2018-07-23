@@ -205,7 +205,7 @@ module WasteCarriersEngine
       describe "#main_people" do
         context "when there are no main_people" do
           before do
-            check_your_answers_form.transient_registration.keyPeople = nil
+            check_your_answers_form.transient_registration.key_people = nil
             check_your_answers_form.main_people = nil
           end
 
@@ -218,7 +218,7 @@ module WasteCarriersEngine
           before do
             main_person = build(:key_person, :main)
 
-            check_your_answers_form.transient_registration.keyPeople = [main_person]
+            check_your_answers_form.transient_registration.key_people = [main_person]
             check_your_answers_form.main_people = [main_person]
           end
 
@@ -231,7 +231,7 @@ module WasteCarriersEngine
           before do
             main_person = build(:key_person, :has_required_data, :main)
 
-            check_your_answers_form.transient_registration.keyPeople = [main_person]
+            check_your_answers_form.transient_registration.key_people = [main_person]
             check_your_answers_form.main_people = [main_person]
           end
 
@@ -257,7 +257,7 @@ module WasteCarriersEngine
             main_person_a = build(:key_person, :has_required_data, :main)
             main_person_b = build(:key_person, :has_required_data, :main)
 
-            check_your_answers_form.transient_registration.keyPeople = [main_person_a, main_person_b]
+            check_your_answers_form.transient_registration.key_people = [main_person_a, main_person_b]
             check_your_answers_form.main_people = [main_person_a, main_person_b]
           end
 
@@ -284,7 +284,7 @@ module WasteCarriersEngine
 
         context "when there are no relevant_people" do
           before do
-            check_your_answers_form.transient_registration.keyPeople = [main_person]
+            check_your_answers_form.transient_registration.key_people = [main_person]
             check_your_answers_form.relevant_people = nil
           end
 
@@ -315,7 +315,7 @@ module WasteCarriersEngine
           before do
             relevant_person = build(:key_person, :has_required_data, :relevant)
 
-            check_your_answers_form.transient_registration.keyPeople = [main_person, relevant_person]
+            check_your_answers_form.transient_registration.key_people = [main_person, relevant_person]
             check_your_answers_form.relevant_people = [relevant_person]
           end
 
@@ -328,7 +328,7 @@ module WasteCarriersEngine
           before do
             relevant_person = build(:key_person, :relevant)
 
-            check_your_answers_form.transient_registration.keyPeople = [main_person, relevant_person]
+            check_your_answers_form.transient_registration.key_people = [main_person, relevant_person]
             check_your_answers_form.relevant_people = [relevant_person]
           end
 

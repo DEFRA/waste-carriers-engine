@@ -31,15 +31,15 @@ module WasteCarriersEngine
               }
             }
 
-            it "increases the number of keyPeople" do
-              key_people_count = transient_registration.keyPeople.count
+            it "increases the number of key_people" do
+              key_people_count = transient_registration.key_people.count
               post main_people_forms_path, main_people_form: valid_params
-              expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+              expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
             end
 
             it "updates the transient registration" do
               post main_people_forms_path, main_people_form: valid_params
-              expect(transient_registration.reload.keyPeople.last.first_name).to eq(valid_params[:first_name])
+              expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
             end
 
             it "returns a 302 response" do
@@ -56,13 +56,13 @@ module WasteCarriersEngine
               let(:existing_main_person) { build(:key_person, :has_required_data, :main) }
 
               before(:each) do
-                transient_registration.update_attributes(keyPeople: [existing_main_person])
+                transient_registration.update_attributes(key_people: [existing_main_person])
               end
 
               context "when there can be multiple main people" do
                 it "does not replace the existing main person" do
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.first.first_name).to eq(existing_main_person.first_name)
+                  expect(transient_registration.reload.key_people.first.first_name).to eq(existing_main_person.first_name)
                 end
               end
 
@@ -71,15 +71,15 @@ module WasteCarriersEngine
                   transient_registration.update_attributes(business_type: "soleTrader")
                 end
 
-                it "does not increase the number of keyPeople" do
-                  key_people_count = transient_registration.keyPeople.count
+                it "does not increase the number of key_people" do
+                  key_people_count = transient_registration.key_people.count
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
+                  expect(transient_registration.reload.key_people.count).to eq(key_people_count)
                 end
 
                 it "replaces the existing main person" do
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.first.first_name).to_not eq(existing_main_person.first_name)
+                  expect(transient_registration.reload.key_people.first.first_name).to_not eq(existing_main_person.first_name)
                 end
               end
             end
@@ -88,19 +88,19 @@ module WasteCarriersEngine
               let(:relevant_conviction_person) { build(:key_person, :has_required_data, :relevant) }
 
               before(:each) do
-                transient_registration.update_attributes(keyPeople: [relevant_conviction_person])
+                transient_registration.update_attributes(key_people: [relevant_conviction_person])
               end
 
               context "when there can be multiple key people" do
                 it "increases the number of key people" do
-                  key_people_count = transient_registration.keyPeople.count
+                  key_people_count = transient_registration.key_people.count
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+                  expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
                 end
 
                 it "does not replace the relevant conviction person" do
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.first.first_name).to eq(relevant_conviction_person.first_name)
+                  expect(transient_registration.reload.key_people.first.first_name).to eq(relevant_conviction_person.first_name)
                 end
               end
 
@@ -109,20 +109,20 @@ module WasteCarriersEngine
                   transient_registration.update_attributes(business_type: "soleTrader")
                 end
 
-                it "increases the number of keyPeople" do
-                  key_people_count = transient_registration.keyPeople.count
+                it "increases the number of key_people" do
+                  key_people_count = transient_registration.key_people.count
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.count).to eq(key_people_count + 1)
+                  expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
                 end
 
                 it "adds the new main person" do
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.last.first_name).to eq(valid_params[:first_name])
+                  expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
                 end
 
                 it "does not replace the relevant conviction person" do
                   post main_people_forms_path, main_people_form: valid_params
-                  expect(transient_registration.reload.keyPeople.first.first_name).to eq(relevant_conviction_person.first_name)
+                  expect(transient_registration.reload.key_people.first.first_name).to eq(relevant_conviction_person.first_name)
                 end
               end
             end
@@ -152,22 +152,22 @@ module WasteCarriersEngine
               expect(response).to have_http_status(302)
             end
 
-            it "does not increase the number of keyPeople" do
-              key_people_count = transient_registration.keyPeople.count
+            it "does not increase the number of key_people" do
+              key_people_count = transient_registration.key_people.count
               post main_people_forms_path, main_people_form: invalid_params
-              expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
+              expect(transient_registration.reload.key_people.count).to eq(key_people_count)
             end
 
             context "when there is already a main person" do
               let(:existing_main_person) { build(:key_person, :has_required_data, :main) }
 
               before(:each) do
-                transient_registration.update_attributes(keyPeople: [existing_main_person])
+                transient_registration.update_attributes(key_people: [existing_main_person])
               end
 
               it "does not replace the existing main person" do
                 post main_people_forms_path, main_people_form: invalid_params
-                expect(transient_registration.reload.keyPeople.first.first_name).to eq(existing_main_person.first_name)
+                expect(transient_registration.reload.key_people.first.first_name).to eq(existing_main_person.first_name)
               end
             end
 
@@ -192,9 +192,9 @@ module WasteCarriersEngine
             }
 
             it "does not increase the number of key people" do
-              key_people_count = transient_registration.keyPeople.count
+              key_people_count = transient_registration.key_people.count
               post main_people_forms_path, main_people_form: blank_params
-              expect(transient_registration.reload.keyPeople.count).to eq(key_people_count)
+              expect(transient_registration.reload.key_people.count).to eq(key_people_count)
             end
           end
         end
@@ -220,7 +220,7 @@ module WasteCarriersEngine
 
           it "does not update the transient registration" do
             post main_people_forms_path, main_people_form: valid_params
-            expect(transient_registration.reload.keyPeople).to_not exist
+            expect(transient_registration.reload.key_people).to_not exist
           end
 
           it "returns a 302 response" do
@@ -320,7 +320,7 @@ module WasteCarriersEngine
             let(:main_person_b) { build(:key_person, :has_required_data, :main) }
 
             before(:each) do
-              transient_registration.update_attributes(keyPeople: [main_person_a, main_person_b])
+              transient_registration.update_attributes(key_people: [main_person_a, main_person_b])
             end
 
             context "when the delete person action is triggered" do
@@ -334,20 +334,20 @@ module WasteCarriersEngine
                 expect(response).to redirect_to(new_main_people_form_path(transient_registration[:reg_identifier]))
               end
 
-              it "reduces the number of keyPeople" do
-                key_people_count = transient_registration.keyPeople.count
+              it "reduces the number of key_people" do
+                key_people_count = transient_registration.key_people.count
                 delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
-                expect(transient_registration.reload.keyPeople.count).to eq(key_people_count - 1)
+                expect(transient_registration.reload.key_people.count).to eq(key_people_count - 1)
               end
 
               it "removes the main person" do
                 delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
-                expect(transient_registration.reload.keyPeople.where(id: main_person_a[:id]).count).to eq(0)
+                expect(transient_registration.reload.key_people.where(id: main_person_a[:id]).count).to eq(0)
               end
 
-              it "does not modify the other keyPeople" do
+              it "does not modify the other key_people" do
                 delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
-                expect(transient_registration.reload.keyPeople.where(id: main_person_b[:id]).count).to eq(1)
+                expect(transient_registration.reload.key_people.where(id: main_person_b[:id]).count).to eq(1)
               end
             end
           end

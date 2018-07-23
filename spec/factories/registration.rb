@@ -19,7 +19,7 @@ FactoryBot.define do
          build(:address, :has_required_data, :registered, :from_os_places)]
       end
 
-      keyPeople do
+      key_people do
         [build(:key_person, :has_required_data, :main),
          build(:key_person, :has_required_data, :relevant)]
       end
@@ -43,7 +43,7 @@ FactoryBot.define do
          build(:address, :has_required_data, :registered, :manual_foreign)]
       end
 
-      keyPeople do
+      key_people do
         [build(:key_person, :has_required_data, :main),
          build(:key_person, :has_required_data, :relevant)]
       end

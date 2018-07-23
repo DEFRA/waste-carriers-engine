@@ -91,7 +91,7 @@ module WasteCarriersEngine
                                                   "constructionWaste",
                                                   "onlyAMF",
                                                   "addresses",
-                                                  "keyPeople",
+                                                  "key_people",
                                                   "financeDetails",
                                                   "declaredConvictions",
                                                   "convictionSearchResult",

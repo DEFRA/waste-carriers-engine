@@ -7,14 +7,14 @@ module WasteCarriersEngine
     included do
       embeds_one :metaData,               class_name: "WasteCarriersEngine::MetaData"
       embeds_many :addresses,             class_name: "WasteCarriersEngine::Address"
-      embeds_many :keyPeople,             class_name: "WasteCarriersEngine::KeyPerson"
+      embeds_many :key_people,            class_name: "WasteCarriersEngine::KeyPerson"
       embeds_one :finance_details,        class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
       embeds_one :convictionSearchResult, class_name: "WasteCarriersEngine::ConvictionSearchResult"
       embeds_many :conviction_sign_offs,  class_name: "WasteCarriersEngine::ConvictionSignOff"
 
       accepts_nested_attributes_for :metaData,
                                     :addresses,
-                                    :keyPeople,
+                                    :key_people,
                                     :finance_details,
                                     :convictionSearchResult,
                                     :conviction_sign_offs
@@ -55,13 +55,13 @@ module WasteCarriersEngine
       end
 
       def main_people
-        return [] unless keyPeople.present?
-        keyPeople.where(person_type: "key")
+        return [] unless key_people.present?
+        key_people.where(person_type: "key")
       end
 
       def relevant_people
-        return [] unless keyPeople.present?
-        keyPeople.where(person_type: "relevant")
+        return [] unless key_people.present?
+        key_people.where(person_type: "relevant")
       end
 
       def conviction_check_required?
@@ -76,9 +76,9 @@ module WasteCarriersEngine
       end
 
       def key_person_has_matching_or_unknown_conviction?
-        return true unless keyPeople.present?
+        return true unless key_people.present?
 
-        conviction_search_results = keyPeople.map(&:convictionSearchResult)
+        conviction_search_results = key_people.map(&:convictionSearchResult)
         match_results = conviction_search_results.map(&:match_result)
 
         match_results.include?("YES") || match_results.include?("UNKNOWN")

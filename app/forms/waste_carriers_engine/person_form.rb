@@ -18,7 +18,7 @@ module WasteCarriersEngine
       self.dob = new_person.dob
 
       attributes = if fields_have_content?
-                     { keyPeople: all_people }
+                     { key_people: all_people }
                    else
                      {}
                    end

@@ -287,13 +287,13 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#keyPeople" do
+    describe "#key_people" do
       context "when a registration has one key person" do
         let(:key_person) { build(:key_person, :has_required_data) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                keyPeople: [key_person])
+                key_people: [key_person])
         end
 
         it "is valid" do
@@ -307,7 +307,7 @@ module WasteCarriersEngine
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                keyPeople: [key_person_a,
+                key_people: [key_person_a,
                             key_person_b])
         end
 
@@ -323,7 +323,7 @@ module WasteCarriersEngine
           let(:registration) do
             build(:registration,
                   :has_required_data,
-                  keyPeople: [key_person])
+                  key_people: [key_person])
           end
 
           it "is valid" do

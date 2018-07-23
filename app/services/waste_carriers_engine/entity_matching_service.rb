@@ -12,7 +12,7 @@ module WasteCarriersEngine
     end
 
     def check_people_for_matches
-      @transient_registration.keyPeople.each do |person|
+      @transient_registration.key_people.each do |person|
         url = person_url(person)
         data = query_service(url)
         store_match_result(person, data)

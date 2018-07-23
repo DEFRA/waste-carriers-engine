@@ -18,6 +18,6 @@
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.singular("finance_details", "finance_details")
   inflect.singular("financeDetails", "financeDetails")
-  inflect.plural("keyPerson", "keyPeople")
+  inflect.plural("key_person", "key_people")
   inflect.singular("metaData", "metaData")
 end

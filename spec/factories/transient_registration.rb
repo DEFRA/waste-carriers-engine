@@ -14,7 +14,7 @@ FactoryBot.define do
     end
 
     trait :has_key_people do
-      keyPeople do
+      key_people do
         [build(:key_person, :has_required_data, :unmatched_conviction_search_result, :main),
          build(:key_person, :has_required_data, :unmatched_conviction_search_result, :relevant)]
       end
@@ -61,7 +61,7 @@ FactoryBot.define do
       company_name "Test Waste Services"
       company_no "12345678"
 
-      keyPeople do
+      key_people do
         [build(:key_person, :has_matching_conviction, :main)]
       end
     end

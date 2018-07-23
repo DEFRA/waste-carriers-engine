@@ -47,7 +47,7 @@ module WasteCarriersEngine
 
         context "when the transient registration already has enough people with convictions" do
           before(:each) do
-            conviction_details_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :relevant)])
+            conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :relevant)])
           end
 
           it "should submit" do
@@ -57,7 +57,7 @@ module WasteCarriersEngine
 
         context "when the transient registration does not have enough people with convictions" do
           before(:each) do
-            conviction_details_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :main)])
+            conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :main)])
           end
 
           it "should not submit" do

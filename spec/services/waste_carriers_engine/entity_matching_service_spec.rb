@@ -41,7 +41,7 @@ module WasteCarriersEngine
         it "creates a valid convictionSearchResult for the person" do
           VCR.use_cassette("entity_matching_person_has_matches") do
             entity_matching_service.check_people_for_matches
-            expect(transient_registration.reload.keyPeople.first.convictionSearchResult.match_result).to eq("YES")
+            expect(transient_registration.reload.key_people.first.convictionSearchResult.match_result).to eq("YES")
           end
         end
       end
@@ -56,7 +56,7 @@ module WasteCarriersEngine
         it "creates a valid convictionSearchResult for the person" do
           VCR.use_cassette("entity_matching_person_no_matches") do
             entity_matching_service.check_people_for_matches
-            expect(transient_registration.reload.keyPeople.first.convictionSearchResult.match_result).to eq("NO")
+            expect(transient_registration.reload.key_people.first.convictionSearchResult.match_result).to eq("NO")
           end
         end
       end
@@ -68,7 +68,7 @@ module WasteCarriersEngine
 
         it "creates a new convictionSearchResult" do
           entity_matching_service.check_people_for_matches
-          expect(transient_registration.reload.keyPeople.first.convictionSearchResult.match_result).to eq("UNKNOWN")
+          expect(transient_registration.reload.key_people.first.convictionSearchResult.match_result).to eq("UNKNOWN")
         end
       end
 
@@ -79,7 +79,7 @@ module WasteCarriersEngine
             stub_request(:any, /.*#{host}.*/).to_timeout
 
             entity_matching_service.check_people_for_matches
-            expect(transient_registration.reload.keyPeople.first.convictionSearchResult.match_result).to eq("UNKNOWN")
+            expect(transient_registration.reload.key_people.first.convictionSearchResult.match_result).to eq("UNKNOWN")
           end
         end
       end
@@ -91,7 +91,7 @@ module WasteCarriersEngine
             stub_request(:any, /.*#{host}.*/).to_raise(Errno::ECONNREFUSED)
 
             entity_matching_service.check_people_for_matches
-            expect(transient_registration.reload.keyPeople.first.convictionSearchResult.match_result).to eq("UNKNOWN")
+            expect(transient_registration.reload.key_people.first.convictionSearchResult.match_result).to eq("UNKNOWN")
           end
         end
       end
@@ -103,7 +103,7 @@ module WasteCarriersEngine
             stub_request(:any, /.*#{host}.*/).to_raise(SocketError)
 
             entity_matching_service.check_people_for_matches
-            expect(transient_registration.reload.keyPeople.first.convictionSearchResult.match_result).to eq("UNKNOWN")
+            expect(transient_registration.reload.key_people.first.convictionSearchResult.match_result).to eq("UNKNOWN")
           end
         end
       end

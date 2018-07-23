@@ -30,17 +30,17 @@ module WasteCarriersEngine
       self.dob_year = @transient_registration.main_people.first.dob_year
     end
 
-    # Adding the new main person directly to @transient_registration.keyPeople immediately updates the object,
+    # Adding the new main person directly to @transient_registration.key_people immediately updates the object,
     # regardless of validation. So instead we copy all existing people into a new array and modify that.
     def list_of_people_to_keep
       people = []
 
       # If there's only one main person allowed, we want to discard any existing main people, but keep people with
-      # relevant convictions. Otherwise, we copy all the keyPeople, regardless of type.
+      # relevant convictions. Otherwise, we copy all the key_people, regardless of type.
       existing_people = if can_only_have_one_main_person?
                           @transient_registration.relevant_people
                         else
-                          @transient_registration.keyPeople
+                          @transient_registration.key_people
                         end
 
       existing_people.each do |person|

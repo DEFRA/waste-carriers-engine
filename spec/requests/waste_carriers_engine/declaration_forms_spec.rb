@@ -44,7 +44,7 @@ module WasteCarriersEngine
 
           it "creates a new convictionSearchResult for the key people" do
             post declaration_forms_path, declaration_form: params
-            expect(transient_registration.reload.keyPeople.first.convictionSearchResult).to_not eq(nil)
+            expect(transient_registration.reload.key_people.first.convictionSearchResult).to_not eq(nil)
           end
         end
       end
