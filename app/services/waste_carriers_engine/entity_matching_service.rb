@@ -76,7 +76,7 @@ module WasteCarriersEngine
     def person_url(person)
       first_name = person.first_name
       last_name = person.last_name
-      date_of_birth = person.date_of_birth.to_s(:entity_matching)
+      date_of_birth = person.dob.to_s(:entity_matching)
       "#{base_url}person?firstname=#{first_name}&lastname=#{last_name}&dateofbirth=#{date_of_birth}"
     end
   end

@@ -277,14 +277,14 @@ module WasteCarriersEngine
         end
       end
 
-      describe "#date_of_birth" do
-        context "when a date_of_birth meets the requirements" do
+      describe "#dob" do
+        context "when a dob meets the requirements" do
           it "is valid" do
             expect(main_people_form).to be_valid
           end
         end
 
-        context "when all the date of birth fields are empty" do
+        context "when all the dob fields are empty" do
           before(:each) do
             main_people_form.dob_day = ""
             main_people_form.dob_month = ""
@@ -296,9 +296,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when a date of birth is not a valid date" do
+        context "when a dob is not a valid date" do
           before(:each) do
-            main_people_form.date_of_birth = nil
+            main_people_form.dob = nil
           end
 
           it "is not valid" do
@@ -312,12 +312,12 @@ module WasteCarriersEngine
           end
 
           it "should be valid when at the age limit" do
-            main_people_form.date_of_birth = Date.today - age_limit.years
+            main_people_form.dob = Date.today - age_limit.years
             expect(main_people_form).to be_valid
           end
 
           it "should not be valid when under the age limit" do
-            main_people_form.date_of_birth = Date.today - (age_limit.years - 1.year)
+            main_people_form.dob = Date.today - (age_limit.years - 1.year)
             expect(main_people_form).to_not be_valid
           end
         end

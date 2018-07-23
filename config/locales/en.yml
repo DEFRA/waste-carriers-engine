@@ -10,9 +10,9 @@ en:
     shared:
       back:
         back_link: Back
-      date_of_birth:
-        date_of_birth: Date of birth
-        date_of_birth_hint: For example, 26 5 1976
+      dob:
+        dob: Date of birth
+        dob_hint: For example, 26 5 1976
         dob_year: Year
         dob_month: Month
         dob_day: Day

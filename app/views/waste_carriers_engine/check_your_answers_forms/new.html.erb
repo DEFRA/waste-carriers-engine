@@ -79,7 +79,7 @@
       <% @check_your_answers_form.main_people.each do |person| %>
         <ul class="list">
           <li><%= person.first_name %> <%= person.last_name %></li>
-          <li><%= person.date_of_birth.to_date %></li>
+          <li><%= person.dob.to_date %></li>
         </ul>
       <% end %>
 
@@ -94,7 +94,7 @@
           <ul class="list">
             <li><%= person.first_name %> <%= person.last_name %></li>
             <li><%= person.position %></li>
-            <li><%= person.date_of_birth.to_date %></li>
+            <li><%= person.dob.to_date %></li>
           </ul>
         <% end %>
       <% end %>
