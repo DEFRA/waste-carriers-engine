@@ -10,17 +10,17 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1530693744">
-              <description>Your Waste Carrier Registration CBDU1336</description>
+            <order orderCode="1532335094">
+              <description>Your Waste Carrier Registration CBDU594</description>
               <amount currencyCode="GBP" value="11000" exponent="2"/>
-              <orderContent>Waste Carrier Registration renewal: CBDU1336 for Acme Waste</orderContent>
+              <orderContent>Waste Carrier Registration renewal: CBDU594 for Acme Waste</orderContent>
               <paymentMethodMask>
                 <include code="VISA-SSL"/>
                 <include code="MAESTRO-SSL"/>
                 <include code="ECMC-SSL"/>
               </paymentMethodMask>
               <shopper>
-                <shopperEmailAddress>user751@example.com</shopperEmailAddress>
+                <shopperEmailAddress>user378@example.com</shopperEmailAddress>
               </shopper>
               <billingAddress>
                 <address>
@@ -55,7 +55,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 04 Jul 2018 08:42:30 GMT
+      - Mon, 23 Jul 2018 08:38:19 GMT
       Server:
       - Apache
       Content-Length:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1530693744"><reference id="3103672130">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1530693744</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1532335094"><reference id="3105528011">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1532335094</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Wed, 04 Jul 2018 08:42:24 GMT
+  recorded_at: Mon, 23 Jul 2018 08:38:14 GMT
 recorded_with: VCR 4.0.0
