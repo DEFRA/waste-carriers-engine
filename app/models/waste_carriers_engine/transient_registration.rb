@@ -94,7 +94,7 @@ module WasteCarriersEngine
                                                   "key_people",
                                                   "financeDetails",
                                                   "declaredConvictions",
-                                                  "convictionSearchResult",
+                                                  "conviction_search_result",
                                                   "conviction_sign_offs",
                                                   "declaration",
                                                   "past_registrations")

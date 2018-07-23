@@ -19,21 +19,21 @@ module WasteCarriersEngine
         context "when there are no convictions" do
           before(:each) { transient_registration.declared_convictions = false }
 
-          context "when the convictionSearchResults have no matches" do
+          context "when the conviction_search_results have no matches" do
             it "changes to :renewal_complete_form after the 'next' event" do
               expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_complete_form).on_event(:next)
             end
           end
 
-          context "when the convictionSearchResult has a match" do
-            before(:each) { transient_registration.convictionSearchResult = build(:convictionSearchResult, :match_result_yes) }
+          context "when the conviction_search_result has a match" do
+            before(:each) { transient_registration.conviction_search_result = build(:conviction_search_result, :match_result_yes) }
 
             it "changes to :renewal_received_form after the 'next' event" do
               expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_received_form).on_event(:next)
             end
           end
 
-          context "when a keyPerson's convictionSearchResult has a match" do
+          context "when a keyPerson's conviction_search_result has a match" do
             before(:each) { transient_registration.key_people << build(:key_person, :main, :matched_conviction_search_result) }
 
             it "changes to :renewal_received_form after the 'next' event" do

@@ -5,18 +5,18 @@ module WasteCarriersEngine
     include Mongoid::Document
 
     included do
-      embeds_one :metaData,               class_name: "WasteCarriersEngine::MetaData"
-      embeds_many :addresses,             class_name: "WasteCarriersEngine::Address"
-      embeds_many :key_people,            class_name: "WasteCarriersEngine::KeyPerson"
-      embeds_one :finance_details,        class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
-      embeds_one :convictionSearchResult, class_name: "WasteCarriersEngine::ConvictionSearchResult"
-      embeds_many :conviction_sign_offs,  class_name: "WasteCarriersEngine::ConvictionSignOff"
+      embeds_one :metaData,                 class_name: "WasteCarriersEngine::MetaData"
+      embeds_many :addresses,               class_name: "WasteCarriersEngine::Address"
+      embeds_many :key_people,              class_name: "WasteCarriersEngine::KeyPerson"
+      embeds_one :finance_details,          class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
+      embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
+      embeds_many :conviction_sign_offs,    class_name: "WasteCarriersEngine::ConvictionSignOff"
 
       accepts_nested_attributes_for :metaData,
                                     :addresses,
                                     :key_people,
                                     :finance_details,
-                                    :convictionSearchResult,
+                                    :conviction_search_result,
                                     :conviction_sign_offs
 
       field :uuid,                                            type: String
@@ -70,15 +70,15 @@ module WasteCarriersEngine
       end
 
       def business_has_matching_or_unknown_conviction?
-        return true unless convictionSearchResult.present?
-        return false if convictionSearchResult.match_result == "NO"
+        return true unless conviction_search_result.present?
+        return false if conviction_search_result.match_result == "NO"
         true
       end
 
       def key_person_has_matching_or_unknown_conviction?
         return true unless key_people.present?
 
-        conviction_search_results = key_people.map(&:convictionSearchResult)
+        conviction_search_results = key_people.map(&:conviction_search_result)
         match_results = conviction_search_results.map(&:match_result)
 
         match_results.include?("YES") || match_results.include?("UNKNOWN")

@@ -36,7 +36,7 @@ FactoryBot.define do
     end
 
     trait :has_conviction_search_result do
-      convictionSearchResult { build(:convictionSearchResult, :match_result_no) }
+      conviction_search_result { build(:conviction_search_result, :match_result_no) }
     end
 
     # Overseas registrations

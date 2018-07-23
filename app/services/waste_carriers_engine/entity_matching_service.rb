@@ -50,7 +50,7 @@ module WasteCarriersEngine
     end
 
     def store_match_result(entity, data)
-      entity.convictionSearchResult = ConvictionSearchResult.new_from_entity_matching_service(data)
+      entity.conviction_search_result = ConvictionSearchResult.new_from_entity_matching_service(data)
       entity.save!
     end
 

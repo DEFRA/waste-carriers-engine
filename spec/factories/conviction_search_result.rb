@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :convictionSearchResult, class: WasteCarriersEngine::ConvictionSearchResult do
+  factory :conviction_search_result, class: WasteCarriersEngine::ConvictionSearchResult do
     trait :match_result_yes do
       match_result "YES"
     end

@@ -132,13 +132,13 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#convictionSearchResult" do
-      context "when a registration has a convictionSearchResult" do
-        let(:conviction_search_result) { build(:convictionSearchResult) }
+    describe "#conviction_search_result" do
+      context "when a registration has a conviction_search_result" do
+        let(:conviction_search_result) { build(:conviction_search_result) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
-                convictionSearchResult: conviction_search_result)
+                conviction_search_result: conviction_search_result)
         end
 
         it "is valid" do
@@ -316,10 +316,10 @@ module WasteCarriersEngine
         end
       end
 
-      describe "#convictionSearchResult" do
-        context "when a registration's key person has a convictionSearchResult" do
-          let(:conviction_search_result) { build(:convictionSearchResult) }
-          let(:key_person) { build(:key_person, :has_required_data, convictionSearchResult: conviction_search_result) }
+      describe "#conviction_search_result" do
+        context "when a registration's key person has a conviction_search_result" do
+          let(:conviction_search_result) { build(:conviction_search_result) }
+          let(:key_person) { build(:key_person, :has_required_data, conviction_search_result: conviction_search_result) }
           let(:registration) do
             build(:registration,
                   :has_required_data,
