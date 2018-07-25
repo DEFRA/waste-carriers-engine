@@ -1,16 +1,16 @@
-<% if form.errors[:date_of_birth].any? %>
+<% if form.errors[:dob].any? %>
 <div class="form-group form-group-error">
 <% else %>
 <div class="form-group">
 <% end %>
-  <fieldset id="date_of_birth">
-    <% if form.errors[:date_of_birth].any? %>
-      <span class="error-message"><%= form.errors[:date_of_birth].join(". ") %></span>
+  <fieldset id="dob">
+    <% if form.errors[:dob].any? %>
+      <span class="error-message"><%= form.errors[:dob].join(". ") %></span>
     <% end %>
 
     <legend>
-      <%= t(".date_of_birth") %>
-      <span class="form-hint"><%= t(".date_of_birth_hint") %></span>
+      <%= t(".dob") %>
+      <span class="form-hint"><%= t(".dob_hint") %></span>
     </legend>
 
     <fieldset id="dob_day" class="inline-date">

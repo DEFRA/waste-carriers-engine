@@ -4,16 +4,16 @@ module WasteCarriersEngine
 
     embedded_in :registration,      class_name: "WasteCarriersEngine::Registration"
     embedded_in :past_registration, class_name: "WasteCarriersEngine::PastRegistration"
-    embedded_in :keyPerson,         class_name: "WasteCarriersEngine::KeyPerson"
+    embedded_in :key_person,         class_name: "WasteCarriersEngine::KeyPerson"
 
-    field :matchResult, as: :match_result,        type: String
-    field :matchingSystem, as: :matching_system,  type: String
-    field :reference,                             type: String
-    field :matchedName, as: :matched_name,        type: String
-    field :searchedAt, as: :searched_at,          type: DateTime
-    field :confirmed,                             type: String
-    field :confirmedAt, as: :confirmed_at,        type: DateTime
-    field :confirmedBy, as: :confirmed_by,        type: String
+    field :match_result,    type: String
+    field :matching_system, type: String
+    field :reference,       type: String
+    field :matched_name,    type: String
+    field :searched_at,     type: DateTime
+    field :confirmed,       type: String
+    field :confirmed_at,    type: DateTime
+    field :confirmed_by,    type: String
 
     def self.new_from_entity_matching_service(data)
       result = ConvictionSearchResult.new

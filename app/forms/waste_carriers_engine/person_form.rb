@@ -1,6 +1,6 @@
 module WasteCarriersEngine
   class PersonForm < BaseForm
-    attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :date_of_birth
+    attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :dob
     attr_accessor :new_person
 
     def initialize(transient_registration)
@@ -15,10 +15,10 @@ module WasteCarriersEngine
       process_date_fields(params)
 
       self.new_person = set_up_new_person
-      self.date_of_birth = new_person.date_of_birth
+      self.dob = new_person.dob
 
       attributes = if fields_have_content?
-                     { keyPeople: all_people }
+                     { key_people: all_people }
                    else
                      {}
                    end
@@ -82,11 +82,11 @@ module WasteCarriersEngine
     end
 
     def old_enough?
-      return false unless date_of_birth.present?
+      return false unless dob.present?
 
-      return true if date_of_birth < age_cutoff_date
+      return true if dob < age_cutoff_date
 
-      errors.add(:date_of_birth, age_limit_error_message)
+      errors.add(:dob, age_limit_error_message)
       false
     end
 

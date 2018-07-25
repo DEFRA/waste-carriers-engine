@@ -16,7 +16,7 @@ module WasteCarriersEngine
     def all_fields_empty?(record)
       fields = [record.dob_day, record.dob_month, record.dob_year].compact
       return false if fields.any?
-      record.errors.add(:date_of_birth, :not_a_date)
+      record.errors.add(:dob, :not_a_date)
       true
     end
 
@@ -41,14 +41,14 @@ module WasteCarriersEngine
     def field_present?(record, type, field)
       return true unless field.blank?
       error_message = "#{type}_blank".to_sym
-      record.errors.add(:date_of_birth, error_message)
+      record.errors.add(:dob, error_message)
       false
     end
 
     def field_is_integer?(record, type, field)
       return true if field.is_a? Integer
       error_message = "#{type}_integer".to_sym
-      record.errors.add(:date_of_birth, error_message)
+      record.errors.add(:dob, error_message)
       false
     end
 
@@ -61,13 +61,13 @@ module WasteCarriersEngine
 
       return true if ranges[type].include?(field)
       error_message = "#{type}_range".to_sym
-      record.errors.add(:date_of_birth, error_message)
+      record.errors.add(:dob, error_message)
       false
     end
 
     def dob_is_a_date?(record)
-      return true if record.date_of_birth.is_a? Date
-      record.errors.add(:date_of_birth, :not_a_date)
+      return true if record.dob.is_a? Date
+      record.errors.add(:dob, :not_a_date)
       false
     end
   end

@@ -47,7 +47,7 @@ module WasteCarriersEngine
 
         context "when the transient registration already has enough people with convictions" do
           before(:each) do
-            conviction_details_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :relevant)])
+            conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :relevant)])
           end
 
           it "should submit" do
@@ -57,7 +57,7 @@ module WasteCarriersEngine
 
         context "when the transient registration does not have enough people with convictions" do
           before(:each) do
-            conviction_details_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :main)])
+            conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :main)])
           end
 
           it "should not submit" do
@@ -268,14 +268,14 @@ module WasteCarriersEngine
         end
       end
 
-      describe "#date_of_birth" do
-        context "when a date_of_birth meets the requirements" do
+      describe "#dob" do
+        context "when a dob meets the requirements" do
           it "is valid" do
             expect(conviction_details_form).to be_valid
           end
         end
 
-        context "when all the date of birth fields are empty" do
+        context "when all the dob fields are empty" do
           before(:each) do
             conviction_details_form.dob_day = ""
             conviction_details_form.dob_month = ""
@@ -287,9 +287,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when a date of birth is not a valid date" do
+        context "when a dob is not a valid date" do
           before(:each) do
-            conviction_details_form.date_of_birth = nil
+            conviction_details_form.dob = nil
           end
 
           it "is not valid" do
@@ -297,9 +297,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the date of birth is below the age limit" do
+        context "when the dob is below the age limit" do
           before(:each) do
-            conviction_details_form.date_of_birth = Date.today
+            conviction_details_form.dob = Date.today
           end
 
           it "should not be valid" do

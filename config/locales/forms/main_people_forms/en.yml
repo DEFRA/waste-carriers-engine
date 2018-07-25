@@ -36,7 +36,7 @@ en:
             last_name:
               blank: "You must enter a last name"
               too_long: "The last name must be no longer than 35 characters"
-            date_of_birth:
+            dob:
               age_limit_localAuthority: "Chief executives must be 17 or older"
               age_limit_limitedCompany: "Directors must be 16 or older to be a director of a private limited company in the UK"
               age_limit_limitedLiabilityPartnership: "Partners must be 17 or older"

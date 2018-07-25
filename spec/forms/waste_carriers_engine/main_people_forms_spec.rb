@@ -45,7 +45,7 @@ module WasteCarriersEngine
 
         context "when the transient registration already has enough main people" do
           before(:each) do
-            main_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :main)])
+            main_people_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :main)])
             main_people_form.business_type = "overseas"
           end
 
@@ -56,7 +56,7 @@ module WasteCarriersEngine
 
         context "when the transient registration does not have enough main people" do
           before(:each) do
-            main_people_form.transient_registration.update_attributes(keyPeople: [build(:key_person, :has_required_data, :main)])
+            main_people_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :main)])
             main_people_form.business_type = "partnership"
           end
 
@@ -73,32 +73,32 @@ module WasteCarriersEngine
           create(:transient_registration,
                  :has_required_data,
                  business_type: "soleTrader",
-                 keyPeople: [build(:key_person, :has_required_data, :main)])
+                 key_people: [build(:key_person, :has_required_data, :main)])
         end
         let(:main_people_form) { MainPeopleForm.new(transient_registration) }
 
         it "should prefill the first_name" do
-          first_name = transient_registration.keyPeople.first.first_name
+          first_name = transient_registration.key_people.first.first_name
           expect(main_people_form.first_name).to eq(first_name)
         end
 
         it "should prefill the last_name" do
-          last_name = transient_registration.keyPeople.first.last_name
+          last_name = transient_registration.key_people.first.last_name
           expect(main_people_form.last_name).to eq(last_name)
         end
 
         it "should prefill the dob_day" do
-          dob_day = transient_registration.keyPeople.first.dob_day
+          dob_day = transient_registration.key_people.first.dob_day
           expect(main_people_form.dob_day).to eq(dob_day)
         end
 
         it "should prefill the dob_month" do
-          dob_month = transient_registration.keyPeople.first.dob_month
+          dob_month = transient_registration.key_people.first.dob_month
           expect(main_people_form.dob_month).to eq(dob_month)
         end
 
         it "should prefill the dob_year" do
-          dob_year = transient_registration.keyPeople.first.dob_year
+          dob_year = transient_registration.key_people.first.dob_year
           expect(main_people_form.dob_year).to eq(dob_year)
         end
       end
@@ -277,14 +277,14 @@ module WasteCarriersEngine
         end
       end
 
-      describe "#date_of_birth" do
-        context "when a date_of_birth meets the requirements" do
+      describe "#dob" do
+        context "when a dob meets the requirements" do
           it "is valid" do
             expect(main_people_form).to be_valid
           end
         end
 
-        context "when all the date of birth fields are empty" do
+        context "when all the dob fields are empty" do
           before(:each) do
             main_people_form.dob_day = ""
             main_people_form.dob_month = ""
@@ -296,9 +296,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when a date of birth is not a valid date" do
+        context "when a dob is not a valid date" do
           before(:each) do
-            main_people_form.date_of_birth = nil
+            main_people_form.dob = nil
           end
 
           it "is not valid" do
@@ -312,12 +312,12 @@ module WasteCarriersEngine
           end
 
           it "should be valid when at the age limit" do
-            main_people_form.date_of_birth = Date.today - age_limit.years
+            main_people_form.dob = Date.today - age_limit.years
             expect(main_people_form).to be_valid
           end
 
           it "should not be valid when under the age limit" do
-            main_people_form.date_of_birth = Date.today - (age_limit.years - 1.year)
+            main_people_form.dob = Date.today - (age_limit.years - 1.year)
             expect(main_people_form).to_not be_valid
           end
         end

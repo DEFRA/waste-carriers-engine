@@ -12,7 +12,7 @@ module WasteCarriersEngine
     end
 
     def check_people_for_matches
-      @transient_registration.keyPeople.each do |person|
+      @transient_registration.key_people.each do |person|
         url = person_url(person)
         data = query_service(url)
         store_match_result(person, data)
@@ -50,7 +50,7 @@ module WasteCarriersEngine
     end
 
     def store_match_result(entity, data)
-      entity.convictionSearchResult = ConvictionSearchResult.new_from_entity_matching_service(data)
+      entity.conviction_search_result = ConvictionSearchResult.new_from_entity_matching_service(data)
       entity.save!
     end
 
@@ -76,7 +76,7 @@ module WasteCarriersEngine
     def person_url(person)
       first_name = person.first_name
       last_name = person.last_name
-      date_of_birth = person.date_of_birth.to_s(:entity_matching)
+      date_of_birth = person.dob.to_s(:entity_matching)
       "#{base_url}person?firstname=#{first_name}&lastname=#{last_name}&dateofbirth=#{date_of_birth}"
     end
   end

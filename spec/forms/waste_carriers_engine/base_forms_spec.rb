@@ -13,7 +13,7 @@ module WasteCarriersEngine
       end
 
       it "should strip excess whitespace from attributes within an array" do
-        attributes = { keyPeople: [build(:key_person, :main, first_name: " test ")] }
+        attributes = { key_people: [build(:key_person, :main, first_name: " test ")] }
 
         base_form.submit(attributes, base_form.reg_identifier)
         expect(base_form.transient_registration.main_people.first.first_name).to eq("test")
