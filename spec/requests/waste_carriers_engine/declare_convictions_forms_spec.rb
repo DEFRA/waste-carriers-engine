@@ -6,10 +6,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      form = "declare_convictions_form",
-                     valid_params = { declared_convictions: "true" },
+                     valid_params = { declared_convictions: "yes" },
                      invalid_params = { declared_convictions: "foo" },
-                     test_attribute = :declared_convictions,
-                     expected_value = true
+                     test_attribute = :declared_convictions
 
     describe "GET back_declare_convictions_forms_path" do
       context "when a valid user is signed in" do

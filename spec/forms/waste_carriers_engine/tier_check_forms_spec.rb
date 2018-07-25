@@ -8,7 +8,7 @@ module WasteCarriersEngine
         let(:valid_params) do
           {
             reg_identifier: tier_check_form.reg_identifier,
-            temp_tier_check: "false"
+            temp_tier_check: tier_check_form.temp_tier_check
           }
         end
 

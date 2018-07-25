@@ -6,10 +6,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      form = "service_provided_form",
-                     valid_params = { is_main_service: "true" },
+                     valid_params = { is_main_service: "yes" },
                      invalid_params = { is_main_service: "foo" },
-                     test_attribute = :is_main_service,
-                     expected_value = true
+                     test_attribute = :is_main_service
 
     describe "GET back_service_provided_forms_path" do
       context "when a valid user is signed in" do

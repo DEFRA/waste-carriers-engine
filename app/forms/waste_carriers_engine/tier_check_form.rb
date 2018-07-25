@@ -11,7 +11,7 @@ module WasteCarriersEngine
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
-      self.temp_tier_check = convert_to_boolean(params[:temp_tier_check])
+      self.temp_tier_check = params[:temp_tier_check]
       attributes = { temp_tier_check: temp_tier_check }
 
       super(attributes, params[:reg_identifier])

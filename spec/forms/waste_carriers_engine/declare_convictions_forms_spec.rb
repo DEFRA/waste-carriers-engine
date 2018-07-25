@@ -8,7 +8,7 @@ module WasteCarriersEngine
         let(:valid_params) do
           {
             reg_identifier: declare_convictions_form.reg_identifier,
-            declared_convictions: "false"
+            declared_convictions: declare_convictions_form.declared_convictions
           }
         end
 

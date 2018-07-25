@@ -66,8 +66,8 @@ en:
             other: Business or organisation owners
         subheading_7: Relevant convictions
         declared_convictions:
-          "true": You told us you have relevant people with convictions in your business or organisation.
-          "false": You told us there are no relevant people with convictions in your business or organisation.
+          "yes": You told us you have relevant people with convictions in your business or organisation.
+          "no": You told us there are no relevant people with convictions in your business or organisation.
         subheading_8: Contact details
         next_button: Continue
   activemodel:

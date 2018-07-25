@@ -487,9 +487,9 @@ module WasteCarriersEngine
     end
 
     def switch_to_lower_tier_based_on_smart_answers?
-      return true if other_businesses == false && construction_waste == false
-      return true if other_businesses == true && is_main_service == false && construction_waste == false
-      return true if other_businesses == true && is_main_service == true && only_amf == true
+      return true if other_businesses == "no" && construction_waste == "no"
+      return true if other_businesses == "yes" && is_main_service == "no" && construction_waste == "no"
+      return true if other_businesses == "yes" && is_main_service == "yes" && only_amf == "yes"
       false
     end
 
@@ -498,15 +498,15 @@ module WasteCarriersEngine
     end
 
     def skip_tier_check?
-      temp_tier_check == false
+      temp_tier_check == "no"
     end
 
     def only_carries_own_waste?
-      other_businesses == false
+      other_businesses == "no"
     end
 
     def waste_is_main_service?
-      is_main_service == true
+      is_main_service == "yes"
     end
 
     def based_overseas?
@@ -540,7 +540,7 @@ module WasteCarriersEngine
     end
 
     def declared_convictions?
-      declared_convictions == true
+      declared_convictions == "yes"
     end
 
     def paying_by_card?

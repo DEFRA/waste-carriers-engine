@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :transient_registration, class: WasteCarriersEngine::TransientRegistration do
     trait :has_required_data do
       location "england"
-      declared_convictions "false"
+      declared_convictions "no"
       temp_cards 1
 
       # Create a new registration when initializing so we can copy its data
@@ -26,7 +26,7 @@ FactoryBot.define do
     end
 
     trait :declared_convictions do
-      declared_convictions "true"
+      declared_convictions "yes"
     end
 
     trait :has_finance_details do
@@ -43,7 +43,7 @@ FactoryBot.define do
 
     trait :has_required_overseas_data do
       location "overseas"
-      declared_convictions "false"
+      declared_convictions "no"
       temp_cards 1
 
       # Create a new registration when initializing so we can copy its data

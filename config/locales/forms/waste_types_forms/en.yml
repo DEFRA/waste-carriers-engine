@@ -8,8 +8,9 @@ en:
           - Farm or agricultural waste
           - Animal by-products
           - Waste from mines or quarries
-        option_true_html: "We only deal with these types of waste"
-        option_false: "We deal with more than just the waste listed above"
+        options:
+          "yes": "We only deal with these types of waste"
+          "no": "We deal with more than just the waste listed above"
         error_heading: Something is wrong
         next_button: Continue
   activemodel:

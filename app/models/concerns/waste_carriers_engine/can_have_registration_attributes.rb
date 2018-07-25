@@ -24,10 +24,10 @@ module WasteCarriersEngine
       field :registrationType, as: :registration_type,        type: String
       field :location,                                        type: String
       field :businessType, as: :business_type,                type: String
-      field :otherBusinesses, as: :other_businesses,          type: Boolean
-      field :isMainService, as: :is_main_service,             type: Boolean
-      field :onlyAMF, as: :only_amf,                          type: Boolean
-      field :constructionWaste, as: :construction_waste,      type: Boolean
+      field :otherBusinesses, as: :other_businesses,          type: String # 'yes' or 'no' - should refactor to boolean
+      field :isMainService, as: :is_main_service,             type: String # 'yes' or 'no' - should refactor to boolean
+      field :onlyAMF, as: :only_amf,                          type: String # 'yes' or 'no' - should refactor to boolean
+      field :constructionWaste, as: :construction_waste,      type: String # 'yes' or 'no' - should refactor to boolean
       field :companyName, as: :company_name,                  type: String
       field :companyNo, as: :company_no,                      type: String # Despite its name, this can include letters
       field :firstName, as: :first_name,                      type: String
@@ -35,8 +35,8 @@ module WasteCarriersEngine
       field :phoneNumber, as: :phone_number,                  type: String
       field :contactEmail, as: :contact_email,                type: String
       field :accountEmail, as: :account_email,                type: String
-      field :declaredConvictions, as: :declared_convictions,  type: Boolean
-      field :declaration,                                     type: Integer # Unsure of type
+      field :declaredConvictions, as: :declared_convictions,  type: String # 'yes' or 'no' - should refactor to boolean
+      field :declaration,                                     type: Integer
       field :regIdentifier, as: :reg_identifier,              type: String
       field :expires_on,                                      type: DateTime
 
@@ -65,7 +65,7 @@ module WasteCarriersEngine
       end
 
       def conviction_check_required?
-        return true if declared_convictions == true
+        return true if declared_convictions == "yes"
         business_has_matching_or_unknown_conviction? || key_person_has_matching_or_unknown_conviction?
       end
 

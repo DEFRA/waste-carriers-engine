@@ -20,9 +20,9 @@ module WasteCarriersEngine
 
         context "when the tier change is because the business only deals with certain waste types" do
           before(:each) do
-            transient_registration.other_businesses = true
-            transient_registration.is_main_service = true
-            transient_registration.only_amf = true
+            transient_registration.other_businesses = "yes"
+            transient_registration.is_main_service = "yes"
+            transient_registration.only_amf = "yes"
           end
 
           it "changes to :waste_types_form after the 'back' event" do
@@ -32,8 +32,8 @@ module WasteCarriersEngine
 
         context "when the tier change is because the business doesn't deal with construction waste" do
           before(:each) do
-            transient_registration.other_businesses = false
-            transient_registration.construction_waste = false
+            transient_registration.other_businesses = "no"
+            transient_registration.construction_waste = "no"
           end
 
           it "changes to :construction_demolition_form after the 'back' event" do

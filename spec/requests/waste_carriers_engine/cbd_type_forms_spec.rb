@@ -32,7 +32,7 @@ module WasteCarriersEngine
             end
 
             context "when the business doesn't carry waste for other businesses or households" do
-              before(:each) { transient_registration.update_attributes(other_businesses: false) }
+              before(:each) { transient_registration.update_attributes(other_businesses: "no") }
 
               it "redirects to the construction_demolition form" do
                 get back_cbd_type_forms_path(transient_registration[:reg_identifier])
@@ -42,8 +42,8 @@ module WasteCarriersEngine
 
             context "when the business carries waste produced by its customers" do
               before(:each) do
-                transient_registration.update_attributes(other_businesses: true,
-                                                         is_main_service: true)
+                transient_registration.update_attributes(other_businesses: "yes",
+                                                         is_main_service: "yes")
               end
 
               it "redirects to the waste_types form" do
@@ -54,8 +54,8 @@ module WasteCarriersEngine
 
             context "when the business carries waste for other businesses but produces that waste" do
               before(:each) do
-                transient_registration.update_attributes(other_businesses: true,
-                                                         is_main_service: false)
+                transient_registration.update_attributes(other_businesses: "yes",
+                                                         is_main_service: "no")
               end
 
               it "redirects to the construction_demolition form" do

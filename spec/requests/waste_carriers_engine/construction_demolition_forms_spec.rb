@@ -6,10 +6,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      form = "construction_demolition_form",
-                     valid_params = { construction_waste: "true" },
+                     valid_params = { construction_waste: "yes" },
                      invalid_params = { construction_waste: "foo" },
-                     test_attribute = :construction_waste,
-                     expected_value = true
+                     test_attribute = :construction_waste
 
     describe "GET back_construction_demolition_forms_path" do
       context "when a valid user is signed in" do
@@ -33,7 +32,7 @@ module WasteCarriersEngine
             end
 
             context "when the business does not carry waste for other businesses or households" do
-              before(:each) { transient_registration.update_attributes(other_businesses: false) }
+              before(:each) { transient_registration.update_attributes(other_businesses: "no") }
 
               it "redirects to the other_businesses form" do
                 get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
@@ -42,7 +41,7 @@ module WasteCarriersEngine
             end
 
             context "when the business does carry waste for other businesses or households" do
-              before(:each) { transient_registration.update_attributes(other_businesses: true) }
+              before(:each) { transient_registration.update_attributes(other_businesses: "yes") }
 
               it "redirects to the service_provided form" do
                 get back_construction_demolition_forms_path(transient_registration[:reg_identifier])

@@ -11,7 +11,7 @@ module WasteCarriersEngine
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
-      self.other_businesses = convert_to_boolean(params[:other_businesses])
+      self.other_businesses = params[:other_businesses]
       attributes = { other_businesses: other_businesses }
 
       super(attributes, params[:reg_identifier])

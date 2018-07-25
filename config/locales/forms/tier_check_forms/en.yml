@@ -19,8 +19,8 @@ en:
           - item: "You ONLY deal with waste you produce in the course of carrying out your business – for example, a hairdresser dealing with hair clippings. This does not include construction or demolition waste"
           - item: "You ONLY deal with waste from mines or quarries, from agricultural premises, or animal by-products"
         options:
-          "false": I know I need an upper tier registration (continue)
-          "true": I want to check my tier is correct before renewing
+          "no": I know I need an upper tier registration (continue)
+          "yes": I want to check my tier is correct before renewing
         error_heading: Something is wrong
         next_button: Continue
   activemodel:

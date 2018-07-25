@@ -290,8 +290,8 @@ module WasteCarriersEngine
 
           context "when declared_convictions does not expect there to be people" do
             before(:each) do
-              check_your_answers_form.transient_registration.declared_convictions = false
-              check_your_answers_form.declared_convictions = false
+              check_your_answers_form.transient_registration.declared_convictions = "no"
+              check_your_answers_form.declared_convictions = "no"
             end
 
             it "is valid" do
@@ -301,8 +301,8 @@ module WasteCarriersEngine
 
           context "when declared_convictions expects there to be people" do
             before(:each) do
-              check_your_answers_form.transient_registration.declared_convictions = true
-              check_your_answers_form.declared_convictions = true
+              check_your_answers_form.transient_registration.declared_convictions = "yes"
+              check_your_answers_form.declared_convictions = "yes"
             end
 
             it "is not valid" do

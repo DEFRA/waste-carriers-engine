@@ -11,7 +11,7 @@ module WasteCarriersEngine
         end
 
         context "when the business does not carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = false }
+          before(:each) { transient_registration.other_businesses = "no" }
 
           it "transitions to :service_provided_form after the 'back' event" do
             expect(transient_registration).to transition_from(:construction_demolition_form).to(:other_businesses_form).on_event(:back)
@@ -19,7 +19,7 @@ module WasteCarriersEngine
         end
 
         context "when the business does carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = true }
+          before(:each) { transient_registration.other_businesses = "yes" }
 
           it "transitions to :service_provided_form after the 'back' event" do
             expect(transient_registration).to transition_from(:construction_demolition_form).to(:service_provided_form).on_event(:back)
@@ -28,9 +28,9 @@ module WasteCarriersEngine
 
         context "when the registration should change to lower tier" do
           before(:each) do
-            transient_registration.other_businesses = true
-            transient_registration.is_main_service = true
-            transient_registration.only_amf = true
+            transient_registration.other_businesses = "yes"
+            transient_registration.is_main_service = "yes"
+            transient_registration.only_amf = "yes"
           end
 
           it "transitions to :cannot_renew_lower_tier_form after the 'next' event" do
@@ -40,9 +40,9 @@ module WasteCarriersEngine
 
         context "when the registration should stay upper tier" do
           before(:each) do
-            transient_registration.other_businesses = true
-            transient_registration.is_main_service = true
-            transient_registration.only_amf = false
+            transient_registration.other_businesses = "yes"
+            transient_registration.is_main_service = "yes"
+            transient_registration.only_amf = "no"
           end
 
           it "transitions to :cbd_type_form after the 'next' event" do

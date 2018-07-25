@@ -15,7 +15,7 @@ module WasteCarriersEngine
         end
 
         context "when the business does not carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = false }
+          before(:each) { transient_registration.other_businesses = "no" }
 
           it "transitions to :construction_demolition_form after the 'next' event" do
             expect(transient_registration).to transition_from(:other_businesses_form).to(:construction_demolition_form).on_event(:next)
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         end
 
         context "when the business does carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = true }
+          before(:each) { transient_registration.other_businesses = "yes" }
 
           it "transitions to :service_provided_form after the 'next' event" do
             expect(transient_registration).to transition_from(:other_businesses_form).to(:service_provided_form).on_event(:next)

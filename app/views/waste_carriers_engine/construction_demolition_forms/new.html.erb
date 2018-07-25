@@ -21,12 +21,12 @@
         <% end %>
 
         <div class="multiple-choice">
-          <%= f.radio_button :construction_waste, "true" %>
-          <%= f.label :construction_waste, t(".option_true"), value: "true" %>
+          <%= f.radio_button :construction_waste, "yes" %>
+          <%= f.label :construction_waste, t(".options.yes"), value: "yes" %>
         </div>
         <div class="multiple-choice">
-          <%= f.radio_button :construction_waste, "false" %>
-          <%= f.label :construction_waste, t(".option_false"), value: "false" %>
+          <%= f.radio_button :construction_waste, "no" %>
+          <%= f.label :construction_waste, t(".options.no"), value: "no" %>
         </div>
       </fieldset>
     </div>
