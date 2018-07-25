@@ -10,7 +10,7 @@ en:
           partnership: What's the address of the partnership?
           soleTrader: What's the address of the business?
         postcode_label: Postcode
-        postcode_change_link: Change
+        postcode_change_link: "Change postcode"
         manual_address_link: "I can't find the address in the list"
         error_heading: Something is wrong
         next_button: Continue
