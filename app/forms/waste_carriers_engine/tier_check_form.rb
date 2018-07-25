@@ -17,6 +17,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :temp_tier_check, "waste_carriers_engine/boolean": true
+    validates :temp_tier_check, "waste_carriers_engine/yes_no": true
   end
 end

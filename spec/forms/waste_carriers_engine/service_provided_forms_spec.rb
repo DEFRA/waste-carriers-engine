@@ -27,6 +27,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate boolean", form = :service_provided_form, field = :is_main_service
+    include_examples "validate yes no", form = :service_provided_form, field = :is_main_service
   end
 end

@@ -27,6 +27,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate boolean", form = :other_businesses_form, field = :other_businesses
+    include_examples "validate yes no", form = :other_businesses_form, field = :other_businesses
   end
 end

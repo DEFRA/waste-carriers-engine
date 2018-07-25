@@ -27,6 +27,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate boolean", form = :construction_demolition_form, field = :construction_waste
+    include_examples "validate yes no", form = :construction_demolition_form, field = :construction_waste
   end
 end

@@ -1,5 +1,5 @@
 module WasteCarriersEngine
-  class BooleanValidator < ActiveModel::EachValidator
+  class YesNoValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       valid_values = %w[yes no]
       return true if valid_values.include?(value)

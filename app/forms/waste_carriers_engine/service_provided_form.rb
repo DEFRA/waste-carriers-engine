@@ -17,6 +17,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :is_main_service, "waste_carriers_engine/boolean": true
+    validates :is_main_service, "waste_carriers_engine/yes_no": true
   end
 end

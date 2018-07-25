@@ -27,6 +27,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate boolean", form = :tier_check_form, field = :temp_tier_check
+    include_examples "validate yes no", form = :tier_check_form, field = :temp_tier_check
   end
 end

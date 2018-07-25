@@ -50,7 +50,7 @@ module WasteCarriersEngine
     validates :company_no, "waste_carriers_engine/company_no": true
     validates :contact_address, "waste_carriers_engine/address": true
     validates :contact_email, "waste_carriers_engine/email": true
-    validates :declared_convictions, "waste_carriers_engine/boolean": true
+    validates :declared_convictions, "waste_carriers_engine/yes_no": true
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true
     validates :location, "waste_carriers_engine/location": true
     validates :phone_number, "waste_carriers_engine/phone_number": true

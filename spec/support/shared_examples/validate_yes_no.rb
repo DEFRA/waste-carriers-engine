@@ -1,5 +1,5 @@
-# Tests for fields using the BooleanValidator
-RSpec.shared_examples "validate boolean" do |form_factory, field|
+# Tests for fields using the YesNoValidator
+RSpec.shared_examples "validate yes no" do |form_factory, field|
   context "when a valid transient registration exists" do
     let(:form) { build(form_factory, :has_required_data) }
 
