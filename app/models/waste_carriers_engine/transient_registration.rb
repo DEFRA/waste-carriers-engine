@@ -97,7 +97,8 @@ module WasteCarriersEngine
                                                   "conviction_search_result",
                                                   "conviction_sign_offs",
                                                   "declaration",
-                                                  "past_registrations")
+                                                  "past_registrations",
+                                                  "copy_cards")
 
       assign_attributes(strip_whitespace(attributes))
       remove_invalid_attributes

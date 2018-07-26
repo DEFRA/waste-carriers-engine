@@ -19,26 +19,29 @@ module WasteCarriersEngine
                                     :conviction_search_result,
                                     :conviction_sign_offs
 
-      field :uuid,                                            type: String
-      field :tier,                                            type: String
-      field :registrationType, as: :registration_type,        type: String
-      field :location,                                        type: String
-      field :businessType, as: :business_type,                type: String
-      field :otherBusinesses, as: :other_businesses,          type: String # 'yes' or 'no' - should refactor to boolean
-      field :isMainService, as: :is_main_service,             type: String # 'yes' or 'no' - should refactor to boolean
-      field :onlyAMF, as: :only_amf,                          type: String # 'yes' or 'no' - should refactor to boolean
-      field :constructionWaste, as: :construction_waste,      type: String # 'yes' or 'no' - should refactor to boolean
-      field :companyName, as: :company_name,                  type: String
-      field :companyNo, as: :company_no,                      type: String # Despite its name, this can include letters
-      field :firstName, as: :first_name,                      type: String
-      field :lastName, as: :last_name,                        type: String
-      field :phoneNumber, as: :phone_number,                  type: String
-      field :contactEmail, as: :contact_email,                type: String
-      field :accountEmail, as: :account_email,                type: String
-      field :declaredConvictions, as: :declared_convictions,  type: String # 'yes' or 'no' - should refactor to boolean
-      field :declaration,                                     type: Integer
-      field :regIdentifier, as: :reg_identifier,              type: String
-      field :expires_on,                                      type: DateTime
+      field :uuid,                                                          type: String
+      field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
+      field :originalRegistrationNumber, as: :original_registration_number, type: String # Used by waste-carriers-frontend
+      field :tier,                                                          type: String
+      field :registrationType, as: :registration_type,                      type: String
+      field :location,                                                      type: String
+      field :businessType, as: :business_type,                              type: String
+      field :otherBusinesses, as: :other_businesses,                        type: String # 'yes' or 'no' - should refactor to boolean
+      field :isMainService, as: :is_main_service,                           type: String # 'yes' or 'no' - should refactor to boolean
+      field :onlyAMF, as: :only_amf,                                        type: String # 'yes' or 'no' - should refactor to boolean
+      field :constructionWaste, as: :construction_waste,                    type: String # 'yes' or 'no' - should refactor to boolean
+      field :companyName, as: :company_name,                                type: String
+      field :companyNo, as: :company_no,                                    type: String # May include letters, despite name
+      field :firstName, as: :first_name,                                    type: String
+      field :lastName, as: :last_name,                                      type: String
+      field :phoneNumber, as: :phone_number,                                type: String
+      field :contactEmail, as: :contact_email,                              type: String
+      field :accountEmail, as: :account_email,                              type: String
+      field :declaredConvictions, as: :declared_convictions,                type: String # 'yes' or 'no' - should refactor to boolean
+      field :declaration,                                                   type: Integer # Unsure of type
+      field :regIdentifier, as: :reg_identifier,                            type: String
+      field :expires_on,                                                    type: DateTime
+      field :copy_cards,                                                    type: Integer
 
       def contact_address
         return nil unless addresses.present?
