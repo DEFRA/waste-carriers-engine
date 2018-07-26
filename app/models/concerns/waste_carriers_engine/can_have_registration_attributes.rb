@@ -41,6 +41,7 @@ module WasteCarriersEngine
       field :declaration,                                                   type: Integer # Unsure of type
       field :regIdentifier, as: :reg_identifier,                            type: String
       field :expires_on,                                                    type: DateTime
+      field :copy_cards,                                                    type: Integer
 
       def contact_address
         return nil unless addresses.present?
