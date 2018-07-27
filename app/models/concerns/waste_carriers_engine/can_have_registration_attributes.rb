@@ -22,6 +22,7 @@ module WasteCarriersEngine
       field :uuid,                                                          type: String
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :originalRegistrationNumber, as: :original_registration_number, type: String # Used by waste-carriers-frontend
+      field :originalDateExpiry, as: :original_date_expiry,                 type: DateTime
       field :tier,                                                          type: String
       field :registrationType, as: :registration_type,                      type: String
       field :location,                                                      type: String
