@@ -23,7 +23,7 @@ module WasteCarriersEngine
       field :accountEmail, as: :account_email,                              type: String
       field :businessType, as: :business_type,                              type: String
       field :companyName, as: :company_name,                                type: String
-      field :companyNo, as: :company_no,                                    type: String # May include letters, despite name
+      field :company_no,                                                    type: String # May include letters, despite name
       field :constructionWaste, as: :construction_waste,                    type: String # 'yes' or 'no' - should refactor to boolean
       field :contactEmail, as: :contact_email,                              type: String
       field :copy_cards,                                                    type: Integer
