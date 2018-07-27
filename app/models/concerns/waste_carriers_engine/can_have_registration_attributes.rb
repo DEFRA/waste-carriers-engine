@@ -43,6 +43,7 @@ module WasteCarriersEngine
       field :regIdentifier, as: :reg_identifier,                            type: String
       field :expires_on,                                                    type: DateTime
       field :copy_cards,                                                    type: Integer
+      field :accessCode, as: :address_code,                                 type: String
 
       def contact_address
         return nil unless addresses.present?
