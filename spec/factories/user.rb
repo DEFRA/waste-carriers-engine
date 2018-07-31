@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user, class: WasteCarriersEngine::User do
+  factory :user do
     sequence :email do |n|
       "user#{n}@example.com"
     end

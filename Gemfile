@@ -20,6 +20,13 @@ gem "jquery-rails"
 # Use MongoDB as the database
 gem "mongoid", "~> 5.2"
 
+# Use CanCanCan for user roles and permissions
+# Version 2.0 doesn't support Mongoid, so we're locked to an earlier one
+gem "cancancan", "~> 1.10"
+
+# Use Devise for user authentication
+gem "devise", ">= 4.4.3"
+
 gem "secure_headers", "~> 5.0"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
