@@ -27,6 +27,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate boolean", form = :waste_types_form, field = :only_amf
+    include_examples "validate yes no", form = :waste_types_form, field = :only_amf
   end
 end

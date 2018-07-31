@@ -5,8 +5,9 @@ en:
         title: Who creates the waste?
         heading: Who creates the waste that you deal with?
         error_heading: Something is wrong
-        option_true: Our customers create the waste, we just collect or move it for them
-        option_false: We create the waste as part of a service we provide to our customers, for example a gardener taking away grass cuttings
+        options:
+          "yes": Our customers create the waste, we just collect or move it for them
+          "no": We create the waste as part of a service we provide to our customers, for example a gardener taking away grass cuttings
         next_button: Continue
   activemodel:
     errors:

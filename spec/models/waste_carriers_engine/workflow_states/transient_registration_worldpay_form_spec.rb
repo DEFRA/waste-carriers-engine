@@ -17,7 +17,7 @@ module WasteCarriersEngine
         end
 
         context "when there are no convictions" do
-          before(:each) { transient_registration.declared_convictions = false }
+          before(:each) { transient_registration.declared_convictions = "no" }
 
           context "when the conviction_search_results have no matches" do
             it "changes to :renewal_complete_form after the 'next' event" do
@@ -43,7 +43,7 @@ module WasteCarriersEngine
         end
 
         context "when there are convictions" do
-          before(:each) { transient_registration.declared_convictions = true }
+          before(:each) { transient_registration.declared_convictions = "yes" }
 
           it "changes to :renewal_received_form after the 'next' event" do
             expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_received_form).on_event(:next)

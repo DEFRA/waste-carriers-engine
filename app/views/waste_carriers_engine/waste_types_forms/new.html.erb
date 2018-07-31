@@ -27,12 +27,12 @@
         <% end %>
 
         <div class="multiple-choice">
-          <%= f.radio_button :only_amf, "true" %>
-          <%= f.label :only_amf, t(".option_true_html"), value: "true" %>
+          <%= f.radio_button :only_amf, "yes" %>
+          <%= f.label :only_amf, t(".options.yes"), value: "yes" %>
         </div>
         <div class="multiple-choice">
-          <%= f.radio_button :only_amf, "false" %>
-          <%= f.label :only_amf, t(".option_false"), value: "false" %>
+          <%= f.radio_button :only_amf, "no" %>
+          <%= f.label :only_amf, t(".options.no"), value: "no" %>
         </div>
       </fieldset>
     </div>

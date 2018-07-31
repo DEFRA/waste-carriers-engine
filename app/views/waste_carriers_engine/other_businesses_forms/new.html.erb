@@ -21,12 +21,12 @@
         <% end %>
 
         <div class="multiple-choice">
-          <%= f.radio_button :other_businesses, "true" %>
-          <%= f.label :other_businesses, t(".option_true"), value: "true" %>
+          <%= f.radio_button :other_businesses, "yes" %>
+          <%= f.label :other_businesses, t(".options.yes"), value: "yes" %>
         </div>
         <div class="multiple-choice">
-          <%= f.radio_button :other_businesses, "false" %>
-          <%= f.label :other_businesses, t(".option_false"), value: "false" %>
+          <%= f.radio_button :other_businesses, "no" %>
+          <%= f.label :other_businesses, t(".options.no"), value: "no" %>
         </div>
       </fieldset>
     </div>

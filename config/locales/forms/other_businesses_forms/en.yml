@@ -4,8 +4,9 @@ en:
       new:
         title: Waste from other people
         heading: Do you ever deal with waste from other businesses or households?
-        option_true: "Yes"
-        option_false: "No"
+        options:
+          "yes": "Yes"
+          "no": "No"
         error_heading: Something is wrong
         next_button: Continue
   activemodel:

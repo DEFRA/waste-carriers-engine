@@ -8,7 +8,7 @@ module WasteCarriersEngine
         let(:valid_params) do
           {
             reg_identifier: declare_convictions_form.reg_identifier,
-            declared_convictions: "false"
+            declared_convictions: declare_convictions_form.declared_convictions
           }
         end
 
@@ -32,6 +32,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate boolean", form = :declare_convictions_form, field = :declared_convictions
+    include_examples "validate yes no", form = :declare_convictions_form, field = :declared_convictions
   end
 end

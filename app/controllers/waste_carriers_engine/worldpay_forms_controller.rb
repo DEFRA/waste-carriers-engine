@@ -5,7 +5,7 @@ module WasteCarriersEngine
 
       payment_info = prepare_for_payment
       if payment_info == :error
-        flash[:error] = I18n.t(".worldpay_forms.new.setup_error")
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.new.setup_error")
         go_back
       else
         redirect_to payment_info[:url]
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         @transient_registration.next!
         redirect_to_correct_form
       else
-        flash[:error] = I18n.t(".worldpay_forms.success.invalid_response")
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.success.invalid_response")
         go_back
       end
     end
@@ -34,9 +34,9 @@ module WasteCarriersEngine
       order = find_order_by_code(params[:orderKey])
 
       if valid_worldpay_failure_response?(params, order)
-        flash[:error] = I18n.t(".worldpay_forms.failure.message.#{params[:paymentStatus]}")
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
       else
-        flash[:error] = I18n.t(".worldpay_forms.failure.invalid_response")
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
       end
 
       go_back

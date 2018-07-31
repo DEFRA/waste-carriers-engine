@@ -6,8 +6,8 @@ en:
         heading: Has anyone in the organisation's management been convicted of an environmental offence in the last 12 months?
         paragraph_1: If you don’t tell us about any unspent environmental offences, you may not be able to register.
         options:
-          "true": "Yes"
-          "false": "No"
+          "yes": "Yes"
+          "no": "No"
         conviction_types_subheading: Offences you must tell us about
         conviction_types_paragraph_1: If anyone involved in managing the business has been convicted of an environmental offence, it might affect this registration.
         conviction_types_paragraph_2: "You only need to tell us about unspent convictions for offences under these areas of law:"

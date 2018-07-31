@@ -19,9 +19,9 @@ module WasteCarriersEngine
     field :temp_cards, type: Integer
     field :temp_company_postcode, type: String
     field :temp_contact_postcode, type: String
-    field :temp_os_places_error, type: Boolean
+    field :temp_os_places_error, type: String # 'yes' or 'no' - should refactor to boolean
     field :temp_payment_method, type: String
-    field :temp_tier_check, type: Boolean
+    field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
 
     # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
     def registration_type_changed?
@@ -97,7 +97,8 @@ module WasteCarriersEngine
                                                   "conviction_search_result",
                                                   "conviction_sign_offs",
                                                   "declaration",
-                                                  "past_registrations")
+                                                  "past_registrations",
+                                                  "copy_cards")
 
       assign_attributes(strip_whitespace(attributes))
       remove_invalid_attributes

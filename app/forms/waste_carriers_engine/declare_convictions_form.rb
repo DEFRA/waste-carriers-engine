@@ -11,12 +11,12 @@ module WasteCarriersEngine
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
-      self.declared_convictions = convert_to_boolean(params[:declared_convictions])
+      self.declared_convictions = params[:declared_convictions]
       attributes = { declared_convictions: declared_convictions }
 
       super(attributes, params[:reg_identifier])
     end
 
-    validates :declared_convictions, "waste_carriers_engine/boolean": true
+    validates :declared_convictions, "waste_carriers_engine/yes_no": true
   end
 end

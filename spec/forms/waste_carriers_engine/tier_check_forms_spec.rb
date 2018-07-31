@@ -8,7 +8,7 @@ module WasteCarriersEngine
         let(:valid_params) do
           {
             reg_identifier: tier_check_form.reg_identifier,
-            temp_tier_check: "false"
+            temp_tier_check: tier_check_form.temp_tier_check
           }
         end
 
@@ -27,6 +27,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate boolean", form = :tier_check_form, field = :temp_tier_check
+    include_examples "validate yes no", form = :tier_check_form, field = :temp_tier_check
   end
 end

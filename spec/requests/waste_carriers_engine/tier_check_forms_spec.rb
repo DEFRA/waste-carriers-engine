@@ -6,10 +6,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      form = "tier_check_form",
-                     valid_params = { temp_tier_check: "true" },
+                     valid_params = { temp_tier_check: "yes" },
                      invalid_params = { temp_tier_check: "foo" },
-                     test_attribute = :temp_tier_check,
-                     expected_value = true
+                     test_attribute = :temp_tier_check
 
     describe "GET back_tier_check_forms_path" do
       context "when a valid user is signed in" do

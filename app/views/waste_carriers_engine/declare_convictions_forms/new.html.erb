@@ -22,12 +22,12 @@
         <p class="strong"><%= t(".paragraph_1") %></p>
 
         <div class="multiple-choice">
-          <%= f.radio_button :declared_convictions, "true" %>
-          <%= f.label :declared_convictions, t(".options.true"), value: "true" %>
+          <%= f.radio_button :declared_convictions, "yes" %>
+          <%= f.label :declared_convictions, t(".options.yes"), value: "yes" %>
         </div>
         <div class="multiple-choice">
-          <%= f.radio_button :declared_convictions, "false" %>
-          <%= f.label :declared_convictions, t(".options.false"), value: "false" %>
+          <%= f.radio_button :declared_convictions, "no" %>
+          <%= f.label :declared_convictions, t(".options.no"), value: "no" %>
         </div>
       </fieldset>
     </div>
