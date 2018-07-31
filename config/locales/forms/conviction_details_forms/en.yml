@@ -4,6 +4,7 @@ en:
       new:
         title: Conviction details
         heading: Details of the person with a conviction
+        paragraph_1: You need to tell us about anyone in your organisation's management who has been convicted of an environmental offence.
         position: Job title
         add_person_link: Add another person
         next_button: Continue
