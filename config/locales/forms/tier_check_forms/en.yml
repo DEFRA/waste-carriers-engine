@@ -5,7 +5,7 @@ en:
         title: Check your tier
         heading: You are renewing an upper tier registration
         paragraph_1: "If you’re not sure whether you should be upper or lower tier, you can check by answering a few questions about your business activities."
-        paragraph_2: "We’ll only use your answers to determine what tier your registration should be. Your answers don't affect what you can do as a registered waste carrier, or license you to perform certain activities."
+        paragraph_2: "We’ll only use your answers to determine what tier your registration should be. Your answers do not affect what you can do as a registered waste carrier, or license you to perform certain activities."
         paragraph_3: "Upper tier registrations need to be renewed every 3 years for £%{renewal_charge}. Lower tier registrations are free and don’t expire."
         tier_details_subheading: "What’s the difference between upper and lower tier?"
         tier_details_paragraph_1: This depends on what waste you deal with and who creates it.

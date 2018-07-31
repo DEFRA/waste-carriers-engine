@@ -4,7 +4,7 @@ en:
       new:
         title: Contact address
         heading: What's the contact address?
-        os_places_error_heading: Our address finder isn't working
+        os_places_error_heading: Our address finder is not working
         os_places_error_text: Please enter the address below.
         error_heading: Something is wrong
         next_button: Continue
