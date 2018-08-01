@@ -129,7 +129,7 @@ module WasteCarriersEngine
 
             context "when the submit params say to add another" do
               it "redirects to the main_people form" do
-                post main_people_forms_path, main_people_form: valid_params, commit: I18n.t("main_people_forms.new.add_person_link")
+                post main_people_forms_path, main_people_form: valid_params, commit: "Add another person"
                 expect(response).to redirect_to(new_main_people_form_path(transient_registration[:reg_identifier]))
               end
             end
@@ -173,7 +173,7 @@ module WasteCarriersEngine
 
             context "when the submit params say to add another" do
               it "returns a 302 response" do
-                post main_people_forms_path, main_people_form: invalid_params, commit: I18n.t("main_people_forms.new.add_person_link")
+                post main_people_forms_path, main_people_form: invalid_params, commit: "Add another person"
                 expect(response).to have_http_status(302)
               end
             end
