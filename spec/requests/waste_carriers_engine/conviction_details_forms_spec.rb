@@ -93,7 +93,7 @@ module WasteCarriersEngine
 
             context "when the submit params say to add another" do
               it "redirects to the conviction_details form" do
-                post conviction_details_forms_path, conviction_details_form: valid_params, commit: I18n.t("conviction_details_forms.new.add_person_link")
+                post conviction_details_forms_path, conviction_details_form: valid_params, commit: "Add another person"
                 expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:reg_identifier]))
               end
             end
@@ -137,7 +137,7 @@ module WasteCarriersEngine
 
             context "when the submit params say to add another" do
               it "returns a 302 response" do
-                post conviction_details_forms_path, conviction_details_form: invalid_params, commit: I18n.t("conviction_details_forms.new.add_person_link")
+                post conviction_details_forms_path, conviction_details_form: invalid_params, commit: "Add another person"
                 expect(response).to have_http_status(302)
               end
             end
