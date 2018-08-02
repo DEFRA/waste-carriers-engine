@@ -31,7 +31,7 @@ en:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
     passwords:
-      no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
+      no_token: "You cannot access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
       send_instructions: "You will receive an email with instructions on how to reset your password in a few minutes."
       send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
       updated: "Your password has been changed successfully. You are now signed in."
@@ -53,7 +53,7 @@ en:
         password_reset_summary: I've forgotten my password
         password_reset_paragraph_1: You can
         password_reset_link_text: reset your password
-        unknown_email_summary: I don't know the email address for my account
+        unknown_email_summary: I do not know the email address for my account
         unknown_email_paragraph_1: If you don’t know the email address belonging to your account, contact our helpline on 03708 506506.
         unconfirmed_email_summary: I need to confirm my email address
         unconfirmed_email_paragraph_1: After you've registered as a waste carrier, you must confirm your email address to access your account.

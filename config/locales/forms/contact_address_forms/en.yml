@@ -6,7 +6,7 @@ en:
         heading: What's the contact address?
         postcode_label: Postcode
         postcode_change_link: "Change postcode"
-        manual_address_link: "I can't find the address in the list"
+        manual_address_link: "I cannot find the address in the list"
         error_heading: Something is wrong
         next_button: Continue
   activemodel:
