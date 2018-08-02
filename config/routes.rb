@@ -1,9 +1,4 @@
 WasteCarriersEngine::Engine.routes.draw do
-  devise_for :users, class_name: "WasteCarriersEngine::User", module: :devise
-  devise_scope :user do
-    get "/users/sign_out" => "devise/sessions#destroy"
-  end
-
   resources :registrations, only: [:index]
 
   resources :renewal_start_forms,
