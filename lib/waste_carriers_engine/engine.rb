@@ -1,8 +1,5 @@
 require "aasm"
 require "mongoid"
-# Must require Mongoid before CanCanCan for adaptors to work
-require "cancancan"
-require "devise"
 require "high_voltage"
 
 module WasteCarriersEngine

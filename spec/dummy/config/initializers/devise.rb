@@ -20,12 +20,6 @@ Devise.setup do |config|
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
 
-  # Router name
-  config.router_name = :waste_carriers_engine
-
-  # Set Devise's controllers to inherit from the engine's controller and not the main controller
-  config.parent_controller = "WasteCarriersEngine::ApplicationController"
-
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be

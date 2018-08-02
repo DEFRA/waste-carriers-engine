@@ -6,11 +6,5 @@ module WasteCarriersEngine
 
     # Use the host application's default layout
     layout "application"
-
-    private
-
-    def current_ability
-      @current_ability ||= Ability.new(current_user)
-    end
   end
 end
