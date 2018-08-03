@@ -2,6 +2,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe WorldpayUrlService do
+    before do
+      allow(Rails.configuration).to receive(:host).and_return("http://localhost:3002")
+    end
+
     let(:transient_registration) do
       create(:transient_registration,
              :has_required_data)
@@ -12,7 +16,7 @@ module WasteCarriersEngine
 
     describe "format_url" do
       let(:url) { worldpay_url_service.format_link }
-      let(:root) { Rails.configuration.wcrs_renewals_url }
+      let(:root) { Rails.configuration.host }
 
       it "returns a link" do
         expect(url).to include(link_base)

@@ -58,6 +58,7 @@ module Dummy
     config.wcrs_frontend_url = ENV["WCRS_FRONTEND_DOMAIN"] || "http://localhost:3000"
     config.wcrs_services_url = ENV["WCRS_SERVICES_DOMAIN"] || "http://localhost:8003"
     config.os_places_service_url = ENV["WCRS_OS_PLACES_DOMAIN"] || "http://localhost:8005"
+    config.host = config.wcrs_renewals_url
 
     # Fees
     config.renewal_charge = ENV["WCRS_RENEWAL_CHARGE"].to_i
