@@ -2,9 +2,7 @@
 
 <h1 class="heading-large">Reset your password</h1>
 
-<p class="text">To reset your password, enter the email address associated with your account.</p>
-
-<p class="text">If you don’t know the email address belonging to your account, contact our helpline on 03708 506506.</p>
+<p class="text">Enter the email address associated with your account.</p>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= render("waste_carriers_engine/shared/errors", object: resource) %>
@@ -14,7 +12,9 @@
     <%= f.email_field :email, class: "form-control" %>
   </div>
 
+<p class="form-hint">If you don’t know the email address belonging to your account, contact our helpline on 03708 506506.</p>
+
   <div class="actions">
-    <%= f.submit "Send me reset password instructions", class: "button" %>
+    <%= f.submit "Reset password", class: "button" %>
   </div>
 <% end %>
