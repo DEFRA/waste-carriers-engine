@@ -3,7 +3,7 @@ en:
     check_your_answers_forms:
       new:
         title: Check your details
-        heading: Check your details before renewing your registration
+        heading: Check your answers before renewing your registration
         error_heading: Something is wrong
         error_description_1: "We're missing some of the information we need to renew your registration:"
         error_description_2: "Please go back and make sure all the required questions have been answered."
