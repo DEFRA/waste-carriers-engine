@@ -21,6 +21,60 @@ module WasteCarriersEngine
 
     let(:worldpay_service) { WorldpayService.new(transient_registration, order, params) }
 
+    describe "prepare_params" do
+      context "when the params are nil" do
+        it "sets params to nil" do
+          expect(worldpay_service.instance_variable_get(:@params)).to eq(nil)
+        end
+      end
+
+      context "when the params are for a non-cancelled response" do
+        let(:params) do
+          {
+            orderKey: "foo^bar^#{order.order_code}",
+            paymentStatus: "AUTHORISED",
+            paymentAmount: order.total_amount,
+            paymentCurrency: "GBP",
+            mac: "baz",
+            source: "WP",
+            reg_identifier: transient_registration.reg_identifier
+          }
+        end
+
+        it "does not modify the params" do
+          expect(worldpay_service.instance_variable_get(:@params)).to eq(params)
+        end
+      end
+
+      context "when the params are for a cancelled response" do
+        let(:params) do
+          {
+            orderKey: "foo^bar^#{order.order_code}",
+            orderAmount: order.total_amount,
+            orderCurrency: "GBP",
+            mac: "baz",
+            source: "WP",
+            reg_identifier: transient_registration.reg_identifier
+          }
+        end
+
+        it "modifies the params" do
+          modified_params = {
+                              orderKey: "foo^bar^#{order.order_code}",
+                              orderAmount: order.total_amount,
+                              orderCurrency: "GBP",
+                              paymentStatus: "CANCELLED",
+                              paymentAmount: order.total_amount,
+                              paymentCurrency: "GBP",
+                              mac: "baz",
+                              source: "WP",
+                              reg_identifier: transient_registration.reg_identifier
+                            }
+          expect(worldpay_service.instance_variable_get(:@params)).to eq(modified_params)
+        end
+      end
+    end
+
     describe "prepare_for_payment" do
       context "when the request is valid" do
         let(:root) { Rails.configuration.wcrs_renewals_url }

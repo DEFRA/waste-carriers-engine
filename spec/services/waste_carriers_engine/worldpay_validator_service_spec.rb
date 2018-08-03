@@ -130,6 +130,24 @@ module WasteCarriersEngine
         expect(worldpay_validator_service.valid_failure?).to eq(true)
       end
 
+      context "when the paymentStatus is cancelled and params are valid" do
+        let(:params) do
+          {
+            orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
+            paymentStatus: "CANCELLED",
+            paymentAmount: order.total_amount,
+            paymentCurrency: "GBP",
+            mac: "dc28800817046640f33846ff5835839a",
+            source: "WP",
+            reg_identifier: transient_registration.reg_identifier
+          }
+        end
+
+        it "returns true" do
+          expect(worldpay_validator_service.valid_failure?).to eq(true)
+        end
+      end
+
       # We test most of the individual param validations when testing :valid_success?,
       # so just test the unique ones for :valid_failure?
       context "when the paymentStatus is invalid" do

@@ -8,7 +8,7 @@ module WasteCarriersEngine
       @url = Rails.configuration.worldpay_url
       @username = Rails.configuration.worldpay_username
       @password = Rails.configuration.worldpay_password
-      @params = params
+      @params = prepare_params(params)
     end
 
     def prepare_for_payment
@@ -45,6 +45,17 @@ module WasteCarriersEngine
     end
 
     private
+
+    def prepare_params(params)
+      return if params.nil?
+
+      # Params can be different if the order is cancelled, so we need to reassign some of them
+      params[:paymentAmount] = params[:orderAmount] if params[:paymentAmount].nil?
+      params[:paymentCurrency] = params[:orderCurrency] if params[:paymentCurrency].nil?
+      params[:paymentStatus] = "CANCELLED" if params[:paymentStatus].nil?
+
+      params
+    end
 
     def send_request
       xml_service = WorldpayXmlService.new(@transient_registration, @order)
