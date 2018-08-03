@@ -3,9 +3,8 @@ en:
     cannot_renew_type_change_forms:
       new:
         title: Your business type has changed
-        heading: You cannot renew registration %{reg_identifier}
-        paragraph_1: Because your business type has changed, you will need to create a new registration rather than renew.
-        paragraph_2: If you have any questions about this, please contact our helpline on 03708 506 506.
+        heading: You need a new registration
+        paragraph: You’ve told us your business type has changed, so you will need to create a new registration rather than renew.
         next_button: Start a new registration
   activemodel:
     errors:
