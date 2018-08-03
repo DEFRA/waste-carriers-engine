@@ -20,8 +20,10 @@ module WasteCarriersEngine
     field :postcode,                                                    type: String
     field :country,                                                     type: String
     field :dependentLocality, as: :dependent_locality,                  type: String
+    field :dependentThoroughfare, as: :dependent_thoroughfare,          type: String
     field :administrativeArea, as: :administrative_area,                type: String
     field :localAuthorityUpdateDate, as: :local_authority_update_date,  type: String
+    field :royalMailUpdateDate, as: :royal_mail_update_date,            type: String
     field :easting,                                                     type: Integer
     field :northing,                                                    type: Integer
     field :firstOrOnlyEasting, as: :first_or_only_easting,              type: Integer
