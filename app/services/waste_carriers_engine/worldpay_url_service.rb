@@ -2,7 +2,6 @@ module WasteCarriersEngine
   # Builds the URL we use to redirect users to Worldpay.
   # This should include URLs for our own service, which Worldpay will redirect users to after payment.
   class WorldpayUrlService
-
     def initialize(reg_identifier, base_url)
       @reg_identifier = reg_identifier
       @base_url = base_url
