@@ -6,14 +6,14 @@ en:
         heading:
           localAuthority: Chief executive details
           limitedCompany: Company director details
-          limitedLiabilityPartnership: Partner details
+          limitedLiabilityPartnership: Member details
           overseas: Business owner details
           partnership: Partner details
           soleTrader: Business owner details
         description_1:
           localAuthority: Enter the name and date of birth for each chief executive of the business.
           limitedCompany: Enter the name and date of birth for each director of the business.
-          limitedLiabilityPartnership: Enter the name and date of birth for each business partner.
+          limitedLiabilityPartnership: Enter the name and date of birth for each business member.
           overseas: Enter the name and date of birth for each owner of the business.
           partnership:  Enter the name and date of birth for each partner of the business.
           soleTrader: Enter the name and date of birth of the business owner.
