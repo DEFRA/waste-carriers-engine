@@ -6,9 +6,6 @@ en:
         heading: Check your tier
         paragraph_1: "If you’re not sure whether you should be upper or lower tier, you can check by answering a few questions about your business activities."
         paragraph_2: "We’ll only use your answers to determine what tier your registration should be. Your answers do not affect what you can do as a registered waste carrier, or license you to perform certain activities."
-        tier_details_list_2:
-          - item: "You ONLY deal with waste you produce in the course of carrying out your business – for example, a hairdresser dealing with hair clippings. This does not include construction or demolition waste"
-          - item: "You ONLY deal with waste from mines or quarries, from agricultural premises, or animal by-products"
         options:
           "no": I know I need an upper tier registration (continue)
           "yes": I want to check my tier is correct before renewing
