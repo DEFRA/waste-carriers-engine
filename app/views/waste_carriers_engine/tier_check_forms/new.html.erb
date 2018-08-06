@@ -7,31 +7,6 @@
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
     <p><%= t(".paragraph_1") %></p>
-    <p><%= t(".paragraph_2") %></p>
-    <p><%= t(".paragraph_3", renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
-
-    <div class="form-group">
-      <details>
-        <summary>
-          <span class="summary"><%= t(".tier_details_subheading") %></span>
-        </summary>
-        <div class="panel panel-border-narrow">
-          <p><%= t(".tier_details_paragraph_1") %></p>
-          <p class="strong"><%= t(".tier_details_paragraph_2") %></p>
-          <ul class="list list-bullet">
-            <% t(".tier_details_list_1").each do |item| %>
-            <li><%= item[:item] %></li>
-            <% end %>
-          </ul>
-          <p class="strong"><%= t(".tier_details_paragraph_3") %></p>
-          <ul class="list list-bullet">
-            <% t(".tier_details_list_2").each do |item| %>
-            <li><%= item[:item] %></li>
-            <% end %>
-          </ul>
-        </div>
-      </details>
-    </div>
 
     <% if @tier_check_form.errors[:temp_tier_check].any? %>
     <div class="form-group form-group-error">
@@ -58,6 +33,8 @@
       </fieldset>
     </div>
 
+    <p class="form-hint"><%= t(".paragraph_2") %></p>
+    
     <%= f.hidden_field :reg_identifier, value: @tier_check_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>

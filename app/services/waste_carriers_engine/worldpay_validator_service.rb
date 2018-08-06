@@ -48,10 +48,11 @@ module WasteCarriersEngine
     def valid_mac?
       data = [@order_key,
               @amount,
-              @currency,
-              @status,
-              Rails.configuration.worldpay_macsecret].join
-      generated_mac = Digest::MD5.hexdigest(data).to_s
+              @currency]
+      data << @status if @status != "CANCELLED"
+      data << Rails.configuration.worldpay_macsecret
+
+      generated_mac = Digest::MD5.hexdigest(data.join).to_s
       return true if generated_mac == @mac
 
       Rails.logger.error "Invalid WorldPay response: MAC is invalid"

@@ -6,16 +6,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <div class="form-group">
-      <details>
-        <summary>
-          <span class="summary"><%= t(".detail_subheading") %></span>
-        </summary>
-        <div class="panel panel-border-narrow">
-          <p><%= t(".detail_paragraph") %></p>
-        </div>
-      </details>
-    </div>
+    <p><%= t(".detail_paragraph") %></p>
 
     <% if @contact_postcode_form.errors[:temp_contact_postcode].any? %>
     <div class="form-group form-group-error">

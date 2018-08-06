@@ -3,21 +3,9 @@ en:
     tier_check_forms:
       new:
         title: Check your tier
-        heading: You are renewing an upper tier registration
+        heading: Check your tier
         paragraph_1: "If you’re not sure whether you should be upper or lower tier, you can check by answering a few questions about your business activities."
         paragraph_2: "We’ll only use your answers to determine what tier your registration should be. Your answers do not affect what you can do as a registered waste carrier, or license you to perform certain activities."
-        paragraph_3: "Upper tier registrations need to be renewed every 3 years for £%{renewal_charge}. Lower tier registrations are free and don’t expire."
-        tier_details_subheading: "What’s the difference between upper and lower tier?"
-        tier_details_paragraph_1: This depends on what waste you deal with and who creates it.
-        tier_details_paragraph_2: "You need an upper tier registration if you do any of the following:"
-        tier_details_list_1:
-          - item: transport other people's waste (for example, a skip company)
-          - item: carry construction or demolition waste
-          - item: buy and/or sell waste or arrange for others to carry it
-        tier_details_paragraph_3: "If your activities are limited to the categories below, you only need a lower tier registration:"
-        tier_details_list_2:
-          - item: "You ONLY deal with waste you produce in the course of carrying out your business – for example, a hairdresser dealing with hair clippings. This does not include construction or demolition waste"
-          - item: "You ONLY deal with waste from mines or quarries, from agricultural premises, or animal by-products"
         options:
           "no": I know I need an upper tier registration (continue)
           "yes": I want to check my tier is correct before renewing
