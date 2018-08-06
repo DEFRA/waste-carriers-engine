@@ -100,6 +100,17 @@ module WasteCarriersEngine
           expect(registration.reload.metaData.route).to eq("DIGITAL")
         end
 
+        context "when the meta_data route is set" do
+          before do
+            allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
+          end
+
+          it "updates the registration's route to the correct value" do
+            renewal_completion_service.complete_renewal
+            expect(registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
+          end
+        end
+
         it "deletes the transient registration" do
           renewal_completion_service.complete_renewal
           expect(TransientRegistration.where(reg_identifier: transient_registration.reg_identifier).count).to eq(0)
