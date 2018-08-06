@@ -95,12 +95,7 @@ module WasteCarriersEngine
           expect(registration.reload.metaData.last_modified).to_not eq(old_last_modified)
         end
 
-        it "updates the registration's route" do
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.metaData.route).to eq("DIGITAL")
-        end
-
-        context "when the meta_data route is set" do
+        context "when the metadata_route is set" do
           before do
             allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
           end
