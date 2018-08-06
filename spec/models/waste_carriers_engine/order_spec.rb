@@ -10,9 +10,10 @@ module WasteCarriersEngine
     end
 
     let(:transient_registration) { create(:transient_registration, :has_required_data, temp_cards: 0) }
+    let(:current_user) { build(:user) }
 
     describe "new_order" do
-      let(:order) { Order.new_order(transient_registration, :worldpay) }
+      let(:order) { Order.new_order(transient_registration, :worldpay, current_user) }
 
       it "should have a valid order_id" do
         Timecop.freeze(Time.new(2018, 1, 1)) do
@@ -34,7 +35,7 @@ module WasteCarriersEngine
       end
 
       it "should have the correct updated_by_user" do
-        expect(order.updated_by_user).to eq("foo@example.com")
+        expect(order.updated_by_user).to eq(current_user.email)
       end
 
       it "updates the date_created" do
@@ -120,7 +121,7 @@ module WasteCarriersEngine
       end
 
       context "when it is a bank transfer order" do
-        let(:order) { Order.new_order(transient_registration, :bank_transfer) }
+        let(:order) { Order.new_order(transient_registration, :bank_transfer, current_user) }
 
         it "should have the correct payment_method" do
           expect(order.payment_method).to eq("OFFLINE")
@@ -137,7 +138,7 @@ module WasteCarriersEngine
     end
 
     describe "update_after_worldpay" do
-      let(:finance_details) { FinanceDetails.new_finance_details(transient_registration, :worldpay) }
+      let(:finance_details) { FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user) }
       let(:order) { finance_details.orders.first }
 
       it "copies the worldpay status to the order" do

@@ -13,7 +13,8 @@ module WasteCarriersEngine
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
-      WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay)
+      user = build(:user)
+      WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
     end
 
     let(:order) { transient_registration.finance_details.orders.first }

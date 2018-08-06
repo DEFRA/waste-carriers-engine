@@ -12,7 +12,7 @@ module WasteCarriersEngine
     private
 
     def set_up_finance_details
-      FinanceDetails.new_finance_details(@transient_registration, :bank_transfer)
+      FinanceDetails.new_finance_details(@transient_registration, :bank_transfer, current_user)
     end
   end
 end

@@ -31,7 +31,7 @@ FactoryBot.define do
 
     trait :has_finance_details do
       after(:build, :create) do |transient_registration|
-        WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay)
+        WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay, build(:user))
       end
     end
 

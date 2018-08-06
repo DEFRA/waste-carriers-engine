@@ -26,7 +26,7 @@ module WasteCarriersEngine
 
           context "when a worldpay order already exists" do
             before do
-              FinanceDetails.new_finance_details(transient_registration, :worldpay)
+              FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
               transient_registration.finance_details.orders.first.world_pay_status = "CANCELLED"
             end
 

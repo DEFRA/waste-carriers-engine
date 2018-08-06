@@ -23,7 +23,7 @@ module WasteCarriersEngine
     field :manualOrder, as: :manual_order,           type: String
     field :order_item_reference,                     type: String
 
-    def self.new_order(transient_registration, method)
+    def self.new_order(transient_registration, method, current_user)
       order = Order.new
 
       card_count = transient_registration.temp_cards
@@ -34,7 +34,7 @@ module WasteCarriersEngine
 
       order[:date_created] = Time.current
       order[:date_last_updated] = order[:date_created]
-      order[:updated_by_user] = transient_registration.account_email
+      order[:updated_by_user] = current_user.email
 
       order[:order_items] = [OrderItem.new_renewal_item]
       order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?

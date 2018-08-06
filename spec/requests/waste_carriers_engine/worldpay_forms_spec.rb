@@ -49,7 +49,7 @@ module WasteCarriersEngine
 
         describe "#success" do
           before do
-            FinanceDetails.new_finance_details(transient_registration, :worldpay)
+            FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
           end
 
           let(:order) do
@@ -116,7 +116,7 @@ module WasteCarriersEngine
 
         describe "#failure" do
           before do
-            FinanceDetails.new_finance_details(transient_registration, :worldpay)
+            FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
           end
 
           let(:order) do

@@ -3,11 +3,12 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe Payment, type: :model do
     let(:transient_registration) { build(:transient_registration, :has_required_data) }
+    let(:current_user) { build(:user) }
 
     describe "new_from_worldpay" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
-          FinanceDetails.new_finance_details(transient_registration, :worldpay)
+          FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user)
         end
       end
 
@@ -49,7 +50,7 @@ module WasteCarriersEngine
 
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
-          FinanceDetails.new_finance_details(transient_registration, :worldpay)
+          FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user)
           payment.update_after_worldpay(paymentStatus: "AUTHORISED", mac: "foo")
         end
       end
