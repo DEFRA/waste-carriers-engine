@@ -4,8 +4,9 @@ en:
       failure:
         invalid_response: "Invalid WorldPay failure response"
         message:
-          REFUSED: "Your payment has been refused. Please try again or select a different payment method."
+          CANCELLED: "Your attempt to pay has been cancelled. Please try again or select a different payment method."
           ERROR: "An error has occurred with WorldPay and your payment has not been processed. Please try again or select a different payment method."
+          REFUSED: "Your payment has been refused. Please try again or select a different payment method."
       new:
         setup_error: "An error has occurred when preparing for your WorldPay payment. Please try again or select a different payment method."
       success:
