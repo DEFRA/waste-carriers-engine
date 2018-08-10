@@ -82,13 +82,8 @@ module WasteCarriersEngine
 
       def key_person_has_matching_or_unknown_conviction?
         return true unless key_people.present?
-
-        matches = false
-        key_people.each do |person|
-          matches = true if person.conviction_check_required?
-        end
-
-        matches
+        all_requirements = key_people.map(&:conviction_check_required?)
+        all_requirements.include?(true)
       end
 
       def update_last_modified
