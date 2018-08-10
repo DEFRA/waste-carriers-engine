@@ -39,5 +39,9 @@ FactoryBot.define do
     trait :unmatched_conviction_search_result do
       conviction_search_result { build(:conviction_search_result, :match_result_no) }
     end
+
+    trait :unknown_conviction_search_result do
+      conviction_search_result { build(:conviction_search_result, :match_result_unknown) }
+    end
   end
 end

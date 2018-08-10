@@ -23,5 +23,45 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "conviction_check_required?" do
+      context "when there is no conviction_search_result" do
+        let(:key_person) { build(:key_person, :has_required_data) }
+
+        it "returns false" do
+          expect(key_person.conviction_check_required?).to eq(false)
+        end
+      end
+
+      context "when there is a matching conviction_search_result" do
+        let(:key_person) { build(:key_person,
+                                 :has_required_data,
+                                 :matched_conviction_search_result) }
+
+        it "returns true" do
+          expect(key_person.conviction_check_required?).to eq(true)
+        end
+      end
+
+      context "when there is a non-matching conviction_search_result" do
+        let(:key_person) { build(:key_person,
+                                 :has_required_data,
+                                 :unmatched_conviction_search_result) }
+
+        it "returns false" do
+          expect(key_person.conviction_check_required?).to eq(false)
+        end
+      end
+
+      context "when there is an unknwon conviction_search_result" do
+        let(:key_person) { build(:key_person,
+                                 :has_required_data,
+                                 :unknown_conviction_search_result) }
+
+        it "returns true" do
+          expect(key_person.conviction_check_required?).to eq(true)
+        end
+      end
+    end
   end
 end

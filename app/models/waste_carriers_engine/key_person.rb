@@ -19,6 +19,12 @@ module WasteCarriersEngine
     field :dob,         type: DateTime
     field :person_type, type: String
 
+    def conviction_check_required?
+      return false unless conviction_search_result.present?
+      return false if conviction_search_result.match_result == "NO"
+      true
+    end
+
     private
 
     def set_date_of_birth
