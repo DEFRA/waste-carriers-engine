@@ -96,6 +96,18 @@ module WasteCarriersEngine
           expect(registration.reload.metaData.last_modified).to_not eq(old_last_modified)
         end
 
+        it "copies the first_name to the contact address" do
+          first_name = transient_registration.first_name
+          renewal_completion_service.complete_renewal
+          expect(registration.reload.contact_address.first_name).to eq(first_name)
+        end
+
+        it "copies the last_name to the contact address" do
+          last_name = transient_registration.last_name
+          renewal_completion_service.complete_renewal
+          expect(registration.reload.contact_address.last_name).to eq(last_name)
+        end
+
         context "when the metadata_route is set" do
           before do
             allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")

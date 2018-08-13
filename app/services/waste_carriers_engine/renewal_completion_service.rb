@@ -7,6 +7,7 @@ module WasteCarriersEngine
 
     def complete_renewal
       return :error unless valid_renewal?
+      copy_names_to_contact_address
       create_past_registration
       update_registration
       delete_transient_registration
@@ -20,6 +21,11 @@ module WasteCarriersEngine
 
     def valid_renewal?
       @registration.metaData.may_renew?
+    end
+
+    def copy_names_to_contact_address
+      @transient_registration.contact_address.first_name = @transient_registration.first_name
+      @transient_registration.contact_address.last_name = @transient_registration.last_name
     end
 
     def create_past_registration
