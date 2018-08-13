@@ -2,13 +2,14 @@ require "rest-client"
 
 module WasteCarriersEngine
   class WorldpayService
-    def initialize(transient_registration, order, params = nil)
+    def initialize(transient_registration, order, current_user, params = nil)
       @transient_registration = transient_registration
       @order = order
       @url = Rails.configuration.worldpay_url
       @username = Rails.configuration.worldpay_username
       @password = Rails.configuration.worldpay_password
       @params = prepare_params(params)
+      @current_user = current_user
     end
 
     def prepare_for_payment
@@ -94,11 +95,11 @@ module WasteCarriersEngine
     end
 
     def new_payment_object(order)
-      Payment.new_from_worldpay(order)
+      Payment.new_from_worldpay(order, @current_user)
     end
 
     def update_saved_data
-      payment = Payment.new_from_worldpay(@order)
+      payment = Payment.new_from_worldpay(@order, @current_user)
       payment.update_after_worldpay(@params)
       @order.update_after_worldpay(@params[:paymentStatus])
 

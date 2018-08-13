@@ -47,7 +47,7 @@ module WasteCarriersEngine
     def prepare_for_payment
       FinanceDetails.new_finance_details(@transient_registration, :worldpay, current_user)
       order = @transient_registration.finance_details.orders.first
-      worldpay_service = WorldpayService.new(@transient_registration, order)
+      worldpay_service = WorldpayService.new(@transient_registration, order, current_user)
       worldpay_service.prepare_for_payment
     end
 
@@ -71,12 +71,12 @@ module WasteCarriersEngine
     end
 
     def valid_worldpay_success_response?(params, order)
-      worldpay_service = WorldpayService.new(@transient_registration, order, params)
+      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
       worldpay_service.valid_success?
     end
 
     def valid_worldpay_failure_response?(params, order)
-      worldpay_service = WorldpayService.new(@transient_registration, order, params)
+      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
       worldpay_service.valid_failure?
     end
   end

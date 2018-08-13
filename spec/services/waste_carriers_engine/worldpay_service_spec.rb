@@ -9,18 +9,18 @@ module WasteCarriersEngine
              :has_finance_details,
              temp_cards: 0)
     end
+    let(:current_user) { build(:user) }
 
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
-      user = build(:user)
-      WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
+      WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user)
     end
 
     let(:order) { transient_registration.finance_details.orders.first }
     let(:params) {}
 
-    let(:worldpay_service) { WorldpayService.new(transient_registration, order, params) }
+    let(:worldpay_service) { WorldpayService.new(transient_registration, order, current_user, params) }
 
     describe "prepare_params" do
       context "when the params are nil" do
