@@ -20,7 +20,7 @@ module WasteCarriersEngine
     field :paymentType, as: :payment_type,                        type: String
     field :manualPayment, as: :manual_payment,                    type: String
 
-    def self.new_from_worldpay(order)
+    def self.new_from_worldpay(order, current_user)
       payment = Payment.new
 
       payment[:order_key] = order[:order_code]
@@ -29,7 +29,7 @@ module WasteCarriersEngine
       payment[:payment_type] = "WORLDPAY"
       payment[:registration_reference] = "Worldpay"
       payment[:comment] = "Paid via Worldpay"
-      payment[:updated_by_user] = order.finance_details.transient_registration.account_email
+      payment[:updated_by_user] = current_user.email
       payment.finance_details = order.finance_details
 
       payment

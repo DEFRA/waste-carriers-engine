@@ -17,7 +17,7 @@ module WasteCarriersEngine
     before do
       current_user = build(:user)
       FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user)
-      Payment.new_from_worldpay(transient_registration.finance_details.orders.first)
+      Payment.new_from_worldpay(transient_registration.finance_details.orders.first, current_user)
       registration.update_attributes(finance_details: build(:finance_details,
                                                             :has_required_data,
                                                             :has_order_and_payment))
