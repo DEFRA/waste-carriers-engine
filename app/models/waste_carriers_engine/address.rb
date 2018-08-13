@@ -28,6 +28,8 @@ module WasteCarriersEngine
     field :northing,                                                    type: Integer
     field :firstOrOnlyEasting, as: :first_or_only_easting,              type: Integer
     field :firstOrOnlyNorthing, as: :first_or_only_northing,            type: Integer
+    field :firstName, as: :first_name,                                  type: String
+    field :lastName, as: :last_name,                                    type: String
 
     def self.create_from_manual_entry(params, overseas)
       address = Address.new
