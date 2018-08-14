@@ -61,12 +61,12 @@ module WasteCarriersEngine
 
       def main_people
         return [] unless key_people.present?
-        key_people.where(person_type: "key")
+        key_people.where(person_type: "KEY")
       end
 
       def relevant_people
         return [] unless key_people.present?
-        key_people.where(person_type: "relevant")
+        key_people.where(person_type: "RELEVANT")
       end
 
       def conviction_check_required?

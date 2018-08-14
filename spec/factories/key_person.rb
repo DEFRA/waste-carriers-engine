@@ -13,11 +13,11 @@ FactoryBot.define do
     end
 
     trait :main do
-      person_type "key"
+      person_type "KEY"
     end
 
     trait :relevant do
-      person_type "relevant"
+      person_type "RELEVANT"
     end
 
     trait :has_matching_conviction do

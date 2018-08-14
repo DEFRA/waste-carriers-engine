@@ -20,9 +20,9 @@ module WasteCarriersEngine
           expect(conviction_details_form.submit(valid_params)).to eq(true)
         end
 
-        it "should set a person_type of 'relevant'" do
+        it "should set a person_type of 'RELEVANT'" do
           conviction_details_form.submit(valid_params)
-          expect(conviction_details_form.new_person.person_type).to eq("relevant")
+          expect(conviction_details_form.new_person.person_type).to eq("RELEVANT")
         end
       end
 

@@ -57,7 +57,7 @@ module WasteCarriersEngine
                              dob_day: dob_day,
                              dob_month: dob_month,
                              dob_year: dob_year,
-                             person_type: person_type)
+                             person_type: person_type.upcase)
       person.position = position if position?
 
       person

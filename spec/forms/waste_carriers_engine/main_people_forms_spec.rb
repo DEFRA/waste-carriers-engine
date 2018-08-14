@@ -19,9 +19,9 @@ module WasteCarriersEngine
           expect(main_people_form.submit(valid_params)).to eq(true)
         end
 
-        it "should set a person_type of 'key'" do
+        it "should set a person_type of 'KEY'" do
           main_people_form.submit(valid_params)
-          expect(main_people_form.new_person.person_type).to eq("key")
+          expect(main_people_form.new_person.person_type).to eq("KEY")
         end
       end
 
