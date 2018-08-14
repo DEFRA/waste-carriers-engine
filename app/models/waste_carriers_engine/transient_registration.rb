@@ -13,7 +13,7 @@ module WasteCarriersEngine
     validate :no_renewal_in_progress?, on: :create
 
     after_initialize :copy_data_from_registration
-    before_validation :update_last_modified
+    before_save :update_last_modified
 
     # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
     field :temp_cards, type: Integer
