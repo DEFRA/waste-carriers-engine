@@ -18,7 +18,7 @@ Make sure you already have:
 
 - Git
 - Ruby 2.4.2
-- [Bundler](http://bundler.io/) – for installing Ruby gems
+- [Bundler](http://bundler.io/) – for installing Ruby gems.
 - MongoDb 3.6
 
 The engine also expects these gems to be installed in the application in which it is mounted:
