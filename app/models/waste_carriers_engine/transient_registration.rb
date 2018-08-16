@@ -75,6 +75,19 @@ module WasteCarriersEngine
       old_company_no != company_no
     end
 
+    def renewal_application_submitted?
+      not_in_progress_states = %w[renewal_received_form renewal_complete_form]
+      not_in_progress_states.include?(workflow_state)
+    end
+
+    def pending_payment?
+      renewal_application_submitted? && finance_details.present? && finance_details.balance.positive?
+    end
+
+    def pending_manual_conviction_check?
+      renewal_application_submitted? && conviction_check_required?
+    end
+
     private
 
     def copy_data_from_registration

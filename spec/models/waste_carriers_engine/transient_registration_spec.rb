@@ -2,6 +2,8 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe TransientRegistration, type: :model do
+    let(:transient_registration) { build(:transient_registration, :has_required_data) }
+
     describe "#initialize" do
       context "when the source registration has whitespace in its attributes" do
         let(:registration) do
@@ -44,11 +46,6 @@ module WasteCarriersEngine
 
     describe "#reg_identifier" do
       context "when a TransientRegistration is created" do
-        let(:transient_registration) do
-          build(:transient_registration,
-                :has_required_data)
-        end
-
         it "is not valid if the reg_identifier is in the wrong format" do
           transient_registration.reg_identifier = "foo"
           expect(transient_registration).to_not be_valid
@@ -69,11 +66,6 @@ module WasteCarriersEngine
 
     describe "#workflow_state" do
       context "when a TransientRegistration is created" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data)
-        end
-
         it "has the state :renewal_start_form" do
           expect(transient_registration).to have_state(:renewal_start_form)
         end
@@ -82,11 +74,6 @@ module WasteCarriersEngine
 
     describe "registration_type_changed?" do
       context "when a TransientRegistration is created" do
-        let(:transient_registration) do
-          create(:transient_registration,
-                 :has_required_data)
-        end
-
         it "should return false" do
           expect(transient_registration.registration_type_changed?).to eq(false)
         end
@@ -98,6 +85,112 @@ module WasteCarriersEngine
 
           it "should return true" do
             expect(transient_registration.registration_type_changed?).to eq(true)
+          end
+        end
+      end
+    end
+
+    describe "renewal_application_completed?" do
+      context "when the workflow_state is not a completed one" do
+        it "returns false" do
+          expect(transient_registration.renewal_application_submitted?).to eq(false)
+        end
+      end
+
+      context "when the workflow_state is renewal_received" do
+        before do
+          transient_registration.workflow_state = "renewal_received_form"
+        end
+
+        it "returns true" do
+          expect(transient_registration.renewal_application_submitted?).to eq(true)
+        end
+      end
+
+      context "when the workflow_state is renewal_complete" do
+        before do
+          transient_registration.workflow_state = "renewal_complete_form"
+        end
+
+        it "returns true" do
+          expect(transient_registration.renewal_application_submitted?).to eq(true)
+        end
+      end
+    end
+
+    describe "pending_payment?" do
+      context "when the renewal is not in a completed workflow_state" do
+        it "returns false" do
+          expect(transient_registration.pending_payment?).to eq(false)
+        end
+      end
+
+      context "when the renewal is in a completed workflow_state" do
+        before do
+          transient_registration.workflow_state = "renewal_received_form"
+        end
+
+        context "when the balance is 0" do
+          before do
+            transient_registration.finance_details = build(:finance_details, balance: 0)
+          end
+
+          it "returns false" do
+            expect(transient_registration.pending_payment?).to eq(false)
+          end
+        end
+
+        context "when the balance is negative" do
+          before do
+            transient_registration.finance_details = build(:finance_details, balance: -1)
+          end
+
+          it "returns false" do
+            expect(transient_registration.pending_payment?).to eq(false)
+          end
+        end
+
+        context "when the balance is positive" do
+          before do
+            transient_registration.finance_details = build(:finance_details, balance: 1)
+          end
+
+          it "returns true" do
+            expect(transient_registration.pending_payment?).to eq(true)
+          end
+        end
+      end
+    end
+
+    describe "pending_manual_conviction_check?" do
+      context "when the renewal is not in a completed workflow_state" do
+        it "returns false" do
+          expect(transient_registration.pending_manual_conviction_check?).to eq(false)
+        end
+      end
+
+      context "when the renewal is in a completed workflow_state" do
+        before do
+          transient_registration.workflow_state = "renewal_received_form"
+        end
+
+        context "when conviction_check_required? is false" do
+          before do
+            allow(transient_registration).to receive(:conviction_check_required?).and_return(false)
+          end
+
+          it "returns false" do
+            expect(transient_registration.pending_manual_conviction_check?).to eq(false)
+          end
+        end
+
+        context "when conviction_check_required? is true" do
+          before do
+            allow(transient_registration).to receive(:conviction_check_required?).and_return(true)
+          end
+
+          it "returns true" do
+            expect(transient_registration.pending_manual_conviction_check?).to eq(true)
           end
         end
       end
