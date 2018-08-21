@@ -10,10 +10,10 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1533545134">
-              <description>Your Waste Carrier Registration CBDU795</description>
+            <order orderCode="1534837805">
+              <description>Your Waste Carrier Registration CBDU996</description>
               <amount currencyCode="GBP" value="10500" exponent="2"/>
-              <orderContent>Waste Carrier Registration renewal: CBDU795 for Acme Waste</orderContent>
+              <orderContent>Waste Carrier Registration renewal: CBDU996 for Acme Waste</orderContent>
               <paymentMethodMask>
                 <include code="VISA-SSL"/>
                 <include code="MAESTRO-SSL"/>
@@ -55,7 +55,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 06 Aug 2018 08:45:36 GMT
+      - Tue, 21 Aug 2018 07:50:08 GMT
       Server:
       - Apache
       Content-Length:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1533545134"><reference id="3106603068">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1533545134</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1534837805"><reference id="3107961733">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1534837805</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Mon, 06 Aug 2018 08:45:34 GMT
+  recorded_at: Tue, 21 Aug 2018 07:50:05 GMT
 recorded_with: VCR 4.0.0

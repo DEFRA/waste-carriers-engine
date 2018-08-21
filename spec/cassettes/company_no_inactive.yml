@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 06 Aug 2018 08:46:38 GMT
+      - Tue, 21 Aug 2018 07:50:42 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,9 +49,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '600'
       X-Ratelimit-Remain:
-      - '598'
+      - '597'
       X-Ratelimit-Reset:
-      - '1533545498'
+      - '1534838141'
       X-Ratelimit-Window:
       - 5m
       Server:
@@ -63,5 +63,5 @@ http_interactions:
         Elizabeth House","address_line_2":"54-58 High Street"},"undeliverable_registered_office_address":false,"company_name":"DIRECT
         SKIPS UK LTD","annual_return":{"last_made_up_to":"2014-06-11"},"jurisdiction":"england-wales","etag":"1cdef5bc2a020b3e9003b086033b64b78bcb28f6","company_status":"dissolved","has_insolvency_history":false,"has_charges":false,"links":{"self":"/company/07281919","filing_history":"/company/07281919/filing-history","officers":"/company/07281919/officers"},"date_of_cessation":"2016-01-05","can_file":false}'
     http_version: 
-  recorded_at: Mon, 06 Aug 2018 08:46:36 GMT
+  recorded_at: Tue, 21 Aug 2018 07:50:39 GMT
 recorded_with: VCR 4.0.0
