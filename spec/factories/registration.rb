@@ -1,16 +1,16 @@
 FactoryBot.define do
   factory :registration, class: WasteCarriersEngine::Registration do
     trait :has_required_data do
-      account_email "foo@example.com"
-      business_type "limitedCompany"
-      company_name "Acme Waste"
-      company_no "09360070" # We need to use a valid company number
-      contact_email "foo@example.com"
-      first_name "Jane"
-      last_name "Doe"
-      registration_type "carrier_broker_dealer"
-      phone_number "03708 506506"
-      tier "UPPER"
+      account_email { "foo@example.com" }
+      business_type { "limitedCompany" }
+      company_name { "Acme Waste" }
+      company_no { "09360070" } # We need to use a valid company number
+      contact_email { "foo@example.com" }
+      first_name { "Jane" }
+      last_name { "Doe" }
+      registration_type { "carrier_broker_dealer" }
+      phone_number { "03708 506506" }
+      tier { "UPPER" }
 
       metaData { build(:metaData, :has_required_data) }
 
@@ -26,15 +26,15 @@ FactoryBot.define do
     end
 
     trait :has_required_overseas_data do
-      account_email "foo@example.com"
-      business_type "overseas"
-      company_name "Acme Waste"
-      contact_email "foo@example.com"
-      first_name "Jane"
-      last_name "Doe"
-      registration_type "carrier_broker_dealer"
-      phone_number "03708 506506"
-      tier "UPPER"
+      account_email { "foo@example.com" }
+      business_type { "overseas" }
+      company_name { "Acme Waste" }
+      contact_email { "foo@example.com" }
+      first_name { "Jane" }
+      last_name { "Doe" }
+      registration_type { "carrier_broker_dealer" }
+      phone_number { "03708 506506" }
+      tier { "UPPER" }
 
       metaData { build(:metaData, :has_required_data) }
 
@@ -51,12 +51,12 @@ FactoryBot.define do
 
     trait :expires_soon do
       metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
-      expires_on 2.months.from_now
+      expires_on { 2.months.from_now }
     end
 
     trait :expires_later do
       metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
-      expires_on 2.years.from_now
+      expires_on { 2.years.from_now }
     end
 
     trait :is_pending do

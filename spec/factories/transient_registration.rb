@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :transient_registration, class: WasteCarriersEngine::TransientRegistration do
     trait :has_required_data do
-      location "england"
-      declared_convictions "no"
-      temp_cards 1
+      location { "england" }
+      declared_convictions { "no" }
+      temp_cards { 1 }
 
       # Create a new registration when initializing so we can copy its data
       initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_soon).reg_identifier) }
@@ -21,12 +21,12 @@ FactoryBot.define do
     end
 
     trait :has_postcode do
-      temp_company_postcode "BS1 5AH"
-      temp_contact_postcode "BS1 5AH"
+      temp_company_postcode { "BS1 5AH" }
+      temp_contact_postcode { "BS1 5AH" }
     end
 
     trait :declared_convictions do
-      declared_convictions "yes"
+      declared_convictions { "yes" }
     end
 
     trait :has_finance_details do
@@ -42,9 +42,9 @@ FactoryBot.define do
     # Overseas registrations
 
     trait :has_required_overseas_data do
-      location "overseas"
-      declared_convictions "no"
-      temp_cards 1
+      location { "overseas" }
+      declared_convictions { "no" }
+      temp_cards { 1 }
 
       # Create a new registration when initializing so we can copy its data
       initialize_with { new(reg_identifier: create(:registration, :has_required_overseas_data, :expires_soon).reg_identifier) }
@@ -58,8 +58,8 @@ FactoryBot.define do
     end
 
     trait :has_matching_convictions do
-      company_name "Test Waste Services"
-      company_no "12345678"
+      company_name { "Test Waste Services" }
+      company_no { "12345678" }
 
       key_people do
         [build(:key_person, :has_matching_conviction, :main)]
