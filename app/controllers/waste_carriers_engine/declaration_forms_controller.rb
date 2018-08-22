@@ -7,9 +7,8 @@ module WasteCarriersEngine
     def create
       return unless super(DeclarationForm, "declaration_form")
 
-      entity_matching_service = WasteCarriersEngine::EntityMatchingService.new(@transient_registration)
-      entity_matching_service.check_business_for_matches
-      entity_matching_service.check_people_for_matches
+      conviction_data_service = WasteCarriersEngine::ConvictionDataService.new(@transient_registration)
+      conviction_data_service.prepare_convictions_data
     end
   end
 end
