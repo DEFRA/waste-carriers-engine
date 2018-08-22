@@ -70,8 +70,8 @@ module WasteCarriersEngine
       end
 
       def conviction_check_required?
-        return true if declared_convictions == "yes"
-        business_has_matching_or_unknown_conviction? || key_person_has_matching_or_unknown_conviction?
+        return false unless conviction_sign_offs.present? && conviction_sign_offs.length.positive?
+        conviction_sign_offs.first.confirmed == "no"
       end
 
       def business_has_matching_or_unknown_conviction?

@@ -75,7 +75,7 @@ module WasteCarriersEngine
 
             context "when it has been flagged for conviction checks" do
               before do
-                transient_registration.update_attributes(declared_convictions: "yes")
+                transient_registration.conviction_sign_offs = [build(:conviction_sign_off)]
               end
 
               it "redirects to renewal_received_form" do
