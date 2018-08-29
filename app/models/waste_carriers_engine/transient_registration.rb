@@ -118,9 +118,18 @@ module WasteCarriersEngine
     end
 
     def remove_invalid_attributes
+      remove_invalid_phone_numbers
+      remove_revoked_reason
+    end
+
+    def remove_invalid_phone_numbers
       validator = PhoneNumberValidator.new(attributes: :phone_number)
       return if validator.validate_each(self, :phone_number, phone_number)
       self.phone_number = nil
+    end
+
+    def remove_revoked_reason
+      metaData.revoked_reason = nil
     end
 
     # Check if a transient renewal already exists for this registration so we don't have

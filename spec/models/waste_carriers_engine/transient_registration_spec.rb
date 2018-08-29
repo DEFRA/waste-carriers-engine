@@ -42,6 +42,19 @@ module WasteCarriersEngine
           expect(transient_registration.phone_number).to eq(nil)
         end
       end
+
+      context "when the source registration has a revoked_reason" do
+        let(:registration) do
+          create(:registration,
+                 :has_required_data,
+                 metaData: build(:metaData, revoked_reason: "foo"))
+        end
+
+        it "does not import it" do
+          transient_registration = TransientRegistration.new(reg_identifier: registration.reg_identifier)
+          expect(transient_registration.metaData.revoked_reason).to eq(nil)
+        end
+      end
     end
 
     describe "#reg_identifier" do
