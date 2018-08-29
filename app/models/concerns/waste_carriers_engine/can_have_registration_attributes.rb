@@ -74,6 +74,11 @@ module WasteCarriersEngine
         conviction_sign_offs.first.confirmed == "no"
       end
 
+      def conviction_check_approved?
+        return false unless conviction_sign_offs.present? && conviction_sign_offs.length.positive?
+        conviction_sign_offs.first.confirmed == "yes"
+      end
+
       def business_has_matching_or_unknown_conviction?
         return true unless conviction_search_result.present?
         return false if conviction_search_result.match_result == "NO"
