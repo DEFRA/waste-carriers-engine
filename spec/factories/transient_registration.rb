@@ -39,6 +39,13 @@ FactoryBot.define do
       conviction_search_result { build(:conviction_search_result, :match_result_no) }
     end
 
+    trait :requires_conviction_check do
+      workflow_state { "renewal_received_form" }
+      key_people { [build(:key_person, :matched_conviction_search_result)] }
+      conviction_search_result { build(:conviction_search_result, :match_result_yes) }
+      conviction_sign_offs { [build(:conviction_sign_off)] }
+    end
+
     # Overseas registrations
 
     trait :has_required_overseas_data do
