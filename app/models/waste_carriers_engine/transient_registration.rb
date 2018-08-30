@@ -85,6 +85,7 @@ module WasteCarriersEngine
     end
 
     def pending_manual_conviction_check?
+      return false unless metaData.ACTIVE?
       renewal_application_submitted? && conviction_check_required?
     end
 
