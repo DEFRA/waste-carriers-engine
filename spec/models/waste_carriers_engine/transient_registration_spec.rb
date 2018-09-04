@@ -202,8 +202,20 @@ module WasteCarriersEngine
             allow(transient_registration).to receive(:conviction_check_required?).and_return(true)
           end
 
-          it "returns true" do
-            expect(transient_registration.pending_manual_conviction_check?).to eq(true)
+          context "when the registration is not active" do
+            before do
+              transient_registration.metaData.revoke!
+            end
+
+            it "returns false" do
+              expect(transient_registration.pending_manual_conviction_check?).to eq(false)
+            end
+          end
+
+          context "when the registration is active" do
+            it "returns true" do
+              expect(transient_registration.pending_manual_conviction_check?).to eq(true)
+            end
           end
         end
       end
