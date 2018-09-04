@@ -46,9 +46,9 @@ module WasteCarriersEngine
           expect(finance_details.balance).to eq(10_000)
         end
 
-        context "when there is also a payment" do
+        context "when there is also a WorldPay payment" do
           before do
-            finance_details.payments = [build(:payment, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
+            finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
           end
 
           it "should have the correct balance" do
@@ -57,9 +57,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the payment is not authorised" do
+        context "when the WorldPay payment is not authorised" do
           before do
-            finance_details.payments = [build(:payment, amount: 5_000, world_pay_payment_status: "REFUSED")]
+            finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "REFUSED")]
           end
 
           it "should not include it when calculating the balance" do
@@ -67,11 +67,22 @@ module WasteCarriersEngine
             expect(finance_details.balance).to eq(10_000)
           end
         end
+
+        context "when the payment is non-WorldPay" do
+          before do
+            finance_details.payments = [build(:payment, :bank_transfer, amount: 5_000)]
+          end
+
+          it "should have the correct balance" do
+            finance_details.update_balance
+            expect(finance_details.balance).to eq(5_000)
+          end
+        end
       end
 
       context "when there is a payment only" do
         before do
-          finance_details.payments = [build(:payment, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
+          finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
         end
 
         it "should have the correct balance" do

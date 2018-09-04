@@ -26,7 +26,9 @@ module WasteCarriersEngine
 
     def update_balance
       order_balance = orders.sum { |item| item[:total_amount] }
-      payment_balance = payments.where(world_pay_payment_status: "AUTHORISED").sum { |item| item[:amount] }
+      # Select payments where the type is not WORLDPAY, or if it is, the status is AUTHORISED
+      payment_balance = payments.any_of({ :payment_type.ne => "WORLDPAY" },
+                                        { world_pay_payment_status: "AUTHORISED" }).sum { |item| item[:amount] }
       self.balance = order_balance - payment_balance
     end
   end
