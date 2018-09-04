@@ -18,7 +18,6 @@ module WasteCarriersEngine
     field :updatedByUser, as: :updated_by_user,                   type: String
     field :comment,                                               type: String
     field :paymentType, as: :payment_type,                        type: String
-    field :manualPayment, as: :manual_payment,                    type: String
 
     def self.new_from_worldpay(order, current_user)
       payment = Payment.new
@@ -30,6 +29,27 @@ module WasteCarriersEngine
       payment[:registration_reference] = "Worldpay"
       payment[:comment] = "Paid via Worldpay"
       payment[:updated_by_user] = current_user.email
+      payment.finance_details = order.finance_details
+
+      payment
+    end
+
+    def self.new_from_non_worldpay(params, order)
+      payment = Payment.new
+
+      payment[:amount] = params[:amount]
+      payment[:comment] = params[:comment]
+      payment[:currency] = "GBP"
+      payment[:date_entered] = Date.current
+      payment[:date_received] = params[:date_received]
+      payment[:date_received_day] = params[:date_received_day]
+      payment[:date_received_month] = params[:date_received_month]
+      payment[:date_received_year] = params[:date_received_year]
+      payment[:order_key] = order[:order_code]
+      payment[:payment_type] = params[:payment_type]
+      payment[:registration_reference] = params[:registration_reference]
+      payment[:updated_by_user] = params[:updated_by_user]
+
       payment.finance_details = order.finance_details
 
       payment

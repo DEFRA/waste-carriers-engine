@@ -44,6 +44,81 @@ module WasteCarriersEngine
       end
     end
 
+    describe "new_from_non_worldpay" do
+      before do
+        Timecop.freeze(Time.new(2018, 1, 1)) do
+          FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user)
+        end
+      end
+
+      let(:params) do
+        {
+          amount: 100,
+          comment: "foo",
+          date_received: Date.new(2018, 1, 1),
+          date_received_day: 1,
+          date_received_month: 1,
+          date_received_year: 2018,
+          payment_type: "BANKTRANSFER",
+          registration_reference: "foo",
+          updated_by_user: current_user.email
+        }
+      end
+
+      let(:order) { transient_registration.finance_details.orders.first }
+      let(:payment) { Payment.new_from_non_worldpay(params, order) }
+
+      it "should set the correct amount" do
+        expect(payment.amount).to eq(params[:amount])
+      end
+
+      it "should set the correct comment" do
+        expect(payment.comment).to eq(params[:comment])
+      end
+
+      it "should set the correct currency" do
+        expect(payment.currency).to eq("GBP")
+      end
+
+      it "should set the correct date_entered" do
+        Timecop.freeze(Time.new(2018, 1, 1)) do
+          expect(payment.date_entered).to eq(Date.new(2018, 1, 1))
+        end
+      end
+
+      it "should set the correct date_received" do
+        expect(payment.date_received).to eq(params[:date_received])
+      end
+
+      it "should set the correct date_received_day" do
+        expect(payment.date_received_day).to eq(params[:date_received_day])
+      end
+
+      it "should set the correct date_received_month" do
+        expect(payment.date_received_month).to eq(params[:date_received_month])
+      end
+
+      it "should set the correct date_received_year" do
+        expect(payment.date_received_year).to eq(params[:date_received_year])
+      end
+
+      it "should set the correct order_key" do
+        expect(payment.order_key).to eq("1514764800")
+      end
+
+      it "should set the correct payment_type" do
+        expect(payment.payment_type).to eq(params[:payment_type])
+      end
+
+      it "should set the correct registration_reference" do
+        expect(payment.registration_reference).to eq(params[:registration_reference])
+      end
+
+      it "should set the correct updated_by_user" do
+        expect(payment.updated_by_user).to eq(params[:updated_by_user])
+      end
+    end
+
     describe "update_after_worldpay" do
       let(:order) { transient_registration.finance_details.orders.first }
       let(:payment) { Payment.new_from_worldpay(order, current_user) }
