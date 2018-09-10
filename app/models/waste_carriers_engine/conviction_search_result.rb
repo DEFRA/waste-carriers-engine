@@ -22,7 +22,8 @@ module WasteCarriersEngine
       result.matching_system = data["matching_system"]
       result.reference = data["reference"]
       result.matched_name = data["matched_name"]
-      result.searched_at = data["searched_at"]
+      # The service provides searched_at as milliseconds from the Unix epoch, so conversion is required
+      result.searched_at = Time.at(data["searched_at"] / 1_000).to_datetime
       result.confirmed = data["confirmed"]
 
       result

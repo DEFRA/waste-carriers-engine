@@ -58,7 +58,8 @@ module WasteCarriersEngine
       {
         "match_result" => "UNKNOWN",
         "matching_system" => "ERROR",
-        "searched_at" => Time.now.to_i,
+        # Get time in milliseconds
+        "searched_at" => Time.now.to_i * 1_000,
         "confirmed" => "no"
       }
     end
