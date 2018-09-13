@@ -541,6 +541,20 @@ module WasteCarriersEngine
               # Use .to_i to ignore milliseconds when comparing time
               expect(new_expiry_date.to_i).to eq((old_expiry_date + 3.years).to_i)
             end
+
+            it "updates the registration's date_registered" do
+              Timecop.freeze do
+                registration.metaData.renew
+                expect(registration.metaData.date_registered).to eq(DateTime.current)
+              end
+            end
+
+            it "updates the registration's date_activated" do
+              Timecop.freeze do
+                registration.metaData.renew
+                expect(registration.metaData.date_activated).to eq(DateTime.current)
+              end
+            end
           end
         end
 

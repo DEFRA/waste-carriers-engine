@@ -46,7 +46,8 @@ module WasteCarriersEngine
                       to: :ACTIVE,
                       guard: %i[close_to_expiry_date?
                                 should_not_be_expired?],
-                      after: :extend_expiry_date
+                      after: %i[extend_expiry_date
+                                update_activation_timestamps]
         end
       end
 
@@ -71,6 +72,11 @@ module WasteCarriersEngine
       def extend_expiry_date
         new_expiry_date = expiry_date_after_renewal(registration.expires_on)
         registration.expires_on = new_expiry_date
+      end
+
+      def update_activation_timestamps
+        self.date_registered = DateTime.current
+        self.date_activated = date_registered
       end
 
       def log_status_change
