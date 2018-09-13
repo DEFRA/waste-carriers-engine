@@ -45,23 +45,29 @@ module WasteCarriersEngine
     end
 
     def copy_data_from_transient_registration
-      attributes = @transient_registration.attributes.except("_id",
-                                                             "financeDetails",
-                                                             "temp_cards",
-                                                             "temp_company_postcode",
-                                                             "temp_contact_postcode",
-                                                             "temp_os_places_error",
-                                                             "temp_payment_method",
-                                                             "temp_tier_check",
-                                                             "workflow_state")
-      @registration.write_attributes(attributes)
+      registration_attributes = @registration.attributes.except("_id", "financeDetails", "past_registrations")
+      renewal_attributes = @transient_registration.attributes.except("_id",
+                                                                     "financeDetails",
+                                                                     "temp_cards",
+                                                                     "temp_company_postcode",
+                                                                     "temp_contact_postcode",
+                                                                     "temp_os_places_error",
+                                                                     "temp_payment_method",
+                                                                     "temp_tier_check",
+                                                                     "workflow_state")
 
-      # If attributes aren't included in the transient_registration, for example if the user skipped the tier check,
-      # update those attributes to be nil for the registration
-      registration_attributes = @registration.attributes.except("_id", "financeDetails", "past_registrations").keys
-      registration_attributes.each do |attribute|
-        next if attributes.keys.include?(attribute)
-        @registration[attribute] = nil
+      remove_unused_attributes(registration_attributes, renewal_attributes)
+
+      @registration.write_attributes(renewal_attributes)
+    end
+
+    def remove_unused_attributes(registration_attributes, renewal_attributes)
+      registration_attributes.keys.each do |old_attribute|
+        # If attributes aren't included in the transient_registration, for example if the user skipped the tier check,
+        # remove those attributes from the registration instead of leaving the existing values
+        next if renewal_attributes.keys.include?(old_attribute)
+
+        @registration.remove_attribute(old_attribute.to_sym)
       end
     end
 
