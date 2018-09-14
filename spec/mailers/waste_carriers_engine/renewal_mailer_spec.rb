@@ -6,6 +6,10 @@ module WasteCarriersEngine
       let(:registration) { create(:registration, :has_required_data) }
       let(:mail) { RenewalMailer.send_renewal_complete_email(registration) }
 
+      before do
+        allow(Rails.configuration).to receive(:email_service_email).and_return("test@example.com")
+      end
+
       it "uses the correct 'to' address" do
         expect(mail.to).to eq([registration.contact_email])
       end
