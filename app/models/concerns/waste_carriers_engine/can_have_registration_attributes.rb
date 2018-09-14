@@ -26,7 +26,6 @@ module WasteCarriersEngine
       field :company_no,                                                    type: String # May include letters, despite name
       field :constructionWaste, as: :construction_waste,                    type: String # 'yes' or 'no' - should refactor to boolean
       field :contactEmail, as: :contact_email,                              type: String
-      field :copy_cards,                                                    type: Integer
       field :declaration,                                                   type: Integer
       field :declaredConvictions, as: :declared_convictions,                type: String # 'yes' or 'no' - should refactor to boolean
       field :expires_on,                                                    type: DateTime
@@ -40,10 +39,26 @@ module WasteCarriersEngine
       field :otherBusinesses, as: :other_businesses,                        type: String # 'yes' or 'no' - should refactor to boolean
       field :phoneNumber, as: :phone_number,                                type: String
       field :regIdentifier, as: :reg_identifier,                            type: String
-      field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :registrationType, as: :registration_type,                      type: String
+      field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :tier,                                                          type: String
       field :uuid,                                                          type: String
+
+      # Deprecated attributes
+      # These are attributes which were in use during earlier stages of the
+      # project, but are no longer used. However, in some cases older
+      # registrations still use these fields, so we need to allow for them
+      # to avoid causing database errors.
+      field :copy_card_fee,                                    type: String
+      field :copy_cards,                                       type: String
+      field :individualsType, as: :individuals_type,           type: String
+      field :otherTitle, as: :other_title,                     type: String
+      field :position,                                         type: String
+      field :publicBodyType, as: :public_body_type,            type: String
+      field :publicBodyTypeOther, as: :public_body_type_other, type: String
+      field :registration_fee,                                 type: String
+      field :title,                                            type: String
+      field :total_fee,                                        type: String
 
       def contact_address
         return nil unless addresses.present?
