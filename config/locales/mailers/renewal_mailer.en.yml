@@ -2,6 +2,7 @@ en:
   waste_carriers_engine:
     renewal_mailer:
       send_renewal_complete_email:
+        subject: "Your waste carriers registration %{reg_identifier} has been renewed"
         heading:
           header: "Your registration as an upper tier waste carrier, broker and dealer has been renewed"
           number: "Your registration number is still"

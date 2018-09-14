@@ -8,7 +8,8 @@ module WasteCarriersEngine
 
       mail(to: @registration.contact_email,
            from: "WCR test <test@example.com>",
-           subject: "Renewal completed" )
+           subject: I18n.t(".waste_carriers_engine.renewal_mailer.send_renewal_complete_email.subject",
+                           reg_identifier: @registration.reg_identifier) )
     end
 
     private

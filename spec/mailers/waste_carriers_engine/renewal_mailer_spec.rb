@@ -15,7 +15,8 @@ module WasteCarriersEngine
       end
 
       it "uses the correct subject" do
-        expect(mail.subject).to eq("Renewal completed")
+        subject = "Your waste carriers registration #{registration.reg_identifier} has been renewed"
+        expect(mail.subject).to eq(subject)
       end
 
       it "includes the correct template in the body" do
