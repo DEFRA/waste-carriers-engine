@@ -68,4 +68,9 @@ RSpec.configure do |config|
 
     DatabaseCleaner.clean
   end
+
+  # Clean the email queue before running tests
+  config.before(:suite) do
+    ActionMailer::Base.deliveries.clear
+  end
 end

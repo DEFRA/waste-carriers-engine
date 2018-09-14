@@ -11,6 +11,7 @@ module WasteCarriersEngine
       create_past_registration
       update_registration
       delete_transient_registration
+      send_confirmation_email
     end
 
     private
@@ -42,6 +43,10 @@ module WasteCarriersEngine
 
     def delete_transient_registration
       @transient_registration.delete
+    end
+
+    def send_confirmation_email
+      RenewalMailer.send_renewal_complete_email(@registration).deliver_now
     end
 
     def copy_data_from_transient_registration
