@@ -18,8 +18,16 @@ module WasteCarriersEngine
         expect(mail.subject).to eq("Renewal completed")
       end
 
-      it "includes the correct text in the body" do
-        expect(mail.body.encoded).to include("#{registration.reg_identifier} has been renewed")
+      it "includes the correct template in the body" do
+        expect(mail.body.encoded).to include("Your registration number is still")
+      end
+
+      it "includes the correct reg_identifier in the body" do
+        expect(mail.body.encoded).to include(registration.reg_identifier)
+      end
+
+      it "includes the correct address in the body" do
+        expect(mail.body.encoded).to include(registration.registered_address.town_city)
       end
     end
   end
