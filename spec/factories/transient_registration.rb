@@ -46,6 +46,14 @@ FactoryBot.define do
       conviction_sign_offs { [build(:conviction_sign_off)] }
     end
 
+    trait :has_unpaid_balance do
+      finance_details { build(:finance_details, balance: 1000) }
+    end
+
+    trait :has_paid_balance do
+      finance_details { build(:finance_details, balance: 0) }
+    end
+
     # Overseas registrations
 
     trait :has_required_overseas_data do

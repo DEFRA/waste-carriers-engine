@@ -41,7 +41,7 @@ module WasteCarriersEngine
         create(:transient_registration,
                :has_required_data,
                :has_addresses,
-               finance_details: build(:finance_details, balance: 0),
+               :has_paid_balance,
                workflow_state: "renewal_received_form")
       end
       let(:mail) { RenewalMailer.send_renewal_received_email(transient_registration) }
@@ -60,7 +60,7 @@ module WasteCarriersEngine
 
       context "when there is an unpaid balance" do
         before do
-          transient_registration.finance_details = build(:finance_details, balance: 550)
+          transient_registration.finance_details.balance = 550
         end
 
         it "uses the correct subject" do

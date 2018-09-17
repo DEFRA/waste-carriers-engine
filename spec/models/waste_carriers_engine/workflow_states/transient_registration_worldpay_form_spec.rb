@@ -9,6 +9,7 @@ module WasteCarriersEngine
                  :has_required_data,
                  :has_conviction_search_result,
                  :has_key_people,
+                 :has_paid_balance,
                  workflow_state: "worldpay_form")
         end
 

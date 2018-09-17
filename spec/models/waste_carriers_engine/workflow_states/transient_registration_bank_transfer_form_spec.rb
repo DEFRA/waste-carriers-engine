@@ -7,6 +7,7 @@ module WasteCarriersEngine
         let(:transient_registration) do
           create(:transient_registration,
                  :has_required_data,
+                 :has_unpaid_balance,
                  workflow_state: "bank_transfer_form")
         end
 
