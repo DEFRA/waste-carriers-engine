@@ -1,6 +1,7 @@
 module WasteCarriersEngine
   class RenewalMailer < ActionMailer::Base
-    add_template_helper(MailerHelper)
+    helper "waste_carriers_engine/application"
+    helper "waste_carriers_engine/mailer"
 
     def send_renewal_complete_email(registration)
       @registration = registration
@@ -14,6 +15,7 @@ module WasteCarriersEngine
 
     def send_renewal_received_email(transient_registration)
       @transient_registration = transient_registration
+      @total_to_pay = @transient_registration.finance_details.balance
 
       template = if @transient_registration.pending_payment?
                    "send_renewal_received_pending_payment_email"
@@ -23,8 +25,6 @@ module WasteCarriersEngine
 
       subject = I18n.t(".waste_carriers_engine.renewal_mailer.#{template}.subject",
                        reg_identifier: @transient_registration.reg_identifier)
-
-      @address_lines = displayable_address(@transient_registration.registered_address)
 
       mail(to: @transient_registration.contact_email,
            from: "#{Rails.configuration.email_service_name} <#{Rails.configuration.email_service_email}>",

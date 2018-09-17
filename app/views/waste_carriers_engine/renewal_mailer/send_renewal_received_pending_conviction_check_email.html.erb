@@ -66,67 +66,11 @@
           <tr>
             <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
               <p style="font-size: 19px; line-height: 1.315789474; margin: 30px 0 15px 0;">
-                <%= t(".responsibilities.paragraph_1.#{@transient_registration.registration_type}") %>
-              </p>
-
-              <ul>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_1.item_1") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
-                  <%= t(".responsibilities.list_1.item_2") %>
-                </li>
-              </ul>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".responsibilities.paragraph_2") %>
-              </p>
-
-              <ul>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_2.item_1") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_2.item_2") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_2.item_3") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
-                  <%= t(".responsibilities.list_2.item_4") %>
-                </li>
-              </ul>
-
-              <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".details.subheading") %>
+                <%= t(".subheading_1") %>
               </p>
 
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".details.paragraph_1") %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
-                <%= @transient_registration.first_name %> <%= @transient_registration.last_name %>
-              </p>
-
-              <% @address_lines.each do |line| %>
-                <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
-                  <%= line %>
-                </p>
-              <% end %>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 15px 0 15px 0;">
-                <%= t(".details.labels.phone_number") %> <%= @transient_registration.phone_number %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".details.labels.date_activated") %> <%= @transient_registration.metaData.date_activated %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 30px 0;">
-                <%= t(".details.paragraph_2.part_1") %>
-                <%= link_to(t(".details.paragraph_2.link_text"), "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
-                <%= t(".details.paragraph_2.part_2") %>
+                <%= t(".paragraph_1") %>
               </p>
 
               <ul>

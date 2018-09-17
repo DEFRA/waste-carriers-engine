@@ -41,6 +41,7 @@ module WasteCarriersEngine
         create(:transient_registration,
                :has_required_data,
                :has_addresses,
+               finance_details: build(:finance_details, balance: 0),
                workflow_state: "renewal_received_form")
       end
       let(:mail) { RenewalMailer.send_renewal_received_email(transient_registration) }
@@ -57,13 +58,9 @@ module WasteCarriersEngine
         expect(mail.body.encoded).to include(transient_registration.reg_identifier)
       end
 
-      it "includes the correct address in the body" do
-        expect(mail.body.encoded).to include(transient_registration.registered_address.town_city)
-      end
-
       context "when there is an unpaid balance" do
         before do
-          transient_registration.finance_details = build(:finance_details, balance: 100)
+          transient_registration.finance_details = build(:finance_details, balance: 550)
         end
 
         it "uses the correct subject" do
@@ -72,22 +69,22 @@ module WasteCarriersEngine
         end
 
         it "includes the correct template in the body" do
-          expect(mail.body.encoded).to include("Your registration number is still")
+          expect(mail.body.encoded).to include("Pay the renewal charge")
+        end
+
+        it "includes the correct balance in the body" do
+          expect(mail.body.encoded).to include("5.50")
         end
       end
 
       context "when the balance is paid" do
-        before do
-          transient_registration.finance_details = build(:finance_details, balance: 0)
-        end
-
         it "uses the correct subject" do
           subject = "Your application to renew waste carriers registration #{transient_registration.reg_identifier} has been received"
           expect(mail.subject).to eq(subject)
         end
 
         it "includes the correct template in the body" do
-          expect(mail.body.encoded).to include("Your registration number is still")
+          expect(mail.body.encoded).to include("What happens next")
         end
       end
     end
