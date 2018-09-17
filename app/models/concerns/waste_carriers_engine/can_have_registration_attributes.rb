@@ -57,6 +57,7 @@ module WasteCarriersEngine
       field :publicBodyType, as: :public_body_type,            type: String
       field :publicBodyTypeOther, as: :public_body_type_other, type: String
       field :registration_fee,                                 type: String
+      field :renewalRequested, as: :renewal_requested,         type: String
       field :title,                                            type: String
       field :total_fee,                                        type: String
 
