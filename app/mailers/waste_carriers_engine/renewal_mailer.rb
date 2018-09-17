@@ -14,12 +14,23 @@ module WasteCarriersEngine
 
     def send_renewal_received_email(transient_registration)
       @transient_registration = transient_registration
+
+      template = if @transient_registration.pending_payment?
+                   "send_renewal_received_pending_payment_email"
+                 else
+                   "send_renewal_received_pending_conviction_check_email"
+                 end
+
+      subject = I18n.t(".waste_carriers_engine.renewal_mailer.#{template}.subject",
+                       reg_identifier: @transient_registration.reg_identifier)
+
       @address_lines = displayable_address(@transient_registration.registered_address)
 
       mail(to: @transient_registration.contact_email,
            from: "#{Rails.configuration.email_service_name} <#{Rails.configuration.email_service_email}>",
-           subject: I18n.t(".waste_carriers_engine.renewal_mailer.send_renewal_received_email.subject",
-                           reg_identifier: @transient_registration.reg_identifier) )
+           subject: subject ) do |format|
+        format.html { render template }
+      end
     end
 
     private
