@@ -123,6 +123,12 @@ module WasteCarriersEngine
           renewal_completion_service.complete_renewal
           expect(TransientRegistration.where(reg_identifier: transient_registration.reg_identifier).count).to eq(0)
         end
+
+        it "sends a confirmation email" do
+          old_emails_sent_count = ActionMailer::Base.deliveries.count
+          renewal_completion_service.complete_renewal
+          expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count + 1)
+        end
       end
 
       context "when the renewal is not valid" do

@@ -77,6 +77,10 @@ module Dummy
     config.worldpay_password = ENV["WCRS_WORLDPAY_ECOM_PASSWORD"]
     config.worldpay_macsecret =  ENV["WCRS_WORLDPAY_ECOM_MACSECRET"]
 
+    # Emails
+    config.email_service_name = "Waste Carriers Registration Service"
+    config.email_service_email = ENV["WCRS_EMAIL_SERVICE_EMAIL"]
+
     # Digital or assisted digital metadata.Route value
     config.metadata_route = "DIGITAL"
 
