@@ -24,6 +24,12 @@ module WasteCarriersEngine
           it "changes to :renewal_complete_form after the 'next' event" do
             expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_complete_form).on_event(:next)
           end
+
+          it "does not send a confirmation email after the 'next' event" do
+            old_emails_sent_count = ActionMailer::Base.deliveries.count
+            transient_registration.next!
+            expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count)
+          end
         end
 
         context "when a conviction check is required" do
@@ -33,6 +39,12 @@ module WasteCarriersEngine
 
           it "changes to :renewal_received_form after the 'next' event" do
             expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_received_form).on_event(:next)
+          end
+
+          it "sends a confirmation email after the 'next' event" do
+            old_emails_sent_count = ActionMailer::Base.deliveries.count
+            transient_registration.next!
+            expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count + 1)
           end
         end
       end

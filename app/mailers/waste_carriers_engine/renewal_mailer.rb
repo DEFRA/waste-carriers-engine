@@ -12,6 +12,16 @@ module WasteCarriersEngine
                            reg_identifier: @registration.reg_identifier) )
     end
 
+    def send_renewal_received_email(transient_registration)
+      @transient_registration = transient_registration
+      @address_lines = displayable_address(@transient_registration.registered_address)
+
+      mail(to: @transient_registration.contact_email,
+           from: "#{Rails.configuration.email_service_name} <#{Rails.configuration.email_service_email}>",
+           subject: I18n.t(".waste_carriers_engine.renewal_mailer.send_renewal_received_email.subject",
+                           reg_identifier: @transient_registration.reg_identifier) )
+    end
+
     private
 
     def displayable_address(address)
