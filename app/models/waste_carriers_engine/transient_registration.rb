@@ -68,7 +68,14 @@ module WasteCarriersEngine
 
     def company_no_changed?
       return false unless company_no_required?
-      old_company_no = Registration.where(reg_identifier: reg_identifier).first.company_no.to_s
+
+      registration = Registration.where(reg_identifier: reg_identifier).first
+      # LLP is a new business type, so users who previously were forced to select 'partnership' would not have had the
+      # opportunity to enter a company_no. Therefore we have nothing to compare against and should allow users to
+      # continue the renewal journey.
+      return false if registration.business_type == "partnership"
+
+      old_company_no = registration.company_no.to_s
       # It was previously valid to have company_nos with less than 8 digits
       # The form prepends 0s to make up the length, so we should do this for the old number to match
       old_company_no = "0#{old_company_no}" while old_company_no.length < 8
