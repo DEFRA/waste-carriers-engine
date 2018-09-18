@@ -41,6 +41,7 @@ RSpec.shared_examples "POST without params form" do |form|
                :has_required_data,
                :has_addresses,
                :has_key_people,
+               :has_unpaid_balance,
                account_email: user.email)
       end
 

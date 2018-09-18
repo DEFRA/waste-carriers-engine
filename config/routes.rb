@@ -1,5 +1,7 @@
 WasteCarriersEngine::Engine.routes.draw do
-  resources :registrations, only: [:index]
+  unless Rails.env.production?
+    resources :registrations, only: [:index]
+  end
 
   resources :renewal_start_forms,
             only: [:new, :create],

@@ -257,13 +257,15 @@ module WasteCarriersEngine
 
           transitions from: :worldpay_form,
                       to: :renewal_received_form,
-                      if: :pending_convictions_check?
+                      if: :pending_convictions_check?,
+                      success: :send_renewal_received_email
 
           transitions from: :worldpay_form,
                       to: :renewal_complete_form
 
           transitions from: :bank_transfer_form,
-                      to: :renewal_received_form
+                      to: :renewal_received_form,
+                      success: :send_renewal_received_email
         end
 
         event :back do
@@ -549,6 +551,10 @@ module WasteCarriersEngine
 
     def pending_convictions_check?
       conviction_check_required?
+    end
+
+    def send_renewal_received_email
+      RenewalMailer.send_renewal_received_email(self).deliver_now
     end
   end
 end
