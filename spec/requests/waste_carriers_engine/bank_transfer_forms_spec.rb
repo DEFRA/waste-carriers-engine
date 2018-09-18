@@ -15,6 +15,7 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:transient_registration,
                    :has_required_data,
+                   :has_unpaid_balance,
                    account_email: user.email,
                    workflow_state: "bank_transfer_form")
           end
@@ -58,6 +59,7 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:transient_registration,
                    :has_required_data,
+                   :has_unpaid_balance,
                    account_email: user.email,
                    workflow_state: "bank_transfer_form")
           end
@@ -79,6 +81,7 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:transient_registration,
                    :has_required_data,
+                   :has_unpaid_balance,
                    account_email: user.email,
                    workflow_state: "renewal_start_form")
           end

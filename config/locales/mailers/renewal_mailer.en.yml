@@ -4,7 +4,10 @@ en:
       send_renewal_complete_email:
         subject: "Your waste carriers registration %{reg_identifier} has been renewed"
         heading:
-          header: "Your registration as an upper tier waste carrier, broker and dealer has been renewed"
+          header:
+            carrier_dealer: "Your registration as an upper tier waste carrier and dealer has been renewed"
+            broker_dealer: "Your registration as an upper tier waste broker and dealer has been renewed"
+            carrier_broker_dealer: "Your registration as an upper tier waste carrier, broker and dealer has been renewed"
           number: "Your registration number is still"
         paragraph_1:
           carrier_dealer: "Based on what you told us about your organisation and what it does, we have renewed your registration as an upper tier waste carrier and dealer."
@@ -34,6 +37,32 @@ en:
             part_1: "You can"
             link_text: "sign in"
             part_2: "to view your certificate or make a change to your registration."
+        footer_list:
+          item_1: "If you have enquiries please contact the Environment Agency helpline: 03708 506506"
+          item_2: "This is an automated email, please do not reply"
+
+      send_renewal_received_pending_conviction_check_email:
+        subject: "Your application to renew waste carriers registration %{reg_identifier} has been received"
+        heading:
+          header:
+            carrier_dealer: "Your application to renew your waste carrier and dealer registration has been received"
+            broker_dealer: "Your application to renew your waste broker and dealer registration has been received"
+            carrier_broker_dealer: "Your application to renew your waste carrier, broker and dealer registration has been received"
+          number: "Your registration number is still"
+        subheading_1: "What happens next"
+        paragraph_1: "We'll check your details and let you know whether your renewal application has been successful. We aim to do this within 10 working days."
+        footer_list:
+          item_1: "If you have enquiries please contact the Environment Agency helpline: 03708 506506"
+          item_2: "This is an automated email, please do not reply"
+
+      send_renewal_received_pending_payment_email:
+        subject: "Your application to renew waste carriers registration %{reg_identifier} is awaiting payment"
+        heading:
+          header:
+            carrier_dealer: "Your application to renew your waste carrier and dealer registration has been received"
+            broker_dealer: "Your application to renew your waste broker and dealer registration has been received"
+            carrier_broker_dealer: "Your application to renew your waste carrier, broker and dealer registration has been received"
+          number: "Your registration number is still"
         footer_list:
           item_1: "If you have enquiries please contact the Environment Agency helpline: 03708 506506"
           item_2: "This is an automated email, please do not reply"

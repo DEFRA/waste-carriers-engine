@@ -48,9 +48,9 @@
             <td width="25%">&nbsp;</td>
           </tr>
           <tr>
-            <td bgcolor="#00823B" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
+            <td bgcolor="#28a197" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
               <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
-                <%= t(".heading.header.#{@registration.registration_type}") %>
+                <%= t(".heading.header.#{@transient_registration.registration_type}") %>
               </p>
 
               <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0;">
@@ -58,75 +58,19 @@
               </p>
 
               <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 15px 0px 30px 0px;">
-                <%= @registration.reg_identifier %>
+                <%= @transient_registration.reg_identifier %>
               </p>
             </td>
             <td width="25%">&nbsp;</td>
           </tr>
           <tr>
             <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 30px 0 15px 0;">
-                <%= t(".responsibilities.paragraph_1.#{@registration.registration_type}") %>
-              </p>
-
-              <ul>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_1.item_1") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
-                  <%= t(".responsibilities.list_1.item_2") %>
-                </li>
-              </ul>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".responsibilities.paragraph_2") %>
-              </p>
-
-              <ul>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_2.item_1") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_2.item_2") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".responsibilities.list_2.item_3") %>
-                </li>
-                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
-                  <%= t(".responsibilities.list_2.item_4") %>
-                </li>
-              </ul>
-
               <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".details.subheading") %>
+                <%= t(".subheading_1") %>
               </p>
 
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".details.paragraph_1") %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
-                <%= @registration.first_name %> <%= @registration.last_name %>
-              </p>
-
-              <% @address_lines.each do |line| %>
-                <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
-                  <%= line %>
-                </p>
-              <% end %>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 15px 0 15px 0;">
-                <%= t(".details.labels.phone_number") %> <%= @registration.phone_number %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".details.labels.date_activated") %> <%= @registration.metaData.date_activated.in_time_zone("London").to_date %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 30px 0;">
-                <%= t(".details.paragraph_2.part_1") %>
-                <%= link_to(t(".details.paragraph_2.link_text"), "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
-                <%= t(".details.paragraph_2.part_2") %>
+                <%= t(".paragraph_1") %>
               </p>
 
               <ul>

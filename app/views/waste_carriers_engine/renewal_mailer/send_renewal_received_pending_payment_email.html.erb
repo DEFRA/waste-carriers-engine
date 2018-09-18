@@ -1,0 +1,241 @@
+<!doctype html>
+<!--[if lt IE 7]>  <html class="ie ie6 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 7]>     <html class="ie ie7 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 8]>     <html class="ie ie8 lte9 lte8"> <![endif]-->
+<!--[if IE 9]>     <html class="ie ie9 lte9"> <![endif]-->
+<!--[if gt IE 9]>  <html> <![endif]-->
+<!--[if !IE]><!-->
+<html>
+<!--<![endif]-->
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <!-- Use title if it's in the page YAML frontmatter -->
+  <title>Waste Carriers Service</title>
+</head>
+
+<body style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="100%" height="53px" bgcolor="#0b0c0c">
+        <table width="580" cellpadding="0" cellspacing="0" border="0" align="center">
+          <tr>
+            <td width="100%" bgcolor="#0b0c0c" valign="middle">
+              <%= email_image_tag("govuk_logotype_email.png", { alt: 'GOV.UK', border: '0' }) %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF">
+    <tr>
+      <td width="100%">
+        <table width="580" cellpadding="0" cellspacing="0" border="0" align="center">
+          <tr>
+            <td width="100%" class="header" style="padding-top: 10px;" colspan="2">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF">
+                <tr>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
+              <p style="font-weight: 400; font-size: 16px; line-height: 1; margin: 10px 0 10px 0;">&nbsp;</p>
+            </td>
+            <td width="25%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td bgcolor="#28a197" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
+              <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
+                <%= t(".heading.header.#{@transient_registration.registration_type}") %>
+              </p>
+
+              <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0;">
+                <%= t(".heading.number") %>
+              </p>
+
+              <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 15px 0px 30px 0px;">
+                <%= @transient_registration.reg_identifier %>
+              </p>
+            </td>
+            <td width="25%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.paragraph_1") %>
+              </p>
+
+              <ol>
+                <li style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                  <%= t("waste_carriers_engine.bank_transfer_forms.new.list_item_1") %>
+                </li>
+                <li style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                  <%= t("waste_carriers_engine.bank_transfer_forms.new.list_item_2") %>
+                </li>
+              </ol>
+
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.paragraph_2") %>
+              </p>
+
+              <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.subheading_1") %>
+              </p>
+
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.paragraph_3") %>
+              </p>
+
+              <table style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <tbody>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.reference_number.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= @transient_registration.reg_identifier %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.total_cost.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">£<%= display_pence_as_pounds(@total_to_pay) %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.account_name.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.account_name.value") %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.bank_name.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.bank_name.value") %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.bank_address.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.bank_address.value").join("<br>").html_safe %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.sort_code.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.sort_code.value") %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.account_number.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.uk_payment_table.account_number.value") %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.paragraph_4") %>
+              </p>
+
+              <table style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <tbody>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.international_payment_table.iban.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.international_payment_table.iban.value") %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                    <%= t("waste_carriers_engine.bank_transfer_forms.new.international_payment_table.swift.label") %>
+                  </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.international_payment_table.swift.value") %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.paragraph_5") %>
+              </p>
+
+              <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.subheading_2") %>
+              </p>
+
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.paragraph_6") %>
+              </p>
+
+              <table style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <tbody>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.send_confirmation_table.email.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.send_confirmation_table.email.value") %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.send_confirmation_table.fax.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.send_confirmation_table.fax.value") %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.send_confirmation_table.post.label") %>
+                    </td>
+                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
+                      <%= t("waste_carriers_engine.bank_transfer_forms.new.send_confirmation_table.post.value").join("<br>").html_safe %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t("waste_carriers_engine.bank_transfer_forms.new.paragraph_7") %>
+              </p>
+
+              <ul>
+                <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 15px 0;">
+                  <%= t(".footer_list.item_1") %>
+                </li>
+                <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 30px 0;">
+                  <%= t(".footer_list.item_2") %>
+                </li>
+              </ul>
+            </td>
+            <td width="25%">
+              &nbsp;
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
