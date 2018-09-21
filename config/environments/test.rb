@@ -16,8 +16,8 @@ Rails.application.configure do
   config.serve_static_files   = true
   config.static_cache_control = 'public, max-age=3600'
 
-  # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  # Show error pages and disable caching.
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.

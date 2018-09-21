@@ -403,6 +403,9 @@ WasteCarriersEngine::Engine.routes.draw do
               on: :collection
             end
 
+  # See http://patrickperey.com/railscast-053-handling-exceptions/
+  get "(errors)/:id", to: "errors#show", as: "error"
+
   # Static pages with HighVoltage - don't include "/pages/" in the path
   resources :pages, only: [:show], controller: "pages", path: ""
 end

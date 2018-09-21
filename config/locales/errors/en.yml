@@ -1,0 +1,28 @@
+en:
+  waste_carriers_engine:
+    errors:
+      error_generic:
+        heading: Something went wrong
+        sorry: Sorry, there was a technical problem. It has been reported to our support team.
+        clarification: If it happens again, call the Environment Agency helpline 03708 506 506.
+        try_again: Please try again in a few minutes.
+      error_401:
+        heading: Unauthorised
+        sorry: Sorry, you don't have permission to access this page.
+        clarification: Please check the web address you entered is correct.
+      error_403:
+        # As per https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
+        # We do not wish to make this information available to the client, therefore using messaging for 404-not-found instead.
+        heading: Page not found
+        sorry: Sorry, we can't find that page.
+        clarification: Please check the web address you entered is correct.
+        link: Start again
+      error_404:
+        heading: Page not found
+        sorry: Sorry, we can't find that page.
+        clarification: Please check the web address you entered was correct.
+        link: Start again
+      error_422:
+        heading: There was a problem
+        sorry: Sorry, the system wasn't able to complete that step.
+        clarification: You could go back and try it again.
