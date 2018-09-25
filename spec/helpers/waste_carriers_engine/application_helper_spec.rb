@@ -46,5 +46,17 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "dashboard_link" do
+      before do
+        allow(Rails.configuration).to receive(:wcrs_frontend_url).and_return("http://www.example.com")
+      end
+
+      it "returns the correct value" do
+        user = build(:user)
+        expected_url = "http://www.example.com/user/#{user.id}/registrations"
+        expect(helper.dashboard_link(user)).to eq(expected_url)
+      end
+    end
   end
 end

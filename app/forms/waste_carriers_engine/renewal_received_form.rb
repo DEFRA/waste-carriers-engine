@@ -11,12 +11,5 @@ module WasteCarriersEngine
 
     # Override BaseForm method as users shouldn't be able to submit this form
     def submit; end
-
-    def dashboard_link(current_user)
-      return unless current_user.present?
-      id = current_user.id
-      root = Rails.configuration.wcrs_frontend_url
-      "#{root}/user/#{id}/registrations"
-    end
   end
 end
