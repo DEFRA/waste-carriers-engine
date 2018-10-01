@@ -18,23 +18,23 @@ module WasteCarriersEngine
     end
 
     def valid_success?
-      valid_order? && valid_params? && valid_success_payment_status?
+      valid_order? && valid_params? && valid_status?(:success)
     end
 
     def valid_failure?
-      valid_order? && valid_params? && valid_failure_payment_status?
+      valid_order? && valid_params? && valid_status?(:failure)
     end
 
     def valid_pending?
-      valid_order? && valid_params? && valid_pending_payment_status?
+      valid_order? && valid_params? && valid_status?(:pending)
     end
 
     def valid_cancel?
-      valid_order? && valid_params? && valid_cancel_payment_status?
+      valid_order? && valid_params? && valid_status?(:cancel)
     end
 
     def valid_error?
-      valid_order? && valid_params? && valid_error_payment_status?
+      valid_order? && valid_params? && valid_status?(:error)
     end
 
     private
@@ -102,40 +102,17 @@ module WasteCarriersEngine
       false
     end
 
-    def valid_success_payment_status?
-      return true if @status == "AUTHORISED"
+    def valid_status?(expected_status)
+      allowed_statuses = {
+        success: ["AUTHORISED"],
+        failure: ["EXPIRED", "REFUSED"],
+        pending: ["PENDING"],
+        cancel: ["CANCELLED"],
+        error: ["ERROR"]
+      }
+      return true if allowed_statuses[expected_status].include?(@status)
 
-      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for success"
-      false
-    end
-
-    def valid_failure_payment_status?
-      statuses = %w[EXPIRED
-                    REFUSED]
-      return true if statuses.include?(@status)
-
-      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for failure"
-      false
-    end
-
-    def valid_pending_payment_status?
-      return true if @status == "PENDING"
-
-      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for pending"
-      false
-    end
-
-    def valid_cancel_payment_status?
-      return true if @status == "CANCELLED"
-
-      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for cancel"
-      false
-    end
-
-    def valid_error_payment_status?
-      return true if @status == "ERROR"
-
-      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for error"
+      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for #{expected_status}"
       false
     end
   end
