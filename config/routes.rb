@@ -351,6 +351,21 @@ WasteCarriersEngine::Engine.routes.draw do
               to: "worldpay_forms#failure",
               as: "failure",
               on: :collection
+
+              get "cancel/:reg_identifier",
+              to: "worldpay_forms#cancel",
+              as: "cancel",
+              on: :collection
+
+              get "error/:reg_identifier",
+              to: "worldpay_forms#error",
+              as: "error",
+              on: :collection
+
+              get "pending/:reg_identifier",
+              to: "worldpay_forms#pending",
+              as: "pending",
+              on: :collection
             end
 
   resources :bank_transfer_forms,

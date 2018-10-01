@@ -42,6 +42,48 @@ module WasteCarriersEngine
       go_back
     end
 
+    def cancel
+      return unless set_up_valid_transient_registration?(params[:reg_identifier])
+
+      order = find_order_by_code(params[:orderKey])
+
+      if valid_worldpay_failure_response?(params, order)
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
+      else
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
+      end
+
+      go_back
+    end
+
+    def error
+      return unless set_up_valid_transient_registration?(params[:reg_identifier])
+
+      order = find_order_by_code(params[:orderKey])
+
+      if valid_worldpay_failure_response?(params, order)
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
+      else
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
+      end
+
+      go_back
+    end
+
+    def pending
+      return unless set_up_valid_transient_registration?(params[:reg_identifier])
+
+      order = find_order_by_code(params[:orderKey])
+
+      if valid_worldpay_failure_response?(params, order)
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
+      else
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
+      end
+
+      go_back
+    end
+
     private
 
     def prepare_for_payment
