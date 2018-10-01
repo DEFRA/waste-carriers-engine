@@ -47,7 +47,7 @@ module WasteCarriersEngine
 
       order = find_order_by_code(params[:orderKey])
 
-      if valid_worldpay_failure_response?(params, order)
+      if valid_worldpay_cancel_response?(params, order)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
       else
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
@@ -61,7 +61,7 @@ module WasteCarriersEngine
 
       order = find_order_by_code(params[:orderKey])
 
-      if valid_worldpay_failure_response?(params, order)
+      if valid_worldpay_error_response?(params, order)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
       else
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
@@ -75,7 +75,7 @@ module WasteCarriersEngine
 
       order = find_order_by_code(params[:orderKey])
 
-      if valid_worldpay_failure_response?(params, order)
+      if valid_worldpay_pending_response?(params, order)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
       else
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
@@ -120,6 +120,21 @@ module WasteCarriersEngine
     def valid_worldpay_failure_response?(params, order)
       worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
       worldpay_service.valid_failure?
+    end
+
+    def valid_worldpay_cancel_response?(params, order)
+      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
+      worldpay_service.valid_cancel?
+    end
+
+    def valid_worldpay_error_response?(params, order)
+      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
+      worldpay_service.valid_error?
+    end
+
+    def valid_worldpay_pending_response?(params, order)
+      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
+      worldpay_service.valid_pending?
     end
   end
 end

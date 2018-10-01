@@ -171,7 +171,7 @@ module WasteCarriersEngine
 
           context "when the params are valid" do
             before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(true)
+              allow_any_instance_of(WorldpayService).to receive(:valid_cancel?).and_return(true)
             end
 
             it "redirects to payment_summary_form" do
@@ -182,7 +182,7 @@ module WasteCarriersEngine
 
           context "when the params are not valid" do
             before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(false)
+              allow_any_instance_of(WorldpayService).to receive(:valid_cancel?).and_return(false)
             end
 
             it "redirects to payment_summary_form" do
@@ -210,7 +210,7 @@ module WasteCarriersEngine
 
           context "when the params are valid" do
             before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(true)
+              allow_any_instance_of(WorldpayService).to receive(:valid_error?).and_return(true)
             end
 
             it "redirects to payment_summary_form" do
@@ -221,7 +221,7 @@ module WasteCarriersEngine
 
           context "when the params are not valid" do
             before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(false)
+              allow_any_instance_of(WorldpayService).to receive(:valid_error?).and_return(false)
             end
 
             it "redirects to payment_summary_form" do
@@ -249,7 +249,7 @@ module WasteCarriersEngine
 
           context "when the params are valid" do
             before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(true)
+              allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(true)
             end
 
             it "redirects to payment_summary_form" do
@@ -260,7 +260,7 @@ module WasteCarriersEngine
 
           context "when the params are not valid" do
             before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_failure?).and_return(false)
+              allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(false)
             end
 
             it "redirects to payment_summary_form" do
