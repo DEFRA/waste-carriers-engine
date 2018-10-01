@@ -25,6 +25,18 @@ module WasteCarriersEngine
       valid_order? && valid_params? && valid_failure_payment_status?
     end
 
+    def valid_pending?
+      valid_order? && valid_params? && valid_pending_payment_status?
+    end
+
+    def valid_cancel?
+      valid_order? && valid_params? && valid_cancel_payment_status?
+    end
+
+    def valid_error?
+      valid_order? && valid_params? && valid_error_payment_status?
+    end
+
     private
 
     def valid_order?
@@ -98,13 +110,32 @@ module WasteCarriersEngine
     end
 
     def valid_failure_payment_status?
-      statuses = %w[CANCELLED
-                    ERROR
-                    EXPIRED
+      statuses = %w[EXPIRED
                     REFUSED]
       return true if statuses.include?(@status)
 
       Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for failure"
+      false
+    end
+
+    def valid_pending_payment_status?
+      return true if @status == "PENDING"
+
+      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for pending"
+      false
+    end
+
+    def valid_cancel_payment_status?
+      return true if @status == "CANCELLED"
+
+      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for cancel"
+      false
+    end
+
+    def valid_error_payment_status?
+      return true if @status == "ERROR"
+
+      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for error"
       false
     end
   end

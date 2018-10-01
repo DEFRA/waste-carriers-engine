@@ -24,7 +24,17 @@ module WasteCarriersEngine
     end
 
     let(:order) { transient_registration.finance_details.orders.first }
-    let(:params) {}
+    let(:params) do
+      {
+        orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
+        paymentStatus: "REFUSED",
+        paymentAmount: order.total_amount,
+        paymentCurrency: "GBP",
+        mac: "b32f74da10bf1d9ebfd262d673e58fb9",
+        source: "WP",
+        reg_identifier: transient_registration.reg_identifier
+      }
+    end
 
     let(:worldpay_validator_service) { WorldpayValidatorService.new(order, params) }
 
@@ -115,22 +125,52 @@ module WasteCarriersEngine
     end
 
     describe "valid_failure?" do
-      let(:params) do
-        {
-          orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-          paymentStatus: "REFUSED",
-          paymentAmount: order.total_amount,
-          paymentCurrency: "GBP",
-          mac: "b32f74da10bf1d9ebfd262d673e58fb9",
-          source: "WP",
-          reg_identifier: transient_registration.reg_identifier
-        }
+      before do
+        params[:paymentStatus] = "REFUSED"
       end
 
       it "returns true" do
         expect(worldpay_validator_service.valid_failure?).to eq(true)
       end
 
+      context "when the paymentStatus is invalid" do
+        before do
+          params[:paymentStatus] = "foo"
+          # Change the MAC param to still be valid as this relies on the paymentStatus
+          params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+        end
+
+        it "returns false" do
+          expect(worldpay_validator_service.valid_failure?).to eq(false)
+        end
+      end
+    end
+
+    describe "valid_pending?" do
+      before do
+        params[:paymentStatus] = "PENDING"
+        # Change the MAC param to still be valid as this relies on the paymentStatus
+        params[:mac] = "69849a1b01ac1324d4874e4082aa766c"
+      end
+
+      it "returns true" do
+        expect(worldpay_validator_service.valid_pending?).to eq(true)
+      end
+
+      context "when the paymentStatus is invalid" do
+        before do
+          params[:paymentStatus] = "foo"
+          # Change the MAC param to still be valid as this relies on the paymentStatus
+          params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+        end
+
+        it "returns false" do
+          expect(worldpay_validator_service.valid_pending?).to eq(false)
+        end
+      end
+    end
+
+    describe "valid_cancel?" do
       context "when the paymentStatus is cancelled and params are valid" do
         let(:params) do
           {
@@ -145,12 +185,34 @@ module WasteCarriersEngine
         end
 
         it "returns true" do
-          expect(worldpay_validator_service.valid_failure?).to eq(true)
+          expect(worldpay_validator_service.valid_cancel?).to eq(true)
+        end
+
+        context "when the paymentStatus is invalid" do
+          before do
+            params[:paymentStatus] = "foo"
+            # Change the MAC param to still be valid as this relies on the paymentStatus
+            params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+          end
+
+          it "returns false" do
+            expect(worldpay_validator_service.valid_cancel?).to eq(false)
+          end
         end
       end
+    end
 
-      # We test most of the individual param validations when testing :valid_success?,
-      # so just test the unique ones for :valid_failure?
+    describe "valid_error?" do
+      before do
+        params[:paymentStatus] = "ERROR"
+        # Change the MAC param to still be valid as this relies on the paymentStatus
+        params[:mac] = "850b1aaf91a079cd888fe9a848835cd5"
+      end
+
+      it "returns true" do
+        expect(worldpay_validator_service.valid_error?).to eq(true)
+      end
+
       context "when the paymentStatus is invalid" do
         before do
           params[:paymentStatus] = "foo"
@@ -159,7 +221,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(worldpay_validator_service.valid_failure?).to eq(false)
+          expect(worldpay_validator_service.valid_error?).to eq(false)
         end
       end
     end
