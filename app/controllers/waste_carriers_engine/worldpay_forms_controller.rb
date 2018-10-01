@@ -113,28 +113,27 @@ module WasteCarriersEngine
     end
 
     def valid_worldpay_success_response?(params, order)
-      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
-      worldpay_service.valid_success?
+      new_worldpay_service(params, order).valid_success?
     end
 
     def valid_worldpay_failure_response?(params, order)
-      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
-      worldpay_service.valid_failure?
+      new_worldpay_service(params, order).valid_failure?
     end
 
     def valid_worldpay_cancel_response?(params, order)
-      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
-      worldpay_service.valid_cancel?
+      new_worldpay_service(params, order).valid_cancel?
     end
 
     def valid_worldpay_error_response?(params, order)
-      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
-      worldpay_service.valid_error?
+      new_worldpay_service(params, order).valid_error?
     end
 
     def valid_worldpay_pending_response?(params, order)
-      worldpay_service = WorldpayService.new(@transient_registration, order, current_user, params)
-      worldpay_service.valid_pending?
+      new_worldpay_service(params, order).valid_pending?
+    end
+
+    def new_worldpay_service(params, order)
+      WorldpayService.new(@transient_registration, order, current_user, params)
     end
   end
 end
