@@ -177,152 +177,20 @@ module WasteCarriersEngine
       end
     end
 
-    describe "valid_failure?" do
-      before do
-        params[:paymentStatus] = "REFUSED"
-      end
-
-      context "when the params are valid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_failure?).and_return(true)
-        end
-
-        it "returns true" do
-          expect(worldpay_service.valid_failure?).to eq(true)
-        end
-
-        it "updates the order status" do
-          worldpay_service.valid_failure?
-          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("REFUSED")
-        end
-      end
-
-      context "when the params are invalid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_failure?).and_return(false)
-        end
-
-        it "returns false" do
-          expect(worldpay_service.valid_failure?).to eq(false)
-        end
-
-        it "does not update the order" do
-          unmodified_order = transient_registration.finance_details.orders.first
-          worldpay_service.valid_failure?
-          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
-        end
-      end
+    describe "#valid_failure?" do
+      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_failure?, "REFUSED"
     end
 
-    describe "valid_pending?" do
-      before do
-        params[:paymentStatus] = "PENDING"
-      end
-
-      context "when the params are valid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_pending?).and_return(true)
-        end
-
-        it "returns true" do
-          expect(worldpay_service.valid_pending?).to eq(true)
-        end
-
-        it "updates the order status" do
-          worldpay_service.valid_pending?
-          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("PENDING")
-        end
-      end
-
-      context "when the params are invalid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_pending?).and_return(false)
-        end
-
-        it "returns false" do
-          expect(worldpay_service.valid_pending?).to eq(false)
-        end
-
-        it "does not update the order" do
-          unmodified_order = transient_registration.finance_details.orders.first
-          worldpay_service.valid_pending?
-          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
-        end
-      end
+    describe "#valid_pending?" do
+      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_pending?, "PENDING"
     end
 
-    describe "valid_cancel?" do
-      before do
-        params[:paymentStatus] = "CANCELLED"
-      end
-
-      context "when the params are valid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_cancel?).and_return(true)
-        end
-
-        it "returns true" do
-          expect(worldpay_service.valid_cancel?).to eq(true)
-        end
-
-        it "updates the order status" do
-          worldpay_service.valid_cancel?
-          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("CANCELLED")
-        end
-      end
-
-      context "when the params are invalid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_cancel?).and_return(false)
-        end
-
-        it "returns false" do
-          expect(worldpay_service.valid_cancel?).to eq(false)
-        end
-
-        it "does not update the order" do
-          unmodified_order = transient_registration.finance_details.orders.first
-          worldpay_service.valid_cancel?
-          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
-        end
-      end
+    describe "#valid_cancel?" do
+      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_cancel?, "CANCELLED"
     end
 
-    describe "valid_error?" do
-      before do
-        params[:paymentStatus] = "ERROR"
-      end
-
-      context "when the params are valid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_error?).and_return(true)
-        end
-
-        it "returns true" do
-          expect(worldpay_service.valid_error?).to eq(true)
-        end
-
-        it "updates the order status" do
-          worldpay_service.valid_error?
-          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("ERROR")
-        end
-      end
-
-      context "when the params are invalid" do
-        before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_error?).and_return(false)
-        end
-
-        it "returns false" do
-          expect(worldpay_service.valid_error?).to eq(false)
-        end
-
-        it "does not update the order" do
-          unmodified_order = transient_registration.finance_details.orders.first
-          worldpay_service.valid_error?
-          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
-        end
-      end
+    describe "#valid_error?" do
+      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_error?, "ERROR"
     end
   end
 end
