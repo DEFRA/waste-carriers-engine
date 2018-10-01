@@ -9,36 +9,22 @@ module WasteCarriersEngine
 
     def format_link
       [@base_url,
-       success_url,
-       pending_url,
-       failure_url,
-       cancel_url,
-       error_url].join
+       redirect_url_for(:success),
+       redirect_url_for(:pending),
+       redirect_url_for(:failure),
+       redirect_url_for(:cancel),
+       redirect_url_for(:error)].join
     end
 
     private
 
-    def success_url
-      ["&successURL=", build_path(:success)].join
+    def redirect_url_for(action)
+      param_name = "&#{action}URL="
+      param_value = build_path_for(action)
+      [param_name, param_value].join
     end
 
-    def pending_url
-      ["&pendingURL=", build_path(:pending)].join
-    end
-
-    def failure_url
-      ["&failureURL=", build_path(:failure)].join
-    end
-
-    def cancel_url
-      ["&cancelURL=", build_path(:cancel)].join
-    end
-
-    def error_url
-      ["&errorURL=", build_path(:error)].join
-    end
-
-    def build_path(action)
+    def build_path_for(action)
       path = "#{action}_worldpay_forms_path"
       url = [Rails.configuration.host,
              WasteCarriersEngine::Engine.routes.url_helpers.public_send(path, @reg_identifier)]
