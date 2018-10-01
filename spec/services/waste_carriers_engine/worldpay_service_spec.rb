@@ -182,7 +182,7 @@ module WasteCarriersEngine
     end
 
     describe "#valid_pending?" do
-      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_pending?, "PENDING"
+      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_pending?, "SENT_FOR_AUTHORISATION"
     end
 
     describe "#valid_cancel?" do

@@ -148,9 +148,9 @@ module WasteCarriersEngine
 
     describe "valid_pending?" do
       before do
-        params[:paymentStatus] = "PENDING"
+        params[:paymentStatus] = "SENT_FOR_AUTHORISATION"
         # Change the MAC param to still be valid as this relies on the paymentStatus
-        params[:mac] = "69849a1b01ac1324d4874e4082aa766c"
+        params[:mac] = "439facf7d9e31b4e6a4b35478803ff6f"
       end
 
       it "returns true" do

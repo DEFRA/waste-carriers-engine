@@ -110,7 +110,7 @@ module WasteCarriersEngine
       allowed_statuses = {
         success: ["AUTHORISED"],
         failure: ["EXPIRED", "REFUSED"],
-        pending: ["PENDING"],
+        pending: ["SENT_FOR_AUTHORISATION", "SHOPPER_REDIRECTED"],
         cancel: ["CANCELLED"],
         error: ["ERROR"]
       }
