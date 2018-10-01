@@ -19,7 +19,7 @@ module WasteCarriersEngine
 
       order = find_order_by_code(params[:orderKey])
 
-      if valid_worldpay_success_response?(params, order)
+      if new_worldpay_service(params, order).valid_success?
         @transient_registration.next!
         redirect_to_correct_form
       else
@@ -29,19 +29,19 @@ module WasteCarriersEngine
     end
 
     def failure
-      respond_to_unsuccessful_payment(:valid_worldpay_failure_response?)
+      respond_to_unsuccessful_payment(:valid_failure?)
     end
 
     def cancel
-      respond_to_unsuccessful_payment(:valid_worldpay_cancel_response?)
+      respond_to_unsuccessful_payment(:valid_cancel?)
     end
 
     def error
-      respond_to_unsuccessful_payment(:valid_worldpay_error_response?)
+      respond_to_unsuccessful_payment(:valid_error?)
     end
 
     def pending
-      respond_to_unsuccessful_payment(:valid_worldpay_pending_response?)
+      respond_to_unsuccessful_payment(:valid_pending?)
     end
 
     private
@@ -53,12 +53,14 @@ module WasteCarriersEngine
       worldpay_service.prepare_for_payment
     end
 
-    def respond_to_unsuccessful_payment(valid_response_method)
+    def respond_to_unsuccessful_payment(valid_method)
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
       order = find_order_by_code(params[:orderKey])
 
-      if self.send(valid_response_method, params, order)
+      response_is_valid = new_worldpay_service(params, order).public_send(valid_method)
+
+      if response_is_valid
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
       else
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
@@ -84,26 +86,6 @@ module WasteCarriersEngine
     def get_order_key(order_key)
       return nil unless order_key.present?
       order_key.match(/[0-9]{10}$/).to_s
-    end
-
-    def valid_worldpay_success_response?(params, order)
-      new_worldpay_service(params, order).valid_success?
-    end
-
-    def valid_worldpay_failure_response?(params, order)
-      new_worldpay_service(params, order).valid_failure?
-    end
-
-    def valid_worldpay_cancel_response?(params, order)
-      new_worldpay_service(params, order).valid_cancel?
-    end
-
-    def valid_worldpay_error_response?(params, order)
-      new_worldpay_service(params, order).valid_error?
-    end
-
-    def valid_worldpay_pending_response?(params, order)
-      new_worldpay_service(params, order).valid_pending?
     end
 
     def new_worldpay_service(params, order)
