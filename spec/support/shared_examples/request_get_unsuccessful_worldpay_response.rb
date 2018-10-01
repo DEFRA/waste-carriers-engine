@@ -1,4 +1,4 @@
-RSpec.shared_examples "GET unsuccessful Worldpay response" do |validation_action|
+RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
   context "when a valid user is signed in" do
     let(:user) { create(:user) }
     before(:each) do
@@ -32,13 +32,19 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |validation_action
         }
       end
 
+      let(:validation_action) { "valid_#{action}?".to_sym }
+      let(:path) do
+        path_route = "#{action}_worldpay_forms_path".to_sym
+        self.public_send(path_route, reg_id)
+      end
+
       context "when the params are valid" do
         before do
           allow_any_instance_of(WasteCarriersEngine::WorldpayService).to receive(validation_action).and_return(true)
         end
 
         it "redirects to payment_summary_form" do
-          get pending_worldpay_forms_path(reg_id), params
+          get path, params
           expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
         end
       end
@@ -49,7 +55,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |validation_action
         end
 
         it "redirects to payment_summary_form" do
-          get pending_worldpay_forms_path(reg_id), params
+          get path, params
           expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
         end
       end
