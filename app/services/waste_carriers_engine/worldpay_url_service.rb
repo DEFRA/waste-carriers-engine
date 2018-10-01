@@ -19,52 +19,29 @@ module WasteCarriersEngine
     private
 
     def success_url
-      ["&successURL=", success_path].join
+      ["&successURL=", build_path(:success)].join
     end
 
     def pending_url
-      ["&pendingURL=", pending_path].join
+      ["&pendingURL=", build_path(:pending)].join
     end
 
     def failure_url
-      ["&failureURL=", failure_path].join
+      ["&failureURL=", build_path(:failure)].join
     end
 
     def cancel_url
-      ["&cancelURL=", cancel_path].join
+      ["&cancelURL=", build_path(:cancel)].join
     end
 
     def error_url
-      ["&errorURL=", error_path].join
+      ["&errorURL=", build_path(:error)].join
     end
 
-    def success_path
+    def build_path(action)
+      path = "#{action}_worldpay_forms_path"
       url = [Rails.configuration.host,
-             WasteCarriersEngine::Engine.routes.url_helpers.success_worldpay_forms_path(@reg_identifier)]
-      CGI.escape(url.join)
-    end
-
-    def pending_path
-      url = [Rails.configuration.host,
-             WasteCarriersEngine::Engine.routes.url_helpers.pending_worldpay_forms_path(@reg_identifier)]
-      CGI.escape(url.join)
-    end
-
-    def failure_path
-      url = [Rails.configuration.host,
-             WasteCarriersEngine::Engine.routes.url_helpers.failure_worldpay_forms_path(@reg_identifier)]
-      CGI.escape(url.join)
-    end
-
-    def cancel_path
-      url = [Rails.configuration.host,
-             WasteCarriersEngine::Engine.routes.url_helpers.cancel_worldpay_forms_path(@reg_identifier)]
-      CGI.escape(url.join)
-    end
-
-    def error_path
-      url = [Rails.configuration.host,
-             WasteCarriersEngine::Engine.routes.url_helpers.error_worldpay_forms_path(@reg_identifier)]
+             WasteCarriersEngine::Engine.routes.url_helpers.public_send(path, @reg_identifier)]
       CGI.escape(url.join)
     end
   end
