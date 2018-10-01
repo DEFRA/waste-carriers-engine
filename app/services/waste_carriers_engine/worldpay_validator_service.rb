@@ -18,26 +18,30 @@ module WasteCarriersEngine
     end
 
     def valid_success?
-      valid_order? && valid_params? && valid_status?(:success)
+      valid?(:success)
     end
 
     def valid_failure?
-      valid_order? && valid_params? && valid_status?(:failure)
+      valid?(:failure)
     end
 
     def valid_pending?
-      valid_order? && valid_params? && valid_status?(:pending)
+      valid?(:pending)
     end
 
     def valid_cancel?
-      valid_order? && valid_params? && valid_status?(:cancel)
+      valid?(:cancel)
     end
 
     def valid_error?
-      valid_order? && valid_params? && valid_status?(:error)
+      valid?(:error)
     end
 
     private
+
+    def valid?(action)
+      valid_order? && valid_params? && valid_status?(action)
+    end
 
     def valid_order?
       return true if @order.present?
