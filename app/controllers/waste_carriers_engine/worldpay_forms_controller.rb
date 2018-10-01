@@ -29,19 +29,19 @@ module WasteCarriersEngine
     end
 
     def failure
-      respond_to_unsuccessful_payment(:valid_failure?)
+      respond_to_unsuccessful_payment(:failure)
     end
 
     def cancel
-      respond_to_unsuccessful_payment(:valid_cancel?)
+      respond_to_unsuccessful_payment(:cancel)
     end
 
     def error
-      respond_to_unsuccessful_payment(:valid_error?)
+      respond_to_unsuccessful_payment(:error)
     end
 
     def pending
-      respond_to_unsuccessful_payment(:valid_pending?)
+      respond_to_unsuccessful_payment(:pending)
     end
 
     private
@@ -53,17 +53,18 @@ module WasteCarriersEngine
       worldpay_service.prepare_for_payment
     end
 
-    def respond_to_unsuccessful_payment(valid_method)
+    def respond_to_unsuccessful_payment(action)
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
       order = find_order_by_code(params[:orderKey])
 
+      valid_method = "valid_#{action}?".to_sym
       response_is_valid = new_worldpay_service(params, order).public_send(valid_method)
 
       if response_is_valid
-        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.message.#{params[:paymentStatus]}")
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.message")
       else
-        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.failure.invalid_response")
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.invalid_response")
       end
 
       go_back

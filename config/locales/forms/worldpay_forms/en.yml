@@ -1,14 +1,20 @@
 en:
   waste_carriers_engine:
     worldpay_forms:
+      cancel:
+        invalid_response: "Invalid WorldPay cancel response"
+        message: "Your attempt to pay has been cancelled. Please try again or select a different payment method."
+      error:
+        invalid_response: "Invalid WorldPay error response"
+        message: "An error has occurred with WorldPay and your payment has not been processed. Please try again or select a different payment method."
       failure:
         invalid_response: "Invalid WorldPay failure response"
-        message:
-          CANCELLED: "Your attempt to pay has been cancelled. Please try again or select a different payment method."
-          ERROR: "An error has occurred with WorldPay and your payment has not been processed. Please try again or select a different payment method."
-          REFUSED: "Your payment has been refused. Please try again or select a different payment method."
+        message: "Your payment has been refused. Please try again or select a different payment method."
       new:
         setup_error: "An error has occurred when preparing for your WorldPay payment. Please try again or select a different payment method."
+      pending:
+        invalid_response: "Invalid WorldPay pending response"
+        message: "Your payment is still pending."
       success:
         invalid_response: "Invalid WorldPay success response"
   activemodel:
