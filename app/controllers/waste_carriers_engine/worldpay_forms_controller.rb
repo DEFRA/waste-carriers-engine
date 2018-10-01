@@ -56,16 +56,11 @@ module WasteCarriersEngine
     def respond_to_unsuccessful_payment(action)
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
-      order = find_order_by_code(params[:orderKey])
-
-      valid_method = "valid_#{action}?".to_sym
-      response_is_valid = new_worldpay_service(params, order).public_send(valid_method)
-
-      if response_is_valid
-        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.message")
-      else
-        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.invalid_response")
-      end
+      flash[:error] = if unsuccessful_response_is_valid?(action, params)
+                        I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.message")
+                      else
+                        I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.invalid_response")
+                      end
 
       go_back
     end
@@ -87,6 +82,13 @@ module WasteCarriersEngine
     def get_order_key(order_key)
       return nil unless order_key.present?
       order_key.match(/[0-9]{10}$/).to_s
+    end
+
+    def unsuccessful_response_is_valid?(action, params)
+      order = find_order_by_code(params[:orderKey])
+      valid_method = "valid_#{action}?".to_sym
+
+      new_worldpay_service(params, order).public_send(valid_method)
     end
 
     def new_worldpay_service(params, order)
