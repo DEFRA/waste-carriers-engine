@@ -18,12 +18,22 @@ module WasteCarriersEngine
     end
 
     let(:order) { transient_registration.finance_details.orders.first }
-    let(:params) {}
+    # An incomplete set of params which should still be valid when we stub the validation service
+    let(:params) do
+      {
+        orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
+        paymentStatus: "REFUSED",
+        paymentAmount: order.total_amount,
+        reg_identifier: transient_registration.reg_identifier
+      }
+    end
 
     let(:worldpay_service) { WorldpayService.new(transient_registration, order, current_user, params) }
 
     describe "prepare_params" do
       context "when the params are nil" do
+        let(:params) { }
+
         it "sets params to nil" do
           expect(worldpay_service.instance_variable_get(:@params)).to eq(nil)
         end
@@ -116,14 +126,8 @@ module WasteCarriersEngine
     end
 
     describe "valid_success?" do
-      # Only include the params we need to test this service, as we stub the validator
-      let(:params) do
-        {
-          orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-          paymentStatus: "AUTHORISED",
-          paymentAmount: order.total_amount,
-          reg_identifier: transient_registration.reg_identifier
-        }
+      before do
+        params[:paymentStatus] = "AUTHORISED"
       end
 
       context "when the params are valid" do
@@ -174,14 +178,8 @@ module WasteCarriersEngine
     end
 
     describe "valid_failure?" do
-      # Only include the params we need to test this service, as we stub the validator
-      let(:params) do
-        {
-          orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-          paymentStatus: "REFUSED",
-          paymentAmount: order.total_amount,
-          reg_identifier: transient_registration.reg_identifier
-        }
+      before do
+        params[:paymentStatus] = "REFUSED"
       end
 
       context "when the params are valid" do
@@ -211,6 +209,117 @@ module WasteCarriersEngine
         it "does not update the order" do
           unmodified_order = transient_registration.finance_details.orders.first
           worldpay_service.valid_failure?
+          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
+        end
+      end
+    end
+
+    describe "valid_pending?" do
+      before do
+        params[:paymentStatus] = "PENDING"
+      end
+
+      context "when the params are valid" do
+        before do
+          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_pending?).and_return(true)
+        end
+
+        it "returns true" do
+          expect(worldpay_service.valid_pending?).to eq(true)
+        end
+
+        it "updates the order status" do
+          worldpay_service.valid_pending?
+          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("PENDING")
+        end
+      end
+
+      context "when the params are invalid" do
+        before do
+          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_pending?).and_return(false)
+        end
+
+        it "returns false" do
+          expect(worldpay_service.valid_pending?).to eq(false)
+        end
+
+        it "does not update the order" do
+          unmodified_order = transient_registration.finance_details.orders.first
+          worldpay_service.valid_pending?
+          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
+        end
+      end
+    end
+
+    describe "valid_cancel?" do
+      before do
+        params[:paymentStatus] = "CANCELLED"
+      end
+
+      context "when the params are valid" do
+        before do
+          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_cancel?).and_return(true)
+        end
+
+        it "returns true" do
+          expect(worldpay_service.valid_cancel?).to eq(true)
+        end
+
+        it "updates the order status" do
+          worldpay_service.valid_cancel?
+          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("CANCELLED")
+        end
+      end
+
+      context "when the params are invalid" do
+        before do
+          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_cancel?).and_return(false)
+        end
+
+        it "returns false" do
+          expect(worldpay_service.valid_cancel?).to eq(false)
+        end
+
+        it "does not update the order" do
+          unmodified_order = transient_registration.finance_details.orders.first
+          worldpay_service.valid_cancel?
+          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
+        end
+      end
+    end
+
+    describe "valid_error?" do
+      before do
+        params[:paymentStatus] = "ERROR"
+      end
+
+      context "when the params are valid" do
+        before do
+          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_error?).and_return(true)
+        end
+
+        it "returns true" do
+          expect(worldpay_service.valid_error?).to eq(true)
+        end
+
+        it "updates the order status" do
+          worldpay_service.valid_error?
+          expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq("ERROR")
+        end
+      end
+
+      context "when the params are invalid" do
+        before do
+          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_error?).and_return(false)
+        end
+
+        it "returns false" do
+          expect(worldpay_service.valid_error?).to eq(false)
+        end
+
+        it "does not update the order" do
+          unmodified_order = transient_registration.finance_details.orders.first
+          worldpay_service.valid_error?
           expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
         end
       end

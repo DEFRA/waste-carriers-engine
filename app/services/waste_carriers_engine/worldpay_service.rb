@@ -45,6 +45,30 @@ module WasteCarriersEngine
       true
     end
 
+    def valid_pending?
+      worldpay_validator_service = WorldpayValidatorService.new(@order, @params)
+      return false unless worldpay_validator_service.valid_pending?
+
+      @order.update_after_worldpay(@params[:paymentStatus])
+      true
+    end
+
+    def valid_cancel?
+      worldpay_validator_service = WorldpayValidatorService.new(@order, @params)
+      return false unless worldpay_validator_service.valid_cancel?
+
+      @order.update_after_worldpay(@params[:paymentStatus])
+      true
+    end
+
+    def valid_error?
+      worldpay_validator_service = WorldpayValidatorService.new(@order, @params)
+      return false unless worldpay_validator_service.valid_error?
+
+      @order.update_after_worldpay(@params[:paymentStatus])
+      true
+    end
+
     private
 
     def prepare_params(params)
