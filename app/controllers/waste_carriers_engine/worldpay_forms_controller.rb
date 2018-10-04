@@ -20,11 +20,11 @@ module WasteCarriersEngine
       order = find_order_by_code(params[:orderKey])
 
       if new_worldpay_service(params, order).valid_success?
-        log_worldpay_response(true, "success")
+        log_and_send_worldpay_response(true, "success")
         @transient_registration.next!
         redirect_to_correct_form
       else
-        log_worldpay_response(false, "success")
+        log_and_send_worldpay_response(false, "success")
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.success.invalid_response")
         go_back
       end
@@ -59,10 +59,10 @@ module WasteCarriersEngine
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
       if unsuccessful_response_is_valid?(action, params)
-        log_worldpay_response(true, action)
+        log_and_send_worldpay_response(true, action)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.message")
       else
-        log_worldpay_response(false, action)
+        log_and_send_worldpay_response(false, action)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.invalid_response")
       end
 
@@ -99,16 +99,25 @@ module WasteCarriersEngine
       WorldpayService.new(@transient_registration, order, current_user, params)
     end
 
-    def log_worldpay_response(is_valid, action)
+    def log_and_send_worldpay_response(is_valid, action)
       valid_text = if is_valid
                      "Valid"
                    else
                      "Invalid"
                    end
+      title = "#{valid_text} WorldPay response for #{params[:reg_identifier]}: #{action}"
 
-      Rails.logger.debug "#{valid_text} WorldPay response for #{params[:reg_identifier]}: #{action}"
-      Rails.logger.debug "Params:"
-      Rails.logger.debug params.to_json
+      log_worldpay_response(title)
+      send_worldpay_response_to_airbrake(title) unless action == :success
+    end
+
+    def log_worldpay_response(title)
+      message = [title, "Params:", params.to_json].join("\n")
+      Rails.logger.debug message
+    end
+
+    def send_worldpay_response_to_airbrake(title)
+      Airbrake.notify(title, { error_message: params })
     end
   end
 end
