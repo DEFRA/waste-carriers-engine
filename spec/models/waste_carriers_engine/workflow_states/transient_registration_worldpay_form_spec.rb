@@ -19,12 +19,12 @@ module WasteCarriersEngine
 
         context "when a conviction check is not required" do
           before do
-            transient_registration.conviction_sign_offs = nil
+            allow(transient_registration).to receive(:conviction_check_required?).and_return(false)
           end
 
-          context "when the balance is 0" do
-            it "changes to :renewal_complete_form after the 'next' event" do
-              expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_complete_form).on_event(:next)
+          context "when there is no pending WorldPay payment" do
+            before do
+              allow(transient_registration).to receive(:pending_worldpay_payment?).and_return(false)
             end
 
             it "does not send a confirmation email after the 'next' event" do
@@ -34,9 +34,9 @@ module WasteCarriersEngine
             end
           end
 
-          context "when there is a positive balance" do
+          context "when there is a pending WorldPay payment" do
             before do
-              transient_registration.finance_details.balance = 100
+              allow(transient_registration).to receive(:pending_worldpay_payment?).and_return(true)
             end
 
             it "changes to :renewal_received_form after the 'next' event" do
@@ -53,7 +53,7 @@ module WasteCarriersEngine
 
         context "when a conviction check is required" do
           before do
-            transient_registration.conviction_sign_offs = [build(:conviction_sign_off)]
+            allow(transient_registration).to receive(:conviction_check_required?).and_return(true)
           end
 
           it "changes to :renewal_received_form after the 'next' event" do
