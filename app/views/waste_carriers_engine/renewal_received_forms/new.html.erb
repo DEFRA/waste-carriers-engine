@@ -19,7 +19,10 @@
 
     <p><%= t(".paragraph_1", email: @renewal_received_form.contact_email) %></p>
 
-    <% if @renewal_received_form.pending_payment %>
+    <% if @renewal_received_form.pending_worldpay_payment %>
+    <h2 class="heading-medium"><%= t(".processing_payment_subheading") %></h2>
+    <p><%= t(".processing_payment_paragraph_1") %></p>
+    <% elsif @renewal_received_form.pending_payment %>
     <h2 class="heading-medium"><%= t(".awaiting_payment_subheading") %></h2>
     <p><%= t(".awaiting_payment_paragraph_1") %></p>
     <p><%= t(".awaiting_payment_paragraph_2") %></p>
