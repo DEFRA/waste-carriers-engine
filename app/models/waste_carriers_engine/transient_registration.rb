@@ -95,8 +95,8 @@ module WasteCarriersEngine
       return false unless finance_details.present? &&
                           finance_details.orders.present? &&
                           finance_details.orders.first.present?
-      pending_statuses = ["SENT_FOR_AUTHORISATION", "SHOPPER_REDIRECTED"]
-      pending_statuses.include?(finance_details.orders.first.world_pay_status)
+
+      Order.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
     end
 
     def pending_manual_conviction_check?
