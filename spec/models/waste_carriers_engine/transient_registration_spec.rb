@@ -183,7 +183,7 @@ module WasteCarriersEngine
 
         context "when the order's world_pay_status is pending" do
           before do
-            transient_registration.finance_details.orders.first.world_pay_status = "SENT_FOR_AUTHORISATION"
+            allow(Order).to receive(:valid_world_pay_status?).and_return(true)
           end
 
           it "returns true" do
@@ -192,6 +192,10 @@ module WasteCarriersEngine
         end
 
         context "when the order's world_pay_status is not pending" do
+          before do
+            allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+          end
+
           it "returns false" do
             expect(transient_registration.pending_worldpay_payment?).to eq(false)
           end
