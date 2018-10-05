@@ -6,6 +6,8 @@ en:
         heading: Application received
         highlight_text: "Your registration number is still"
         paragraph_1: "We have sent a confirmation email to %{email}."
+        processing_payment_subheading: "Processing your payment"
+        processing_payment_paragraph_1: We are currently processing your payment and will let you know when it has been received.
         awaiting_payment_subheading: "Next step: pay the renewal charge"
         awaiting_payment_paragraph_1: We've sent an email telling you how to pay the charge.
         awaiting_payment_paragraph_2: Please allow 5 working days for your payment to reach us.

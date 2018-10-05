@@ -106,17 +106,10 @@ module WasteCarriersEngine
       false
     end
 
-    def valid_status?(expected_status)
-      allowed_statuses = {
-        success: ["AUTHORISED"],
-        failure: ["EXPIRED", "REFUSED"],
-        pending: ["SENT_FOR_AUTHORISATION", "SHOPPER_REDIRECTED"],
-        cancel: ["CANCELLED"],
-        error: ["ERROR"]
-      }
-      return true if allowed_statuses[expected_status].include?(@status)
+    def valid_status?(response_type)
+      return true if Order.valid_world_pay_status?(response_type, @status)
 
-      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for #{expected_status}"
+      Rails.logger.error "Invalid WorldPay response: #{@status} is not valid payment status for #{response_type}"
       false
     end
   end

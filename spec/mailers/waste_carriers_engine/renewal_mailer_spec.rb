@@ -58,6 +58,21 @@ module WasteCarriersEngine
         expect(mail.body.encoded).to include(transient_registration.reg_identifier)
       end
 
+      context "when there is a pending worldpay payment" do
+        before do
+          allow(transient_registration).to receive(:pending_worldpay_payment?).and_return(true)
+        end
+
+        it "uses the correct subject" do
+          subject = "Your application to renew waste carriers registration #{transient_registration.reg_identifier} has been received"
+          expect(mail.subject).to eq(subject)
+        end
+
+        it "includes the correct template in the body" do
+          expect(mail.body.encoded).to include("processing your payment")
+        end
+      end
+
       context "when there is an unpaid balance" do
         before do
           transient_registration.finance_details.balance = 550

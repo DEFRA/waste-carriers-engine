@@ -63,9 +63,10 @@ module WasteCarriersEngine
             }
           end
 
-          context "when the params are valid" do
+          context "when the params are valid and the balance is paid" do
             before do
               allow_any_instance_of(WorldpayService).to receive(:valid_success?).and_return(true)
+              transient_registration.finance_details.update_attributes(balance: 0)
             end
 
             it "redirects to renewal_complete_form" do
@@ -113,6 +114,46 @@ module WasteCarriersEngine
             end
           end
         end
+
+        describe "#pending" do
+          before do
+            FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
+          end
+
+          let(:order) do
+            transient_registration.finance_details.orders.first
+          end
+
+          let(:params) do
+            {
+              orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
+              reg_identifier: reg_id
+            }
+          end
+
+          context "when the params are valid" do
+            before do
+              allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(true)
+              allow_any_instance_of(TransientRegistration).to receive(:pending_worldpay_payment?).and_return(true)
+            end
+
+            it "redirects to renewal_received_form" do
+              get pending_worldpay_forms_path(reg_id), params
+              expect(response).to redirect_to(new_renewal_received_form_path(reg_id))
+            end
+          end
+
+          context "when the params are invalid" do
+            before do
+              allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(false)
+            end
+
+            it "redirects to payment_summary_form" do
+              get pending_worldpay_forms_path(reg_id), params
+              expect(response).to redirect_to(new_payment_summary_form_path(reg_id))
+            end
+          end
+        end
       end
     end
 
@@ -126,10 +167,6 @@ module WasteCarriersEngine
 
     describe "#failure" do
       it_should_behave_like "GET unsuccessful Worldpay response", :failure
-    end
-
-    describe "#pending" do
-      it_should_behave_like "GET unsuccessful Worldpay response", :pending
     end
   end
 end

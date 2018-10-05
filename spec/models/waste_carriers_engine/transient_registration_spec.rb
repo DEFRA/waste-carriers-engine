@@ -175,6 +175,44 @@ module WasteCarriersEngine
       end
     end
 
+    describe "pending_worldpay_payment?" do
+      context "when the renewal has an order" do
+        before do
+          transient_registration.finance_details = build(:finance_details, :has_order)
+        end
+
+        context "when the order's world_pay_status is pending" do
+          before do
+            allow(Order).to receive(:valid_world_pay_status?).and_return(true)
+          end
+
+          it "returns true" do
+            expect(transient_registration.pending_worldpay_payment?).to eq(true)
+          end
+        end
+
+        context "when the order's world_pay_status is not pending" do
+          before do
+            allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+          end
+
+          it "returns false" do
+            expect(transient_registration.pending_worldpay_payment?).to eq(false)
+          end
+        end
+      end
+
+      context "when the renewal has no order" do
+        before do
+          transient_registration.finance_details = build(:finance_details)
+        end
+
+        it "returns false" do
+          expect(transient_registration.pending_worldpay_payment?).to eq(false)
+        end
+      end
+    end
+
     describe "pending_manual_conviction_check?" do
       context "when the renewal is not in a completed workflow_state" do
         it "returns false" do

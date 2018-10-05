@@ -156,5 +156,15 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "valid_world_pay_status?" do
+      it "returns true when the status matches the values for the response type" do
+        expect(Order.valid_world_pay_status?(:success, "AUTHORISED")).to eq(true)
+      end
+
+      it "returns false when the status does not match the values for the response type" do
+        expect(Order.valid_world_pay_status?(:success, "FOO")).to eq(false)
+      end
+    end
   end
 end
