@@ -18,10 +18,11 @@ module WasteCarriersEngine
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
       if worldpay_service(params).valid_success?
+        log_and_send_worldpay_response(true, :success)
         @transient_registration.next!
         redirect_to_correct_form
       else
-        log_and_send_worldpay_response(false, "success")
+        log_and_send_worldpay_response(false, :success)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.success.invalid_response")
         go_back
       end
@@ -43,9 +44,11 @@ module WasteCarriersEngine
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
       if worldpay_service(params).valid_pending?
+        log_and_send_worldpay_response(true, :pending)
         @transient_registration.next!
         redirect_to_correct_form
       else
+        log_and_send_worldpay_response(false, :pending)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.pending.invalid_response")
         go_back
       end
@@ -113,7 +116,7 @@ module WasteCarriersEngine
       title = "#{valid_text} WorldPay response for #{params[:reg_identifier]}: #{action}"
 
       log_worldpay_response(title)
-      send_worldpay_response_to_airbrake(title) unless action == :success
+      send_worldpay_response_to_airbrake(title) unless is_valid && action == :success
     end
 
     def log_worldpay_response(title)
