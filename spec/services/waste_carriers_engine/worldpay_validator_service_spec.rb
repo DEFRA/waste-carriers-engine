@@ -69,9 +69,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          params[:paymentStatus] = "foo"
-          # Change the MAC param to still be valid as this relies on the paymentStatus
-          params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -135,9 +133,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          params[:paymentStatus] = "foo"
-          # Change the MAC param to still be valid as this relies on the paymentStatus
-          params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -159,9 +155,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          params[:paymentStatus] = "foo"
-          # Change the MAC param to still be valid as this relies on the paymentStatus
-          params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -190,9 +184,7 @@ module WasteCarriersEngine
 
         context "when the paymentStatus is invalid" do
           before do
-            params[:paymentStatus] = "foo"
-            # Change the MAC param to still be valid as this relies on the paymentStatus
-            params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+            allow(Order).to receive(:valid_world_pay_status?).and_return(false)
           end
 
           it "returns false" do
@@ -215,9 +207,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          params[:paymentStatus] = "foo"
-          # Change the MAC param to still be valid as this relies on the paymentStatus
-          params[:mac] = "ecf0c84b1efa523ae847dd26cdf7b798"
+          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do

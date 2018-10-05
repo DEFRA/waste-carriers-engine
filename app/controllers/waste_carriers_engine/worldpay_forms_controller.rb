@@ -17,10 +17,7 @@ module WasteCarriersEngine
     def success
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
-      order = find_order_by_code(params[:orderKey])
-
-      if new_worldpay_service(params, order).valid_success?
-        log_and_send_worldpay_response(true, "success")
+      if worldpay_service(params).valid_success?
         @transient_registration.next!
         redirect_to_correct_form
       else
@@ -43,7 +40,15 @@ module WasteCarriersEngine
     end
 
     def pending
-      respond_to_unsuccessful_payment(:pending)
+      return unless set_up_valid_transient_registration?(params[:reg_identifier])
+
+      if worldpay_service(params).valid_pending?
+        @transient_registration.next!
+        redirect_to_correct_form
+      else
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.pending.invalid_response")
+        go_back
+      end
     end
 
     private
@@ -89,13 +94,13 @@ module WasteCarriersEngine
     end
 
     def unsuccessful_response_is_valid?(action, params)
-      order = find_order_by_code(params[:orderKey])
       valid_method = "valid_#{action}?".to_sym
 
-      new_worldpay_service(params, order).public_send(valid_method)
+      worldpay_service(params).public_send(valid_method)
     end
 
-    def new_worldpay_service(params, order)
+    def worldpay_service(params)
+      order = find_order_by_code(params[:orderKey])
       WorldpayService.new(@transient_registration, order, current_user, params)
     end
 

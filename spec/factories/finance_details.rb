@@ -6,6 +6,10 @@ FactoryBot.define do
       payments {[]}
     end
 
+    trait :has_order do
+      orders { [build(:order, :has_required_data)] }
+    end
+
     trait :has_order_and_payment do
       orders { [build(:order, :has_required_data)] }
       payments { [build(:payment)] }

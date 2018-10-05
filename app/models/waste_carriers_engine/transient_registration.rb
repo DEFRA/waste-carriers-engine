@@ -91,6 +91,14 @@ module WasteCarriersEngine
       renewal_application_submitted? && finance_details.present? && finance_details.balance.positive?
     end
 
+    def pending_worldpay_payment?
+      return false unless finance_details.present? &&
+                          finance_details.orders.present? &&
+                          finance_details.orders.first.present?
+
+      Order.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
+    end
+
     def pending_manual_conviction_check?
       return false unless metaData.ACTIVE?
       renewal_application_submitted? && conviction_check_required?

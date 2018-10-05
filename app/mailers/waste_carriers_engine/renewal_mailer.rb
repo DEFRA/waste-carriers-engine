@@ -17,12 +17,7 @@ module WasteCarriersEngine
       @transient_registration = transient_registration
       @total_to_pay = @transient_registration.finance_details.balance
 
-      template = if @transient_registration.pending_payment?
-                   "send_renewal_received_pending_payment_email"
-                 else
-                   "send_renewal_received_pending_conviction_check_email"
-                 end
-
+      template = renewal_received_template
       subject = I18n.t(".waste_carriers_engine.renewal_mailer.#{template}.subject",
                        reg_identifier: @transient_registration.reg_identifier)
 
@@ -34,6 +29,16 @@ module WasteCarriersEngine
     end
 
     private
+
+    def renewal_received_template
+      if @transient_registration.pending_worldpay_payment?
+        "send_renewal_received_processing_payment_email"
+      elsif @transient_registration.pending_payment?
+        "send_renewal_received_pending_payment_email"
+      else
+        "send_renewal_received_pending_conviction_check_email"
+      end
+    end
 
     def displayable_address(address)
       return [] unless address.present?
