@@ -15,17 +15,11 @@ module WasteCarriersEngine
     def create; end
 
     def success
-      return unless set_up_valid_transient_registration?(params[:reg_identifier])
+      respond_to_acceptable_payment(:success)
+    end
 
-      if worldpay_service(params).valid_success?
-        log_and_send_worldpay_response(true, :success)
-        @transient_registration.next!
-        redirect_to_correct_form
-      else
-        log_and_send_worldpay_response(false, :success)
-        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.success.invalid_response")
-        go_back
-      end
+    def pending
+      respond_to_acceptable_payment(:pending)
     end
 
     def failure
@@ -40,20 +34,6 @@ module WasteCarriersEngine
       respond_to_unsuccessful_payment(:error)
     end
 
-    def pending
-      return unless set_up_valid_transient_registration?(params[:reg_identifier])
-
-      if worldpay_service(params).valid_pending?
-        log_and_send_worldpay_response(true, :pending)
-        @transient_registration.next!
-        redirect_to_correct_form
-      else
-        log_and_send_worldpay_response(false, :pending)
-        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.pending.invalid_response")
-        go_back
-      end
-    end
-
     private
 
     def prepare_for_payment
@@ -63,10 +43,24 @@ module WasteCarriersEngine
       worldpay_service.prepare_for_payment
     end
 
+    def respond_to_acceptable_payment(action)
+      return unless set_up_valid_transient_registration?(params[:reg_identifier])
+
+      if response_is_valid?(action, params)
+        log_and_send_worldpay_response(true, action)
+        @transient_registration.next!
+        redirect_to_correct_form
+      else
+        log_and_send_worldpay_response(false, action)
+        flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.invalid_response")
+        go_back
+      end
+    end
+
     def respond_to_unsuccessful_payment(action)
       return unless set_up_valid_transient_registration?(params[:reg_identifier])
 
-      if unsuccessful_response_is_valid?(action, params)
+      if response_is_valid?(action, params)
         log_and_send_worldpay_response(true, action)
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.#{action}.message")
       else
@@ -96,7 +90,7 @@ module WasteCarriersEngine
       order_key.match(/[0-9]{10}$/).to_s
     end
 
-    def unsuccessful_response_is_valid?(action, params)
+    def response_is_valid?(action, params)
       valid_method = "valid_#{action}?".to_sym
 
       worldpay_service(params).public_send(valid_method)
