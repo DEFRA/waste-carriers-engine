@@ -75,7 +75,7 @@ module WasteCarriersEngine
     end
 
     def send_request
-      xml_service = WorldpayXmlService.new(@transient_registration, @order)
+      xml_service = WorldpayXmlService.new(@transient_registration, @order, @current_user)
       xml = xml_service.build_xml
 
       Rails.logger.debug "Sending initial request to WorldPay"

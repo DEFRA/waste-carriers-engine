@@ -12,7 +12,8 @@ module WasteCarriersEngine
              temp_cards: 0)
     end
     let(:order) { transient_registration.finance_details.orders.first }
-    let(:worldpay_xml_service) { WorldpayXmlService.new(transient_registration, order) }
+    let(:current_user) { build(:user) }
+    let(:worldpay_xml_service) { WorldpayXmlService.new(transient_registration, order, current_user) }
 
     before do
       # Set a specific reg_identifier so we can match our XML
@@ -27,6 +28,10 @@ module WasteCarriersEngine
 
     describe "build_xml" do
       context "when it's a digital registration" do
+        before do
+          current_user.email = transient_registration.account_email
+        end
+
         it "returns correctly-formatted XML" do
           xml = File.read("./spec/fixtures/files/request_to_worldpay.xml")
           expect(worldpay_xml_service.build_xml).to eq(xml)
@@ -34,6 +39,10 @@ module WasteCarriersEngine
       end
 
       context "when it's an assisted digital registration" do
+        before do
+          current_user.email = "not-the-same-account@example.com"
+        end
+
         it "returns correctly-formatted XML" do
           xml = File.read("./spec/fixtures/files/request_to_worldpay_ad.xml")
           expect(worldpay_xml_service.build_xml).to eq(xml)
