@@ -6,6 +6,7 @@ module WasteCarriersEngine
     let(:transient_registration) do
       create(:transient_registration,
              :has_required_data,
+             :has_different_contact_email,
              :has_overseas_addresses,
              :has_finance_details,
              temp_cards: 0)
@@ -25,9 +26,18 @@ module WasteCarriersEngine
     end
 
     describe "build_xml" do
-      it "returns correctly-formatted XML" do
-        xml = File.read("./spec/fixtures/files/request_to_worldpay.xml")
-        expect(worldpay_xml_service.build_xml).to eq(xml)
+      context "when it's a digital registration" do
+        it "returns correctly-formatted XML" do
+          xml = File.read("./spec/fixtures/files/request_to_worldpay.xml")
+          expect(worldpay_xml_service.build_xml).to eq(xml)
+        end
+      end
+
+      context "when it's an assisted digital registration" do
+        it "returns correctly-formatted XML" do
+          xml = File.read("./spec/fixtures/files/request_to_worldpay_ad.xml")
+          expect(worldpay_xml_service.build_xml).to eq(xml)
+        end
       end
     end
   end

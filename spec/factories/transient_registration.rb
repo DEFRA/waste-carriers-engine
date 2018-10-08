@@ -54,6 +54,10 @@ FactoryBot.define do
       finance_details { build(:finance_details, balance: 0) }
     end
 
+    trait :has_different_contact_email do
+      contact_email { "contact-foo@example.com" }
+    end
+
     # Overseas registrations
 
     trait :has_required_overseas_data do
