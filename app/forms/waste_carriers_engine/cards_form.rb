@@ -9,7 +9,11 @@ module WasteCarriersEngine
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
-      self.temp_cards = params[:temp_cards]
+      self.temp_cards = if params[:temp_cards].present?
+                          params[:temp_cards]
+                        else
+                          0
+                        end
       attributes = { temp_cards: temp_cards }
 
       super(attributes, params[:reg_identifier])
