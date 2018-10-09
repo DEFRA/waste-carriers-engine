@@ -73,16 +73,14 @@ module WasteCarriersEngine
     end
 
     def assign_address_lines(data)
-      lines = []
-      lines << data["organisationName"]
-      lines << data["subBuildingName"]
-      lines << data["buildingName"]
-      lines << [data["buildingNumber"], data["thoroughfareName"]].join(" ")
+      lines = data["lines"]
+      lines.insert(0, data["buildingNumber"])
+      lines.reject!(&:blank?)
+
       address_attributes = %i[address_line_1
                               address_line_2
                               address_line_3
                               address_line_4]
-      lines.reject!(&:empty?)
 
       # Assign lines one at a time until we run out of lines to assign
       write_attribute(address_attributes.shift, lines.shift) until lines.empty?
