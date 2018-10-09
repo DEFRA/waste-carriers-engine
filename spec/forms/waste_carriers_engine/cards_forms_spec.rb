@@ -42,8 +42,8 @@ module WasteCarriersEngine
             cards_form.temp_cards = ""
           end
 
-          it "is valid" do
-            expect(cards_form).to be_valid
+          it "is not valid" do
+            expect(cards_form).to_not be_valid
           end
         end
 

@@ -17,7 +17,6 @@ module WasteCarriersEngine
 
     # Must be a positive integer or 0
     # Leaving it blank is also valid - this will automatically sub in a 0 since the field is marked as an Integer
-    validates :temp_cards, numericality: { only_integer: true, greater_than_or_equal_to: 0 },
-                           allow_blank: true
+    validates :temp_cards, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   end
 end
