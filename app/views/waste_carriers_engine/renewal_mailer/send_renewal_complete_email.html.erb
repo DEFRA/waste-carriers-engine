@@ -109,7 +109,7 @@
                 <%= @registration.first_name %> <%= @registration.last_name %>
               </p>
 
-              <% @address_lines.each do |line| %>
+              <% displayable_address(@registration.registered_address).each do |line| %>
                 <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
                   <%= line %>
                 </p>
