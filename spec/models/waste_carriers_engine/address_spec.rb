@@ -4,7 +4,7 @@ module WasteCarriersEngine
   RSpec.describe Address, type: :model do
     let(:address) { build(:address) }
 
-    describe "assign_address_lines" do
+    describe "assign_house_number_and_address_lines" do
       context "when it is given address data" do
         let(:data) do
           {
@@ -20,7 +20,7 @@ module WasteCarriersEngine
 
         context "when all the lines are used" do
           before do
-            address.assign_address_lines(data)
+            address.assign_house_number_and_address_lines(data)
           end
 
           it "should assign the correct house_number" do
@@ -38,7 +38,7 @@ module WasteCarriersEngine
         context "when the lines are not all used" do
           before do
             data["lines"] = ["FOO BUILDINGS", "BAR STREET"]
-            address.assign_address_lines(data)
+            address.assign_house_number_and_address_lines(data)
           end
 
           it "should assign the correct house_number" do

@@ -66,12 +66,12 @@ module WasteCarriersEngine
       address[:easting] = data["easting"]
       address[:northing] = data["northing"]
 
-      address.assign_address_lines(data)
+      address.assign_house_number_and_address_lines(data)
 
       address
     end
 
-    def assign_address_lines(data)
+    def assign_house_number_and_address_lines(data)
       lines = data["lines"]
       address_attributes = %i[house_number
                               address_line_1
