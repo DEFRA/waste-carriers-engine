@@ -4,9 +4,9 @@ module WasteCarriersEngine
     include CanLimitNumberOfRelevantPeople
     include CanNavigateFlexibly
 
-    attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_address_display, :contact_email,
+    attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_email,
                   :declared_convictions, :first_name, :last_name, :location, :main_people, :phone_number,
-                  :registered_address, :registered_address_display, :registration_type, :relevant_people, :tier
+                  :registered_address, :registration_type, :relevant_people, :tier
 
     def initialize(transient_registration)
       super
@@ -14,7 +14,6 @@ module WasteCarriersEngine
       self.company_name = @transient_registration.company_name
       self.company_no = @transient_registration.company_no
       self.contact_address = @transient_registration.contact_address
-      self.contact_address_display = displayable_address(contact_address)
       self.contact_email = @transient_registration.contact_email
       self.declared_convictions = @transient_registration.declared_convictions
       self.first_name = @transient_registration.first_name
@@ -23,7 +22,6 @@ module WasteCarriersEngine
       self.main_people = @transient_registration.main_people
       self.phone_number = @transient_registration.phone_number
       self.registered_address = @transient_registration.registered_address
-      self.registered_address_display = displayable_address(registered_address)
       self.registration_type = @transient_registration.registration_type
       self.relevant_people = @transient_registration.relevant_people
       self.tier = @transient_registration.tier
@@ -61,19 +59,6 @@ module WasteCarriersEngine
     validates_with KeyPeopleValidator
 
     private
-
-    def displayable_address(address)
-      return [] unless address.present?
-      # Get all the possible address lines, then remove the blank ones
-      [address.house_number,
-       address.address_line_1,
-       address.address_line_2,
-       address.address_line_3,
-       address.address_line_4,
-       address.town_city,
-       address.postcode,
-       address.country].reject
-    end
 
     def should_be_renewed
       business_type_change_valid? && same_company_no?
