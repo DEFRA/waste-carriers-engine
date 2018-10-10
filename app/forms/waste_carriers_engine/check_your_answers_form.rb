@@ -65,7 +65,8 @@ module WasteCarriersEngine
     def displayable_address(address)
       return [] unless address.present?
       # Get all the possible address lines, then remove the blank ones
-      [address.address_line_1,
+      [address.house_number,
+       address.address_line_1,
        address.address_line_2,
        address.address_line_3,
        address.address_line_4,
