@@ -9,15 +9,17 @@ module WasteCarriersEngine
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
-      self.temp_cards = params[:temp_cards]
+      # If temp_cards is blank, sub in 0 so it passes validation
+      self.temp_cards = if params[:temp_cards].present?
+                          params[:temp_cards]
+                        else
+                          0
+                        end
       attributes = { temp_cards: temp_cards }
 
       super(attributes, params[:reg_identifier])
     end
 
-    # Must be a positive integer or 0
-    # Leaving it blank is also valid - this will automatically sub in a 0 since the field is marked as an Integer
-    validates :temp_cards, numericality: { only_integer: true, greater_than_or_equal_to: 0 },
-                           allow_blank: true
+    validates :temp_cards, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   end
 end

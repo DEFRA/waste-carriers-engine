@@ -80,7 +80,22 @@ module WasteCarriersEngine
         end
       end
 
-      context "when there are no copy cards" do
+      context "when temp_cards is 0" do
+        before do
+          transient_registration.temp_cards = 0
+        end
+
+        it "should not include a copy cards item" do
+          matching_item = order[:order_items].find { |item| item[:type] == "COPY_CARDS" }
+          expect(matching_item).to be_nil
+        end
+      end
+
+      context "when temp_cards is not present" do
+        before do
+          transient_registration.temp_cards = nil
+        end
+
         it "should not include a copy cards item" do
           matching_item = order[:order_items].find { |item| item[:type] == "COPY_CARDS" }
           expect(matching_item).to be_nil

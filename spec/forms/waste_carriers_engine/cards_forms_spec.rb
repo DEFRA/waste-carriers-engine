@@ -25,6 +25,22 @@ module WasteCarriersEngine
           expect(cards_form.submit(invalid_params)).to eq(false)
         end
       end
+
+      context "when temp_cards is blank" do
+        let(:cards_form) { build(:cards_form, :has_required_data) }
+        let(:transient_registration) { TransientRegistration.where(reg_identifier: cards_form.reg_identifier).first }
+        let(:blank_params) do
+          {
+            reg_identifier: cards_form.reg_identifier,
+            temp_cards: ""
+          }
+        end
+
+        it "should change the value to zero" do
+          cards_form.submit(blank_params)
+          expect(transient_registration.reload.temp_cards).to eq(0)
+        end
+      end
     end
 
     context "when a valid transient registration exists" do
@@ -42,8 +58,8 @@ module WasteCarriersEngine
             cards_form.temp_cards = ""
           end
 
-          it "is valid" do
-            expect(cards_form).to be_valid
+          it "is not valid" do
+            expect(cards_form).to_not be_valid
           end
         end
 
