@@ -52,6 +52,20 @@ module WasteCarriersEngine
       # "#{root}/user/#{id}/registrations"
     end
 
+    def displayable_address(address)
+      return [] unless address.present?
+
+      # Get all the possible address lines, then remove the blank ones
+      [address.house_number,
+       address.address_line_1,
+       address.address_line_2,
+       address.address_line_3,
+       address.address_line_4,
+       address.town_city,
+       address.postcode,
+       address.country].reject(&:blank?)
+    end
+
     private
 
     def title_text

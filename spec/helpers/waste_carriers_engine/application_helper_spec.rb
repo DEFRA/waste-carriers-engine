@@ -58,5 +58,22 @@ module WasteCarriersEngine
         expect(helper.dashboard_link(user)).to eq(expected_url)
       end
     end
+
+    describe "displayable_address" do
+      let(:address) do
+        build(:address,
+              house_number: "5",
+              address_line_1: "Foo Terrace",
+              address_line_2: "Bar Street",
+              town_city: "Bazville",
+              postcode: "AB1 2CD",
+              country: "Quxland")
+      end
+
+      it "returns the correct value" do
+        expected_address = ["5", "Foo Terrace", "Bar Street", "Bazville", "AB1 2CD", "Quxland"]
+        expect(displayable_address(address)).to eq(expected_address)
+      end
+    end
   end
 end
