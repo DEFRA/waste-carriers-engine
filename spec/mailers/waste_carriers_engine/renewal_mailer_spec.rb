@@ -36,27 +36,31 @@ module WasteCarriersEngine
       end
 
       context "attachments" do
-        let(:pdf_attachment) { mail.attachments[0] }
-        let(:png_attachment) { mail.attachments[1] }
+        before(:all) do
+          @registration = create(:registration, :has_required_data, :expires_later)
+          @mail = RenewalMailer.send_renewal_complete_email(@registration)
+          @pdf_attachment = @mail.attachments[0]
+          @png_attachment = @mail.attachments[1]
+        end
 
         it "has 2 attachments (pdf and logo)" do
-          expect(mail.attachments.length).to eq(2)
+          expect(@mail.attachments.length).to eq(2)
         end
 
         it "has an attachment of type pdf" do
-          expect(pdf_attachment.content_type).to start_with("application/pdf;")
+          expect(@pdf_attachment.content_type).to start_with("application/pdf;")
         end
 
         it "has a pdf attachment with the right identifier in the filename" do
-          expect(pdf_attachment.filename).to eq("WasteCarrierRegistrationCertificate-#{registration.regIdentifier}.pdf")
+          expect(@pdf_attachment.filename).to eq("WasteCarrierRegistrationCertificate-#{@registration.regIdentifier}.pdf")
         end
 
         it "has an attachment of type png" do
-          expect(png_attachment.content_type).to start_with("image/png;")
+          expect(@png_attachment.content_type).to start_with("image/png;")
         end
 
         it "has a png attachment with the right filename" do
-          expect(png_attachment.filename).to eq("govuk_logotype_email.png")
+          expect(@png_attachment.filename).to eq("govuk_logotype_email.png")
         end
       end
     end
