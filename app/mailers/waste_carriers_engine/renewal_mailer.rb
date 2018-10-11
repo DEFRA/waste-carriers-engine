@@ -6,6 +6,8 @@ module WasteCarriersEngine
     def send_renewal_complete_email(registration)
       @registration = registration
 
+      attachments["WasteCarrierRegistrationCertificate-#{registration.regIdentifier}.pdf"] = pdf_certificate
+
       mail(to: @registration.contact_email,
            from: "#{Rails.configuration.email_service_name} <#{Rails.configuration.email_service_email}>",
            subject: I18n.t(".waste_carriers_engine.renewal_mailer.send_renewal_complete_email.subject",
@@ -37,6 +39,18 @@ module WasteCarriersEngine
       else
         "send_renewal_received_pending_conviction_check_email"
       end
+    end
+
+    def pdf_certificate
+      @presenter = RegistrationPresenter.new(@registration, view_context)
+      pdf_generator = GeneratePdfService.new(
+        render_to_string(
+          pdf: "certificate",
+          template: "waste_carriers_engine/certificates/registration_pdf",
+          layout: "waste_carriers_engine/pdf.html.erb"
+        )
+      )
+      pdf_generator.pdf
     end
   end
 end
