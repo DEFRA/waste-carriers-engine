@@ -45,6 +45,31 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#tier_and_registration_type" do
+      let(:registration) { create(:registration, :has_required_data) }
+      context "when the registration is a carrier dealer" do
+        it "returns a description including 'carrier and dealer'" do
+          registration.registration_type = "carrier_dealer"
+          presenter = RegistrationPresenter.new(registration, view)
+          expect(presenter.tier_and_registration_type).to eq("An upper tier waste carrier and dealer")
+        end
+      end
+      context "when the registration is a broker dealer" do
+        it "returns a description including 'broker and dealer'" do
+          registration.registration_type = "broker_dealer"
+          presenter = RegistrationPresenter.new(registration, view)
+          expect(presenter.tier_and_registration_type).to eq("An upper tier waste broker and dealer")
+        end
+      end
+      context "when the registration is a carrier, broker and dealer" do
+        it "returns a description including 'carrier, broker and dealer'" do
+          registration.registration_type = "carrier_broker_dealer"
+          presenter = RegistrationPresenter.new(registration, view)
+          expect(presenter.tier_and_registration_type).to eq("An upper tier waste carrier, broker and dealer")
+        end
+      end
+    end
+
     describe "#list_main_people" do
       let(:registration) do
         reg = create(:registration, :has_required_data)

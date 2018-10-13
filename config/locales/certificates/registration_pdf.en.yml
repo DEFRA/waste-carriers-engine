@@ -28,3 +28,6 @@ en:
         year: "year"
         updatePhone: "You can do this by calling the Environment Agency."
         registered_as: "An upper tier waste %{registration_type}"
+        carrier_dealer: "carrier and dealer"
+        broker_dealer: "broker and dealer"
+        carrier_broker_dealer: "carrier, broker and dealer"

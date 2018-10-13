@@ -19,6 +19,12 @@ module WasteCarriersEngine
       list_main_people
     end
 
+    def tier_and_registration_type
+      I18n.t("#{LOCALES_KEY}.registered_as",
+        registration_type: I18n.t("#{LOCALES_KEY}.#{registrationType}")
+      )
+    end
+
     def list_main_people
       list = key_people
         .select { |person| person.person_type == 'KEY' }
