@@ -63,6 +63,20 @@ module WasteCarriersEngine
           expect(@png_attachment.filename).to eq("govuk_logotype_email.png")
         end
       end
+
+      context "error generating pdf attachment" do
+        before do
+          allow_any_instance_of(GeneratePdfService).to receive(:initialize).and_raise(StandardError)
+        end
+        let(:registration) { create(:registration, :has_required_data, :expires_later) }
+        let(:mail) { RenewalMailer.send_renewal_complete_email(registration) }
+
+        it "does not block the email from completing" do
+          expect(mail.to).to eq([registration.contact_email])
+          expect(mail.to).to eq([registration.contact_email])
+          expect(mail.from).to eq(["test@example.com"])
+        end
+      end
     end
 
     describe "send_renewal_received_email" do

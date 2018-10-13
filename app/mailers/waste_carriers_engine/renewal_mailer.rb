@@ -6,7 +6,8 @@ module WasteCarriersEngine
     def send_renewal_complete_email(registration)
       @registration = registration
 
-      attachments["WasteCarrierRegistrationCertificate-#{registration.regIdentifier}.pdf"] = pdf_certificate
+      certificate = generate_pdf_certificate
+      attachments["WasteCarrierRegistrationCertificate-#{registration.regIdentifier}.pdf"] = certificate if certificate
 
       mail(to: @registration.contact_email,
            from: "#{Rails.configuration.email_service_name} <#{Rails.configuration.email_service_email}>",
@@ -41,7 +42,11 @@ module WasteCarriersEngine
       end
     end
 
-    def pdf_certificate
+    # We wrap the generation of the pdf in a rescue block, because though it's
+    # not ideal that the user doesn't get their certificate attached if an error
+    # occurs, we also don't want to block their renewal from completing because
+    # of it
+    def generate_pdf_certificate
       @presenter = RegistrationPresenter.new(@registration, view_context)
       pdf_generator = GeneratePdfService.new(
         render_to_string(
@@ -51,6 +56,9 @@ module WasteCarriersEngine
         )
       )
       pdf_generator.pdf
+    rescue StandardError => e
+      Airbrake.notify(e) if defined?(Airbrake)
+      nil
     end
   end
 end
