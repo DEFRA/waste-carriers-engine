@@ -25,6 +25,13 @@ module WasteCarriersEngine
       )
     end
 
+    def expires_after_pluralized
+      ActionController::Base.helpers.pluralize(
+        Rails.configuration.expires_after,
+        I18n.t("#{LOCALES_KEY}.year")
+      )
+    end
+
     def list_main_people
       list = key_people
         .select { |person| person.person_type == 'KEY' }

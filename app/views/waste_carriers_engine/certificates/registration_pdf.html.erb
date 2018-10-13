@@ -98,7 +98,7 @@
 
       <!-- Renewal details section -->
       <div class="renewal">
-        <p class="certificate_text"><%= t ".upper_renewal_html", expires_after_pluralized: pluralize(Rails.configuration.expires_after, t(".year")) %></p>
+        <p class="certificate_text"><%= t ".upper_renewal_html", expires_after_pluralized: @presenter.expires_after_pluralized %></p>
         <% if @presenter.assisted_digital? %>
           <p class="certificate_text"><%= t ".updatePhone" %></p>
         <% end %>
