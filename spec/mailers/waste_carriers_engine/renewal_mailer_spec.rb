@@ -73,7 +73,6 @@ module WasteCarriersEngine
 
         it "does not block the email from completing" do
           expect(mail.to).to eq([registration.contact_email])
-          expect(mail.to).to eq([registration.contact_email])
           expect(mail.from).to eq(["test@example.com"])
         end
       end
