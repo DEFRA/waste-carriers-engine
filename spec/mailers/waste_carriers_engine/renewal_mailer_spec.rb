@@ -74,6 +74,8 @@ module WasteCarriersEngine
         it "does not block the email from completing" do
           expect(mail.to).to eq([registration.contact_email])
           expect(mail.from).to eq(["test@example.com"])
+          expect(mail.attachments.length).to eq(1)
+          expect(mail.attachments[0].filename).to eq("govuk_logotype_email.png")
         end
       end
     end
