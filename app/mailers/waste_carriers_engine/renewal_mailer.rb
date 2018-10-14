@@ -57,7 +57,7 @@ module WasteCarriersEngine
       )
       pdf_generator.pdf
     rescue StandardError => e
-      Airbrake.notify(e) if defined?(Airbrake)
+      Airbrake.notify(e, { registration_no: @registration.regIdentifier }) if defined?(Airbrake)
       nil
     end
   end
