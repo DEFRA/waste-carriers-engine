@@ -3,11 +3,6 @@ module WasteCarriersEngine
 
     LOCALES_KEY = ".waste_carriers_engine.certificates.registration_pdf"
 
-    def complex_organisation_details?
-      return false unless ["soleTrader", "partnership"].include?(business_type)
-      true
-    end
-
     def carrier_name
       return company_name unless business_type == "soleTrader"
 
@@ -16,6 +11,29 @@ module WasteCarriersEngine
       # the details entered into key people. For sole traders there will only be
       # one, but the list_main_people method still works for finding and
       # formatting the result found
+      list_main_people
+    end
+
+    # By complex we mean is there a need to display extra detail in the
+    # document. If its a soletrader we display we display an extra section,
+    # which in the case of partners is a list of their names, and for sole
+    # traders its their business name.
+    def complex_organisation_details?
+      return false unless ["soleTrader", "partnership"].include?(business_type)
+      true
+    end
+
+    def complex_organisation_title
+      return I18n.t("#{LOCALES_KEY}.partners") if business_type == "partnership"
+      I18n.t("#{LOCALES_KEY}.business_name_if_applicable")
+    end
+
+    def complex_organisation_name
+      return company_name unless business_type == "partnership"
+
+      # Based on the logic found in the existing certificate, we simply display
+      # the company name field unless its a partnership, in which case we list
+      # out all the partners
       list_main_people
     end
 
@@ -37,20 +55,6 @@ module WasteCarriersEngine
         .select { |person| person.person_type == 'KEY' }
         .map    { |person| format('%s %s', person.first_name, person.last_name) }
       list.join("<br>").html_safe
-    end
-
-    def complex_organisation_title
-      return I18n.t("#{LOCALES_KEY}.partners") if business_type == "partnership"
-      I18n.t("#{LOCALES_KEY}.business_name_if_applicable")
-    end
-
-    def complex_organisation_name
-      return company_name unless business_type == "partnership"
-
-      # Based on the logic found in the existing certificate, we simply display
-      # the company name field unless its a partnership, in which case we list
-      # out all the partners
-      list_main_people
     end
 
     def assisted_digital?

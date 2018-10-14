@@ -11,40 +11,85 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#complex_organisation_details?" do
-      let(:registration) { create(:registration, :has_required_data) }
-
-      context "when the registration is a limited company" do
-        it "returns false" do
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.complex_organisation_details?).to be false
-        end
-      end
-
-      context "when the registration is a sole trader" do
-        it "returns true" do
-          registration.business_type = "soleTrader"
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.complex_organisation_details?).to be true
-        end
-      end
-    end
-
     describe "#carrier_name" do
       let(:registration) { create(:registration, :has_required_data) }
 
-      context "when the registration is a limited company" do
+      context "when the registration business type is 'soleTrader'" do
+        it "returns the carrier's name" do
+          registration.business_type = "soleTrader"
+          presenter = RegistrationPresenter.new(registration, view)
+          expect(presenter.carrier_name).to eq("Kate Franklin")
+        end
+      end
+
+      context "when the registration business type is NOT 'sole trader'" do
         it "returns the company name" do
           presenter = RegistrationPresenter.new(registration, view)
           expect(presenter.carrier_name).to eq("Acme Waste")
         end
       end
+    end
 
-      context "when the registration is a sole trader" do
-        it "returns something else" do
-          registration.business_type = "soleTrader"
+    describe "#complex_organisation_details?" do
+      let(:registration) { create(:registration, :has_required_data) }
+
+      test_values = {
+        limitedCompany: false,
+        soleTrader: true,
+        partnership: true
+      }
+      test_values.each do |business_type, expected|
+        context "when the registration business type is '#{business_type}'" do
+          it "returns '#{expected}'" do
+            registration.business_type = business_type
+            presenter = RegistrationPresenter.new(registration, view)
+            expect(presenter.complex_organisation_details?).to eq(expected)
+          end
+        end
+      end
+    end
+
+    describe "#complex_organisation_title" do
+      let(:registration) { create(:registration, :has_required_data) }
+
+      context "when the registration business type is 'partnership'" do
+        it "returns 'Partners'" do
+          registration.business_type = "partnership"
           presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.carrier_name).to eq("Kate Franklin")
+          expect(presenter.complex_organisation_title).to eq("Partners")
+        end
+      end
+
+      context "when the registration business type is NOT 'partnership'" do
+        it "returns a generic title" do
+          presenter = RegistrationPresenter.new(registration, view)
+          expect(presenter.complex_organisation_title).to eq("Business name (if applicable)")
+        end
+      end
+    end
+
+    describe "#complex_organisation_name" do
+      let(:registration) do
+        reg = create(:registration, :has_required_data)
+        person = build(:key_person, :has_required_data, :main)
+        person.first_name = "Ryan"
+        person.last_name = "Gosling"
+        reg.key_people.push(person)
+        reg
+      end
+
+      context "when the registration business type is 'partnership'" do
+        it "returns a list of the partners names" do
+          registration.business_type = "partnership"
+          presenter = RegistrationPresenter.new(registration, view)
+          expect(presenter.complex_organisation_name).to eq("Kate Franklin<br>Ryan Gosling")
+        end
+      end
+
+      context "when the registration business type is NOT 'partnership'" do
+        it "returns the company name" do
+          presenter = RegistrationPresenter.new(registration, view)
+          expect(presenter.complex_organisation_name).to eq("Acme Waste")
         end
       end
     end
@@ -52,27 +97,18 @@ module WasteCarriersEngine
     describe "#tier_and_registration_type" do
       let(:registration) { create(:registration, :has_required_data) }
 
-      context "when the registration is a carrier dealer" do
-        it "returns a description including 'carrier and dealer'" do
-          registration.registration_type = "carrier_dealer"
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.tier_and_registration_type).to eq("An upper tier waste carrier and dealer")
-        end
-      end
-
-      context "when the registration is a broker dealer" do
-        it "returns a description including 'broker and dealer'" do
-          registration.registration_type = "broker_dealer"
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.tier_and_registration_type).to eq("An upper tier waste broker and dealer")
-        end
-      end
-
-      context "when the registration is a carrier, broker and dealer" do
-        it "returns a description including 'carrier, broker and dealer'" do
-          registration.registration_type = "carrier_broker_dealer"
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.tier_and_registration_type).to eq("An upper tier waste carrier, broker and dealer")
+      test_values = {
+        carrier_dealer: "An upper tier waste carrier and dealer",
+        broker_dealer: "An upper tier waste broker and dealer",
+        carrier_broker_dealer: "An upper tier waste carrier, broker and dealer"
+      }
+      test_values.each do |carrier_type, expected|
+        context "when the registration is a '#{carrier_type}'" do
+          it "returns '#{expected}'" do
+            registration.registration_type = carrier_type
+            presenter = RegistrationPresenter.new(registration, view)
+            expect(presenter.tier_and_registration_type).to eq(expected)
+          end
         end
       end
     end
@@ -113,56 +149,9 @@ module WasteCarriersEngine
         reg
       end
 
-      context "when the registration is a limited company" do
-        it "returns the company name" do
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.list_main_people).to eq("Kate Franklin<br>Ryan Gosling")
-        end
-      end
-    end
-
-    describe "#complex_organisation_title" do
-      let(:registration) { create(:registration, :has_required_data) }
-
-      context "when the registration is a partnership" do
-        it "returns the 'Partners'" do
-          registration.business_type = "partnership"
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.complex_organisation_title).to eq("Partners")
-        end
-      end
-
-      context "when the registration is anything else" do
-        it "returns something else" do
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.complex_organisation_title).to eq("Business name (if applicable)")
-        end
-      end
-    end
-
-    describe "#complex_organisation_name" do
-      let(:registration) do
-        reg = create(:registration, :has_required_data)
-        person = build(:key_person, :has_required_data, :main)
-        person.first_name = "Ryan"
-        person.last_name = "Gosling"
-        reg.key_people.push(person)
-        reg
-      end
-
-      context "when the registration is a partnership" do
-        it "returns the 'Partners' as the name" do
-          registration.business_type = "partnership"
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.complex_organisation_name).to eq("Kate Franklin<br>Ryan Gosling")
-        end
-      end
-
-      context "when the registration is anything else" do
-        it "returns something the company name" do
-          presenter = RegistrationPresenter.new(registration, view)
-          expect(presenter.complex_organisation_name).to eq("Acme Waste")
-        end
+      it "returns a list of names separated by a <br>" do
+        presenter = RegistrationPresenter.new(registration, view)
+        expect(presenter.list_main_people).to eq("Kate Franklin<br>Ryan Gosling")
       end
     end
 
@@ -170,7 +159,7 @@ module WasteCarriersEngine
       let(:registration) { create(:registration, :has_required_data) }
 
       context "when the registration is assisted digital" do
-        it "returns the 'Partners'" do
+        it "returns 'true'" do
           registration.metaData.route = "ASSISTED_DIGITAL"
           presenter = RegistrationPresenter.new(registration, view)
           expect(presenter.assisted_digital?).to be true
@@ -178,7 +167,7 @@ module WasteCarriersEngine
       end
 
       context "when the registration is not assisted digital" do
-        it "returns something else" do
+        it "returns 'false'" do
           presenter = RegistrationPresenter.new(registration, view)
           expect(presenter.assisted_digital?).to be false
         end
