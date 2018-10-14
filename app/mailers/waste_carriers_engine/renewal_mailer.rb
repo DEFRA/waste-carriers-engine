@@ -51,8 +51,7 @@ module WasteCarriersEngine
       pdf_generator = GeneratePdfService.new(
         render_to_string(
           pdf: "certificate",
-          template: "waste_carriers_engine/certificates/registration_pdf",
-          layout: "waste_carriers_engine/pdf.html.erb"
+          template: "waste_carriers_engine/certificates/registration_pdf"
         )
       )
       pdf_generator.pdf

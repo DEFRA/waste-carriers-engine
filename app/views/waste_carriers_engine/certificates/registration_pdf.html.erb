@@ -1,110 +1,148 @@
-<div id="wrapper">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type='text/css'>
+      * {
+        font-family: Helvetica, Arial, Sans-Serif !important;
+        background: #FFF;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      body {
+        margin: 40px 60px;
+      }
+      table tr td:first-child {
+        width: 220px;
+      }
+      ul, li {
+        list-style-type: none;
+        margin-left: 0;
+        padding-left: 0;
+      }
+      li, td, p {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      table th {
+        margin-top: 20px;
+        text-align: left;
+        font-size: 22px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
 
-  <main id="content" role="main" class="group">
+      <main id="content" role="main" class="group">
 
-    <div class="grid-wrapper">
-    <div class="grid-2-3">
+        <div class="grid-wrapper">
+        <div class="grid-2-3">
 
-    <!-- Header section -->
-    <header class="page-header group">
-      <div class="hgroup">
-        <h1 class="heading-small"><%=t ".heading" %></h1>
+        <!-- Header section -->
+        <header class="page-header group">
+          <div class="hgroup">
+            <h1 class="heading-small"><%=t ".heading" %></h1>
+          </div>
+        </header>
+
+          <table summary="Regulation Authority details" class="certificate_table" role="presentation">
+            <thead>
+              <tr>
+                <th><%=t ".authority" %></th>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-column-text"><%=t ".name" %></td>
+                  <td>
+                    <%= wicked_pdf_image_tag("environment_agency_logo.png", {:alt => "Environment Agency Logo", :border => "0", :height => "39", :width => "129"}) %>
+                  </td>
+              </tr>
+              <tr>
+                <td class="table-column-text"><%=t ".nccc_address_pretext" %></td>
+                <td>
+                  <ul>
+                    <li><%=t ".nccc_address_line1" %></li>
+                    <li><%=t ".nccc_address_line2" %></li>
+                    <li><%=t ".nccc_address_line3" %></li>
+                    <li><%=t ".nccc_address_line4" %></li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-column-text"><%=t ".telephone_number_pretext" %></td>
+                <td><%=t ".nccc_number" %></td>
+              </tr>
+            </tbody>
+          </table>
+          </br>
+
+          <p class="certificate_text"><%=t ".certify_message" %></p>
+
+          <table summary="Registration Certificate" role="presentation">
+            <thead>
+              <tr>
+                <th><%=t ".carrier_table_heading" %></th>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-column-text"><%=t ".carrier_name" %></td>
+                <td><%= @presenter.carrier_name %></td>
+              </tr>
+              <% if @presenter.complex_organisation_details? %>
+                <tr>
+                  <td class="table-column-text"><%= @presenter.complex_organisation_title %></td>
+                  <td><%= @presenter.complex_organisation_name %></td>
+                </tr>
+              <% end %>
+              <tr>
+                <td class="table-column-text"><%=t ".registered" %></td>
+                <td><%= @presenter.tier_and_registration_type %></td>
+              </tr>
+              <tr>
+                <td class="table-column-text"><%=t ".registration_number" %></td>
+                <td><%= @presenter.regIdentifier%></td>
+              </tr>
+              <tr>
+                <td class="table-column-text"><%=t ".business_address" %></td>
+                <td>
+                  <%= render "waste_carriers_engine/shared/address_display.html.erb", r: @presenter, a: @presenter.registered_address  %>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-column-text"><%=t ".carrier_telephone_number" %></td>
+                <td><%= @presenter.phoneNumber%></td>
+              </tr>
+              <tr>
+                <td class="table-column-text"><%=t ".registration_date" %></td>
+                <td><%= @presenter.metaData.date_activated.in_time_zone("London").to_date %></td>
+              </tr>
+              <tr>
+                <td class="table-column-text"><%=t ".expiry_date" %></td>
+                <td><%= @presenter.expires_on.in_time_zone("London").to_date %></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2 class="certificate_title"><%=t ".heading2" %></h2>
+
+          <!-- Renewal details section -->
+          <div class="renewal">
+            <p class="certificate_text"><%= t ".upper_renewal_html", expires_after_pluralized: @presenter.expires_after_pluralized %></p>
+            <% if @presenter.assisted_digital? %>
+              <p class="certificate_text"><%= t ".updatePhone" %></p>
+            <% end %>
+          </div>
+
+        </div>
       </div>
-    </header>
-
-      <table summary="Regulation Authority details" class="certificate_table" role="presentation">
-        <thead>
-          <tr>
-            <th><%=t ".authority" %></th>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-column-text"><%=t ".name" %></td>
-              <td>
-                <%= wicked_pdf_image_tag("environment_agency_logo.png", {:alt => "Environment Agency Logo", :border => "0", :height => "39", :width => "129"}) %>
-              </td>
-          </tr>
-          <tr>
-            <td class="table-column-text"><%=t ".nccc_address_pretext" %></td>
-            <td>
-              <ul>
-                <li><%=t ".nccc_address_line1" %></li>
-                <li><%=t ".nccc_address_line2" %></li>
-                <li><%=t ".nccc_address_line3" %></li>
-                <li><%=t ".nccc_address_line4" %></li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-column-text"><%=t ".telephone_number_pretext" %></td>
-            <td><%=t ".nccc_number" %></td>
-          </tr>
-        </tbody>
-      </table>
-      </br>
-
-      <p class="certificate_text"><%=t ".certify_message" %></p>
-
-      <table summary="Registration Certificate" role="presentation">
-        <thead>
-          <tr>
-            <th><%=t ".carrier_table_heading" %></th>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-column-text"><%=t ".carrier_name" %></td>
-            <td><%= @presenter.carrier_name %></td>
-          </tr>
-          <% if @presenter.complex_organisation_details? %>
-            <tr>
-              <td class="table-column-text"><%= @presenter.complex_organisation_title %></td>
-              <td><%= @presenter.complex_organisation_name %></td>
-            </tr>
-          <% end %>
-          <tr>
-            <td class="table-column-text"><%=t ".registered" %></td>
-            <td><%= @presenter.tier_and_registration_type %></td>
-          </tr>
-          <tr>
-            <td class="table-column-text"><%=t ".registration_number" %></td>
-            <td><%= @presenter.regIdentifier%></td>
-          </tr>
-          <tr>
-            <td class="table-column-text"><%=t ".business_address" %></td>
-            <td>
-              <%= render "waste_carriers_engine/shared/address_display.html.erb", r: @presenter, a: @presenter.registered_address  %>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-column-text"><%=t ".carrier_telephone_number" %></td>
-            <td><%= @presenter.phoneNumber%></td>
-          </tr>
-          <tr>
-            <td class="table-column-text"><%=t ".registration_date" %></td>
-            <td><%= @presenter.metaData.date_activated.in_time_zone("London").to_date %></td>
-          </tr>
-          <tr>
-            <td class="table-column-text"><%=t ".expiry_date" %></td>
-            <td><%= @presenter.expires_on.in_time_zone("London").to_date %></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2 class="certificate_title"><%=t ".heading2" %></h2>
-
-      <!-- Renewal details section -->
-      <div class="renewal">
-        <p class="certificate_text"><%= t ".upper_renewal_html", expires_after_pluralized: @presenter.expires_after_pluralized %></p>
-        <% if @presenter.assisted_digital? %>
-          <p class="certificate_text"><%= t ".updatePhone" %></p>
-        <% end %>
-      </div>
-
-    </div><!--end grid-2-3 -->
-  </div><!--end grid-wrapper -->
-  </main><!-- end main -->
-</div><!-- end wrapper -->
+      </main>
+    </div>
+  </body>
+</html>
