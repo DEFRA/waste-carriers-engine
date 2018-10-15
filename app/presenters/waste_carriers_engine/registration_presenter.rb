@@ -52,8 +52,8 @@ module WasteCarriersEngine
 
     def list_main_people
       list = key_people
-        .select { |person| person.person_type == 'KEY' }
-        .map    { |person| format('%s %s', person.first_name, person.last_name) }
+        .select { |person| person.person_type == "KEY" }
+        .map    { |person| format("%s %s", person.first_name, person.last_name) }
       list.join("<br>").html_safe
     end
 

@@ -33,7 +33,7 @@ gem "secure_headers", "~> 5.0"
 gem "turbolinks"
 
 # Generates a PDF from HTML, in our case, the users certificate
-gem 'wicked_pdf'
+gem "wicked_pdf"
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
