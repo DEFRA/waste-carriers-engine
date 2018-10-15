@@ -1,7 +1,7 @@
 module WasteCarriersEngine
-  class RegistrationPresenter < BasePresenter
+  class CertificatePresenter < BasePresenter
 
-    LOCALES_KEY = ".waste_carriers_engine.certificates.registration_pdf"
+    LOCALES_KEY = ".waste_carriers_engine.pdfs.certificate"
 
     def carrier_name
       return company_name unless business_type == "soleTrader"

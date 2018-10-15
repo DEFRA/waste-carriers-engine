@@ -1,12 +1,12 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RegistrationPresenter do
+  RSpec.describe CertificatePresenter do
     describe "calling root model attributes" do
       let(:registration) { create(:registration, :has_required_data) }
 
       it "returns the value of the attribute" do
-        presenter = RegistrationPresenter.new(registration, view)
+        presenter = CertificatePresenter.new(registration, view)
         expect(presenter.company_name).to eq("Acme Waste")
       end
     end
@@ -17,14 +17,14 @@ module WasteCarriersEngine
       context "when the registration business type is 'soleTrader'" do
         it "returns the carrier's name" do
           registration.business_type = "soleTrader"
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.carrier_name).to eq("Kate Franklin")
         end
       end
 
       context "when the registration business type is NOT 'sole trader'" do
         it "returns the company name" do
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.carrier_name).to eq("Acme Waste")
         end
       end
@@ -42,7 +42,7 @@ module WasteCarriersEngine
         context "when the registration business type is '#{business_type}'" do
           it "returns '#{expected}'" do
             registration.business_type = business_type
-            presenter = RegistrationPresenter.new(registration, view)
+            presenter = CertificatePresenter.new(registration, view)
             expect(presenter.complex_organisation_details?).to eq(expected)
           end
         end
@@ -55,14 +55,14 @@ module WasteCarriersEngine
       context "when the registration business type is 'partnership'" do
         it "returns 'Partners'" do
           registration.business_type = "partnership"
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.complex_organisation_title).to eq("Partners")
         end
       end
 
       context "when the registration business type is NOT 'partnership'" do
         it "returns a generic title" do
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.complex_organisation_title).to eq("Business name (if applicable)")
         end
       end
@@ -81,14 +81,14 @@ module WasteCarriersEngine
       context "when the registration business type is 'partnership'" do
         it "returns a list of the partners names" do
           registration.business_type = "partnership"
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.complex_organisation_name).to eq("Kate Franklin<br>Ryan Gosling")
         end
       end
 
       context "when the registration business type is NOT 'partnership'" do
         it "returns the company name" do
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.complex_organisation_name).to eq("Acme Waste")
         end
       end
@@ -106,7 +106,7 @@ module WasteCarriersEngine
         context "when the registration is a '#{carrier_type}'" do
           it "returns '#{expected}'" do
             registration.registration_type = carrier_type
-            presenter = RegistrationPresenter.new(registration, view)
+            presenter = CertificatePresenter.new(registration, view)
             expect(presenter.tier_and_registration_type).to eq(expected)
           end
         end
@@ -122,7 +122,7 @@ module WasteCarriersEngine
         end
 
         it "returns '1 year'" do
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.expires_after_pluralized).to eq("1 year")
         end
       end
@@ -133,7 +133,7 @@ module WasteCarriersEngine
         end
 
         it "returns '3 years'" do
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.expires_after_pluralized).to eq("3 years")
         end
       end
@@ -150,7 +150,7 @@ module WasteCarriersEngine
       end
 
       it "returns a list of names separated by a <br>" do
-        presenter = RegistrationPresenter.new(registration, view)
+        presenter = CertificatePresenter.new(registration, view)
         expect(presenter.list_main_people).to eq("Kate Franklin<br>Ryan Gosling")
       end
     end
@@ -161,14 +161,14 @@ module WasteCarriersEngine
       context "when the registration is assisted digital" do
         it "returns 'true'" do
           registration.metaData.route = "ASSISTED_DIGITAL"
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.assisted_digital?).to be true
         end
       end
 
       context "when the registration is not assisted digital" do
         it "returns 'false'" do
-          presenter = RegistrationPresenter.new(registration, view)
+          presenter = CertificatePresenter.new(registration, view)
           expect(presenter.assisted_digital?).to be false
         end
       end

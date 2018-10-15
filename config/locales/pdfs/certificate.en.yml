@@ -1,7 +1,7 @@
 en:
   waste_carriers_engine:
-    certificates:
-      registration_pdf:
+    pdfs:
+      certificate:
         heading: "Certificate of Registration under the Waste (England and Wales) Regulations 2011"
         authority: "Regulation authority"
         name: "Name"

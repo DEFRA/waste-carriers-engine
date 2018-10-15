@@ -47,11 +47,11 @@ module WasteCarriersEngine
     # occurs, we also don't want to block their renewal from completing because
     # of it
     def generate_pdf_certificate
-      @presenter = RegistrationPresenter.new(@registration, view_context)
+      @presenter = CertificatePresenter.new(@registration, view_context)
       pdf_generator = GeneratePdfService.new(
         render_to_string(
           pdf: "certificate",
-          template: "waste_carriers_engine/certificates/registration_pdf"
+          template: "waste_carriers_engine/pdfs/certificate"
         )
       )
       pdf_generator.pdf

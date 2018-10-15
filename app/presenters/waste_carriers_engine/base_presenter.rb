@@ -3,9 +3,10 @@ module WasteCarriersEngine
   # The `BasePresenter` inherits from SimpleDelegator, and this allows us with
   # the line `super(model)` in the intializer to say any calls made on the
   # presenter which are not recognised, pass down to the model passed in. For
-  # example if `RegistrationPresenter` inherits `BasePresenter`, when it is
-  # instantiated you can call `@presenter.company_name` without having to
-  # explicitly expose a method or attribute on the `RegistrationPresenter`.
+  # example if `CertificatePresenter` inherits `BasePresenter`, and we pass in
+  # an instance of `Registration`, when it is instantiated you can call
+  # `@presenter.company_name` without having to explicitly expose a method or
+  # attribute on the `CertificatePresenter`.
   class BasePresenter < SimpleDelegator
 
     def initialize(model, view)
