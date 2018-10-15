@@ -69,14 +69,7 @@ module WasteCarriersEngine
     end
 
     describe "#complex_organisation_name" do
-      let(:registration) do
-        reg = create(:registration, :has_required_data)
-        person = build(:key_person, :has_required_data, :main)
-        person.first_name = "Ryan"
-        person.last_name = "Gosling"
-        reg.key_people.push(person)
-        reg
-      end
+      let(:registration) { create(:registration, :has_required_data, :has_mulitiple_key_people) }
 
       context "when the registration business type is 'partnership'" do
         it "returns a list of the partners names" do
@@ -140,14 +133,7 @@ module WasteCarriersEngine
     end
 
     describe "#list_main_people" do
-      let(:registration) do
-        reg = create(:registration, :has_required_data)
-        person = build(:key_person, :has_required_data, :main)
-        person.first_name = "Ryan"
-        person.last_name = "Gosling"
-        reg.key_people.push(person)
-        reg
-      end
+      let(:registration) { create(:registration, :has_required_data, :has_mulitiple_key_people) }
 
       it "returns a list of names separated by a <br>" do
         presenter = CertificatePresenter.new(registration, view)

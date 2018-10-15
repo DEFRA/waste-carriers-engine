@@ -49,6 +49,17 @@ FactoryBot.define do
       end
     end
 
+    trait :has_mulitiple_key_people do
+      key_people do
+        [
+          build(:key_person, :has_required_data, :main),
+          build(:key_person, :has_required_data, :main, first_name: "Ryan", last_name: "Gosling"),
+          build(:key_person, :has_required_data, :relevant),
+          build(:key_person, :has_required_data, :relevant, first_name: "Corey", last_name: "Stoll")
+        ]
+      end
+    end
+
     trait :expires_soon do
       metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
       expires_on { 2.months.from_now }
