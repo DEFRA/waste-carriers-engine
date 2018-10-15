@@ -54,4 +54,7 @@ Gem::Specification.new do |s|
   # ~/.bash_profile (or equivalent)
   # https://github.com/skywinder/github-changelog-generator#github-token
   s.add_development_dependency "github_changelog_generator"
+
+  # Used to generate a PDF from HTML, in our case, the users certificate
+  s.add_dependency "wicked_pdf"
 end
