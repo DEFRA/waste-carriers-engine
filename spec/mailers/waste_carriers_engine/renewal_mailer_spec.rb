@@ -66,7 +66,7 @@ module WasteCarriersEngine
 
       context "error generating pdf attachment" do
         before do
-          allow_any_instance_of(GeneratePdfService).to receive(:initialize).and_raise(StandardError)
+          allow(GeneratePdfService).to receive(:new).and_raise(StandardError)
         end
         let(:registration) { create(:registration, :has_required_data, :expires_later) }
         let(:mail) { RenewalMailer.send_renewal_complete_email(registration) }
