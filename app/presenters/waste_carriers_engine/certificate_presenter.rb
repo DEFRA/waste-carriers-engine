@@ -23,7 +23,10 @@ module WasteCarriersEngine
       true
     end
 
-    def complex_organisation_title
+    # The certificate displays headings on the left, and values from the
+    # registration on the right. Because this heading is dynamic based on the
+    # business type, we have a method for it in the presenter
+    def complex_organisation_heading
       return I18n.t("#{LOCALES_KEY}.partners") if business_type == "partnership"
       I18n.t("#{LOCALES_KEY}.business_name_if_applicable")
     end

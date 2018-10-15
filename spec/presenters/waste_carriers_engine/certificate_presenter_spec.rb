@@ -49,21 +49,21 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#complex_organisation_title" do
+    describe "#complex_organisation_heading" do
       let(:registration) { create(:registration, :has_required_data) }
 
       context "when the registration business type is 'partnership'" do
         it "returns 'Partners'" do
           registration.business_type = "partnership"
           presenter = CertificatePresenter.new(registration, view)
-          expect(presenter.complex_organisation_title).to eq("Partners")
+          expect(presenter.complex_organisation_heading).to eq("Partners")
         end
       end
 
       context "when the registration business type is NOT 'partnership'" do
         it "returns a generic title" do
           presenter = CertificatePresenter.new(registration, view)
-          expect(presenter.complex_organisation_title).to eq("Business name (if applicable)")
+          expect(presenter.complex_organisation_heading).to eq("Business name (if applicable)")
         end
       end
     end
