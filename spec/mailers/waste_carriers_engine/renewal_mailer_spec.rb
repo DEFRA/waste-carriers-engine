@@ -52,7 +52,7 @@ module WasteCarriersEngine
         end
 
         it "has a pdf attachment with the right identifier in the filename" do
-          expect(@pdf_attachment.filename).to eq("WasteCarrierRegistrationCertificate-#{@registration.regIdentifier}.pdf")
+          expect(@pdf_attachment.filename).to eq("WasteCarrierRegistrationCertificate-#{@registration.reg_identifier}.pdf")
         end
 
         it "has an attachment of type png" do

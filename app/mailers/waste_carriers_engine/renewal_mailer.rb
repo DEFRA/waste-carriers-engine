@@ -7,7 +7,7 @@ module WasteCarriersEngine
       @registration = registration
 
       certificate = generate_pdf_certificate
-      attachments["WasteCarrierRegistrationCertificate-#{registration.regIdentifier}.pdf"] = certificate if certificate
+      attachments["WasteCarrierRegistrationCertificate-#{registration.reg_identifier}.pdf"] = certificate if certificate
 
       mail(to: @registration.contact_email,
            from: "#{Rails.configuration.email_service_name} <#{Rails.configuration.email_service_email}>",
@@ -56,7 +56,7 @@ module WasteCarriersEngine
       )
       pdf_generator.pdf
     rescue StandardError => e
-      Airbrake.notify(e, { registration_no: @registration.regIdentifier }) if defined?(Airbrake)
+      Airbrake.notify(e, { registration_no: @registration.reg_identifier }) if defined?(Airbrake)
       nil
     end
   end

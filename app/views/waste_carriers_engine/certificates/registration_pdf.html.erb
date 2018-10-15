@@ -107,7 +107,7 @@
               </tr>
               <tr>
                 <td class="table-column-text"><%=t ".registration_number" %></td>
-                <td><%= @presenter.regIdentifier%></td>
+                <td><%= @presenter.reg_identifier%></td>
               </tr>
               <tr>
                 <td class="table-column-text"><%=t ".business_address" %></td>
@@ -117,7 +117,7 @@
               </tr>
               <tr>
                 <td class="table-column-text"><%=t ".carrier_telephone_number" %></td>
-                <td><%= @presenter.phoneNumber%></td>
+                <td><%= @presenter.phone_number%></td>
               </tr>
               <tr>
                 <td class="table-column-text"><%=t ".registration_date" %></td>
@@ -136,7 +136,7 @@
           <div class="renewal">
             <p class="certificate_text"><%= t ".upper_renewal_html", expires_after_pluralized: @presenter.expires_after_pluralized %></p>
             <% if @presenter.assisted_digital? %>
-              <p class="certificate_text"><%= t ".updatePhone" %></p>
+              <p class="certificate_text"><%= t ".update_phone" %></p>
             <% end %>
           </div>
 
