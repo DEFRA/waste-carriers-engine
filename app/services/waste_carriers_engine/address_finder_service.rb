@@ -27,13 +27,9 @@ module WasteCarriersEngine
       rescue RestClient::BadRequest
         Rails.logger.debug "OS Places: resource not found"
         :not_found
-      rescue RestClient::ExceptionWithResponse => e
+      rescue StandardError => e
         Airbrake.notify(e) if defined?(Airbrake)
-        Rails.logger.error "OS Places response error: " + e.to_s
-        :error
-      rescue SocketError => e
-        Airbrake.notify(e) if defined?(Airbrake)
-        Rails.logger.error "OS Places socket error: " + e.to_s
+        Rails.logger.error "OS Places error: " + e.to_s
         :error
       end
     end
