@@ -1,7 +1,7 @@
 require "wicked_pdf"
 
-if ENV.has_key?('WCRS_USE_XVFB_FOR_WICKEDPDF')
+if ENV["WCRS_USE_XVFB_FOR_WICKEDPDF"] == "true"
   WickedPdf.config = {
-    exe_path: WasteCarriersEngine::Engine.root.join('script', 'wkhtmltopdf.sh').to_s
+    exe_path: WasteCarriersEngine::Engine.root.join("script", "wkhtmltopdf.sh").to_s
   }
 end
