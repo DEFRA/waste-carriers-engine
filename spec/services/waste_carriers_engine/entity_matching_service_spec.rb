@@ -67,7 +67,7 @@ module WasteCarriersEngine
         end
 
         it "escapes the unicode characters and creates a valid conviction_search_result for the person" do
-          VCR.use_cassette("entity_matching_person_has_matches_unicode") do
+          VCR.use_cassette("entity_matching_person_unicode") do
             entity_matching_service.check_people_for_matches
             expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("NO")
           end
