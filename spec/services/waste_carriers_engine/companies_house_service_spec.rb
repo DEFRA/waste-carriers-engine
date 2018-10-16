@@ -42,7 +42,7 @@ module WasteCarriersEngine
       end
     end
 
-    context "when the request returns a socket error" do
+    context "when the request returns an error" do
       it "returns :error" do
         VCR.turned_off do
           host = "https://api.companieshouse.gov.uk/"

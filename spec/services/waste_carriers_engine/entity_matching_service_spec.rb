@@ -84,19 +84,7 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the request returns a connection refused error" do
-        it "creates a new conviction_search_result" do
-          VCR.turned_off do
-            host = Rails.configuration.wcrs_services_url
-            stub_request(:any, /.*#{host}.*/).to_raise(Errno::ECONNREFUSED)
-
-            entity_matching_service.check_people_for_matches
-            expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("UNKNOWN")
-          end
-        end
-      end
-
-      context "when the request returns a socket error" do
+      context "when the request returns an error" do
         it "creates a new conviction_search_result" do
           VCR.turned_off do
             host = Rails.configuration.wcrs_services_url
