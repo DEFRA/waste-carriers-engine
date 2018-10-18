@@ -61,6 +61,19 @@ module WasteCarriersEngine
         end
       end
 
+      context "when a person's name contains unicode characters" do
+        before do
+          transient_registration.key_people.first.first_name = "José"
+        end
+
+        it "escapes the unicode characters and creates a valid conviction_search_result for the person" do
+          VCR.use_cassette("entity_matching_person_unicode") do
+            entity_matching_service.check_people_for_matches
+            expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("NO")
+          end
+        end
+      end
+
       context "when the response cannot be parsed as JSON" do
         before do
           allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")

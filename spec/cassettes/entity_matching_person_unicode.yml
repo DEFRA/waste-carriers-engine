@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8003/match/person?dateofbirth=01-01-1981&firstname=Jos%C3%A9&lastname=Blogs
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin16.7.0 x86_64) ruby/2.4.2p198
+      Host:
+      - localhost:8003
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Oct 2018 18:12:55 GMT
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '166'
+    body:
+      encoding: UTF-8
+      string: '{"match_result":"NO","matching_system":null,"reference":null,"matched_name":null,"searched_at":1539713575766,"confirmed":"no","confirmed_at":null,"confirmed_by":null}'
+    http_version: 
+  recorded_at: Tue, 16 Oct 2018 18:12:57 GMT
+recorded_with: VCR 4.0.0

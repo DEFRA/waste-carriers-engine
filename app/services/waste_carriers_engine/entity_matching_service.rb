@@ -25,7 +25,8 @@ module WasteCarriersEngine
       Rails.logger.debug "Sending request to Entity Matching service"
 
       begin
-        response = RestClient::Request.execute(method: :get, url: url)
+        response = RestClient::Request.execute(method: :get,
+                                               url: URI.encode(url))
 
         begin
           JSON.parse(response)
