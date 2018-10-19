@@ -77,6 +77,10 @@ module WasteCarriersEngine
     def renewal_allowed?
       return true if renewal_application_submitted?
 
+      # The only time an expired registration can be renewed is if the application has previously been submitted -
+      # otherwise expiry is an automatic no
+      return false if EXPIRED?
+
       close_to_expiry_date? && should_not_be_expired?
     end
 
