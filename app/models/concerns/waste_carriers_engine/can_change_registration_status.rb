@@ -42,7 +42,8 @@ module WasteCarriersEngine
         end
 
         event :renew do
-          transitions from: :ACTIVE,
+          transitions from: %i[ACTIVE
+                               EXPIRED],
                       to: :ACTIVE,
                       guard: %i[close_to_expiry_date?
                                 should_not_be_expired?],
