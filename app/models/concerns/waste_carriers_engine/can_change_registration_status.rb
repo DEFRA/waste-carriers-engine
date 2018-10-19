@@ -75,7 +75,16 @@ module WasteCarriersEngine
 
     # Guards
     def renewal_allowed?
+      return true if renewal_application_submitted?
+
       close_to_expiry_date? && should_not_be_expired?
+    end
+
+    def renewal_application_submitted?
+      transient_registration = TransientRegistration.where(reg_identifier: registration.reg_identifier).first
+      return false unless transient_registration.present?
+
+      transient_registration.workflow_state == "renewal_received_form"
     end
 
     def close_to_expiry_date?
@@ -89,7 +98,6 @@ module WasteCarriersEngine
       current_day = Time.now.in_time_zone("London").to_date
       current_day < expiry_day
     end
-
 
     # expires_on is stored as a Time in UTC and then converted to a Date.
     # If a user first registered near midnight around the transition between GMT and BST (or the other way round),
