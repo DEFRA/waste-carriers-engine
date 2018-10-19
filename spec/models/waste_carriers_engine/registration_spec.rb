@@ -599,6 +599,24 @@ module WasteCarriersEngine
             expect(registration.metaData).to_not allow_event :renew
           end
 
+          context "when a transient registration exists" do
+            let(:transient_registration) { TransientRegistration.create(reg_identifier: registration.reg_identifier) }
+
+            it "cannot be renewed" do
+              expect(registration.metaData).to_not allow_event :renew
+            end
+
+            context "when the transient_registration is in a submitted state" do
+              before do
+                transient_registration.workflow_state = "renewal_received_form"
+              end
+
+              it "can be renewed" do
+                expect(registration.metaData).to allow_event :renew
+              end
+            end
+          end
+
           it "cannot be revoked" do
             expect(registration.metaData).to_not allow_event :revoke
           end
