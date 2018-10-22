@@ -589,7 +589,7 @@ module WasteCarriersEngine
         end
 
         context "when a registration is expired" do
-          let(:registration) { build(:registration, :is_expired, expires_on: 1.month.ago) }
+          let(:registration) { build(:registration, :has_required_data, :is_expired, expires_on: 1.month.ago) }
 
           it "has 'expired' status" do
             expect(registration.metaData).to have_state(:EXPIRED)
@@ -597,6 +597,30 @@ module WasteCarriersEngine
 
           it "cannot be renewed" do
             expect(registration.metaData).to_not allow_event :renew
+          end
+
+          context "when a transient registration exists" do
+            let(:transient_registration) { build(:transient_registration, :has_required_data) }
+
+            before do
+              # These checks require the registration to be persisted
+              registration.save!
+              transient_registration.update_attributes(reg_identifier: registration.reg_identifier)
+            end
+
+            it "cannot be renewed" do
+              expect(registration.metaData).to_not allow_event :renew
+            end
+
+            context "when the transient_registration is in a submitted state" do
+              before do
+                transient_registration.update_attributes(workflow_state: "renewal_received_form")
+              end
+
+              it "can be renewed" do
+                expect(registration.metaData).to allow_event :renew
+              end
+            end
           end
 
           it "cannot be revoked" do

@@ -42,26 +42,13 @@ module WasteCarriersEngine
         end
 
         event :renew do
-          transitions from: :ACTIVE,
+          transitions from: %i[ACTIVE
+                               EXPIRED],
                       to: :ACTIVE,
-                      guard: %i[close_to_expiry_date?
-                                should_not_be_expired?],
+                      guard: %i[renewal_allowed?],
                       after: %i[extend_expiry_date
                                 update_activation_timestamps]
         end
-      end
-
-      # Guards
-      def close_to_expiry_date?
-        expiry_day = registration.expires_on.to_date
-        expiry_day < Rails.configuration.renewal_window.months.from_now
-      end
-
-      def should_not_be_expired?
-        expiry_day = expiry_time_adjusted_for_daylight_savings.to_date
-        # We store dates and times in UTC, but want to use the current date in the UK, not necessarily UTC
-        current_day = Time.now.in_time_zone("London").to_date
-        current_day < expiry_day
       end
 
       # Transition effects
@@ -85,6 +72,36 @@ module WasteCarriersEngine
     end
 
     private
+
+    # Guards
+    def renewal_allowed?
+      return true if renewal_application_submitted?
+
+      # The only time an expired registration can be renewed is if the application has previously been submitted -
+      # otherwise expiry is an automatic no
+      return false if EXPIRED?
+
+      close_to_expiry_date? && should_not_be_expired?
+    end
+
+    def renewal_application_submitted?
+      transient_registration = TransientRegistration.where(reg_identifier: registration.reg_identifier).first
+      return false unless transient_registration.present?
+
+      transient_registration.workflow_state == "renewal_received_form"
+    end
+
+    def close_to_expiry_date?
+      expiry_day = registration.expires_on.to_date
+      expiry_day < Rails.configuration.renewal_window.months.from_now
+    end
+
+    def should_not_be_expired?
+      expiry_day = expiry_time_adjusted_for_daylight_savings.to_date
+      # We store dates and times in UTC, but want to use the current date in the UK, not necessarily UTC
+      current_day = Time.now.in_time_zone("London").to_date
+      current_day < expiry_day
+    end
 
     # expires_on is stored as a Time in UTC and then converted to a Date.
     # If a user first registered near midnight around the transition between GMT and BST (or the other way round),
