@@ -595,8 +595,16 @@ module WasteCarriersEngine
             expect(registration.metaData).to have_state(:EXPIRED)
           end
 
-          it "cannot be renewed" do
-            expect(registration.metaData).to_not allow_event :renew
+          context "and we are outside the 'grace window'" do
+            it "cannot be renewed" do
+              expect(registration.metaData).to_not allow_event :renew
+            end
+          end
+
+          context "and we are inside the 'grace window'" do
+            it "can be renewed" do
+              expect(registration.metaData).to allow_event :renew
+            end
           end
 
           context "when a transient registration exists" do
