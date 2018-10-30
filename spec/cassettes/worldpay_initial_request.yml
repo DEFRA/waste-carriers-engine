@@ -10,10 +10,10 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1539599537">
-              <description>Your Waste Carrier Registration CBDU578</description>
+            <order orderCode="1540811976">
+              <description>Your Waste Carrier Registration CBDU1161</description>
               <amount currencyCode="GBP" value="10500" exponent="2"/>
-              <orderContent>Waste Carrier Registration renewal: CBDU578 for Acme Waste</orderContent>
+              <orderContent>Waste Carrier Registration renewal: CBDU1161 for Acme Waste</orderContent>
               <paymentMethodMask>
                 <include code="VISA-SSL"/>
                 <include code="MAESTRO-SSL"/>
@@ -46,7 +46,7 @@ http_interactions:
       Authorization:
       - Basic <API_KEY>
       Content-Length:
-      - '1130'
+      - '1132'
       Host:
       - secure-test.worldpay.com
   response:
@@ -55,7 +55,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 15 Oct 2018 10:32:21 GMT
+      - Mon, 29 Oct 2018 11:19:37 GMT
       Server:
       - Apache
       Content-Length:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1539599537"><reference id="3112851473">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1539599537</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1540811976"><reference id="3114350534">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1540811976</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Mon, 15 Oct 2018 10:32:17 GMT
+  recorded_at: Mon, 29 Oct 2018 11:19:37 GMT
 recorded_with: VCR 4.0.0

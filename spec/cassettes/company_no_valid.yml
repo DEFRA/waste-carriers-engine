@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 15 Oct 2018 10:31:55 GMT
+      - Mon, 29 Oct 2018 11:19:23 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,9 +49,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '600'
       X-Ratelimit-Remain:
-      - '594'
+      - '596'
       X-Ratelimit-Reset:
-      - '1539599689'
+      - '1540812150'
       X-Ratelimit-Window:
       - 5m
       Server:
@@ -61,5 +61,5 @@ http_interactions:
       string: '{"type":"ltd","company_name":"0800 WASTE LTD.","has_insolvency_history":false,"accounts":{"accounting_reference_date":{"month":"12","day":"31"},"last_accounts":{"period_end_on":"2017-12-31","made_up_to":"2017-12-31","period_start_on":"2017-01-01"},"next_accounts":{"period_start_on":"2018-01-01","overdue":false,"due_on":"2019-09-30","period_end_on":"2018-12-31"},"overdue":false,"next_due":"2019-09-30","next_made_up_to":"2018-12-31"},"undeliverable_registered_office_address":false,"etag":"ca635bdd31825fb7ddfba4e9abcd07ab60532151","company_number":"09360070","registered_office_address":{"postal_code":"SM3
         9ND","address_line_1":"21 Haslam Avenue","region":"Surrey","locality":"Sutton"},"jurisdiction":"england-wales","date_of_creation":"2014-12-18","company_status":"active","has_charges":false,"sic_codes":["38110"],"last_full_members_list_date":"2015-12-18","confirmation_statement":{"overdue":false,"next_due":"2018-12-29","next_made_up_to":"2018-12-15","last_made_up_to":"2017-12-15"},"links":{"self":"/company/09360070","filing_history":"/company/09360070/filing-history","officers":"/company/09360070/officers"},"registered_office_is_in_dispute":false,"can_file":true}'
     http_version: 
-  recorded_at: Mon, 15 Oct 2018 10:31:51 GMT
+  recorded_at: Mon, 29 Oct 2018 11:19:23 GMT
 recorded_with: VCR 4.0.0
