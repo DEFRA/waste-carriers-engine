@@ -114,6 +114,8 @@ RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_a
             # But the registration is now expired
             registration = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier).first
             registration.metaData.expire!
+            registration.expires_on = Date.today + Rails.configuration.grace_window
+            registration.save!
           end
 
           it "does not update the transient registration, including workflow_state" do

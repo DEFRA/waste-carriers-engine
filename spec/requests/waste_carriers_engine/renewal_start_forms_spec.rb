@@ -35,7 +35,11 @@ module WasteCarriersEngine
               end
 
               context "when the registration cannot be renewed" do
-                before(:each) { registration.metaData.expire! }
+                before(:each) do
+                  registration.metaData.expire!
+                  registration.expires_on = Date.today + Rails.configuration.grace_window
+                  registration.save!
+                end
 
                 it "redirects to the unrenewable error page" do
                   get new_renewal_start_form_path(registration[:reg_identifier])
@@ -208,7 +212,11 @@ module WasteCarriersEngine
                 end
 
                 context "when the registration cannot be renewed" do
-                  before(:each) { registration.metaData.expire! }
+                  before(:each) do
+                    registration.metaData.expire!
+                    registration.expires_on = Date.today + Rails.configuration.grace_window
+                    registration.save!
+                  end
 
                   it "redirects to the unrenewable error page" do
                     get new_renewal_start_form_path(registration[:reg_identifier])
