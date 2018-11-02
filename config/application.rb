@@ -70,7 +70,7 @@ module WasteCarriersRenewals
     # is within a given 'grace window' after the registration expired. So if the
     # window is 3 days, the current date is October 12, and the reg. expired Oct
     # 10 then the reg. is within the window and can still be renewed.
-    config.grace_window = ENV['WCRS_REGISTRATION_GRACE_WINDOW'].to_i
+    config.grace_window = ENV["WCRS_REGISTRATION_GRACE_WINDOW"].to_i
 
     # Worldpay
     config.worldpay_url = ENV["WCRS_WORLDPAY_URL"] || "https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp"
