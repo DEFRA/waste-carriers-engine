@@ -92,7 +92,7 @@ module WasteCarriersEngine
     end
 
     def close_to_expiry_date?
-      expiry_day = registration.expires_on.to_date
+      expiry_day = expiry_time_adjusted_for_daylight_savings.to_date
       expiry_day < Rails.configuration.renewal_window.months.from_now
     end
 
