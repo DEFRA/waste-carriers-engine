@@ -112,7 +112,8 @@ module WasteCarriersEngine
     # till Oct 4 (i.e. 1 + 3) when in fact we need to include the 1st as one of
     # our grace window days.
     def in_expiry_grace_window?(expiry_date, current_day)
-      return false if current_day > ((expiry_date + Rails.configuration.grace_window) - 1.day)
+      last_date_of_grace_window = (expiry_date + Rails.configuration.grace_window) - 1.day
+      return false if current_day > last_date_of_grace_window
 
       true
     end
