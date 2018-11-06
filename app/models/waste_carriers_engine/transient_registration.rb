@@ -100,7 +100,8 @@ module WasteCarriersEngine
     end
 
     def pending_manual_conviction_check?
-      return false unless metaData.ACTIVE?
+      registration = Registration.where(reg_identifier: reg_identifier).first
+      return false unless registration.metaData.may_renew?
       renewal_application_submitted? && conviction_check_required?
     end
 

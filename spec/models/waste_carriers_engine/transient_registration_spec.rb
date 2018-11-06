@@ -241,12 +241,13 @@ module WasteCarriersEngine
           end
 
           context "when the registration is not active" do
-            before do
-              transient_registration.metaData.revoke!
+            let(:revoked_transient_registration) do
+              registration = create(:registration, :has_required_data, :is_revoked)
+              TransientRegistration.new(reg_identifier: registration.reg_identifier)
             end
 
             it "returns false" do
-              expect(transient_registration.pending_manual_conviction_check?).to eq(false)
+              expect(revoked_transient_registration.pending_manual_conviction_check?).to eq(false)
             end
           end
 
