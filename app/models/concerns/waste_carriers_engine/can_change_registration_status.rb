@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module CanChangeRegistrationStatus
     extend ActiveSupport::Concern
@@ -149,11 +151,13 @@ module WasteCarriersEngine
 
     def registered_in_daylight_savings?
       return true if registration.metaData.date_registered.in_time_zone("London").dst?
+
       false
     end
 
     def expires_in_daylight_savings?
       return true if registration.expires_on.in_time_zone("London").dst?
+
       false
     end
   end
