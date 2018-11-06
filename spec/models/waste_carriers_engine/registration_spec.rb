@@ -493,8 +493,9 @@ module WasteCarriersEngine
               expect(registration.metaData).to allow_event :renew
             end
 
-            it "expires when it reaches the expiry date plus 'grace window' in the UK" do
-              # Skip ahead to the start of the day a reg should expire
+            it "cannot be renewed when it reaches the expiry date plus 'grace window' in the UK" do
+              # Skip ahead to the start of the day a reg should expire, plus the
+              # grace window
               Timecop.freeze(Time.find_zone("London").local(2020, 3, 31, 0, 1))
               # GMT is now in effect (not BST)
               # UK local time & UTC are both 00:01 on 28 March 2020
@@ -530,8 +531,9 @@ module WasteCarriersEngine
               expect(registration.metaData).to allow_event :renew
             end
 
-            it "expires when it reaches the expiry date plus 'grace window' in the UK" do
+            it "cannot be renewed when it reaches the expiry date plus 'grace window' in the UK" do
               # Skip ahead to the start of the day a reg should expire, plus the
+              # grace window
               Timecop.freeze(Time.find_zone("London").local(2018, 10, 30, 0, 1))
               # BST is now in effect (not GMT)
               # UK local time is 00:01 on 27 October 2018
