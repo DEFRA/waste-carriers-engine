@@ -88,7 +88,7 @@ RSpec.shared_examples "POST without params form" do |form|
           before do
             # Params are otherwise valid, but the registration is now expired
             registration = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier).first
-            registration.update_attributes(expires_on: Date.today + Rails.configuration.grace_window)
+            registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window)
           end
 
           it "does not update the transient registration, including workflow_state" do
