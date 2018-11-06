@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -308,7 +310,7 @@ module WasteCarriersEngine
           build(:registration,
                 :has_required_data,
                 key_people: [key_person_a,
-                            key_person_b])
+                             key_person_b])
         end
 
         it "is valid" do
@@ -557,14 +559,14 @@ module WasteCarriersEngine
             it "updates the registration's date_registered" do
               Timecop.freeze do
                 registration.metaData.renew
-                expect(registration.metaData.date_registered).to eq(DateTime.current)
+                expect(registration.metaData.date_registered).to eq(Time.current)
               end
             end
 
             it "updates the registration's date_activated" do
               Timecop.freeze do
                 registration.metaData.renew
-                expect(registration.metaData.date_activated).to eq(DateTime.current)
+                expect(registration.metaData.date_activated).to eq(Time.current)
               end
             end
           end
