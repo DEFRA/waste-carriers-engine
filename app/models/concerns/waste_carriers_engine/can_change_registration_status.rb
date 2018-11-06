@@ -77,7 +77,6 @@ module WasteCarriersEngine
 
     # Guards
     def renewal_allowed?
-      return false unless %w[ACTIVE EXPIRED].include?(status)
       return true if renewal_application_submitted?
       return true if renew_expired_registration?
 
