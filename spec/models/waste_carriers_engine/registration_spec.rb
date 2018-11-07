@@ -453,16 +453,14 @@ module WasteCarriersEngine
             end
           end
 
-          context "when the registration expiration date is today" do
-            context "and the 'grace' window is 3 days" do
-              before { allow(Rails.configuration).to receive(:grace_window).and_return(3) }
+          context "when the registration expiration date was three days ago, it cannot be renewed today" do
+            before { allow(Rails.configuration).to receive(:grace_window).and_return(3) }
 
-              let(:registration) { build(:registration, :is_active, expires_on: Date.today) }
+            let(:registration) { build(:registration, :is_active, expires_on: Date.today) }
 
-              it "cannot be renewed in 3 days time" do
-                Timecop.freeze(registration.expires_on + 3.days) do
-                  expect(registration.metaData).to_not allow_event :renew
-                end
+            it "cannot be renewed in 3 days time" do
+              Timecop.freeze(registration.expires_on + 3.days) do
+                expect(registration.metaData).to_not allow_event :renew
               end
             end
           end

@@ -78,17 +78,13 @@ module WasteCarriersEngine
     # Guards
     def renewal_allowed?
       return true if renewal_application_submitted?
-      return true if renew_expired_registration?
-
-      close_to_expiry_date? && should_not_be_expired?
-    end
-
-    def renew_expired_registration?
       return true if in_expiry_grace_window?
 
       # The only time an expired registration can be renewed is if the application has previously been submitted,
       # or it is withion the grace window - otherwise expiry is an automatic no
       return false if EXPIRED?
+
+      close_to_expiry_date? && should_not_be_expired?
     end
 
     def renewal_application_submitted?
