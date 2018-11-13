@@ -75,7 +75,6 @@ module WasteCarriersEngine
     end
 
     describe "#date_can_renew_from" do
-
       context "when the renewal window is 3 months and the registration provided expires on 2018-03-25" do
         before do
           allow(Rails.configuration).to receive(:renewal_window).and_return(3)
@@ -88,11 +87,9 @@ module WasteCarriersEngine
           expect(subject.date_can_renew_from).to eq(Date.new(2017, 12, 25))
         end
       end
-
     end
 
     describe "#expired?" do
-
       context "when the registration expired yesterday" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.yesterday) }
         subject { ExpiryCheckService.new(registration) }
@@ -119,11 +116,9 @@ module WasteCarriersEngine
           expect(subject.expired?).to eq(false)
         end
       end
-
     end
 
     describe "#in_renewal_window?" do
-
       context "when the renewal window is 3 months" do
         before do
           allow(Rails.configuration).to receive(:renewal_window).and_return(3)

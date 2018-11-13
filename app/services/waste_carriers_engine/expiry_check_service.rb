@@ -17,14 +17,14 @@ module WasteCarriersEngine
     # For more details about the renewal window check out
     # https://github.com/DEFRA/waste-carriers-renewals/wiki/Renewal-window
     def date_can_renew_from
-      (@expiry_date - Rails.configuration.renewal_window.months)
+      (@expiry_date.to_date - Rails.configuration.renewal_window.months)
     end
 
     def expired?
       # Registrations are expired on the date recorded for their expiry date e.g.
       # an expiry date of Mar 25 2018 means the registration was active up till
       # 24:00 on Mar 24 2018.
-      return false if @expiry_date > Date.today
+      return false if @expiry_date.to_date > Date.today
 
       true
     end
@@ -32,7 +32,7 @@ module WasteCarriersEngine
     def in_renewal_window?
       # If the registration expires in more than x months from now, its outside
       # the renewal window
-      return true if @expiry_date < Rails.configuration.renewal_window.months.from_now
+      return true if @expiry_date.to_date < Rails.configuration.renewal_window.months.from_now
 
       false
     end
@@ -45,9 +45,9 @@ module WasteCarriersEngine
     # our grace window days.
     def in_expiry_grace_window?
       current_day = Date.today
-      last_day_of_grace_window = (@expiry_date + Rails.configuration.grace_window.days) - 1.day
+      last_day_of_grace_window = (@expiry_date.to_date + Rails.configuration.grace_window.days) - 1.day
 
-      current_day >= @expiry_date && current_day <= last_day_of_grace_window
+      current_day >= @expiry_date.to_date && current_day <= last_day_of_grace_window
     end
 
     private
