@@ -82,7 +82,9 @@ module WasteCarriersEngine
 
       # The only time an expired registration can be renewed is if the application has previously been submitted,
       # or it is withion the grace window - otherwise expiry is an automatic no
-      return false if EXPIRED?
+      check_service = ExpiryCheckService.new(self)
+      return false if check_service.expired?
+      # return false if EXPIRED?
 
       close_to_expiry_date? && should_not_be_expired?
     end
