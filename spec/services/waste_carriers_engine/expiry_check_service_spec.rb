@@ -19,6 +19,41 @@ module WasteCarriersEngine
         end
       end
 
+      context "when the registration was created in BST and expires in GMT" do
+        let!(:registration) do
+          registration = build(:registration, :has_required_data)
+          registration.metaData.date_registered = Time.find_zone("London").local(2017, 3, 28, 0, 30)
+          registration.expires_on = registration.metaData.date_registered + 3.years
+          registration
+        end
+        subject { ExpiryCheckService.new(registration) }
+
+        # Registration is made during British Summer Time (BST)
+        # UK local time is 00:30 on 28 March 2017
+        # UTC time is 23:30 on 27 March 2017
+        # Registration should expire on 28 March 2020
+        it ":expiry_date is an hour ahead of the expires_on date to compensate" do
+          expect(subject.expiry_date).to eq(registration.expires_on + 1.hour)
+        end
+      end
+
+      context "when the registration was created in GMT and expires in BST" do
+        let!(:registration) do
+          registration = build(:registration, :has_required_data)
+          registration.metaData.date_registered = Time.find_zone("London").local(2015, 10, 27, 23, 30)
+          registration.expires_on = registration.metaData.date_registered + 3.years
+          registration
+        end
+        subject { ExpiryCheckService.new(registration) }
+
+        # Registration is made during Greenwich Mean Time (GMT).
+        # UK local time & UTC are both 23:30 on 27 October 2015
+        # Registration should expire on 27 October 2018
+        it ":expiry_date is an hour behind the expires_on date to compensate" do
+          expect(subject.expiry_date).to eq(registration.expires_on - 1.hour)
+        end
+      end
+
       context "when initialized with nil" do
         it "raises an error" do
           expect { ExpiryCheckService.new(nil) }.to raise_error("ExpiryCheckService expects a registration")

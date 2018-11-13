@@ -9,8 +9,9 @@ module WasteCarriersEngine
     def initialize(registration)
       raise "ExpiryCheckService expects a registration" if registration.nil?
 
-      @expiry_date = expires_on_date(registration.expires_on)
       @registration_date = registration.metaData.date_registered
+      @expires_on = registration.expires_on
+      @expiry_date = corrected_expires_on
     end
 
     # For more details about the renewal window check out
@@ -51,10 +52,32 @@ module WasteCarriersEngine
 
     private
 
-    def expires_on_date(provided_date)
-      return Date.new(1970, 1, 1) if provided_date.nil?
+    def corrected_expires_on
+      return Date.new(1970, 1, 1) if @expires_on.nil?
+      return @expires_on + 1.hour if registered_in_bst_and_expires_in_gmt?
+      return @expires_on - 1.hour if registered_in_gmt_and_expires_in_bst?
 
-      provided_date
+      @expires_on
+    end
+
+    def registered_in_bst_and_expires_in_gmt?
+      registered_in_daylight_savings? && !expires_on_in_daylight_savings?
+    end
+
+    def registered_in_gmt_and_expires_in_bst?
+      !registered_in_daylight_savings? && expires_on_in_daylight_savings?
+    end
+
+    def registered_in_daylight_savings?
+      return true if @registration_date.in_time_zone("London").dst?
+
+      false
+    end
+
+    def expires_on_in_daylight_savings?
+      return true if @expires_on.in_time_zone("London").dst?
+
+      false
     end
   end
 end
