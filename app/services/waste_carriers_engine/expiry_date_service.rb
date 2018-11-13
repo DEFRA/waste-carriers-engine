@@ -4,14 +4,13 @@ module WasteCarriersEngine
   # Contains methods related to dealing with dates in the service, for example
   # whether a date would be considered as expired.
   class ExpiryDateService
-    attr_reader :expiry_date
+    attr_reader :expiry_date, :registration_date
 
-    def initialize(expiry_date)
-      return if default_source_date(expiry_date)
+    def initialize(registration)
+      raise "ExpiryDateService expects a registration" if registration.nil?
 
-      return if date_from_utc_milliseconds(expiry_date)
-
-      @expiry_date = expiry_date.to_date
+      @expiry_date = expires_on_date(registration.expires_on)
+      @registration_date = registration.metaData.date_registered
     end
 
     # For more details about the renewal window check out
@@ -52,25 +51,10 @@ module WasteCarriersEngine
 
     private
 
-    # Believe we have functionality that relies on setting dates to the epoch
-    # where no existing date exists hence this bit of functionality
-    def default_source_date(provided_date)
-      return false unless provided_date.nil?
+    def expires_on_date(provided_date)
+      return Date.new(1970, 1, 1) if provided_date.nil?
 
-      @expiry_date = Date.new(1970, 1, 1)
-
-      true
-    end
-
-    def date_from_utc_milliseconds(milliseconds)
-      return false if milliseconds.is_a? Date
-      return false if milliseconds.is_a? Time
-
-      milliseconds = milliseconds.to_i if milliseconds.is_a? String
-
-      @expiry_date = Time.at(milliseconds / 1000.0).to_date
-
-      true
+      provided_date
     end
   end
 end
