@@ -3,11 +3,11 @@
 module WasteCarriersEngine
   # Contains methods related to dealing with dates in the service, for example
   # whether a date would be considered as expired.
-  class ExpiryDateService
+  class ExpiryCheckService
     attr_reader :expiry_date, :registration_date
 
     def initialize(registration)
-      raise "ExpiryDateService expects a registration" if registration.nil?
+      raise "ExpiryCheckService expects a registration" if registration.nil?
 
       @expiry_date = expires_on_date(registration.expires_on)
       @registration_date = registration.metaData.date_registered
