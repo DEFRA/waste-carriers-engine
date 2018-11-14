@@ -83,6 +83,7 @@ module WasteCarriersEngine
     # Guards
     def renewal_allowed?
       return true if renewal_application_submitted?
+      return true if renewal_declaration_confirmed?
 
       # The only time an expired registration can be renewed is if the application has previously been submitted,
       # or it is withion the grace window - otherwise expiry is an automatic no
@@ -94,10 +95,21 @@ module WasteCarriersEngine
     end
 
     def renewal_application_submitted?
-      transient_registration = TransientRegistration.where(reg_identifier: registration.reg_identifier).first
+      transient_registration = matching_transient_registration
       return false unless transient_registration.present?
 
       transient_registration.workflow_state == "renewal_received_form"
+    end
+
+    def renewal_declaration_confirmed?
+      transient_registration = matching_transient_registration
+      return false unless transient_registration.present?
+
+      transient_registration.declaration_confirmed?
+    end
+
+    def matching_transient_registration
+      TransientRegistration.where(reg_identifier: registration.reg_identifier).first
     end
   end
   # rubocop:enable Metrics/BlockLength

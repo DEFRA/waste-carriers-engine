@@ -111,6 +111,10 @@ module WasteCarriersEngine
         return unless metaData.present?
         metaData.last_modified = Time.current
       end
+
+      def declaration_confirmed?
+        declaration == 1
+      end
     end
   end
 end

@@ -633,7 +633,7 @@ module WasteCarriersEngine
             end
           end
 
-          context "when a transient registration exists" do
+          context "and a transient registration exists" do
             let(:transient_registration) { build(:transient_registration, :has_required_data) }
 
             before do
@@ -642,18 +642,22 @@ module WasteCarriersEngine
               transient_registration.update_attributes(reg_identifier: registration.reg_identifier)
             end
 
-            it "cannot be renewed" do
-              expect(registration.metaData).to_not allow_event :renew
-            end
-
-            context "when the transient_registration is in a submitted state" do
-              before do
-                transient_registration.update_attributes(workflow_state: "renewal_received_form")
-              end
-
+            context "and when the transient_registration has a confirmed declaration" do
               it "can be renewed" do
+                transient_registration.update_attributes(workflow_state: "cards_form", declaration: 1)
                 expect(registration.metaData).to allow_event :renew
               end
+            end
+
+            context "and when the transient_registration is in a submitted state" do
+              it "can be renewed" do
+                transient_registration.update_attributes(workflow_state: "renewal_received_form")
+                expect(registration.metaData).to allow_event :renew
+              end
+            end
+
+            it "cannot be renewed if not declared or in a submitted state" do
+              expect(registration.metaData).to_not allow_event :renew
             end
           end
 
