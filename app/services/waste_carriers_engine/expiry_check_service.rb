@@ -24,7 +24,7 @@ module WasteCarriersEngine
       # Registrations are expired on the date recorded for their expiry date e.g.
       # an expiry date of Mar 25 2018 means the registration was active up till
       # 24:00 on Mar 24 2018.
-      return false if @expiry_date.to_date > Date.today
+      return false if @expiry_date.to_date > current_day
 
       true
     end
@@ -44,7 +44,6 @@ module WasteCarriersEngine
     # till Oct 4 (i.e. 1 + 3) when in fact we need to include the 1st as one of
     # our grace window days.
     def in_expiry_grace_window?
-      current_day = Date.today
       last_day_of_grace_window = (@expiry_date.to_date + Rails.configuration.grace_window.days) - 1.day
 
       current_day >= @expiry_date.to_date && current_day <= last_day_of_grace_window
@@ -52,6 +51,11 @@ module WasteCarriersEngine
 
     private
 
+    # expires_on is stored as a Time in UTC and then converted to a Date.
+    # If a user first registered near midnight around the transition between GMT
+    # and BST (or the other way round), there is a risk that the UTC date will
+    # not be the same as the UK date. So compensate to avoid flagging something
+    # as expired on the wrong date.
     def corrected_expires_on
       return Date.new(1970, 1, 1) if @expires_on.nil?
       return @expires_on + 1.hour if registered_in_bst_and_expires_in_gmt?
@@ -78,6 +82,25 @@ module WasteCarriersEngine
       return true if @expires_on.in_time_zone("London").dst?
 
       false
+    end
+
+    # We store dates and times in UTC, but want to use the current date in the
+    # UK, not necessarily UTC. For example a reg. that was
+    # registered = Tue, 28 Mar 2017 00:30:00 BST +01:00
+    # expires_on = Fri, 27 Mar 2020 23:30:00 +0000
+    #
+    # will have its expiry date corrected to
+    # expiry_date = 28 Mar 2020 00:30:00 +0000
+    #
+    # If the current time was Tue, 31 Mar 2020 00:01:00 BST +01:00, but we just
+    # called and used Date.Today we'd get Mon, 30 Mar 2020. Used in a method
+    # like in_expiry_grace_window? with the grace window set to 3 would mean it
+    # returns true when it should return false. Hence when referring to
+    # to the current day, we should always be specific about the timezone we
+    # are interested. In this example using current_day would return
+    # Tue, 31 Mar 2020
+    def current_day
+      Time.now.in_time_zone("London").to_date
     end
   end
 end
