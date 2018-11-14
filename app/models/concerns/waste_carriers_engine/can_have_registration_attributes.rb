@@ -1,10 +1,21 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   # Define the attributes a registration or a renewal has
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
     include Mongoid::Document
 
+    # Rubocop sees a module as a block, and as such is not very forgiving in how
+    # many lines it allows. In the case of this concern we have to list out all
+    # the attributes on a registration so cannot help it being overly long.
+    # rubocop:disable Metrics/BlockLength
     included do
+      # For this section only we feel it makes it more readble if certain
+      # attributes are aligned. The problem is this doesn't allow us much room
+      # for comments in some places, and putting them on the line above breaks
+      # the formatting we have in place.
+      # rubocop:disable Metrics/LineLength
       embeds_many :addresses,               class_name: "WasteCarriersEngine::Address"
       embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
       embeds_many :conviction_sign_offs,    class_name: "WasteCarriersEngine::ConvictionSignOff"
@@ -43,6 +54,7 @@ module WasteCarriersEngine
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :tier,                                                          type: String
       field :uuid,                                                          type: String
+      # rubocop:enable Metrics/LineLength
 
       # Deprecated attributes
       # These are attributes which were in use during earlier stages of the
@@ -63,11 +75,13 @@ module WasteCarriersEngine
 
       def contact_address
         return nil unless addresses.present?
+
         addresses.where(address_type: "POSTAL").first
       end
 
       def registered_address
         return nil unless addresses.present?
+
         addresses.where(address_type: "REGISTERED").first
       end
 
@@ -77,38 +91,45 @@ module WasteCarriersEngine
 
       def main_people
         return [] unless key_people.present?
+
         key_people.where(person_type: "KEY")
       end
 
       def relevant_people
         return [] unless key_people.present?
+
         key_people.where(person_type: "RELEVANT")
       end
 
       def conviction_check_required?
         return false unless conviction_sign_offs.present? && conviction_sign_offs.length.positive?
+
         conviction_sign_offs.first.confirmed == "no"
       end
 
       def conviction_check_approved?
         return false unless conviction_sign_offs.present? && conviction_sign_offs.length.positive?
+
         conviction_sign_offs.first.confirmed == "yes"
       end
 
       def business_has_matching_or_unknown_conviction?
         return true unless conviction_search_result.present?
         return false if conviction_search_result.match_result == "NO"
+
         true
       end
 
       def key_person_has_matching_or_unknown_conviction?
         return true unless key_people.present?
+
         all_requirements = key_people.map(&:conviction_check_required?)
         all_requirements.include?(true)
       end
 
       def update_last_modified
         return unless metaData.present?
+
         metaData.last_modified = Time.current
       end
 
@@ -116,5 +137,6 @@ module WasteCarriersEngine
         declaration == 1
       end
     end
+    # rubocop:enable Metrics/BlockLength
   end
 end
