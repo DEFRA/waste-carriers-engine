@@ -6,6 +6,11 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanCalculateRenewalDates
 
+    # The pattern for denoting events here is common when using AASM, however it does
+    # mean we get flagged by rubocop. We don't want to change the rule at a global
+    # level, but the ecessive block length is acceptable here hence we're happy to add
+    # this exception
+    # rubocop:disable Metrics/BlockLength
     included do
       include AASM
 
@@ -64,7 +69,7 @@ module WasteCarriersEngine
       end
 
       def update_activation_timestamps
-        self.date_registered = DateTime.current
+        self.date_registered = Time.now
         self.date_activated = date_registered
       end
 
@@ -95,4 +100,5 @@ module WasteCarriersEngine
       transient_registration.workflow_state == "renewal_received_form"
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end
