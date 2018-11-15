@@ -6,10 +6,10 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanCalculateRenewalDates
 
-    # The pattern for denoting events here is common when using AASM, however it does
-    # mean we get flagged by rubocop. We don't want to change the rule at a global
-    # level, but the ecessive block length is acceptable here hence we're happy to add
-    # this exception
+    # The pattern for denoting events here is common when using AASM, however it
+    # does mean we get flagged by rubocop. We don't want to change the rule at a
+    # global level, but the excessive block length is acceptable here hence
+    # we're happy to addthis exception
     # rubocop:disable Metrics/BlockLength
     included do
       include AASM
