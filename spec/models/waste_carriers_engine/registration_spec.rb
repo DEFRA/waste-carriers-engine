@@ -649,13 +649,6 @@ module WasteCarriersEngine
               end
             end
 
-            context "and when the transient_registration is in a submitted state" do
-              it "can be renewed" do
-                transient_registration.update_attributes(workflow_state: "renewal_received_form")
-                expect(registration.metaData).to allow_event :renew
-              end
-            end
-
             it "cannot be renewed if not declared or in a submitted state" do
               expect(registration.metaData).to_not allow_event :renew
             end
