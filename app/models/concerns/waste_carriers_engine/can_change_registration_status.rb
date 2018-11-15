@@ -84,8 +84,10 @@ module WasteCarriersEngine
     def renewal_allowed?
       return true if renewal_declaration_confirmed?
 
-      # The only time an expired registration can be renewed is if the application has previously been submitted,
-      # or it is withion the grace window - otherwise expiry is an automatic no
+      # The only time an expired registration can be renewed is if the
+      # application
+      # - has a confirmed declaration i.e. user reached the copy cards page
+      # - it is withion the grace window
       check_service = ExpiryCheckService.new(registration)
       return true if check_service.in_expiry_grace_window?
       return false if check_service.expired?
