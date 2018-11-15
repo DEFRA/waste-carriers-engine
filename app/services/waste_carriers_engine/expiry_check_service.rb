@@ -15,7 +15,7 @@ module WasteCarriersEngine
     end
 
     # For more details about the renewal window check out
-    # https://github.com/DEFRA/waste-carriers-renewals/wiki/Renewal-window
+    # https://github.com/DEFRA/dst-guides/blob/master/services/wcr/renewal_window.md
     def date_can_renew_from
       (@expiry_date.to_date - Rails.configuration.renewal_window.months)
     end
