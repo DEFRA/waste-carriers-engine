@@ -23,6 +23,12 @@ module WasteCarriersEngine
     field :temp_payment_method, type: String
     field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
 
+    scope :reference, ->(reference) { where(reg_identifier: reference) }
+    scope :submitted, -> { where(:workflow_state.in => %w[renewal_complete_form renewal_received_form]) }
+    scope :paid, -> { submitted.where("financeDetails.balance": 0) }
+    scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
+    scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
+
     # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
     def registration_type_changed?
       # Don't compare registration types if the new one hasn't been set
