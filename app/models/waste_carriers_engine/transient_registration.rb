@@ -30,6 +30,7 @@ module WasteCarriersEngine
              "addresses.postcode": /#{term}/i)
     }
     scope :submitted, -> { where(:workflow_state.in => %w[renewal_complete_form renewal_received_form]) }
+    scope :in_progress, -> { where(:workflow_state.nin => %w[renewal_complete_form renewal_received_form]) }
     scope :paid, -> { submitted.where("financeDetails.balance": 0) }
     scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
     scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
