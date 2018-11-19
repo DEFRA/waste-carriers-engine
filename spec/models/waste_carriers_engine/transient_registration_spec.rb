@@ -57,6 +57,10 @@ module WasteCarriersEngine
       end
     end
 
+    describe "scope" do
+      it_should_behave_like "TransientRegistration named scopes"
+    end
+
     describe "#reg_identifier" do
       context "when a TransientRegistration is created" do
         it "is not valid if the reg_identifier is in the wrong format" do
