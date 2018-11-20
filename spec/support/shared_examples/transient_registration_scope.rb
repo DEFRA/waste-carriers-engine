@@ -85,7 +85,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
 
     it "does not return others" do
       in_progress_renewal = create(:transient_registration, :has_required_data)
-      expect(WasteCarriersEngine::TransientRegistration.submitted).not_to include(in_progress_renewal)
+      expect(WasteCarriersEngine::TransientRegistration.pending_payment).not_to include(in_progress_renewal)
     end
   end
 
@@ -102,7 +102,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
 
     it "does not return others" do
       in_progress_renewal = create(:transient_registration, :has_required_data)
-      expect(WasteCarriersEngine::TransientRegistration.submitted).not_to include(in_progress_renewal)
+      expect(WasteCarriersEngine::TransientRegistration.pending_approval).not_to include(in_progress_renewal)
     end
   end
 end
