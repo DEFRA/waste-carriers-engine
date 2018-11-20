@@ -1,6 +1,7 @@
 module WasteCarriersEngine
   class ConvictionSignOff
     include Mongoid::Document
+    include CanChangeConvictionWorkflowStatus
 
     embedded_in :registration,      class_name: "WasteCarriersEngine::Registration"
     embedded_in :past_registration, class_name: "WasteCarriersEngine::PastRegistration"
