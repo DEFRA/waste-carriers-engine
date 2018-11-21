@@ -22,8 +22,8 @@ module WasteCarriersEngine
           expect(conviction_sign_off).to allow_event :begin_checks
         end
 
-        it "can be signed off" do
-          expect(conviction_sign_off).to allow_event :sign_off
+        it "can be approved" do
+          expect(conviction_sign_off).to allow_event :approve
         end
 
         it "can be rejected" do
@@ -38,8 +38,8 @@ module WasteCarriersEngine
           expect(conviction_sign_off).to_not allow_event :begin_checks
         end
 
-        it "can be signed off" do
-          expect(conviction_sign_off).to allow_event :sign_off
+        it "can be approved" do
+          expect(conviction_sign_off).to allow_event :approve
         end
 
         it "can be rejected" do
@@ -54,8 +54,8 @@ module WasteCarriersEngine
           expect(conviction_sign_off).to_not allow_event :begin_checks
         end
 
-        it "cannot be signed off" do
-          expect(conviction_sign_off).to_not allow_event :sign_off
+        it "cannot be approved" do
+          expect(conviction_sign_off).to_not allow_event :approve
         end
 
         it "cannot be rejected" do
@@ -70,8 +70,8 @@ module WasteCarriersEngine
           expect(conviction_sign_off).to_not allow_event :begin_checks
         end
 
-        it "cannot be signed off" do
-          expect(conviction_sign_off).to_not allow_event :sign_off
+        it "cannot be approved" do
+          expect(conviction_sign_off).to_not allow_event :approve
         end
 
         it "cannot be rejected" do
@@ -79,9 +79,9 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the sign_off event happens" do
+      context "when the approve event happens" do
         before do
-          conviction_sign_off.sign_off(user)
+          conviction_sign_off.approve(user)
         end
 
         it "updates confirmed" do

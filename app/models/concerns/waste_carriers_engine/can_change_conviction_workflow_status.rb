@@ -21,7 +21,7 @@ module WasteCarriersEngine
                       to: :checks_in_progress
         end
 
-        event :sign_off do
+        event :approve do
           transitions from: %i[possible_match
                                checks_in_progress],
                       to: :approved,
