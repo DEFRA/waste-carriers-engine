@@ -11,10 +11,5 @@ module WasteCarriersEngine
     field :confirmed,                       type: String
     field :confirmedAt, as: :confirmed_at,  type: DateTime
     field :confirmedBy, as: :confirmed_by,  type: String
-
-    def approve(current_user)
-      sign_off(current_user)
-      save!
-    end
   end
 end
