@@ -99,6 +99,20 @@ module WasteCarriersEngine
           expect(conviction_sign_off).to_not allow_event :reject
         end
       end
+
+      context "when the sign_off event happens" do
+        before do
+          conviction_sign_off.sign_off
+        end
+
+        it "updates confirmed" do
+          expect(conviction_sign_off.confirmed).to eq("yes")
+        end
+
+        it "updates confirmed_at" do
+          expect(conviction_sign_off.confirmed_at).to be_a(DateTime)
+        end
+      end
     end
   end
 end

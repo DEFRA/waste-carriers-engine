@@ -24,7 +24,8 @@ module WasteCarriersEngine
         event :sign_off do
           transitions from: %i[possible_match
                                checks_in_progress],
-                      to: :approved
+                      to: :approved,
+                      after: :update_confirmed_info
         end
 
         event :reject do
@@ -33,6 +34,13 @@ module WasteCarriersEngine
                       to: :rejected
         end
       end
+    end
+
+    private
+
+    def update_confirmed_info
+      self.confirmed = "yes"
+      self.confirmed_at = Time.current
     end
   end
 end
