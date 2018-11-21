@@ -13,9 +13,7 @@ module WasteCarriersEngine
     field :confirmedBy, as: :confirmed_by,  type: String
 
     def approve(current_user)
-      sign_off
-      self.confirmed_by = current_user.email
-
+      sign_off(current_user)
       save!
     end
   end

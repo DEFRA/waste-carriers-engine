@@ -6,11 +6,10 @@ module WasteCarriersEngine
   RSpec.describe ConvictionSignOff, type: :model do
     let(:transient_registration) { build(:transient_registration, :requires_conviction_check) }
     let(:conviction_sign_off) { transient_registration.conviction_sign_offs.first }
+    let(:user) { build(:user) }
 
     describe "#approve" do
       context "when a conviction_sign_off is approved" do
-        let(:user) { build(:user) }
-
         before do
           conviction_sign_off.approve(user)
         end
@@ -102,7 +101,7 @@ module WasteCarriersEngine
 
       context "when the sign_off event happens" do
         before do
-          conviction_sign_off.sign_off
+          conviction_sign_off.sign_off(user)
         end
 
         it "updates confirmed" do
@@ -111,6 +110,10 @@ module WasteCarriersEngine
 
         it "updates confirmed_at" do
           expect(conviction_sign_off.confirmed_at).to be_a(DateTime)
+        end
+
+        it "updates confirmed_by" do
+          expect(conviction_sign_off.confirmed_by).to eq(user.email)
         end
       end
     end

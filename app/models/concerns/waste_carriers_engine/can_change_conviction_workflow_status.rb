@@ -38,9 +38,10 @@ module WasteCarriersEngine
 
     private
 
-    def update_confirmed_info
+    def update_confirmed_info(current_user)
       self.confirmed = "yes"
       self.confirmed_at = Time.current
+      self.confirmed_by = current_user.email
     end
   end
 end
