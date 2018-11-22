@@ -31,7 +31,8 @@ module WasteCarriersEngine
         event :reject do
           transitions from: %i[possible_match
                                checks_in_progress],
-                      to: :rejected
+                      to: :rejected,
+                      after: :revoke_parent
         end
       end
     end
@@ -42,6 +43,10 @@ module WasteCarriersEngine
       self.confirmed = "yes"
       self.confirmed_at = Time.current
       self.confirmed_by = current_user.email
+    end
+
+    def revoke_parent
+      _parent.metaData.revoke!
     end
   end
 end

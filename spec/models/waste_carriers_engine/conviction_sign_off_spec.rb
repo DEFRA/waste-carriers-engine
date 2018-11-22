@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe ConvictionSignOff, type: :model do
-    let(:transient_registration) { build(:transient_registration, :requires_conviction_check) }
+    let(:transient_registration) { build(:transient_registration, :requires_conviction_check, :has_required_data) }
     let(:conviction_sign_off) { transient_registration.conviction_sign_offs.first }
     let(:user) { build(:user) }
 
@@ -94,6 +94,16 @@ module WasteCarriersEngine
 
         it "updates confirmed_by" do
           expect(conviction_sign_off.confirmed_by).to eq(user.email)
+        end
+      end
+
+      context "when the reject event happens" do
+        before do
+          conviction_sign_off.reject
+        end
+
+        it "updates the transient_registration's metaData.status" do
+          expect(transient_registration.metaData.status).to eq("REVOKED")
         end
       end
     end
