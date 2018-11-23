@@ -134,4 +134,82 @@ RSpec.shared_examples "TransientRegistration named scopes" do
       expect(scope).not_to include(in_progress_renewal)
     end
   end
+
+  describe "conviction check scopes" do
+    let(:convictions_renewal) do
+      create(
+        :transient_registration,
+        :has_required_data,
+        :requires_conviction_check,
+        workflow_state: :renewal_received_form
+      )
+    end
+
+    let(:convictions_possible_match_renewal) do
+      convictions_renewal
+    end
+
+    let(:convictions_checks_in_progress_renewal) do
+      convictions_renewal.conviction_sign_offs.first.begin_checks!
+      convictions_renewal
+    end
+
+    let(:convictions_approved_renewal) do
+      convictions_renewal.conviction_sign_offs.first.approve!(build(:user))
+      convictions_renewal
+    end
+
+    let(:convictions_rejected_renewal) do
+      convictions_renewal.conviction_sign_offs.first.reject!
+      convictions_renewal
+    end
+
+    describe "#convictions_possible_match" do
+      let(:scope) { WasteCarriersEngine::TransientRegistration.convictions_possible_match }
+
+      it "returns renewals where a conviction_sign_off is in the possible_match state" do
+        expect(scope).to include(convictions_possible_match_renewal)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(convictions_checks_in_progress_renewal)
+      end
+    end
+
+    describe "#convictions_checks_in_progress" do
+      let(:scope) { WasteCarriersEngine::TransientRegistration.convictions_checks_in_progress }
+
+      it "returns renewals where a conviction_sign_off is in the checks_in_progress state" do
+        expect(scope).to include(convictions_checks_in_progress_renewal)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(convictions_possible_match_renewal)
+      end
+    end
+
+    describe "#convictions_approved" do
+      let(:scope) { WasteCarriersEngine::TransientRegistration.convictions_approved }
+
+      it "returns renewals where a conviction_sign_off is in the approved state" do
+        expect(scope).to include(convictions_approved_renewal)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(convictions_possible_match_renewal)
+      end
+    end
+
+    describe "#convictions_rejected" do
+      let(:scope) { WasteCarriersEngine::TransientRegistration.convictions_rejected }
+
+      it "returns renewals where a conviction_sign_off is in the rejected state" do
+        expect(scope).to include(convictions_rejected_renewal)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(convictions_possible_match_renewal)
+      end
+    end
+  end
 end

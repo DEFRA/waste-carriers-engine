@@ -36,6 +36,11 @@ module WasteCarriersEngine
     scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
     scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
 
+    scope :convictions_possible_match, -> { submitted.where("conviction_sign_offs.0.workflow_state": "possible_match") }
+    scope :convictions_checks_in_progress, -> { submitted.where("conviction_sign_offs.0.workflow_state": "checks_in_progress") }
+    scope :convictions_approved, -> { submitted.where("conviction_sign_offs.0.workflow_state": "approved") }
+    scope :convictions_rejected, -> { submitted.where("conviction_sign_offs.0.workflow_state": "rejected") }
+
     # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
     def registration_type_changed?
       # Don't compare registration types if the new one hasn't been set
