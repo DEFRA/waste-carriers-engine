@@ -122,6 +122,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
 
     let(:convictions_checks_in_progress_renewal) do
       convictions_renewal.conviction_sign_offs.first.begin_checks!
+      convictions_renewal
     end
 
     describe "#convictions_possible_match" do
@@ -133,6 +134,18 @@ RSpec.shared_examples "TransientRegistration named scopes" do
 
       it "does not return others" do
         expect(scope).not_to include(convictions_checks_in_progress_renewal)
+      end
+    end
+
+    describe "#convictions_checks_in_progress" do
+      let(:scope) { WasteCarriersEngine::TransientRegistration.convictions_checks_in_progress }
+
+      it "returns renewals where a conviction_sign_off is in the checks_in_progress state" do
+        expect(scope).to include(convictions_checks_in_progress_renewal)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(convictions_possible_match_renewal)
       end
     end
   end
