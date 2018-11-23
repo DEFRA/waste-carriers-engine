@@ -130,6 +130,11 @@ RSpec.shared_examples "TransientRegistration named scopes" do
       convictions_renewal
     end
 
+    let(:convictions_rejected_renewal) do
+      convictions_renewal.conviction_sign_offs.first.reject!
+      convictions_renewal
+    end
+
     describe "#convictions_possible_match" do
       let(:scope) { WasteCarriersEngine::TransientRegistration.convictions_possible_match }
 
@@ -159,6 +164,18 @@ RSpec.shared_examples "TransientRegistration named scopes" do
 
       it "returns renewals where a conviction_sign_off is in the approved state" do
         expect(scope).to include(convictions_approved_renewal)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(convictions_possible_match_renewal)
+      end
+    end
+
+    describe "#convictions_rejected" do
+      let(:scope) { WasteCarriersEngine::TransientRegistration.convictions_rejected }
+
+      it "returns renewals where a conviction_sign_off is in the rejected state" do
+        expect(scope).to include(convictions_rejected_renewal)
       end
 
       it "does not return others" do
