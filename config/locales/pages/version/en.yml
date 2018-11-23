@@ -1,7 +1,5 @@
 en:
   pages:
     version:
-      app_version: "Application version:"
-      engine_version: "Engine version:"
       commit: "Commit hash:"
       render_time: "Page rendered at:"
