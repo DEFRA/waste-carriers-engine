@@ -46,6 +46,8 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
 
     context "when the search term is a name" do
+      let(:term) { "Lee" }
+
       let(:matching_company_name_renewal) do
         create(:transient_registration, :has_required_data, company_name: "Stan Lee Waste Company")
       end
@@ -53,8 +55,6 @@ RSpec.shared_examples "TransientRegistration named scopes" do
       let(:matching_person_name_renewal) do
         create(:transient_registration, :has_required_data, last_name: "Lee")
       end
-
-      let(:term) { "Lee" }
 
       it "returns renewals with a matching company_name" do
         expect(scope).to include(matching_company_name_renewal)
@@ -70,12 +70,12 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
 
     context "when the search term is a postcode" do
+      let(:term) { "SW1A 2AA" }
+
       let(:matching_postcode_renewal) do
-        address = build(:address, postcode: "SW1A 2AA")
+        address = build(:address, postcode: term)
         create(:transient_registration, :has_required_data, addresses: [address])
       end
-
-      let(:term) { matching_postcode_renewal.addresses.first.postcode }
 
       it "returns renewals with a matching postcode" do
         expect(scope).to include(matching_postcode_renewal)
