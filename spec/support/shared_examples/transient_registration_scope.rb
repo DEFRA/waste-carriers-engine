@@ -80,42 +80,50 @@ RSpec.shared_examples "TransientRegistration named scopes" do
   end
 
   describe "#in_progress" do
+    let(:scope) { WasteCarriersEngine::TransientRegistration.in_progress }
+
     it "returns in progress renewals when they exist" do
-      expect(WasteCarriersEngine::TransientRegistration.in_progress).to include(in_progress_renewal)
+      expect(scope).to include(in_progress_renewal)
     end
 
     it "does not return submitted renewals" do
-      expect(WasteCarriersEngine::TransientRegistration.in_progress).not_to include(submitted_renewal)
+      expect(scope).not_to include(submitted_renewal)
     end
   end
 
   describe "#submitted" do
+    let(:scope) { WasteCarriersEngine::TransientRegistration.submitted }
+
     it "returns submitted renewals" do
-      expect(WasteCarriersEngine::TransientRegistration.submitted).to include(submitted_renewal)
+      expect(scope).to include(submitted_renewal)
     end
 
     it "does not return in progress renewals" do
-      expect(WasteCarriersEngine::TransientRegistration.submitted).not_to include(in_progress_renewal)
+      expect(scope).not_to include(in_progress_renewal)
     end
   end
 
   describe "#pending_payment" do
+    let(:scope) { WasteCarriersEngine::TransientRegistration.pending_payment }
+
     it "returns renewals pending payment" do
-      expect(WasteCarriersEngine::TransientRegistration.pending_payment).to include(pending_payment_renewal)
+      expect(scope).to include(pending_payment_renewal)
     end
 
     it "does not return others" do
-      expect(WasteCarriersEngine::TransientRegistration.pending_payment).not_to include(in_progress_renewal)
+      expect(scope).not_to include(in_progress_renewal)
     end
   end
 
   describe "#pending_approval" do
+    let(:scope) { WasteCarriersEngine::TransientRegistration.pending_approval }
+
     it "returns renewals pending conviction approval" do
-      expect(WasteCarriersEngine::TransientRegistration.pending_approval).to include(pending_approval_renewal)
+      expect(scope).to include(pending_approval_renewal)
     end
 
     it "does not return others" do
-      expect(WasteCarriersEngine::TransientRegistration.pending_approval).not_to include(in_progress_renewal)
+      expect(scope).not_to include(in_progress_renewal)
     end
   end
 end
