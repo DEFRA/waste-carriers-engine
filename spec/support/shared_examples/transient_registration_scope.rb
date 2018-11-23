@@ -36,9 +36,12 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     context "when the search term is a reg_identifier" do
       let(:term) { in_progress_renewal.reg_identifier }
 
-      it "returns only the matching renewal" do
+      it "returns renewals with a matching reg_identifier" do
         expect(scope).to include(in_progress_renewal)
-        expect(scope.length).to eq(1)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(submitted_renewal)
       end
     end
 
@@ -53,29 +56,33 @@ RSpec.shared_examples "TransientRegistration named scopes" do
 
       let(:term) { "Lee" }
 
-      it "returns all matching renewals" do
+      it "returns renewals with a matching company_name" do
         expect(scope).to include(matching_company_name_renewal)
+      end
+
+      it "returns renewals with a matching last_name" do
         expect(scope).to include(matching_person_name_renewal)
+      end
+
+      it "does not return others" do
         expect(scope).not_to include(in_progress_renewal)
       end
     end
 
-    context "when a postcode search term is given" do
+    context "when the search term is a postcode" do
       let(:matching_postcode_renewal) do
         address = build(:address, postcode: "SW1A 2AA")
         create(:transient_registration, :has_required_data, addresses: [address])
       end
 
-      let(:non_matching_postcode_renewal) do
-        address = build(:address, postcode: "BS1 5AH")
-        create(:transient_registration, :has_required_data, addresses: [address])
-      end
-
       let(:term) { matching_postcode_renewal.addresses.first.postcode }
 
-      it "returns all matching renewals when a postcode is given" do
+      it "returns renewals with a matching postcode" do
         expect(scope).to include(matching_postcode_renewal)
-        expect(scope).not_to include(non_matching_postcode_renewal)
+      end
+
+      it "does not return others" do
+        expect(scope).not_to include(in_progress_renewal)
       end
     end
   end
