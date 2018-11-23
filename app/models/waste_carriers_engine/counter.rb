@@ -2,7 +2,6 @@ module WasteCarriersEngine
   class Counter
     include Mongoid::Document
 
-    field :_id, type: String
     field :seq, type: Integer
 
     def increment
