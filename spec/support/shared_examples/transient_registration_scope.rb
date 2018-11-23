@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "TransientRegistration named scopes" do
-  context "#search_term" do
+  describe "#search_term" do
     it "returns everything when no search term is given" do
       expect(WasteCarriersEngine::TransientRegistration.search_term(nil).length).to eq(WasteCarriersEngine::TransientRegistration.all.length)
     end
@@ -40,7 +40,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
   end
 
-  context "#in_progress" do
+  describe "#in_progress" do
     it "returns in progress renewals when they exist" do
       in_progress_renewal = create(:transient_registration, :has_required_data)
       expect(WasteCarriersEngine::TransientRegistration.in_progress).to include(in_progress_renewal)
@@ -56,7 +56,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
   end
 
-  context "#submitted" do
+  describe "#submitted" do
     it "returns submitted renewals" do
       submitted_renewal = create(
         :transient_registration,
@@ -72,7 +72,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
   end
 
-  context "#pending_payment" do
+  describe "#pending_payment" do
     it "returns renewals pending payment" do
       pending_payment_renewal = create(
         :transient_registration,
@@ -89,7 +89,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
   end
 
-  context "#pending_approval" do
+  describe "#pending_approval" do
     it "returns renewals pending conviction approval" do
       pending_approval_renewal = create(
         :transient_registration,
