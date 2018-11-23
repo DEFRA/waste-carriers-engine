@@ -1,8 +1,46 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe TransientRegistration, type: :model do
     let(:transient_registration) { build(:transient_registration, :has_required_data) }
+
+    describe "workflow_state" do
+      context "when a TransientRegistration is created" do
+        it "has the state :renewal_start_form" do
+          expect(transient_registration).to have_state(:renewal_start_form)
+        end
+      end
+    end
+
+    describe "reg_identifier" do
+      context "when a TransientRegistration is created" do
+        it "is not valid if the reg_identifier is in the wrong format" do
+          transient_registration.reg_identifier = "foo"
+          expect(transient_registration).to_not be_valid
+        end
+
+        it "is not valid if no matching registration exists" do
+          transient_registration.reg_identifier = "CBDU999999"
+          expect(transient_registration).to_not be_valid
+        end
+
+        it "is not valid if the reg_identifier is already in use" do
+          existing_transient_registration = create(:transient_registration, :has_required_data)
+          transient_registration.reg_identifier = existing_transient_registration.reg_identifier
+          expect(transient_registration).to_not be_valid
+        end
+      end
+    end
+
+    describe "scope" do
+      it_should_behave_like "TransientRegistration named scopes"
+    end
+
+    describe "registration attributes" do
+      it_should_behave_like "Can have registration attributes"
+    end
 
     describe "#initialize" do
       context "when the source registration has whitespace in its attributes" do
@@ -57,39 +95,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "scope" do
-      it_should_behave_like "TransientRegistration named scopes"
-    end
-
-    describe "#reg_identifier" do
-      context "when a TransientRegistration is created" do
-        it "is not valid if the reg_identifier is in the wrong format" do
-          transient_registration.reg_identifier = "foo"
-          expect(transient_registration).to_not be_valid
-        end
-
-        it "is not valid if no matching registration exists" do
-          transient_registration.reg_identifier = "CBDU999999"
-          expect(transient_registration).to_not be_valid
-        end
-
-        it "is not valid if the reg_identifier is already in use" do
-          existing_transient_registration = create(:transient_registration, :has_required_data)
-          transient_registration.reg_identifier = existing_transient_registration.reg_identifier
-          expect(transient_registration).to_not be_valid
-        end
-      end
-    end
-
-    describe "#workflow_state" do
-      context "when a TransientRegistration is created" do
-        it "has the state :renewal_start_form" do
-          expect(transient_registration).to have_state(:renewal_start_form)
-        end
-      end
-    end
-
-    describe "registration_type_changed?" do
+    describe "#registration_type_changed?" do
       context "when a TransientRegistration is created" do
         it "should return false" do
           expect(transient_registration.registration_type_changed?).to eq(false)
@@ -107,7 +113,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "renewal_application_completed?" do
+    describe "#renewal_application_submitted?" do
       context "when the workflow_state is not a completed one" do
         it "returns false" do
           expect(transient_registration.renewal_application_submitted?).to eq(false)
@@ -135,7 +141,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "pending_payment?" do
+    describe "#pending_payment?" do
       context "when the renewal is not in a completed workflow_state" do
         it "returns false" do
           expect(transient_registration.pending_payment?).to eq(false)
@@ -179,7 +185,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "pending_worldpay_payment?" do
+    describe "#pending_worldpay_payment?" do
       context "when the renewal has an order" do
         before do
           transient_registration.finance_details = build(:finance_details, :has_order)
@@ -217,7 +223,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "pending_manual_conviction_check?" do
+    describe "#pending_manual_conviction_check?" do
       context "when the renewal is not in a completed workflow_state" do
         it "returns false" do
           expect(transient_registration.pending_manual_conviction_check?).to eq(false)
@@ -259,44 +265,6 @@ module WasteCarriersEngine
             it "returns true" do
               expect(transient_registration.pending_manual_conviction_check?).to eq(true)
             end
-          end
-        end
-      end
-    end
-
-    describe "conviction_check_approved?" do
-      context "when there are no conviction_sign_offs" do
-        before do
-          transient_registration.conviction_sign_offs = nil
-        end
-
-        it "returns false" do
-          expect(transient_registration.conviction_check_approved?).to eq(false)
-        end
-      end
-
-      context "when there is a conviction_sign_off" do
-        before do
-          transient_registration.conviction_sign_offs = [build(:conviction_sign_off)]
-        end
-
-        context "when confirmed is no" do
-          before do
-            transient_registration.conviction_sign_offs.first.confirmed = "no"
-          end
-
-          it "returns false" do
-            expect(transient_registration.conviction_check_approved?).to eq(false)
-          end
-        end
-
-        context "when confirmed is yes" do
-          before do
-            transient_registration.conviction_sign_offs.first.confirmed = "yes"
-          end
-
-          it "returns true" do
-            expect(transient_registration.conviction_check_approved?).to eq(true)
           end
         end
       end
