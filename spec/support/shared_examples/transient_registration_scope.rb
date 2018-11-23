@@ -1,6 +1,30 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "TransientRegistration named scopes" do
+  let(:in_progress_renewal) do
+    create(:transient_registration, :has_required_data)
+  end
+
+  let(:submitted_renewal) do
+    create(:transient_registration,
+           :has_required_data,
+           workflow_state: :renewal_received_form)
+  end
+
+  let(:pending_payment_renewal) do
+    create(:transient_registration,
+           :has_required_data,
+           :has_unpaid_balance,
+           workflow_state: :renewal_received_form)
+  end
+
+  let(:pending_approval_renewal) do
+    create(:transient_registration,
+           :has_required_data,
+           :requires_conviction_check,
+           workflow_state: :renewal_received_form)
+  end
+
   describe "#search_term" do
     it "returns everything when no search term is given" do
       expect(WasteCarriersEngine::TransientRegistration.search_term(nil).length).to eq(WasteCarriersEngine::TransientRegistration.all.length)
@@ -42,66 +66,40 @@ RSpec.shared_examples "TransientRegistration named scopes" do
 
   describe "#in_progress" do
     it "returns in progress renewals when they exist" do
-      in_progress_renewal = create(:transient_registration, :has_required_data)
       expect(WasteCarriersEngine::TransientRegistration.in_progress).to include(in_progress_renewal)
     end
 
     it "does not return submitted renewals" do
-      submitted_renewal = create(
-        :transient_registration,
-        :has_required_data,
-        workflow_state: :renewal_complete_form
-      )
       expect(WasteCarriersEngine::TransientRegistration.in_progress).not_to include(submitted_renewal)
     end
   end
 
   describe "#submitted" do
     it "returns submitted renewals" do
-      submitted_renewal = create(
-        :transient_registration,
-        :has_required_data,
-        workflow_state: :renewal_complete_form
-      )
       expect(WasteCarriersEngine::TransientRegistration.submitted).to include(submitted_renewal)
     end
 
     it "does not return in progress renewals" do
-      in_progress_renewal = create(:transient_registration, :has_required_data)
       expect(WasteCarriersEngine::TransientRegistration.submitted).not_to include(in_progress_renewal)
     end
   end
 
   describe "#pending_payment" do
     it "returns renewals pending payment" do
-      pending_payment_renewal = create(
-        :transient_registration,
-        :has_required_data,
-        :has_unpaid_balance,
-        workflow_state: :renewal_complete_form
-      )
       expect(WasteCarriersEngine::TransientRegistration.pending_payment).to include(pending_payment_renewal)
     end
 
     it "does not return others" do
-      in_progress_renewal = create(:transient_registration, :has_required_data)
       expect(WasteCarriersEngine::TransientRegistration.pending_payment).not_to include(in_progress_renewal)
     end
   end
 
   describe "#pending_approval" do
     it "returns renewals pending conviction approval" do
-      pending_approval_renewal = create(
-        :transient_registration,
-        :has_required_data,
-        :requires_conviction_check,
-        workflow_state: :renewal_complete_form
-      )
       expect(WasteCarriersEngine::TransientRegistration.pending_approval).to include(pending_approval_renewal)
     end
 
     it "does not return others" do
-      in_progress_renewal = create(:transient_registration, :has_required_data)
       expect(WasteCarriersEngine::TransientRegistration.pending_approval).not_to include(in_progress_renewal)
     end
   end
