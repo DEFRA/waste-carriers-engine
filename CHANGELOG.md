@@ -4,6 +4,7 @@
 
 **Implemented enhancements:**
 
+- Improve dashboard search performance [\#302](https://github.com/DEFRA/waste-carriers-renewals/pull/302) ([Cruikshanks](https://github.com/Cruikshanks))
 - Allow expired renewal to complete post declaration [\#300](https://github.com/DEFRA/waste-carriers-renewals/pull/300) ([Cruikshanks](https://github.com/Cruikshanks))
 - Add a grace window for expired regs to renew [\#290](https://github.com/DEFRA/waste-carriers-renewals/pull/290) ([Cruikshanks](https://github.com/Cruikshanks))
 - Allow renewals that expire after submission to complete [\#287](https://github.com/DEFRA/waste-carriers-renewals/pull/287) ([irisfaraway](https://github.com/irisfaraway))
