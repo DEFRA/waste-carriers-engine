@@ -31,13 +31,11 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
 
     it "returns only matching renewal when a reg. identifier is given" do
-      matching_renewal = create(:transient_registration, :has_required_data)
-      create(:transient_registration, :has_required_data)
       results = WasteCarriersEngine::TransientRegistration.search_term(
-        matching_renewal.reg_identifier
+        in_progress_renewal.reg_identifier
       )
 
-      expect(results).to include(matching_renewal)
+      expect(results).to include(in_progress_renewal)
       expect(results.length).to eq(1)
     end
 
