@@ -57,16 +57,25 @@ RSpec.shared_examples "TransientRegistration named scopes" do
       end
     end
 
-    it "returns all matching renewals when a postcode is given" do
-      ["SW1A 2AA", "BS1 5AH"].each do |postcode|
-        address = build(:address, postcode: postcode)
+    context "when a postcode search term is given" do
+      let(:matching_postcode_renewal) do
+        address = build(:address, postcode: "SW1A 2AA")
         create(:transient_registration, :has_required_data, addresses: [address])
       end
 
-      results = WasteCarriersEngine::TransientRegistration.search_term("SW1A 2AA")
+      let(:non_matching_postcode_renewal) do
+        address = build(:address, postcode: "BS1 5AH")
+        create(:transient_registration, :has_required_data, addresses: [address])
+      end
 
-      expect(results.first.addresses[0].postcode).to eq("SW1A 2AA")
-      expect(results.length).to eq(1)
+      it "returns all matching renewals when a postcode is given" do
+        results = WasteCarriersEngine::TransientRegistration.search_term(
+          matching_postcode_renewal.addresses.first.postcode
+        )
+
+        expect(results).to include(matching_postcode_renewal)
+        expect(results).not_to include(non_matching_postcode_renewal)
+      end
     end
   end
 
