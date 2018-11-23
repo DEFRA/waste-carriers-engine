@@ -26,20 +26,23 @@ RSpec.shared_examples "TransientRegistration named scopes" do
   end
 
   describe "#search_term" do
+    let(:term) { nil }
+    let(:scope) { WasteCarriersEngine::TransientRegistration.search_term(term) }
+
     it "returns everything when no search term is given" do
-      expect(WasteCarriersEngine::TransientRegistration.search_term(nil).length).to eq(WasteCarriersEngine::TransientRegistration.all.length)
+      expect(scope.length).to eq(WasteCarriersEngine::TransientRegistration.all.length)
     end
 
-    it "returns only matching renewal when a reg. identifier is given" do
-      results = WasteCarriersEngine::TransientRegistration.search_term(
-        in_progress_renewal.reg_identifier
-      )
+    context "when the search term is a reg_identifier" do
+      let(:term) { in_progress_renewal.reg_identifier }
 
-      expect(results).to include(in_progress_renewal)
-      expect(results.length).to eq(1)
+      it "returns only the matching renewal" do
+        expect(scope).to include(in_progress_renewal)
+        expect(scope.length).to eq(1)
+      end
     end
 
-    context "when a search term is given" do
+    context "when the search term is a name" do
       let(:matching_company_name_renewal) do
         create(:transient_registration, :has_required_data, company_name: "Stan Lee Waste Company")
       end
@@ -48,12 +51,12 @@ RSpec.shared_examples "TransientRegistration named scopes" do
         create(:transient_registration, :has_required_data, last_name: "Lee")
       end
 
-      it "returns all matching renewals" do
-        results = WasteCarriersEngine::TransientRegistration.search_term("lee")
+      let(:term) { "Lee" }
 
-        expect(results).to include(matching_company_name_renewal)
-        expect(results).to include(matching_person_name_renewal)
-        expect(results).not_to include(in_progress_renewal)
+      it "returns all matching renewals" do
+        expect(scope).to include(matching_company_name_renewal)
+        expect(scope).to include(matching_person_name_renewal)
+        expect(scope).not_to include(in_progress_renewal)
       end
     end
 
@@ -68,13 +71,11 @@ RSpec.shared_examples "TransientRegistration named scopes" do
         create(:transient_registration, :has_required_data, addresses: [address])
       end
 
-      it "returns all matching renewals when a postcode is given" do
-        results = WasteCarriersEngine::TransientRegistration.search_term(
-          matching_postcode_renewal.addresses.first.postcode
-        )
+      let(:term) { matching_postcode_renewal.addresses.first.postcode }
 
-        expect(results).to include(matching_postcode_renewal)
-        expect(results).not_to include(non_matching_postcode_renewal)
+      it "returns all matching renewals when a postcode is given" do
+        expect(scope).to include(matching_postcode_renewal)
+        expect(scope).not_to include(non_matching_postcode_renewal)
       end
     end
   end
