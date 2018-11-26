@@ -132,12 +132,12 @@ module WasteCarriersEngine
       end
 
       context "when the renewal is not valid" do
-        before do
-          registration.metaData.update_attributes(status: "REJECTED")
+        let(:expired_renewal_completion_service) do
+          RenewalCompletionService.new(build(:transient_registration, :has_expired))
         end
 
         it "returns :error" do
-          expect(renewal_completion_service.complete_renewal).to eq(:error)
+          expect(expired_renewal_completion_service.complete_renewal).to eq(:error)
         end
       end
     end

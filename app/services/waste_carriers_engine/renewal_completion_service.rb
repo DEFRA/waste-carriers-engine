@@ -21,7 +21,7 @@ module WasteCarriersEngine
     end
 
     def valid_renewal?
-      @registration.metaData.may_renew?
+      @transient_registration.can_be_renewed?
     end
 
     def copy_names_to_contact_address
