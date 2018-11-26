@@ -113,8 +113,7 @@ module WasteCarriersEngine
     end
 
     def can_be_renewed?
-      registration = Registration.where(reg_identifier: @transient_registration.reg_identifier).first
-      return true if registration.metaData.may_renew?
+      return true if @transient_registration.can_be_renewed?
       redirect_to page_path("unrenewable")
       false
     end
