@@ -93,6 +93,13 @@ module WasteCarriersEngine
         location == "overseas"
       end
 
+      # Some business types should not have a company_no
+      def company_no_required?
+        return false if overseas?
+
+        %w[limitedCompany limitedLiabilityPartnership].include?(business_type)
+      end
+
       def main_people
         return [] unless key_people.present?
 
