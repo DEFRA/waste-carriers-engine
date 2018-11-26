@@ -23,7 +23,7 @@ module WasteCarriersEngine
                                                             :has_order_and_payment))
     end
 
-    describe "complete_renewal" do
+    describe "#complete_renewal" do
       context "when the renewal is valid" do
         it "creates a new past_registration" do
           number_of_past_registrations = registration.past_registrations.count
