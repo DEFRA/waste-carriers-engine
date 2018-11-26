@@ -44,15 +44,10 @@ module WasteCarriersEngine
       end
 
       context "when the source registration has a revoked_reason" do
-        let(:registration) do
-          create(:registration,
-                 :has_required_data,
-                 metaData: build(:metaData, revoked_reason: "foo"))
-        end
+        let(:revoked_transient_registration) { build(:transient_registration, :has_been_revoked) }
 
         it "does not import it" do
-          transient_registration = TransientRegistration.new(reg_identifier: registration.reg_identifier)
-          expect(transient_registration.metaData.revoked_reason).to eq(nil)
+          expect(revoked_transient_registration.metaData.revoked_reason).to eq(nil)
         end
       end
     end
@@ -245,10 +240,7 @@ module WasteCarriersEngine
           end
 
           context "when the registration is not active" do
-            let(:revoked_transient_registration) do
-              registration = create(:registration, :has_required_data, :is_revoked)
-              TransientRegistration.new(reg_identifier: registration.reg_identifier)
-            end
+            let(:revoked_transient_registration) { build(:transient_registration, :has_been_revoked) }
 
             it "returns false" do
               expect(revoked_transient_registration.pending_manual_conviction_check?).to eq(false)

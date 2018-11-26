@@ -84,5 +84,11 @@ FactoryBot.define do
         [build(:key_person, :has_matching_conviction, :main)]
       end
     end
+
+    trait :has_been_revoked do
+      # Create a new registration when initializing so we can copy its data
+      initialize_with { new(reg_identifier: create(:registration, :has_required_data,
+      metaData: build(:metaData, revoked_reason: "foo")).reg_identifier) }
+    end
   end
 end
