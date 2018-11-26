@@ -85,6 +85,10 @@ module WasteCarriersEngine
         addresses.where(address_type: "REGISTERED").first
       end
 
+      def charity?
+        business_type == "charity"
+      end
+
       def overseas?
         location == "overseas"
       end
