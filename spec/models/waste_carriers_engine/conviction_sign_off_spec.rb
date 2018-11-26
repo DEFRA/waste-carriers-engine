@@ -26,8 +26,8 @@ module WasteCarriersEngine
           expect(conviction_sign_off).to allow_event :approve
         end
 
-        it "can be rejected" do
-          expect(conviction_sign_off).to allow_event :reject
+        it "cannot be rejected" do
+          expect(conviction_sign_off).to_not allow_event :reject
         end
       end
 
@@ -99,6 +99,7 @@ module WasteCarriersEngine
 
       context "when the reject event happens" do
         before do
+          conviction_sign_off.workflow_state = "checks_in_progress"
           conviction_sign_off.reject
         end
 

@@ -160,6 +160,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
     end
 
     let(:convictions_rejected_renewal) do
+      convictions_renewal.conviction_sign_offs.first.begin_checks!
       convictions_renewal.conviction_sign_offs.first.reject!
       convictions_renewal
     end

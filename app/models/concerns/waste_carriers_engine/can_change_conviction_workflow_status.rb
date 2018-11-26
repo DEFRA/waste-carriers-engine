@@ -29,8 +29,7 @@ module WasteCarriersEngine
         end
 
         event :reject do
-          transitions from: %i[possible_match
-                               checks_in_progress],
+          transitions from: :checks_in_progress,
                       to: :rejected,
                       after: :revoke_parent
         end
