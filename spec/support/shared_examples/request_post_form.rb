@@ -45,13 +45,10 @@ RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_a
       context "when the workflow_state matches the requested form" do
         before do
           transient_registration.update_attributes(workflow_state: form)
+          valid_params[:reg_identifier] = transient_registration.reg_identifier
         end
 
         context "when the params are valid" do
-          before do
-            valid_params[:reg_identifier] = transient_registration.reg_identifier
-          end
-
           it "updates the transient registration" do
             # If we've specified the value we want to get after updating, use that
             # Otherwise, expect the value submitted in params
