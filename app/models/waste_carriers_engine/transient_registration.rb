@@ -114,6 +114,22 @@ module WasteCarriersEngine
       renewal_application_submitted? && conviction_check_required?
     end
 
+    def can_be_renewed?
+      return false unless %w[ACTIVE EXPIRED].include?(metaData.status)
+
+      # The only time an expired registration can be renewed is if the
+      # application
+      # - has a confirmed declaration i.e. user reached the copy cards page
+      # - it is within the grace window
+      return true if declaration_confirmed?
+
+      check_service = ExpiryCheckService.new(self)
+      return true if check_service.in_expiry_grace_window?
+      return false if check_service.expired?
+
+      check_service.in_renewal_window?
+    end
+
     private
 
     def copy_data_from_registration

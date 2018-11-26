@@ -94,5 +94,15 @@ FactoryBot.define do
       initialize_with { new(reg_identifier: create(:registration, :has_required_data,
       metaData: build(:metaData, revoked_reason: "foo")).reg_identifier) }
     end
+
+    trait :has_expired do
+      # Create a new registration when initializing so we can copy its data
+      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :is_expired, expires_on: 1.month.ago).reg_identifier) }
+    end
+
+    trait :has_expired_today do
+      # Create a new registration when initializing so we can copy its data
+      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :is_expired, expires_on: Date.today).reg_identifier) }
+    end
   end
 end
