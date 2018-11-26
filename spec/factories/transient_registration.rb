@@ -85,7 +85,11 @@ FactoryBot.define do
       end
     end
 
+<<<<<<< HEAD
     trait :has_revoked_registration do
+=======
+    trait :has_been_revoked do
+>>>>>>> Add new revoked trait to trans reg factory
       # Create a new registration when initializing so we can copy its data
       initialize_with { new(reg_identifier: create(:registration, :has_required_data,
       metaData: build(:metaData, revoked_reason: "foo")).reg_identifier) }
