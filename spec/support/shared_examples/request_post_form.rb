@@ -105,13 +105,7 @@ RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_a
         end
 
         context "when the registration cannot be renewed" do
-          before do
-            # Params are otherwise valid
-            valid_params[:reg_identifier] = transient_registration.reg_identifier
-            # But the registration is now expired
-            registration = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier).first
-            registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window)
-          end
+          before { transient_registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
 
           it "does not update the transient registration, including workflow_state" do
             transient_reg_before_submitting = transient_registration
