@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class RenewalCompletionService
     def initialize(transient_registration)
