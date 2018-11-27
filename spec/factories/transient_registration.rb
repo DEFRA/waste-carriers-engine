@@ -35,6 +35,10 @@ FactoryBot.define do
       end
     end
 
+    trait :has_paid_order do
+      finance_details { build(:finance_details, :has_paid_order_and_payment) }
+    end
+
     trait :has_conviction_search_result do
       conviction_search_result { build(:conviction_search_result, :match_result_no) }
     end

@@ -5,8 +5,26 @@ module WasteCarriersEngine
       @registration = find_original_registration
     end
 
+    def can_be_completed?
+      # Both pending_payment? and pending_manual_conviction_check? also check
+      # that the renewal has been submitted hence we don't check that
+      # independently here
+      return false if @transient_registration.pending_payment?
+      return false if @transient_registration.pending_manual_conviction_check?
+      # We check the status of the transient registration as part of its
+      # can_be_renewed? method and this is sufficient during the application.
+      # However during that period there is a possibility that the registration
+      # has since been REVOKED so we perform this additional check against the
+      # underlying registration just to be sure we are not allowing a renewal
+      # for a REVOKED registration to complete
+      return false unless %w[ACTIVE EXPIRED].include?(@registration.metaData.status)
+
+      true
+    end
+
     def complete_renewal
-      return :error unless valid_renewal?
+      return :error unless can_be_completed?
+
       copy_names_to_contact_address
       create_past_registration
       update_registration
@@ -18,10 +36,6 @@ module WasteCarriersEngine
 
     def find_original_registration
       Registration.where(reg_identifier: @transient_registration.reg_identifier).first
-    end
-
-    def valid_renewal?
-      @transient_registration.can_be_renewed?
     end
 
     def copy_names_to_contact_address
