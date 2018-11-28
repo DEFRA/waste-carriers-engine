@@ -3,8 +3,9 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanChangeRegistrationStatus
 
-    embedded_in :registration,      class_name: "WasteCarriersEngine::Registration"
-    embedded_in :past_registration, class_name: "WasteCarriersEngine::PastRegistration"
+    embedded_in :registration,           class_name: "WasteCarriersEngine::Registration"
+    embedded_in :past_registration,      class_name: "WasteCarriersEngine::PastRegistration"
+    embedded_in :transient_registration, class_name: "WasteCarriersEngine::TransientRegistration"
 
     field :route,                                 type: String
     field :dateRegistered, as: :date_registered,  type: DateTime
