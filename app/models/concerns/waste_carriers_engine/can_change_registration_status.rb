@@ -95,13 +95,6 @@ module WasteCarriersEngine
       check_service.in_renewal_window?
     end
 
-    def renewal_application_submitted?
-      transient_registration = matching_transient_registration
-      return false unless transient_registration.present?
-
-      transient_registration.workflow_state == "renewal_received_form"
-    end
-
     def renewal_declaration_confirmed?
       transient_registration = matching_transient_registration
       return false unless transient_registration.present?
