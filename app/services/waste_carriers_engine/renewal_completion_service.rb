@@ -88,7 +88,7 @@ module WasteCarriersEngine
       registration_attributes.keys.each do |old_attribute|
         # If attributes aren't included in the transient_registration, for example if the user skipped the tier check,
         # remove those attributes from the registration instead of leaving the existing values
-        next if renewal_attributes.keys.include?(old_attribute)
+        next if renewal_attributes.key?(old_attribute)
 
         @registration.remove_attribute(old_attribute.to_sym)
       end
