@@ -95,8 +95,8 @@ module WasteCarriersEngine
     end
 
     def merge_finance_details
-      set_up_finance_details(@registration)
-      set_up_finance_details(@transient_registration)
+      initialise_finance_details(@registration)
+      initialise_finance_details(@transient_registration)
 
       @transient_registration.finance_details.orders.each do |order|
         @registration.finance_details.orders << order
@@ -110,17 +110,17 @@ module WasteCarriersEngine
     end
 
     # If for some reason we have no existing finance info, create empty objects
-    def set_up_finance_details(registration)
+    def initialise_finance_details(registration)
       registration.finance_details = FinanceDetails.new unless registration.finance_details.present?
-      set_up_orders(registration)
-      set_up_payments(registration)
+      intialise_orders(registration)
+      initialise_payments(registration)
     end
 
-    def set_up_orders(registration)
+    def intialise_orders(registration)
       registration.finance_details.orders = [] unless registration.finance_details.orders.present?
     end
 
-    def set_up_payments(registration)
+    def initialise_payments(registration)
       registration.finance_details.payments = [] unless registration.finance_details.payments.present?
     end
   end
