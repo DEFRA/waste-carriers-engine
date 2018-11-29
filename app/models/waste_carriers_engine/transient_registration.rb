@@ -77,17 +77,6 @@ module WasteCarriersEngine
       temp_cards * Rails.configuration.card_charge
     end
 
-    def charity?
-      business_type == "charity"
-    end
-
-    # Some business types should not have a company_no
-    def company_no_required?
-      return false if overseas?
-
-      %w[limitedCompany limitedLiabilityPartnership].include?(business_type)
-    end
-
     def company_no_changed?
       return false unless company_no_required?
 
