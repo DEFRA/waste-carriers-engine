@@ -8,9 +8,11 @@ module WasteCarriersEngine
     end
 
     def can_be_completed?
-      # Both pending_payment? and pending_manual_conviction_check? also check
-      # that the renewal has been submitted hence we don't check that
-      # independently here
+      # Though both pending_payment? and pending_manual_conviction_check? also
+      # check that the renewal has been submitted, if it hasn't they would both
+      # return false, which would mean we would not stop the renewal from
+      # completing. Hence we have to check it separately first
+      return false unless @transient_registration.renewal_application_submitted?
       return false if @transient_registration.pending_payment?
       return false if @transient_registration.pending_manual_conviction_check?
       # We check the status of the transient registration as part of its
