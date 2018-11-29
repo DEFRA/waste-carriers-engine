@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :transient_registration, class: WasteCarriersEngine::TransientRegistration do
     trait :has_required_data do
@@ -95,8 +97,9 @@ FactoryBot.define do
     trait :has_been_revoked do
 >>>>>>> Add new revoked trait to trans reg factory
       # Create a new registration when initializing so we can copy its data
-      initialize_with { new(reg_identifier: create(:registration, :has_required_data,
-      metaData: build(:metaData, revoked_reason: "foo")).reg_identifier) }
+      initialize_with do
+        new(reg_identifier: create(:registration, :has_required_data, metaData: build(:metaData, revoked_reason: "foo")).reg_identifier)
+      end
     end
 
     trait :has_expired do
