@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tests for fields using the CompanyNoValidator
 RSpec.shared_examples "validate company_no" do |form_factory|
   before do

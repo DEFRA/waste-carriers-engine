@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :order, class: WasteCarriersEngine::Order do
     trait :has_required_data do

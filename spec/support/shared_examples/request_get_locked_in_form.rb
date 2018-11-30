@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A 'locked-in' form is a form we definitely don't want users to access out-of-order,
 # for example, by clicking the back button or URL-hacking.
 # Users shouldn't be able to get into locked-in forms this way.

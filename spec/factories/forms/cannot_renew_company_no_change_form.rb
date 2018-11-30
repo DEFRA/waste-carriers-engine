@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :cannot_renew_company_no_change_form, class: WasteCarriersEngine::CannotRenewCompanyNoChangeForm do
     trait :has_required_data do

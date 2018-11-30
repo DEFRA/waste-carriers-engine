@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # When a user submits a form, that form must match the expected workflow_state.
 # We don't adjust the state to match what the user is doing like we do for viewing forms.
 

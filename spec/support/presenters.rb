@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |config|
 
   # Adding this resolves getting the following error when you attemp to run the
