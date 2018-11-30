@@ -107,5 +107,11 @@ FactoryBot.define do
       # Create a new registration when initializing so we can copy its data
       initialize_with { new(reg_identifier: create(:registration, :has_required_data, :is_expired, expires_on: Date.today).reg_identifier) }
     end
+
+    trait :is_ready_to_complete do
+      has_required_data
+      has_paid_order
+      workflow_state { "renewal_received_form" }
+    end
   end
 end

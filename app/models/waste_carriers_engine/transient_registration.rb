@@ -130,6 +130,18 @@ module WasteCarriersEngine
       check_service.in_renewal_window?
     end
 
+    def ready_to_complete?
+      # Though both pending_payment? and pending_manual_conviction_check? also
+      # check that the renewal has been submitted, if it hasn't they would both
+      # return false, which would mean we would not stop the renewal from
+      # completing. Hence we have to check it separately first
+      return false unless renewal_application_submitted?
+      return false if pending_payment?
+      return false if pending_manual_conviction_check?
+
+      true
+    end
+
     private
 
     def copy_data_from_registration

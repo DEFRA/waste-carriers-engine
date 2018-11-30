@@ -271,7 +271,7 @@ module WasteCarriersEngine
       end
 
       context "when a registration is neither active or expired" do
-        let(:revoked_transient_registration) { build(:transient_registration, :has_been_revoked) }
+        let(:revoked_transient_registration) { build(:transient_registration, :has_revoked_registration) }
 
         it "returns false" do
           expect(revoked_transient_registration.can_be_renewed?).to eq(false)
@@ -356,6 +356,33 @@ module WasteCarriersEngine
                 expect(expired_today_transient_registration.can_be_renewed?).to eq(false)
               end
             end
+          end
+        end
+      end
+    end
+
+    describe "#ready_to_complete?" do
+      context "when the transient registration is ready to complete" do
+        let(:transient_registration) { build(:transient_registration, :is_ready_to_complete) }
+        it "returns true" do
+          expect(transient_registration.ready_to_complete?).to eq(true)
+        end
+      end
+      context "when the transient registration is not ready to complete" do
+        context "because it is not submitted" do
+          let(:transient_registration) { build(:transient_registration, workflow_state: "bank_transfer_form") }
+          it "returns false" do
+            expect(transient_registration.ready_to_complete?).to eq(false)
+          end
+        end
+        context "because it has outstanding payments" do
+          it "returns false" do
+            expect(transient_registration.ready_to_complete?).to eq(false)
+          end
+        end
+        context "because it has outstanding conviction checks" do
+          it "returns false" do
+            expect(transient_registration.ready_to_complete?).to eq(false)
           end
         end
       end
