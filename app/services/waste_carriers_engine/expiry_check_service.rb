@@ -20,6 +20,10 @@ module WasteCarriersEngine
       (@expiry_date.to_date - Rails.configuration.renewal_window.months)
     end
 
+    def expiry_date_after_renewal
+      @expiry_date.to_date + Rails.configuration.expires_after.years
+    end
+
     def expired?
       # Registrations are expired on the date recorded for their expiry date e.g.
       # an expiry date of Mar 25 2018 means the registration was active up till

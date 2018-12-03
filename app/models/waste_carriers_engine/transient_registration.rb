@@ -3,7 +3,6 @@
 module WasteCarriersEngine
   class TransientRegistration
     include Mongoid::Document
-    include CanCalculateRenewalDates
     include CanChangeWorkflowStatus
     include CanCheckBusinessTypeChanges
     include CanHaveRegistrationAttributes
@@ -61,7 +60,7 @@ module WasteCarriersEngine
     def projected_renewal_end_date
       return unless expires_on.present?
 
-      expiry_date_after_renewal(expires_on.to_date)
+      ExpiryCheckService.new(self).expiry_date_after_renewal
     end
 
     def total_to_pay

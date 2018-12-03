@@ -4,7 +4,6 @@ module WasteCarriersEngine
   module CanChangeRegistrationStatus
     extend ActiveSupport::Concern
     include Mongoid::Document
-    include CanCalculateRenewalDates
 
     # The pattern for denoting events here is common when using AASM, however it
     # does mean we get flagged by rubocop. We don't want to change the rule at a
