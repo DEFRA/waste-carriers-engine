@@ -48,9 +48,21 @@ module WasteCarriersEngine
     def update_registration
       copy_data_from_transient_registration
       merge_finance_details
+      extend_expiry_date
+      update_meta_data
+      @registration.save!
+    end
+
+    def update_meta_data
       @registration.metaData.route = Rails.configuration.metadata_route
       @registration.metaData.renew
-      @registration.save!
+      @registration.metaData.date_registered = Time.now
+      @registration.metaData.date_activated = @registration.metaData.date_registered
+    end
+
+    def extend_expiry_date
+      expiry_check_service = ExpiryCheckService.new(@registration)
+      @registration.expires_on = expiry_check_service.expiry_date_after_renewal
     end
 
     def delete_transient_registration
