@@ -85,6 +85,44 @@ module WasteCarriersEngine
           )
         end
 
+        it "extends expires_on by 3 years" do
+          old_expiry_date = registration.expires_on
+          renewal_completion_service.complete_renewal
+          new_expiry_date = registration.reload.expires_on
+
+          expect(new_expiry_date.to_date).to eq((old_expiry_date.to_date + 3.years))
+        end
+
+        it "updates the registration's date_registered" do
+          Timecop.freeze do
+            renewal_completion_service.complete_renewal
+
+            date_registered = registration.reload.metaData.date_registered
+
+            expect(date_registered.to_time.to_s).to eq(Time.now.to_s)
+          end
+        end
+
+        it "updates the registration's date_activated" do
+          Timecop.freeze do
+            renewal_completion_service.complete_renewal
+
+            date_activated = registration.reload.metaData.date_activated
+
+            expect(date_activated.to_time.to_s).to eq(Time.now.to_s)
+          end
+        end
+
+        it "updates the registration's last_modified" do
+          Timecop.freeze do
+            renewal_completion_service.complete_renewal
+
+            last_modified = registration.reload.metaData.last_modified
+
+            expect(last_modified.to_time.to_s).to eq(Time.now.to_s)
+          end
+        end
+
         # This only applies to attributes where a value could be set, but not always - for example, smart answers
         context "if the registration has an attribute which is not in the transient_registration" do
           before do
@@ -95,18 +133,6 @@ module WasteCarriersEngine
             renewal_completion_service.complete_renewal
             expect(registration.reload.construction_waste).to eq(nil)
           end
-        end
-
-        it "updates the registration's expiry date" do
-          old_expiry_date = registration.expires_on
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.expires_on).to eq(old_expiry_date + 3.years)
-        end
-
-        it "updates the registration's last_modified" do
-          old_last_modified = registration.metaData.last_modified
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.metaData.last_modified).to_not eq(old_last_modified)
         end
 
         it "copies the first_name to the contact address" do

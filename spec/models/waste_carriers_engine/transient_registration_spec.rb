@@ -359,6 +359,79 @@ module WasteCarriersEngine
           end
         end
       end
+
+      context "when the registration was created in BST and expires in GMT" do
+        before { allow(Rails.configuration).to receive(:grace_window).and_return(3) }
+
+        # Registration is made during British Summer Time (BST)
+        # UK local time is 00:30 on 28 March 2017
+        # UTC time is 23:30 on 27 March 2017
+        # Registration should expire on 28 March 2020
+        let!(:bst_transient_registration) do
+          registration = create(:registration, :has_required_data)
+          registration.metaData.status = "EXPIRED"
+          registration.metaData.date_registered = Time.find_zone("London").local(2017, 3, 28, 0, 30)
+          registration.expires_on = registration.metaData.date_registered + 3.years
+          registration.save!
+          TransientRegistration.new(reg_identifier: registration.reg_identifier)
+        end
+
+        it "does not expire a day early due to the time difference" do
+          # Skip ahead to the end of the last day the reg should be active
+          Timecop.freeze(Time.find_zone("London").local(2020, 3, 27, 23, 59)) do
+            # GMT is now in effect (not BST)
+            # UK local time & UTC are both 23:59 on 27 March 2020
+            expect(bst_transient_registration.can_be_renewed?).to eq(true)
+          end
+        end
+
+        it "cannot be renewed when it reaches the expiry date plus 'grace window' in the UK" do
+          # Skip ahead to the start of the day a reg should expire, plus the
+          # grace window
+          Timecop.freeze(Time.find_zone("London").local(2020, 3, 31, 0, 1)) do
+            # GMT is now in effect (not BST)
+            # UK local time & UTC are both 00:01 on 28 March 2020
+            expect(bst_transient_registration.can_be_renewed?).to eq(false)
+          end
+        end
+      end
+    end
+
+    context "when the registration was created in GMT and expires in BST" do
+      before { allow(Rails.configuration).to receive(:grace_window).and_return(3) }
+
+      # Registration is made in during Greenwich Mean Time (GMT)
+      # UK local time & UTC are both 23:30 on 27 October 2015
+      # Registration should expire on 27 October 2018
+      let!(:gmt_registration) do
+        registration = build(:registration, :has_required_data)
+        registration.metaData.status = "EXPIRED"
+        registration.metaData.date_registered = Time.find_zone("London").local(2015, 10, 27, 23, 30)
+        registration.expires_on = registration.metaData.date_registered + 3.years
+        registration.save!
+        TransientRegistration.new(reg_identifier: registration.reg_identifier)
+      end
+
+      it "does not expire a day early due to the time difference" do
+        # Skip ahead to the end of the last day the reg should be active
+        Timecop.freeze(Time.find_zone("London").local(2018, 10, 26, 23, 59)) do
+          # BST is now in effect (not GMT)
+          # UK local time is 23:59 on 26 October 2018
+          # UTC time is 22:59 on 26 October 2018
+          expect(gmt_registration.can_be_renewed?).to eq(true)
+        end
+      end
+
+      it "cannot be renewed when it reaches the expiry date plus 'grace window' in the UK" do
+        # Skip ahead to the start of the day a reg should expire, plus the
+        # grace window
+        Timecop.freeze(Time.find_zone("London").local(2018, 10, 30, 0, 1)) do
+          # BST is now in effect (not GMT)
+          # UK local time is 00:01 on 27 October 2018
+          # UTC time is 23:01 on 26 October 2018
+          expect(gmt_registration.can_be_renewed?).to eq(false)
+        end
+      end
     end
 
     describe "#ready_to_complete?" do
