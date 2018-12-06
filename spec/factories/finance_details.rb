@@ -21,7 +21,7 @@ FactoryBot.define do
       orders { [build(:order, :has_required_data)] }
       payments do
         [
-          build(:payment, :bank_transfer, amount: 105_00),
+          build(:payment, :bank_transfer, amount: 10_500),
           build(:payment, :bank_transfer, amount: 500)
         ]
       end
@@ -30,7 +30,7 @@ FactoryBot.define do
 
     trait :has_outstanding_copy_card do
       orders { [build(:order, :has_required_data)] }
-      payments { [build(:payment, :bank_transfer, amount: 105_00)] }
+      payments { [build(:payment, :bank_transfer, amount: 10_500)] }
       after(:build, :create, &:update_balance)
     end
   end
