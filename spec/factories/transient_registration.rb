@@ -94,18 +94,18 @@ FactoryBot.define do
     trait :has_revoked_registration do
       # Create a new registration when initializing so we can copy its data
       initialize_with do
-        new(reg_identifier: create(:registration, :has_required_data, metaData: build(:metaData, revoked_reason: "foo")).reg_identifier)
+        new(reg_identifier: create(:registration, :has_required_data, :is_revoked).reg_identifier)
       end
     end
 
     trait :has_expired do
       # Create a new registration when initializing so we can copy its data
-      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :is_expired, expires_on: 1.month.ago).reg_identifier) }
+      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expired_one_month_ago).reg_identifier) }
     end
 
     trait :has_expired_today do
       # Create a new registration when initializing so we can copy its data
-      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :is_expired, expires_on: Date.today).reg_identifier) }
+      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_today).reg_identifier) }
     end
 
     trait :is_ready_to_complete do

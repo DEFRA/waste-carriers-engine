@@ -60,9 +60,19 @@ FactoryBot.define do
       end
     end
 
+    trait :expired_one_month_ago do
+      metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
+      expires_on { 1.month.ago }
+    end
+
     trait :expires_soon do
       metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
       expires_on { 2.months.from_now }
+    end
+
+    trait :expires_today do
+      metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
+      expires_on { Date.today }
     end
 
     trait :expires_later do
