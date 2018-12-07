@@ -31,6 +31,10 @@ FactoryBot.define do
       declared_convictions { "yes" }
     end
 
+    trait :is_submitted do
+      workflow_state { "renewal_received_form" }
+    end
+
     trait :has_finance_details do
       after(:build, :create) do |transient_registration|
         WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay, build(:user))
@@ -46,13 +50,19 @@ FactoryBot.define do
     end
 
     trait :requires_conviction_check do
-      workflow_state { "renewal_received_form" }
+      is_submitted
       key_people { [build(:key_person, :matched_conviction_search_result)] }
       conviction_search_result { build(:conviction_search_result, :match_result_yes) }
       conviction_sign_offs { [build(:conviction_sign_off)] }
     end
 
+    trait :has_rejected_conviction_sign_off do
+      declared_convictions
+      conviction_search_result { build(:conviction_sign_off, :rejected) }
+    end
+
     trait :has_unpaid_balance do
+      is_submitted
       finance_details { build(:finance_details, balance: 1000) }
     end
 
@@ -111,7 +121,7 @@ FactoryBot.define do
     trait :is_ready_to_complete do
       has_required_data
       has_paid_order
-      workflow_state { "renewal_received_form" }
+      is_submitted
     end
   end
 end

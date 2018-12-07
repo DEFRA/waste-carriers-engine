@@ -141,6 +141,14 @@ module WasteCarriersEngine
       true
     end
 
+    def stuck?
+      return false unless renewal_application_submitted?
+      return true if conviction_sign_offs&.first&.rejected?
+      return false if pending_payment? || pending_manual_conviction_check?
+
+      true
+    end
+
     private
 
     def copy_data_from_registration
