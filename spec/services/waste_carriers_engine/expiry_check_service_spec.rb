@@ -30,7 +30,6 @@ module WasteCarriersEngine
     end
 
     describe "#attributes" do
-
       context "when initialized with an upper tier registration" do
         let(:registration) { build(:registration, :has_required_data, :expires_later) }
         subject { ExpiryCheckService.new(registration) }

@@ -350,6 +350,7 @@ module WasteCarriersEngine
           expect(transient_registration.ready_to_complete?).to eq(true)
         end
       end
+
       context "when the transient registration is not ready to complete" do
         context "because it is not submitted" do
           let(:transient_registration) { build(:transient_registration, workflow_state: "bank_transfer_form") }
@@ -357,11 +358,13 @@ module WasteCarriersEngine
             expect(transient_registration.ready_to_complete?).to eq(false)
           end
         end
+
         context "because it has outstanding payments" do
           it "returns false" do
             expect(transient_registration.ready_to_complete?).to eq(false)
           end
         end
+
         context "because it has outstanding conviction checks" do
           it "returns false" do
             expect(transient_registration.ready_to_complete?).to eq(false)
