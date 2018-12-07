@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "countries"
 
 module WasteCarriersEngine
@@ -79,7 +81,7 @@ module WasteCarriersEngine
       address2 = address.address_line_2
       postcode = address.postcode
       city = address.town_city
-      country_code = get_country_code(address.country)
+      country_code = look_up_country_code(address.country)
 
       xml.billingAddress do
         xml.address do
@@ -94,10 +96,11 @@ module WasteCarriersEngine
       end
     end
 
-    def get_country_code(country)
+    def look_up_country_code(country)
       country = ISO3166::Country.find_country_by_name(country)
       # If we didn't provide a country or no match was found, use GB as default
       return "GB" if country.nil?
+
       country.alpha2
     end
   end
