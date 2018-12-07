@@ -263,18 +263,18 @@ module WasteCarriersEngine
     end
 
     describe "#can_be_renewed?" do
-      context "when the declaration is confirmed" do
-        it "returns true" do
-          transient_registration.declaration = 1
-          expect(transient_registration.can_be_renewed?).to eq(true)
-        end
-      end
-
       context "when a registration is neither active or expired" do
         let(:revoked_transient_registration) { build(:transient_registration, :has_revoked_registration) }
 
         it "returns false" do
           expect(revoked_transient_registration.can_be_renewed?).to eq(false)
+        end
+      end
+
+      context "when the declaration is confirmed" do
+        it "returns true" do
+          transient_registration.declaration = 1
+          expect(transient_registration.can_be_renewed?).to eq(true)
         end
       end
 
