@@ -102,6 +102,21 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#expiry_date_after_renewal" do
+      context "when the registration duration is 3 years and the registration provided expires on 2018-03-25" do
+        before do
+          allow(Rails.configuration).to receive(:expires_after).and_return(3)
+        end
+
+        let(:registration) { build(:registration, :has_required_data, expires_on: Date.new(2018, 3, 25)) }
+        subject { ExpiryCheckService.new(registration) }
+
+        it "returns a date of 2021-03-25" do
+          expect(subject.expiry_date_after_renewal).to eq(Date.new(2021, 3, 25))
+        end
+      end
+    end
+
     describe "#expired?" do
       context "when the registration expired yesterday" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.yesterday) }
