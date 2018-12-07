@@ -62,7 +62,7 @@ module WasteCarriersEngine
     end
 
     def build_shopper(xml)
-      email = get_email
+      email = @transient_registration.account_email
 
       xml.shopper do
         xml.shopperEmailAddress email
@@ -99,14 +99,6 @@ module WasteCarriersEngine
       # If we didn't provide a country or no match was found, use GB as default
       return "GB" if country.nil?
       country.alpha2
-    end
-
-    def get_email
-      if @current_user.email == @transient_registration.account_email
-        @transient_registration.account_email
-      else
-        @transient_registration.contact_email
-      end
     end
   end
 end

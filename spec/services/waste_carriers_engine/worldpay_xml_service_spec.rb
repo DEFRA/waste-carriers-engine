@@ -26,27 +26,10 @@ module WasteCarriersEngine
       allow_any_instance_of(Order).to receive(:total_amount).and_return(10_000)
     end
 
-    describe "build_xml" do
-      context "when it's a digital registration" do
-        before do
-          current_user.email = transient_registration.account_email
-        end
-
-        it "returns correctly-formatted XML" do
-          xml = File.read("./spec/fixtures/files/request_to_worldpay.xml")
-          expect(worldpay_xml_service.build_xml).to eq(xml)
-        end
-      end
-
-      context "when it's an assisted digital registration" do
-        before do
-          current_user.email = "not-the-same-account@example.com"
-        end
-
-        it "returns correctly-formatted XML" do
-          xml = File.read("./spec/fixtures/files/request_to_worldpay_ad.xml")
-          expect(worldpay_xml_service.build_xml).to eq(xml)
-        end
+    describe "#build_xml" do
+      it "returns correctly-formatted XML" do
+        xml = File.read("./spec/fixtures/files/request_to_worldpay.xml")
+        expect(worldpay_xml_service.build_xml).to eq(xml)
       end
     end
   end
