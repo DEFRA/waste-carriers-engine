@@ -56,7 +56,13 @@ FactoryBot.define do
       conviction_sign_offs { [build(:conviction_sign_off)] }
     end
 
+    trait :has_rejected_conviction_sign_off do
+      declared_convictions
+      conviction_search_result { build(:conviction_sign_off, :rejected) }
+    end
+
     trait :has_unpaid_balance do
+      is_submitted
       finance_details { build(:finance_details, balance: 1000) }
     end
 

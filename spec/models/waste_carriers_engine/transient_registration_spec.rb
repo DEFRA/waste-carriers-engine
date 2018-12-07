@@ -487,6 +487,14 @@ module WasteCarriersEngine
           end
         end
 
+        context "and has been refused" do
+          let(:transient_registration) { build(:transient_registration, :is_submitted, :has_rejected_conviction_sign_off) }
+
+          it "returns true" do
+            expect(transient_registration.stuck?).to eq(true)
+          end
+        end
+
         context "and has no outstanding checks" do
           let(:transient_registration) { build(:transient_registration, :is_submitted, :has_paid_balance) }
 
