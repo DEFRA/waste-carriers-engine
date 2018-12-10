@@ -21,7 +21,7 @@ module WasteCarriersEngine
     end
 
     def go_back
-      set_transient_registration(params[:reg_identifier])
+      find_or_initialize_transient_registration(params[:reg_identifier])
 
       @transient_registration.back! if form_matches_state?
       redirect_to_correct_form
@@ -29,7 +29,7 @@ module WasteCarriersEngine
 
     private
 
-    def set_transient_registration(reg_identifier)
+    def find_or_initialize_transient_registration(reg_identifier)
       @transient_registration = TransientRegistration.where(reg_identifier: reg_identifier).first ||
                                 TransientRegistration.new(reg_identifier: reg_identifier)
     end
@@ -37,7 +37,7 @@ module WasteCarriersEngine
     # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
     # and the reg_identifier param
     def set_up_form(form_class, form, reg_identifier, get_request = false)
-      set_transient_registration(reg_identifier)
+      find_or_initialize_transient_registration(reg_identifier)
       set_workflow_state if get_request
 
       return false unless setup_checks_pass?

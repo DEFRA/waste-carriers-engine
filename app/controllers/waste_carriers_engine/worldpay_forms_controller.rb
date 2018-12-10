@@ -74,7 +74,7 @@ module WasteCarriersEngine
     end
 
     def valid_transient_registration?(reg_identifier)
-      set_transient_registration(reg_identifier)
+      find_or_initialize_transient_registration(reg_identifier)
       setup_checks_pass?
     end
 
