@@ -22,12 +22,12 @@ module WasteCarriersEngine
           end
 
           context "when valid params are submitted" do
-            let(:valid_params) {
+            let(:valid_params) do
               {
                 reg_identifier: transient_registration[:reg_identifier],
                 temp_company_postcode: "BS1 6AH"
               }
-            }
+            end
 
             before do
               example_json = { postcode: "BS1 6AH" }
@@ -62,12 +62,12 @@ module WasteCarriersEngine
           end
 
           context "when invalid params are submitted" do
-            let(:invalid_params) {
+            let(:invalid_params) do
               {
                 reg_identifier: "foo",
                 temp_company_postcode: "ABC123DEF456"
               }
-            }
+            end
 
             it "returns a 302 response" do
               post company_postcode_forms_path, company_postcode_form: invalid_params
@@ -89,12 +89,12 @@ module WasteCarriersEngine
                    workflow_state: "renewal_start_form")
           end
 
-          let(:valid_params) {
+          let(:valid_params) do
             {
               reg_identifier: transient_registration[:reg_identifier],
               temp_company_postcode: "BS1 5AH"
             }
-          }
+          end
 
           it "returns a 302 response" do
             post company_postcode_forms_path, company_postcode_form: valid_params

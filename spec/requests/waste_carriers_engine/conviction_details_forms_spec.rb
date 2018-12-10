@@ -22,7 +22,7 @@ module WasteCarriersEngine
           end
 
           context "when valid params are submitted" do
-            let(:valid_params) {
+            let(:valid_params) do
               {
                 reg_identifier: transient_registration[:reg_identifier],
                 first_name: "Foo",
@@ -32,7 +32,7 @@ module WasteCarriersEngine
                 dob_month: "1",
                 dob_year: "2000"
               }
-            }
+            end
 
             it "increases the total number of people" do
               total_people_count = transient_registration.key_people.count
@@ -102,7 +102,7 @@ module WasteCarriersEngine
           end
 
           context "when invalid params are submitted" do
-            let(:invalid_params) {
+            let(:invalid_params) do
               {
                 reg_identifier: "foo",
                 first_name: "",
@@ -111,7 +111,7 @@ module WasteCarriersEngine
                 dob_month: "02",
                 dob_year: "2000"
               }
-            }
+            end
 
             it "returns a 302 response" do
               post conviction_details_forms_path, conviction_details_form: invalid_params
@@ -146,7 +146,7 @@ module WasteCarriersEngine
           end
 
           context "when blank params are submitted" do
-            let(:blank_params) {
+            let(:blank_params) do
               {
                 reg_identifier: "foo",
                 first_name: "",
@@ -156,7 +156,7 @@ module WasteCarriersEngine
                 dob_month: "",
                 dob_year: ""
               }
-            }
+            end
 
             it "does not increase the total number of people" do
               total_people_count = transient_registration.key_people.count
@@ -174,7 +174,7 @@ module WasteCarriersEngine
                    workflow_state: "renewal_start_form")
           end
 
-          let(:valid_params) {
+          let(:valid_params) do
             {
               reg_identifier: transient_registration[:reg_identifier],
               first_name: "Foo",
@@ -184,7 +184,7 @@ module WasteCarriersEngine
               dob_month: "1",
               dob_year: "2000"
             }
-          }
+          end
 
           it "does not update the transient registration" do
             post conviction_details_forms_path, conviction_details_form: valid_params

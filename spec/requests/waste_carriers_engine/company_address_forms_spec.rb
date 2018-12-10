@@ -29,12 +29,12 @@ module WasteCarriersEngine
           end
 
           context "when valid params are submitted" do
-            let(:valid_params) {
+            let(:valid_params) do
               {
                 reg_identifier: transient_registration[:reg_identifier],
                 temp_address: "340116"
               }
-            }
+            end
 
             it "updates the transient registration" do
               post company_address_forms_path, company_address_form: valid_params
@@ -86,11 +86,11 @@ module WasteCarriersEngine
           end
 
           context "when invalid params are submitted" do
-            let(:invalid_params) {
+            let(:invalid_params) do
               {
                 reg_identifier: "foo"
               }
-            }
+            end
 
             it "returns a 302 response" do
               post company_address_forms_path, company_address_form: invalid_params
@@ -113,11 +113,11 @@ module WasteCarriersEngine
                    workflow_state: "renewal_start_form")
           end
 
-          let(:valid_params) {
+          let(:valid_params) do
             {
               reg_identifier: transient_registration[:reg_identifier]
             }
-          }
+          end
 
           it "does not update the transient registration" do
             post company_address_forms_path, company_address_form: valid_params
