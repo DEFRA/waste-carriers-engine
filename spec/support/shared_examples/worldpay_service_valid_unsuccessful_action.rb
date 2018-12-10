@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples "WorldpayService valid unsuccessful action" do |valid_action, status|
   let(:transient_registration) do
     create(:transient_registration,

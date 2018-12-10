@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class RegistrationTypeValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)

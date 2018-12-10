@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tests for fields using the BusinessTypeValidator
 RSpec.shared_examples "validate business_type" do |form_factory|
   context "when a valid transient registration exists" do
