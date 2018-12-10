@@ -7,6 +7,7 @@ module WasteCarriersEngine
                        broker_dealer
                        carrier_broker_dealer]
       return true if value.present? && valid_types.include?(value)
+
       record.errors[attribute] << error_message(record, attribute, "inclusion")
       false
     end

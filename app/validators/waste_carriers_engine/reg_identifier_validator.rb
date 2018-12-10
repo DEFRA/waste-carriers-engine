@@ -13,12 +13,14 @@ module WasteCarriersEngine
       # Make sure the format of the reg_identifier is valid to prevent injection
       # Format should be CBDU or CBDL, followed by at least one digit
       return true if value.present? && value.match?(/^CBD[U|L][0-9]+$/)
+
       record.errors[attribute] << error_message(record, attribute, "invalid_format")
       false
     end
 
     def matches_existing_registration?(record, attribute, value)
       return true if Registration.where(reg_identifier: value).exists?
+
       record.errors[attribute] << error_message(record, attribute, "no_registration")
       false
     end

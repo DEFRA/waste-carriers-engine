@@ -7,6 +7,7 @@ module WasteCarriersEngine
     def validate_each(record, attribute, value)
       email_address_to_confirm = record.send(options[:compare_to])
       return true if value == email_address_to_confirm
+
       record.errors[attribute] << error_message(record, attribute, "does_not_match")
       false
     end

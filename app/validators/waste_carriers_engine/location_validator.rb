@@ -9,6 +9,7 @@ module WasteCarriersEngine
                            wales
                            overseas]
       return true if value.present? && valid_locations.include?(value)
+
       record.errors[attribute] << error_message(record, attribute, "inclusion")
       false
     end
