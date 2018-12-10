@@ -71,7 +71,7 @@ module WasteCarriersEngine
 
     # WickedPdf does come with helpers that you can use
     def wicked_pdf_image_tag(img, options = {})
-      image_tag "file:///#{WasteCarriersEngine::Engine.root.join("app", "assets", "images", img)}", options
+      image_tag "file:///#{WasteCarriersEngine::Engine.root.join('app', 'assets', 'images', img)}", options
     end
 
     private
