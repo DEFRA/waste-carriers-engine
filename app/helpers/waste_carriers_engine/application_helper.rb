@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module ApplicationHelper
     def self.feedback_survey_url(current_title)

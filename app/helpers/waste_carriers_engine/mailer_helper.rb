@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module MailerHelper
     # This ensures that an images we need to display in an email are shown by
