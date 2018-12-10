@@ -4,6 +4,7 @@ module WasteCarriersEngine
   class RenewalCompleteFormsController < FormsController
     def new
       return unless super(RenewalCompleteForm, "renewal_complete_form")
+
       renewal_completion_service = RenewalCompletionService.new(@transient_registration)
       renewal_completion_service.complete_renewal
     end

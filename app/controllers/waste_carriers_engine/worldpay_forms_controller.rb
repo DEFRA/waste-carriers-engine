@@ -89,6 +89,7 @@ module WasteCarriersEngine
 
     def get_order_key(order_key)
       return nil unless order_key.present?
+
       order_key.match(/[0-9]{10}$/).to_s
     end
 

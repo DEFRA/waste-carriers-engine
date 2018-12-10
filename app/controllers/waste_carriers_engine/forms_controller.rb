@@ -94,18 +94,21 @@ module WasteCarriersEngine
 
     def transient_registration_is_valid?
       return true if @transient_registration.valid?
+
       redirect_to page_path("invalid")
       false
     end
 
     def user_has_permission?
       return true if can? :update, @transient_registration
+
       redirect_to page_path("permission")
       false
     end
 
     def state_is_correct?
       return true if form_matches_state?
+
       redirect_to_correct_form
       false
     end
@@ -116,6 +119,7 @@ module WasteCarriersEngine
 
     def can_be_renewed?
       return true if @transient_registration.can_be_renewed?
+
       redirect_to page_path("unrenewable")
       false
     end
