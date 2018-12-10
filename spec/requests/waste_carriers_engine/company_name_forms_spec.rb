@@ -8,9 +8,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      "company_name_form",
-                     valid_params = { company_name: "WasteCo Ltd" },
-                     invalid_params = { company_name: "" },
-                     test_attribute = :company_name
+                     valid_params: { company_name: "WasteCo Ltd" },
+                     invalid_params: { company_name: "" },
+                     test_attribute: :company_name
 
     describe "GET back_company_name_forms_path" do
       context "when a valid user is signed in" do

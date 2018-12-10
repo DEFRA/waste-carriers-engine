@@ -8,9 +8,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      "payment_summary_form",
-                     valid_params = { temp_payment_method: "card" },
-                     invalid_params = { temp_payment_method: "foo" },
-                     test_attribute = :temp_payment_method
+                     valid_params: { temp_payment_method: "card" },
+                     invalid_params: { temp_payment_method: "foo" },
+                     test_attribute: :temp_payment_method
 
     describe "GET back_payment_summary_forms_path" do
       context "when a valid user is signed in" do

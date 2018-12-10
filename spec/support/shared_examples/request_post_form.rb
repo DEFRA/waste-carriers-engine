@@ -1,10 +1,15 @@
 # When a user submits a form, that form must match the expected workflow_state.
 # We don't adjust the state to match what the user is doing like we do for viewing forms.
 
-# We expect to receive the name of the form (for example, location_form),
-# a set of valid params, a set of invalid params, and an attribute to test persistence
-# Default to :reg_identifier for forms which don't submit new data
-RSpec.shared_examples "POST form" do |form, valid_params, invalid_params, test_attribute = :reg_identifier, expected_value = nil|
+# We expect to receive the name of the form (for example, location_form), and a set of options.
+# Options can include valid params, invalid params, and an attribute to test persistence.
+RSpec.shared_examples "POST form" do |form, options|
+  let(:valid_params) { options[:valid_params] }
+  let(:invalid_params) { options[:invalid_params] }
+  # Default to :reg_identifier for forms which don't submit new data.
+  let(:test_attribute) { options[:test_attribute] || :reg_identifier }
+  let(:expected_value) { options[:expected_value] }
+
   context "when a valid user is signed in" do
     let(:user) { create(:user) }
     before(:each) do

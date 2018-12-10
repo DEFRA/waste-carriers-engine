@@ -8,9 +8,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      "construction_demolition_form",
-                     valid_params = { construction_waste: "yes" },
-                     invalid_params = { construction_waste: "foo" },
-                     test_attribute = :construction_waste
+                     valid_params: { construction_waste: "yes" },
+                     invalid_params: { construction_waste: "foo" },
+                     test_attribute: :construction_waste
 
     describe "GET back_construction_demolition_forms_path" do
       context "when a valid user is signed in" do

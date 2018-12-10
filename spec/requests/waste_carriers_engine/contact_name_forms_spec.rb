@@ -6,13 +6,13 @@ module WasteCarriersEngine
   RSpec.describe "ContactNameForms", type: :request do
     include_examples "GET flexible form", "contact_name_form"
 
-      include_examples "POST form",
-                       "contact_name_form",
-                       valid_params = { first_name: "Foo",
-                                        last_name: "Bar" },
-                       invalid_params = { first_name: "",
-                                          last_name: "" },
-                       test_attribute = :contact_name
+    include_examples "POST form",
+                     "contact_name_form",
+                     valid_params: { first_name: "Foo",
+                                     last_name: "Bar" },
+                     invalid_params: { first_name: "",
+                                       last_name: "" },
+                     test_attribute: :contact_name
 
     describe "GET back_contact_name_forms_path" do
       context "when a valid user is signed in" do

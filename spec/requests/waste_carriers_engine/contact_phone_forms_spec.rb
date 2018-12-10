@@ -8,9 +8,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      "contact_phone_form",
-                     valid_params = { phone_number: "01234 567890" },
-                     invalid_params = { phone_number: "foo" },
-                     test_attribute = :phone_number
+                     valid_params: { phone_number: "01234 567890" },
+                     invalid_params: { phone_number: "foo" },
+                     test_attribute: :phone_number
 
     describe "GET back_contact_phone_forms_path" do
       context "when a valid user is signed in" do

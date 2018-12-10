@@ -12,9 +12,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      "declaration_form",
-                     valid_params = { declaration: 1 },
-                     invalid_params = { declaration: "foo" },
-                     test_attribute = :declaration
+                     valid_params: { declaration: 1 },
+                     invalid_params: { declaration: "foo" },
+                     test_attribute: :declaration
 
     describe "POST declaration_forms_path" do
       context "when a valid user is signed in" do

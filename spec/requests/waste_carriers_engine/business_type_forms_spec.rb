@@ -8,9 +8,9 @@ module WasteCarriersEngine
 
     include_examples "POST form",
                      "business_type_form",
-                     valid_params = { business_type: "limitedCompany" },
-                     invalid_params = { business_type: "foo" },
-                     test_attribute = :business_type
+                     valid_params: { business_type: "limitedCompany" },
+                     invalid_params: { business_type: "foo" },
+                     test_attribute: :business_type
 
     describe "GET back_business_type_forms_path" do
       context "when a valid user is signed in" do
