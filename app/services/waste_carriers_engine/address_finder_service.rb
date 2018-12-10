@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rest-client"
 
 module WasteCarriersEngine
@@ -12,10 +14,8 @@ module WasteCarriersEngine
       Rails.logger.debug "Sending request to OS Places service"
 
       begin
-        response = RestClient::Request.execute(
-          method: :get,
-          url: @url
-        )
+        response = RestClient::Request.execute(method: :get,
+                                               url: @url)
 
         begin
           JSON.parse(response)
