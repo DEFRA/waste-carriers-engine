@@ -22,6 +22,7 @@ module WasteCarriersEngine
     # traders its their business name.
     def complex_organisation_details?
       return false unless ["soleTrader", "partnership"].include?(business_type)
+
       true
     end
 
@@ -30,6 +31,7 @@ module WasteCarriersEngine
     # business type, we have a method for it in the presenter
     def complex_organisation_heading
       return I18n.t("#{LOCALES_KEY}.partners") if business_type == "partnership"
+
       I18n.t("#{LOCALES_KEY}.business_name_if_applicable")
     end
 
