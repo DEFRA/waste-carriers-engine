@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module ApplicationHelper
     def self.feedback_survey_url(current_title)
@@ -46,6 +48,7 @@ module WasteCarriersEngine
 
     def dashboard_link(current_user)
       return unless current_user.present?
+
       id = current_user.id
       root = Rails.configuration.wcrs_frontend_url
       I18n.t("waste_carriers_engine.dashboard_link", root: root, id: id)
@@ -68,7 +71,7 @@ module WasteCarriersEngine
 
     # WickedPdf does come with helpers that you can use
     def wicked_pdf_image_tag(img, options = {})
-      image_tag "file:///#{WasteCarriersEngine::Engine.root.join("app", "assets", "images", img)}", options
+      image_tag "file:///#{WasteCarriersEngine::Engine.root.join('app', 'assets', 'images', img)}", options
     end
 
     private
@@ -76,10 +79,12 @@ module WasteCarriersEngine
     def title_text
       # Check if the title is set in the view (we do this for High Voltage pages)
       return content_for :title if content_for?(:title)
+
       # Otherwise, look up translation key based on controller path, action name and .title
       # Solution from https://coderwall.com/p/a1pj7w/rails-page-titles-with-the-right-amount-of-magic
       title = t("#{controller_path.tr('/', '.')}.#{action_name}.title", default: "")
       return title if title.present?
+
       # Default to title for "new" action if the current action doesn't return anything
       t("#{controller_path.tr('/', '.')}.new.title", default: "")
     end

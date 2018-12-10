@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tests for fields using the YesNoValidator
 RSpec.shared_examples "validate yes no" do |form_factory, field|
   context "when a valid transient registration exists" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class DateOfBirthValidator < ActiveModel::Validator
     def validate(record)
@@ -16,6 +18,7 @@ module WasteCarriersEngine
     def all_fields_empty?(record)
       fields = [record.dob_day, record.dob_month, record.dob_year].compact
       return false if fields.any?
+
       record.errors.add(:dob, :not_a_date)
       true
     end
@@ -26,6 +29,7 @@ module WasteCarriersEngine
       fields = { day: record.dob_day, month: record.dob_month, year: record.dob_year }
       fields.each do |type, field|
         next if field_is_valid?(record, type, field)
+
         all_fields_valid = false
       end
 
@@ -35,11 +39,13 @@ module WasteCarriersEngine
     def field_is_valid?(record, type, field)
       return false unless field_present?(record, type, field)
       return false unless field_is_integer?(record, type, field)
+
       field_is_in_correct_range?(record, type, field)
     end
 
     def field_present?(record, type, field)
       return true unless field.blank?
+
       error_message = "#{type}_blank".to_sym
       record.errors.add(:dob, error_message)
       false
@@ -47,6 +53,7 @@ module WasteCarriersEngine
 
     def field_is_integer?(record, type, field)
       return true if field.is_a? Integer
+
       error_message = "#{type}_integer".to_sym
       record.errors.add(:dob, error_message)
       false
@@ -60,6 +67,7 @@ module WasteCarriersEngine
       }
 
       return true if ranges[type].include?(field)
+
       error_message = "#{type}_range".to_sym
       record.errors.add(:dob, error_message)
       false
@@ -67,6 +75,7 @@ module WasteCarriersEngine
 
     def dob_is_a_date?(record)
       return true if record.dob.is_a? Date
+
       record.errors.add(:dob, :not_a_date)
       false
     end

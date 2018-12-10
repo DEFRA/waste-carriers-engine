@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class BusinessTypeValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       return if record.transient_registration.overseas?
+
       valid_business_type?(record, attribute, value)
     end
 
@@ -16,6 +19,7 @@ module WasteCarriersEngine
                                 soleTrader]
 
       return true if value.present? && valid_business_types.include?(value)
+
       record.errors[attribute] << error_message(record, attribute, "inclusion")
       false
     end

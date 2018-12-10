@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -32,7 +34,7 @@ module WasteCarriersEngine
 
     describe "prepare_params" do
       context "when the params are nil" do
-        let(:params) { }
+        let(:params) {}
 
         it "sets params to nil" do
           expect(worldpay_service.instance_variable_get(:@params)).to eq(nil)
@@ -71,16 +73,16 @@ module WasteCarriersEngine
 
         it "modifies the params" do
           modified_params = {
-                              orderKey: "foo^bar^#{order.order_code}",
-                              orderAmount: order.total_amount,
-                              orderCurrency: "GBP",
-                              paymentStatus: "CANCELLED",
-                              paymentAmount: order.total_amount,
-                              paymentCurrency: "GBP",
-                              mac: "baz",
-                              source: "WP",
-                              reg_identifier: transient_registration.reg_identifier
-                            }
+            orderKey: "foo^bar^#{order.order_code}",
+            orderAmount: order.total_amount,
+            orderCurrency: "GBP",
+            paymentStatus: "CANCELLED",
+            paymentAmount: order.total_amount,
+            paymentCurrency: "GBP",
+            mac: "baz",
+            source: "WP",
+            reg_identifier: transient_registration.reg_identifier
+          }
           expect(worldpay_service.instance_variable_get(:@params)).to eq(modified_params)
         end
       end

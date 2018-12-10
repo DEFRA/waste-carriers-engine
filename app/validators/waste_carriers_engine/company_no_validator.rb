@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class CompanyNoValidator < ActiveModel::EachValidator
     VALID_COMPANIES_HOUSE_REGISTRATION_NUMBER_REGEX = Regexp.new(/\A(\d{8,8}$)|([a-zA-Z]{2}\d{6}$)\z/i).freeze
@@ -15,17 +17,20 @@ module WasteCarriersEngine
     def valid_company_no?(record, attribute, value)
       return false unless value_is_present?(record, attribute, value)
       return false unless format_is_valid?(record, attribute, value)
+
       validate_with_companies_house(record, attribute, value)
     end
 
     def value_is_present?(record, attribute, value)
       return true if value.present?
+
       record.errors[attribute] << error_message(record, attribute, "blank")
       false
     end
 
     def format_is_valid?(record, attribute, value)
       return true if value.match?(VALID_COMPANIES_HOUSE_REGISTRATION_NUMBER_REGEX)
+
       record.errors[attribute] << error_message(record, attribute, "invalid_format")
       false
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tests for fields using the CompanyNameValidator
 RSpec.shared_examples "validate company_name" do |form_factory|
   context "when a valid transient registration exists" do

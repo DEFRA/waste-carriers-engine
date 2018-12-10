@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module MailerHelper
     # This ensures that an images we need to display in an email are shown by
@@ -9,9 +11,7 @@ module WasteCarriersEngine
 
       full_path = Rails.root.join(path)
 
-      unless File.exist?(full_path)
-        full_path = "#{Gem.loaded_specs['waste_carriers_engine'].full_gem_path}#{path}"
-      end
+      full_path = "#{Gem.loaded_specs['waste_carriers_engine'].full_gem_path}#{path}" unless File.exist?(full_path)
 
       attachments[image] = File.read(full_path)
       image_tag(attachments[image].url, **options)
