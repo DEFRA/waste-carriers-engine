@@ -21,7 +21,7 @@ module WasteCarriersEngine
     # which in the case of partners is a list of their names, and for sole
     # traders its their business name.
     def complex_organisation_details?
-      return false unless ["soleTrader", "partnership"].include?(business_type)
+      return false unless %w[soleTrader partnership].include?(business_type)
 
       true
     end
