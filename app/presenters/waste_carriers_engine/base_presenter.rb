@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
 
   # The `BasePresenter` inherits from SimpleDelegator, and this allows us with
