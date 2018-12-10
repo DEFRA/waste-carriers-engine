@@ -33,6 +33,7 @@ module WasteCarriersEngine
     def matching_or_unknown_convictions?
       return true if @transient_registration.business_has_matching_or_unknown_conviction?
       return true if @transient_registration.key_person_has_matching_or_unknown_conviction?
+
       false
     end
   end
