@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "CannotRenewLowerTierForms", type: :request do
-    include_examples "GET flexible form", form = "cannot_renew_lower_tier_form"
+    include_examples "GET flexible form", "cannot_renew_lower_tier_form"
 
     describe "GET back_cannot_renew_lower_tier_forms_path" do
       context "when a valid user is signed in" do

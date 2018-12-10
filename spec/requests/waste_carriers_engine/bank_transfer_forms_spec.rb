@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "BankTransferForms", type: :request do
-    include_examples "GET locked-in form", form = "bank_transfer_form"
+    include_examples "GET locked-in form", "bank_transfer_form"
 
     describe "GET new_bank_transfer_form" do
       context "when a valid user is signed in" do
@@ -48,7 +48,7 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "POST without params form", form = "bank_transfer_form"
+    include_examples "POST without params form", "bank_transfer_form"
 
     describe "GET back_bank_transfer_forms_path" do
       context "when a valid user is signed in" do

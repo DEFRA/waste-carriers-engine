@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "PaymentSummaryForms", type: :request do
-    include_examples "GET locked-in form", form = "payment_summary_form"
+    include_examples "GET locked-in form", "payment_summary_form"
 
     include_examples "POST form",
-                     form = "payment_summary_form",
+                     "payment_summary_form",
                      valid_params = { temp_payment_method: "card" },
                      invalid_params = { temp_payment_method: "foo" },
                      test_attribute = :temp_payment_method

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "CannotRenewTypeChangeForms", type: :request do
-    include_examples "GET flexible form", form = "cannot_renew_type_change_form"
+    include_examples "GET flexible form", "cannot_renew_type_change_form"
 
     describe "GET back_cannot_renew_type_change_forms_path" do
       context "when a valid user is signed in" do

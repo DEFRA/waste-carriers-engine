@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "LocationForms", type: :request do
-    include_examples "GET flexible form", form = "location_form"
+    include_examples "GET flexible form", "location_form"
 
     include_examples "POST form",
-                     form = "location_form",
+                     "location_form",
                      valid_params = { location: "england" },
                      invalid_params = { location: "foo" },
                      test_attribute = :location

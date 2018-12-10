@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "DeclareConvictionsForms", type: :request do
-    include_examples "GET flexible form", form = "declare_convictions_form"
+    include_examples "GET flexible form", "declare_convictions_form"
 
     include_examples "POST form",
-                     form = "declare_convictions_form",
+                     "declare_convictions_form",
                      valid_params = { declared_convictions: "yes" },
                      invalid_params = { declared_convictions: "foo" },
                      test_attribute = :declared_convictions

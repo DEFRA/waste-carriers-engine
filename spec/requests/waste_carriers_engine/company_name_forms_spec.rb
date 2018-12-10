@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "CompanyNameForms", type: :request do
-    include_examples "GET flexible form", form = "company_name_form"
+    include_examples "GET flexible form", "company_name_form"
 
     include_examples "POST form",
-                     form = "company_name_form",
+                     "company_name_form",
                      valid_params = { company_name: "WasteCo Ltd" },
                      invalid_params = { company_name: "" },
                      test_attribute = :company_name

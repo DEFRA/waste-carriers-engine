@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "CompanyAddressManualForms", type: :request do
-    include_examples "GET flexible form", form = "company_address_manual_form"
+    include_examples "GET flexible form", "company_address_manual_form"
 
     describe "POST company_address_manual_forms_path" do
       context "when a valid user is signed in" do

@@ -8,9 +8,9 @@ module WasteCarriersEngine
       allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:active)
     end
 
-    include_examples "GET flexible form", form = "check_your_answers_form"
+    include_examples "GET flexible form", "check_your_answers_form"
 
-    include_examples "POST without params form", form = "check_your_answers_form"
+    include_examples "POST without params form", "check_your_answers_form"
 
     describe "GET back_check_your_answers_forms_path" do
       context "when a valid user is signed in" do

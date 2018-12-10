@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ContactEmailForms", type: :request do
-    include_examples "GET flexible form", form = "contact_email_form"
+    include_examples "GET flexible form", "contact_email_form"
 
     include_examples "POST form",
-                     form = "contact_email_form",
+                     "contact_email_form",
                      valid_params = { contact_email: "bar.baz@example.com",
                                       confirmed_email: "bar.baz@example.com" },
                      invalid_params = { contact_email: "bar",

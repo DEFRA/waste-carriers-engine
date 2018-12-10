@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "RegistrationNumberForms", type: :request do
-    include_examples "GET flexible form", form = "registration_number_form"
+    include_examples "GET flexible form", "registration_number_form"
 
     describe "POST registration_number_forms_path" do
       before do

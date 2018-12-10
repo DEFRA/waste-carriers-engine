@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "CbdTypeForms", type: :request do
-    include_examples "GET flexible form", form = "cbd_type_form"
+    include_examples "GET flexible form", "cbd_type_form"
 
     include_examples "POST form",
-                     form = "cbd_type_form",
+                     "cbd_type_form",
                      valid_params = { registration_type: "broker_dealer" },
                      invalid_params = { registration_type: "foo" },
                      test_attribute = :registration_type

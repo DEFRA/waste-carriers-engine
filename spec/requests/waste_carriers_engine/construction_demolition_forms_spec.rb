@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ConstructionDemolitionForms", type: :request do
-    include_examples "GET flexible form", form = "construction_demolition_form"
+    include_examples "GET flexible form", "construction_demolition_form"
 
     include_examples "POST form",
-                     form = "construction_demolition_form",
+                     "construction_demolition_form",
                      valid_params = { construction_waste: "yes" },
                      invalid_params = { construction_waste: "foo" },
                      test_attribute = :construction_waste

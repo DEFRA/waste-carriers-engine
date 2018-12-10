@@ -4,9 +4,9 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "RenewalInformationForms", type: :request do
-    include_examples "GET flexible form", form = "renewal_information_form"
+    include_examples "GET flexible form", "renewal_information_form"
 
-    include_examples "POST without params form", form = "renewal_information_form"
+    include_examples "POST without params form", "renewal_information_form"
 
     describe "GET back_renewal_information_forms_path" do
       context "when a valid user is signed in" do

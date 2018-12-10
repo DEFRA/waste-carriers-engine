@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ServiceProvidedForms", type: :request do
-    include_examples "GET flexible form", form = "service_provided_form"
+    include_examples "GET flexible form", "service_provided_form"
 
     include_examples "POST form",
-                     form = "service_provided_form",
+                     "service_provided_form",
                      valid_params = { is_main_service: "yes" },
                      invalid_params = { is_main_service: "foo" },
                      test_attribute = :is_main_service

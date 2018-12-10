@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ContactNameForms", type: :request do
-    include_examples "GET flexible form", form = "contact_name_form"
+    include_examples "GET flexible form", "contact_name_form"
 
       include_examples "POST form",
-                       form = "contact_name_form",
+                       "contact_name_form",
                        valid_params = { first_name: "Foo",
                                         last_name: "Bar" },
                        invalid_params = { first_name: "",

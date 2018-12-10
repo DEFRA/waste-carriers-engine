@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "CardsForms", type: :request do
-    include_examples "GET locked-in form", form = "cards_form"
+    include_examples "GET locked-in form", "cards_form"
 
     include_examples "POST form",
-                     form = "cards_form",
+                     "cards_form",
                      valid_params = { temp_cards: 2 },
                      invalid_params = { temp_cards: "foo" },
                      test_attribute = :temp_cards

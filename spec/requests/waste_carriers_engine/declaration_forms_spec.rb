@@ -8,10 +8,10 @@ module WasteCarriersEngine
       allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
     end
 
-    include_examples "GET locked-in form", form = "declaration_form"
+    include_examples "GET locked-in form", "declaration_form"
 
     include_examples "POST form",
-                     form = "declaration_form",
+                     "declaration_form",
                      valid_params = { declaration: 1 },
                      invalid_params = { declaration: "foo" },
                      test_attribute = :declaration

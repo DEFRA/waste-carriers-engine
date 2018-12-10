@@ -4,9 +4,9 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "RegisterInScotlandForms", type: :request do
-    include_examples "GET flexible form", form = "register_in_scotland_form"
+    include_examples "GET flexible form", "register_in_scotland_form"
 
-    include_examples "POST without params form", form = "register_in_scotland_form"
+    include_examples "POST without params form", "register_in_scotland_form"
 
     describe "GET back_register_in_scotland_forms_path" do
       context "when a valid user is signed in" do
