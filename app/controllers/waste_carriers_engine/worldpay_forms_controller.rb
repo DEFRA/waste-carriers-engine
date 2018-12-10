@@ -122,7 +122,7 @@ module WasteCarriersEngine
     end
 
     def send_worldpay_response_to_airbrake(title)
-      Airbrake.notify(title, { error_message: params })
+      Airbrake.notify(title, error_message: params)
     end
   end
 end
