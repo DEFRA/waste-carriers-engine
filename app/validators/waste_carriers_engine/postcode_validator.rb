@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "uk_postcode"
 
 module WasteCarriersEngine
@@ -5,6 +7,7 @@ module WasteCarriersEngine
     def validate_each(record, attribute, value)
       return unless value_is_present?(record, attribute, value)
       return unless value_uses_correct_format?(record, attribute, value)
+
       postcode_returns_results?(record, attribute, value)
     end
 
@@ -12,12 +15,14 @@ module WasteCarriersEngine
 
     def value_is_present?(record, attribute, value)
       return true if value.present?
+
       record.errors[attribute] << error_message(record, attribute, "blank")
       false
     end
 
     def value_uses_correct_format?(record, attribute, value)
       return true if UKPostcode.parse(value).full_valid?
+
       record.errors[attribute] << error_message(record, attribute, "wrong_format")
       false
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class CertificatePresenter < BasePresenter
 
@@ -19,7 +21,8 @@ module WasteCarriersEngine
     # which in the case of partners is a list of their names, and for sole
     # traders its their business name.
     def complex_organisation_details?
-      return false unless ["soleTrader", "partnership"].include?(business_type)
+      return false unless %w[soleTrader partnership].include?(business_type)
+
       true
     end
 
@@ -28,6 +31,7 @@ module WasteCarriersEngine
     # business type, we have a method for it in the presenter
     def complex_organisation_heading
       return I18n.t("#{LOCALES_KEY}.partners") if business_type == "partnership"
+
       I18n.t("#{LOCALES_KEY}.business_name_if_applicable")
     end
 
@@ -42,8 +46,7 @@ module WasteCarriersEngine
 
     def tier_and_registration_type
       I18n.t("#{LOCALES_KEY}.registered_as",
-        registration_type: I18n.t("#{LOCALES_KEY}.#{registrationType}")
-      )
+             registration_type: I18n.t("#{LOCALES_KEY}.#{registrationType}"))
     end
 
     def expires_after_pluralized
@@ -55,8 +58,8 @@ module WasteCarriersEngine
 
     def list_main_people
       list = key_people
-        .select { |person| person.person_type == "KEY" }
-        .map    { |person| format("%s %s", person.first_name, person.last_name) }
+             .select { |person| person.person_type == "KEY" }
+             .map    { |person| format("%<first>s %<last>s", first: person.first_name, last: person.last_name) }
       list.join("<br>").html_safe
     end
 

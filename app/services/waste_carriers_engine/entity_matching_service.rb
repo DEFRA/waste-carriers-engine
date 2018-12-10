@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rest-client"
 
 module WasteCarriersEngine
@@ -26,7 +28,7 @@ module WasteCarriersEngine
 
       begin
         response = RestClient::Request.execute(method: :get,
-                                               url: URI.encode(url))
+                                               url: url)
 
         begin
           JSON.parse(response)
@@ -64,13 +66,17 @@ module WasteCarriersEngine
     end
 
     def company_url
-      "#{base_url}company?name=#{@transient_registration.company_name}&number=#{@transient_registration.company_no}"
+      company_name = CGI.escape(@transient_registration.company_name)
+      company_no = @transient_registration.company_no
+
+      "#{base_url}company?name=#{company_name}&number=#{company_no}"
     end
 
     def person_url(person)
-      first_name = person.first_name
-      last_name = person.last_name
+      first_name = CGI.escape(person.first_name)
+      last_name = CGI.escape(person.last_name)
       date_of_birth = person.dob.to_s(:entity_matching)
+
       "#{base_url}person?firstname=#{first_name}&lastname=#{last_name}&dateofbirth=#{date_of_birth}"
     end
   end

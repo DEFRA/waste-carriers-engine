@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tests for fields using the PhoneNumberValidator
 RSpec.shared_examples "validate phone_number" do |form_factory|
   context "when a valid transient registration exists" do

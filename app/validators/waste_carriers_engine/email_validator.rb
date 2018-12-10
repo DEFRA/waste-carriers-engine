@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require "validates_email_format_of"
 
 module WasteCarriersEngine
   class EmailValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       return false unless value_is_present?(record, attribute, value)
+
       valid_format?(record, attribute, value)
     end
 
@@ -11,6 +14,7 @@ module WasteCarriersEngine
 
     def value_is_present?(record, attribute, value)
       return true if value.present?
+
       record.errors[attribute] << error_message(record, attribute, "blank")
       false
     end
@@ -18,6 +22,7 @@ module WasteCarriersEngine
     def valid_format?(record, attribute, value)
       # validate_email_format returns nil if the validation passes
       return true unless ValidatesEmailFormatOf.validate_email_format(value)
+
       record.errors[attribute] << error_message(record, attribute, "invalid_format")
       false
     end
