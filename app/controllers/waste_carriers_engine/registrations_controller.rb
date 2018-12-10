@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class RegistrationsController < ApplicationController
     before_action :authenticate_user!

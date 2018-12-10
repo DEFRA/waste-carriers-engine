@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class ApplicationController < ActionController::Base
     # Prevent CSRF attacks by raising an exception.

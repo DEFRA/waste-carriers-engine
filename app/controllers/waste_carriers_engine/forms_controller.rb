@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class FormsController < ApplicationController
     include ActionView::Helpers::UrlHelper

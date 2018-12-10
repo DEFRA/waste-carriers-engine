@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class PostcodeFormsController < FormsController
     def skip_to_manual_address

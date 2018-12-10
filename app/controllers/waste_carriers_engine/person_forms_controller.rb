@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class PersonFormsController < FormsController
     def create(form_class, form)
