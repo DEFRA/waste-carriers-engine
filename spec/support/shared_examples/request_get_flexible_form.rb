@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A 'flexible' form is a form that we don't mind users getting to via the back button.
 # Getting to this form too early by URL-hacking might cause problems for the user,
 # but we know that we will be validating the entire transient_registration later in the
