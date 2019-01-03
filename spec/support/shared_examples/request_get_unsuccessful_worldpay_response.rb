@@ -37,7 +37,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
       let(:validation_action) { "valid_#{action}?".to_sym }
       let(:path) do
         path_route = "#{action}_worldpay_forms_path".to_sym
-        self.public_send(path_route, reg_id)
+        public_send(path_route, reg_id)
       end
 
       context "when the params are valid" do
