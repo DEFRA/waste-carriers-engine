@@ -20,6 +20,7 @@ module WasteCarriersEngine
     def build_certificate_link
       registration = Registration.where(reg_identifier: reg_identifier).first
       return unless registration.present?
+
       id = registration.id
       root = Rails.configuration.wcrs_frontend_url
       "#{root}/registrations/#{id}/view"
