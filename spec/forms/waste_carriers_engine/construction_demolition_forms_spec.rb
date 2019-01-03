@@ -7,12 +7,12 @@ module WasteCarriersEngine
     describe "#submit" do
       context "when the form is valid" do
         let(:construction_demolition_form) { build(:construction_demolition_form, :has_required_data) }
-        let(:valid_params) {
+        let(:valid_params) do
           {
             reg_identifier: construction_demolition_form.reg_identifier,
             construction_waste: construction_demolition_form.construction_waste
           }
-        }
+        end
 
         it "should submit" do
           expect(construction_demolition_form.submit(valid_params)).to eq(true)
