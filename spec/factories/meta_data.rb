@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :metaData, class: WasteCarriersEngine::MetaData do
     trait :has_required_data do

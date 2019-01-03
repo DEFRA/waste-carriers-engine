@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :conviction_search_result, class: WasteCarriersEngine::ConvictionSearchResult do
     trait :match_result_yes do
