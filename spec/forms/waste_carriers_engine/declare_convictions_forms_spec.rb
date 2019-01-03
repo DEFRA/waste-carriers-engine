@@ -34,6 +34,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", form = :declare_convictions_form, field = :declared_convictions
+    include_examples "validate yes no", :declare_convictions_form, :declared_convictions
   end
 end

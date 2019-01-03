@@ -30,7 +30,7 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate person name", form = :contact_name_form, field = :first_name
-    include_examples "validate person name", form = :contact_name_form, field = :last_name
+    include_examples "validate person name", :contact_name_form, :first_name
+    include_examples "validate person name", :contact_name_form, :last_name
   end
 end

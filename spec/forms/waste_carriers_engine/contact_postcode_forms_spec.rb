@@ -51,6 +51,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate postcode", form = :contact_postcode_form, field = :temp_contact_postcode
+    include_examples "validate postcode", :contact_postcode_form, :temp_contact_postcode
   end
 end

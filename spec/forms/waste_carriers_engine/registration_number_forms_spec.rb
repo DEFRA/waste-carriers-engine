@@ -41,6 +41,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate company_no", form = :registration_number_form
+    include_examples "validate company_no", :registration_number_form
   end
 end

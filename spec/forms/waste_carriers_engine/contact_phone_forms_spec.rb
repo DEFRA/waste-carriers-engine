@@ -34,6 +34,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate phone_number", form = :contact_phone_form
+    include_examples "validate phone_number", :contact_phone_form
   end
 end
