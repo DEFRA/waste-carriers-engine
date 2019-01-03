@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :cannot_renew_lower_tier_form, class: WasteCarriersEngine::CannotRenewLowerTierForm do
     trait :has_required_data do

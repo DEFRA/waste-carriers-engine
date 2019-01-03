@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :contact_postcode_form, class: WasteCarriersEngine::ContactPostcodeForm do
     trait :has_required_data do
