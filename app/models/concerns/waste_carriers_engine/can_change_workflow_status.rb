@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ModuleLength
   module CanChangeWorkflowStatus
     extend ActiveSupport::Concern
     include Mongoid::Document
 
+    # rubocop:disable Metrics/BlockLength
     included do
       include AASM
 
@@ -476,6 +480,7 @@ module WasteCarriersEngine
         end
       end
     end
+    # rubocop:enable Metrics/BlockLength
 
     private
 
@@ -514,6 +519,7 @@ module WasteCarriersEngine
 
     def registered_address_was_manually_entered?
       return unless registered_address
+
       registered_address.manually_entered?
     end
 
@@ -523,6 +529,7 @@ module WasteCarriersEngine
 
     def contact_address_was_manually_entered?
       return unless contact_address
+
       contact_address.manually_entered?
     end
 
@@ -554,4 +561,5 @@ module WasteCarriersEngine
       RenewalMailer.send_renewal_received_email(self).deliver_now
     end
   end
+  # rubocop:enable Metrics/ModuleLength
 end

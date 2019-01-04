@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   # The standard behaviour for loading a form is to check whether the requested form matches the workflow_state for
   # the transient registration, and redirect to the saved workflow_state if it doesn't.

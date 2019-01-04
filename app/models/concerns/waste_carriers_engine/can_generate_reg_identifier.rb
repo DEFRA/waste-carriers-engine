@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module CanGenerateRegIdentifier
     extend ActiveSupport::Concern
@@ -20,9 +22,7 @@ module WasteCarriersEngine
       counter = Counter.where(_id: "regid").first || Counter.create(_id: "regid", seq: 1)
 
       # Increment the counter until no reg_identifier is using it
-      while Registration.where(reg_identifier: /CBD[U|L]#{counter.seq}/).exists?
-        counter.increment
-      end
+      counter.increment while Registration.where(reg_identifier: /CBD[U|L]#{counter.seq}/).exists?
 
       counter.seq
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module CanCheckBusinessTypeChanges
     extend ActiveSupport::Concern
@@ -8,7 +10,12 @@ module WasteCarriersEngine
         return true if business_type == "overseas"
 
         old_type = Registration.where(reg_identifier: reg_identifier).first.business_type
+        old_type_can_change_to_new_type?(old_type)
+      end
 
+      private
+
+      def old_type_can_change_to_new_type?(old_type)
         case old_type
         # If the old type and the new type are the same, it's valid
         when business_type
@@ -27,8 +34,6 @@ module WasteCarriersEngine
           false
         end
       end
-
-      private
 
       def changing_to?(value)
         business_type == value

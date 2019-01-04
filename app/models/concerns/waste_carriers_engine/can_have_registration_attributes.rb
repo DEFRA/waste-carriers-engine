@@ -2,6 +2,7 @@
 
 module WasteCarriersEngine
   # Define the attributes a registration or a renewal has
+  # rubocop:disable Metrics/ModuleLength
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
     include Mongoid::Document
@@ -150,4 +151,5 @@ module WasteCarriersEngine
     end
     # rubocop:enable Metrics/BlockLength
   end
+  # rubocop:enable Metrics/ModuleLength
 end
