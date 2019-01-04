@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/DEFRA/defra-ruby-style
+  revision: 53a29901cbade724ccf7112518db3ec93875aba6
+  branch: master
+  specs:
+    defra_ruby_style (0.0.1)
+      rubocop
+
 PATH
   remote: .
   specs:
@@ -309,6 +317,7 @@ DEPENDENCIES
   byebug
   cancancan (~> 1.10)
   database_cleaner
+  defra_ruby_style!
   devise (>= 4.4.3)
   dotenv-rails
   factory_bot_rails
@@ -321,7 +330,6 @@ DEPENDENCIES
   rails-html-sanitizer (>= 1.0.4)
   rails_12factor
   rspec-rails (~> 3.6)
-  rubocop
   secure_headers (~> 5.0)
   simplecov
   spring
