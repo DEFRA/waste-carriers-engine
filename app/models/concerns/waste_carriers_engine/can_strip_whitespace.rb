@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   # Used to clean up excess whitespace from the start and end of fields
   module CanStripWhitespace
@@ -6,9 +8,9 @@ module WasteCarriersEngine
     # Expects a hash of attributes or a Mongoid object
     def strip_whitespace(attributes)
       # Loop over each value and strip the whitespace, or strip the whitespace from values nested within it
-      attributes.each_pair do |_key, value|
+      attributes.each_pair do |key, value|
         if value.is_a?(String)
-          strip_string(value)
+          attributes[key] = strip_string(value)
         elsif value.is_a?(Hash)
           strip_hash(value)
         elsif value.is_a?(Array)
@@ -20,7 +22,7 @@ module WasteCarriersEngine
     private
 
     def strip_string(string)
-      string.strip!
+      string.strip
     end
 
     def strip_hash(hash)
