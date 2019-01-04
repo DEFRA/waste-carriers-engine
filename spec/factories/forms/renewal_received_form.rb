@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :renewal_received_form, class: WasteCarriersEngine::RenewalReceivedForm do
     trait :has_required_data do
