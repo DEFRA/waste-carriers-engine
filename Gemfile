@@ -37,6 +37,8 @@ group :development, :test do
   gem "byebug"
   gem "dotenv-rails"
   gem "rspec-rails", "~> 3.6"
+  # Rubocop to ensure consistency in how the code is written
+  gem "rubocop"
 end
 
 group :development do
