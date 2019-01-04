@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :address, class: WasteCarriersEngine::Address do
     trait :has_required_data do

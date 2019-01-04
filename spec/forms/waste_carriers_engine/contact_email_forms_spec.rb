@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -28,7 +30,7 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate email", form = :contact_email_form, field = :contact_email
+    include_examples "validate email", :contact_email_form, :contact_email
 
     context "when a valid transient registration exists" do
       let(:contact_email_form) { build(:contact_email_form, :has_required_data) }

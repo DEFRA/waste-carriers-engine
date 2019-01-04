@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -27,6 +29,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate location", form = :location_form
+    include_examples "validate location", :location_form
   end
 end
