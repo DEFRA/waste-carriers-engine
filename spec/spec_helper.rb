@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Test coverage report
 require "simplecov"
 SimpleCov.start
