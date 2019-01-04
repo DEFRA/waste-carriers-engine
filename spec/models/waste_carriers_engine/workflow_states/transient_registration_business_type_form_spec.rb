@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -23,10 +25,10 @@ module WasteCarriersEngine
 
           {
             # Permutation table of location and the state that should result
-            "england"          => :location_form,
+            "england" => :location_form,
             "northern_ireland" => :register_in_northern_ireland_form,
-            "scotland"         => :register_in_scotland_form,
-            "wales"            => :register_in_wales_form
+            "scotland" => :register_in_scotland_form,
+            "wales" => :register_in_wales_form
           }.each do |location, back_form|
             it_behaves_like "'back' transition from business_type_form", location, back_form
           end
@@ -50,21 +52,21 @@ module WasteCarriersEngine
           {
             # Permutation table of old business_type, new business_type and the state that should result
             # Example where the business_type doesn't change:
-            %w[limitedCompany limitedCompany]              => :tier_check_form,
-            %w[charity charity]                            => :cannot_renew_lower_tier_form,
+            %w[limitedCompany limitedCompany] => :tier_check_form,
+            %w[charity charity] => :cannot_renew_lower_tier_form,
             # Examples where the business_type change is allowed and not allowed:
-            %w[authority localAuthority]                   => :tier_check_form,
-            %w[authority limitedCompany]                   => :cannot_renew_type_change_form,
-            %w[charity limitedCompany]                     => :cannot_renew_type_change_form,
+            %w[authority localAuthority] => :tier_check_form,
+            %w[authority limitedCompany] => :cannot_renew_type_change_form,
+            %w[charity limitedCompany] => :cannot_renew_type_change_form,
             %w[limitedCompany limitedLiabilityPartnership] => :tier_check_form,
-            %w[limitedCompany soleTrader]                  => :cannot_renew_type_change_form,
-            %w[partnership limitedLiabilityPartnership]    => :tier_check_form,
-            %w[partnership soleTrader]                     => :cannot_renew_type_change_form,
-            %w[publicBody localAuthority]                  => :tier_check_form,
-            %w[publicBody soleTrader]                      => :cannot_renew_type_change_form,
-            %w[soleTrader limitedCompany]                  => :cannot_renew_type_change_form,
+            %w[limitedCompany soleTrader] => :cannot_renew_type_change_form,
+            %w[partnership limitedLiabilityPartnership] => :tier_check_form,
+            %w[partnership soleTrader] => :cannot_renew_type_change_form,
+            %w[publicBody localAuthority] => :tier_check_form,
+            %w[publicBody soleTrader] => :cannot_renew_type_change_form,
+            %w[soleTrader limitedCompany] => :cannot_renew_type_change_form,
             # Example where the business_type was invalid to begin with:
-            %w[foo limitedCompany]            => :cannot_renew_type_change_form
+            %w[foo limitedCompany] => :cannot_renew_type_change_form
           }.each do |business_types, next_form|
             it_behaves_like "'next' transition from business_type_form", business_types, next_form
           end
