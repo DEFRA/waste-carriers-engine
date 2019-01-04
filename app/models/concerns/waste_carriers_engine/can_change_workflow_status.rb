@@ -494,6 +494,7 @@ module WasteCarriersEngine
       return true if other_businesses == "no" && construction_waste == "no"
       return true if other_businesses == "yes" && is_main_service == "no" && construction_waste == "no"
       return true if other_businesses == "yes" && is_main_service == "yes" && only_amf == "yes"
+
       false
     end
 
@@ -519,6 +520,7 @@ module WasteCarriersEngine
 
     def registered_address_was_manually_entered?
       return unless registered_address
+
       registered_address.manually_entered?
     end
 
@@ -528,6 +530,7 @@ module WasteCarriersEngine
 
     def contact_address_was_manually_entered?
       return unless contact_address
+
       contact_address.manually_entered?
     end
 
