@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -25,13 +27,12 @@ module WasteCarriersEngine
             end
           end
 
-          {
-            # Permutation table of location and the state that should result
-            "england"          => :business_type_form,
+          { # Permutation table of location and the state that should result
+            "england" => :business_type_form,
             "northern_ireland" => :register_in_northern_ireland_form,
-            "scotland"         => :register_in_scotland_form,
-            "wales"            => :register_in_wales_form,
-            "overseas"         => :tier_check_form
+            "scotland" => :register_in_scotland_form,
+            "wales" => :register_in_wales_form,
+            "overseas" => :tier_check_form
           }.each do |location, next_form|
             it_behaves_like "'next' transition from location_form", location, next_form
           end
