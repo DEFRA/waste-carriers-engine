@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 ruby "2.4.2"
 
-# Declare your gem's dependencies in flood_risk_engine.gemspec.
+# Declare your gem's dependencies in waste_carriers_engine.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
