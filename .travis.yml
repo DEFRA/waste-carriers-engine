@@ -47,6 +47,10 @@ before_script:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; fi
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then chmod +x ./cc-test-reporter; fi
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter before-build; fi
+  # Run rubocop. It's installed as a dependency (hence no install step) as this
+  # allows projects to control the version they are using (rather than getting)
+  # surprise build failures.
+  - bundle exec rubocop
 script:
   - bundle exec rspec
 after_script:
