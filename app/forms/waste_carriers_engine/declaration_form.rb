@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class DeclarationForm < BaseForm
     attr_accessor :declaration

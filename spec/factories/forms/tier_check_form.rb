@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :tier_check_form, class: WasteCarriersEngine::TierCheckForm do
     trait :has_required_data do

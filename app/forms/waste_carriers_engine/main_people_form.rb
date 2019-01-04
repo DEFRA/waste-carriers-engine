@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class MainPeopleForm < PersonForm
     include CanLimitNumberOfMainPeople
@@ -44,7 +46,7 @@ module WasteCarriersEngine
                         end
 
       existing_people.each do |person|
-        # We need to copy the person before adding to the array to avoid a 'conflicting modifications' Mongo error (10151)
+        # We need to copy the person before adding to the array to avoid 'conflicting modifications' Mongo error (10151)
         people << person.clone
       end
 

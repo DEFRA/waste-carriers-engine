@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class ContactPostcodeForm < PostcodeForm
     include CanNavigateFlexibly
@@ -14,7 +16,7 @@ module WasteCarriersEngine
       self.temp_contact_postcode = format_postcode(params[:temp_contact_postcode])
       attributes = { temp_contact_postcode: temp_contact_postcode }
 
-      # While we won't proceed if the postcode isn't valid, we should always save it in case it's needed for manual entry
+      # While we won't proceed if the postcode isn't valid, we always save it in case it's needed for manual entry
       @transient_registration.update_attributes(attributes)
 
       super(attributes, params[:reg_identifier])

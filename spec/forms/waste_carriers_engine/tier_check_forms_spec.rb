@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -27,6 +29,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", form = :tier_check_form, field = :temp_tier_check
+    include_examples "validate yes no", :tier_check_form, :temp_tier_check
   end
 end

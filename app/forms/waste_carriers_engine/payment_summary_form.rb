@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class PaymentSummaryForm < BaseForm
     attr_accessor :temp_payment_method, :type_change, :registration_cards, :registration_card_charge, :total_charge

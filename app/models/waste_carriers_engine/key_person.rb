@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class KeyPerson
     include Mongoid::Document
@@ -22,21 +24,20 @@ module WasteCarriersEngine
     def conviction_check_required?
       return false unless conviction_search_result.present?
       return false if conviction_search_result.match_result == "NO"
+
       true
     end
 
     private
 
     def set_date_of_birth
-      begin
-        self.dob = Date.new(dob_year, dob_month, dob_day)
-      rescue NoMethodError
-        errors.add(:dob, :invalid_date)
-      rescue ArgumentError
-        errors.add(:dob, :invalid_date)
-      rescue TypeError
-        errors.add(:dob, :invalid_date)
-      end
+      self.dob = Date.new(dob_year, dob_month, dob_day)
+    rescue NoMethodError
+      errors.add(:dob, :invalid_date)
+    rescue ArgumentError
+      errors.add(:dob, :invalid_date)
+    rescue TypeError
+      errors.add(:dob, :invalid_date)
     end
   end
 end

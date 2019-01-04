@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class Order
     include Mongoid::Document
@@ -53,11 +55,13 @@ module WasteCarriersEngine
 
     def self.valid_world_pay_status?(response_type, status)
       allowed_statuses = {
-        success: ["AUTHORISED"],
-        failure: ["EXPIRED", "REFUSED"],
-        pending: ["SENT_FOR_AUTHORISATION", "SHOPPER_REDIRECTED"],
-        cancel: ["CANCELLED"],
-        error: ["ERROR"]
+        success: %w[AUTHORISED],
+        failure: %w[EXPIRED
+                    REFUSED],
+        pending: %w[SENT_FOR_AUTHORISATION
+                    SHOPPER_REDIRECTED],
+        cancel: %w[CANCELLED],
+        error: %w[ERROR]
       }
       allowed_statuses[response_type].include?(status)
     end

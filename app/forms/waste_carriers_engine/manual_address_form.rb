@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class ManualAddressForm < BaseForm
     include CanNavigateFlexibly
@@ -55,11 +57,13 @@ module WasteCarriersEngine
       return false unless existing_address
       return true if saved_temp_postcode.blank?
       return true if saved_temp_postcode == existing_address.postcode
+
       false
     end
 
     def prefill_existing_address
       return unless existing_address
+
       self.house_number = existing_address.house_number
       self.address_line_1 = existing_address.address_line_1
       self.address_line_2 = existing_address.address_line_2

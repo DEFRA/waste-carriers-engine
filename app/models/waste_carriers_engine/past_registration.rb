@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   # A record of a previous version of the registration. For example, before it was renewed.
   # We store this so we can have a record of each renewal.
@@ -10,6 +12,7 @@ module WasteCarriersEngine
     def self.build_past_registration(registration)
       past_registration = PastRegistration.new
       return if past_registration.version_already_backed_up?(registration)
+
       past_registration.registration = registration
 
       attributes = registration.attributes.except("_id", "past_registrations")
