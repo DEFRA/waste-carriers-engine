@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class ConvictionDetailsForm < PersonForm
     include CanLimitNumberOfRelevantPeople
@@ -21,7 +23,7 @@ module WasteCarriersEngine
       people = []
 
       @transient_registration.key_people.each do |person|
-        # We need to copy the person before adding to the array to avoid a 'conflicting modifications' Mongo error (10151)
+        # We need to copy the person before adding to the array to avoid 'conflicting modifications' Mongo error (10151)
         people << person.clone
       end
 

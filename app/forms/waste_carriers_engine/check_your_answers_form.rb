@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class CheckYourAnswersForm < BaseForm
     include CanLimitNumberOfMainPeople
@@ -66,12 +68,14 @@ module WasteCarriersEngine
 
     def business_type_change_valid?
       return true if @transient_registration.business_type_change_valid?
+
       errors.add(:business_type, :invalid_change)
       false
     end
 
     def same_company_no?
       return true unless @transient_registration.company_no_changed?
+
       errors.add(:company_no, :changed)
       false
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -49,6 +51,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate postcode", form = :company_postcode_form, field = :temp_company_postcode
+    include_examples "validate postcode", :company_postcode_form, :temp_company_postcode
   end
 end

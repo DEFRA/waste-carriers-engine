@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :conviction_details_form, class: WasteCarriersEngine::ConvictionDetailsForm do
     trait :has_required_data do

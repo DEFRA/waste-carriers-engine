@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -24,6 +26,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate company_name", form = :company_name_form
+    include_examples "validate company_name", :company_name_form
   end
 end

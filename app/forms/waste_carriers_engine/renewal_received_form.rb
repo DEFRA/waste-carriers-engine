@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class RenewalReceivedForm < BaseForm
     attr_accessor :contact_email, :pending_convictions_check, :pending_payment, :pending_worldpay_payment
