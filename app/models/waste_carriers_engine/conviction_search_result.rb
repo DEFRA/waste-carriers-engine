@@ -6,7 +6,7 @@ module WasteCarriersEngine
 
     embedded_in :registration,      class_name: "WasteCarriersEngine::Registration"
     embedded_in :past_registration, class_name: "WasteCarriersEngine::PastRegistration"
-    embedded_in :key_person,         class_name: "WasteCarriersEngine::KeyPerson"
+    embedded_in :key_person,        class_name: "WasteCarriersEngine::KeyPerson"
 
     field :match_result,    type: String
     field :matching_system, type: String
