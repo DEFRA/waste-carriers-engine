@@ -4,8 +4,8 @@ module WasteCarriersEngine
 
     def format_postcode(postcode)
       return unless postcode.present?
-      postcode.upcase!
-      postcode.strip!
+
+      postcode.upcase.strip
     end
   end
 end
