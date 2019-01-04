@@ -10,11 +10,25 @@ module WasteCarriersEngine
     end
 
     def lower_tier?
-      return true if @other_businesses == "no" && @construction_waste == "no"
-      return true if @other_businesses == "yes" && @is_main_service == "no" && @construction_waste == "no"
-      return true if @other_businesses == "yes" && @is_main_service == "yes" && @only_amf == "yes"
+      return true if no_other_businesses_and_no_construction_waste?
+      return true if other_businesses_but_not_main_service_or_construction_waste?
+      return true if other_businesses_and_main_service_but_only_amf?
 
       false
+    end
+
+    private
+
+    def no_other_businesses_and_no_construction_waste?
+      @other_businesses == "no" && @construction_waste == "no"
+    end
+
+    def other_businesses_but_not_main_service_or_construction_waste?
+      @other_businesses == "yes" && @is_main_service == "no" && @construction_waste == "no"
+    end
+
+    def other_businesses_and_main_service_but_only_amf?
+      @other_businesses == "yes" && @is_main_service == "yes" && @only_amf == "yes"
     end
   end
 end
