@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ClassLength
   class TransientRegistration
     include Mongoid::Document
     include CanChangeWorkflowStatus
@@ -204,4 +205,5 @@ module WasteCarriersEngine
       errors.add(:reg_identifier, :renewal_in_progress)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
