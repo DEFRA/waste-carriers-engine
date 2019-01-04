@@ -24,6 +24,7 @@ module WasteCarriersEngine
     def conviction_check_required?
       return false unless conviction_search_result.present?
       return false if conviction_search_result.match_result == "NO"
+
       true
     end
 

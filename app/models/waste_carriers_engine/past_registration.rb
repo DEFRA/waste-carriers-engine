@@ -12,6 +12,7 @@ module WasteCarriersEngine
     def self.build_past_registration(registration)
       past_registration = PastRegistration.new
       return if past_registration.version_already_backed_up?(registration)
+
       past_registration.registration = registration
 
       attributes = registration.attributes.except("_id", "past_registrations")
