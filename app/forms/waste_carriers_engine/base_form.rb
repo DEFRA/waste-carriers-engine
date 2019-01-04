@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class BaseForm
     include ActiveModel::Model
@@ -33,6 +35,7 @@ module WasteCarriersEngine
 
     def transient_registration_valid?
       return if @transient_registration.valid?
+
       @transient_registration.errors.each do |_attribute, message|
         errors[:base] << message
       end

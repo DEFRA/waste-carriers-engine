@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ClassLength
   class TransientRegistration
     include Mongoid::Document
     include CanChangeWorkflowStatus
@@ -24,7 +25,7 @@ module WasteCarriersEngine
     field :temp_payment_method, type: String
     field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
 
-    scope :search_term, ->(term) {
+    scope :search_term, lambda { |term|
       any_of({ reg_identifier: /\A#{term}\z/i },
              { company_name: /#{term}/i },
              { last_name: /#{term}/i },
@@ -36,7 +37,9 @@ module WasteCarriersEngine
     scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
 
     scope :convictions_possible_match, -> { submitted.where("conviction_sign_offs.0.workflow_state": "possible_match") }
-    scope :convictions_checks_in_progress, -> { submitted.where("conviction_sign_offs.0.workflow_state": "checks_in_progress") }
+    scope :convictions_checks_in_progress, lambda {
+      submitted.where("conviction_sign_offs.0.workflow_state": "checks_in_progress")
+    }
     scope :convictions_approved, -> { submitted.where("conviction_sign_offs.0.workflow_state": "approved") }
     scope :convictions_rejected, -> { submitted.where("conviction_sign_offs.0.workflow_state": "rejected") }
 
@@ -202,4 +205,5 @@ module WasteCarriersEngine
       errors.add(:reg_identifier, :renewal_in_progress)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

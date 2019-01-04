@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -26,16 +28,16 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", form = :check_your_answers_form, field = :declared_convictions
-    include_examples "validate business_type", form = :check_your_answers_form
-    include_examples "validate company_name", form = :check_your_answers_form
-    include_examples "validate company_no", form = :check_your_answers_form
-    include_examples "validate email", form = :check_your_answers_form, field = :contact_email
-    include_examples "validate location", form = :check_your_answers_form
-    include_examples "validate person name", form = :check_your_answers_form, field = :first_name
-    include_examples "validate person name", form = :check_your_answers_form, field = :last_name
-    include_examples "validate phone_number", form = :check_your_answers_form
-    include_examples "validate registration_type", form = :check_your_answers_form
+    include_examples "validate yes no", :check_your_answers_form, :declared_convictions
+    include_examples "validate business_type", :check_your_answers_form
+    include_examples "validate company_name", :check_your_answers_form
+    include_examples "validate company_no", :check_your_answers_form
+    include_examples "validate email", :check_your_answers_form, :contact_email
+    include_examples "validate location", :check_your_answers_form
+    include_examples "validate person name", :check_your_answers_form, :first_name
+    include_examples "validate person name", :check_your_answers_form, :last_name
+    include_examples "validate phone_number", :check_your_answers_form
+    include_examples "validate registration_type", :check_your_answers_form
 
     context "when a valid transient registration exists" do
       let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }

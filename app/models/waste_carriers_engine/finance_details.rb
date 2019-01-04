@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class FinanceDetails
     include Mongoid::Document
@@ -28,7 +30,7 @@ module WasteCarriersEngine
       order_balance = orders.sum { |item| item[:total_amount] }
       # Select payments where the type is not WORLDPAY, or if it is, the status is AUTHORISED
       payment_balance = payments.any_of({ :payment_type.ne => "WORLDPAY" },
-                                        { world_pay_payment_status: "AUTHORISED" }).sum { |item| item[:amount] }
+                                        world_pay_payment_status: "AUTHORISED").sum { |item| item[:amount] }
       self.balance = order_balance - payment_balance
     end
   end

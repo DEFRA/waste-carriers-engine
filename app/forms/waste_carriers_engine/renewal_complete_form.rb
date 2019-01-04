@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class RenewalCompleteForm < BaseForm
     attr_accessor :certificate_link, :contact_email, :projected_renewal_end_date, :registration_type
@@ -18,6 +20,7 @@ module WasteCarriersEngine
     def build_certificate_link
       registration = Registration.where(reg_identifier: reg_identifier).first
       return unless registration.present?
+
       id = registration.id
       root = Rails.configuration.wcrs_frontend_url
       "#{root}/registrations/#{id}/view"
