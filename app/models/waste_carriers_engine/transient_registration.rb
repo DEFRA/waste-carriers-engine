@@ -24,7 +24,7 @@ module WasteCarriersEngine
     field :temp_payment_method, type: String
     field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
 
-    scope :search_term, ->(term) {
+    scope :search_term, lambda { |term|
       any_of({ reg_identifier: /\A#{term}\z/i },
              { company_name: /#{term}/i },
              { last_name: /#{term}/i },
