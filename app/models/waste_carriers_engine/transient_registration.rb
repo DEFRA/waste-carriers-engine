@@ -36,7 +36,9 @@ module WasteCarriersEngine
     scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
 
     scope :convictions_possible_match, -> { submitted.where("conviction_sign_offs.0.workflow_state": "possible_match") }
-    scope :convictions_checks_in_progress, -> { submitted.where("conviction_sign_offs.0.workflow_state": "checks_in_progress") }
+    scope :convictions_checks_in_progress, lambda {
+      submitted.where("conviction_sign_offs.0.workflow_state": "checks_in_progress")
+    }
     scope :convictions_approved, -> { submitted.where("conviction_sign_offs.0.workflow_state": "approved") }
     scope :convictions_rejected, -> { submitted.where("conviction_sign_offs.0.workflow_state": "rejected") }
 
