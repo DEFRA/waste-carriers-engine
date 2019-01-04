@@ -36,8 +36,8 @@ module WasteCarriersEngine
           let(:registration_b) { create(:registration, :has_required_data) }
 
           it "should have a sequential reg_identifier" do
-            id_number_a = registration.reg_identifier.slice("CBDU")
-            id_number_b = registration_b.reg_identifier.slice("CBDU")
+            id_number_a = registration.reg_identifier.remove("CBDU")
+            id_number_b = registration_b.reg_identifier.remove("CBDU")
 
             expect(id_number_b.to_i - id_number_a.to_i).to eq(1)
           end
