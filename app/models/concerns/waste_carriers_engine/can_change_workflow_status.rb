@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ModuleLength
   module CanChangeWorkflowStatus
     extend ActiveSupport::Concern
     include Mongoid::Document
 
+    # rubocop:disable Metrics/BlockLength
     included do
       include AASM
 
@@ -478,6 +480,7 @@ module WasteCarriersEngine
         end
       end
     end
+    # rubocop:enable Metrics/BlockLength
 
     private
 
@@ -562,4 +565,5 @@ module WasteCarriersEngine
       RenewalMailer.send_renewal_received_email(self).deliver_now
     end
   end
+  # rubocop:enable Metrics/ModuleLength
 end
