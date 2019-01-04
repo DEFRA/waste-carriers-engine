@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -10,7 +12,7 @@ module WasteCarriersEngine
             "matching_system" => "PQR",
             "reference" => "7766",
             "matched_name" => "Test Waste Services Ltd.",
-            "searched_at" => 4815162342,
+            "searched_at" => 4_815_162_342,
             "confirmed" => "no",
             "confirmed_at" => nil,
             "confirmed_by" => nil
