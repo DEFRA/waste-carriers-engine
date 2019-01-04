@@ -489,10 +489,7 @@ module WasteCarriersEngine
     end
 
     def switch_to_lower_tier_based_on_smart_answers?
-      return true if other_businesses == "no" && construction_waste == "no"
-      return true if other_businesses == "yes" && is_main_service == "no" && construction_waste == "no"
-      return true if other_businesses == "yes" && is_main_service == "yes" && only_amf == "yes"
-      false
+      SmartAnswersCheckerService.new(self).lower_tier?
     end
 
     def require_new_registration_based_on_company_no?
