@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User
   include Mongoid::Document
 
@@ -44,6 +46,7 @@ class User
     has_uppercase = (password =~ /[A-Z]/)
     has_numeric = (password =~ /[0-9]/)
     return true if has_lowercase && has_uppercase && has_numeric
+
     errors.add(:password, I18n.t("errors.messages.weakPassword"))
   end
 end
