@@ -37,9 +37,8 @@ gem "turbolinks"
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug"
-  gem "defra_ruby_style",
-      git: "https://github.com/DEFRA/defra-ruby-style",
-      branch: "master"
+  # Apply our style guide to ensure consistency in how the code is written
+  gem "defra_ruby_style"
   gem "dotenv-rails"
   gem "rspec-rails", "~> 3.6"
 end
