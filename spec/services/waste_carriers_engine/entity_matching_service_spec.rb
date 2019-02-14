@@ -14,7 +14,7 @@ module WasteCarriersEngine
 
     describe "check_business_for_matches" do
       context "when there is a match" do
-        it "creates a valid conviction_search_result for the business" do
+        it "creates a valid conviction_search_result for the business", vcr: true do
           VCR.use_cassette("entity_matching_business_has_matches") do
             entity_matching_service.check_business_for_matches
             expect(transient_registration.reload.conviction_search_result.match_result).to eq("YES")
@@ -29,7 +29,7 @@ module WasteCarriersEngine
                  :has_key_people)
         end
 
-        it "creates a valid conviction_search_result for the business" do
+        it "creates a valid conviction_search_result for the business", vcr: true do
           VCR.use_cassette("entity_matching_business_no_matches") do
             entity_matching_service.check_business_for_matches
             expect(transient_registration.reload.conviction_search_result.match_result).to eq("NO")
@@ -40,7 +40,7 @@ module WasteCarriersEngine
 
     describe "check_people_for_matches" do
       context "when there is a match" do
-        it "creates a valid conviction_search_result for the person" do
+        it "creates a valid conviction_search_result for the person", vcr: true do
           VCR.use_cassette("entity_matching_person_has_matches") do
             entity_matching_service.check_people_for_matches
             expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("YES")
@@ -55,7 +55,7 @@ module WasteCarriersEngine
                  :has_key_people)
         end
 
-        it "creates a valid conviction_search_result for the person" do
+        it "creates a valid conviction_search_result for the person", vcr: true do
           VCR.use_cassette("entity_matching_person_no_matches") do
             entity_matching_service.check_people_for_matches
             expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("NO")
@@ -68,7 +68,7 @@ module WasteCarriersEngine
           transient_registration.key_people.first.first_name = "José"
         end
 
-        it "escapes the unicode characters and creates a valid conviction_search_result for the person" do
+        it "escapes the unicode characters and creates a valid conviction_search_result for the person", vcr: true do
           VCR.use_cassette("entity_matching_person_unicode") do
             entity_matching_service.check_people_for_matches
             expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("NO")

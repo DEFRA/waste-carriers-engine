@@ -98,14 +98,14 @@ module WasteCarriersEngine
           allow_any_instance_of(WorldpayUrlService).to receive(:format_link).and_return("LINK GOES HERE")
         end
 
-        it "returns a link" do
+        it "returns a link", vcr: true do
           VCR.use_cassette("worldpay_initial_request") do
             url = worldpay_service.prepare_for_payment[:url]
             expect(url).to eq("LINK GOES HERE")
           end
         end
 
-        it "creates a new payment" do
+        it "creates a new payment", vcr: true do
           VCR.use_cassette("worldpay_initial_request") do
             number_of_existing_payments = transient_registration.finance_details.payments.length
             worldpay_service.prepare_for_payment
@@ -119,7 +119,7 @@ module WasteCarriersEngine
           allow_any_instance_of(WorldpayXmlService).to receive(:build_xml).and_return("foo")
         end
 
-        it "returns :error" do
+        it "returns :error", vcr: true do
           VCR.use_cassette("worldpay_initial_request_invalid") do
             expect(worldpay_service.prepare_for_payment).to eq(:error)
           end

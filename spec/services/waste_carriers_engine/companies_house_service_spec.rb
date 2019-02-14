@@ -7,7 +7,7 @@ module WasteCarriersEngine
     let(:companies_house_service) { CompaniesHouseService.new("09360070") }
 
     context "when a company_no is for an active company" do
-      it "returns :active" do
+      it "returns :active", vcr: true do
         VCR.use_cassette("company_no_valid") do
           expect(companies_house_service.status).to eq(:active)
         end
@@ -17,7 +17,7 @@ module WasteCarriersEngine
     context "when a company_no is not found" do
       let(:companies_house_service) { CompaniesHouseService.new("99999999") }
 
-      it "returns :not_found" do
+      it "returns :not_found", vcr: true do
         VCR.use_cassette("company_no_not_found") do
           expect(companies_house_service.status).to eq(:not_found)
         end
@@ -27,7 +27,7 @@ module WasteCarriersEngine
     context "when a company_no is inactive" do
       let(:companies_house_service) { CompaniesHouseService.new("07281919") }
 
-      it "returns :inactive" do
+      it "returns :inactive", vcr: true do
         VCR.use_cassette("company_no_inactive") do
           expect(companies_house_service.status).to eq(:inactive)
         end

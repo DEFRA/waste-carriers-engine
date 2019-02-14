@@ -23,7 +23,7 @@ module WasteCarriersEngine
         let(:reg_id) { transient_registration[:reg_identifier] }
 
         describe "#new" do
-          it "redirects to worldpay" do
+          it "redirects to worldpay", vcr: true do
             VCR.use_cassette("worldpay_redirect") do
               get new_worldpay_form_path(reg_id)
               expect(response.location).to include("https://secure-test.worldpay.com")

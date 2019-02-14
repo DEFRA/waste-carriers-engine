@@ -7,7 +7,7 @@ module WasteCarriersEngine
     let(:address_finder_service) { AddressFinderService.new("BS1 5AH") }
 
     context "when the response can be parsed as JSON" do
-      it "returns the parsed JSON" do
+      it "returns the parsed JSON", vcr: true do
         VCR.use_cassette("postcode_valid") do
           expect(address_finder_service.search_by_postcode.first["postcode"]).to include("BS1 5AH")
         end
@@ -27,7 +27,7 @@ module WasteCarriersEngine
     context "when OS Places returns a bad request error" do
       let(:address_finder_service) { AddressFinderService.new("AA1 1AA") }
 
-      it "returns :not_found" do
+      it "returns :not_found", vcr: true do
         VCR.use_cassette("postcode_no_matches") do
           expect(address_finder_service.search_by_postcode).to eq(:not_found)
         end
