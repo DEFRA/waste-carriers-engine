@@ -172,7 +172,7 @@ GEM
     parallel (1.14.0)
     parser (2.6.0.0)
       ast (~> 2.4.0)
-    phonelib (0.6.29)
+    phonelib (0.6.30)
     powerpack (0.1.2)
     psych (3.1.0)
     public_suffix (3.0.3)
