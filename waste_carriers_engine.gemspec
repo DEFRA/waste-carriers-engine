@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "4.2.11"
+  s.add_dependency "rails", "~> 4.2.11"
   # Use MongoDB as the database
   s.add_dependency "mongoid", "~> 5.2.0"
   # Use jquery as the JavaScript library

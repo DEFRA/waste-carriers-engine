@@ -10,7 +10,7 @@ PATH
       mongoid (~> 5.2.0)
       nokogiri
       phonelib
-      rails (= 4.2.11)
+      rails (~> 4.2.11)
       rest-client (~> 2.0)
       turbolinks
       uk_postcode
