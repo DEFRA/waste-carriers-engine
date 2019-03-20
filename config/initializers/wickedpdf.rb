@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "wicked_pdf"
 
 if ENV["WCRS_USE_XVFB_FOR_WICKEDPDF"] == "true"

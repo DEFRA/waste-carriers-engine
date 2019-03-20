@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 WasteCarriersEngine::Engine.routes.draw do
   unless Rails.env.production?
     resources :registrations, only: [:index]
