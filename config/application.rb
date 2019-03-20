@@ -83,7 +83,7 @@ module WasteCarriersRenewals
     config.worldpay_macsecret = ENV["WCRS_WORLDPAY_ECOM_MACSECRET"]
 
     # Version info
-    config.application_version = "0.0.1".freeze
+    config.application_version = "0.0.1"
     config.application_name = "waste-carriers-renewals"
     config.git_repository_url = "https://github.com/DEFRA/#{config.application_name}"
   end
