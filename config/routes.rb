@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 WasteCarriersEngine::Engine.routes.draw do
   resources :registrations, only: [:index] unless Rails.env.production?
 
@@ -424,3 +425,4 @@ WasteCarriersEngine::Engine.routes.draw do
   # Static pages with HighVoltage
   resources :pages, only: [:show], controller: "pages"
 end
+# rubocop:enable Metrics/BlockLength
