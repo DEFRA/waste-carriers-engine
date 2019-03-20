@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 WasteCarriersEngine::Engine.routes.draw do
-  unless Rails.env.production?
-    resources :registrations, only: [:index]
-  end
+  resources :registrations, only: [:index] unless Rails.env.production?
 
   resources :renewal_start_forms,
             only: %i[new create],
