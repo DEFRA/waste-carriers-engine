@@ -36,7 +36,7 @@ module WasteCarriersRenewals
 
     # Don't add field_with_errors div wrapper around fields with errors
     config.action_view.field_error_proc = proc { |html_tag, _instance|
-      "#{html_tag}".html_safe
+      html_tag.to_s.html_safe
     }
 
     # Errbit config
