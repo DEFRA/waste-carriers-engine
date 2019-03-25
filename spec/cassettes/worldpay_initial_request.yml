@@ -10,10 +10,10 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1552296851">
-              <description>Your Waste Carrier Registration CBDU2</description>
+            <order orderCode="1553506596">
+              <description>Your Waste Carrier Registration CBDU8</description>
               <amount currencyCode="GBP" value="10500" exponent="2"/>
-              <orderContent>Waste Carrier Registration renewal: CBDU2 for Acme Waste</orderContent>
+              <orderContent>Waste Carrier Registration renewal: CBDU8 for Acme Waste</orderContent>
               <paymentMethodMask>
                 <include code="VISA-SSL"/>
                 <include code="MAESTRO-SSL"/>
@@ -55,7 +55,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 11 Mar 2019 09:34:15 GMT
+      - Mon, 25 Mar 2019 09:36:36 GMT
       Server:
       - Apache
       Content-Length:
@@ -63,7 +63,7 @@ http_interactions:
       P3p:
       - CP="NON"
       Set-Cookie:
-      - machine=0ab20016;path=/
+      - machine=0aa20016;path=/
       Content-Type:
       - text/plain
       X-Xss-Protection:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1552296851"><reference id="3129054122">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1552296851</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1553506596"><reference id="3130564633">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1553506596</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Mon, 11 Mar 2019 09:34:11 GMT
+  recorded_at: Mon, 25 Mar 2019 09:36:36 GMT
 recorded_with: VCR 4.0.0
