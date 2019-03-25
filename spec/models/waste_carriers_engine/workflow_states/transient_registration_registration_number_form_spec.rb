@@ -46,6 +46,23 @@ module WasteCarriersEngine
             end
           end
         end
+
+        context "when the old company_no had trailing whitespace in it" do
+          before do
+            reg = Registration.where(reg_identifier: transient_registration.reg_identifier)
+            reg.update(company_no: "#{transient_registration.company_no} ")
+          end
+
+          context "when the business is a limited_company" do
+            before do
+              transient_registration.business_type = "limitedCompany"
+            end
+
+            it "changes to :company_name_form after the 'next' event" do
+              expect(transient_registration).to transition_from(:registration_number_form).to(:company_name_form).on_event(:next)
+            end
+          end
+        end
       end
     end
   end

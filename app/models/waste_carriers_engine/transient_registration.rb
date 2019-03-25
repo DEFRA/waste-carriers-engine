@@ -88,7 +88,11 @@ module WasteCarriersEngine
       # continue the renewal journey.
       return false if registration.business_type == "partnership"
 
-      old_company_no = registration.company_no.to_s
+      # It was previously possible to save a company_no with excess whitespace. This is no longer possible, but we
+      # should ignore this whitespace when comparing, otherwise a trailing space will block the user from renewing their
+      # registration.
+      old_company_no = registration.company_no.to_s.strip
+
       # It was previously valid to have company_nos with less than 8 digits
       # The form prepends 0s to make up the length, so we should do this for the old number to match
       old_company_no = "0#{old_company_no}" while old_company_no.length < 8
