@@ -28,17 +28,13 @@ module WasteCarriersEngine
       # Registrations are expired on the date recorded for their expiry date e.g.
       # an expiry date of Mar 25 2018 means the registration was active up till
       # 24:00 on Mar 24 2018.
-      return false if @expiry_date.to_date > current_day
-
-      true
+      @expiry_date.to_date <= current_day
     end
 
     def in_renewal_window?
       # If the registration expires in more than x months from now, its outside
       # the renewal window
-      return true if @expiry_date.to_date < Rails.configuration.renewal_window.months.from_now
-
-      false
+      @expiry_date.to_date < Rails.configuration.renewal_window.months.from_now
     end
 
     # Its important to note that a registration is expired on its expires_on date.
@@ -77,15 +73,11 @@ module WasteCarriersEngine
     end
 
     def registered_in_daylight_savings?
-      return true if @registration_date.in_time_zone("London").dst?
-
-      false
+      @registration_date.in_time_zone("London").dst?
     end
 
     def expires_on_in_daylight_savings?
-      return true if @expires_on.in_time_zone("London").dst?
-
-      false
+      @expires_on.in_time_zone("London").dst?
     end
 
     # We store dates and times in UTC, but want to use the current date in the

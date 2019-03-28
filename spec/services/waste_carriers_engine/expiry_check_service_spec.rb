@@ -34,8 +34,8 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, :expires_later) }
         subject { ExpiryCheckService.new(registration) }
 
-        it ":expiry_date matches the registration's" do
-          expect(subject.expiry_date).to eq(registration.expires_on)
+        it ":expiry_date is within 1 hour of the registration's" do
+          expect(subject.expiry_date).to be_within(1.hour).of(registration.expires_on)
         end
 
         it ":registration_date matches the registration's" do
