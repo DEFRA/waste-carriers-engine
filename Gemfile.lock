@@ -301,7 +301,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    wicked_pdf (1.2.1)
+    wicked_pdf (1.2.2)
       activesupport
 
 PLATFORMS
