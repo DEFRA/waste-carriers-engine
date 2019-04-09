@@ -43,6 +43,21 @@ module WasteCarriersEngine
           expect(transient_registration.reload.temp_cards).to eq(0)
         end
       end
+
+      context "when temp_cards is more than 999" do
+        let(:cards_form) { build(:cards_form, :has_required_data) }
+        let(:transient_registration) { TransientRegistration.where(reg_identifier: cards_form.reg_identifier).first }
+        let(:outside_range_params) do
+          {
+            reg_identifier: cards_form.reg_identifier,
+            temp_cards: "1000"
+          }
+        end
+
+        it "should not submit" do
+          expect(cards_form.submit(outside_range_params)).to eq(false)
+        end
+      end
     end
 
     context "when a valid transient registration exists" do
