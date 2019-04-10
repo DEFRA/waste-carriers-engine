@@ -19,7 +19,12 @@
         <% end %>
 
         <%= f.label :temp_cards, t(".temp_cards_label"), class: "form-label" %>
-        <%= f.number_field :temp_cards, value: (@cards_form.temp_cards || 0), class: "form-control", min: 0, max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS %>
+        <%= f.number_field :temp_cards,
+            value: (@cards_form.temp_cards || 0),
+            class: "form-control",
+            min: 0,
+            max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS
+        %>
       </fieldset>
     </div>
 
