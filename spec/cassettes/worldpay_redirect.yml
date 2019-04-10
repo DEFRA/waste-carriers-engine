@@ -10,7 +10,7 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1553506594">
+            <order orderCode="1554895150">
               <description>Your Waste Carrier Registration CBDU6</description>
               <amount currencyCode="GBP" value="11000" exponent="2"/>
               <orderContent>Waste Carrier Registration renewal: CBDU6 for Acme Waste</orderContent>
@@ -55,7 +55,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 25 Mar 2019 09:36:35 GMT
+      - Wed, 10 Apr 2019 11:19:15 GMT
       Server:
       - Apache
       Content-Length:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1553506594"><reference id="3130564632">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1553506594</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1554895150"><reference id="3132611439">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1554895150</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Mon, 25 Mar 2019 09:36:35 GMT
+  recorded_at: Wed, 10 Apr 2019 11:19:10 GMT
 recorded_with: VCR 4.0.0
