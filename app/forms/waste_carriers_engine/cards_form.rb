@@ -2,6 +2,7 @@
 
 module WasteCarriersEngine
   class CardsForm < BaseForm
+    MAX_TEMP_CARDS = 999
     attr_accessor :temp_cards
 
     def initialize(transient_registration)
@@ -22,6 +23,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :temp_cards, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 999 }
+    validates :temp_cards, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: MAX_TEMP_CARDS }
   end
 end
