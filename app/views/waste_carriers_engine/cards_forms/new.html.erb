@@ -12,24 +12,31 @@
       <%= image_tag "example_card.jpg", alt: t(".card_alt_text") %>
     </div>
 
-    <div class="form-group <%="form-group-error" if @cards_form.errors[:temp_cards].any? %>">
+    <% if @cards_form.errors[:temp_cards].any? %>
+    <div class="form-group form-group-error">
+    <% else %>
+    <div class="form-group">
+    <% end %>
+
       <fieldset id="temp_cards">
         <% if @cards_form.errors[:temp_cards].any? %>
           <span class="error-message"><%= @cards_form.errors[:temp_cards].join(", ") %></span>
         <% end %>
 
         <%= f.label :temp_cards, t(".temp_cards_label"), class: "form-label" %>
-        <%= f.number_field :temp_cards,
-            value: (@cards_form.temp_cards || 0),
-            class: "form-control",
-            min: 0,
-            max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS
+        <%= f.number_field(
+              :temp_cards,
+              value: (@cards_form.temp_cards || 0),
+              class: "form-control",
+              min: 0,
+              max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS
+            )
         %>
       </fieldset>
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @cards_form.reg_identifier %>
-    
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
