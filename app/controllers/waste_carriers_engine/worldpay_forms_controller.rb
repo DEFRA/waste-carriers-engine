@@ -110,7 +110,7 @@ module WasteCarriersEngine
                    else
                      "Invalid"
                    end
-      title = "#{valid_text} WorldPay response for #{params[:reg_identifier]}: #{action}"
+      title = "#{valid_text} WorldPay response: #{action}"
 
       log_worldpay_response(title)
       send_worldpay_response_to_airbrake(title) unless is_valid && action == :success
