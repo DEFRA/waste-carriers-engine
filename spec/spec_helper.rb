@@ -4,7 +4,7 @@
 # This is as per its docs https://github.com/colszowka/simplecov#getting-started
 require "./spec/support/simplecov"
 
-# Call "buinding.pry" anywhere in the code to stop execution and get a debugger console
+# Call "binding.pry" anywhere in the code to stop execution and get a debugger console
 require "pry-byebug"
 
 # Test helpers for gems
