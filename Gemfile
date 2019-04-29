@@ -35,7 +35,7 @@ gem "secure_headers", "~> 5.0"
 gem "turbolinks"
 
 group :development, :test do
-  # Call "buinding.pry" anywhere in the code to stop execution and get a debugger console
+  # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
   # Apply our style guide to ensure consistency in how the code is written
   gem "defra_ruby_style"
