@@ -4,8 +4,8 @@
 # This is as per its docs https://github.com/colszowka/simplecov#getting-started
 require "./spec/support/simplecov"
 
-# Support debugging in the tests
-require "byebug"
+# Call "buinding.pry" anywhere in the code to stop execution and get a debugger console
+require "pry-byebug"
 
 # Test helpers for gems
 require "aasm/rspec"

@@ -70,6 +70,7 @@ GEM
     builder (3.2.3)
     byebug (11.0.1)
     cancancan (1.17.0)
+    coderay (1.1.2)
     concurrent-ruby (1.1.5)
     countries (3.0.0)
       i18n_data (~> 0.8.0)
@@ -147,6 +148,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    method_source (0.9.2)
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2018.0812)
@@ -173,6 +175,12 @@ GEM
     parser (2.6.2.0)
       ast (~> 2.4.0)
     phonelib (0.6.33)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.7.0)
+      byebug (~> 11.0)
+      pry (~> 0.10)
     psych (3.1.0)
     public_suffix (3.0.3)
     rack (1.6.11)
@@ -309,7 +317,6 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (= 5.8.1)
-  byebug
   cancancan (~> 1.10)
   database_cleaner
   defra_ruby_style
@@ -322,6 +329,7 @@ DEPENDENCIES
   jquery-rails
   loofah (>= 2.2.1)
   mongoid (~> 5.2)
+  pry-byebug
   rails-html-sanitizer (>= 1.0.4)
   rails_12factor
   rspec-rails (~> 3.6)
@@ -339,4 +347,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.17.1
+   1.17.3
