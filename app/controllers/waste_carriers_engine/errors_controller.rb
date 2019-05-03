@@ -5,14 +5,15 @@ module WasteCarriersEngine
     def show
       render(
         template: file_for(template),
-        locals: { message: exception.try(:message) }
+        locals: { message: exception.try(:message) },
+        status: (template_exists(error_code) ? error_code : "500")
       )
     end
 
     protected
 
     def error_code
-      @error_code ||= params[:id]
+      @error_code ||= params[:status]
     end
 
     def template_exists(name)
