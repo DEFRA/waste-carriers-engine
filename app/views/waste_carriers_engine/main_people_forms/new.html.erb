@@ -1,48 +1,53 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_main_people_forms_path(@main_people_form.reg_identifier)) %>
 
 <% if @main_people_form.can_only_have_one_main_person? %>
- <div class="text">
+<div class="text">
 <% else %>
 <div class="grid-row">
   <div class="column-two-thirds">
 <% end %>
-  <%= form_for(@main_people_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @main_people_form) %>
 
-    <h1 class="heading-large"><%= t(".heading.#{@main_people_form.business_type}") %></h1>
+<%= form_for(@main_people_form) do |f| %>
+  <%= render("waste_carriers_engine/shared/errors", object: @main_people_form) %>
 
-    <p><%= t(".description_1.#{@main_people_form.business_type}") %></p>
+  <h1 class="heading-large"><%= t(".heading.#{@main_people_form.business_type}") %></h1>
 
-    <%= render("waste_carriers_engine/shared/person_name", form: @main_people_form, f: f) %>
+  <p><%= t(".description_1.#{@main_people_form.business_type}") %></p>
 
-    <%= render("waste_carriers_engine/shared/dob", form: @main_people_form, f: f) %>
+  <%= render("waste_carriers_engine/shared/person_name", form: @main_people_form, f: f) %>
 
-    <%= f.hidden_field :reg_identifier, value: @main_people_form.reg_identifier %>
+  <%= render("waste_carriers_engine/shared/dob", form: @main_people_form, f: f) %>
 
-    <% if @main_people_form.can_only_have_one_main_person? %>
-      <div class="form-group">
-        <%= f.submit t(".next_button"), class: "button" %>
-      </div>
-    <% elsif @main_people_form.minimum_main_people > (@main_people_form.number_of_existing_main_people + 1) %>
-      <div class="form-group">
-        <%= f.submit t(".add_person_link"), class: "button" %>
-      </div>
-    <% else %>
-      <div class="form-group">
-        <%= f.submit t(".add_person_link"), class: "button-link" %>
-      </div>
-      <div class="form-group">
-        <%= f.submit t(".next_button"), class: "button" %>
-      </div>
-    <% end %>
+  <%= f.hidden_field :reg_identifier, value: @main_people_form.reg_identifier %>
+
+  <% if @main_people_form.can_only_have_one_main_person? %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% elsif @main_people_form.minimum_main_people > (@main_people_form.number_of_existing_main_people + 1) %>
+    <div class="form-group">
+      <%= f.submit t(".add_person_link"), class: "button" %>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <%= f.submit t(".add_person_link"), class: "button-link" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
   <% end %>
+<% end %>
 
-  <% unless @main_people_form.can_only_have_one_main_person? || @main_people_form.number_of_existing_main_people < 1 %>
-  </div>
+<% if @main_people_form.can_only_have_one_main_person? %>
+  </div> <!-- closes .text -->
+<% else %>
+  </div> <!-- closes .column-two-thirds -->
+  <% if @main_people_form.number_of_existing_main_people > 0 %>
   <div class="column-one-third">
     <h2 class="heading-small"><%= t(".list_of_people") %></h2>
+
+    <ul class="main-person-list">
     <% @transient_registration.main_people.each do |person| %>
-      <ul class="main-person-list">
         <li>
           <%= person.first_name %> <%= person.last_name %>
           <%= button_to(t(".delete_person_link"),
@@ -51,8 +56,9 @@
               method: :delete,
               params: { reg_identifier: @main_people_form.reg_identifier }) %>
         </li>
-      </ul>
     <% end %>
-  </div>
+    </ul>
+  </div> <!-- closes .column-one-third -->
   <% end %>
-</div>
+</div> <!-- closes .grid-row -->
+<% end %>
