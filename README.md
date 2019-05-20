@@ -1,14 +1,14 @@
-# Waste Carriers renewals
+# Waste Carriers engine
 
-[![Build Status](https://travis-ci.org/DEFRA/waste-carriers-renewals.svg?branch=master)](https://travis-ci.org/DEFRA/waste-carriers-renewals)
-[![Maintainability](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/maintainability)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/414c0f88f3f030452da8/test_coverage)](https://codeclimate.com/github/DEFRA/waste-carriers-renewals/test_coverage)
+[![Build Status](https://travis-ci.org/DEFRA/waste-carriers-engine.svg?branch=master)](https://travis-ci.org/DEFRA/waste-carriers-engine)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ffee0bc4bcd2940c73ed/maintainability)](https://codeclimate.com/github/DEFRA/waste-carriers-engine/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ffee0bc4bcd2940c73ed/test_coverage)](https://codeclimate.com/github/DEFRA/waste-carriers-engine/test_coverage)
 
 The 'Register as a waste carrier' service allows businesses, who deal with waste and have to register according to the regulations, to register online. Once registered, businesses can sign in again to edit their registrations if needed.
 
 The service also allows authorised agency users and NCCC staff to create and manage registrations on other users' behalf, e.g. to support 'Assisted Digital' registrations. The service provides an internal user account management facility which allows authorised administrators to create and manage other agency user accounts.
 
-waste-carriers-renewals contains the WasteCarriersEngine. This engine allows users who registered using the 'Register as a waste carrier' service to renew their registrations.
+The waste-carriers-engine allows users who registered using the 'Register as a waste carrier' service to renew their registrations.
 
 The engine is mounted in [waste-carriers-front-office](https://github.com/DEFRA/waste-carriers-front-office) and [waste-carriers-back-office](https://github.com/DEFRA/waste-carriers-back-office).
 
@@ -26,7 +26,7 @@ The engine also expects these gems to be installed in the application in which i
 - [Devise](https://github.com/plataformatec/devise/) >= 4.4.3
 - [CanCanCan](https://github.com/CanCanCommunity/cancancan) ~> 1.10
 
-And for a User model to be in place. See the [dummy testing app](https://github.com/DEFRA/waste-carriers-renewals/tree/master/spec/dummy) for an example of how this might be implemented.
+And for a User model to be in place. See the [dummy testing app](https://github.com/DEFRA/waste-carriers-engine/tree/master/spec/dummy) for an example of how this might be implemented.
 
 ## Mounting the engine
 
@@ -34,7 +34,7 @@ Add the engine to your Gemfile:
 
 ```
 gem "waste_carriers_engine",
-    git: "https://github.com/DEFRA/waste-carriers-renewals"
+    git: "https://github.com/DEFRA/waste-carriers-engine"
 ```
 
 Install it with `bundle install`.
@@ -68,7 +68,7 @@ However, if you want to edit the engine, you'll have to install it locally.
 Clone the repo and drop into the project:
 
 ```bash
-git clone https://github.com/DEFRA/waste-carriers-renewals.git && cd waste-carriers-renewals`
+git clone https://github.com/DEFRA/waste-carriers-engine.git && cd waste-carriers-engine`
 ```
 
 Then install the dependencies with `bundle install`.
