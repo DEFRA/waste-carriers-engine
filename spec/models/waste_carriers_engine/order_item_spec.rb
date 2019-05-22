@@ -13,10 +13,10 @@ module WasteCarriersEngine
     let(:transient_registration) { build(:transient_registration, :has_required_data) }
 
     describe "new_renewal_item" do
-      let(:order_item) { OrderItem.new_renewal_item }
+      let(:order_item) { described_class.new_renewal_item }
 
       it "should have a type of 'RENEW'" do
-        expect(order_item.type).to eq("RENEW")
+        expect(order_item.type).to eq(described_class::TYPES[:renew])
       end
 
       it "should set the correct amount" do
@@ -29,10 +29,10 @@ module WasteCarriersEngine
     end
 
     describe "new_type_change_item" do
-      let(:order_item) { OrderItem.new_type_change_item }
+      let(:order_item) { described_class.new_type_change_item }
 
-      it "should have a type of 'CHARGE_ADJUST'" do
-        expect(order_item.type).to eq("CHARGE_ADJUST")
+      it "should have a type of 'EDIT'" do
+        expect(order_item.type).to eq(described_class::TYPES[:edit])
       end
 
       it "should set the correct amount" do
@@ -45,10 +45,10 @@ module WasteCarriersEngine
     end
 
     describe "new_copy_cards_item" do
-      let(:order_item) { OrderItem.new_copy_cards_item(3) }
+      let(:order_item) { described_class.new_copy_cards_item(3) }
 
       it "should have a type of 'COPY_CARDS'" do
-        expect(order_item.type).to eq("COPY_CARDS")
+        expect(order_item.type).to eq(described_class::TYPES[:copy_cards])
       end
 
       it "should set the correct amount" do

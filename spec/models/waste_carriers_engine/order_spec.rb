@@ -28,7 +28,7 @@ module WasteCarriersEngine
       end
 
       it "should include 1 renewal item" do
-        matching_item = order[:order_items].find { |item| item[:type] == "RENEW" }
+        matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:renew] }
         expect(matching_item).to_not be_nil
       end
 
@@ -58,7 +58,7 @@ module WasteCarriersEngine
 
       context "when the registration type has not changed" do
         it "should not include a type change item" do
-          matching_item = order[:order_items].find { |item| item[:type] == "CHARGE_ADJUST" }
+          matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:edit] }
           expect(matching_item).to be_nil
         end
       end
@@ -69,7 +69,7 @@ module WasteCarriersEngine
         end
 
         it "should include a type change item" do
-          matching_item = order[:order_items].find { |item| item[:type] == "CHARGE_ADJUST" }
+          matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:edit] }
           expect(matching_item).to_not be_nil
         end
 
@@ -88,7 +88,7 @@ module WasteCarriersEngine
         end
 
         it "should not include a copy cards item" do
-          matching_item = order[:order_items].find { |item| item[:type] == "COPY_CARDS" }
+          matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:copy_cards] }
           expect(matching_item).to be_nil
         end
       end
@@ -99,7 +99,7 @@ module WasteCarriersEngine
         end
 
         it "should not include a copy cards item" do
-          matching_item = order[:order_items].find { |item| item[:type] == "COPY_CARDS" }
+          matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:copy_cards] }
           expect(matching_item).to be_nil
         end
       end
@@ -110,7 +110,7 @@ module WasteCarriersEngine
         end
 
         it "should include a copy cards item" do
-          matching_item = order[:order_items].find { |item| item[:type] == "COPY_CARDS" }
+          matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:copy_cards] }
           expect(matching_item).to_not be_nil
         end
 
