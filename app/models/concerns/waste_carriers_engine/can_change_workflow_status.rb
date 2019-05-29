@@ -559,6 +559,8 @@ module WasteCarriersEngine
 
     def send_renewal_received_email
       RenewalMailer.send_renewal_received_email(self).deliver_now
+    rescue StandardError => e
+      Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
   end
   # rubocop:enable Metrics/ModuleLength

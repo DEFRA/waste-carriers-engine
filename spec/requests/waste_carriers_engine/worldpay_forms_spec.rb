@@ -85,6 +85,17 @@ module WasteCarriersEngine
                 get success_worldpay_forms_path(reg_id), params
                 expect(response).to redirect_to(new_renewal_received_form_path(reg_id))
               end
+
+              context "when the mailer fails" do
+                before do
+                  allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
+                  allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_raise(StandardError)
+                end
+
+                it "does not raise an error" do
+                  expect { get success_worldpay_forms_path(reg_id), params }.to_not raise_error
+                end
+              end
             end
           end
 

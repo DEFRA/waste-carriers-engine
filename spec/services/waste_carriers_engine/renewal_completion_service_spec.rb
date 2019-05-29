@@ -179,6 +179,17 @@ module WasteCarriersEngine
           expect(renewal_completion_service.complete_renewal).to eq(:error)
         end
       end
+
+      context "when the mailer fails" do
+        before do
+          allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
+          allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_raise(StandardError)
+        end
+
+        it "does not raise an error" do
+          expect { renewal_completion_service.complete_renewal }.to_not raise_error
+        end
+      end
     end
   end
 end
