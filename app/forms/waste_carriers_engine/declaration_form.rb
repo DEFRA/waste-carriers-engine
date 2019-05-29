@@ -4,6 +4,10 @@ module WasteCarriersEngine
   class DeclarationForm < BaseForm
     attr_accessor :declaration
 
+    def self.can_navigate_flexibly?
+      false
+    end
+
     def initialize(transient_registration)
       super
       self.declaration = @transient_registration.declaration

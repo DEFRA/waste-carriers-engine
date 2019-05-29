@@ -4,6 +4,10 @@ module WasteCarriersEngine
   class RenewalCompleteForm < BaseForm
     attr_accessor :certificate_link, :contact_email, :projected_renewal_end_date, :registration_type
 
+    def self.can_navigate_flexibly?
+      false
+    end
+
     def initialize(transient_registration)
       super
       self.certificate_link = build_certificate_link

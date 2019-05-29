@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class CbdTypeForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :registration_type
 
     def initialize(transient_registration)

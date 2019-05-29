@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class CompanyPostcodeForm < PostcodeForm
-    include CanNavigateFlexibly
-
     attr_accessor :business_type, :temp_company_postcode
 
     def initialize(transient_registration)

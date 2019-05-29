@@ -4,6 +4,10 @@ module WasteCarriersEngine
   class PaymentSummaryForm < BaseForm
     attr_accessor :temp_payment_method, :type_change, :registration_cards, :registration_card_charge, :total_charge
 
+    def self.can_navigate_flexibly?
+      false
+    end
+
     def initialize(transient_registration)
       super
       self.temp_payment_method = @transient_registration.temp_payment_method

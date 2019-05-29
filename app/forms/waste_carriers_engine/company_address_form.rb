@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class CompanyAddressForm < AddressForm
-    include CanNavigateFlexibly
-
     attr_accessor :business_type
     attr_accessor :temp_company_postcode
 

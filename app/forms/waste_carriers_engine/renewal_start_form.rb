@@ -2,6 +2,9 @@
 
 module WasteCarriersEngine
   class RenewalStartForm < BaseForm
+    def self.can_navigate_flexibly?
+      false
+    end
 
     def initialize(transient_registration)
       super

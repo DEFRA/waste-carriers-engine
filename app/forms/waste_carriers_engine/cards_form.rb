@@ -5,6 +5,10 @@ module WasteCarriersEngine
     MAX_TEMP_CARDS = 999
     attr_accessor :temp_cards
 
+    def self.can_navigate_flexibly?
+      false
+    end
+
     def initialize(transient_registration)
       super
       self.temp_cards = @transient_registration.temp_cards || 0

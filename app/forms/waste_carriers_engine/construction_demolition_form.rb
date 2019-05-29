@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class ConstructionDemolitionForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :construction_waste
 
     def initialize(transient_registration)

@@ -4,7 +4,6 @@ module WasteCarriersEngine
   class CheckYourAnswersForm < BaseForm
     include CanLimitNumberOfMainPeople
     include CanLimitNumberOfRelevantPeople
-    include CanNavigateFlexibly
 
     attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_email,
                   :declared_convictions, :first_name, :last_name, :location, :main_people, :phone_number,
