@@ -3,9 +3,9 @@
     <h2 class="heading-medium error-summary-heading"><%= t(".heading") %></h2>
 
     <ul class="error-summary-list">
-    <% object.errors.each do |field, message| %>
-      <li><a href="#<%= field %>"><%= message %></a></li>
-    <% end %>
+      <% object.errors.each do |field, message| %>
+        <li><a href="#<%= field %>"><%= message %></a></li>
+      <% end %>
     </ul>
   </div>
 <% end %>

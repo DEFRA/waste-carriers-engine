@@ -1,11 +1,7 @@
-<% if form.errors[:first_name].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:first_name].any? %>">
   <fieldset id="first_name">
     <% if form.errors[:first_name].any? %>
-    <span class="error-message"><%= form.errors[:first_name].join(", ") %></span>
+      <span class="error-message"><%= form.errors[:first_name].join(", ") %></span>
     <% end %>
 
     <%= f.label :first_name, t(".first_name"), class: "form-label" %>
@@ -13,14 +9,10 @@
   </fieldset>
 </div>
 
-<% if form.errors[:last_name].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:last_name].any? %>">
   <fieldset id="last_name">
     <% if form.errors[:last_name].any? %>
-    <span class="error-message"><%= form.errors[:last_name].join(", ") %></span>
+      <span class="error-message"><%= form.errors[:last_name].join(", ") %></span>
     <% end %>
 
     <%= f.label :last_name, t(".last_name"), class: "form-label" %>

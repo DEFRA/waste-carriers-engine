@@ -6,18 +6,14 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% if @service_provided_form.errors[:is_main_service].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @service_provided_form.errors[:is_main_service].any? %>">
       <fieldset class="inline" id="is_main_service">
         <legend class="visuallyhidden">
           <%= t(".heading") %>
         </legend>
 
         <% if @service_provided_form.errors[:is_main_service].any? %>
-        <span class="error-message"><%= @service_provided_form.errors[:is_main_service].join(", ") %></span>
+          <span class="error-message"><%= @service_provided_form.errors[:is_main_service].join(", ") %></span>
         <% end %>
 
         <div class="multiple-choice">
@@ -32,6 +28,7 @@
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @service_provided_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

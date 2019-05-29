@@ -23,18 +23,21 @@
             <td><%= t(".renewal_fee") %></td>
             <td>£<%= display_pence_as_pounds(Rails.configuration.renewal_charge) %></td>
           </tr>
+
           <% if @payment_summary_form.type_change %>
-          <tr>
-            <td><%= t(".cbd_fee") %></td>
-            <td>£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
-          </tr>
+            <tr>
+              <td><%= t(".cbd_fee") %></td>
+              <td>£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
+            </tr>
           <% end %>
+
           <% if @payment_summary_form.registration_cards > 0 %>
-          <tr>
-            <td><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></td>
-            <td>£<%= display_pence_as_pounds(@payment_summary_form.registration_card_charge) %></td>
-          </tr>
+            <tr>
+              <td><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></td>
+              <td>£<%= display_pence_as_pounds(@payment_summary_form.registration_card_charge) %></td>
+            </tr>
           <% end %>
+
           <tr>
             <td><span class="strong"><%= t(".total_fee") %></span></td>
             <td><span class="strong">£<%= display_pence_as_pounds(@payment_summary_form.total_charge) %></span></td>
@@ -47,15 +50,11 @@
 
     <h2 class="heading-medium"><%= t(".make_payment_subheading") %></h2>
 
-    <% if @payment_summary_form.errors[:temp_payment_method].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:temp_payment_method].any? %>">
       <fieldset id="temp_payment_method">
 
         <% if @payment_summary_form.errors[:temp_payment_method].any? %>
-        <span class="error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
+          <span class="error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
         <% end %>
 
         <div class="multiple-choice">
@@ -77,6 +76,7 @@
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @payment_summary_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

@@ -6,24 +6,21 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% if @construction_demolition_form.errors[:construction_waste].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @construction_demolition_form.errors[:construction_waste].any? %>">
       <fieldset class="inline" id="construction_waste">
         <legend class="visuallyhidden">
           <%= t(".heading") %>
         </legend>
 
         <% if @construction_demolition_form.errors[:construction_waste].any? %>
-        <span class="error-message"><%= @construction_demolition_form.errors[:construction_waste].join(", ") %></span>
+          <span class="error-message"><%= @construction_demolition_form.errors[:construction_waste].join(", ") %></span>
         <% end %>
 
         <div class="multiple-choice">
           <%= f.radio_button :construction_waste, "yes" %>
           <%= f.label :construction_waste, t(".options.yes"), value: "yes" %>
         </div>
+
         <div class="multiple-choice">
           <%= f.radio_button :construction_waste, "no" %>
           <%= f.label :construction_waste, t(".options.no"), value: "no" %>
@@ -44,6 +41,7 @@
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @construction_demolition_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

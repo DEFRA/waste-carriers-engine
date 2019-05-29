@@ -1,37 +1,33 @@
 <div class="text">
-<% if @renewal_start_form.errors.any? %>
+  <% if @renewal_start_form.errors.any? %>
+    <h1 class="heading-large"><%= t(".error_heading") %></h1>
 
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
+    <% @renewal_start_form.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% else %>
+    <%= form_for(@renewal_start_form) do |f| %>
+      <%= render("waste_carriers_engine/shared/errors", object: @renewal_start_form) %>
 
-  <% @renewal_start_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
+      <h1 class="heading-large"><%= t(".heading", reg_identifier: @renewal_start_form.reg_identifier) %></h1>
+
+      <p><%= t(".paragraph_1_html", date: @renewal_start_form.transient_registration.projected_renewal_end_date, renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
+      <p><%= t(".paragraph_2_html", type_change_charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
+      <p><%= t(".paragraph_3") %></p>
+      <p><%= t(".paragraph_4") %></p>
+
+      <ul class="list list-bullet">
+        <li><%= t(".list_item_1") %></li>
+        <li><%= t(".list_item_2") %></li>
+        <% if @renewal_start_form.transient_registration.company_no.present? %>
+          <li><%= t(".list_item_3") %></li>
+        <% end %>
+      </ul>
+
+      <%= f.hidden_field :reg_identifier, value: @renewal_start_form.reg_identifier %>
+      <div class="form-group">
+        <%= f.submit t(".next_button"), class: "button" %>
+      </div>
+    <% end %>
   <% end %>
-
-<% else %>
-
-  <%= form_for(@renewal_start_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @renewal_start_form) %>
-
-    <h1 class="heading-large"><%= t(".heading", reg_identifier: @renewal_start_form.reg_identifier) %></h1>
-
-    <p><%= t(".paragraph_1_html", date: @renewal_start_form.transient_registration.projected_renewal_end_date, renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
-    <p><%= t(".paragraph_2_html", type_change_charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
-    <p><%= t(".paragraph_3") %></p>
-    <p><%= t(".paragraph_4") %></p>
-
-    <ul class="list list-bullet">
-      <li><%= t(".list_item_1") %></li>
-      <li><%= t(".list_item_2") %></li>
-      <% if @renewal_start_form.transient_registration.company_no.present? %>
-      <li><%= t(".list_item_3") %></li>
-      <% end %>
-    </ul>
-
-    <%= f.hidden_field :reg_identifier, value: @renewal_start_form.reg_identifier %>
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
-
-<% end %>
 </div>

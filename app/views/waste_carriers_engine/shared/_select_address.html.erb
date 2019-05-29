@@ -1,8 +1,4 @@
-<% if form.errors[:addresses].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:addresses].any? %>">
   <fieldset id="addresses">
     <%= f.label :temp_address, t(".address_label"), class: "form-label" %>
     <%= f.select(:temp_address,

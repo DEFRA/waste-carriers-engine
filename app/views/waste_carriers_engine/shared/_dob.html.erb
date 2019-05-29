@@ -1,8 +1,4 @@
-<% if form.errors[:dob].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:dob].any? %>">
   <fieldset id="dob">
     <% if form.errors[:dob].any? %>
       <span class="error-message"><%= form.errors[:dob].join(". ") %></span>
@@ -27,6 +23,5 @@
       <%= f.label :dob_year, t(".dob_year"), class: "form-label" %>
       <%= f.text_field :dob_year, value: form.dob_year, class: "form-control" %>
     </fieldset>
-
   </fieldset>
 </div>

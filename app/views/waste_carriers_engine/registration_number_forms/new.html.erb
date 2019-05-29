@@ -6,26 +6,22 @@
 
     <h1 class="heading-large"><%= t(".heading.#{@registration_number_form.business_type}") %></h1>
 
-    <% if @registration_number_form.errors[:company_no].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @registration_number_form.errors[:company_no].any? %>">
       <fieldset id="company_no">
         <legend class="visuallyhidden">
           <%= t(".heading.#{@registration_number_form.business_type}") %>
         </legend>
 
         <% if @registration_number_form.errors[:company_no].any? %>
-        <span class="error-message"><%= @registration_number_form.errors[:company_no].join(", ") %></span>
+          <span class="error-message"><%= @registration_number_form.errors[:company_no].join(", ") %></span>
         <% end %>
 
         <%= f.label :company_no, class: "form-label" do %>
           <%= t(".company_no_label") %>
           <span class='form-hint'><%= t(".company_no_hint") %></span>
         <% end %>
-        <%= f.text_field :company_no, value: @registration_number_form.company_no, class: "form-control" %>
 
+        <%= f.text_field :company_no, value: @registration_number_form.company_no, class: "form-control" %>
       </fieldset>
     </div>
 
@@ -34,6 +30,7 @@
         <summary>
           <span class="summary"><%= t(".detail_subheading") %></span>
         </summary>
+
         <div class="panel panel-border-narrow">
           <p><%= t(".detail.#{@registration_number_form.business_type}") %></p>
         </div>

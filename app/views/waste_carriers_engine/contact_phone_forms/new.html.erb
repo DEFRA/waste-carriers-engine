@@ -6,25 +6,23 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% if @contact_phone_form.errors[:phone_number].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @contact_phone_form.errors[:phone_number].any? %>">
       <fieldset id="phone_number">
         <% if @contact_phone_form.errors[:phone_number].any? %>
-        <span class="error-message"><%= @contact_phone_form.errors[:phone_number].join(", ") %></span>
+          <span class="error-message"><%= @contact_phone_form.errors[:phone_number].join(", ") %></span>
         <% end %>
 
         <%= f.label :phone_number, class: "form-label" do %>
           <%= t(".phone_number_label") %>
           <span class='form-hint'><%= t(".phone_number_hint") %></span>
         <% end %>
+
         <%= f.telephone_field :phone_number, value: @contact_phone_form.phone_number, class: "form-control" %>
       </fieldset>
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @contact_phone_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

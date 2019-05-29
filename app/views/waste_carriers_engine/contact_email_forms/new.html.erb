@@ -6,32 +6,25 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% if @contact_email_form.errors[:contact_email].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @contact_email_form.errors[:contact_email].any? %>">
       <fieldset id="contact_email">
         <% if @contact_email_form.errors[:contact_email].any? %>
-        <span class="error-message"><%= @contact_email_form.errors[:contact_email].join(", ") %></span>
+          <span class="error-message"><%= @contact_email_form.errors[:contact_email].join(", ") %></span>
         <% end %>
 
         <%= f.label :contact_email, class: "form-label" do %>
           <%= t(".contact_email_label") %>
           <span class='form-hint'><%= t(".contact_email_hint") %></span>
         <% end %>
+
         <%= f.email_field :contact_email, value: @contact_email_form.contact_email, class: "form-control" %>
       </fieldset>
     </div>
 
-    <% if @contact_email_form.errors[:confirmed_email].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @contact_email_form.errors[:confirmed_email].any? %>">
       <fieldset id="confirmed_email">
         <% if @contact_email_form.errors[:confirmed_email].any? %>
-        <span class="error-message"><%= @contact_email_form.errors[:confirmed_email].join(", ") %></span>
+          <span class="error-message"><%= @contact_email_form.errors[:confirmed_email].join(", ") %></span>
         <% end %>
 
         <%= f.label :confirmed_email, t(".confirmed_email_label"), class: "form-label" %>
@@ -40,6 +33,7 @@
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @contact_email_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

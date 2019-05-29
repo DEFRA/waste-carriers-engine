@@ -12,18 +12,14 @@
       <% end %>
     </ul>
 
-    <% if @waste_types_form.errors[:only_amf].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @waste_types_form.errors[:only_amf].any? %>">
       <fieldset id="only_amf">
         <legend class="visuallyhidden">
           <%= t(".heading") %>
         </legend>
 
         <% if @waste_types_form.errors[:only_amf].any? %>
-        <span class="error-message"><%= @waste_types_form.errors[:only_amf].join(", ") %></span>
+          <span class="error-message"><%= @waste_types_form.errors[:only_amf].join(", ") %></span>
         <% end %>
 
         <div class="multiple-choice">

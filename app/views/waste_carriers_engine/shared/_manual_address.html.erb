@@ -6,32 +6,25 @@
   </div>
 <% end %>
 
-<% if form.errors[:house_number].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:house_number].any? %>">
   <fieldset id="house_number">
     <% if form.errors[:house_number].any? %>
-    <span class="error-message"><%= form.errors[:house_number].join(", ") %></span>
+      <span class="error-message"><%= form.errors[:house_number].join(", ") %></span>
     <% end %>
 
     <%= f.label :house_number, class: "form-label" do %>
       <%= t(".house_number_label") %>
       <span class='form-hint'><%= t(".house_number_hint") %></span>
     <% end %>
-    <%= f.text_field :house_number, value: form.house_number, class: "form-control" %>
+    <
+    %= f.text_field :house_number, value: form.house_number, class: "form-control" %>
   </fieldset>
 </div>
 
-<% if form.errors[:address_line_1].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:address_line_1].any? %>">
   <fieldset id="address_line_1">
     <% if form.errors[:address_line_1].any? %>
-    <span class="error-message"><%= form.errors[:address_line_1].join(", ") %></span>
+      <span class="error-message"><%= form.errors[:address_line_1].join(", ") %></span>
     <% end %>
 
     <%= f.label :address_line_1, t(".address_line_1_label"), class: "form-label" %>
@@ -39,14 +32,10 @@
   </fieldset>
 </div>
 
-<% if form.errors[:address_line_2].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:address_line_2].any? %>">
   <fieldset id="address_line_2">
     <% if form.errors[:address_line_2].any? %>
-    <span class="error-message"><%= form.errors[:address_line_2].join(", ") %></span>
+      <span class="error-message"><%= form.errors[:address_line_2].join(", ") %></span>
     <% end %>
 
     <%= f.label :address_line_2, t(".address_line_2_label"), class: "form-label" %>
@@ -54,14 +43,10 @@
   </fieldset>
 </div>
 
-<% if form.errors[:town_city].any? %>
-<div class="form-group form-group-error">
-<% else %>
-<div class="form-group">
-<% end %>
+<div class="form-group <%= "form-group-error" if form.errors[:town_city].any? %>">
   <fieldset id="town_city">
     <% if form.errors[:town_city].any? %>
-    <span class="error-message"><%= form.errors[:town_city].join(", ") %></span>
+      <span class="error-message"><%= form.errors[:town_city].join(", ") %></span>
     <% end %>
 
     <%= f.label :town_city, t(".town_city_label"), class: "form-label" %>
@@ -70,14 +55,10 @@
 </div>
 
 <% if overseas %>
-  <% if form.errors[:postcode].any? %>
-  <div class="form-group form-group-error">
-  <% else %>
-  <div class="form-group">
-  <% end %>
+  <div class="form-group <%= "form-group-error" if form.errors[:postcode].any? %>">
     <fieldset id="postcode">
       <% if form.errors[:postcode].any? %>
-      <span class="error-message"><%= form.errors[:postcode].join(", ") %></span>
+        <span class="error-message"><%= form.errors[:postcode].join(", ") %></span>
       <% end %>
 
       <%= f.label :postcode, t(".postcode_label"), class: "form-label" %>
@@ -85,14 +66,10 @@
     </fieldset>
   </div>
 
-  <% if form.errors[:country].any? %>
-  <div class="form-group form-group-error">
-  <% else %>
-  <div class="form-group">
-  <% end %>
+  <div class="form-group <%= "form-group-error" if form.errors[:country].any? %>">
     <fieldset id="country">
       <% if form.errors[:country].any? %>
-      <span class="error-message"><%= form.errors[:country].join(", ") %></span>
+        <span class="error-message"><%= form.errors[:country].join(", ") %></span>
       <% end %>
 
       <%= f.label :country, t(".country_label"), class: "form-label" %>

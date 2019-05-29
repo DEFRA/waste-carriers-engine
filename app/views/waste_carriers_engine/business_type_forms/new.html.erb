@@ -6,11 +6,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% if @business_type_form.errors[:business_type].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @business_type_form.errors[:business_type].any? %>">
       <fieldset id="business_type">
         <legend class="visuallyhidden">
           <%= t(".heading") %>

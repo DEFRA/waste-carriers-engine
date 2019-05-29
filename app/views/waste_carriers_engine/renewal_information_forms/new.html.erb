@@ -1,37 +1,37 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_renewal_information_forms_path(@renewal_information_form.reg_identifier)) %>
 
 <div class="text">
-<% if @renewal_information_form.errors.any? %>
+  <% if @renewal_information_form.errors.any? %>
 
-  <h1 class="heading-large"><%= t(".error_heading") %></h1>
+    <h1 class="heading-large"><%= t(".error_heading") %></h1>
 
-  <% @renewal_information_form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-
-<% else %>
-
-  <%= form_for(@renewal_information_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @renewal_information_form) %>
-
-    <h1 class="heading-large"><%= t(".heading") %></h1>
-
-    <p><%= t(".paragraph_1") %></p>
-
-    <p><%= t(".paragraph_2", reg_identifier: @renewal_information_form.reg_identifier, renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
-
-    <% if @renewal_information_form.type_change %>
-    <p><%= t(".paragraph_3", type_change_charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
-    <% else %>
-    <p><%= t(".paragraph_4") %></p>
+    <% @renewal_information_form.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
     <% end %>
-    <p><%= t(".paragraph_5", reg_identifier: @renewal_information_form.reg_identifier, total_charge: display_pence_as_pounds(@renewal_information_form.total_fee)) %></p>
 
-    <%= f.hidden_field :reg_identifier, value: @renewal_information_form.reg_identifier %>
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
+  <% else %>
+
+    <%= form_for(@renewal_information_form) do |f| %>
+      <%= render("waste_carriers_engine/shared/errors", object: @renewal_information_form) %>
+
+      <h1 class="heading-large"><%= t(".heading") %></h1>
+
+      <p><%= t(".paragraph_1") %></p>
+
+      <p><%= t(".paragraph_2", reg_identifier: @renewal_information_form.reg_identifier, renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
+
+      <% if @renewal_information_form.type_change %>
+        <p><%= t(".paragraph_3", type_change_charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
+      <% else %>
+        <p><%= t(".paragraph_4") %></p>
+      <% end %>
+
+      <p><%= t(".paragraph_5", reg_identifier: @renewal_information_form.reg_identifier, total_charge: display_pence_as_pounds(@renewal_information_form.total_fee)) %></p>
+
+      <%= f.hidden_field :reg_identifier, value: @renewal_information_form.reg_identifier %>
+      <div class="form-group">
+        <%= f.submit t(".next_button"), class: "button" %>
+      </div>
+    <% end %>
   <% end %>
-
-<% end %>
 </div>

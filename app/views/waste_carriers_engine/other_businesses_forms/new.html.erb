@@ -6,24 +6,21 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% if @other_businesses_form.errors[:other_businesses].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @other_businesses_form.errors[:other_businesses].any? %>">
       <fieldset class="inline" id="other_businesses">
         <legend class="visuallyhidden">
           <%= t(".heading") %>
         </legend>
 
         <% if @other_businesses_form.errors[:other_businesses].any? %>
-        <span class="error-message"><%= @other_businesses_form.errors[:other_businesses].join(", ") %></span>
+          <span class="error-message"><%= @other_businesses_form.errors[:other_businesses].join(", ") %></span>
         <% end %>
 
         <div class="multiple-choice">
           <%= f.radio_button :other_businesses, "yes" %>
           <%= f.label :other_businesses, t(".options.yes"), value: "yes" %>
         </div>
+
         <div class="multiple-choice">
           <%= f.radio_button :other_businesses, "no" %>
           <%= f.label :other_businesses, t(".options.no"), value: "no" %>
@@ -32,6 +29,7 @@
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @other_businesses_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

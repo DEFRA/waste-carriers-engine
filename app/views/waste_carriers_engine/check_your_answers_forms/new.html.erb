@@ -2,7 +2,6 @@
 
 <div class="text">
   <% if @check_your_answers_form.errors.any? %>
-
     <div class="error-summary" role="alert">
       <h2 class="heading-medium error-summary-heading"><%= t(".error_heading") %></h2>
 
@@ -16,9 +15,7 @@
 
       <p><%= t(".error_description_2") %></p>
     </div>
-
   <% else %>
-
     <%= form_for(@check_your_answers_form) do |f| %>
       <%= render("waste_carriers_engine/shared/errors", object: @check_your_answers_form) %>
 
@@ -27,7 +24,7 @@
       <p><%= t(".paragraph_1_html", expiry_date: @check_your_answers_form.transient_registration.projected_renewal_end_date) %></p>
       <p><%= t(".paragraph_2", renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
       <% if @check_your_answers_form.registration_type_changed? %>
-      <p><%= t(".paragraph_3", type_change_charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
+        <p><%= t(".paragraph_3", type_change_charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
       <% end %>
 
       <hr>

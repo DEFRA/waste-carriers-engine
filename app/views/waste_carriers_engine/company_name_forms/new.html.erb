@@ -6,27 +6,23 @@
 
     <h1 class="heading-large"><%= t(".heading.#{@company_name_form.business_type}") %></h1>
 
-    <% if @company_name_form.errors[:company_name].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @company_name_form.errors[:company_name].any? %>">
       <fieldset id="company_name">
         <legend class="visuallyhidden">
           <%= t(".heading.#{@company_name_form.business_type}") %>
         </legend>
 
         <% if @company_name_form.errors[:company_name].any? %>
-        <span class="error-message"><%= @company_name_form.errors[:company_name].join(", ") %></span>
+          <span class="error-message"><%= @company_name_form.errors[:company_name].join(", ") %></span>
         <% end %>
 
         <%= f.label :company_name, t(".company_name_label.#{@company_name_form.business_type}"), class: "form-label" %>
         <%= f.text_field :company_name, value: @company_name_form.company_name, class: "form-control" %>
-
       </fieldset>
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @company_name_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

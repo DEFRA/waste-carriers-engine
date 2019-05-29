@@ -8,38 +8,35 @@
 
     <p><%= t(".detail_paragraph") %></p>
 
-    <% if @contact_postcode_form.errors[:temp_contact_postcode].any? %>
-    <div class="form-group form-group-error">
-    <% else %>
-    <div class="form-group">
-    <% end %>
+    <div class="form-group <%= "form-group-error" if @contact_postcode_form.errors[:temp_contact_postcode].any? %>">
       <fieldset id="temp_contact_postcode">
         <legend class="visuallyhidden">
           <%= t(".heading") %>
         </legend>
 
         <% if @contact_postcode_form.errors[:temp_contact_postcode].any? %>
-        <span class="error-message"><%= @contact_postcode_form.errors[:temp_contact_postcode].join(", ") %></span>
+          <span class="error-message"><%= @contact_postcode_form.errors[:temp_contact_postcode].join(", ") %></span>
         <% end %>
 
         <%= f.label :temp_contact_postcode, class: "form-label" do %>
           <%= t(".temp_contact_postcode_label") %>
           <span class='form-hint'><%= t(".temp_contact_postcode_hint") %></span>
         <% end %>
-        <%= f.text_field :temp_contact_postcode, value: @contact_postcode_form.temp_contact_postcode, class: "form-control" %>
 
+        <%= f.text_field :temp_contact_postcode, value: @contact_postcode_form.temp_contact_postcode, class: "form-control" %>
       </fieldset>
     </div>
 
     <%= f.hidden_field :reg_identifier, value: @contact_postcode_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
 
     <% if @contact_postcode_form.errors.added?(:temp_contact_postcode, :no_results) %>
-    <div class="form-group">
-      <%= link_to(t(".manual_address_link"), skip_to_manual_address_contact_postcode_forms_path(@contact_postcode_form.reg_identifier)) %>
-    </div>
+      <div class="form-group">
+        <%= link_to(t(".manual_address_link"), skip_to_manual_address_contact_postcode_forms_path(@contact_postcode_form.reg_identifier)) %>
+      </div>
     <% end %>
   <% end %>
 

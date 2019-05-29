@@ -22,6 +22,7 @@
     <p><%= link_to t(".privacy_link_text"), page_path("privacy"),  target: "_blank" %></p>
 
     <%= f.hidden_field :reg_identifier, value: @declaration_form.reg_identifier %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
