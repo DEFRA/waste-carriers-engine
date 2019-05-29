@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class ContactAddressForm < AddressForm
-    include CanNavigateFlexibly
-
     attr_accessor :temp_contact_postcode
 
     def initialize(transient_registration)

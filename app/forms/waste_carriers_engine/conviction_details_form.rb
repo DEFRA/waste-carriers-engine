@@ -3,7 +3,6 @@
 module WasteCarriersEngine
   class ConvictionDetailsForm < PersonForm
     include CanLimitNumberOfRelevantPeople
-    include CanNavigateFlexibly
 
     def position?
       true

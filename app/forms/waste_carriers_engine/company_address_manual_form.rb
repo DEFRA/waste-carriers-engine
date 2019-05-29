@@ -2,7 +2,6 @@
 
 module WasteCarriersEngine
   class CompanyAddressManualForm < ManualAddressForm
-    include CanNavigateFlexibly
 
     private
 

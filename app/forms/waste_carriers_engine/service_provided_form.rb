@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class ServiceProvidedForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :is_main_service
 
     def initialize(transient_registration)

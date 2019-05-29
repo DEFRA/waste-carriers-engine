@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class BusinessTypeForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :business_type
 
     def initialize(transient_registration)

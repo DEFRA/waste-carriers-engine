@@ -4,6 +4,10 @@ module WasteCarriersEngine
   class BankTransferForm < BaseForm
     attr_accessor :total_to_pay
 
+    def self.can_navigate_flexibly?
+      false
+    end
+
     def initialize(transient_registration)
       super
       self.total_to_pay = @transient_registration.total_to_pay

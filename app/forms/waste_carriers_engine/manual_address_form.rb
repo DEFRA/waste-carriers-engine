@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class ManualAddressForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :business_type
     attr_accessor :addresses
     attr_accessor :os_places_error

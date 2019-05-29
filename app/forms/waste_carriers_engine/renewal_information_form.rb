@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class RenewalInformationForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :type_change, :total_fee
 
     def initialize(transient_registration)
