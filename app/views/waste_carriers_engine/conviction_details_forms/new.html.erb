@@ -33,23 +33,23 @@
         <%= f.submit t(".next_button"), class: "button" %>
       </div>
     <% end %>
-
-    <% if @conviction_details_form.number_of_existing_relevant_people > 0 %>
-      <div class="column-one-third">
-        <h2 class="heading-small"><%= t(".list_of_people") %></h2>
-        <% @transient_registration.relevant_people.each do |person| %>
-          <ul class="key-person-list">
-            <li>
-              <%= person.first_name %> <%= person.last_name %>
-              <%= button_to(t(".delete_person_link"),
-                  delete_person_conviction_details_forms_path(person.id),
-                  class: "button-link",
-                  method: :delete,
-                  params: { reg_identifier: @conviction_details_form.reg_identifier }) %>
-            </li>
-          </ul>
-        <% end %>
-      </div>
-    <% end %>
   </div>
+
+  <% if @conviction_details_form.number_of_existing_relevant_people > 0 %>
+    <div class="column-one-third">
+      <h2 class="heading-small"><%= t(".list_of_people") %></h2>
+      <ul class="key-person-list">
+        <% @transient_registration.relevant_people.each do |person| %>
+          <li>
+            <%= person.first_name %> <%= person.last_name %>
+            <%= button_to(t(".delete_person_link"),
+                delete_person_conviction_details_forms_path(person.id),
+                class: "button-link",
+                method: :delete,
+                params: { reg_identifier: @conviction_details_form.reg_identifier }) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>
