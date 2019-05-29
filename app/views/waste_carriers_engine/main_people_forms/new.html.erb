@@ -2,12 +2,12 @@
 
 <% if @main_people_form.can_only_have_one_main_person? %>
   <div class="text">
-    <%= render "waste_carriers_engine/main_people_form/form" %>
+    <%= render "waste_carriers_engine/main_people_forms/form" %>
   </div>
 <% else %>
   <div class="grid-row">
     <div class="column-two-thirds">
-      <%= render "waste_carriers_engine/main_people_form/form" %>
+      <%= render "waste_carriers_engine/main_people_forms/form" %>
     </div>
 
     <% if @main_people_form.number_of_existing_main_people > 0 %>
