@@ -71,6 +71,8 @@ module WasteCarriersEngine
 
     def send_confirmation_email
       RenewalMailer.send_renewal_complete_email(@registration).deliver_now
+    rescue StandardError => e
+      Airbrake.notify(e, registration_no: @registration.reg_identifier) if defined?(Airbrake)
     end
 
     def copy_data_from_transient_registration
