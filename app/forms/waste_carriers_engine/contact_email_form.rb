@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class ContactEmailForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :contact_email, :confirmed_email
 
     def initialize(transient_registration)

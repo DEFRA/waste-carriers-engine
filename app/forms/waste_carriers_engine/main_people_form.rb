@@ -3,7 +3,6 @@
 module WasteCarriersEngine
   class MainPeopleForm < PersonForm
     include CanLimitNumberOfMainPeople
-    include CanNavigateFlexibly
 
     attr_accessor :business_type
 

@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class RegisterInScotlandForm < BaseForm
-    include CanNavigateFlexibly
-
     def initialize(transient_registration)
       super
     end

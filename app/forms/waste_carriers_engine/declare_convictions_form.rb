@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class DeclareConvictionsForm < BaseForm
-    include CanNavigateFlexibly
-
     attr_accessor :declared_convictions
 
     def initialize(transient_registration)
