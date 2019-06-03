@@ -1,0 +1,31 @@
+<%= form_for(@conviction_details_form) do |f| %>
+  <%= render("waste_carriers_engine/shared/errors", object: @conviction_details_form) %>
+
+  <h1 class="heading-large"><%= t(".heading") %></h1>
+  <p><%= t(".paragraph_1") %></p>
+
+  <%= render("waste_carriers_engine/shared/person_name", form: @conviction_details_form, f: f) %>
+
+  <div class="form-group <%= "form-group-error" if @conviction_details_form.errors[:position].any? %>">
+    <fieldset id="position">
+      <% if @conviction_details_form.errors[:position].any? %>
+        <span class="error-message"><%= @conviction_details_form.errors[:position].join(", ") %></span>
+      <% end %>
+
+      <%= f.label :position, t(".position"), class: "form-label" %>
+      <%= f.text_field :position, value: @conviction_details_form.position, class: "form-control" %>
+    </fieldset>
+  </div>
+
+  <%= render("waste_carriers_engine/shared/dob", form: @conviction_details_form, f: f) %>
+
+  <%= f.hidden_field :reg_identifier, value: @conviction_details_form.reg_identifier %>
+
+  <div class="form-group">
+    <%= f.submit t(".add_person_link"), class: "button-link" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit t(".next_button"), class: "button" %>
+  </div>
+<% end %>

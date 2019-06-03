@@ -3,6 +3,9 @@ en:
     main_people_forms:
       new:
         title: Main people
+        list_of_people: You have added the following people
+        delete_person_link: Delete
+      form:
         heading:
           localAuthority: Chief executive details
           limitedCompany: Company director details
@@ -18,9 +21,6 @@ en:
           partnership:  Enter the name and date of birth for each partner of the business.
           soleTrader: Enter the name and date of birth of the business owner.
         add_person_link: Add another person
-        next_button: Continue
-        list_of_people: You have added the following people
-        delete_person_link: Delete
         next_button: Continue
   activemodel:
     errors:
