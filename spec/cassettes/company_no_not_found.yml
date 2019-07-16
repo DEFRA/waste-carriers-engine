@@ -39,7 +39,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Jul 2019 08:27:13 GMT
+      - Tue, 16 Jul 2019 09:55:36 GMT
       Pragma:
       - no-cache
       Server:
@@ -47,9 +47,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '600'
       X-Ratelimit-Remain:
-      - '586'
+      - '592'
       X-Ratelimit-Reset:
-      - '1561969740'
+      - '1563270937'
       X-Ratelimit-Window:
       - 5m
       Content-Length:
@@ -60,5 +60,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"errors":[{"type":"ch:service","error":"company-profile-not-found"}]}'
     http_version: 
-  recorded_at: Mon, 01 Jul 2019 08:27:07 GMT
+  recorded_at: Tue, 16 Jul 2019 09:55:34 GMT
 recorded_with: VCR 4.0.0
