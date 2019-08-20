@@ -191,7 +191,7 @@ module WasteCarriersEngine
     end
 
     def remove_invalid_phone_numbers
-      validator = PhoneNumberValidator.new(attributes: :phone_number)
+      validator = DefraRuby::Validators::PhoneNumberValidator.new(attributes: :phone_number)
       return if validator.validate_each(self, :phone_number, phone_number)
 
       self.phone_number = nil
