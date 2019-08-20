@@ -44,7 +44,12 @@ module WasteCarriersEngine
       "#{first_name} #{last_name}"
     end
 
-    validates :business_type, "waste_carriers_engine/business_type": true
+    validates :business_type, "defra_ruby/validators/business_type": {
+      messages: {
+        inclusion: I18n.t("activemodel.errors.models.waste_carriers_engine/check_your_answers_form"\
+                          ".attributes.business_type.inclusion")
+      }
+    }
     validates :company_name, "waste_carriers_engine/company_name": true
     validates :company_no, "waste_carriers_engine/company_no": true
     validates :contact_address, "waste_carriers_engine/address": true
