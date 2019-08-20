@@ -52,7 +52,7 @@ module WasteCarriersEngine
     validates :declared_convictions, "waste_carriers_engine/yes_no": true
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true
     validates :location, "waste_carriers_engine/location": true
-    validates :phone_number, "waste_carriers_engine/phone_number": true
+    validates :phone_number, "defra_ruby/validators/phone_number": true
     validates :registered_address, "waste_carriers_engine/address": true
     validates :registration_type, "waste_carriers_engine/registration_type": true
     validate :should_be_renewed
