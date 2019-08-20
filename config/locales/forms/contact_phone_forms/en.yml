@@ -13,10 +13,6 @@ en:
       models:
         waste_carriers_engine/contact_phone_form:
           attributes:
-            phone_number:
-              blank: "Enter a telephone number"
-              invalid_format: "Enter a valid telephone number"
-              too_long: "Check the number you entered - it should have no more than than 15 characters"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
