@@ -21,7 +21,7 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :company_no, "waste_carriers_engine/company_no": true
+    validates :company_no, "defra_ruby/validators/companies_house_number": true
 
     private
 

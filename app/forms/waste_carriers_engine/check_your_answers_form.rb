@@ -46,7 +46,7 @@ module WasteCarriersEngine
 
     validates :business_type, "waste_carriers_engine/business_type": true
     validates :company_name, "waste_carriers_engine/company_name": true
-    validates :company_no, "waste_carriers_engine/company_no": true
+    validates :company_no, "defra_ruby/validators/companies_house_number": true, if: :company_no_required?
     validates :contact_address, "waste_carriers_engine/address": true
     validates :contact_email, "waste_carriers_engine/email": true
     validates :declared_convictions, "waste_carriers_engine/yes_no": true
@@ -77,6 +77,10 @@ module WasteCarriersEngine
 
       errors.add(:company_no, :changed)
       false
+    end
+
+    def company_no_required?
+      @transient_registration.company_no_required?
     end
   end
 end
