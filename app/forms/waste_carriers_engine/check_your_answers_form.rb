@@ -54,7 +54,14 @@ module WasteCarriersEngine
     validates :company_name, "waste_carriers_engine/company_name": true
     validates :company_no, "defra_ruby/validators/companies_house_number": true, if: :company_no_required?
     validates :contact_address, "waste_carriers_engine/address": true
-    validates :contact_email, "waste_carriers_engine/email": true
+    validates :contact_email, "defra_ruby/validators/email": {
+      messages: {
+        blank: I18n.t("activemodel.errors.models.waste_carriers_engine/check_your_answers_form"\
+                      ".attributes.contact_email.blank"),
+        invalid_format: I18n.t("activemodel.errors.models.waste_carriers_engine/check_your_answers_form"\
+                               ".attributes.contact_email.invalid_format")
+      }
+    }
     validates :declared_convictions, "waste_carriers_engine/yes_no": true
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true
     validates :location, "defra_ruby/validators/location": {
