@@ -82,6 +82,7 @@ en:
           not_enough_relevant_people:
             one: "You must add the details of at least one person with a relevant conviction"
             other: "You must add the details of at least %{count} people with a relevant conviction"
+          too_many_main_people: "You have added too many main people for this business type"
           attributes:
             business_type:
               inclusion: "Select a valid business or organisation type"

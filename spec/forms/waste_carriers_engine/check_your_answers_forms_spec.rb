@@ -263,15 +263,15 @@ module WasteCarriersEngine
             check_your_answers_form.main_people = [main_person_a, main_person_b]
           end
 
-          context "when the business type is not sole_trader" do
+          context "when the business type is not soleTrader" do
             it "is valid" do
               expect(check_your_answers_form).to be_valid
             end
           end
 
-          context "when the business type is sole_trader" do
+          context "when the business type is soleTrader" do
             before do
-              check_your_answers_form.business_type = "sole_trader"
+              check_your_answers_form.business_type = "soleTrader"
             end
 
             it "is not valid" do

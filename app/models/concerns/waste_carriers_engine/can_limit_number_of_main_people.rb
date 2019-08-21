@@ -10,6 +10,13 @@ module WasteCarriersEngine
       true
     end
 
+    def not_too_many_main_people?
+      return true if maximum_main_people.nil?
+      return false if number_of_existing_main_people > maximum_main_people
+
+      true
+    end
+
     def can_only_have_one_main_person?
       return false unless maximum_main_people
 
