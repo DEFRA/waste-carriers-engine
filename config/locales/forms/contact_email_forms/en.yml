@@ -14,9 +14,6 @@ en:
       models:
         waste_carriers_engine/contact_email_form:
           attributes:
-            contact_email:
-              blank: "Enter an email address"
-              invalid_format: "Enter a valid email address - there’s a mistake in that one"
             confirmed_email:
               blank: "Enter your email address again to confirm it"
               invalid_format: "Enter a valid confirmed email address - there’s a mistake in that one"
