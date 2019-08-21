@@ -115,10 +115,6 @@ en:
               inclusion: "State whether you have any convictions to declare"
             location:
               inclusion: "Select a valid principal place of business"
-            phone_number:
-              blank: "Enter a contact telephone number"
-              invalid_format: "Enter a valid contact telephone number"
-              too_long: "Check the number you entered - it should have no more than than 15 characters"
             registered_address:
               blank: "Provide an address for the business or organisation"
               should_be_overseas: "Provide an overseas address for the business or organisation"
