@@ -46,6 +46,7 @@ module WasteCarriersEngine
 
     validates :business_type, "defra_ruby/validators/business_type": {
       messages: {
+        allow_overseas: true,
         inclusion: I18n.t("activemodel.errors.models.waste_carriers_engine/check_your_answers_form"\
                           ".attributes.business_type.inclusion")
       }

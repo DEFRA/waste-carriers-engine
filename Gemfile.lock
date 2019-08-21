@@ -84,7 +84,7 @@ GEM
     debug_inspector (0.0.3)
     defra_ruby_style (0.1.2)
       rubocop
-    defra_ruby_validators (2.0.0)
+    defra_ruby_validators (2.1.0)
       activemodel
       os_map_ref
       phonelib
