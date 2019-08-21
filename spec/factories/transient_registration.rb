@@ -78,6 +78,7 @@ FactoryBot.define do
 
     trait :has_required_overseas_data do
       location { "overseas" }
+      business_type { "overseas" }
       declared_convictions { "no" }
       temp_cards { 1 }
 
