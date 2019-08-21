@@ -40,9 +40,7 @@ Gem::Specification.new do |s|
 
   # Validations
   s.add_dependency "defra_ruby_validators"
-  s.add_dependency "phonelib"
   s.add_dependency "uk_postcode"
-  s.add_dependency "validates_email_format_of"
 
   # Used to build and parse XML requests
   s.add_dependency "nokogiri"
