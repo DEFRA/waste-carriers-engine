@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe CheckYourAnswersForm, type: :model do
     before do
-      allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:active)
+      allow_any_instance_of(DefraRuby::Validators::CompaniesHouseService).to receive(:status).and_return(:active)
     end
 
     describe "#submit" do

@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     describe "POST registration_number_forms_path" do
       before do
-        allow_any_instance_of(CompaniesHouseService).to receive(:status).and_return(:active)
+        allow_any_instance_of(DefraRuby::Validators::CompaniesHouseService).to receive(:status).and_return(:active)
       end
 
       context "when a valid user is signed in" do

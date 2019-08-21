@@ -89,13 +89,6 @@ en:
             company_name:
               blank: "Enter a trading name"
               too_long: "Enter a shorter trading name with no more than 255 characters"
-            company_no:
-              blank: "Enter a company registration number"
-              changed: "If your Companies House number has changed, you cannot renew and must make a new registration"
-              inactive: "Your company must be registered as an active company"
-              error: "There was an error with Companies House"
-              invalid_format: "Enter a valid number - it should have 8 digits, or 2 letters followed by 6 digits. If your number has only 7 digits, enter it with a zero at the start."
-              not_found: "Companies House couldn't find a company with this number"
             contact_address:
               blank: "Provide a contact address"
               should_be_overseas: "Provide an overseas contact address"
