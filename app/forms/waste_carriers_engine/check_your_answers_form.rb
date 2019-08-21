@@ -57,7 +57,13 @@ module WasteCarriersEngine
     validates :contact_email, "waste_carriers_engine/email": true
     validates :declared_convictions, "waste_carriers_engine/yes_no": true
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true
-    validates :location, "waste_carriers_engine/location": true
+    validates :location, "defra_ruby/validators/location": {
+      allow_overseas: true,
+      messages: {
+        inclusion: I18n.t("activemodel.errors.models.waste_carriers_engine/check_your_answers_form"\
+                          ".attributes.location.inclusion")
+      }
+    }
     validates :phone_number, "defra_ruby/validators/phone_number": true
     validates :registered_address, "waste_carriers_engine/address": true
     validates :registration_type, "waste_carriers_engine/registration_type": true

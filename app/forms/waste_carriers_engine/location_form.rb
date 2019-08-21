@@ -20,6 +20,6 @@ module WasteCarriersEngine
       super(attributes, params[:reg_identifier])
     end
 
-    validates :location, "waste_carriers_engine/location": true
+    validates :location, "defra_ruby/validators/location": { allow_overseas: true }
   end
 end
