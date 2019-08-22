@@ -9,10 +9,10 @@ http_interactions:
     headers:
       Accept:
       - "*/*"
-      Accept-Encoding:
-      - gzip, deflate
       User-Agent:
-      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.2p198
+      - rest-client/2.1.0 (linux-gnu x86_64) ruby/2.4.2p198
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
       - localhost:8005
   response:
@@ -21,7 +21,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Mon, 12 Aug 2019 08:51:09 GMT
+      - Thu, 22 Aug 2019 15:28:09 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -30,5 +30,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"error":{"statuscode":400,"message":"Parameters are not valid"}}'
     http_version: 
-  recorded_at: Mon, 12 Aug 2019 08:51:09 GMT
+  recorded_at: Thu, 22 Aug 2019 15:28:09 GMT
 recorded_with: VCR 4.0.0

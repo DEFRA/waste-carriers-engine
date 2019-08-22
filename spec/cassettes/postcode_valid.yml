@@ -9,10 +9,10 @@ http_interactions:
     headers:
       Accept:
       - "*/*"
-      Accept-Encoding:
-      - gzip, deflate
       User-Agent:
-      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.2p198
+      - rest-client/2.1.0 (linux-gnu x86_64) ruby/2.4.2p198
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
       - localhost:8005
   response:
@@ -21,19 +21,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Aug 2019 08:51:06 GMT
+      - Thu, 22 Aug 2019 15:28:07 GMT
       Content-Type:
       - application/json
       Vary:
       - Accept-Encoding
-      Content-Encoding:
-      - gzip
       Content-Length:
       - '400'
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAM1SXU/CMBT9K0uf98BAGOFtY42QQGfG0CDhoWwFGrd26VqVGP+7dzKRL18MJj407T339n6ce+ZvKJeCPzGFeqh103CcDrKRKZQ4tDMuWIl6c4TJ/TAKyRiT2PJuMenPwBtgj+BoZkWhF6CFjbR8qX770XAShyMIKGSpE5myCpw4VtsbAMhoqblYV2Xa3WajDZCQSm92mOM23UYXsEQaodUWIDBSVjCRMqFHMqEZ16dwvFHSrDcrqtjOQ9OcC15qRTV/Zp5i9KixrErjGb2RCpJNi5RqFsDZfVZyS7Mx5dmpo6BKc5qBcc6HbQ3CaPgYErinE2xbh+zYVl0bHnsiSrP0Dc9SGJzQvC6xPEaOcoK76vhr0jrkaAs2kmpNYXKYW4o64uLy9oVMvvwUQb2vcLXiCfPl66EDiIbRc2D6u9NUmmXGgkubebfP1OWeqMs9VFc8iIb32IowwQ+eP8IT627Uv47AnFbjTGCdrvvvBXaRkiuJ6rc6+mlNfyqlxQdAZbDRqgQAAA==
+      string: '[{"moniker":"340116","uprn":"340116","lines":["ENVIRONMENT AGENCY","DEANERY
+        ROAD"],"town":"BRISTOL","postcode":"BS1 5AH","easting":"358205","northing":"172708","country":"","dependentLocality":"","dependentThroughfare":"","administrativeArea":"BRISTOL","localAuthorityUpdateDate":"","royalMailUpdateDate":"","partial":"ENVIRONMENT
+        AGENCY, HORIZON HOUSE, DEANERY ROAD, BRISTOL, BS1 5AH","subBuildingName":"","buildingName":"HORIZON
+        HOUSE","thoroughfareName":"DEANERY ROAD","organisationName":"ENVIRONMENT AGENCY","buildingNumber":"","postOfficeBoxNumber":"","departmentName":"","doubleDependentLocality":""},{"moniker":"340117","uprn":"340117","lines":["THRIVE
+        RENEWABLES PLC","DEANERY ROAD"],"town":"BRISTOL","postcode":"BS1 5AH","easting":"358130","northing":"172687","country":"","dependentLocality":"","dependentThroughfare":"","administrativeArea":"BRISTOL","localAuthorityUpdateDate":"","royalMailUpdateDate":"","partial":"THRIVE
+        RENEWABLES PLC, DEANERY ROAD, BRISTOL, BS1 5AH","subBuildingName":"","buildingName":"","thoroughfareName":"DEANERY
+        ROAD","organisationName":"THRIVE RENEWABLES PLC","buildingNumber":"","postOfficeBoxNumber":"","departmentName":"","doubleDependentLocality":""}]'
     http_version: 
-  recorded_at: Mon, 12 Aug 2019 08:51:09 GMT
+  recorded_at: Thu, 22 Aug 2019 15:28:08 GMT
 recorded_with: VCR 4.0.0

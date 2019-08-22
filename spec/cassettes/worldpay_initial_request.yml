@@ -10,7 +10,7 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1565599842">
+            <order orderCode="1566487616">
               <description>Your Waste Carrier Registration CBDU1</description>
               <amount currencyCode="GBP" value="10500" exponent="2"/>
               <orderContent>Waste Carrier Registration renewal: CBDU1 for Acme Waste</orderContent>
@@ -39,14 +39,14 @@ http_interactions:
     headers:
       Accept:
       - "*/*"
-      Accept-Encoding:
-      - gzip, deflate
       User-Agent:
-      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.2p198
+      - rest-client/2.1.0 (linux-gnu x86_64) ruby/2.4.2p198
       Authorization:
       - Basic <API_KEY>
       Content-Length:
       - '1126'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
       - secure-test.worldpay.com
   response:
@@ -55,7 +55,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Aug 2019 08:50:47 GMT
+      - Thu, 22 Aug 2019 15:27:00 GMT
       Server:
       - Apache
       Content-Length:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1565599842"><reference id="3145983235">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1565599842</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1566487616"><reference id="3147113801">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1566487616</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Mon, 12 Aug 2019 08:50:43 GMT
+  recorded_at: Thu, 22 Aug 2019 15:26:57 GMT
 recorded_with: VCR 4.0.0
