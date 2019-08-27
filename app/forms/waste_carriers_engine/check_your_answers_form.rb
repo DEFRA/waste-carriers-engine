@@ -9,6 +9,19 @@ module WasteCarriersEngine
                   :declared_convictions, :first_name, :last_name, :location, :main_people, :phone_number,
                   :registered_address, :registration_type, :relevant_people, :tier
 
+    # This has to be before the validations are called, otherwise it fails.
+    def self.custom_error_messages(attribute, *errors)
+      messages = {}
+
+      errors.each do |error|
+        messages[attribute] = I18n.t("activemodel.errors.models."\
+                                     "waste_carriers_engine/check_your_answers_form"\
+                                     ".attributes.#{attribute}.#{error}")
+      end
+
+      messages
+    end
+
     def initialize(transient_registration)
       super
       self.business_type = @transient_registration.business_type
@@ -46,19 +59,19 @@ module WasteCarriersEngine
 
     validates :business_type, "defra_ruby/validators/business_type": {
       allow_overseas: true,
-      messages: -> { custom_error_messages(:business_type, :inclusion) }
+      messages: custom_error_messages(:business_type, :inclusion)
     }
     validates :company_name, "waste_carriers_engine/company_name": true
     validates :company_no, "defra_ruby/validators/companies_house_number": true, if: :company_no_required?
     validates :contact_address, "waste_carriers_engine/address": true
     validates :contact_email, "defra_ruby/validators/email": {
-      messages: -> { custom_error_messages(:contact_email, :blank, :invalid_format) }
+      messages: custom_error_messages(:contact_email, :blank, :invalid_format)
     }
     validates :declared_convictions, "waste_carriers_engine/yes_no": true
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true
     validates :location, "defra_ruby/validators/location": {
       allow_overseas: true,
-      messages: -> { custom_error_messages(:location, :inclusion) }
+      messages: custom_error_messages(:location, :inclusion)
     }
     validates :phone_number, "defra_ruby/validators/phone_number": true
     validates :registered_address, "waste_carriers_engine/address": true
@@ -89,18 +102,6 @@ module WasteCarriersEngine
 
     def company_no_required?
       @transient_registration.company_no_required?
-    end
-
-    def custom_error_messages(attribute, *errors)
-      messages = {}
-
-      errors.each do |error|
-        messages[attribute] = I18n.t("activemodel.errors.models."\
-                                     "waste_carriers_engine/check_your_answers_form"\
-                                     ".attributes.#{attribute}.#{error}")
-      end
-
-      messages
     end
   end
 end
