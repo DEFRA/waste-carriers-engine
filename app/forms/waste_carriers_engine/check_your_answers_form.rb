@@ -14,7 +14,7 @@ module WasteCarriersEngine
       messages = {}
 
       errors.each do |error|
-        messages[attribute] = I18n.t("activemodel.errors.models."\
+        messages[error] = I18n.t("activemodel.errors.models."\
                                      "waste_carriers_engine/check_your_answers_form"\
                                      ".attributes.#{attribute}.#{error}")
       end

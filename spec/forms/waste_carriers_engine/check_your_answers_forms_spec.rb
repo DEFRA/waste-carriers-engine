@@ -375,17 +375,10 @@ module WasteCarriersEngine
     end
 
     describe "custom_error_messages" do
-      context "when the form is not valid" do
-        let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
+      it "should get the correct error" do
+        hash = { inclusion: "Select a valid principal place of business" }
 
-        before { check_your_answers_form.contact_email = "foo" }
-
-        it "should get the correct error" do
-          message = "Enter a valid contact email address - there’s a mistake in that one"
-          check_your_answers_form.valid?
-
-          expect(check_your_answers_form.errors[:contact_email]).to eq(message)
-        end
+        expect(described_class.custom_error_messages(:location, :inclusion)).to eq(hash)
       end
     end
   end
