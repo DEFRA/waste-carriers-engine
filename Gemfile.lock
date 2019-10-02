@@ -82,7 +82,7 @@ GEM
     debug_inspector (0.0.3)
     defra_ruby_style (0.1.2)
       rubocop
-    defra_ruby_validators (2.1.2)
+    defra_ruby_validators (2.2.0)
       activemodel
       os_map_ref
       phonelib
@@ -159,7 +159,7 @@ GEM
     mime-types-data (3.2019.0904)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
-    minitest (5.12.0)
+    minitest (5.12.2)
     mongo (2.6.2)
       bson (>= 4.3.0, < 5.0.0)
     mongoid (5.2.1)
