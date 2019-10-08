@@ -5,8 +5,9 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe RegisterInNorthernIrelandForm, type: :model do
     describe "#submit" do
+      let(:register_in_northern_ireland_form) { build(:register_in_northern_ireland_form, :has_required_data) }
+
       context "when the form is valid" do
-        let(:register_in_northern_ireland_form) { build(:register_in_northern_ireland_form, :has_required_data) }
         let(:valid_params) do
           {
             reg_identifier: register_in_northern_ireland_form.reg_identifier
@@ -19,11 +20,12 @@ module WasteCarriersEngine
       end
 
       context "when the form is not valid" do
-        let(:register_in_northern_ireland_form) { build(:register_in_northern_ireland_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        before do
+          expect(register_in_northern_ireland_form).to receive(:valid?).and_return(false)
+        end
 
         it "should not submit" do
-          expect(register_in_northern_ireland_form.submit(invalid_params)).to eq(false)
+          expect(register_in_northern_ireland_form.submit({})).to eq(false)
         end
       end
     end

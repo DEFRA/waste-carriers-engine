@@ -17,7 +17,7 @@ module WasteCarriersEngine
       # Set the business type to overseas when required as we use this for microcopy
       attributes[:business_type] = "overseas" if location == "overseas"
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :location, "defra_ruby/validators/location": { allow_overseas: true }
