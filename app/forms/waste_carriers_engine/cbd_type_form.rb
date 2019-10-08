@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.registration_type = params[:registration_type]
       attributes = { registration_type: registration_type }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :registration_type, "waste_carriers_engine/registration_type": true

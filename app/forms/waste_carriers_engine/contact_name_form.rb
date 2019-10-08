@@ -19,7 +19,7 @@ module WasteCarriersEngine
         last_name: last_name
       }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true

@@ -18,7 +18,7 @@ module WasteCarriersEngine
       self.declaration = params[:declaration].to_i
       attributes = { declaration: declaration }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :declaration, inclusion: { in: [1] }

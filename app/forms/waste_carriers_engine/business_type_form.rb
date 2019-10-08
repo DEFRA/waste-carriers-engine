@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.business_type = params[:business_type]
       attributes = { business_type: business_type }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :business_type, "defra_ruby/validators/business_type": { allow_overseas: true }

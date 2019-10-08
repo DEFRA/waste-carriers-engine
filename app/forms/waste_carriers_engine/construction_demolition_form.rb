@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.construction_waste = params[:construction_waste]
       attributes = { construction_waste: construction_waste }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :construction_waste, "waste_carriers_engine/yes_no": true

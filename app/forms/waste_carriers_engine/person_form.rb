@@ -25,7 +25,7 @@ module WasteCarriersEngine
                      {}
                    end
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validate :old_enough?

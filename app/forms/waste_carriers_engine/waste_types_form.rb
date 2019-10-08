@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.only_amf = params[:only_amf]
       attributes = { only_amf: only_amf }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :only_amf, "waste_carriers_engine/yes_no": true

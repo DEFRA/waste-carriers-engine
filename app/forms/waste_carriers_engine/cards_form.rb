@@ -24,7 +24,7 @@ module WasteCarriersEngine
                         end
       attributes = { temp_cards: temp_cards }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates(

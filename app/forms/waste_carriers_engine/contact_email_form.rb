@@ -17,7 +17,7 @@ module WasteCarriersEngine
 
       attributes = { contact_email: contact_email }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :contact_email, :confirmed_email, "defra_ruby/validators/email": true

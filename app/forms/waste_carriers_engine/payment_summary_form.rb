@@ -23,7 +23,7 @@ module WasteCarriersEngine
       self.temp_payment_method = params[:temp_payment_method]
       attributes = { temp_payment_method: temp_payment_method }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :temp_payment_method, inclusion: { in: %w[card bank_transfer] }

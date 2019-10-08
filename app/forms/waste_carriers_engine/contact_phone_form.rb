@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.phone_number = params[:phone_number]
       attributes = { phone_number: phone_number }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :phone_number, "defra_ruby/validators/phone_number": true

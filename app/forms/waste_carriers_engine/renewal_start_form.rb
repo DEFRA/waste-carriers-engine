@@ -13,7 +13,7 @@ module WasteCarriersEngine
     def submit(params)
       attributes = {}
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
   end
 end

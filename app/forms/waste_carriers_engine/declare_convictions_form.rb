@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.declared_convictions = params[:declared_convictions]
       attributes = { declared_convictions: declared_convictions }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :declared_convictions, "waste_carriers_engine/yes_no": true

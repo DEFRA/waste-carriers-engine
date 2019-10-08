@@ -29,8 +29,7 @@ module WasteCarriersEngine
       @transient_registration = transient_registration
     end
 
-    # TODO: Remove `reg_identifier` param
-    def submit(attributes, _reg_identifier = nil)
+    def submit(attributes)
       attributes = strip_whitespace(attributes)
 
       transient_registration.assign_attributes(attributes)

@@ -18,7 +18,7 @@ module WasteCarriersEngine
       self.company_no = process_company_no(company_no) if company_no.present?
       attributes = { company_no: company_no }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :company_no, "defra_ruby/validators/companies_house_number": true

@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.is_main_service = params[:is_main_service]
       attributes = { is_main_service: is_main_service }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :is_main_service, "waste_carriers_engine/yes_no": true

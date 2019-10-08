@@ -16,7 +16,7 @@ module WasteCarriersEngine
       self.company_name = params[:company_name]
       attributes = { company_name: company_name }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :company_name, "waste_carriers_engine/company_name": true

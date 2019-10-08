@@ -19,7 +19,7 @@ module WasteCarriersEngine
       # While we won't proceed if the postcode isn't valid, we always save it in case it's needed for manual entry
       @transient_registration.update_attributes(attributes)
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :temp_company_postcode, "waste_carriers_engine/postcode": true

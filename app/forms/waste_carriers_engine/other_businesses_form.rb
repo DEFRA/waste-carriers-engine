@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.other_businesses = params[:other_businesses]
       attributes = { other_businesses: other_businesses }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     validates :other_businesses, "waste_carriers_engine/yes_no": true
