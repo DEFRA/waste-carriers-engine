@@ -43,7 +43,7 @@ module WasteCarriersEngine
       valid?
     end
 
-    def submit(params)
+    def submit(_params)
       attributes = {}
 
       super(attributes)

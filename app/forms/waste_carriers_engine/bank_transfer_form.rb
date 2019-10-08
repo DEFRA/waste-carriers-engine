@@ -14,7 +14,7 @@ module WasteCarriersEngine
       self.total_to_pay = @transient_registration.total_to_pay
     end
 
-    def submit(params)
+    def submit(_params)
       # Assign the params for validation and pass them to the BaseForm method for updating
       attributes = {}
 
