@@ -17,7 +17,11 @@ module WasteCarriersEngine
       return false unless set_up_form(form_class, form, params[form][:reg_identifier])
 
       # Submit the form by getting the instance variable we just set
-      submit_form(instance_variable_get("@#{form}"), params[form])
+      if respond_to?(:transient_registration_attributes) # TODO: Temporary refactoring code.
+        submit_form(instance_variable_get("@#{form}"), transient_registration_attributes)
+      else
+        submit_form(instance_variable_get("@#{form}"), params[form])
+      end
     end
 
     def go_back
