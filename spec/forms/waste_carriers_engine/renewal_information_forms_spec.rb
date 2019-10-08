@@ -21,7 +21,7 @@ module WasteCarriersEngine
         end
 
         it "should not submit" do
-          expect(renewal_information_form.submit(valid_params)).to eq(true)
+          expect(renewal_information_form.submit({})).to eq(false)
         end
       end
     end
