@@ -4,9 +4,11 @@ module WasteCarriersEngine
   class OtherBusinessesForm < BaseForm
     attr_accessor :other_businesses
 
+    validates :other_businesses, "waste_carriers_engine/yes_no": true
+
     def initialize(transient_registration)
       super
-      self.other_businesses = @transient_registration.other_businesses
+      self.other_businesses = transient_registration.other_businesses
     end
 
     def submit(params)
@@ -16,7 +18,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :other_businesses, "waste_carriers_engine/yes_no": true
   end
 end

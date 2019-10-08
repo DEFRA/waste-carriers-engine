@@ -4,9 +4,11 @@ module WasteCarriersEngine
   class LocationForm < BaseForm
     attr_accessor :location
 
+    validates :location, "defra_ruby/validators/location": { allow_overseas: true }
+
     def initialize(transient_registration)
       super
-      self.location = @transient_registration.location
+      self.location = transient_registration.location
     end
 
     def submit(params)
@@ -19,7 +21,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :location, "defra_ruby/validators/location": { allow_overseas: true }
   end
 end

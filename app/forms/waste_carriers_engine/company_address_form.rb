@@ -8,8 +8,8 @@ module WasteCarriersEngine
     def initialize(transient_registration)
       super
       # We only use this for the correct microcopy
-      self.business_type = @transient_registration.business_type
-      self.temp_company_postcode = @transient_registration.temp_company_postcode
+      self.business_type = transient_registration.business_type
+      self.temp_company_postcode = transient_registration.temp_company_postcode
 
       look_up_addresses
       preselect_existing_address
@@ -22,7 +22,7 @@ module WasteCarriersEngine
     end
 
     def saved_address
-      @transient_registration.registered_address
+      transient_registration.registered_address
     end
 
     def address_type

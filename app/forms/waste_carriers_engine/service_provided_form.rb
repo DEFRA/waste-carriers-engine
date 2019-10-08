@@ -4,9 +4,11 @@ module WasteCarriersEngine
   class ServiceProvidedForm < BaseForm
     attr_accessor :is_main_service
 
+    validates :is_main_service, "waste_carriers_engine/yes_no": true
+
     def initialize(transient_registration)
       super
-      self.is_main_service = @transient_registration.is_main_service
+      self.is_main_service = transient_registration.is_main_service
     end
 
     def submit(params)
@@ -16,7 +18,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :is_main_service, "waste_carriers_engine/yes_no": true
   end
 end

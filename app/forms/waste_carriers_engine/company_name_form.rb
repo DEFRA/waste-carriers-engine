@@ -4,11 +4,13 @@ module WasteCarriersEngine
   class CompanyNameForm < BaseForm
     attr_accessor :business_type, :company_name
 
+    validates :company_name, "waste_carriers_engine/company_name": true
+
     def initialize(transient_registration)
       super
       # We only use this for the correct microcopy
-      self.business_type = @transient_registration.business_type
-      self.company_name = @transient_registration.company_name
+      self.business_type = transient_registration.business_type
+      self.company_name = transient_registration.company_name
     end
 
     def submit(params)
@@ -18,7 +20,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :company_name, "waste_carriers_engine/company_name": true
   end
 end

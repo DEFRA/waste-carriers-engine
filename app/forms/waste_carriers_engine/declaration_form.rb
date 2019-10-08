@@ -8,9 +8,11 @@ module WasteCarriersEngine
       false
     end
 
+    validates :declaration, inclusion: { in: [1] }
+
     def initialize(transient_registration)
       super
-      self.declaration = @transient_registration.declaration
+      self.declaration = transient_registration.declaration
     end
 
     def submit(params)
@@ -20,7 +22,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :declaration, inclusion: { in: [1] }
   end
 end

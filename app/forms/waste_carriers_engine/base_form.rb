@@ -18,6 +18,9 @@ module WasteCarriersEngine
       true
     end
 
+    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
+    validate :transient_registration_valid?
+
     def initialize(transient_registration)
       # Get values from transient registration so form will be pre-filled
       @transient_registration = transient_registration
@@ -39,9 +42,6 @@ module WasteCarriersEngine
         false
       end
     end
-
-    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
-    validate :transient_registration_valid?
 
     private
 

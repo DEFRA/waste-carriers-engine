@@ -22,41 +22,6 @@ module WasteCarriersEngine
       messages
     end
 
-    def initialize(transient_registration)
-      super
-      self.business_type = @transient_registration.business_type
-      self.company_name = @transient_registration.company_name
-      self.company_no = @transient_registration.company_no
-      self.contact_address = @transient_registration.contact_address
-      self.contact_email = @transient_registration.contact_email
-      self.declared_convictions = @transient_registration.declared_convictions
-      self.first_name = @transient_registration.first_name
-      self.last_name = @transient_registration.last_name
-      self.location = @transient_registration.location
-      self.main_people = @transient_registration.main_people
-      self.phone_number = @transient_registration.phone_number
-      self.registered_address = @transient_registration.registered_address
-      self.registration_type = @transient_registration.registration_type
-      self.relevant_people = @transient_registration.relevant_people
-      self.tier = @transient_registration.tier
-
-      valid?
-    end
-
-    def submit(params)
-      attributes = {}
-
-      super(attributes, params[:reg_identifier])
-    end
-
-    def registration_type_changed?
-      @transient_registration.registration_type_changed?
-    end
-
-    def contact_name
-      "#{first_name} #{last_name}"
-    end
-
     validates :business_type, "defra_ruby/validators/business_type": {
       allow_overseas: true,
       messages: custom_error_messages(:business_type, :inclusion)
@@ -80,6 +45,41 @@ module WasteCarriersEngine
 
     validates_with KeyPeopleValidator
 
+    def initialize(transient_registration)
+      super
+      self.business_type = transient_registration.business_type
+      self.company_name = transient_registration.company_name
+      self.company_no = transient_registration.company_no
+      self.contact_address = transient_registration.contact_address
+      self.contact_email = transient_registration.contact_email
+      self.declared_convictions = transient_registration.declared_convictions
+      self.first_name = transient_registration.first_name
+      self.last_name = transient_registration.last_name
+      self.location = transient_registration.location
+      self.main_people = transient_registration.main_people
+      self.phone_number = transient_registration.phone_number
+      self.registered_address = transient_registration.registered_address
+      self.registration_type = transient_registration.registration_type
+      self.relevant_people = transient_registration.relevant_people
+      self.tier = transient_registration.tier
+
+      valid?
+    end
+
+    def submit(params)
+      attributes = {}
+
+      super(attributes, params[:reg_identifier])
+    end
+
+    def registration_type_changed?
+      transient_registration.registration_type_changed?
+    end
+
+    def contact_name
+      "#{first_name} #{last_name}"
+    end
+
     private
 
     def should_be_renewed
@@ -87,21 +87,21 @@ module WasteCarriersEngine
     end
 
     def business_type_change_valid?
-      return true if @transient_registration.business_type_change_valid?
+      return true if transient_registration.business_type_change_valid?
 
       errors.add(:business_type, :invalid_change)
       false
     end
 
     def same_company_no?
-      return true unless @transient_registration.company_no_changed?
+      return true unless transient_registration.company_no_changed?
 
       errors.add(:company_no, :changed)
       false
     end
 
     def company_no_required?
-      @transient_registration.company_no_required?
+      transient_registration.company_no_required?
     end
   end
 end

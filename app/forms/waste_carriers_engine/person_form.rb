@@ -5,6 +5,8 @@ module WasteCarriersEngine
     attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :dob
     attr_accessor :new_person
 
+    validate :old_enough?
+
     def initialize(transient_registration)
       super
     end
@@ -27,8 +29,6 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validate :old_enough?
 
     # Used to switch on usage of the :position attribute for validation and form-filling
     def position?

@@ -4,9 +4,11 @@ module WasteCarriersEngine
   class BusinessTypeForm < BaseForm
     attr_accessor :business_type
 
+    validates :business_type, "defra_ruby/validators/business_type": { allow_overseas: true }
+
     def initialize(transient_registration)
       super
-      self.business_type = @transient_registration.business_type
+      self.business_type = transient_registration.business_type
     end
 
     def submit(params)
@@ -16,7 +18,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :business_type, "defra_ruby/validators/business_type": { allow_overseas: true }
   end
 end
