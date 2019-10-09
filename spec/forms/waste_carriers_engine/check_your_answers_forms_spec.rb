@@ -9,21 +9,22 @@ module WasteCarriersEngine
     end
 
     describe "#submit" do
+      let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
       context "when the form is valid" do
-        let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
         let(:valid_params) { { reg_identifier: check_your_answers_form.reg_identifier } }
 
         it "should submit" do
-          expect(check_your_answers_form.submit(valid_params)).to eq(true)
+          expect(check_your_answers_form.submit(valid_params)).to be_truthy
         end
       end
 
       context "when the form is not valid" do
-        let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        before do
+          expect(check_your_answers_form).to receive(:valid?).and_return(false)
+        end
 
         it "should not submit" do
-          expect(check_your_answers_form.submit(invalid_params)).to eq(false)
+          expect(check_your_answers_form.submit({})).to be_falsey
         end
       end
     end

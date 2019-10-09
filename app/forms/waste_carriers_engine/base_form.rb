@@ -4,7 +4,17 @@ module WasteCarriersEngine
   class BaseForm
     include ActiveModel::Model
     include CanStripWhitespace
-    attr_accessor :reg_identifier, :transient_registration
+
+    extend ActiveModel::Callbacks
+
+    attr_reader :transient_registration
+
+    delegate :reg_identifier, to: :transient_registration
+
+    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
+    validate :transient_registration_valid?
+
+    define_model_callbacks :initialize
 
     # The standard behaviour for loading a form is to check whether the requested form matches the workflow_state for
     # the registration, and redirect to the saved workflow_state if it doesn't.
@@ -22,33 +32,29 @@ module WasteCarriersEngine
     validate :transient_registration_valid?
 
     def initialize(transient_registration)
-      # Get values from transient registration so form will be pre-filled
-      @transient_registration = transient_registration
-      self.reg_identifier = @transient_registration.reg_identifier
+      run_callbacks :initialize do
+        # Get values from transient registration so form will be pre-filled
+        @transient_registration = transient_registration
+      end
     end
 
-    def submit(attributes, reg_identifier)
-      # Additional attributes are set in individual form subclasses
-      self.reg_identifier = reg_identifier
-
+    # TODO: Remove `reg_identifier` param
+    def submit(attributes, _reg_identifier = nil)
       attributes = strip_whitespace(attributes)
 
-      # Update the transient registration with params from the registration if valid
-      if valid?
-        @transient_registration.update_attributes(attributes)
-        @transient_registration.save!
-        true
-      else
-        false
-      end
+      transient_registration.assign_attributes(attributes)
+
+      return transient_registration.save! if valid?
+
+      false
     end
 
     private
 
     def transient_registration_valid?
-      return if @transient_registration.valid?
+      return if transient_registration.valid?
 
-      @transient_registration.errors.each do |_attribute, message|
+      transient_registration.errors.each do |_attribute, message|
         errors[:base] << message
       end
     end

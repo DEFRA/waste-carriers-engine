@@ -5,8 +5,9 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe BankTransferForm, type: :model do
     describe "#submit" do
+      let(:bank_transfer_form) { build(:bank_transfer_form, :has_required_data) }
+
       context "when the form is valid" do
-        let(:bank_transfer_form) { build(:bank_transfer_form, :has_required_data) }
         let(:valid_params) { { reg_identifier: bank_transfer_form.reg_identifier } }
 
         it "should submit" do
@@ -15,11 +16,12 @@ module WasteCarriersEngine
       end
 
       context "when the form is not valid" do
-        let(:bank_transfer_form) { build(:bank_transfer_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        before do
+          expect(bank_transfer_form).to receive(:valid?).and_return(false)
+        end
 
         it "should not submit" do
-          expect(bank_transfer_form.submit(invalid_params)).to eq(false)
+          expect(bank_transfer_form.submit({})).to eq(false)
         end
       end
     end

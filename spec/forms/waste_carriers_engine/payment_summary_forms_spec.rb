@@ -29,30 +29,28 @@ module WasteCarriersEngine
       end
     end
 
-    context "when a valid transient registration exists" do
-      let(:payment_summary_form) { build(:payment_summary_form, :has_required_data) }
+    describe "#valid?" do
+      context "when a valid transient registration exists" do
+        let(:payment_summary_form) { build(:payment_summary_form, :has_required_data, temp_payment_method: temp_payment_method) }
 
-      describe "#temp_payment_method" do
-        context "when a temp_payment_method meets the requirements" do
+        context "when a temp_payment_method is bank_transfer" do
+          let(:temp_payment_method) { "bank_transfer" }
+
           it "is valid" do
             expect(payment_summary_form).to be_valid
           end
         end
 
-        context "when a temp_payment_method is blank" do
-          before(:each) do
-            payment_summary_form.reg_identifier = ""
-          end
+        context "when a temp_payment_method is card" do
+          let(:temp_payment_method) { "card" }
 
-          it "is not valid" do
-            expect(payment_summary_form).to_not be_valid
+          it "is valid" do
+            expect(payment_summary_form).to be_valid
           end
         end
 
-        context "when a temp_payment_method not an allowed string" do
-          before(:each) do
-            payment_summary_form.reg_identifier = "foo"
-          end
+        context "when a temp_payment_method is anything else" do
+          let(:temp_payment_method) { "I am a payment method, don't you know?" }
 
           it "is not valid" do
             expect(payment_summary_form).to_not be_valid

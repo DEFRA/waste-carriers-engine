@@ -10,21 +10,21 @@ module WasteCarriersEngine
       it "should strip excess whitespace from attributes" do
         attributes = { company_name: " test " }
 
-        base_form.submit(attributes, base_form.reg_identifier)
+        base_form.submit(attributes)
         expect(base_form.transient_registration.company_name).to eq("test")
       end
 
       it "should strip excess whitespace from attributes within an array" do
         attributes = { key_people: [build(:key_person, :main, first_name: " test ")] }
 
-        base_form.submit(attributes, base_form.reg_identifier)
+        base_form.submit(attributes)
         expect(base_form.transient_registration.main_people.first.first_name).to eq("test")
       end
 
       it "should strip excess whitespace from attributes within a hash" do
         attributes = { metaData: { revoked_reason: " test " } }
 
-        base_form.submit(attributes, base_form.reg_identifier)
+        base_form.submit(attributes)
         expect(base_form.transient_registration.metaData.revoked_reason).to eq("test")
       end
     end
@@ -39,8 +39,8 @@ module WasteCarriersEngine
       end
 
       context "when a reg_identifier is blank" do
-        before(:each) do
-          base_form.reg_identifier = ""
+        before do
+          base_form.transient_registration.reg_identifier = nil
         end
 
         it "is not valid" do
@@ -49,8 +49,8 @@ module WasteCarriersEngine
       end
 
       context "when a reg_identifier is in the wrong format" do
-        before(:each) do
-          base_form.reg_identifier = "foo"
+        before do
+          base_form.transient_registration.reg_identifier = "foo"
         end
 
         it "is not valid" do
@@ -68,9 +68,8 @@ module WasteCarriersEngine
         # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
         let(:form) { BusinessTypeForm.new(transient_registration) }
 
-        before(:each) do
+        before do
           # Make reg_identifier valid for the form, but not the transient object
-          form.reg_identifier = transient_registration.reg_identifier
           transient_registration.reg_identifier = "foo"
         end
 

@@ -21,7 +21,11 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:cards_form) { build(:cards_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) do
+          {
+            temp_cards: described_class::MAX_TEMP_CARDS + 1
+          }
+        end
 
         it "should not submit" do
           expect(cards_form.submit(invalid_params)).to eq(false)
