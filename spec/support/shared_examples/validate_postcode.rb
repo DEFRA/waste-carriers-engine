@@ -19,7 +19,12 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
     context "when a postcode is blank" do
       before do
         # Using 'send' because we have to pass in a field name (for example, instead of form.temp_company_postcode = ?)
-        form.send("#{field}=", "")
+        # TODO: Temporary refactoring code
+        if form.respond_to? "#{field}="
+          form.send("#{field}=", "")
+        else
+          form.transient_registration.send("#{field}=", "")
+        end
       end
 
       it "is not valid" do
@@ -30,7 +35,12 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
     context "when a postcode is in the wrong format" do
       before do
         # Using 'send' because we have to pass in a field name (for example, instead of form.temp_company_postcode = ?)
-        form.send("#{field}=", "foo")
+        # TODO: Temporary refactoring code
+        if form.respond_to? "#{field}="
+          form.send("#{field}=", "foo")
+        else
+          form.transient_registration.send("#{field}=", "foo")
+        end
       end
 
       it "is not valid" do
