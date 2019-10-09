@@ -11,7 +11,7 @@ module WasteCarriersEngine
     def initialize(transient_registration)
       super
 
-      self.total_to_pay = @transient_registration.total_to_pay
+      self.total_to_pay = transient_registration.total_to_pay
     end
 
     def submit(params)

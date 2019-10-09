@@ -6,29 +6,30 @@ module WasteCarriersEngine
 
     attr_accessor :business_type
 
+    validates_with MainPersonValidator
+
     def initialize(transient_registration)
       super
+
       # We only use this for the correct microcopy
-      self.business_type = @transient_registration.business_type
+      self.business_type = transient_registration.business_type
 
       # If there's only one main person, we can pre-fill the fields so users can easily edit them
-      prefill_form if can_only_have_one_main_person? && @transient_registration.main_people.present?
+      prefill_form if can_only_have_one_main_person? && transient_registration.main_people.present?
     end
 
     def person_type
       :key
     end
 
-    validates_with MainPersonValidator
-
     private
 
     def prefill_form
-      self.first_name = @transient_registration.main_people.first.first_name
-      self.last_name = @transient_registration.main_people.first.last_name
-      self.dob_day = @transient_registration.main_people.first.dob_day
-      self.dob_month = @transient_registration.main_people.first.dob_month
-      self.dob_year = @transient_registration.main_people.first.dob_year
+      self.first_name = transient_registration.main_people.first.first_name
+      self.last_name = transient_registration.main_people.first.last_name
+      self.dob_day = transient_registration.main_people.first.dob_day
+      self.dob_month = transient_registration.main_people.first.dob_month
+      self.dob_year = transient_registration.main_people.first.dob_year
     end
 
     # Adding the new main person directly to @transient_registration.key_people immediately updates the object,
@@ -39,9 +40,9 @@ module WasteCarriersEngine
       # If there's only one main person allowed, we want to discard any existing main people, but keep people with
       # relevant convictions. Otherwise, we copy all the key_people, regardless of type.
       existing_people = if can_only_have_one_main_person?
-                          @transient_registration.relevant_people
+                          transient_registration.relevant_people
                         else
-                          @transient_registration.key_people
+                          transient_registration.key_people
                         end
 
       existing_people.each do |person|

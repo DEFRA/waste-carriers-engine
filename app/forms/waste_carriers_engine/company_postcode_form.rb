@@ -4,11 +4,14 @@ module WasteCarriersEngine
   class CompanyPostcodeForm < PostcodeForm
     attr_accessor :business_type, :temp_company_postcode
 
+    validates :temp_company_postcode, "waste_carriers_engine/postcode": true
+
     def initialize(transient_registration)
       super
-      self.temp_company_postcode = @transient_registration.temp_company_postcode
+
+      self.temp_company_postcode = transient_registration.temp_company_postcode
       # We only use this for the correct microcopy
-      self.business_type = @transient_registration.business_type
+      self.business_type = transient_registration.business_type
     end
 
     def submit(params)
@@ -17,11 +20,9 @@ module WasteCarriersEngine
       attributes = { temp_company_postcode: temp_company_postcode }
 
       # While we won't proceed if the postcode isn't valid, we always save it in case it's needed for manual entry
-      @transient_registration.update_attributes(attributes)
+      transient_registration.update_attributes(attributes)
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :temp_company_postcode, "waste_carriers_engine/postcode": true
   end
 end

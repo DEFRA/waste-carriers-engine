@@ -4,6 +4,8 @@ module WasteCarriersEngine
   class ConvictionDetailsForm < PersonForm
     include CanLimitNumberOfRelevantPeople
 
+    validates_with RelevantPersonValidator
+
     def position?
       true
     end
@@ -12,8 +14,6 @@ module WasteCarriersEngine
       :relevant
     end
 
-    validates_with RelevantPersonValidator
-
     private
 
     # Adding the new person directly to @transient_registration.key_people immediately updates the object,
@@ -21,7 +21,7 @@ module WasteCarriersEngine
     def list_of_people_to_keep
       people = []
 
-      @transient_registration.key_people.each do |person|
+      transient_registration.key_people.each do |person|
         # We need to copy the person before adding to the array to avoid 'conflicting modifications' Mongo error (10151)
         people << person.clone
       end

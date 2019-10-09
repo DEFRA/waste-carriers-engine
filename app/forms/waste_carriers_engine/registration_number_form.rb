@@ -4,11 +4,14 @@ module WasteCarriersEngine
   class RegistrationNumberForm < BaseForm
     attr_accessor :company_no, :business_type
 
+    validates :company_no, "defra_ruby/validators/companies_house_number": true
+
     def initialize(transient_registration)
       super
-      self.company_no = @transient_registration.company_no
+
+      self.company_no = transient_registration.company_no
       # We only use this for the correct microcopy
-      self.business_type = @transient_registration.business_type
+      self.business_type = transient_registration.business_type
     end
 
     def submit(params)
@@ -20,8 +23,6 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :company_no, "defra_ruby/validators/companies_house_number": true
 
     private
 

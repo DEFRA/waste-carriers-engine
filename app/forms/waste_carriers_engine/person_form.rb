@@ -5,9 +5,7 @@ module WasteCarriersEngine
     attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :dob
     attr_accessor :new_person
 
-    def initialize(transient_registration)
-      super
-    end
+    validate :old_enough?
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
@@ -27,8 +25,6 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validate :old_enough?
 
     # Used to switch on usage of the :position attribute for validation and form-filling
     def position?

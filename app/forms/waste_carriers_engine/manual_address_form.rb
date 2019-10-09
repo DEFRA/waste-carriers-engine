@@ -8,15 +8,24 @@ module WasteCarriersEngine
     # We pass the following attributes in to create a new Address
     attr_accessor :house_number, :address_line_1, :address_line_2, :town_city, :postcode, :country
 
+    validates :house_number, presence: true, length: { maximum: 200 }
+    validates :address_line_1, presence: true, length: { maximum: 160 }
+    validates :address_line_2, length: { maximum: 70 }
+    validates :town_city, presence: true, length: { maximum: 30 }
+    validates :postcode, length: { maximum: 30 }
+    validates :country, presence: true, if: :overseas?
+    validates :country, length: { maximum: 50 }
+
     def initialize(transient_registration)
       super
+
       # We use this for the correct microcopy and to determine what fields to show
-      self.business_type = @transient_registration.business_type
+      self.business_type = transient_registration.business_type
 
       # Check if the user reached this page through an OS Places error
       # Then wipe the temp attribute as we only need it for routing
-      self.os_places_error = @transient_registration.temp_os_places_error
-      @transient_registration.update_attributes(temp_os_places_error: nil)
+      self.os_places_error = transient_registration.temp_os_places_error
+      transient_registration.update_attributes(temp_os_places_error: nil)
 
       # Prefill the existing address unless the temp_postcode has changed from the existing address's postcode
       # Otherwise, just fill in the temp_postcode
@@ -35,14 +44,6 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :house_number, presence: true, length: { maximum: 200 }
-    validates :address_line_1, presence: true, length: { maximum: 160 }
-    validates :address_line_2, length: { maximum: 70 }
-    validates :town_city, presence: true, length: { maximum: 30 }
-    validates :postcode, length: { maximum: 30 }
-    validates :country, presence: true, if: :overseas?
-    validates :country, length: { maximum: 50 }
 
     def overseas?
       business_type == "overseas"
@@ -71,11 +72,11 @@ module WasteCarriersEngine
     end
 
     def add_or_replace_address(params)
-      address = Address.create_from_manual_entry(params, @transient_registration.overseas?)
+      address = Address.create_from_manual_entry(params, transient_registration.overseas?)
       address.assign_attributes(address_type: address_type)
 
       # Update the transient object's nested addresses, replacing any existing registered address
-      updated_addresses = @transient_registration.addresses
+      updated_addresses = transient_registration.addresses
       updated_addresses.delete(existing_address) if existing_address
       updated_addresses << address
       updated_addresses

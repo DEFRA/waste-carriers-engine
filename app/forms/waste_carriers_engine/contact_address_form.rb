@@ -6,7 +6,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      self.temp_contact_postcode = @transient_registration.temp_contact_postcode
+      self.temp_contact_postcode = transient_registration.temp_contact_postcode
 
       look_up_addresses
       preselect_existing_address
@@ -19,7 +19,7 @@ module WasteCarriersEngine
     end
 
     def saved_address
-      @transient_registration.contact_address
+      transient_registration.contact_address
     end
 
     def address_type
