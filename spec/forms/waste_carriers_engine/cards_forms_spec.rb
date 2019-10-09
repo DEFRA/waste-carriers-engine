@@ -76,27 +76,7 @@ module WasteCarriersEngine
 
         context "when a temp_cards is blank" do
           before(:each) do
-            cards_form.temp_cards = ""
-          end
-
-          it "is not valid" do
-            expect(cards_form).to_not be_valid
-          end
-        end
-
-        context "when a temp_cards is not a number" do
-          before(:each) do
-            cards_form.temp_cards = "foo"
-          end
-
-          it "is not valid" do
-            expect(cards_form).to_not be_valid
-          end
-        end
-
-        context "when a temp_cards is not an integer" do
-          before(:each) do
-            cards_form.temp_cards = 3.14
+            cards_form.transient_registration.temp_cards = nil
           end
 
           it "is not valid" do
@@ -106,7 +86,7 @@ module WasteCarriersEngine
 
         context "when a temp_cards is a negative number" do
           before(:each) do
-            cards_form.temp_cards = -3
+            cards_form.transient_registration.temp_cards = -3
           end
 
           it "is not valid" do
