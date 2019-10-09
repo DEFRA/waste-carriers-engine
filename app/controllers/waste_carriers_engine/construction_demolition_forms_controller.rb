@@ -9,5 +9,11 @@ module WasteCarriersEngine
     def create
       super(ConstructionDemolitionForm, "construction_demolition_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params.require(:construction_demolition_form).permit(:construction_waste)
+    end
   end
 end
