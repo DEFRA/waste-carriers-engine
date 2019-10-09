@@ -4,10 +4,13 @@ module WasteCarriersEngine
   class ContactNameForm < BaseForm
     attr_accessor :first_name, :last_name
 
+    validates :first_name, :last_name, "waste_carriers_engine/person_name": true
+
     def initialize(transient_registration)
       super
-      self.first_name = @transient_registration.first_name
-      self.last_name = @transient_registration.last_name
+
+      self.first_name = transient_registration.first_name
+      self.last_name = transient_registration.last_name
     end
 
     def submit(params)
@@ -21,7 +24,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :first_name, :last_name, "waste_carriers_engine/person_name": true
   end
 end

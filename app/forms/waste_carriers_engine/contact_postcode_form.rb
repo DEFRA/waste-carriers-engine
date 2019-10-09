@@ -4,9 +4,12 @@ module WasteCarriersEngine
   class ContactPostcodeForm < PostcodeForm
     attr_accessor :temp_contact_postcode
 
+    validates :temp_contact_postcode, "waste_carriers_engine/postcode": true
+
     def initialize(transient_registration)
       super
-      self.temp_contact_postcode = @transient_registration.temp_contact_postcode
+
+      self.temp_contact_postcode = transient_registration.temp_contact_postcode
     end
 
     def submit(params)
@@ -15,11 +18,9 @@ module WasteCarriersEngine
       attributes = { temp_contact_postcode: temp_contact_postcode }
 
       # While we won't proceed if the postcode isn't valid, we always save it in case it's needed for manual entry
-      @transient_registration.update_attributes(attributes)
+      transient_registration.update_attributes(attributes)
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :temp_contact_postcode, "waste_carriers_engine/postcode": true
   end
 end

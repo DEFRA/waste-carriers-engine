@@ -10,10 +10,11 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+
       self.certificate_link = build_certificate_link
-      self.contact_email = @transient_registration.contact_email
-      self.projected_renewal_end_date = @transient_registration.projected_renewal_end_date
-      self.registration_type = @transient_registration.registration_type
+      self.contact_email = transient_registration.contact_email
+      self.projected_renewal_end_date = transient_registration.projected_renewal_end_date
+      self.registration_type = transient_registration.registration_type
     end
 
     # Override BaseForm method as users shouldn't be able to submit this form

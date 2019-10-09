@@ -13,7 +13,5 @@ module WasteCarriersEngine
 
       super
     end
-
-    validates :temp_company_postcode, "waste_carriers_engine/postcode": true
   end
 end

@@ -10,10 +10,11 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      self.contact_email = @transient_registration.contact_email
-      self.pending_convictions_check = @transient_registration.conviction_check_required?
-      self.pending_payment = @transient_registration.pending_payment?
-      self.pending_worldpay_payment = @transient_registration.pending_worldpay_payment?
+
+      self.contact_email = transient_registration.contact_email
+      self.pending_convictions_check = transient_registration.conviction_check_required?
+      self.pending_payment = transient_registration.pending_payment?
+      self.pending_worldpay_payment = transient_registration.pending_worldpay_payment?
     end
 
     # Override BaseForm method as users shouldn't be able to submit this form

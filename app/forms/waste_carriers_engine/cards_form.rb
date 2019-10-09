@@ -9,9 +9,19 @@ module WasteCarriersEngine
       false
     end
 
+    validates(
+      :temp_cards,
+      numericality: {
+        only_integer: true,
+        greater_than_or_equal_to: 0,
+        less_than_or_equal_to: MAX_TEMP_CARDS
+      }
+    )
+
     def initialize(transient_registration)
       super
-      self.temp_cards = @transient_registration.temp_cards || 0
+
+      self.temp_cards = transient_registration.temp_cards || 0
     end
 
     def submit(params)
@@ -26,14 +36,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates(
-      :temp_cards,
-      numericality: {
-        only_integer: true,
-        greater_than_or_equal_to: 0,
-        less_than_or_equal_to: MAX_TEMP_CARDS
-      }
-    )
   end
 end

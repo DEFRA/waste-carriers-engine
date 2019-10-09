@@ -6,8 +6,9 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      self.type_change = @transient_registration.registration_type_changed?
-      self.total_fee = @transient_registration.fee_including_possible_type_change
+
+      self.type_change = transient_registration.registration_type_changed?
+      self.total_fee = transient_registration.fee_including_possible_type_change
     end
 
     def submit(params)
