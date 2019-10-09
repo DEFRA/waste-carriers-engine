@@ -4,9 +4,12 @@ module WasteCarriersEngine
   class WasteTypesForm < BaseForm
     attr_accessor :only_amf
 
+    validates :only_amf, "waste_carriers_engine/yes_no": true
+
     def initialize(transient_registration)
       super
-      self.only_amf = @transient_registration.only_amf
+
+      self.only_amf = transient_registration.only_amf
     end
 
     def submit(params)
@@ -16,7 +19,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :only_amf, "waste_carriers_engine/yes_no": true
   end
 end

@@ -4,9 +4,12 @@ module WasteCarriersEngine
   class CbdTypeForm < BaseForm
     attr_accessor :registration_type
 
+    validates :registration_type, "waste_carriers_engine/registration_type": true
+
     def initialize(transient_registration)
       super
-      self.registration_type = @transient_registration.registration_type
+
+      self.registration_type = transient_registration.registration_type
     end
 
     def submit(params)
@@ -16,7 +19,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :registration_type, "waste_carriers_engine/registration_type": true
   end
 end

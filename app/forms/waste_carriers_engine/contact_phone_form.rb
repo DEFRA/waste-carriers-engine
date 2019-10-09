@@ -4,9 +4,12 @@ module WasteCarriersEngine
   class ContactPhoneForm < BaseForm
     attr_accessor :phone_number
 
+    validates :phone_number, "defra_ruby/validators/phone_number": true
+
     def initialize(transient_registration)
       super
-      self.phone_number = @transient_registration.phone_number
+
+      self.phone_number = transient_registration.phone_number
     end
 
     def submit(params)
@@ -16,7 +19,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :phone_number, "defra_ruby/validators/phone_number": true
   end
 end

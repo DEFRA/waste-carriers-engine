@@ -4,9 +4,12 @@ module WasteCarriersEngine
   class ConstructionDemolitionForm < BaseForm
     attr_accessor :construction_waste
 
+    validates :construction_waste, "waste_carriers_engine/yes_no": true
+
     def initialize(transient_registration)
       super
-      self.construction_waste = @transient_registration.construction_waste
+
+      self.construction_waste = transient_registration.construction_waste
     end
 
     def submit(params)
@@ -16,7 +19,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :construction_waste, "waste_carriers_engine/yes_no": true
   end
 end

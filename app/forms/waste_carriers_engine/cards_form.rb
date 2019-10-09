@@ -10,12 +10,6 @@ module WasteCarriersEngine
       false
     end
 
-    def submit(params)
-      params[:temp_cards] = 0 unless params[:temp_cards].present?
-
-      super
-    end
-
     validates(
       :temp_cards,
       numericality: {
@@ -24,5 +18,11 @@ module WasteCarriersEngine
         less_than_or_equal_to: MAX_TEMP_CARDS
       }
     )
+
+    def submit(params)
+      params[:temp_cards] = 0 unless params[:temp_cards].present?
+
+      super
+    end
   end
 end

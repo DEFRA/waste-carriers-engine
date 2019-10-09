@@ -4,9 +4,12 @@ module WasteCarriersEngine
   class TierCheckForm < BaseForm
     attr_accessor :temp_tier_check
 
+    validates :temp_tier_check, "waste_carriers_engine/yes_no": true
+
     def initialize(transient_registration)
       super
-      self.temp_tier_check = @transient_registration.temp_tier_check
+
+      self.temp_tier_check = transient_registration.temp_tier_check
     end
 
     def submit(params)
@@ -16,7 +19,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :temp_tier_check, "waste_carriers_engine/yes_no": true
   end
 end
