@@ -13,7 +13,12 @@ RSpec.shared_examples "validate registration_type" do |form_factory|
 
     context "when a registration_type is blank" do
       before(:each) do
-        form.registration_type = ""
+        # TODO: Temporary refactoring code
+        if form.respond_to?(:registration_type=)
+          form.registration_type = ""
+        else
+          form.transient_registration.registration_type = ""
+        end
       end
 
       it "is not valid" do
@@ -23,7 +28,12 @@ RSpec.shared_examples "validate registration_type" do |form_factory|
 
     context "when a registration_type is not in the allowed list" do
       before(:each) do
-        form.registration_type = "foo"
+        # TODO: Temporary refactoring code
+        if form.respond_to?(:registration_type=)
+          form.registration_type = ""
+        else
+          form.transient_registration.registration_type = "foo"
+        end
       end
 
       it "is not valid" do
