@@ -11,7 +11,7 @@ module WasteCarriersEngine
     end
 
     def submit(params)
-      params[:temp_cards] ||= 0
+      params[:temp_cards] = 0 unless params[:temp_cards].present?
 
       super
     end
