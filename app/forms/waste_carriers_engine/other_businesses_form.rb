@@ -17,7 +17,7 @@ module WasteCarriersEngine
       self.other_businesses = params[:other_businesses]
       attributes = { other_businesses: other_businesses }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
   end
 end

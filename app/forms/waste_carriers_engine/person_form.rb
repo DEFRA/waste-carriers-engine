@@ -23,7 +23,7 @@ module WasteCarriersEngine
                      {}
                    end
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     # Used to switch on usage of the :position attribute for validation and form-filling

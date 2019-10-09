@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       attributes = { contact_email: contact_email }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
   end
 end
