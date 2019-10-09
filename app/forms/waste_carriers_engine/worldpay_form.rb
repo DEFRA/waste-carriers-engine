@@ -5,9 +5,5 @@ module WasteCarriersEngine
     def self.can_navigate_flexibly?
       false
     end
-
-    def initialize(transient_registration)
-      super
-    end
   end
 end

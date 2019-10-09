@@ -2,10 +2,6 @@
 
 module WasteCarriersEngine
   class RegisterInScotlandForm < BaseForm
-    def initialize(transient_registration)
-      super
-    end
-
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
       attributes = {}

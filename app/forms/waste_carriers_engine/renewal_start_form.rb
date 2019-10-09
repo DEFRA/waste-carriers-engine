@@ -6,10 +6,6 @@ module WasteCarriersEngine
       false
     end
 
-    def initialize(transient_registration)
-      super
-    end
-
     def submit(params)
       attributes = {}
 

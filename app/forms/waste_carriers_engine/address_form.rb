@@ -6,6 +6,8 @@ module WasteCarriersEngine
     attr_accessor :temp_address
     attr_accessor :addresses
 
+    validates :addresses, presence: true
+
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
       self.addresses = add_or_replace_address(params[:temp_address])
@@ -13,8 +15,6 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :addresses, presence: true
 
     private
 
@@ -51,7 +51,7 @@ module WasteCarriersEngine
       address.assign_attributes(address_type: address_type)
 
       # Update the transient object's nested addresses, replacing any existing address of the same type
-      updated_addresses = @transient_registration.addresses
+      updated_addresses = transient_registration.addresses
       updated_addresses.delete(saved_address) if saved_address
       updated_addresses << address
       updated_addresses

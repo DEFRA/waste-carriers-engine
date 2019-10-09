@@ -4,9 +4,12 @@ module WasteCarriersEngine
   class DeclareConvictionsForm < BaseForm
     attr_accessor :declared_convictions
 
+    validates :declared_convictions, "waste_carriers_engine/yes_no": true
+
     def initialize(transient_registration)
       super
-      self.declared_convictions = @transient_registration.declared_convictions
+
+      self.declared_convictions = transient_registration.declared_convictions
     end
 
     def submit(params)
@@ -16,7 +19,5 @@ module WasteCarriersEngine
 
       super(attributes, params[:reg_identifier])
     end
-
-    validates :declared_convictions, "waste_carriers_engine/yes_no": true
   end
 end
