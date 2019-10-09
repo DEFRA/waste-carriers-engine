@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.is_main_service = transient_registration.is_main_service
     end
 

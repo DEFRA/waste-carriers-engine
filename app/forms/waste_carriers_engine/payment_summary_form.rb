@@ -12,7 +12,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.temp_payment_method = transient_registration.temp_payment_method
 
       self.type_change = transient_registration.registration_type_changed?

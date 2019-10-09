@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.phone_number = transient_registration.phone_number
     end
 

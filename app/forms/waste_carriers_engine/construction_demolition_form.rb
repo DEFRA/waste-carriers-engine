@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.construction_waste = transient_registration.construction_waste
     end
 

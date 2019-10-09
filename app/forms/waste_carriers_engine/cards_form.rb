@@ -20,7 +20,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.temp_cards = transient_registration.temp_cards || 0
     end
 

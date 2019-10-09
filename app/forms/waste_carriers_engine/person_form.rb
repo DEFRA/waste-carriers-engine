@@ -7,7 +7,6 @@ module WasteCarriersEngine
 
     validate :old_enough?
 
-
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
       self.first_name = params[:first_name]

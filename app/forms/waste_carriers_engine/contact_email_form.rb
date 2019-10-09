@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.contact_email = transient_registration.contact_email
       self.confirmed_email = transient_registration.contact_email
     end

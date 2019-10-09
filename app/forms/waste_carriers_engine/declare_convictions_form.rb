@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.declared_convictions = transient_registration.declared_convictions
     end
 

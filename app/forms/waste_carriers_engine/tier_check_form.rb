@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
-      
+
       self.temp_tier_check = transient_registration.temp_tier_check
     end
 
