@@ -11,11 +11,11 @@ module WasteCarriersEngine
       self.total_fee = transient_registration.fee_including_possible_type_change
     end
 
-    def submit(params)
+    def submit(_params)
       # Assign the params for validation and pass them to the BaseForm method for updating
       attributes = {}
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
   end
 end

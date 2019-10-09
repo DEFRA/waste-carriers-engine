@@ -17,7 +17,7 @@ module WasteCarriersEngine
       self.temp_tier_check = params[:temp_tier_check]
       attributes = { temp_tier_check: temp_tier_check }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
   end
 end

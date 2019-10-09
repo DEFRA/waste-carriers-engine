@@ -13,7 +13,7 @@ module WasteCarriersEngine
       self.addresses = add_or_replace_address(params[:temp_address])
       attributes = { addresses: addresses }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     private

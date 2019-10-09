@@ -22,7 +22,7 @@ module WasteCarriersEngine
         last_name: last_name
       }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
   end
 end

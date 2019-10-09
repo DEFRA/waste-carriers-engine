@@ -47,6 +47,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+
       self.business_type = transient_registration.business_type
       self.company_name = transient_registration.company_name
       self.company_no = transient_registration.company_no
@@ -66,10 +67,10 @@ module WasteCarriersEngine
       valid?
     end
 
-    def submit(params)
+    def submit(_params)
       attributes = {}
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     def registration_type_changed?

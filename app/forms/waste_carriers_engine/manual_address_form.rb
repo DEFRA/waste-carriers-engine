@@ -42,7 +42,7 @@ module WasteCarriersEngine
       self.country = params[:country]
       attributes = { addresses: add_or_replace_address(params) }
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
 
     def overseas?

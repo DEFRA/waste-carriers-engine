@@ -6,10 +6,10 @@ module WasteCarriersEngine
       false
     end
 
-    def submit(params)
+    def submit(_params)
       attributes = {}
 
-      super(attributes, params[:reg_identifier])
+      super(attributes)
     end
   end
 end
