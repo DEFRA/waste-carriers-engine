@@ -8,6 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+      
       self.company_no = transient_registration.company_no
       # We only use this for the correct microcopy
       self.business_type = transient_registration.business_type

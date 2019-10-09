@@ -8,6 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+      
       self.only_amf = transient_registration.only_amf
     end
 

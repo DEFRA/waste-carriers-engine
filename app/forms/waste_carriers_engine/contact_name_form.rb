@@ -8,6 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+      
       self.first_name = transient_registration.first_name
       self.last_name = transient_registration.last_name
     end

@@ -8,6 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+
       self.business_type = transient_registration.business_type
     end
 

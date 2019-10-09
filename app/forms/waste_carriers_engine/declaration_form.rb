@@ -12,6 +12,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+      
       self.declaration = transient_registration.declaration
     end
 

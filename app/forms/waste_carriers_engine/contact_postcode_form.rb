@@ -8,6 +8,7 @@ module WasteCarriersEngine
 
     def initialize(transient_registration)
       super
+      
       self.temp_contact_postcode = transient_registration.temp_contact_postcode
     end
 
