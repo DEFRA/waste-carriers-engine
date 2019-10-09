@@ -5,12 +5,16 @@ module WasteCarriersEngine
     include ActiveModel::Model
     include CanStripWhitespace
 
+    extend ActiveModel::Callbacks
+
     attr_reader :transient_registration
 
     delegate :reg_identifier, to: :transient_registration
 
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
     validate :transient_registration_valid?
+
+    define_model_callbacks :initialize
 
     # The standard behaviour for loading a form is to check whether the requested form matches the workflow_state for
     # the registration, and redirect to the saved workflow_state if it doesn't.
@@ -25,8 +29,10 @@ module WasteCarriersEngine
     end
 
     def initialize(transient_registration)
-      # Get values from transient registration so form will be pre-filled
-      @transient_registration = transient_registration
+      run_callbacks :initialize do
+        # Get values from transient registration so form will be pre-filled
+        @transient_registration = transient_registration
+      end
     end
 
     # TODO: Remove `reg_identifier` param
