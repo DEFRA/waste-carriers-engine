@@ -3,7 +3,8 @@
 module WasteCarriersEngine
   class CardsForm < BaseForm
     MAX_TEMP_CARDS = 999
-    attr_accessor :temp_cards
+
+    delegate :temp_cards, to: :transient_registration
 
     def self.can_navigate_flexibly?
       false
@@ -18,23 +19,10 @@ module WasteCarriersEngine
       }
     )
 
-    def initialize(transient_registration)
-      super
-
-      self.temp_cards = transient_registration.temp_cards || 0
-    end
-
     def submit(params)
-      # Assign the params for validation and pass them to the BaseForm method for updating
-      # If temp_cards is blank, sub in 0 so it passes validation
-      self.temp_cards = if params[:temp_cards].present?
-                          params[:temp_cards]
-                        else
-                          0
-                        end
-      attributes = { temp_cards: temp_cards }
+      params[:temp_cards] = 0 unless params[:temp_cards].present?
 
-      super(attributes)
+      super
     end
   end
 end

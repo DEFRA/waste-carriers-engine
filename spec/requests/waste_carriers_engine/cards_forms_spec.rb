@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "cards_form",
                      valid_params: { temp_cards: 2 },
-                     invalid_params: { temp_cards: "foo" },
+                     invalid_params: { temp_cards: 999_999 },
                      test_attribute: :temp_cards
 
     describe "GET back_cards_forms_path" do
