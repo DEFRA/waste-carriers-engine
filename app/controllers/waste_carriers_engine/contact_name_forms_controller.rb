@@ -9,5 +9,11 @@ module WasteCarriersEngine
     def create
       super(ContactNameForm, "contact_name_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params.require(:contact_name_form).permit(:first_name, :last_name)
+    end
   end
 end

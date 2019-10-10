@@ -2,26 +2,25 @@
 
 module WasteCarriersEngine
   class ContactEmailForm < BaseForm
-    attr_accessor :contact_email, :confirmed_email
+    delegate :contact_email, to: :transient_registration
+    attr_accessor :confirmed_email
 
     validates :contact_email, :confirmed_email, "defra_ruby/validators/email": true
     validates :confirmed_email, "waste_carriers_engine/matching_email": { compare_to: :contact_email }
 
-    def initialize(transient_registration)
-      super
-
-      self.contact_email = transient_registration.contact_email
-      self.confirmed_email = transient_registration.contact_email
-    end
+    after_initialize :populate_confirmed_email
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
-      self.contact_email = params[:contact_email]
       self.confirmed_email = params[:confirmed_email]
 
-      attributes = { contact_email: contact_email }
+      super(params.permit(:contact_email))
+    end
 
-      super(attributes)
+    private
+
+    def populate_confirmed_email
+      self.confirmed_email = contact_email
     end
   end
 end
