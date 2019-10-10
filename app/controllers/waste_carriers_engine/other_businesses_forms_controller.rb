@@ -9,5 +9,11 @@ module WasteCarriersEngine
     def create
       super(OtherBusinessesForm, "other_businesses_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params.require(:other_businesses_form).permit(:other_businesses)
+    end
   end
 end
