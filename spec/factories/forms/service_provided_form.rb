@@ -3,9 +3,16 @@
 FactoryBot.define do
   factory :service_provided_form, class: WasteCarriersEngine::ServiceProvidedForm do
     trait :has_required_data do
-      is_main_service { "yes" }
-
-      initialize_with { new(create(:transient_registration, :has_required_data, workflow_state: "service_provided_form")) }
+      initialize_with do
+        new(
+          create(
+            :transient_registration,
+            :has_required_data,
+            workflow_state: "service_provided_form",
+            is_main_service: "yes"
+          )
+        )
+      end
     end
   end
 end
