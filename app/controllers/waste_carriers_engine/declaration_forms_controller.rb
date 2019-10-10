@@ -12,5 +12,11 @@ module WasteCarriersEngine
       conviction_data_service = WasteCarriersEngine::ConvictionDataService.new(@transient_registration)
       conviction_data_service.prepare_convictions_data
     end
+
+    private
+
+    def transient_registration_attributes
+      params.require(:declaration_form).permit(:declaration)
+    end
   end
 end
