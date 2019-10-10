@@ -3,9 +3,16 @@
 FactoryBot.define do
   factory :location_form, class: WasteCarriersEngine::LocationForm do
     trait :has_required_data do
-      location { "england" }
-
-      initialize_with { new(create(:transient_registration, :has_required_data, workflow_state: "location_form")) }
+      initialize_with do
+        new(
+          create(
+            :transient_registration,
+            :has_required_data,
+            workflow_state: "location_form",
+            location: "england"
+          )
+        )
+      end
     end
   end
 end
