@@ -16,16 +16,15 @@ module WasteCarriersEngine
         end
 
         it "should submit" do
-          expect(contact_email_form.submit(valid_params)).to eq(true)
+          expect(contact_email_form.submit(ActionController::Parameters.new(valid_params))).to eq(true)
         end
       end
 
       context "when the form is not valid" do
         let(:contact_email_form) { build(:contact_email_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
 
         it "should not submit" do
-          expect(contact_email_form.submit(invalid_params)).to eq(false)
+          expect(contact_email_form.submit(ActionController::Parameters.new({}))).to eq(false)
         end
       end
     end
