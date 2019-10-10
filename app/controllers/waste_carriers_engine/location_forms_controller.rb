@@ -9,5 +9,11 @@ module WasteCarriersEngine
     def create
       super(LocationForm, "location_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params.require(:location_form).permit(:location)
+    end
   end
 end
