@@ -46,7 +46,7 @@ module WasteCarriersEngine
 
         context "when a declaration is blank" do
           before(:each) do
-            declaration_form.declaration = ""
+            declaration_form.transient_registration.declaration = ""
           end
 
           it "is not valid" do
@@ -56,7 +56,7 @@ module WasteCarriersEngine
 
         context "when a declaration is 0" do
           before(:each) do
-            declaration_form.declaration = 0
+            declaration_form.transient_registration.declaration = 0
           end
 
           it "is not valid" do
