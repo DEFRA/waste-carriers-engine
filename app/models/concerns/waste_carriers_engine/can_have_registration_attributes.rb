@@ -23,7 +23,6 @@ module WasteCarriersEngine
       reference_one :registered_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
 
       embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
-
       embeds_many :conviction_sign_offs,    class_name: "WasteCarriersEngine::ConvictionSignOff"
       embeds_one :finance_details,          class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
       embeds_many :key_people,              class_name: "WasteCarriersEngine::KeyPerson"
