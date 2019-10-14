@@ -5,7 +5,7 @@ RSpec.shared_examples "Can reference single document in collection" do |subject_
 
   describe ".reference_one" do
     it "defines an attr getter for the given attribute" do
-      expect(subject).to respond_to("#{attribute}")
+      expect(subject).to respond_to(attribute.to_s)
     end
 
     it "defines an attr setter for the given attribute" do

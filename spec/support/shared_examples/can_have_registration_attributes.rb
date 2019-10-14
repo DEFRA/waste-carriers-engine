@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "Can have registration attributes" do
-  include_examples "Can reference single document in collection",
-    Proc.new { create(:transient_registration, :has_required_data, :has_addresses) },
+  include_examples(
+    "Can reference single document in collection",
+    proc { create(:transient_registration, :has_required_data, :has_addresses) },
     :contact_address,
-    Proc.new { subject.addresses.find_by(address_type: "POSTAL") },
+    proc { subject.addresses.find_by(address_type: "POSTAL") },
     WasteCarriersEngine::Address.new,
     :addresses
+  )
 
   describe "#charity?" do
     let(:transient_registration) { build(:transient_registration) }

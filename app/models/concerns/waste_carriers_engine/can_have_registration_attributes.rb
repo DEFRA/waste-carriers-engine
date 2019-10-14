@@ -2,7 +2,6 @@
 
 module WasteCarriersEngine
   # Define the attributes a registration or a renewal has
-  # rubocop:disable Metrics/ModuleLength
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
     include Mongoid::Document
@@ -18,7 +17,7 @@ module WasteCarriersEngine
       # for comments in some places, and putting them on the line above breaks
       # the formatting we have in place.
       # rubocop:disable Metrics/LineLength
-      embeds_many :addresses,               class_name: "WasteCarriersEngine::Address"
+      embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
       reference_one :contact_address, collection: :addresses, find_by: { address_type: "POSTAL" }
       reference_one :registered_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
 
@@ -140,5 +139,4 @@ module WasteCarriersEngine
     end
     # rubocop:enable Metrics/BlockLength
   end
-  # rubocop:enable Metrics/ModuleLength
 end
