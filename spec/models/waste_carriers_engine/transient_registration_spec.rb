@@ -34,7 +34,13 @@ module WasteCarriersEngine
       end
     end
 
-    describe "scope" do
+    describe "search" do
+      it_should_behave_like "Search scopes",
+                            record_class: WasteCarriersEngine::TransientRegistration,
+                            factory: :transient_registration
+    end
+
+    describe "scopes" do
       it_should_behave_like "TransientRegistration named scopes"
     end
 

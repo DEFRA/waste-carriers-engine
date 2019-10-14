@@ -78,6 +78,13 @@ module WasteCarriersEngine
       field :title,                                            type: String
       field :total_fee,                                        type: String
 
+      scope :search_term, lambda { |term|
+        any_of({ reg_identifier: /\A#{term}\z/i },
+               { company_name: /#{term}/i },
+               { last_name: /#{term}/i },
+               "addresses.postcode": /#{term}/i)
+      }
+
       def charity?
         business_type == "charity"
       end

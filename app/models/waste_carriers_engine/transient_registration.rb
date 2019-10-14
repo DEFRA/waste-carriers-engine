@@ -25,12 +25,6 @@ module WasteCarriersEngine
     field :temp_payment_method, type: String
     field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
 
-    scope :search_term, lambda { |term|
-      any_of({ reg_identifier: /\A#{term}\z/i },
-             { company_name: /#{term}/i },
-             { last_name: /#{term}/i },
-             "addresses.postcode": /#{term}/i)
-    }
     scope :in_progress, -> { where(:workflow_state.nin => %w[renewal_complete_form renewal_received_form]) }
     scope :submitted, -> { where(:workflow_state.in => %w[renewal_complete_form renewal_received_form]) }
     scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
