@@ -6,6 +6,7 @@ module WasteCarriersEngine
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
     include Mongoid::Document
+    include CanReferenceSingleDocumentInCollection
 
     # Rubocop sees a module as a block, and as such is not very forgiving in how
     # many lines it allows. In the case of this concern we have to list out all
@@ -18,7 +19,11 @@ module WasteCarriersEngine
       # the formatting we have in place.
       # rubocop:disable Metrics/LineLength
       embeds_many :addresses,               class_name: "WasteCarriersEngine::Address"
+      reference_one :contact_address, collection: :addresses, find_by: { address_type: "POSTAL" }
+      reference_one :registered_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
+
       embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
+
       embeds_many :conviction_sign_offs,    class_name: "WasteCarriersEngine::ConvictionSignOff"
       embeds_one :finance_details,          class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
       embeds_many :key_people,              class_name: "WasteCarriersEngine::KeyPerson"
@@ -74,18 +79,6 @@ module WasteCarriersEngine
       field :title,                                            type: String
       field :total_fee,                                        type: String
 
-      def contact_address
-        return nil unless addresses.present?
-
-        addresses.where(address_type: "POSTAL").first
-      end
-
-      def registered_address
-        return nil unless addresses.present?
-
-        addresses.where(address_type: "REGISTERED").first
-      end
-
       def charity?
         business_type == "charity"
       end
@@ -102,14 +95,10 @@ module WasteCarriersEngine
       end
 
       def main_people
-        return [] unless key_people.present?
-
         key_people.where(person_type: "KEY")
       end
 
       def relevant_people
-        return [] unless key_people.present?
-
         key_people.where(person_type: "RELEVANT")
       end
 
