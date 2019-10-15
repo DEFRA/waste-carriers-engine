@@ -103,10 +103,14 @@ module WasteCarriersEngine
       end
 
       def main_people
+        return [] unless key_people.present?
+
         key_people.where(person_type: "KEY")
       end
 
       def relevant_people
+        return [] unless key_people.present?
+
         key_people.where(person_type: "RELEVANT")
       end
 
