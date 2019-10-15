@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-# This module's aim is to implement a way to reference documetns in collection but singularly
-# so that they can be treated as `has_one` associations. Currently on the WEX project we achieve the same
-# functionality thanks to ActiveRecord Relation ability of specify custom associations using default scopes.
-# But with the version of MongoId we use there is no ability of doing so.
+# This module's aim is to implement a way to reference a single document in a
+# collection so that they can then be treated as `has_one` associations.
+# In projects using ActiveRecord like WEX we achieve the same functionality
+# thanks to ActiveRecord's Relation ability to specify custom associations using
+# default scopes. But because here we are using an old version of MongoDB, we
+# are also stuck with a version of Mongoid which does not have this ability.
 module WasteCarriersEngine
   module CanReferenceSingleDocumentInCollection
     extend ActiveSupport::Concern
