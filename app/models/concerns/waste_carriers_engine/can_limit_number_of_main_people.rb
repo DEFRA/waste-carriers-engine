@@ -43,7 +43,7 @@ module WasteCarriersEngine
     end
 
     def number_of_existing_main_people
-      @transient_registration.main_people.count
+      transient_registration.main_people.count
     end
 
     private

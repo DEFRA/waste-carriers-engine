@@ -52,7 +52,7 @@ module WasteCarriersEngine
       describe "#registered_address" do
         context "when there is no registered_address" do
           before do
-            check_your_answers_form.registered_address = nil
+            check_your_answers_form.transient_registration.registered_address = nil
           end
 
           it "is not valid" do
@@ -63,7 +63,7 @@ module WasteCarriersEngine
         context "when the location is in the uk" do
           context "when the registered_address mode is manual-uk" do
             before do
-              check_your_answers_form.registered_address = build(:address, :registered, :manual_uk)
+              check_your_answers_form.transient_registration.registered_address = build(:address, :registered, :manual_uk)
             end
 
             it "is valid" do
@@ -73,7 +73,7 @@ module WasteCarriersEngine
 
           context "when the registered_address mode is address-lookup" do
             before do
-              check_your_answers_form.registered_address = build(:address, :registered, :from_os_places)
+              check_your_answers_form.transient_registration.registered_address = build(:address, :registered, :from_os_places)
             end
 
             it "is valid" do
@@ -83,7 +83,7 @@ module WasteCarriersEngine
 
           context "when the registered_address mode is manual-foreign" do
             before do
-              check_your_answers_form.registered_address = build(:address, :registered, :manual_foreign)
+              check_your_answers_form.transient_registration.registered_address = build(:address, :registered, :manual_foreign)
             end
 
             it "is not valid" do
@@ -97,7 +97,7 @@ module WasteCarriersEngine
 
           context "when the registered_address mode is manual-foreign" do
             before do
-              check_your_answers_form.registered_address = build(:address, :registered, :manual_foreign)
+              check_your_answers_form.transient_registration.registered_address = build(:address, :registered, :manual_foreign)
             end
 
             it "is valid" do
@@ -107,7 +107,7 @@ module WasteCarriersEngine
 
           context "when the registered_address mode is manual-uk" do
             before do
-              check_your_answers_form.registered_address = build(:address, :registered, :manual_uk)
+              check_your_answers_form.transient_registration.registered_address = build(:address, :registered, :manual_uk)
             end
 
             it "is not valid" do
@@ -117,7 +117,7 @@ module WasteCarriersEngine
 
           context "when the registered_address mode is address-lookup" do
             before do
-              check_your_answers_form.registered_address = build(:address, :registered, :from_os_places)
+              check_your_answers_form.transient_registration.registered_address = build(:address, :registered, :from_os_places)
             end
 
             it "is not valid" do
@@ -130,7 +130,7 @@ module WasteCarriersEngine
       describe "#contact_address" do
         context "when there is no contact_address" do
           before do
-            check_your_answers_form.contact_address = nil
+            check_your_answers_form.transient_registration.contact_address = nil
           end
 
           it "is not valid" do
@@ -141,7 +141,7 @@ module WasteCarriersEngine
         context "when the location is in the uk" do
           context "when the contact_address mode is manual-uk" do
             before do
-              check_your_answers_form.contact_address = build(:address, :contact, :manual_uk)
+              check_your_answers_form.transient_registration.contact_address = build(:address, :contact, :manual_uk)
             end
 
             it "is valid" do
@@ -151,7 +151,7 @@ module WasteCarriersEngine
 
           context "when the contact_address mode is address-lookup" do
             before do
-              check_your_answers_form.contact_address = build(:address, :contact, :from_os_places)
+              check_your_answers_form.transient_registration.contact_address = build(:address, :contact, :from_os_places)
             end
 
             it "is valid" do
@@ -161,7 +161,7 @@ module WasteCarriersEngine
 
           context "when the contact_address mode is manual-foreign" do
             before do
-              check_your_answers_form.contact_address = build(:address, :contact, :manual_foreign)
+              check_your_answers_form.transient_registration.contact_address = build(:address, :contact, :manual_foreign)
             end
 
             it "is not valid" do
@@ -175,7 +175,7 @@ module WasteCarriersEngine
 
           context "when the contact_address mode is manual-foreign" do
             before do
-              check_your_answers_form.contact_address = build(:address, :contact, :manual_foreign)
+              check_your_answers_form.transient_registration.contact_address = build(:address, :contact, :manual_foreign)
             end
 
             it "is valid" do
@@ -185,7 +185,7 @@ module WasteCarriersEngine
 
           context "when the contact_address mode is manual-uk" do
             before do
-              check_your_answers_form.contact_address = build(:address, :contact, :manual_uk)
+              check_your_answers_form.transient_registration.contact_address = build(:address, :contact, :manual_uk)
             end
 
             it "is not valid" do
@@ -195,7 +195,7 @@ module WasteCarriersEngine
 
           context "when the contact_address mode is address-lookup" do
             before do
-              check_your_answers_form.contact_address = build(:address, :contact, :from_os_places)
+              check_your_answers_form.transient_registration.contact_address = build(:address, :contact, :from_os_places)
             end
 
             it "is not valid" do
@@ -209,7 +209,6 @@ module WasteCarriersEngine
         context "when there are no main_people" do
           before do
             check_your_answers_form.transient_registration.key_people = nil
-            check_your_answers_form.main_people = nil
           end
 
           it "is not valid" do
@@ -222,7 +221,6 @@ module WasteCarriersEngine
             main_person = build(:key_person, :main)
 
             check_your_answers_form.transient_registration.key_people = [main_person]
-            check_your_answers_form.main_people = [main_person]
           end
 
           it "is not valid" do
@@ -235,7 +233,6 @@ module WasteCarriersEngine
             main_person = build(:key_person, :has_required_data, :main)
 
             check_your_answers_form.transient_registration.key_people = [main_person]
-            check_your_answers_form.main_people = [main_person]
           end
 
           context "when the business type is not partnership" do
@@ -246,7 +243,7 @@ module WasteCarriersEngine
 
           context "when the business type is partnership" do
             before do
-              check_your_answers_form.business_type = "partnership"
+              check_your_answers_form.transient_registration.business_type = "partnership"
             end
 
             it "is not valid" do
@@ -261,7 +258,6 @@ module WasteCarriersEngine
             main_person_b = build(:key_person, :has_required_data, :main)
 
             check_your_answers_form.transient_registration.key_people = [main_person_a, main_person_b]
-            check_your_answers_form.main_people = [main_person_a, main_person_b]
           end
 
           context "when the business type is not soleTrader" do
@@ -272,7 +268,7 @@ module WasteCarriersEngine
 
           context "when the business type is soleTrader" do
             before do
-              check_your_answers_form.business_type = "soleTrader"
+              check_your_answers_form.transient_registration.business_type = "soleTrader"
             end
 
             it "is not valid" do
@@ -288,13 +284,11 @@ module WasteCarriersEngine
         context "when there are no relevant_people" do
           before do
             check_your_answers_form.transient_registration.key_people = [main_person]
-            check_your_answers_form.relevant_people = nil
           end
 
           context "when declared_convictions does not expect there to be people" do
             before(:each) do
               check_your_answers_form.transient_registration.declared_convictions = "no"
-              check_your_answers_form.declared_convictions = "no"
             end
 
             it "is valid" do
@@ -305,7 +299,6 @@ module WasteCarriersEngine
           context "when declared_convictions expects there to be people" do
             before(:each) do
               check_your_answers_form.transient_registration.declared_convictions = "yes"
-              check_your_answers_form.declared_convictions = "yes"
             end
 
             it "is not valid" do
@@ -319,7 +312,6 @@ module WasteCarriersEngine
             relevant_person = build(:key_person, :has_required_data, :relevant)
 
             check_your_answers_form.transient_registration.key_people = [main_person, relevant_person]
-            check_your_answers_form.relevant_people = [relevant_person]
           end
 
           it "is valid" do
@@ -332,7 +324,6 @@ module WasteCarriersEngine
             relevant_person = build(:key_person, :relevant)
 
             check_your_answers_form.transient_registration.key_people = [main_person, relevant_person]
-            check_your_answers_form.relevant_people = [relevant_person]
           end
 
           it "is not valid" do
@@ -343,8 +334,8 @@ module WasteCarriersEngine
 
       context "when the business type has an invalid change" do
         before(:each) do
-          check_your_answers_form.transient_registration.business_type = "soleTrader"
-          check_your_answers_form.business_type = "limitedCompany"
+          check_your_answers_form.transient_registration.business_type = "limitedCompany"
+          check_your_answers_form.transient_registration.registration.update_attributes(business_type: "soleTrader")
         end
 
         it "is not valid" do
@@ -355,7 +346,6 @@ module WasteCarriersEngine
       context "when the business type has changed to charity" do
         before(:each) do
           check_your_answers_form.transient_registration.business_type = "charity"
-          check_your_answers_form.business_type = "charity"
         end
 
         it "is not valid" do
@@ -366,7 +356,7 @@ module WasteCarriersEngine
       context "when the company_no has changed" do
         before(:each) do
           check_your_answers_form.transient_registration.company_no = "01234567"
-          check_your_answers_form.company_no = "12345678"
+          check_your_answers_form.transient_registration.registration.update_attributes(company_no: "12345678")
         end
 
         it "is not valid" do
