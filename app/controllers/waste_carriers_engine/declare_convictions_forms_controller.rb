@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:declare_convictions_form).permit(:declared_convictions)
+      params.fetch(:declare_convictions_form, {}).permit(:declared_convictions)
     end
   end
 end

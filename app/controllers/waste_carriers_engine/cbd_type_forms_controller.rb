@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:cbd_type_form).permit(:registration_type)
+      params.fetch(:cbd_type_form, {}).permit(:registration_type)
     end
   end
 end

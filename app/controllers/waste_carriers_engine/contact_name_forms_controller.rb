@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:contact_name_form).permit(:first_name, :last_name)
+      params.fetch(:contact_name_form, {}).permit(:first_name, :last_name)
     end
   end
 end

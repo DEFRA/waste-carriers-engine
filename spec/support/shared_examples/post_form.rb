@@ -94,6 +94,14 @@ RSpec.shared_examples "POST form" do |form, options|
           end
         end
 
+        context "when the params are empty" do
+          it "does not throw an error" do
+            expect {
+              post_with_params(form, { reg_identifier: transient_registration.reg_identifier })
+            }.not_to raise_error
+          end
+        end
+
         context "when the reg_identifier is invalid" do
           before do
             valid_params[:reg_identifier] = "foo"

@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:other_businesses_form).permit(:other_businesses)
+      params.fetch(:other_businesses_form, {}).permit(:other_businesses)
     end
   end
 end

@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:construction_demolition_form).permit(:construction_waste)
+      params.fetch(:construction_demolition_form, {}).permit(:construction_waste)
     end
   end
 end

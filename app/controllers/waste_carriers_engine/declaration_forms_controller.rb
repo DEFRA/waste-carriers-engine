@@ -16,7 +16,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:declaration_form).permit(:declaration)
+      params.fetch(:declaration_form, {}).permit(:declaration)
     end
   end
 end

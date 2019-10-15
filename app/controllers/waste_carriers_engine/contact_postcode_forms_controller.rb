@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:contact_postcode_form).permit(:temp_contact_postcode)
+      params.fetch(:contact_postcode_form, {}).permit(:temp_contact_postcode)
     end
   end
 end

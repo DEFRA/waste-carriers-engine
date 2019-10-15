@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:contact_email_form).permit(:contact_email, :confirmed_email)
+      params.fetch(:contact_email_form, {}).permit(:contact_email, :confirmed_email)
     end
   end
 end
