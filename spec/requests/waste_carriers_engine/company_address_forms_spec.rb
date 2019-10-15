@@ -78,7 +78,7 @@ module WasteCarriersEngine
               end
 
               it "does not modify the existing contact address" do
-                old_contact_address = transient_registration.contact_address
+                old_contact_address = transient_registration.reload.contact_address
                 post company_address_manual_forms_path, company_address_manual_form: valid_params
                 expect(transient_registration.reload.contact_address).to eq(old_contact_address)
               end

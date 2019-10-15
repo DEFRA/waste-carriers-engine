@@ -9,5 +9,11 @@ module WasteCarriersEngine
     def create
       super(TierCheckForm, "tier_check_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params.require(:tier_check_form).permit(:temp_tier_check)
+    end
   end
 end

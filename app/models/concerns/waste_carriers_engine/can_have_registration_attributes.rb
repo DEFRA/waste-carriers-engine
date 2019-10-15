@@ -6,6 +6,7 @@ module WasteCarriersEngine
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
     include Mongoid::Document
+    include CanReferenceSingleDocumentInCollection
 
     # Rubocop sees a module as a block, and as such is not very forgiving in how
     # many lines it allows. In the case of this concern we have to list out all
@@ -17,7 +18,12 @@ module WasteCarriersEngine
       # for comments in some places, and putting them on the line above breaks
       # the formatting we have in place.
       # rubocop:disable Metrics/LineLength
-      embeds_many :addresses,               class_name: "WasteCarriersEngine::Address"
+      embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
+
+      # This is our own custom association. See CanReferenceSingleDocumentInCollection for details
+      reference_one :contact_address, collection: :addresses, find_by: { address_type: "POSTAL" }
+      reference_one :registered_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
+
       embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
       embeds_many :conviction_sign_offs,    class_name: "WasteCarriersEngine::ConvictionSignOff"
       embeds_one :finance_details,          class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
@@ -74,17 +80,12 @@ module WasteCarriersEngine
       field :title,                                            type: String
       field :total_fee,                                        type: String
 
-      def contact_address
-        return nil unless addresses.present?
-
-        addresses.where(address_type: "POSTAL").first
-      end
-
-      def registered_address
-        return nil unless addresses.present?
-
-        addresses.where(address_type: "REGISTERED").first
-      end
+      scope :search_term, lambda { |term|
+        any_of({ reg_identifier: /\A#{term}\z/i },
+               { company_name: /#{term}/i },
+               { last_name: /#{term}/i },
+               "addresses.postcode": /#{term}/i)
+      }
 
       def charity?
         business_type == "charity"

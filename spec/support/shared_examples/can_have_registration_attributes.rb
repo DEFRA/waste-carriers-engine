@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "Can have registration attributes" do
+  include_examples(
+    "Can reference single document in collection",
+    proc { create(:transient_registration, :has_required_data, :has_addresses) },
+    :contact_address,
+    proc { subject.addresses.find_by(address_type: "POSTAL") },
+    WasteCarriersEngine::Address.new,
+    :addresses
+  )
+
   describe "#charity?" do
     let(:transient_registration) { build(:transient_registration) }
 
@@ -16,6 +25,26 @@ RSpec.shared_examples "Can have registration attributes" do
           expect(transient_registration.charity?).to eq(result)
         end
       end
+    end
+  end
+
+  describe "#contact_address" do
+    let(:contact_address) { build(:address, :contact) }
+    let(:transient_registration) { build(:transient_registration, addresses: [contact_address]) }
+
+    it "returns the address of type contact" do
+      expect(transient_registration.contact_address).to eq(contact_address)
+    end
+  end
+
+  describe "#contact_address=" do
+    let(:contact_address) { build(:address) }
+    let(:transient_registration) { build(:transient_registration, addresses: []) }
+
+    it "set an address of type contact" do
+      transient_registration.contact_address = contact_address
+
+      expect(transient_registration.addresses).to eq([contact_address])
     end
   end
 

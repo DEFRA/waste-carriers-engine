@@ -491,5 +491,11 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "search" do
+      it_should_behave_like "Search scopes",
+                            record_class: WasteCarriersEngine::Registration,
+                            factory: :registration
+    end
   end
 end
