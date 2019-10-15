@@ -19,6 +19,8 @@ module WasteCarriersEngine
       # the formatting we have in place.
       # rubocop:disable Metrics/LineLength
       embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
+
+      # This is our own custom association. See CanReferenceSingleDocumentInCollection for details
       reference_one :contact_address, collection: :addresses, find_by: { address_type: "POSTAL" }
       reference_one :registered_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
 
