@@ -5,9 +5,10 @@ module WasteCarriersEngine
     include CanLimitNumberOfMainPeople
     include CanLimitNumberOfRelevantPeople
 
-    attr_accessor :business_type, :company_name, :company_no, :contact_address, :contact_email,
-                  :declared_convictions, :first_name, :last_name, :location, :main_people, :phone_number,
-                  :registered_address, :registration_type, :relevant_people, :tier
+    delegate :business_type, :company_name, :company_no, :contact_address, :contact_email, to: :transient_registration
+    delegate :first_name, :last_name, :location, :main_people, :phone_number, to: :transient_registration
+    delegate :registration_type, :relevant_people, :tier, to: :transient_registration
+    delegate :registered_address, :declared_convictions, to: :transient_registration
 
     # This has to be before the validations are called, otherwise it fails.
     def self.custom_error_messages(attribute, *errors)
@@ -45,27 +46,7 @@ module WasteCarriersEngine
 
     validates_with KeyPeopleValidator
 
-    def initialize(transient_registration)
-      super
-
-      self.business_type = transient_registration.business_type
-      self.company_name = transient_registration.company_name
-      self.company_no = transient_registration.company_no
-      self.contact_address = transient_registration.contact_address
-      self.contact_email = transient_registration.contact_email
-      self.declared_convictions = transient_registration.declared_convictions
-      self.first_name = transient_registration.first_name
-      self.last_name = transient_registration.last_name
-      self.location = transient_registration.location
-      self.main_people = transient_registration.main_people
-      self.phone_number = transient_registration.phone_number
-      self.registered_address = transient_registration.registered_address
-      self.registration_type = transient_registration.registration_type
-      self.relevant_people = transient_registration.relevant_people
-      self.tier = transient_registration.tier
-
-      valid?
-    end
+    after_initialize :valid
 
     def submit(_params)
       attributes = {}
@@ -82,6 +63,10 @@ module WasteCarriersEngine
     end
 
     private
+
+    def valid
+      valid?
+    end
 
     def should_be_renewed
       business_type_change_valid? && same_company_no?
