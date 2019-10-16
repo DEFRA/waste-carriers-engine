@@ -98,7 +98,7 @@ RSpec.shared_examples "POST form" do |form, options|
           it "does not throw an error" do
             # rubocop:disable Style/BlockDelimiters
             expect {
-              post_with_params(form, { reg_identifier: transient_registration.reg_identifier })
+              post_with_params(form, reg_identifier: transient_registration.reg_identifier)
             }.not_to raise_error
             # rubocop:enable Style/BlockDelimiters
           end
