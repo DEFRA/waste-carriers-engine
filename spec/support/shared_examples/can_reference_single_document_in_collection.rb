@@ -7,7 +7,9 @@ RSpec.shared_examples "Can reference single document in collection" do |subject_
     context "when the object to save is not persisted and the number of transactions would be more than one" do
       it "can save a document to MongoDb without throwing an error" do
         subject.send("#{attribute}=", new_object_for_collection)
-        expect { subject.assign_attributes(attribute => new_object_for_collection.clone, account_email: "new@test.com"); subject.save! }.to_not raise_error
+        subject.assign_attributes(attribute => new_object_for_collection.clone)
+
+        expect { subject.save! }.to_not raise_error
       end
     end
   end
