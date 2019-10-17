@@ -4,10 +4,8 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe CompanyAddressForm, type: :model do
-    # Stub the address search so we have JSON to use
     before do
-      address_json = build(:company_address_form, :has_required_data).temp_addresses
-      allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(address_json)
+      stub_address_finder_service(uprn: "340116")
     end
 
     describe "#submit" do
@@ -16,9 +14,7 @@ module WasteCarriersEngine
         let(:valid_params) { { reg_identifier: company_address_form.reg_identifier, temp_address: company_address_form.temp_address } }
 
         it "should submit" do
-          VCR.use_cassette("company_postcode_form_valid_postcode") do
-            expect(company_address_form.submit(valid_params)).to eq(true)
-          end
+          expect(company_address_form.submit(valid_params)).to eq(true)
         end
       end
 
@@ -27,9 +23,7 @@ module WasteCarriersEngine
         let(:invalid_params) { { reg_identifier: "foo" } }
 
         it "should not submit" do
-          VCR.use_cassette("company_postcode_form_valid_postcode") do
-            expect(company_address_form.submit(invalid_params)).to eq(false)
-          end
+          expect(company_address_form.submit(invalid_params)).to eq(false)
         end
       end
     end
