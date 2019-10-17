@@ -1,32 +1,20 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CompanyAddressForm < AddressForm
-    attr_accessor :business_type
-    attr_accessor :temp_company_postcode
+  class CompanyAddressForm < AddressLookupFormBase
+    delegate :temp_company_postcode, :business_type, :company_address, to: :transient_registration
 
-    def initialize(transient_registration)
-      super
-      # We only use this for the correct microcopy
-      self.business_type = transient_registration.business_type
-      self.temp_company_postcode = transient_registration.temp_company_postcode
+    alias existing_address company_address
+    alias postcode temp_company_postcode
 
-      look_up_addresses
-      preselect_existing_address
-    end
+    validates :company_address, "waste_carriers_engine/address": true
 
-    private
+    def submit(params)
+      company_address_params = params.fetch(:company_address, {})
+      # binding.pry
+      company_address = create_address(company_address_params[:uprn], "REGISTERED")
 
-    def temp_postcode
-      temp_company_postcode
-    end
-
-    def saved_address
-      transient_registration.registered_address
-    end
-
-    def address_type
-      "REGISTERED"
+      super(company_address: company_address)
     end
   end
 end

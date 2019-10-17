@@ -4,10 +4,8 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "CompanyAddressForms", type: :request do
-    # Stub the address search so we have JSON to use
     before do
-      address_json = build(:company_address_form, :has_required_data).temp_addresses
-      allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(address_json)
+      stub_address_finder_service(uprn: "340116")
     end
 
     include_examples "GET flexible form", "company_address_form"
@@ -32,13 +30,15 @@ module WasteCarriersEngine
             let(:valid_params) do
               {
                 reg_identifier: transient_registration[:reg_identifier],
-                temp_address: "340116"
+                company_address: {
+                  uprn: "340116"
+                }
               }
             end
 
             it "updates the transient registration" do
               post company_address_forms_path, company_address_form: valid_params
-              expect(transient_registration.reload.registered_address.uprn.to_s).to eq(valid_params[:temp_address])
+              expect(transient_registration.reload.company_address.uprn.to_s).to eq("340116")
             end
 
             it "returns a 302 response" do

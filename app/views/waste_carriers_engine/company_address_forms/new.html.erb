@@ -12,7 +12,9 @@
       <%= link_to(t(".postcode_change_link"), back_company_address_forms_path(@company_address_form.reg_identifier)) %>
     </div>
 
-    <%= render("waste_carriers_engine/shared/select_address", form: @company_address_form, f: f) %>
+    <%= f.fields_for :company_address do |f| %>
+      <%= render("waste_carriers_engine/shared/select_address", form: @company_address_form, address: :company_address, f: f) %>
+    <% end %>
 
     <div class="form-group">
       <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_address_forms_path(@company_address_form.reg_identifier)) %>

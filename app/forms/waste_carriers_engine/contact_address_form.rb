@@ -1,29 +1,19 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class ContactAddressForm < AddressForm
-    attr_accessor :temp_contact_postcode
+  class ContactAddressForm < AddressLookupFormBase
+    delegate :temp_contact_postcode, :contact_address, to: :transient_registration
 
-    def initialize(transient_registration)
-      super
-      self.temp_contact_postcode = transient_registration.temp_contact_postcode
+    alias existing_address contact_address
+    alias postcode temp_contact_postcode
 
-      look_up_addresses
-      preselect_existing_address
-    end
+    validates :contact_address, "waste_carriers_engine/address": true
 
-    private
+    def submit(params)
+      contact_address_params = params.fetch(:contact_address, {})
+      contact_address = create_address(contact_address_params[:uprn], "POSTAL")
 
-    def temp_postcode
-      temp_contact_postcode
-    end
-
-    def saved_address
-      transient_registration.contact_address
-    end
-
-    def address_type
-      "POSTAL"
+      super(contact_address: contact_address)
     end
   end
 end

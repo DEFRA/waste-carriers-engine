@@ -9,5 +9,11 @@ module WasteCarriersEngine
     def create
       super(CompanyAddressForm, "company_address_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params.fetch(:company_address_form, {}).permit(company_address: [:uprn])
+    end
   end
 end

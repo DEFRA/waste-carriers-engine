@@ -73,6 +73,10 @@ module WasteCarriersEngine
       address
     end
 
+    def manual_foreign?
+      address_mode == "manual-foreign"
+    end
+
     def assign_house_number_and_address_lines(data)
       lines = data["lines"]
       address_attributes = %i[house_number

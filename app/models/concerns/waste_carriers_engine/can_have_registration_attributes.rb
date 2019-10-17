@@ -22,6 +22,8 @@ module WasteCarriersEngine
 
       # This is our own custom association. See CanReferenceSingleDocumentInCollection for details
       reference_one :contact_address, collection: :addresses, find_by: { address_type: "POSTAL" }
+      reference_one :company_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
+      # TODO: Remove this and always use `company_address` rather than `registrered_address`
       reference_one :registered_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
 
       embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
