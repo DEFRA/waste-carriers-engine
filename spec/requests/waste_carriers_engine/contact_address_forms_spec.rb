@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "ContactAddressForms", type: :request do
     before do
-      stub_address_finder_service(uprn: 340116)
+      stub_address_finder_service(uprn: "340116")
     end
 
     include_examples "GET flexible form", "contact_address_form"

@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe CompanyAddressForm, type: :model do
     # Stub the address search so we have JSON to use
     before do
-      stub_address_finder_service(uprn: 340116)
+      stub_address_finder_service(uprn: "340116")
     end
 
     describe "#submit" do
@@ -16,7 +16,7 @@ module WasteCarriersEngine
           {
             reg_identifier: company_address_form.reg_identifier,
             company_address: {
-              uprn: 340116
+              uprn: "340116"
             }
           }
         end

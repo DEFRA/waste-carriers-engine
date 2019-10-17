@@ -28,7 +28,6 @@ module WasteCarriersEngine
           fetch_attribute(collection, find_by)
       end
 
-      # rubocop:disable Lint/UnusedMethodArgument
       def assign_attribute(attribute_name, collection, new_object)
         public_send(attribute_name)&.delete
 
@@ -37,14 +36,11 @@ module WasteCarriersEngine
 
         public_send("#{collection}=", new_collection)
       end
-      # rubocop:enable Lint/UnusedMethodArgument
 
       def fetch_attribute(collection, find_by)
         public_send(collection).each do |element|
           find_by.each do |key, value|
-            if element.public_send(key) == value
-              return element
-            end
+            return element if element.public_send(key) == value
           end
         end
 

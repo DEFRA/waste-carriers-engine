@@ -7,7 +7,7 @@ module WasteCarriersEngine
     describe "#submit" do
       context "when the form is valid" do
         before do
-          stub_address_finder_service(uprn: 340116)
+          stub_address_finder_service(uprn: "340116")
         end
 
         let(:contact_address_form) { build(:contact_address_form, :has_required_data) }
@@ -15,7 +15,7 @@ module WasteCarriersEngine
           {
             reg_identifier: contact_address_form.reg_identifier,
             contact_address: {
-              uprn: 340116
+              uprn: "340116"
             }
           }
         end
