@@ -17,7 +17,7 @@ module WasteCarriersEngine
         end
 
         define_method("#{attribute_name}=") do |new_object|
-          assign_attribute(attribute_name, collection, new_object)
+          assign_attribute(attribute_name, collection, new_object, find_by)
         end
       end
     end
@@ -28,12 +28,22 @@ module WasteCarriersEngine
           fetch_attribute(collection, find_by)
       end
 
-      def assign_attribute(attribute_name, collection, new_object)
+      def assign_attribute(attribute_name, collection, new_object, find_by)
+        # Feth the existing collection
         new_collection = public_send(collection) || []
 
+        # Remove current object, if present, from the collection
         new_collection -= [public_send(attribute_name)]
+
+        # Assign the params that define this relation to the new object
+        find_by.each do |key, value|
+          new_object.public_send("#{key}=", value)
+        end
+
+        # Add new object to the collection
         new_collection << new_object
 
+        # Assign the new collection
         public_send("#{collection}=", new_collection)
       end
 

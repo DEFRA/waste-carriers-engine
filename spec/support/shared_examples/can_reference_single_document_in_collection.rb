@@ -32,14 +32,17 @@ RSpec.shared_examples "Can reference single document in collection" do |subject_
 
   describe "##{attribute}=" do
     it "updates the object's collection with the new object" do
-      size = subject.send(collection).size
-
       expect(subject.send(collection)).to_not include(new_object_for_collection)
 
       subject.send("#{attribute}=", new_object_for_collection)
 
       expect(subject.send(collection)).to include(new_object_for_collection)
-      expect(subject.send(collection).size).to eq(size)
+    end
+
+    it "apply correct attributes to new objects so that they can be found back in the collection" do
+      subject.send("#{attribute}=", new_object_for_collection)
+
+      expect(subject.send(attribute)).to eq(new_object_for_collection)
     end
   end
 end
