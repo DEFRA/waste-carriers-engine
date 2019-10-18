@@ -35,13 +35,15 @@ module WasteCarriersEngine
         # Remove current object, if present, from the collection
         new_collection -= [public_send(attribute_name)]
 
-        # Assign the params that define this relation to the new object
-        find_by.each do |key, value|
-          new_object[key] = value
-        end
+        if new_object
+          # Assign the params that define this relation to the new object
+          find_by.each do |key, value|
+            new_object[key] = value
+          end
 
-        # Add new object to the collection
-        new_collection << new_object
+          # Add new object to the collection
+          new_collection << new_object
+        end
 
         # Assign the new collection
         public_send("#{collection}=", new_collection)
