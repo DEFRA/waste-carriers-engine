@@ -37,7 +37,7 @@ module WasteCarriersEngine
 
         # Assign the params that define this relation to the new object
         find_by.each do |key, value|
-          new_object.public_send("#{key}=", value)
+          new_object[key] = value
         end
 
         # Add new object to the collection
