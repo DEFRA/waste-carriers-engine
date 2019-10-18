@@ -31,26 +31,5 @@ module WasteCarriersEngine
 
       address
     end
-
-    def house_number_and_address_lines(data)
-      attributes = {}
-
-      lines = data["lines"]
-      address_attributes = %i[house_number
-                              address_line_1
-                              address_line_2
-                              address_line_3
-                              address_line_4]
-      lines.reject!(&:blank?)
-
-      # Assign lines one at a time until we run out of lines to assign
-      address_attributes.each do |attribute|
-        attributes[attribute] = lines.shift
-
-        break if lines.empty?
-      end
-
-      attributes
-    end
   end
 end
