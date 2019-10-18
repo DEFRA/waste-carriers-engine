@@ -29,10 +29,10 @@ module WasteCarriersEngine
       end
 
       def assign_attribute(attribute_name, collection, new_object)
-        public_send(attribute_name)&.delete
+        new_collection = public_send(collection) || []
 
-        new_collection = public_send(collection)
-        new_collection += [new_object]
+        new_collection -= [public_send(attribute_name)]
+        new_collection << new_object
 
         public_send("#{collection}=", new_collection)
       end
