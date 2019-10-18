@@ -11,7 +11,6 @@ module WasteCarriersEngine
 
     def submit(params)
       company_address_params = params.fetch(:company_address, {})
-      # binding.pry
       company_address = create_address(company_address_params[:uprn], "REGISTERED")
 
       super(company_address: company_address)
