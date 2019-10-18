@@ -28,20 +28,23 @@ module WasteCarriersEngine
           fetch_attribute(collection, find_by)
       end
 
-      # rubocop:disable Lint/UnusedMethodArgument
       def assign_attribute(attribute_name, collection, new_object)
-        send(attribute_name)&.delete
+        new_collection = public_send(collection) || []
 
-        instance_eval("#{collection} << new_object", __FILE__, __LINE__)
+        new_collection -= [public_send(attribute_name)]
+        new_collection << new_object
 
-        instance_variable_set("@#{attribute_name}", nil)
+        public_send("#{collection}=", new_collection)
       end
-      # rubocop:enable Lint/UnusedMethodArgument
 
       def fetch_attribute(collection, find_by)
-        criteria = instance_eval("#{collection}.criteria", __FILE__, __LINE__)
+        public_send(collection).each do |element|
+          find_by.each do |key, value|
+            return element if element.public_send(key) == value
+          end
+        end
 
-        criteria.where(find_by).first
+        nil
       end
     end
   end
