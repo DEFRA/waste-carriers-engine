@@ -37,7 +37,7 @@ module WasteCarriersEngine
     end
 
     def renewable_status?
-      %w[ACTIVE EXPIRED].include?(metaData.status)
+      active? || expired?
     end
 
     def renewable_date?
