@@ -497,5 +497,10 @@ module WasteCarriersEngine
                             record_class: WasteCarriersEngine::Registration,
                             factory: :registration
     end
+
+    describe "status" do
+      it_should_behave_like "Can check registration status",
+                            factory: :registration
+    end
   end
 end
