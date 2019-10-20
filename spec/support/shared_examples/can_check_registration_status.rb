@@ -39,6 +39,24 @@ RSpec.shared_examples "Can check registration status" do |factory:|
     end
   end
 
+  describe "#inactive?" do
+    context "when the metadata status is inactive" do
+      before { resource.metaData.status = "INACTIVE" }
+
+      it "returns true" do
+        expect(resource).to be_inactive
+      end
+    end
+
+    context "when the metadata status is not inactive" do
+      before { resource.metaData.status = "ACTIVE" }
+
+      it "returns false" do
+        expect(resource).to_not be_inactive
+      end
+    end
+  end
+
   describe "#pending?" do
     context "when the metadata status is pending" do
       before { resource.metaData.status = "PENDING" }

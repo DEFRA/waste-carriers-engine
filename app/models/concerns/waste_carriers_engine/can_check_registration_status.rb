@@ -13,6 +13,10 @@ module WasteCarriersEngine
         metaData.EXPIRED?
       end
 
+      def inactive?
+        metaData.INACTIVE?
+      end
+
       def pending?
         metaData.PENDING?
       end
