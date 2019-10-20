@@ -3,6 +3,14 @@
 RSpec.shared_examples "Can check registration status" do |factory:|
   let(:resource) { build(factory, :has_required_data) }
 
+  describe "#status" do
+    before { resource.metaData.status = "ACTIVE" }
+
+    it "outputs a lowercase symbol of the metadata status" do
+      expect(resource.status).to eq(:active)
+    end
+  end
+
   describe "#active?" do
     context "when the metadata status is active" do
       before { resource.metaData.status = "ACTIVE" }

@@ -5,6 +5,10 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
 
     included do
+      def status
+        metaData.status.downcase.to_sym
+      end
+
       def active?
         metaData.ACTIVE?
       end
