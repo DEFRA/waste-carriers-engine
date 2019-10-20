@@ -24,5 +24,27 @@ module WasteCarriersEngine
 
     validates :tier,
               inclusion: { in: %w[UPPER LOWER] }
+
+    def can_start_renewal?
+      renewable_tier? && renewable_status? && renewable_date?
+    end
+
+    private
+
+    def renewable_tier?
+      tier == "UPPER"
+    end
+
+    def renewable_status?
+      %w[ACTIVE EXPIRED].include?(metaData.status)
+    end
+
+    def renewable_date?
+      check_service = ExpiryCheckService.new(self)
+      return true if check_service.in_expiry_grace_window?
+      return false if check_service.expired?
+
+      check_service.in_renewal_window?
+    end
   end
 end
