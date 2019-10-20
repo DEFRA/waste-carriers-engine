@@ -3,6 +3,7 @@
 module WasteCarriersEngine
   class Registration
     include Mongoid::Document
+    include CanCheckRegistrationStatus
     include CanHaveRegistrationAttributes
     include CanGenerateRegIdentifier
 
