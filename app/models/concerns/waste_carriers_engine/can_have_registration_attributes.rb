@@ -83,10 +83,12 @@ module WasteCarriersEngine
       field :total_fee,                                        type: String
 
       scope :search_term, lambda { |term|
-        any_of({ reg_identifier: /\A#{term}\z/i },
-               { company_name: /#{term}/i },
-               { last_name: /#{term}/i },
-               "addresses.postcode": /#{term}/i)
+        escaped_term = Regexp.escape(term) if term.present?
+
+        any_of({ reg_identifier: /\A#{escaped_term}\z/i },
+               { company_name: /#{escaped_term}/i },
+               { last_name: /#{escaped_term}/i },
+               "addresses.postcode": /#{escaped_term}/i)
       }
 
       def charity?
