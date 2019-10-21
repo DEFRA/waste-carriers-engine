@@ -57,30 +57,23 @@ module WasteCarriersEngine
                        :has_required_data,
                        :has_addresses,
                        account_email: user.email,
-                       workflow_state: "company_address_manual_form")
+                       workflow_state: "company_address_form")
               end
 
               it "should have have the same number of addresses before and after submitting" do
                 number_of_addresses = transient_registration.addresses.count
-                post company_address_manual_forms_path, company_address_manual_form: valid_params
+
+                post company_address_forms_path, company_address_form: valid_params
+
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)
               end
 
-              it "removes the old registered address" do
-                old_registered_address = transient_registration.registered_address
-                post company_address_manual_forms_path, company_address_manual_form: valid_params
-                expect(transient_registration.reload.registered_address).to_not eq(old_registered_address)
-              end
+              it "updates the old contact address" do
+                transient_registration.company_address.update_attributes(uprn: "123456")
 
-              it "adds the new registered address" do
-                post company_address_manual_forms_path, company_address_manual_form: valid_params
-                expect(transient_registration.reload.registered_address.address_line_1).to eq(valid_params[:address_line_1])
-              end
+                post company_address_forms_path, company_address_form: valid_params
 
-              it "does not modify the existing contact address" do
-                old_contact_address = transient_registration.reload.contact_address
-                post company_address_manual_forms_path, company_address_manual_form: valid_params
-                expect(transient_registration.reload.contact_address).to eq(old_contact_address)
+                expect(transient_registration.reload.company_address.uprn).to eq(340_116)
               end
             end
           end
