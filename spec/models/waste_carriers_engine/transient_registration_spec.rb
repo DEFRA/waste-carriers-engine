@@ -44,6 +44,11 @@ module WasteCarriersEngine
       it_should_behave_like "TransientRegistration named scopes"
     end
 
+    describe "status" do
+      it_should_behave_like "Can check registration status",
+                            factory: :transient_registration
+    end
+
     describe "registration attributes" do
       it_should_behave_like "Can have registration attributes"
     end

@@ -22,6 +22,7 @@ module WasteCarriersEngine
         state :REVOKED
         state :REFUSED
         state :EXPIRED
+        state :INACTIVE
 
         # Transitions
         after_all_transitions :log_status_change

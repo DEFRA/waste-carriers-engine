@@ -70,5 +70,13 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
         expect(scope).not_to include(non_matching_record)
       end
     end
+
+    context "when the search term has special characters" do
+      let(:term) { "*" }
+
+      it "does not break the search" do
+        expect { scope }.to_not raise_error
+      end
+    end
   end
 end

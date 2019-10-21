@@ -6,6 +6,7 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanChangeWorkflowStatus
     include CanCheckBusinessTypeChanges
+    include CanCheckRegistrationStatus
     include CanHaveRegistrationAttributes
     include CanStripWhitespace
 
