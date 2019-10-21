@@ -50,5 +50,11 @@ RSpec.shared_examples "Can reference single document in collection" do |subject_
         .to change { subject.public_send(collection).size }
         .by(-1)
     end
+
+    it "can remove the attribute from the collection if assigning empty hash" do
+      expect { subject.public_send("#{attribute}=", {}) }
+        .to change { subject.public_send(collection).size }
+        .by(-1)
+    end
   end
 end

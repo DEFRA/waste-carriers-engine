@@ -35,7 +35,7 @@ module WasteCarriersEngine
         # Remove current object, if present, from the collection
         new_collection -= [public_send(attribute_name)]
 
-        if new_object
+        if new_object.present?
           # Assign the params that define this relation to the new object
           find_by.each do |key, value|
             new_object[key] = value
