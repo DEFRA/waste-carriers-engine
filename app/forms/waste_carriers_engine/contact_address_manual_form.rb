@@ -22,7 +22,9 @@ module WasteCarriersEngine
 
     def clean_address
       # Prefill the existing address unless the postcode has changed from the existing address's postcode
-      transient_registration.contact_address = Address.new(postcode: transient_registration.temp_contact_postcode)
+      transient_registration.contact_address = Address.new(
+        postcode: transient_registration.temp_contact_postcode
+      )
     end
 
     def saved_address_still_valid?
