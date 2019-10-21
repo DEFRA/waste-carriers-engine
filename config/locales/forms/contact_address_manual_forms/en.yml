@@ -7,6 +7,8 @@ en:
         os_places_error_heading: Our address finder is not working
         os_places_error_text: Please enter the address below.
         error_heading: Something is wrong
+        preset_postcode_label: Postcode
+        postcode_change_link: "Change postcode"
         next_button: Continue
   activemodel:
     errors:
