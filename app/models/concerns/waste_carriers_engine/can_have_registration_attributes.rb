@@ -99,6 +99,10 @@ module WasteCarriersEngine
         location == "overseas"
       end
 
+      def business_is_overseas?
+        business_type == "overseas"
+      end
+
       # Some business types should not have a company_no
       def company_no_required?
         return false if overseas?

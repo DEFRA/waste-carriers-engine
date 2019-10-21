@@ -86,7 +86,8 @@ module WasteCarriersEngine
             create(:transient_registration,
                    :has_required_data,
                    account_email: user.email,
-                   workflow_state: "renewal_start_form")
+                   workflow_state: "renewal_start_form",
+                   temp_company_postcode: "BS2 6AH")
           end
 
           let(:valid_params) do

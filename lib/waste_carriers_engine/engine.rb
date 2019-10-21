@@ -16,6 +16,8 @@ module WasteCarriersEngine
       g.helper false
     end
 
+    config.autoload_paths << "#{config.root}/app/forms/concerns"
+
     # Load I18n translation files from engine before loading ones from the host app
     # This means values in the host app can override those in the engine
     config.before_initialize do

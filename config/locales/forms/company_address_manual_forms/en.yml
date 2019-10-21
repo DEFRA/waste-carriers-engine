@@ -12,6 +12,8 @@ en:
           overseas: What's the address of the business or organisation?
         os_places_error_heading: Our address finder is not working
         os_places_error_text: Please enter the address below.
+        preset_postcode_label: Postcode
+        postcode_change_link: "Change postcode"
         error_heading: Something is wrong
         next_button: Continue
   activemodel:
