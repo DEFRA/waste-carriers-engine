@@ -98,7 +98,8 @@ module WasteCarriersEngine
     context "when a valid contact address exists and is still valid" do
       let(:contact_address) { build(:address, :contact, :has_required_data) }
       let(:transient_registration) do
-        build(:transient_registration,
+        build(
+          :transient_registration,
           :has_required_data,
           workflow_state: "contact_address_manual_form",
           contact_address: contact_address,

@@ -6,7 +6,8 @@ module WasteCarriersEngine
     include CanValidateManualAddress
 
     delegate :business_is_overseas?, :company_address, :business_type, to: :transient_registration
-    delegate :house_number, :address_line_1, :address_line_2, :postcode, :town_city, :country, to: :company_address, allow_nil: true
+    delegate :house_number, :address_line_1, :address_line_2, to: :company_address, allow_nil: true
+    delegate :postcode, :town_city, :country, to: :company_address, allow_nil: true
 
     after_initialize :clean_address, unless: :saved_address_still_valid?
 
@@ -21,7 +22,9 @@ module WasteCarriersEngine
 
     def clean_address
       # Prefill the existing address unless the postcode has changed from the existing address's postcode
-      transient_registration.company_address = Address.new(postcode: transient_registration.temp_company_postcode)
+      transient_registration.company_address = Address.new(
+        postcode: transient_registration.temp_company_postcode
+      )
     end
 
     def saved_address_still_valid?

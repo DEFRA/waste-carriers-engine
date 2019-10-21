@@ -98,7 +98,8 @@ module WasteCarriersEngine
     context "when a valid company address exists and is still valid" do
       let(:company_address) { build(:address, :company, :has_required_data) }
       let(:transient_registration) do
-        build(:transient_registration,
+        build(
+          :transient_registration,
           :has_required_data,
           workflow_state: "company_address_manual_form",
           company_address: company_address,
