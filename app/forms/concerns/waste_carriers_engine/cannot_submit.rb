@@ -1,3 +1,5 @@
+# frozen_string_literal: true.
+
 module WasteCarriersEngine
   module CannotSubmit
     extend ActiveSupport::Concern
