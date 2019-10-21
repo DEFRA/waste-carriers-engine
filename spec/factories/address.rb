@@ -18,6 +18,10 @@ FactoryBot.define do
       address_type { "REGISTERED" }
     end
 
+    trait :company do
+      address_type { "REGISTERED" }
+    end
+
     trait :from_os_places do
       address_mode { "address-results" }
     end

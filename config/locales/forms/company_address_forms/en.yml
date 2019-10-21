@@ -19,9 +19,5 @@ en:
       models:
         waste_carriers_engine/company_address_form:
           attributes:
-            addresses:
+            company_address:
               blank: "You must select an address"
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"

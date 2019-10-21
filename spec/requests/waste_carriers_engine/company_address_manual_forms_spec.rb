@@ -25,15 +25,17 @@ module WasteCarriersEngine
             let(:valid_params) do
               {
                 reg_identifier: transient_registration[:reg_identifier],
-                house_number: "42",
-                address_line_1: "Foo Terrace",
-                town_city: "Barton"
+                company_address: {
+                  house_number: "42",
+                  address_line_1: "Foo Terrace",
+                  town_city: "Barton"
+                }
               }
             end
 
             it "updates the transient registration" do
               post company_address_manual_forms_path, company_address_manual_form: valid_params
-              expect(transient_registration.reload.registered_address.house_number).to eq(valid_params[:house_number])
+              expect(transient_registration.reload.registered_address.house_number).to eq("42")
             end
 
             it "returns a 302 response" do
@@ -69,7 +71,7 @@ module WasteCarriersEngine
 
               it "adds the new registered address" do
                 post company_address_manual_forms_path, company_address_manual_form: valid_params
-                expect(transient_registration.reload.registered_address.address_line_1).to eq(valid_params[:address_line_1])
+                expect(transient_registration.reload.registered_address.address_line_1).to eq("Foo Terrace")
               end
 
               it "does not modify the existing contact address" do
@@ -110,9 +112,11 @@ module WasteCarriersEngine
           let(:valid_params) do
             {
               reg_identifier: transient_registration[:reg_identifier],
-              house_number: "42",
-              address_line_1: "Foo Terrace",
-              town_city: "Barton"
+              company_address: {
+                house_number: "42",
+                address_line_1: "Foo Terrace",
+                town_city: "Barton"
+              }
             }
           end
 

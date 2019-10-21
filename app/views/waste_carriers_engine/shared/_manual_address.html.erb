@@ -1,11 +1,3 @@
-<% unless overseas %>
-  <div class="form-group">
-    <label class="form-label"><%= t(".preset_postcode_label") %></label>
-    <span class="postcode"><%= form.postcode %></span>
-    <%= link_to(t(".postcode_change_link"), back_contact_address_manual_forms_path(form.reg_identifier)) %>
-  </div>
-<% end %>
-
 <div class="form-group <%= "form-group-error" if form.errors[:house_number].any? %>">
   <fieldset id="house_number">
     <% if form.errors[:house_number].any? %>

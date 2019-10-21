@@ -92,7 +92,7 @@ module WasteCarriersEngine
           let(:valid_params) do
             {
               reg_identifier: transient_registration[:reg_identifier],
-              temp_contact_postcode: "BS1 5AH"
+              temp_contact_postcode: "BS3 6AH"
             }
           end
 

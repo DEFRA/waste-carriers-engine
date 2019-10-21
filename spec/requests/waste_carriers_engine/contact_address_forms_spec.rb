@@ -13,6 +13,7 @@ module WasteCarriersEngine
     describe "POST contact_address_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before(:each) do
           sign_in(user)
         end
@@ -38,6 +39,7 @@ module WasteCarriersEngine
 
             it "updates the transient registration" do
               post contact_address_forms_path, contact_address_form: valid_params
+
               expect(transient_registration.reload.contact_address.uprn.to_s).to eq("340116")
             end
 
@@ -57,30 +59,21 @@ module WasteCarriersEngine
                        :has_required_data,
                        :has_addresses,
                        account_email: user.email,
-                       workflow_state: "contact_address_manual_form")
+                       workflow_state: "contact_address_form")
               end
 
               it "should have have the same number of addresses before and after submitting" do
                 number_of_addresses = transient_registration.addresses.count
-                post contact_address_manual_forms_path, contact_address_manual_form: valid_params
+                post contact_address_forms_path, contact_address_form: valid_params
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)
               end
 
-              it "removes the old contact address" do
-                old_contact_address = transient_registration.contact_address
-                post contact_address_manual_forms_path, contact_address_manual_form: valid_params
-                expect(transient_registration.reload.contact_address).to_not eq(old_contact_address)
-              end
+              it "updates the old contact address" do
+                transient_registration.contact_address.update_attributes(uprn: "123456")
 
-              it "adds the new contact address" do
-                post contact_address_manual_forms_path, contact_address_manual_form: valid_params
-                expect(transient_registration.reload.contact_address.address_line_1).to eq(valid_params[:address_line_1])
-              end
+                post contact_address_forms_path, contact_address_form: valid_params
 
-              it "does not modify the existing registered address" do
-                old_registered_address = transient_registration.registered_address
-                post contact_address_manual_forms_path, contact_address_manual_form: valid_params
-                expect(transient_registration.reload.registered_address).to eq(old_registered_address)
+                expect(transient_registration.reload.contact_address.uprn).to eq(340_116)
               end
             end
           end
