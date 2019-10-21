@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class RenewalReceivedForm < BaseForm
+    include CannotSubmit
+
     attr_accessor :contact_email, :pending_convictions_check, :pending_payment, :pending_worldpay_payment
 
     def self.can_navigate_flexibly?
@@ -16,8 +18,5 @@ module WasteCarriersEngine
       self.pending_payment = transient_registration.pending_payment?
       self.pending_worldpay_payment = transient_registration.pending_worldpay_payment?
     end
-
-    # Override BaseForm method as users shouldn't be able to submit this form
-    def submit; end
   end
 end

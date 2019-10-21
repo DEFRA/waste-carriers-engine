@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class RenewalCompleteForm < BaseForm
+    include CannotSubmit
+
     attr_accessor :certificate_link, :contact_email, :projected_renewal_end_date, :registration_type
 
     def self.can_navigate_flexibly?
@@ -16,9 +18,6 @@ module WasteCarriersEngine
       self.projected_renewal_end_date = transient_registration.projected_renewal_end_date
       self.registration_type = transient_registration.registration_type
     end
-
-    # Override BaseForm method as users shouldn't be able to submit this form
-    def submit; end
 
     private
 
