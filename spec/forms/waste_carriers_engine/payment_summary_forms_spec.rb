@@ -31,7 +31,11 @@ module WasteCarriersEngine
 
     describe "#valid?" do
       context "when a valid transient registration exists" do
-        let(:payment_summary_form) { build(:payment_summary_form, :has_required_data, temp_payment_method: temp_payment_method) }
+        let(:payment_summary_form) { build(:payment_summary_form, :has_required_data) }
+
+        before do
+          payment_summary_form.transient_registration.temp_payment_method = temp_payment_method
+        end
 
         context "when a temp_payment_method is bank_transfer" do
           let(:temp_payment_method) { "bank_transfer" }

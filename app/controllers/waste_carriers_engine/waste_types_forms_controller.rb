@@ -9,5 +9,11 @@ module WasteCarriersEngine
     def create
       super(WasteTypesForm, "waste_types_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params.fetch(:waste_types_form, {}).permit(:only_amf)
+    end
   end
 end
