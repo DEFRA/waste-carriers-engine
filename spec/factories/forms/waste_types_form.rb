@@ -3,9 +3,16 @@
 FactoryBot.define do
   factory :waste_types_form, class: WasteCarriersEngine::WasteTypesForm do
     trait :has_required_data do
-      only_amf { "yes" }
-
-      initialize_with { new(create(:transient_registration, :has_required_data, workflow_state: "waste_types_form")) }
+      initialize_with do
+        new(
+          create(
+            :transient_registration,
+            :has_required_data,
+            workflow_state: "waste_types_form",
+            only_amf: "yes"
+          )
+        )
+      end
     end
   end
 end

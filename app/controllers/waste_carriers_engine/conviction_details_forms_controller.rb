@@ -13,5 +13,13 @@ module WasteCarriersEngine
     def delete_person
       super(ConvictionDetailsForm, "conviction_details_form")
     end
+
+    private
+
+    def transient_registration_attributes
+      params
+        .fetch(:conviction_details_form, {})
+        .permit(:first_name, :last_name, :position, :dob_day, :dob_month, :dob_year)
+    end
   end
 end
