@@ -30,7 +30,7 @@ module WasteCarriersEngine
 
     def transient_registration_attributes
       # Default behavuour - permit no params
-      # Override in subclasses if needed
+      # Override in subclasses when needed
       params.permit
     end
 
