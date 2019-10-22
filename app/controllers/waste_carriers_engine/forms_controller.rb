@@ -16,13 +16,7 @@ module WasteCarriersEngine
     def create(form_class, form)
       return false unless set_up_form(form_class, form, params[form][:reg_identifier])
 
-      # Submit the form by getting the instance variable we just set
-      # TODO: Temporary refactoring code.
-      begin
-        submit_form(instance_variable_get("@#{form}"), transient_registration_attributes)
-      rescue NameError
-        submit_form(instance_variable_get("@#{form}"), params[form])
-      end
+      submit_form(instance_variable_get("@#{form}"), transient_registration_attributes)
     end
 
     def go_back
@@ -33,6 +27,12 @@ module WasteCarriersEngine
     end
 
     private
+
+    def transient_registration_attributes
+      # Default behavuour - permit no params
+      # Override in subclasses when needed
+      params.permit
+    end
 
     def find_or_initialize_transient_registration(reg_identifier)
       @transient_registration = TransientRegistration.where(reg_identifier: reg_identifier).first ||
