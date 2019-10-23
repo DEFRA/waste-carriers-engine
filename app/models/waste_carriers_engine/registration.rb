@@ -30,6 +30,10 @@ module WasteCarriersEngine
       renewable_tier? && renewable_status? && renewable_date?
     end
 
+    def pending_manual_conviction_check?
+      conviction_check_required?
+    end
+
     private
 
     def renewable_tier?
