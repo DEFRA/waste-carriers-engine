@@ -102,7 +102,7 @@ module WasteCarriersEngine
     end
 
     def pending_payment?
-      renewal_application_submitted? && finance_details.present? && finance_details.balance.positive?
+      renewal_application_submitted? && unpaid_balance?
     end
 
     def pending_worldpay_payment?

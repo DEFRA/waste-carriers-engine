@@ -157,6 +157,10 @@ module WasteCarriersEngine
       def declaration_confirmed?
         declaration == 1
       end
+
+      def unpaid_balance?
+        finance_details.present? && finance_details.balance.positive?
+      end
     end
     # rubocop:enable Metrics/BlockLength
   end
