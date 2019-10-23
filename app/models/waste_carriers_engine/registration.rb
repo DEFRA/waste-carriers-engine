@@ -30,6 +30,10 @@ module WasteCarriersEngine
       renewable_tier? && renewable_status? && renewable_date?
     end
 
+    def pending_payment?
+      unpaid_balance?
+    end
+
     private
 
     def renewable_tier?
