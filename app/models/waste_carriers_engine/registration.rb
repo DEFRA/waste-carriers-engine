@@ -26,12 +26,10 @@ module WasteCarriersEngine
     validates :tier,
               inclusion: { in: %w[UPPER LOWER] }
 
+    alias pending_manual_conviction_check? conviction_check_required?
+
     def can_start_renewal?
       renewable_tier? && renewable_status? && renewable_date?
-    end
-
-    def pending_manual_conviction_check?
-      conviction_check_required?
     end
 
     private

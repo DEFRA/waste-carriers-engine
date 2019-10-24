@@ -566,26 +566,6 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#pending_manual_conviction_check?" do
-      let(:registration) { build(:registration) }
-
-      context "when the registration requires a conviction check" do
-        before { allow(registration).to receive(:conviction_check_required?).and_return(true) }
-
-        it "returns true" do
-          expect(registration.pending_manual_conviction_check?).to eq(true)
-        end
-      end
-
-      context "when the registration does not require a conviction check" do
-        before { allow(registration).to receive(:conviction_check_required?).and_return(false) }
-
-        it "returns false" do
-          expect(registration.pending_manual_conviction_check?).to eq(false)
-        end
-      end
-    end
-
     describe "status" do
       it_should_behave_like "Can check registration status",
                             factory: :registration
