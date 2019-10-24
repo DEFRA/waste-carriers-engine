@@ -262,14 +262,23 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :renewal_received_form,
                       if: :pending_worldpay_payment_or_convictions_check?,
-                      success: :send_renewal_received_email
+                      success: :send_renewal_received_email,
+                      # TODO: This don't get triggered if in the `success`
+                      # callback block, hence we went for `after`
+                      after: :set_metadata_route
 
           transitions from: :worldpay_form,
-                      to: :renewal_complete_form
+                      to: :renewal_complete_form,
+                      # TODO: This don't get triggered if in the `success`
+                      # callback block, hence we went for `after`
+                      after: :set_metadata_route
 
           transitions from: :bank_transfer_form,
                       to: :renewal_received_form,
-                      success: :send_renewal_received_email
+                      success: :send_renewal_received_email,
+                      # TODO: This don't get triggered if in the `success`
+                      # callback block, hence we went for `after`
+                      after: :set_metadata_route
         end
 
         event :back do

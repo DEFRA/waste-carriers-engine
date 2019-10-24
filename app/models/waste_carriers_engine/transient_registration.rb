@@ -153,6 +153,12 @@ module WasteCarriersEngine
       true
     end
 
+    def set_metadata_route
+      metaData.route = Rails.configuration.metadata_route
+
+      save
+    end
+
     private
 
     def copy_data_from_registration
