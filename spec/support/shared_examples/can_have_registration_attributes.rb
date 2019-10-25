@@ -104,4 +104,46 @@ RSpec.shared_examples "Can have registration attributes" do
       end
     end
   end
+
+  describe "#unpaid_balance?" do
+    context do
+      before do
+        transient_registration.finance_details = nil
+      end
+
+      it "returns false" do
+        expect(transient_registration.unpaid_balance?).to eq(false)
+      end
+    end
+
+    context "when the balance is 0" do
+      before do
+        transient_registration.finance_details = build(:finance_details, balance: 0)
+      end
+
+      it "returns false" do
+        expect(transient_registration.unpaid_balance?).to eq(false)
+      end
+    end
+
+    context "when the balance is negative" do
+      before do
+        transient_registration.finance_details = build(:finance_details, balance: -1)
+      end
+
+      it "returns false" do
+        expect(transient_registration.unpaid_balance?).to eq(false)
+      end
+    end
+
+    context "when the balance is positive" do
+      before do
+        transient_registration.finance_details = build(:finance_details, balance: 1)
+      end
+
+      it "returns true" do
+        expect(transient_registration.unpaid_balance?).to eq(true)
+      end
+    end
+  end
 end
