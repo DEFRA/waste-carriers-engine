@@ -63,6 +63,14 @@ module WasteCarriersEngine
           expect(registration.reload.finance_details.payments).to include(new_payment)
         end
 
+        it "copies the registration's route from the transient_registration to the registration" do
+          transient_registration.metaData.route = "ASSISTED_DIGITAL_FROM_TRANSIENT_REGISTRATION"
+
+          renewal_completion_service.complete_renewal
+
+          expect(registration.reload.metaData.route).to eq("ASSISTED_DIGITAL_FROM_TRANSIENT_REGISTRATION")
+        end
+
         it "keeps existing orders" do
           old_order = registration.finance_details.orders.first
           renewal_completion_service.complete_renewal
@@ -145,17 +153,6 @@ module WasteCarriersEngine
           last_name = transient_registration.last_name
           renewal_completion_service.complete_renewal
           expect(registration.reload.contact_address.last_name).to eq(last_name)
-        end
-
-        context "when the metadata_route is set" do
-          before do
-            allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
-          end
-
-          it "updates the registration's route to the correct value" do
-            renewal_completion_service.complete_renewal
-            expect(registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
-          end
         end
 
         it "deletes the transient registration" do

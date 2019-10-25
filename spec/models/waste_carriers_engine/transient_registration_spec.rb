@@ -12,6 +12,47 @@ module WasteCarriersEngine
           expect(transient_registration).to have_state(:renewal_start_form)
         end
       end
+
+      context "when transitioning from bank_transfer_form to renewal_received_form succesfully" do
+        it "set the transient registration metadata route" do
+          expect(transient_registration).to receive(:set_metadata_route).once
+
+          transient_registration.update_attributes(workflow_state: :bank_transfer_form)
+          transient_registration.next
+        end
+      end
+
+      context "when transitioning from worldpay_form to renewal_complete_form succesfully" do
+        it "set the transient registration metadata route" do
+          expect(transient_registration).to receive(:set_metadata_route).once
+          expect(transient_registration).to receive(:pending_worldpay_payment_or_convictions_check?).and_return(false)
+
+          transient_registration.update_attributes(workflow_state: :worldpay_form)
+          transient_registration.next
+        end
+      end
+
+      context "when transitioning from worldpay_form to renewal_received_form succesfully" do
+        it "set the transient registration metadata route" do
+          expect(transient_registration).to receive(:set_metadata_route).once
+          expect(transient_registration).to receive(:pending_worldpay_payment_or_convictions_check?).and_return(true)
+
+          transient_registration.update_attributes(workflow_state: :worldpay_form)
+          transient_registration.next
+        end
+      end
+    end
+
+    describe "#set_metadata_route" do
+      it "updates the transient registration's metadata route" do
+        metadata_route = double(:metadata_route)
+
+        expect(Rails.configuration).to receive(:metadata_route).and_return(metadata_route)
+        expect(transient_registration.metaData).to receive(:route=).with(metadata_route)
+        expect(transient_registration).to receive(:save)
+
+        transient_registration.set_metadata_route
+      end
     end
 
     describe "reg_identifier" do
@@ -160,9 +201,9 @@ module WasteCarriersEngine
           transient_registration.workflow_state = "renewal_received_form"
         end
 
-        context "when the balance is 0" do
+        context "when there is no unpaid balance" do
           before do
-            transient_registration.finance_details = build(:finance_details, balance: 0)
+            allow(transient_registration).to receive(:unpaid_balance?).and_return(false)
           end
 
           it "returns false" do
@@ -170,19 +211,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the balance is negative" do
+        context "when there is an unpaid balance" do
           before do
-            transient_registration.finance_details = build(:finance_details, balance: -1)
-          end
-
-          it "returns false" do
-            expect(transient_registration.pending_payment?).to eq(false)
-          end
-        end
-
-        context "when the balance is positive" do
-          before do
-            transient_registration.finance_details = build(:finance_details, balance: 1)
+            allow(transient_registration).to receive(:unpaid_balance?).and_return(true)
           end
 
           it "returns true" do

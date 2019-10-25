@@ -54,7 +54,7 @@ module WasteCarriersEngine
     end
 
     def update_meta_data
-      @registration.metaData.route = Rails.configuration.metadata_route
+      @registration.metaData.route = @transient_registration.metaData.route
       @registration.metaData.renew
       @registration.metaData.date_registered = Time.now
       @registration.metaData.date_activated = @registration.metaData.date_registered
