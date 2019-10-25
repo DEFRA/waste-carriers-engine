@@ -566,40 +566,6 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#pending_payment?" do
-      let(:registration) { build(:registration) }
-
-      context "when the balance is 0" do
-        before do
-          registration.finance_details = build(:finance_details, balance: 0)
-        end
-
-        it "returns false" do
-          expect(registration.pending_payment?).to eq(false)
-        end
-      end
-
-      context "when the balance is negative" do
-        before do
-          registration.finance_details = build(:finance_details, balance: -1)
-        end
-
-        it "returns false" do
-          expect(registration.pending_payment?).to eq(false)
-        end
-      end
-
-      context "when the balance is positive" do
-        before do
-          registration.finance_details = build(:finance_details, balance: 1)
-        end
-
-        it "returns true" do
-          expect(registration.pending_payment?).to eq(true)
-        end
-      end
-    end
-
     describe "status" do
       it_should_behave_like "Can check registration status",
                             factory: :registration
