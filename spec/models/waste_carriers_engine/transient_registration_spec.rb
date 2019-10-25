@@ -200,9 +200,9 @@ module WasteCarriersEngine
           transient_registration.workflow_state = "renewal_received_form"
         end
 
-        context "when the balance is 0" do
+        context "when there is no unpaid balance" do
           before do
-            transient_registration.finance_details = build(:finance_details, balance: 0)
+            allow(transient_registration).to receive(:unpaid_balance?).and_return(false)
           end
 
           it "returns false" do
@@ -210,19 +210,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the balance is negative" do
+        context "when there is an unpaid balance" do
           before do
-            transient_registration.finance_details = build(:finance_details, balance: -1)
-          end
-
-          it "returns false" do
-            expect(transient_registration.pending_payment?).to eq(false)
-          end
-        end
-
-        context "when the balance is positive" do
-          before do
-            transient_registration.finance_details = build(:finance_details, balance: 1)
+            allow(transient_registration).to receive(:unpaid_balance?).and_return(true)
           end
 
           it "returns true" do
