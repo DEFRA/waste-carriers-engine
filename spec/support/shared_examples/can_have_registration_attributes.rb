@@ -65,6 +65,44 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
+  describe "#conviction_check_required?" do
+    context "when there are no conviction_sign_offs" do
+      before do
+        resource.conviction_sign_offs = nil
+      end
+
+      it "returns false" do
+        expect(resource.conviction_check_required?).to eq(false)
+      end
+    end
+
+    context "when there is a conviction_sign_off" do
+      before do
+        resource.conviction_sign_offs = [build(:conviction_sign_off)]
+      end
+
+      context "when confirmed is yes" do
+        before do
+          resource.conviction_sign_offs.first.confirmed = "yes"
+        end
+
+        it "returns false" do
+          expect(resource.conviction_check_required?).to eq(false)
+        end
+      end
+
+      context "when confirmed is no" do
+        before do
+          resource.conviction_sign_offs.first.confirmed = "no"
+        end
+
+        it "returns true" do
+          expect(resource.conviction_check_required?).to eq(true)
+        end
+      end
+    end
+  end
+
   describe "#conviction_check_approved?" do
     context "when there are no conviction_sign_offs" do
       before do
