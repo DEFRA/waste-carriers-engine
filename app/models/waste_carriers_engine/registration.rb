@@ -26,12 +26,10 @@ module WasteCarriersEngine
     validates :tier,
               inclusion: { in: %w[UPPER LOWER] }
 
+    alias pending_payment? unpaid_balance?
+
     def can_start_renewal?
       renewable_tier? && renewable_status? && renewable_date?
-    end
-
-    def pending_payment?
-      unpaid_balance?
     end
 
     private

@@ -159,7 +159,9 @@ module WasteCarriersEngine
       end
 
       def unpaid_balance?
-        finance_details.present? && finance_details.balance.positive?
+        return true if finance_details.presence&.balance&.positive?
+
+        false
       end
     end
     # rubocop:enable Metrics/BlockLength
