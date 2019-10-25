@@ -144,41 +144,41 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
   describe "#unpaid_balance?" do
     context do
       before do
-        transient_registration.finance_details = nil
+        resource.finance_details = nil
       end
 
       it "returns false" do
-        expect(transient_registration.unpaid_balance?).to eq(false)
+        expect(resource.unpaid_balance?).to eq(false)
       end
     end
 
     context "when the balance is 0" do
       before do
-        transient_registration.finance_details = build(:finance_details, balance: 0)
+        resource.finance_details = build(:finance_details, balance: 0)
       end
 
       it "returns false" do
-        expect(transient_registration.unpaid_balance?).to eq(false)
+        expect(resource.unpaid_balance?).to eq(false)
       end
     end
 
     context "when the balance is negative" do
       before do
-        transient_registration.finance_details = build(:finance_details, balance: -1)
+        resource.finance_details = build(:finance_details, balance: -1)
       end
 
       it "returns false" do
-        expect(transient_registration.unpaid_balance?).to eq(false)
+        expect(resource.unpaid_balance?).to eq(false)
       end
     end
 
     context "when the balance is positive" do
       before do
-        transient_registration.finance_details = build(:finance_details, balance: 1)
+        resource.finance_details = build(:finance_details, balance: 1)
       end
 
       it "returns true" do
-        expect(transient_registration.unpaid_balance?).to eq(true)
+        expect(resource.unpaid_balance?).to eq(true)
       end
     end
   end
