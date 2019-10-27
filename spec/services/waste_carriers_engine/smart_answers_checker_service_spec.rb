@@ -4,15 +4,28 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe SmartAnswersCheckerService do
-    let(:transient_registration) { build(:transient_registration) }
-    let(:service) { SmartAnswersCheckerService.new(transient_registration) }
+    let(:other_businesses) { }
+    let(:construction_waste) { }
+    let(:is_main_service) { }
+    let(:only_amf) { }
+    let(:transient_registration) do
+      double(
+        :transient_registration,
+        other_businesses: other_businesses,
+        construction_waste: construction_waste,
+        is_main_service: is_main_service,
+        only_amf: only_amf
+      )
+    end
+
+    let(:service) { described_class.new(transient_registration) }
 
     describe "#lower_tier?" do
       context "when other_businesses is no" do
-        before { transient_registration.other_businesses = "no" }
+        let(:other_businesses) { "no" }
 
         context "when construction_waste is no" do
-          before { transient_registration.construction_waste = "no" }
+          let(:construction_waste) { "no" }
 
           it "returns true" do
             expect(service.lower_tier?).to eq(true)
@@ -20,7 +33,7 @@ module WasteCarriersEngine
         end
 
         context "when construction_waste is yes" do
-          before { transient_registration.construction_waste = "yes" }
+          let(:construction_waste) { "yes" }
 
           it "returns false" do
             expect(service.lower_tier?).to eq(false)
@@ -29,13 +42,13 @@ module WasteCarriersEngine
       end
 
       context "when other_businesses is yes" do
-        before { transient_registration.other_businesses = "yes" }
+        let(:other_businesses) { "yes" }
 
         context "when is_main_service is no" do
-          before { transient_registration.is_main_service = "no" }
+          let(:is_main_service) { "no" }
 
           context "when construction_waste is no" do
-            before { transient_registration.construction_waste = "no" }
+            let(:construction_waste) { "no" }
 
             it "returns true" do
               expect(service.lower_tier?).to eq(true)
@@ -43,7 +56,7 @@ module WasteCarriersEngine
           end
 
           context "when construction_waste is yes" do
-            before { transient_registration.construction_waste = "yes" }
+            let(:construction_waste) { "yes" }
 
             it "returns false" do
               expect(service.lower_tier?).to eq(false)
@@ -52,10 +65,10 @@ module WasteCarriersEngine
         end
 
         context "when is_main_service is yes" do
-          before { transient_registration.is_main_service = "yes" }
+          let(:is_main_service) { "yes" }
 
           context "when only_amf is no" do
-            before { transient_registration.only_amf = "no" }
+            let(:only_amf) { "no" }
 
             it "returns false" do
               expect(service.lower_tier?).to eq(false)
@@ -63,7 +76,7 @@ module WasteCarriersEngine
           end
 
           context "when only_amf is yes" do
-            before { transient_registration.only_amf = "yes" }
+            let(:only_amf) { "yes" }
 
             it "returns true" do
               expect(service.lower_tier?).to eq(true)
