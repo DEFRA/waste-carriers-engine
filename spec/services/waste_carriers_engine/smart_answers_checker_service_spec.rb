@@ -4,10 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe SmartAnswersCheckerService do
-    let(:other_businesses) { }
-    let(:construction_waste) { }
-    let(:is_main_service) { }
-    let(:only_amf) { }
+    let(:other_businesses) {}
+    let(:construction_waste) {}
+    let(:is_main_service) {}
+    let(:only_amf) {}
     let(:transient_registration) do
       double(
         :transient_registration,
