@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "business_type_form",
                      valid_params: { business_type: "limitedCompany" },
-                     invalid_params: { business_type: "foo" },
+                     invalid_params: [{ business_type: "foo" }, { business_type: nil }],
                      test_attribute: :business_type
 
     describe "GET back_business_type_forms_path" do

@@ -7,7 +7,6 @@
 # Options can include valid params, invalid params, and an attribute to test persistence.
 RSpec.shared_examples "POST form" do |form, options|
   let(:valid_params) { options[:valid_params] }
-  let(:invalid_params) { options[:invalid_params] }
   # Default to :reg_identifier for forms which don't submit new data.
   let(:test_attribute) { options[:test_attribute] || :reg_identifier }
   let(:expected_value) { options[:expected_value] }
@@ -79,18 +78,29 @@ RSpec.shared_examples "POST form" do |form, options|
 
         context "when the params are invalid" do
           before do
-            invalid_params[:reg_identifier] = transient_registration.reg_identifier
+
           end
 
-          it "does not update the transient registration, including workflow_state" do
-            transient_reg_before_submitting = transient_registration
-            post_form_with_params(form, invalid_params)
-            expect(transient_registration.reload).to eq(transient_reg_before_submitting)
-          end
+          it "includes validation errors for the form data" do
+            options[:invalid_params].each do |invalid_data|
+              invalid_data[:reg_identifier] = transient_registration.reg_identifier
 
-          it "show the form again" do
-            post_form_with_params(form, invalid_params)
-            expect(response).to render_template("#{form}s/new")
+              post_form_with_params(form, invalid_data)
+
+              invalid_form = build(form, :has_required_data)
+              invalid_form.submit(ActionController::Parameters.new(invalid_data).permit!)
+
+              raise("No errors found for invalid data: #{invalid_data}") if invalid_form.valid?
+
+              invalid_form.errors.messages.values.flatten.each do |error_message|
+                # We include error messages twice, but RSpec has no built-in "include twice" method yet.
+                # Hence, the scan will make sure we match the message *at least* twice in the rendered page.
+                expect(response.body.scan(error_message).count).to be > 1
+              end
+
+              expect(transient_registration).to eq(transient_registration.reload)
+              expect(response).to render_template("#{form}s/new")
+            end
           end
         end
 

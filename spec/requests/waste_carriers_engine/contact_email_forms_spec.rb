@@ -6,13 +6,26 @@ module WasteCarriersEngine
   RSpec.describe "ContactEmailForms", type: :request do
     include_examples "GET flexible form", "contact_email_form"
 
-    include_examples "POST form",
-                     "contact_email_form",
-                     valid_params: { contact_email: "bar.baz@example.com",
-                                     confirmed_email: "bar.baz@example.com" },
-                     invalid_params: { contact_email: "bar",
-                                       confirmed_email: "baz" },
-                     test_attribute: :contact_email
+    include_examples(
+      "POST form",
+      "contact_email_form",
+      valid_params: {
+        contact_email: "bar.baz@example.com",
+        confirmed_email: "bar.baz@example.com"
+      }, invalid_params: [
+        {
+          contact_email: "bar",
+          confirmed_email: "baz"
+        }, {
+          contact_email: "bar",
+          confirmed_email: nil
+        }, {
+          contact_email: nil,
+          confirmed_email: "baz"
+        }
+      ],
+      test_attribute: :contact_email
+    )
 
     describe "GET back_contact_email_forms_path" do
       context "when a valid user is signed in" do

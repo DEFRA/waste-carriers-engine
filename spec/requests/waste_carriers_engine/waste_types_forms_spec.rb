@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "waste_types_form",
                      valid_params: { only_amf: "yes" },
-                     invalid_params: { only_amf: "foo" },
+                     invalid_params: [{ only_amf: "foo" }],
                      test_attribute: :only_amf
 
     describe "GET back_waste_types_forms_path" do

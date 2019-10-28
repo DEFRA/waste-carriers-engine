@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "other_businesses_form",
                      valid_params: { other_businesses: "yes" },
-                     invalid_params: { other_businesses: "foo" },
+                     invalid_params: [{ other_businesses: "foo" }],
                      test_attribute: :other_businesses
 
     describe "GET back_other_businesses_forms_path" do

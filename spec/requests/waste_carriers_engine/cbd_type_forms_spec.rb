@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "cbd_type_form",
                      valid_params: { registration_type: "broker_dealer" },
-                     invalid_params: { registration_type: "foo" },
+                     invalid_params: [{ registration_type: "foo" }, { registration_type: nil }],
                      test_attribute: :registration_type
 
     describe "GET back_cbd_type_forms_path" do

@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "declare_convictions_form",
                      valid_params: { declared_convictions: "yes" },
-                     invalid_params: { declared_convictions: "foo" },
+                     invalid_params: [{ declared_convictions: "foo" }],
                      test_attribute: :declared_convictions
 
     describe "GET back_declare_convictions_forms_path" do

@@ -13,7 +13,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "declaration_form",
                      valid_params: { declaration: 1 },
-                     invalid_params: { declaration: "foo" },
+                     invalid_params: [{ declaration: "foo" }, { declaration: nil }],
                      test_attribute: :declaration
 
     describe "POST declaration_forms_path" do

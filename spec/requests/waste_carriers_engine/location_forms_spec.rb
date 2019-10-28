@@ -9,7 +9,7 @@ module WasteCarriersEngine
     include_examples "POST form",
                      "location_form",
                      valid_params: { location: "england" },
-                     invalid_params: { location: "foo" },
+                     invalid_params: [{ location: "foo" }],
                      test_attribute: :location
 
     describe "GET back_location_forms_path" do
