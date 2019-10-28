@@ -10,8 +10,12 @@
       <li><%= t(".list_item_2") %></li>
     </ul>
 
-    <div class="form-group">
+    <div class="form-group  <%= "form-group-error" if @declaration_form.errors[:declaration].any? %>">
       <fieldset id="declaration">
+        <% if @declaration_form.errors[:declaration].any? %>
+          <span class="error-message"><%= @declaration_form.errors[:declaration].join(", ") %></span>
+        <% end %>
+
         <div class="multiple-choice">
           <%= f.check_box :declaration %>
           <%= f.label :declaration, t(".declaration_text") %>
