@@ -28,6 +28,24 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
+  describe "#amount_paid" do
+    it "returns the total amount paid by the user" do
+      finance_detail_1 = double(:finance_detail_1, amount: 23)
+      finance_detail_2 = double(:finance_detail_2, amount: 30)
+      finance_details = double(:finance_details, payments: [finance_detail_1, finance_detail_2])
+
+      expect(resource).to receive(:finance_details).and_return(finance_details)
+      expect(resource.amount_paid).to eq(53)
+    end
+
+    context "when there are no finance details" do
+      it "return 0" do
+        expect(resource).to receive(:finance_details)
+        expect(resource.amount_paid).to eq(0)
+      end
+    end
+  end
+
   describe "#contact_address" do
     let(:contact_address) { build(:address, :contact) }
     let(:resource) { build(factory, addresses: [contact_address]) }
