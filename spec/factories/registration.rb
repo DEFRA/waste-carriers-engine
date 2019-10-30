@@ -16,15 +16,16 @@ FactoryBot.define do
 
       metaData { build(:metaData, :has_required_data) }
 
-      addresses do
-        [build(:address, :has_required_data, :contact, :from_os_places),
-         build(:address, :has_required_data, :registered, :from_os_places)]
-      end
+      has_addresses
 
       key_people do
         [build(:key_person, :has_required_data, :main),
          build(:key_person, :has_required_data, :relevant)]
       end
+    end
+
+    trait :has_addresses do
+      addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end
 
     trait :has_required_overseas_data do

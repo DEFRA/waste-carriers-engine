@@ -26,6 +26,7 @@ module WasteCarriersEngine
     validates :tier,
               inclusion: { in: %w[UPPER LOWER] }
 
+    alias pending_manual_conviction_check? conviction_check_required?
     alias pending_payment? unpaid_balance?
 
     def can_start_renewal?

@@ -91,7 +91,8 @@ module WasteCarriersEngine
     end
 
     describe "registration attributes" do
-      it_should_behave_like "Can have registration attributes"
+      it_should_behave_like "Can have registration attributes",
+                            factory: :transient_registration
     end
 
     describe "#initialize" do
