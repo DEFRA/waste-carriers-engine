@@ -30,9 +30,9 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
 
   describe "#amount_paid" do
     it "returns the total amount paid by the user" do
-      finance_detail_1 = double(:finance_detail_1, amount: 23)
-      finance_detail_2 = double(:finance_detail_2, amount: 30)
-      finance_details = double(:finance_details, payments: [finance_detail_1, finance_detail_2])
+      finance_detail1 = double(:finance_detail1, amount: 23)
+      finance_detail2 = double(:finance_detail2, amount: 30)
+      finance_details = double(:finance_details, payments: [finance_detail1, finance_detail2])
 
       expect(resource).to receive(:finance_details).and_return(finance_details)
       expect(resource.amount_paid).to eq(53)
