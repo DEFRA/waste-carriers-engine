@@ -17,10 +17,12 @@ module WasteCarriersEngine
 
       describe "scopes" do
         let(:term) { "foo" }
-        let(:non_matching_term) { "bar" }
+        let(:matching_first_name) { "foo" }
+        let(:matching_last_name) { "bar" }
+        let(:non_matching_term) { "baz" }
 
-        describe "#matching_name" do
-          let(:scope) { described_class.matching_name(term) }
+        describe "#matching_organisation_name" do
+          let(:scope) { described_class.matching_organisation_name(term) }
 
           it "returns records with matching names" do
             matching_record = described_class.create(name: term)
@@ -37,7 +39,45 @@ module WasteCarriersEngine
           end
 
           context "when the search term has special characters" do
-            let(:term) { "*" }
+            let(:matching_first_name) { "*" }
+
+            it "does not break the scope" do
+              expect { scope }.to_not raise_error
+            end
+          end
+        end
+
+        describe "#matching_person_name" do
+          let(:scope) { described_class.matching_person_name(first_name: matching_first_name, last_name: matching_last_name) }
+
+          it "returns records with matching first names and last names" do
+            matching_record = described_class.create(name: "#{matching_last_name}, #{matching_first_name}")
+            non_matching_record = described_class.create(name: non_matching_term)
+
+            expect(scope).to include(matching_record)
+            expect(scope).to_not include(non_matching_record)
+          end
+
+          it "does not return records where only the first name matches" do
+            non_matching_record = described_class.create(name: "#{non_matching_term}, #{matching_first_name}")
+
+            expect(scope).to_not include(non_matching_record)
+          end
+
+          it "does not return records where only the last name matches" do
+            non_matching_record = described_class.create(name: "#{matching_last_name}, #{non_matching_term}")
+
+            expect(scope).to_not include(non_matching_record)
+          end
+
+          it "is not case sensitive" do
+            upcased_record = described_class.create(name: "#{matching_last_name}, #{matching_first_name}".upcase)
+
+            expect(scope).to include(upcased_record)
+          end
+
+          context "when the search term has special characters" do
+            let(:matching_first_name) { "*" }
 
             it "does not break the scope" do
               expect { scope }.to_not raise_error
@@ -135,10 +175,10 @@ module WasteCarriersEngine
         let(:date_term) { Date.today }
         let(:non_matching_date_term) { Date.yesterday }
 
-        let(:results) { described_class.matching_people(name: term, date_of_birth: date_term) }
+        let(:results) { described_class.matching_people(first_name: term, last_name: term, date_of_birth: date_term) }
 
         it "returns records with matching names" do
-          matching_record = described_class.create(name: term)
+          matching_record = described_class.create(name: "#{term} #{term}")
           non_matching_record = described_class.create(name: non_matching_term)
 
           expect(results).to include(matching_record)
@@ -161,12 +201,16 @@ module WasteCarriersEngine
           expect(results).to_not include(non_matching_record)
         end
 
-        it "does not allow name to be missing" do
-          expect { described_class.matching_people(date_of_birth: term) }.to raise_error { ArgumentError }
+        it "does not allow first_name to be missing" do
+          expect { described_class.matching_people(last_name: term, date_of_birth: term) }.to raise_error { ArgumentError }
+        end
+
+        it "does not allow last_name to be missing" do
+          expect { described_class.matching_people(first_name: term, date_of_birth: term) }.to raise_error { ArgumentError }
         end
 
         it "does not allow date_of_birth to be missing" do
-          expect { described_class.matching_people(name: term) }.to raise_error { ArgumentError }
+          expect { described_class.matching_people(first_name: term, last_name: term) }.to raise_error { ArgumentError }
         end
       end
     end
