@@ -26,9 +26,11 @@ module WasteCarriersEngine
 
           it "returns records with matching names" do
             matching_record = described_class.create(name: term)
+            partially_matching_record = described_class.create(name: "#{term} waste")
             non_matching_record = described_class.create(name: non_matching_term)
 
             expect(scope).to include(matching_record)
+            expect(scope).to include(partially_matching_record)
             expect(scope).to_not include(non_matching_record)
           end
 
