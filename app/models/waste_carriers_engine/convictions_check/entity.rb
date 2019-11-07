@@ -29,6 +29,11 @@ module WasteCarriersEngine
       scope :matching_company_number, lambda { |term|
         where(company_number: term)
       }
+
+      def self.matching_organisations(term)
+        results = matching_name(term) + matching_company_number(term)
+        results.uniq
+      end
     end
   end
 end
