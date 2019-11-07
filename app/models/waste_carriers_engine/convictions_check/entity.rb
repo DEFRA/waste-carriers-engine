@@ -19,9 +19,11 @@ module WasteCarriersEngine
       field :incidentNumber, as: :incident_number, type: String
 
       scope :matching_organisation_name, lambda { |term|
-        term = ::Regexp.escape(term) if term.present?
+        escaped_term = ::Regexp.escape(term) if term.present?
+        # If the name ends with a full stop, treat that as optional in the regex
+        term_with_optional_trailing_full_stop = escaped_term.gsub(/\.$/, ".?") if escaped_term.present?
 
-        where(name: /#{term}/i)
+        where(name: /#{term_with_optional_trailing_full_stop}/i)
       }
 
       scope :matching_person_name, lambda { |first_name:, last_name:|

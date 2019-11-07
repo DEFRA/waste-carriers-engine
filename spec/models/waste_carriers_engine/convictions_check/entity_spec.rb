@@ -40,6 +40,20 @@ module WasteCarriersEngine
             expect(scope).to include(upcased_record)
           end
 
+          context "when the search term ends with a ." do
+            let(:term) { "foo." }
+
+            it "treats the . as an optional match" do
+              record_with_trailing_full_stop = described_class.create(name: "foo.")
+              record_without_trailing_full_stop = described_class.create(name: "foo")
+              record_with_full_stop_somewhere_else = described_class.create(name: "f.oo")
+
+              expect(scope).to include(record_with_trailing_full_stop)
+              expect(scope).to include(record_without_trailing_full_stop)
+              expect(scope).to_not include(record_with_full_stop_somewhere_else)
+            end
+          end
+
           context "when the search term has special characters" do
             let(:matching_first_name) { "*" }
 
