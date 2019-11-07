@@ -33,7 +33,7 @@ module WasteCarriersEngine
 
         context "when a renewal is in progress" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    :has_addresses,
                    :has_key_people,

@@ -45,6 +45,8 @@ module WasteCarriersEngine
     end
 
     def revoke_parent
+      return unless _parent&.metaData
+
       _parent.metaData.revoke!
     end
   end

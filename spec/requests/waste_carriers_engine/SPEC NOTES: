@@ -1,0 +1,10 @@
+SPEC NOTES:
+
+- Forms:
+  - Pure unit
+  - All scenarios covered
+  - Multiple scenarios per-context if multiple things happens
+- Request:
+  - Full integration
+  - All scenarios covered
+  - Only ONE scenario PER-CONTEXT
