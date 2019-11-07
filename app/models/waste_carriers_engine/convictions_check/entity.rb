@@ -34,6 +34,12 @@ module WasteCarriersEngine
         results = matching_name(term) + matching_company_number(term)
         results.uniq
       end
+
+      def self.matching_people(term)
+        results = matching_name(term)
+        results += matching_date_of_birth(term) if term.is_a?(Date)
+        results.uniq
+      end
     end
   end
 end
