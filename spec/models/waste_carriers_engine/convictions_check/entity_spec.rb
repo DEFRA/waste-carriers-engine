@@ -139,13 +139,13 @@ module WasteCarriersEngine
             let(:term) { "01234567" }
 
             it "treats the zero as an optional match" do
-              term_with_leading_zero = described_class.create(company_number: "01234567")
-              term_without_leading_zero = described_class.create(company_number: "1234567")
-              term_with_zero_somewhere_else = described_class.create(company_number: "10234567")
+              record_with_leading_zero = described_class.create(company_number: "01234567")
+              record_without_leading_zero = described_class.create(company_number: "1234567")
+              record_with_zero_somewhere_else = described_class.create(company_number: "10234567")
 
-              expect(scope).to include(term_with_leading_zero)
-              expect(scope).to include(term_without_leading_zero)
-              expect(scope).to_not include(term_with_zero_somewhere_else)
+              expect(scope).to include(record_with_leading_zero)
+              expect(scope).to include(record_without_leading_zero)
+              expect(scope).to_not include(record_with_zero_somewhere_else)
             end
           end
 
