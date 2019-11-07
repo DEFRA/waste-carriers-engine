@@ -17,6 +17,18 @@ module WasteCarriersEngine
       field :systemFlag, as: :system_flag,         type: String
       # The incident number or reference code
       field :incidentNumber, as: :incident_number, type: String
+
+      scope :matching_name, lambda { |term|
+        where(name: term)
+      }
+
+      scope :matching_date_of_birth, lambda { |term|
+        where(date_of_birth: term)
+      }
+
+      scope :matching_company_number, lambda { |term|
+        where(company_number: term)
+      }
     end
   end
 end
