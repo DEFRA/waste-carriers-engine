@@ -40,7 +40,7 @@ module WasteCarriersEngine
         # If the company_no starts with a 0, treat that 0 as optional in the regex
         term_with_optional_starting_zero = escaped_term.gsub(/^0/, "0?") if escaped_term.present?
 
-        where(company_number: /#{term_with_optional_starting_zero}/i)
+        where(company_number: /^#{term_with_optional_starting_zero}$/i)
       }
 
       scope :matching_people, lambda { |first_name:, last_name:, date_of_birth:|

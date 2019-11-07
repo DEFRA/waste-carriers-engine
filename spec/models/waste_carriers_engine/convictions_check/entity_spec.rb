@@ -103,11 +103,13 @@ module WasteCarriersEngine
         describe "#matching_company_number" do
           let(:scope) { described_class.matching_company_number(term) }
 
-          it "returns records with matching company_numbers" do
+          it "returns records with exactly matching company_numbers" do
             matching_record = described_class.create(company_number: term)
+            partially_matching_record = described_class.create(company_number: "#{term}A")
             non_matching_record = described_class.create(company_number: non_matching_term)
 
             expect(scope).to include(matching_record)
+            expect(scope).to_not include(partially_matching_record)
             expect(scope).to_not include(non_matching_record)
           end
 
