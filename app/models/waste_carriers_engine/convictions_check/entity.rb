@@ -41,14 +41,12 @@ module WasteCarriersEngine
         where(company_number: /#{escaped_term}/i)
       }
 
+      scope :matching_people, lambda { |first_name:, last_name:, date_of_birth:|
+        matching_person_name(first_name: first_name, last_name: last_name).matching_date_of_birth(date_of_birth)
+      }
+
       def self.matching_organisations(name:, company_no: nil)
         results = matching_organisation_name(name) + matching_company_number(company_no)
-        results.uniq
-      end
-
-      def self.matching_people(first_name:, last_name:, date_of_birth:)
-        results = matching_person_name(first_name: first_name, last_name: last_name) +
-                  matching_date_of_birth(date_of_birth)
         results.uniq
       end
     end

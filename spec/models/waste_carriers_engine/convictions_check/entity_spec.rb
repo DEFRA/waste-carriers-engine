@@ -125,6 +125,27 @@ module WasteCarriersEngine
             end
           end
         end
+
+        describe "#matching_people" do
+          let(:term) { "foo" }
+          let(:non_matching_term) { "bar" }
+          let(:date_term) { Date.today }
+          let(:non_matching_date_term) { Date.yesterday }
+
+          let(:scope) { described_class.matching_people(first_name: term, last_name: term, date_of_birth: date_term) }
+
+          it "only returns records where both the name and date_of_birth match" do
+            matching_record = described_class.create(name: "#{term} #{term}", date_of_birth: date_term)
+            name_match_only_record = described_class.create(name: "#{term} #{term}", date_of_birth: non_matching_date_term)
+            dob_match_only_record = described_class.create(name: non_matching_term, date_of_birth: date_term)
+            non_matching_record = described_class.create(name: non_matching_term, date_of_birth: non_matching_date_term)
+
+            expect(scope).to include(matching_record)
+            expect(scope).to_not include(name_match_only_record)
+            expect(scope).to_not include(dob_match_only_record)
+            expect(scope).to_not include(non_matching_record)
+          end
+        end
       end
 
       describe "#matching_organisations" do
@@ -166,51 +187,6 @@ module WasteCarriersEngine
 
         it "does not allow name to be missing" do
           expect { described_class.matching_organisations(company_no: term) }.to raise_error { ArgumentError }
-        end
-      end
-
-      describe "#matching_people" do
-        let(:term) { "foo" }
-        let(:non_matching_term) { "bar" }
-        let(:date_term) { Date.today }
-        let(:non_matching_date_term) { Date.yesterday }
-
-        let(:results) { described_class.matching_people(first_name: term, last_name: term, date_of_birth: date_term) }
-
-        it "returns records with matching names" do
-          matching_record = described_class.create(name: "#{term} #{term}")
-          non_matching_record = described_class.create(name: non_matching_term)
-
-          expect(results).to include(matching_record)
-          expect(results).to_not include(non_matching_record)
-        end
-
-        it "returns records with matching date_of_births" do
-          matching_record = described_class.create(date_of_birth: date_term)
-          non_matching_record = described_class.create(date_of_birth: non_matching_date_term)
-
-          expect(results).to include(matching_record)
-          expect(results).to_not include(non_matching_record)
-        end
-
-        it "does not return records with matching company_numbers" do
-          matching_record = described_class.create(company_number: term)
-          non_matching_record = described_class.create(company_number: non_matching_term)
-
-          expect(results).to_not include(matching_record)
-          expect(results).to_not include(non_matching_record)
-        end
-
-        it "does not allow first_name to be missing" do
-          expect { described_class.matching_people(last_name: term, date_of_birth: term) }.to raise_error { ArgumentError }
-        end
-
-        it "does not allow last_name to be missing" do
-          expect { described_class.matching_people(first_name: term, date_of_birth: term) }.to raise_error { ArgumentError }
-        end
-
-        it "does not allow date_of_birth to be missing" do
-          expect { described_class.matching_people(first_name: term, last_name: term) }.to raise_error { ArgumentError }
         end
       end
     end
