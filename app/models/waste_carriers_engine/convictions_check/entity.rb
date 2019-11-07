@@ -30,8 +30,8 @@ module WasteCarriersEngine
         where(company_number: term)
       }
 
-      def self.matching_organisations(term)
-        results = matching_name(term) + matching_company_number(term)
+      def self.matching_organisations(name:, company_no: nil)
+        results = matching_name(name) + matching_company_number(company_no)
         results.uniq
       end
 

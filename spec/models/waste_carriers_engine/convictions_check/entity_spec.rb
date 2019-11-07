@@ -63,20 +63,22 @@ module WasteCarriersEngine
         let(:term) { "foo" }
         let(:non_matching_term) { "bar" }
 
+        let(:results) { described_class.matching_organisations(name: term, company_no: term) }
+
         it "returns records with matching names" do
           matching_record = described_class.create(name: term)
           non_matching_record = described_class.create(name: non_matching_term)
 
-          expect(described_class.matching_organisations(term)).to include(matching_record)
-          expect(described_class.matching_organisations(term)).to_not include(non_matching_record)
+          expect(results).to include(matching_record)
+          expect(results).to_not include(non_matching_record)
         end
 
         it "returns records with matching company_numbers" do
           matching_record = described_class.create(company_number: term)
           non_matching_record = described_class.create(company_number: non_matching_term)
 
-          expect(described_class.matching_organisations(term)).to include(matching_record)
-          expect(described_class.matching_organisations(term)).to_not include(non_matching_record)
+          expect(results).to include(matching_record)
+          expect(results).to_not include(non_matching_record)
         end
 
         it "does not return records with matching date_of_births" do
@@ -86,8 +88,16 @@ module WasteCarriersEngine
           matching_record = described_class.create(date_of_birth: term)
           non_matching_record = described_class.create(date_of_birth: non_matching_term)
 
-          expect(described_class.matching_organisations(term)).to_not include(matching_record)
-          expect(described_class.matching_organisations(term)).to_not include(non_matching_record)
+          expect(results).to_not include(matching_record)
+          expect(results).to_not include(non_matching_record)
+        end
+
+        it "allows company_no to be missing" do
+          expect { described_class.matching_organisations(name: term) }.to_not raise_error
+        end
+
+        it "does not allow name to be missing" do
+          expect { described_class.matching_organisations(company_no: term) }.to raise_error { ArgumentError }
         end
       end
 
