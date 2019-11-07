@@ -29,6 +29,20 @@ module WasteCarriersEngine
             expect(scope).to include(matching_record)
             expect(scope).to_not include(non_matching_record)
           end
+
+          it "is not case sensitive" do
+            upcased_record = described_class.create(name: term.upcase)
+
+            expect(scope).to include(upcased_record)
+          end
+
+          context "when the search term has special characters" do
+            let(:term) { "*" }
+
+            it "does not break the scope" do
+              expect { scope }.to_not raise_error
+            end
+          end
         end
 
         describe "#matching_date_of_birth" do
@@ -55,6 +69,20 @@ module WasteCarriersEngine
 
             expect(scope).to include(matching_record)
             expect(scope).to_not include(non_matching_record)
+          end
+
+          it "is not case sensitive" do
+            upcased_record = described_class.create(company_number: term.upcase)
+
+            expect(scope).to include(upcased_record)
+          end
+
+          context "when the search term has special characters" do
+            let(:term) { "*" }
+
+            it "does not break the scope" do
+              expect { scope }.to_not raise_error
+            end
           end
         end
       end

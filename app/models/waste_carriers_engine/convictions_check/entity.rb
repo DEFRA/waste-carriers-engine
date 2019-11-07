@@ -19,7 +19,9 @@ module WasteCarriersEngine
       field :incidentNumber, as: :incident_number, type: String
 
       scope :matching_name, lambda { |term|
-        where(name: term)
+        escaped_term = ::Regexp.escape(term) if term.present?
+
+        where(name: /#{escaped_term}/i)
       }
 
       scope :matching_date_of_birth, lambda { |term|
@@ -27,7 +29,9 @@ module WasteCarriersEngine
       }
 
       scope :matching_company_number, lambda { |term|
-        where(company_number: term)
+        escaped_term = ::Regexp.escape(term) if term.present?
+
+        where(company_number: /#{escaped_term}/i)
       }
 
       def self.matching_organisations(name:, company_no: nil)
