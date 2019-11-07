@@ -112,16 +112,6 @@ module WasteCarriersEngine
           expect(worldpay_validator_service.valid_success?).to eq(false)
         end
       end
-
-      context "when the source is invalid" do
-        before do
-          params[:source] = "foo"
-        end
-
-        it "returns false" do
-          expect(worldpay_validator_service.valid_success?).to eq(false)
-        end
-      end
     end
 
     describe "valid_failure?" do
