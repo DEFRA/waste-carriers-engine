@@ -9,7 +9,7 @@ module WasteCarriersEngine
     def create
       return unless super(DeclarationForm, "declaration_form")
 
-      conviction_data_service = WasteCarriersEngine::ConvictionDataService.run(@transient_registration)
+      WasteCarriersEngine::ConvictionDataService.run(@transient_registration)
     end
 
     private
