@@ -6,11 +6,25 @@ module WasteCarriersEngine
   module ConvictionsCheck
     RSpec.describe PersonMatchService do
       describe "run" do
+        let(:time) { Time.new(2019, 1, 1) }
+        before { allow(Time).to receive(:current).and_return(time) }
+
         let(:first_name) { "foo" }
         let(:last_name) { "bar" }
         let(:date_of_birth) { Date.today }
 
-        let(:entity) { double(:entity) }
+        let(:entity_a) do
+          double(:entity,
+                 system_flag: "foo",
+                 incident_number: "bar",
+                 name: "baz")
+        end
+        let(:entity_b) do
+          double(:entity,
+                 system_flag: "qux",
+                 incident_number: "quux",
+                 name: "quuz")
+        end
 
         let(:subject) do
           described_class.run(first_name: first_name,
@@ -26,16 +40,27 @@ module WasteCarriersEngine
           expect(Entity).to receive(:matching_people).with(first_name: first_name,
                                                            last_name: last_name,
                                                            date_of_birth: date_of_birth)
-                                                     .and_return([entity])
+                                                     .and_return([entity_a])
 
           subject
         end
 
         context "when there are matches" do
-          before { allow(Entity).to receive(:matching_people).and_return([entity]) }
+          before { allow(Entity).to receive(:matching_people).and_return([entity_a, entity_b]) }
 
-          it "returns true" do
-            expect(subject).to be(true)
+          it "returns a hash of data for the first entity" do
+            data = {
+              searched_at: time,
+              confirmed: "no",
+              confirmed_at: nil,
+              confirmed_by: nil,
+              match_result: "YES",
+              matching_system: entity_a.system_flag,
+              reference: entity_a.incident_number,
+              matched_name: entity_a.name
+            }
+
+            expect(subject).to eq(data)
           end
         end
 
