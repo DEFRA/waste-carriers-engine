@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  # TODO (?): Create test class and include concern?
+  # TODO: (?) Create test class and include concern?
   RSpec.describe RenewingRegistration, type: :model do
     describe "#workflow_state" do
       context "when a RenewingRegistration's state is :bank_transfer_form" do

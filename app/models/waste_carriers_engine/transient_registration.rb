@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ClassLength
   class TransientRegistration
     include Mongoid::Document
     include CanCheckBusinessTypeChanges
@@ -71,5 +70,4 @@ module WasteCarriersEngine
       save
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end
