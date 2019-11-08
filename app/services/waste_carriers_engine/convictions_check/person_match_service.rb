@@ -17,7 +17,7 @@ module WasteCarriersEngine
             negative_match
           end
         rescue ArgumentError
-          nil
+          error_match
         end
       end
 
@@ -44,6 +44,15 @@ module WasteCarriersEngine
         data = basic_match_data
 
         data[:match_result] = "NO"
+
+        data
+      end
+
+      def error_match
+        data = basic_match_data
+
+        data[:match_result] = "UNKNOWN"
+        data[:matching_system] = "ERROR"
 
         data
       end

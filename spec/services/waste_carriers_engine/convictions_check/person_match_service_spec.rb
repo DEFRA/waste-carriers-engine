@@ -83,8 +83,17 @@ module WasteCarriersEngine
         context "when there is an error" do
           before { allow(Entity).to receive(:matching_people).and_raise(ArgumentError) }
 
-          it "returns nil" do
-            expect(subject).to be(nil)
+          it "returns a hash of data" do
+            data = {
+              searched_at: time,
+              confirmed: "no",
+              confirmed_at: nil,
+              confirmed_by: nil,
+              match_result: "UNKNOWN",
+              matching_system: "ERROR"
+            }
+
+            expect(subject).to eq(data)
           end
         end
       end
