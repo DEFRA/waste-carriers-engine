@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :check_your_answers_form, class: WasteCarriersEngine::CheckYourAnswersForm do
     trait :has_required_data do
       initialize_with do
-        new(create(:transient_registration,
+        new(create(:renewing_registration,
                    :has_required_data,
                    :has_addresses,
                    :has_key_people,
@@ -14,7 +14,7 @@ FactoryBot.define do
 
     trait :has_required_overseas_data do
       initialize_with do
-        new(create(:transient_registration,
+        new(create(:renewing_registration,
                    :has_required_overseas_data,
                    :has_overseas_addresses,
                    :has_key_people,
