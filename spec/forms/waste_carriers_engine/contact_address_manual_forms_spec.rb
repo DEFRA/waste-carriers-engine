@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:contact_address) { build(:address, :contact, :has_required_data) }
         let(:transient_registration) do
           build(
-            :transient_registration,
+            :renewing_registration,
             workflow_state: "contact_address_manual_form",
             contact_address: contact_address
           )
@@ -99,7 +99,7 @@ module WasteCarriersEngine
       let(:contact_address) { build(:address, :contact, :has_required_data) }
       let(:transient_registration) do
         build(
-          :transient_registration,
+          :renewing_registration,
           :has_required_data,
           workflow_state: "contact_address_manual_form",
           contact_address: contact_address,

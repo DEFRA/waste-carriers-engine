@@ -11,7 +11,7 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
     end
 
-    let(:transient_registration) { create(:transient_registration, :has_required_data, temp_cards: 0) }
+    let(:transient_registration) { create(:renewing_registration, :has_required_data, temp_cards: 0) }
     let(:current_user) { build(:user) }
 
     describe "new_order" do
