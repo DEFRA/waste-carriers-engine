@@ -67,8 +67,16 @@ module WasteCarriersEngine
         context "when there are no matches" do
           before { allow(Entity).to receive(:matching_people).and_return([]) }
 
-          it "returns false" do
-            expect(subject).to be(false)
+          it "returns a hash of data" do
+            data = {
+              searched_at: time,
+              confirmed: "no",
+              confirmed_at: nil,
+              confirmed_by: nil,
+              match_result: "NO"
+            }
+
+            expect(subject).to eq(data)
           end
         end
 

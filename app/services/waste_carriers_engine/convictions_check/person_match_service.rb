@@ -14,7 +14,7 @@ module WasteCarriersEngine
           if matching_entities.any?
             positive_match(matching_entities.first)
           else
-            false
+            negative_match
           end
         rescue ArgumentError
           nil
@@ -36,6 +36,14 @@ module WasteCarriersEngine
         data[:matching_system] = entity.system_flag
         data[:reference] = entity.incident_number
         data[:matched_name] = entity.name
+
+        data
+      end
+
+      def negative_match
+        data = basic_match_data
+
+        data[:match_result] = "NO"
 
         data
       end
