@@ -19,11 +19,7 @@ module WasteCarriersEngine
       field :incidentNumber, as: :incident_number, type: String
 
       scope :matching_organisation_name, lambda { |term|
-        escaped_term = ::Regexp.escape(term) if term.present?
-        # If the name ends with a full stop, treat that as optional in the regex
-        term_with_optional_trailing_full_stop = escaped_term.gsub(/\.$/, ".?") if escaped_term.present?
-
-        where(name: /#{term_with_optional_trailing_full_stop}/i)
+        where(name: /#{org_name_search_term(term)}/i)
       }
 
       scope :matching_person_name, lambda { |first_name:, last_name:|
@@ -52,6 +48,35 @@ module WasteCarriersEngine
       def self.matching_organisations(name:, company_no: nil)
         results = matching_organisation_name(name) + matching_company_number(company_no)
         results.uniq
+      end
+
+      private
+
+      # We want to ignore certain common words for the purposes of name matching.
+      # This includes company types and suffixes, and major locations.
+      # This is so a name like "Bobby's Bins Ltd" will still match "Bobby's Bins
+      # Limited" or just "Bobby's Bins".
+      IGNORABLE_ORG_NAME_WORDS = %w[
+        limited ltd plc inc incorporated llp lp company
+        co holdings investments services technologies solutions
+        group cyf cyfyngedig ccc cic cio ag corp eurl
+        gmbh sa sarl sp prc partners lc
+        uk gb europe intl international england wales
+        scotland cymru
+      ].freeze
+
+      private_class_method def self.org_name_search_term(term)
+        return if term.blank?
+
+        # Trim trailing full stops
+        term_without_trailing_full_stops = term.gsub(/\.$/, "")
+
+        # Remove the words we want to ignore
+        word_array = term_without_trailing_full_stops.downcase.split(" ")
+        word_array.reject! { |word| IGNORABLE_ORG_NAME_WORDS.include?(word) }
+        term_without_ignorable_words = word_array.join(" ")
+
+        ::Regexp.escape(term_without_ignorable_words)
       end
     end
   end

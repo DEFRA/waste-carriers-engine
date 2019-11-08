@@ -54,6 +54,20 @@ module WasteCarriersEngine
             end
           end
 
+          context "when the search term contains ignorable words" do
+            let(:term) { "foo ltd" }
+
+            it "does not require them to match" do
+              record_with_exact_name = described_class.create(name: "foo ltd")
+              record_without_common_word = described_class.create(name: "foo")
+              record_with_different_common_word = described_class.create(name: "foo limited")
+
+              expect(scope).to include(record_with_exact_name)
+              expect(scope).to include(record_without_common_word)
+              expect(scope).to include(record_with_different_common_word)
+            end
+          end
+
           context "when the search term has special characters" do
             let(:matching_first_name) { "*" }
 
