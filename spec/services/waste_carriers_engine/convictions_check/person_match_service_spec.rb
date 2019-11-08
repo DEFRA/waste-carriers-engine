@@ -46,6 +46,14 @@ module WasteCarriersEngine
             expect(subject).to be(false)
           end
         end
+
+        context "when there is an error" do
+          before { allow(Entity).to receive(:matching_people).and_raise(ArgumentError) }
+
+          it "returns nil" do
+            expect(subject).to be(nil)
+          end
+        end
       end
     end
   end

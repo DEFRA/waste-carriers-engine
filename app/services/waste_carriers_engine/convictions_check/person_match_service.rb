@@ -10,7 +10,11 @@ module WasteCarriersEngine
         @last_name = last_name
         @date_of_birth = date_of_birth
 
-        search_for_matches.any?
+        begin
+          search_for_matches.any?
+        rescue ArgumentError
+          nil
+        end
       end
 
       private
