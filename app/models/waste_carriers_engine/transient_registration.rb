@@ -12,6 +12,8 @@ module WasteCarriersEngine
     # TODO: Swap me with the base registration workflow for new registrations
     include CanUseRenewingRegistrationWorkflow
 
+    store_in collection: "transient_registrations"
+
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
     validate :no_renewal_in_progress?, on: :create
 
