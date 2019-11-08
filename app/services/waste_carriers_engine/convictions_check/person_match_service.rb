@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rest-client"
-
 module WasteCarriersEngine
   module ConvictionsCheck
     class PersonMatchService < BaseService
