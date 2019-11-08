@@ -1,44 +1,13 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ClassLength
-  class TransientRegistration
-    include Mongoid::Document
-    include CanCheckBusinessTypeChanges
-    include CanCheckRegistrationStatus
-    include CanHaveRegistrationAttributes
-    include CanStripWhitespace
-
-    # TODO: Swap me with the base registration workflow for new registrations
+  class RenewingRegistration < TransientRegistration
     include CanUseRenewingRegistrationWorkflow
 
-    store_in collection: "transient_registrations"
-
-    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
     validate :no_renewal_in_progress?, on: :create
+    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
     after_initialize :copy_data_from_registration
-    before_save :update_last_modified
-
-    # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
-    field :temp_cards, type: Integer
-    field :temp_company_postcode, type: String
-    field :temp_contact_postcode, type: String
-    field :temp_os_places_error, type: String # 'yes' or 'no' - should refactor to boolean
-    field :temp_payment_method, type: String
-    field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
-
-    scope :in_progress, -> { where(:workflow_state.nin => %w[renewal_complete_form renewal_received_form]) }
-    scope :submitted, -> { where(:workflow_state.in => %w[renewal_complete_form renewal_received_form]) }
-    scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
-    scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
-
-    scope :convictions_possible_match, -> { submitted.where("conviction_sign_offs.0.workflow_state": "possible_match") }
-    scope :convictions_checks_in_progress, lambda {
-      submitted.where("conviction_sign_offs.0.workflow_state": "checks_in_progress")
-    }
-    scope :convictions_approved, -> { submitted.where("conviction_sign_offs.0.workflow_state": "approved") }
-    scope :convictions_rejected, -> { submitted.where("conviction_sign_offs.0.workflow_state": "rejected") }
 
     # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
     def registration_type_changed?
@@ -66,17 +35,8 @@ module WasteCarriersEngine
       ExpiryCheckService.new(self).expiry_date_after_renewal
     end
 
-    def total_to_pay
-      charges = [Rails.configuration.renewal_charge]
-      charges << Rails.configuration.type_change_charge if registration_type_changed?
-      charges << total_registration_card_charge
-      charges.sum
-    end
-
-    def total_registration_card_charge
-      return 0 unless temp_cards.present?
-
-      temp_cards * Rails.configuration.card_charge
+    def pending_payment?
+      renewal_application_submitted? && super
     end
 
     def company_no_changed?
@@ -101,22 +61,6 @@ module WasteCarriersEngine
     def renewal_application_submitted?
       not_in_progress_states = %w[renewal_received_form renewal_complete_form]
       not_in_progress_states.include?(workflow_state)
-    end
-
-    def pending_payment?
-      renewal_application_submitted? && unpaid_balance?
-    end
-
-    def pending_worldpay_payment?
-      return false unless finance_details.present? &&
-                          finance_details.orders.present? &&
-                          finance_details.orders.first.present?
-
-      Order.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
-    end
-
-    def pending_manual_conviction_check?
-      renewal_application_submitted? && conviction_check_required?
     end
 
     def can_be_renewed?
@@ -155,13 +99,19 @@ module WasteCarriersEngine
       true
     end
 
-    def set_metadata_route
-      metaData.route = Rails.configuration.metadata_route
-
-      save
+    def pending_manual_conviction_check?
+      renewal_application_submitted? && super
     end
 
     private
+
+    # Check if a transient renewal already exists for this registration so we don't have
+    # multiple renewals in progress at once
+    def no_renewal_in_progress?
+      return unless RenewingRegistration.where(reg_identifier: reg_identifier).exists?
+
+      errors.add(:reg_identifier, :renewal_in_progress)
+    end
 
     def copy_data_from_registration
       # Don't try to get Registration data with an invalid reg_identifier
@@ -203,14 +153,5 @@ module WasteCarriersEngine
     def remove_revoked_reason
       metaData.revoked_reason = nil
     end
-
-    # Check if a transient renewal already exists for this registration so we don't have
-    # multiple renewals in progress at once
-    def no_renewal_in_progress?
-      return unless TransientRegistration.where(reg_identifier: reg_identifier).exists?
-
-      errors.add(:reg_identifier, :renewal_in_progress)
-    end
   end
-  # rubocop:enable Metrics/ClassLength
 end
