@@ -14,9 +14,7 @@ module WasteCarriersEngine
     private
 
     def check_for_matches
-      entity_matching_service = WasteCarriersEngine::EntityMatchingService.new(@transient_registration)
-      entity_matching_service.check_business_for_matches
-      entity_matching_service.check_people_for_matches
+      WasteCarriersEngine::EntityMatchingService.run(@transient_registration)
     end
 
     def add_conviction_sign_off
