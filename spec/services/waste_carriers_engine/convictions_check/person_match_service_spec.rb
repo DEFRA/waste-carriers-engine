@@ -19,6 +19,14 @@ module WasteCarriersEngine
         it "does not explode" do
           expect { subject }.to_not raise_error
         end
+
+        it "checks for matching entities" do
+          expect(Entity).to receive(:matching_people).with(first_name: first_name,
+                                                           last_name: last_name,
+                                                           date_of_birth: date_of_birth)
+
+          subject
+        end
       end
     end
   end
