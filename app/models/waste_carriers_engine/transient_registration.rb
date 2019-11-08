@@ -4,13 +4,13 @@ module WasteCarriersEngine
   # rubocop:disable Metrics/ClassLength
   class TransientRegistration
     include Mongoid::Document
-    include CanChangeWorkflowStatus
     include CanCheckBusinessTypeChanges
     include CanCheckRegistrationStatus
     include CanHaveRegistrationAttributes
     include CanStripWhitespace
 
-    store_in collection: "transient_registrations"
+    # TODO: Swap me with the base registration workflow for new registrations
+    include CanUseRenewingRegistrationWorkflow
 
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
     validate :no_renewal_in_progress?, on: :create
