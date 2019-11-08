@@ -19,24 +19,32 @@ module WasteCarriersEngine
       field :incidentNumber, as: :incident_number, type: String
 
       scope :matching_organisation_name, lambda { |term|
+        raise ArgumentError if term.blank?
+
         where(name: /#{org_name_search_term(term)}/i)
       }
 
       scope :matching_person_name, lambda { |first_name:, last_name:|
-        escaped_first_name = ::Regexp.escape(first_name) if first_name.present?
-        escaped_last_name = ::Regexp.escape(last_name) if last_name.present?
+        raise ArgumentError if first_name.blank? || last_name.blank?
+
+        escaped_first_name = ::Regexp.escape(first_name)
+        escaped_last_name = ::Regexp.escape(last_name)
 
         where(name: /#{escaped_first_name}/i).and(name: /#{escaped_last_name}/i)
       }
 
       scope :matching_date_of_birth, lambda { |term|
+        raise ArgumentError unless term.is_a?(Date)
+
         where(date_of_birth: term)
       }
 
       scope :matching_company_number, lambda { |term|
-        escaped_term = ::Regexp.escape(term) if term.present?
+        raise ArgumentError if term.blank?
+
+        escaped_term = ::Regexp.escape(term)
         # If the company_no starts with a 0, treat that 0 as optional in the regex
-        term_with_optional_starting_zero = escaped_term.gsub(/^0/, "0?") if escaped_term.present?
+        term_with_optional_starting_zero = escaped_term.gsub(/^0/, "0?")
 
         where(company_number: /^#{term_with_optional_starting_zero}$/i)
       }
@@ -46,7 +54,13 @@ module WasteCarriersEngine
       }
 
       def self.matching_organisations(name:, company_no: nil)
-        results = matching_organisation_name(name) + matching_company_number(company_no)
+        raise ArgumentError if name.blank?
+
+        results = matching_organisation_name(name)
+
+        return results unless company_no.present?
+
+        results += matching_company_number(company_no)
         results.uniq
       end
 

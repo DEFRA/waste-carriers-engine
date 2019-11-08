@@ -75,6 +75,14 @@ module WasteCarriersEngine
               expect { scope }.to_not raise_error
             end
           end
+
+          context "when the search term is blank" do
+            let(:term) { nil }
+
+            it "raises an error" do
+              expect { scope }.to raise_error(ArgumentError)
+            end
+          end
         end
 
         describe "#matching_person_name" do
@@ -113,6 +121,15 @@ module WasteCarriersEngine
               expect { scope }.to_not raise_error
             end
           end
+
+          context "when the search terms are blank" do
+            let(:matching_first_name) { nil }
+            let(:matching_last_name) { nil }
+
+            it "raises an error" do
+              expect { scope }.to raise_error(ArgumentError)
+            end
+          end
         end
 
         describe "#matching_date_of_birth" do
@@ -127,6 +144,22 @@ module WasteCarriersEngine
 
             expect(scope).to include(matching_record)
             expect(scope).to_not include(non_matching_record)
+          end
+
+          context "when the search term is blank" do
+            let(:term) { nil }
+
+            it "raises an error" do
+              expect { scope }.to raise_error(ArgumentError)
+            end
+          end
+
+          context "when the search term is not a date" do
+            let(:term) { "foo" }
+
+            it "raises an error" do
+              expect { scope }.to raise_error(ArgumentError)
+            end
           end
         end
 
@@ -170,6 +203,14 @@ module WasteCarriersEngine
               expect { scope }.to_not raise_error
             end
           end
+
+          context "when the search term is blank" do
+            let(:term) { nil }
+
+            it "raises an error" do
+              expect { scope }.to raise_error(ArgumentError)
+            end
+          end
         end
 
         describe "#matching_people" do
@@ -190,6 +231,22 @@ module WasteCarriersEngine
             expect(scope).to_not include(name_match_only_record)
             expect(scope).to_not include(dob_match_only_record)
             expect(scope).to_not include(non_matching_record)
+          end
+
+          context "when the name is blank" do
+            let(:term) { nil }
+
+            it "raises an error" do
+              expect { scope }.to raise_error(ArgumentError)
+            end
+          end
+
+          context "when the date_of_birth is blank" do
+            let(:date_term) { nil }
+
+            it "raises an error" do
+              expect { scope }.to raise_error(ArgumentError)
+            end
           end
         end
       end
@@ -233,6 +290,14 @@ module WasteCarriersEngine
 
         it "does not allow name to be missing" do
           expect { described_class.matching_organisations(company_no: term) }.to raise_error { ArgumentError }
+        end
+
+        context "when the name is blank" do
+          let(:term) { nil }
+
+          it "raises an error" do
+            expect { results }.to raise_error(ArgumentError)
+          end
         end
       end
     end
