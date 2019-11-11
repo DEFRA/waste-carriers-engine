@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe WorldpayXmlService do
     # Test with overseas addresses for maximum coverage
     let(:transient_registration) do
-      create(:transient_registration,
+      create(:renewing_registration,
              :has_required_data,
              :has_different_contact_email,
              :has_overseas_addresses,

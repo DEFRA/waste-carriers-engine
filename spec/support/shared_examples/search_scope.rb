@@ -15,11 +15,11 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
     end
 
     context "when the search term is a reg_identifier" do
-      let(:matching_record) do
-        create(factory, :has_required_data)
-      end
+      let(:term) { "CBDU0001" }
 
-      let(:term) { matching_record.reg_identifier }
+      let(:matching_record) do
+        create(factory, :has_required_data, reg_identifier: term)
+      end
 
       it "returns records with a matching reg_identifier" do
         expect(scope).to include(matching_record)

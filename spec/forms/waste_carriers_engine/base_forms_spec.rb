@@ -62,7 +62,7 @@ module WasteCarriersEngine
     describe "#transient_registration" do
       context "when the transient registration is invalid" do
         let(:transient_registration) do
-          build(:transient_registration,
+          build(:renewing_registration,
                 workflow_state: "business_type")
         end
         # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
@@ -79,7 +79,7 @@ module WasteCarriersEngine
 
         it "inherits the errors from the transient_registration" do
           form.valid?
-          expect(form.errors[:base]).to include(I18n.t("activemodel.errors.models.waste_carriers_engine/transient_registration.attributes.reg_identifier.invalid_format"))
+          expect(form.errors[:base]).to include(I18n.t("activemodel.errors.models.waste_carriers_engine/renewing_registration.attributes.reg_identifier.invalid_format"))
         end
       end
     end
