@@ -25,7 +25,7 @@ module WasteCarriersEngine
                  name: "quuz")
         end
 
-        let(:subject) do
+        subject do
           described_class.run(name: name,
                               company_no: company_no)
         end
