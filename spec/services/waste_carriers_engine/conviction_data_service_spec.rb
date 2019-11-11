@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe ConvictionDataService do
     let(:transient_registration) do
-      create(:transient_registration,
+      create(:renewing_registration,
              :has_required_data)
     end
 

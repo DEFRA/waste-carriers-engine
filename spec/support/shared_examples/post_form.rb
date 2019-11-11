@@ -37,14 +37,14 @@ RSpec.shared_examples "POST form" do |form, options|
 
       it "does not create a transient registration" do
         post_form_with_params(form, params)
-        matching_transient_regs = WasteCarriersEngine::TransientRegistration.where(reg_identifier: registration.reg_identifier)
+        matching_transient_regs = WasteCarriersEngine::RenewingRegistration.where(reg_identifier: registration.reg_identifier)
         expect(matching_transient_regs.length).to eq(0)
       end
     end
 
     context "when a renewal is in progress" do
       let(:transient_registration) do
-        create(:transient_registration,
+        create(:renewing_registration,
                :has_required_data,
                account_email: user.email)
       end

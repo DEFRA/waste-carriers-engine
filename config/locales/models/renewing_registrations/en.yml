@@ -3,7 +3,7 @@ en:
     errors:
       models:
         waste_carriers_engine:
-          transient_registration:
+          renewing_registration:
             attributes:
               reg_identifier:
                 invalid_format: "The registration ID is not in a valid format"
