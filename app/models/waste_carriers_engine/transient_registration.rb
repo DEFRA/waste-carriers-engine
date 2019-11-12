@@ -48,10 +48,6 @@ module WasteCarriersEngine
       temp_cards * Rails.configuration.card_charge
     end
 
-    def rejected?
-      metaData.REVOKED?
-    end
-
     def pending_payment?
       unpaid_balance?
     end
