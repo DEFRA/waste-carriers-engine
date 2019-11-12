@@ -6,7 +6,7 @@ FactoryBot.define do
       initialize_with do
         new(
           create(
-            :transient_registration,
+            :renewing_registration,
             :has_required_data,
             :has_addresses,
             workflow_state: "contact_address_manual_form"

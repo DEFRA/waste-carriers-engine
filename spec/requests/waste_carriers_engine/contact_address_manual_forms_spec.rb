@@ -15,7 +15,7 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "contact_address_manual_form")
@@ -50,7 +50,7 @@ module WasteCarriersEngine
 
             context "when the transient registration already has addresses" do
               let(:transient_registration) do
-                create(:transient_registration,
+                create(:renewing_registration,
                        :has_required_data,
                        :has_addresses,
                        account_email: user.email,
@@ -103,7 +103,7 @@ module WasteCarriersEngine
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "renewal_start_form")
@@ -147,7 +147,7 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "contact_address_manual_form")
@@ -181,7 +181,7 @@ module WasteCarriersEngine
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "renewal_start_form")

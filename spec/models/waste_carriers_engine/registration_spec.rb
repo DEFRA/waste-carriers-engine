@@ -570,5 +570,10 @@ module WasteCarriersEngine
       it_should_behave_like "Can check registration status",
                             factory: :registration
     end
+
+    describe "registration attributes" do
+      it_should_behave_like "Can have registration attributes",
+                            factory: :registration
+    end
   end
 end

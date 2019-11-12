@@ -29,7 +29,7 @@ RSpec.shared_examples "GET locked-in form" do |form|
 
     context "when a renewal is in progress" do
       let(:transient_registration) do
-        create(:transient_registration,
+        create(:renewing_registration,
                :has_required_data,
                account_email: user.email)
       end

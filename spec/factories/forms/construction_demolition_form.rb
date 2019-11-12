@@ -6,7 +6,7 @@ FactoryBot.define do
       initialize_with do
         new(
           create(
-            :transient_registration,
+            :renewing_registration,
             :has_required_data,
             workflow_state: "construction_demolition_form",
             construction_waste: "yes"

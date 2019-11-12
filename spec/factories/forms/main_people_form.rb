@@ -10,7 +10,7 @@ FactoryBot.define do
       dob_day { 1 }
       dob { Date.new(2000, 1, 1) }
 
-      initialize_with { new(create(:transient_registration, :has_required_data, workflow_state: "main_people_form")) }
+      initialize_with { new(create(:renewing_registration, :has_required_data, workflow_state: "main_people_form")) }
     end
   end
 end

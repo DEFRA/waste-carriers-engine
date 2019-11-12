@@ -9,7 +9,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
 
     context "when a valid transient registration exists" do
       let(:transient_registration) do
-        create(:transient_registration,
+        create(:renewing_registration,
                :has_required_data,
                :has_addresses,
                :has_conviction_search_result,
