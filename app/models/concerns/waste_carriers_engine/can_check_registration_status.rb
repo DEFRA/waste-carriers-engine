@@ -32,8 +32,6 @@ module WasteCarriersEngine
       def revoked?
         metaData.REVOKED?
       end
-
-      alias_method :rejected?, :revoked?
     end
   end
 end

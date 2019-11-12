@@ -118,22 +118,4 @@ RSpec.shared_examples "Can check registration status" do |factory:|
       end
     end
   end
-
-  describe "#rejected?" do
-    context "when the metadata status is revoked" do
-      before { resource.metaData.status = "REVOKED" }
-
-      it "returns true" do
-        expect(resource).to be_rejected
-      end
-    end
-
-    context "when the metadata status is not revoked" do
-      before { resource.metaData.status = "ACTIVE" }
-
-      it "returns false" do
-        expect(resource).to_not be_rejected
-      end
-    end
-  end
 end
