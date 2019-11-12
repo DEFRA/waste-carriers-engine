@@ -9,7 +9,7 @@ module WasteCarriersEngine
     end
 
     let(:transient_registration) do
-      create(:transient_registration,
+      create(:renewing_registration,
              :has_required_data)
     end
     let(:reg_id) { transient_registration.reg_identifier }

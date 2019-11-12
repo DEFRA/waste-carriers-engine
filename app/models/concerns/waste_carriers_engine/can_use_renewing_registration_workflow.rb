@@ -2,7 +2,7 @@
 
 module WasteCarriersEngine
   # rubocop:disable Metrics/ModuleLength
-  module CanChangeWorkflowStatus
+  module CanUseRenewingRegistrationWorkflow
     extend ActiveSupport::Concern
     include Mongoid::Document
 

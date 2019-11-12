@@ -35,8 +35,8 @@ module WasteCarriersEngine
     end
 
     def find_or_initialize_transient_registration(reg_identifier)
-      @transient_registration = TransientRegistration.where(reg_identifier: reg_identifier).first ||
-                                TransientRegistration.new(reg_identifier: reg_identifier)
+      @transient_registration = RenewingRegistration.where(reg_identifier: reg_identifier).first ||
+                                RenewingRegistration.new(reg_identifier: reg_identifier)
     end
 
     # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),

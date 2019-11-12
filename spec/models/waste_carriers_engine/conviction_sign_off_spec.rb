@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe ConvictionSignOff, type: :model do
-    let(:transient_registration) { build(:transient_registration, :requires_conviction_check, :has_required_data) }
+    let(:transient_registration) { build(:renewing_registration, :requires_conviction_check, :has_required_data) }
     let(:conviction_sign_off) { transient_registration.conviction_sign_offs.first }
     let(:user) { build(:user) }
 

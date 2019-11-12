@@ -12,7 +12,7 @@ module WasteCarriersEngine
 
       context "when a valid transient registration exists" do
         let(:transient_registration) do
-          create(:transient_registration,
+          create(:renewing_registration,
                  :has_required_data,
                  :has_addresses,
                  :has_conviction_search_result,
@@ -167,7 +167,7 @@ module WasteCarriersEngine
           context "when the params are valid" do
             before do
               allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(true)
-              allow_any_instance_of(TransientRegistration).to receive(:pending_worldpay_payment?).and_return(true)
+              allow_any_instance_of(RenewingRegistration).to receive(:pending_worldpay_payment?).and_return(true)
             end
 
             it "redirects to renewal_received_form" do

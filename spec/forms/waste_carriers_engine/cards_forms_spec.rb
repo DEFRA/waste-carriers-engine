@@ -34,7 +34,7 @@ module WasteCarriersEngine
 
       context "when temp_cards is blank" do
         let(:cards_form) { build(:cards_form, :has_required_data) }
-        let(:transient_registration) { TransientRegistration.where(reg_identifier: cards_form.reg_identifier).first }
+        let(:transient_registration) { RenewingRegistration.where(reg_identifier: cards_form.reg_identifier).first }
         let(:blank_params) do
           {
             reg_identifier: cards_form.reg_identifier,
@@ -50,7 +50,7 @@ module WasteCarriersEngine
 
       context "when temp_cards is more than 999" do
         let(:cards_form) { build(:cards_form, :has_required_data) }
-        let(:transient_registration) { TransientRegistration.where(reg_identifier: cards_form.reg_identifier).first }
+        let(:transient_registration) { RenewingRegistration.where(reg_identifier: cards_form.reg_identifier).first }
         let(:outside_range_params) do
           {
             reg_identifier: cards_form.reg_identifier,
