@@ -20,13 +20,13 @@ module WasteCarriersEngine
     def self.new_from_entity_matching_service(data)
       result = ConvictionSearchResult.new
 
-      result.match_result = data["match_result"]
-      result.matching_system = data["matching_system"]
-      result.reference = data["reference"]
-      result.matched_name = data["matched_name"]
-      # The service provides searched_at as milliseconds from the Unix epoch, so conversion is required
-      result.searched_at = Time.at(data["searched_at"] / 1_000).to_datetime
-      result.confirmed = data["confirmed"]
+      valid_keys = %i[match_result
+                      matching_system
+                      reference
+                      matched_name
+                      searched_at
+                      confirmed]
+      result.attributes = data.slice(*valid_keys)
 
       result
     end

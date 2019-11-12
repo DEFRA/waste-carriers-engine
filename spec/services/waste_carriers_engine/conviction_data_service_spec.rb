@@ -9,14 +9,14 @@ module WasteCarriersEngine
              :has_required_data)
     end
 
-    let(:conviction_data_service) { ConvictionDataService.new(transient_registration) }
+    let(:conviction_data_service) { ConvictionDataService.run(transient_registration) }
 
     before do
       allow_any_instance_of(EntityMatchingService).to receive(:check_business_for_matches).and_return(false)
       allow_any_instance_of(EntityMatchingService).to receive(:check_people_for_matches).and_return(false)
     end
 
-    describe "prepare_convictions_data" do
+    describe "run" do
       context "when the user has not declared convictions" do
         before do
           transient_registration.declared_convictions = "no"
@@ -29,7 +29,7 @@ module WasteCarriersEngine
           end
 
           it "does not create a conviction_search_result" do
-            conviction_data_service.prepare_convictions_data
+            conviction_data_service
             expect(transient_registration.reload.conviction_sign_offs).to_not exist
           end
         end
@@ -41,7 +41,7 @@ module WasteCarriersEngine
           end
 
           it "creates a conviction_search_result" do
-            conviction_data_service.prepare_convictions_data
+            conviction_data_service
             expect(transient_registration.reload.conviction_sign_offs).to exist
           end
         end
@@ -53,7 +53,7 @@ module WasteCarriersEngine
           end
 
           it "creates a conviction_search_result" do
-            conviction_data_service.prepare_convictions_data
+            conviction_data_service
             expect(transient_registration.reload.conviction_sign_offs).to exist
           end
         end
@@ -71,7 +71,7 @@ module WasteCarriersEngine
           end
 
           it "creates a conviction_search_result" do
-            conviction_data_service.prepare_convictions_data
+            conviction_data_service
             expect(transient_registration.reload.conviction_sign_offs).to exist
           end
         end
@@ -83,7 +83,7 @@ module WasteCarriersEngine
           end
 
           it "creates a conviction_search_result" do
-            conviction_data_service.prepare_convictions_data
+            conviction_data_service
             expect(transient_registration.reload.conviction_sign_offs).to exist
           end
         end
@@ -95,7 +95,7 @@ module WasteCarriersEngine
           end
 
           it "creates a conviction_search_result" do
-            conviction_data_service.prepare_convictions_data
+            conviction_data_service
             expect(transient_registration.reload.conviction_sign_offs).to exist
           end
         end
