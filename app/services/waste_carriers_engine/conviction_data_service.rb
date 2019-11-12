@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class ConvictionDataService
-    def initialize(transient_registration)
+  class ConvictionDataService < BaseService
+    def run(transient_registration)
       @transient_registration = transient_registration
-    end
 
-    def prepare_convictions_data
       check_for_matches
       add_conviction_sign_off if declared_convictions? || matching_or_unknown_convictions?
     end
@@ -14,9 +12,7 @@ module WasteCarriersEngine
     private
 
     def check_for_matches
-      entity_matching_service = WasteCarriersEngine::EntityMatchingService.new(@transient_registration)
-      entity_matching_service.check_business_for_matches
-      entity_matching_service.check_people_for_matches
+      WasteCarriersEngine::EntityMatchingService.run(@transient_registration)
     end
 
     def add_conviction_sign_off
