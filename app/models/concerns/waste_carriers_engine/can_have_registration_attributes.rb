@@ -163,6 +163,12 @@ module WasteCarriersEngine
 
         false
       end
+
+      def amount_paid
+        (finance_details.presence&.payments || []).inject(0) do |tot, payment|
+          tot + payment.amount
+        end
+      end
     end
     # rubocop:enable Metrics/BlockLength
   end

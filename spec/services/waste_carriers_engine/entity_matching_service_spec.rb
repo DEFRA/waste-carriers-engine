@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe EntityMatchingService do
     let(:transient_registration) do
-      create(:transient_registration,
+      create(:renewing_registration,
              :has_required_data,
              :has_matching_convictions)
     end
@@ -24,7 +24,7 @@ module WasteCarriersEngine
 
       context "when there is no match" do
         let(:transient_registration) do
-          create(:transient_registration,
+          create(:renewing_registration,
                  :has_required_data,
                  :has_key_people)
         end
@@ -50,7 +50,7 @@ module WasteCarriersEngine
 
       context "when there is no match" do
         let(:transient_registration) do
-          create(:transient_registration,
+          create(:renewing_registration,
                  :has_required_data,
                  :has_key_people)
         end

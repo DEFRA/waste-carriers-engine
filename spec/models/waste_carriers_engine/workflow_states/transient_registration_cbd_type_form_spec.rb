@@ -3,11 +3,11 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe TransientRegistration, type: :model do
+  RSpec.describe RenewingRegistration, type: :model do
     describe "#workflow_state" do
-      context "when a TransientRegistration's state is :cbd_type" do
+      context "when a RenewingRegistration's state is :cbd_type" do
         let(:transient_registration) do
-          create(:transient_registration,
+          create(:renewing_registration,
                  :has_required_data,
                  workflow_state: "cbd_type_form")
         end

@@ -49,7 +49,7 @@ module WasteCarriersEngine
             context "when a renewal is in progress" do
               context "when a valid transient registration exists" do
                 let(:transient_registration) do
-                  create(:transient_registration,
+                  create(:renewing_registration,
                          :has_required_data,
                          account_email: user.email,
                          workflow_state: "renewal_start_form")
@@ -63,7 +63,7 @@ module WasteCarriersEngine
 
               context "when the transient registration is in a different state" do
                 let(:transient_registration) do
-                  create(:transient_registration,
+                  create(:renewing_registration,
                          :has_required_data,
                          account_email: user.email,
                          workflow_state: "location_form")
@@ -94,7 +94,7 @@ module WasteCarriersEngine
 
             context "when a renewal is in progress" do
               let(:transient_registration) do
-                create(:transient_registration,
+                create(:renewing_registration,
                        :has_required_data,
                        account_email: "not-#{user.email}",
                        workflow_state: "renewal_start_form")
@@ -144,9 +144,9 @@ module WasteCarriersEngine
           end
 
           it "does not create a new transient registration" do
-            original_tr_count = TransientRegistration.count
+            original_tr_count = RenewingRegistration.count
             post renewal_start_forms_path, renewal_start_form: invalid_params
-            updated_tr_count = TransientRegistration.count
+            updated_tr_count = RenewingRegistration.count
 
             expect(original_tr_count).to eq(updated_tr_count)
           end
@@ -161,9 +161,9 @@ module WasteCarriersEngine
           end
 
           it "does not create a new transient registration" do
-            original_tr_count = TransientRegistration.count
+            original_tr_count = RenewingRegistration.count
             post renewal_start_forms_path, renewal_start_form: invalid_params
-            updated_tr_count = TransientRegistration.count
+            updated_tr_count = RenewingRegistration.count
 
             expect(original_tr_count).to eq(updated_tr_count)
           end
@@ -184,16 +184,16 @@ module WasteCarriersEngine
                 let(:valid_params) { { reg_identifier: registration.reg_identifier } }
 
                 it "creates a new transient registration" do
-                  expected_tr_count = TransientRegistration.count + 1
+                  expected_tr_count = RenewingRegistration.count + 1
                   post renewal_start_forms_path, renewal_start_form: valid_params
-                  updated_tr_count = TransientRegistration.count
+                  updated_tr_count = RenewingRegistration.count
 
                   expect(expected_tr_count).to eq(updated_tr_count)
                 end
 
                 it "creates a transient registration with correct data" do
                   post renewal_start_forms_path, renewal_start_form: valid_params
-                  transient_registration = TransientRegistration.where(reg_identifier: registration.reg_identifier).first
+                  transient_registration = RenewingRegistration.where(reg_identifier: registration.reg_identifier).first
 
                   expect(transient_registration.reg_identifier).to eq(registration.reg_identifier)
                   expect(transient_registration.company_name).to eq(registration.company_name)
@@ -223,9 +223,9 @@ module WasteCarriersEngine
                 let(:invalid_params) { { reg_identifier: "foo" } }
 
                 it "does not create a new transient registration" do
-                  original_tr_count = TransientRegistration.count
+                  original_tr_count = RenewingRegistration.count
                   post renewal_start_forms_path, renewal_start_form: invalid_params
-                  updated_tr_count = TransientRegistration.count
+                  updated_tr_count = RenewingRegistration.count
                   expect(original_tr_count).to eq(updated_tr_count)
                 end
               end
@@ -234,7 +234,7 @@ module WasteCarriersEngine
 
           context "when a renewal is in progress" do
             let(:transient_registration) do
-              create(:transient_registration,
+              create(:renewing_registration,
                      :has_required_data,
                      account_email: user.email,
                      workflow_state: "renewal_start_form")
@@ -256,16 +256,16 @@ module WasteCarriersEngine
               # Touch the test object so it gets created now and the count is correct
               transient_registration.touch
 
-              original_tr_count = TransientRegistration.count
+              original_tr_count = RenewingRegistration.count
               post renewal_start_forms_path, renewal_start_form: valid_params
-              updated_tr_count = TransientRegistration.count
+              updated_tr_count = RenewingRegistration.count
 
               expect(original_tr_count).to eq(updated_tr_count)
             end
 
             context "when the state is different" do
               let(:transient_registration) do
-                create(:transient_registration,
+                create(:renewing_registration,
                        :has_required_data,
                        account_email: user.email,
                        workflow_state: "other_businesses_form")
@@ -287,9 +287,9 @@ module WasteCarriersEngine
                 # Touch the test object so it gets created now and the count is correct
                 transient_registration.touch
 
-                original_tr_count = TransientRegistration.count
+                original_tr_count = RenewingRegistration.count
                 post renewal_start_forms_path, renewal_start_form: valid_params
-                updated_tr_count = TransientRegistration.count
+                updated_tr_count = RenewingRegistration.count
 
                 expect(original_tr_count).to eq(updated_tr_count)
               end
@@ -315,7 +315,7 @@ module WasteCarriersEngine
 
           context "when a renewal is in progress" do
             let(:transient_registration) do
-              create(:transient_registration,
+              create(:renewing_registration,
                      :has_required_data,
                      account_email: "not-#{user.email}",
                      workflow_state: "renewal_start_form")
@@ -350,9 +350,9 @@ module WasteCarriersEngine
         end
 
         it "does not create a new transient registration" do
-          original_tr_count = TransientRegistration.count
+          original_tr_count = RenewingRegistration.count
           post renewal_start_forms_path, renewal_start_form: valid_params
-          updated_tr_count = TransientRegistration.count
+          updated_tr_count = RenewingRegistration.count
           expect(original_tr_count).to eq(updated_tr_count)
         end
       end

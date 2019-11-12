@@ -15,7 +15,7 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    :has_unpaid_balance,
                    account_email: user.email,
@@ -60,7 +60,7 @@ module WasteCarriersEngine
 
         context "when a renewal is in progress" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    :has_addresses,
                    :has_key_people,
@@ -98,7 +98,7 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    :has_unpaid_balance,
                    account_email: user.email,
@@ -120,7 +120,7 @@ module WasteCarriersEngine
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:transient_registration,
+            create(:renewing_registration,
                    :has_required_data,
                    :has_unpaid_balance,
                    account_email: user.email,

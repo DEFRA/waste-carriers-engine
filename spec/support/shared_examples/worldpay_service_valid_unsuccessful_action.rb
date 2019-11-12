@@ -2,7 +2,7 @@
 
 RSpec.shared_examples "WorldpayService valid unsuccessful action" do |valid_action, status|
   let(:transient_registration) do
-    create(:transient_registration,
+    create(:renewing_registration,
            :has_required_data,
            :has_overseas_addresses,
            :has_finance_details,
