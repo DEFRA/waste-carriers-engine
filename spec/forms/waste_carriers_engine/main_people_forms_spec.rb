@@ -72,7 +72,7 @@ module WasteCarriersEngine
     describe "#initialize" do
       context "when a main person already exists and it's a sole trader" do
         let(:transient_registration) do
-          create(:transient_registration,
+          create(:renewing_registration,
                  :has_required_data,
                  business_type: "soleTrader",
                  key_people: [build(:key_person, :has_required_data, :main)])

@@ -56,8 +56,7 @@ module WasteCarriersEngine
       valid_mac? &&
         valid_order_key_format? &&
         valid_payment_amount? &&
-        valid_currency? &&
-        valid_source?
+        valid_currency?
     end
 
     # For the most up-to-date guidance about validating the MAC, see:
@@ -98,13 +97,6 @@ module WasteCarriersEngine
       return true if @currency == @order.currency
 
       Rails.logger.error "Invalid WorldPay response: #{@currency} is not valid currency"
-      false
-    end
-
-    def valid_source?
-      return true if @source == "WP"
-
-      Rails.logger.error "Invalid WorldPay response: #{@source} is not valid source"
       false
     end
 

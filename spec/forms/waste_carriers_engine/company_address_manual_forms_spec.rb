@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:company_address) { build(:address, :registered, :has_required_data) }
         let(:transient_registration) do
           build(
-            :transient_registration,
+            :renewing_registration,
             :has_required_data,
             workflow_state: "company_address_manual_form",
             company_address: company_address
@@ -99,7 +99,7 @@ module WasteCarriersEngine
       let(:company_address) { build(:address, :company, :has_required_data) }
       let(:transient_registration) do
         build(
-          :transient_registration,
+          :renewing_registration,
           :has_required_data,
           workflow_state: "company_address_manual_form",
           company_address: company_address,

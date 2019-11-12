@@ -3,11 +3,12 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe TransientRegistration, type: :model do
+  # TODO: (?) Create test class and include concern?
+  RSpec.describe RenewingRegistration, type: :model do
     describe "#workflow_state" do
-      context "when a TransientRegistration's state is :bank_transfer_form" do
+      context "when a RenewingRegistration's state is :bank_transfer_form" do
         let(:transient_registration) do
-          create(:transient_registration,
+          create(:renewing_registration,
                  :has_required_data,
                  :has_unpaid_balance,
                  workflow_state: "bank_transfer_form")

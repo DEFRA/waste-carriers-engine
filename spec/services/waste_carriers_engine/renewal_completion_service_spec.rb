@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe RenewalCompletionService do
     let(:transient_registration) do
       create(
-        :transient_registration,
+        :renewing_registration,
         :has_required_data,
         :has_addresses,
         :has_key_people,
@@ -157,7 +157,7 @@ module WasteCarriersEngine
 
         it "deletes the transient registration" do
           renewal_completion_service.complete_renewal
-          expect(TransientRegistration.where(reg_identifier: transient_registration.reg_identifier).count).to eq(0)
+          expect(RenewingRegistration.where(reg_identifier: transient_registration.reg_identifier).count).to eq(0)
         end
 
         it "sends a confirmation email" do
