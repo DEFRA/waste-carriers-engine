@@ -39,13 +39,11 @@ module WasteCarriersEngine
     end
 
     context "delegates" do
+      let(:business_type) { double(:business_type) }
+      let(:transient_registration) { double(:transient_registration, business_type: business_type) }
+
       describe "#business_type" do
         it "delegates the business_type to the transient_registration" do
-          # We use a double here as we want to make sure we return the same object, not just a string
-          # that can come from somewere else and pass the scenario for equality.
-          business_type = double(:business_type)
-
-          expect(transient_registration).to receive(:business_type).and_return(business_type)
           expect(business_type_form.business_type).to eq(business_type)
         end
       end
@@ -80,7 +78,7 @@ module WasteCarriersEngine
           let(:is_transient_registration_valid) { false }
 
           it "should not submit" do
-            skip "TODO: if we are stubbing the main form `validate`, the transient_registration `validate` never gets called"
+            skip "TODO: only integration possible - To implement in `BaseForm` specific test"
 
             error = [0, "my message"]
             errors = [error]
