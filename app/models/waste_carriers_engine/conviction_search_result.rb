@@ -20,12 +20,13 @@ module WasteCarriersEngine
     def self.new_from_entity_matching_service(data)
       result = ConvictionSearchResult.new
 
-      result.match_result = data[:match_result]
-      result.matching_system = data[:matching_system]
-      result.reference = data[:reference]
-      result.matched_name = data[:matched_name]
-      result.searched_at = data[:searched_at]
-      result.confirmed = data[:confirmed]
+      valid_keys = %i[match_result
+                      matching_system
+                      reference
+                      matched_name
+                      searched_at
+                      confirmed]
+      result.attributes = data.slice(*valid_keys)
 
       result
     end
