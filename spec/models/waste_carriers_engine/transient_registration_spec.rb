@@ -34,6 +34,30 @@ module WasteCarriersEngine
                             factory: :transient_registration
     end
 
+    describe "#rejected?" do
+      let(:metadata) { double(:metadata, REVOKED?: revoked) }
+
+      before do
+        expect(transient_registration).to receive(:metaData).and_return(metadata)
+      end
+
+      context "when the metadata is in a REVOKED status" do
+        let(:revoked) { true }
+
+        it "returns true" do
+          expect(transient_registration).to be_rejected
+        end
+      end
+
+      context "when the metadata is not in a REVOKED status" do
+        let(:revoked) { false }
+
+        it "returns false" do
+          expect(transient_registration).to_not be_rejected
+        end
+      end
+    end
+
     describe "#pending_payment?" do
       before do
         allow(transient_registration).to receive(:unpaid_balance?).and_return(unpaid_balance)
