@@ -34,26 +34,37 @@ module WasteCarriersEngine
                             factory: :transient_registration
     end
 
-    describe "#rejected?" do
-      let(:metadata) { double(:metadata, REVOKED?: revoked) }
-
+    describe "#has_rejected_conviction_checks?" do
       before do
-        expect(transient_registration).to receive(:metaData).and_return(metadata)
+        allow(transient_registration).to receive(:conviction_sign_offs).and_return(conviction_sign_offs)
       end
 
-      context "when the metadata is in a REVOKED status" do
-        let(:revoked) { true }
+      context "when there are no conviction sign offs" do
+        let(:conviction_sign_offs) { nil }
 
-        it "returns true" do
-          expect(transient_registration).to be_rejected
+        it "return false" do
+          expect(transient_registration.has_rejected_conviction_checks?).to be_falsey
         end
       end
 
-      context "when the metadata is not in a REVOKED status" do
-        let(:revoked) { false }
+      context "when there are conviction sign offs" do
+        let(:conviction_sign_off) { double(:conviction_sign_off, rejected?: rejected) }
+        let(:conviction_sign_offs) { [double, conviction_sign_off] }
 
-        it "returns false" do
-          expect(transient_registration).to_not be_rejected
+        context "when thee last conviction sign off status is rejected" do
+          let(:rejected) { true }
+
+          it "returns true" do
+            expect(transient_registration.has_rejected_conviction_checks?).to be_truthy
+          end
+        end
+
+        context "when the last conviction sign off status is not rejected" do
+          let(:rejected) { false }
+
+          it "returns false" do
+            expect(transient_registration.has_rejected_conviction_checks?).to be_falsey
+          end
         end
       end
     end

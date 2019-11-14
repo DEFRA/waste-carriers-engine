@@ -35,7 +35,11 @@ module WasteCarriersEngine
     scope :convictions_approved, -> { submitted.where("conviction_sign_offs.0.workflow_state": "approved") }
     scope :convictions_rejected, -> { submitted.where("conviction_sign_offs.0.workflow_state": "rejected") }
 
-    alias rejected? revoked?
+    def has_rejected_conviction_checks?
+      return false unless conviction_sign_offs&.any?
+
+      conviction_sign_offs.last.rejected?
+    end
 
     def total_to_pay
       charges = [Rails.configuration.renewal_charge]
