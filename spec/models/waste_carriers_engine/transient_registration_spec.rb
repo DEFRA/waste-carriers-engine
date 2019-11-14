@@ -34,7 +34,7 @@ module WasteCarriersEngine
                             factory: :transient_registration
     end
 
-    describe "#has_rejected_conviction_checks?" do
+    describe "#rejected_conviction_checks?" do
       before do
         allow(transient_registration).to receive(:conviction_sign_offs).and_return(conviction_sign_offs)
       end
@@ -43,7 +43,7 @@ module WasteCarriersEngine
         let(:conviction_sign_offs) { nil }
 
         it "return false" do
-          expect(transient_registration.has_rejected_conviction_checks?).to be_falsey
+          expect(transient_registration.rejected_conviction_checks?).to be_falsey
         end
       end
 
@@ -55,7 +55,7 @@ module WasteCarriersEngine
           let(:rejected) { true }
 
           it "returns true" do
-            expect(transient_registration.has_rejected_conviction_checks?).to be_truthy
+            expect(transient_registration.rejected_conviction_checks?).to be_truthy
           end
         end
 
@@ -63,7 +63,7 @@ module WasteCarriersEngine
           let(:rejected) { false }
 
           it "returns false" do
-            expect(transient_registration.has_rejected_conviction_checks?).to be_falsey
+            expect(transient_registration.rejected_conviction_checks?).to be_falsey
           end
         end
       end
