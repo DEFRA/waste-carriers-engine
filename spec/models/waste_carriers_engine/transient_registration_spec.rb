@@ -51,7 +51,7 @@ module WasteCarriersEngine
         let(:conviction_sign_off) { double(:conviction_sign_off, rejected?: rejected) }
         let(:conviction_sign_offs) { [double, conviction_sign_off] }
 
-        context "when thee last conviction sign off status is rejected" do
+        context "when the last conviction sign off status is rejected" do
           let(:rejected) { true }
 
           it "returns true" do
