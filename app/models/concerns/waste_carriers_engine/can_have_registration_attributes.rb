@@ -110,6 +110,12 @@ module WasteCarriersEngine
         %w[limitedCompany limitedLiabilityPartnership].include?(business_type)
       end
 
+      def rejected_conviction_checks?
+        return false unless conviction_sign_offs&.any?
+
+        conviction_sign_offs.last.rejected?
+      end
+
       def main_people
         return [] unless key_people.present?
 
