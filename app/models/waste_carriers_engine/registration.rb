@@ -33,14 +33,6 @@ module WasteCarriersEngine
       renewable_tier? && renewable_status? && renewable_date?
     end
 
-    def upper_tier?
-      tier == "UPPER"
-    end
-
-    def lower_tier?
-      tier == "LOWER"
-    end
-
     private
 
     def renewable_tier?
