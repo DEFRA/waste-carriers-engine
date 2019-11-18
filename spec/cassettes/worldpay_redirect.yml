@@ -10,7 +10,7 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1572890290">
+            <order orderCode="1574074995">
               <description>Your Waste Carrier Registration CBDU1</description>
               <amount currencyCode="GBP" value="11000" exponent="2"/>
               <orderContent>Waste Carrier Registration renewal: CBDU1 for Acme Waste</orderContent>
@@ -20,7 +20,7 @@ http_interactions:
                 <include code="ECMC-SSL"/>
               </paymentMethodMask>
               <shopper>
-                <shopperEmailAddress>user948@example.com</shopperEmailAddress>
+                <shopperEmailAddress>user170@example.com</shopperEmailAddress>
               </shopper>
               <billingAddress>
                 <address>
@@ -55,11 +55,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 04 Nov 2019 17:58:12 GMT
+      - Mon, 18 Nov 2019 11:03:16 GMT
       Server:
       - Apache
       Content-Length:
-      - '536'
+      - '538'
       P3p:
       - CP="NON"
       Set-Cookie:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1572890290"><reference id="3157973416">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1572890290</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1574074995"><reference id="3159690362">https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=MERCHANT_CODE%5E1574074995</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Mon, 04 Nov 2019 17:58:11 GMT
+  recorded_at: Mon, 18 Nov 2019 11:03:16 GMT
 recorded_with: VCR 4.0.0
