@@ -292,6 +292,16 @@ module WasteCarriersEngine
           expect { described_class.matching_organisations(company_no: term) }.to raise_error { ArgumentError }
         end
 
+        context "when there is a matching company_no and a matching name" do
+          it "returns the company_no match first" do
+            company_no_match = described_class.create(company_number: term)
+            name_match = described_class.create(name: term)
+
+            expect(results.first).to eq(company_no_match)
+            expect(results.last).to eq(name_match)
+          end
+        end
+
         context "when the name is blank" do
           let(:term) { nil }
 
