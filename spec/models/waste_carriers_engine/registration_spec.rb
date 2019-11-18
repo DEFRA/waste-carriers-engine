@@ -79,6 +79,46 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#lower_tier?" do
+      subject(:registration) { build(:registration, :has_required_data, tier: tier) }
+
+      context "when a registration's tier is set to 'LOWER'" do
+        let(:tier) { "LOWER" }
+
+        it "returns true" do
+          expect(registration.lower_tier?).to be_truthy
+        end
+      end
+
+      context "when a registration's tier is not set to 'LOWER'" do
+        let(:tier) { "FOO" }
+
+        it "returns false" do
+          expect(registration.lower_tier?).to be_falsey
+        end
+      end
+    end
+
+    describe "#upper_tier?" do
+      subject(:registration) { build(:registration, :has_required_data, tier: tier) }
+
+      context "when a registration's tier is set to 'UPPER'" do
+        let(:tier) { "UPPER" }
+
+        it "returns true" do
+          expect(registration.upper_tier?).to be_truthy
+        end
+      end
+
+      context "when a registration's tier is not set to 'UPPER'" do
+        let(:tier) { "FOO" }
+
+        it "returns false" do
+          expect(registration.upper_tier?).to be_falsey
+        end
+      end
+    end
+
     describe "#address" do
       context "when a registration has one address" do
         let(:address) { build(:address, :has_required_data) }
