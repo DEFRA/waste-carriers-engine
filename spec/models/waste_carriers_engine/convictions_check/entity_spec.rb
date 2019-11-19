@@ -221,16 +221,30 @@ module WasteCarriersEngine
 
           let(:scope) { described_class.matching_people(first_name: term, last_name: term, date_of_birth: date_term) }
 
-          it "only returns records where both the name and date_of_birth match" do
-            matching_record = described_class.create(name: "#{term} #{term}", date_of_birth: date_term)
-            name_match_only_record = described_class.create(name: "#{term} #{term}", date_of_birth: non_matching_date_term)
-            dob_match_only_record = described_class.create(name: non_matching_term, date_of_birth: date_term)
-            non_matching_record = described_class.create(name: non_matching_term, date_of_birth: non_matching_date_term)
+          context "when both the name and date of birth match" do
+            it "only returns records where both the name and date_of_birth match" do
+              matching_record = described_class.create(name: "#{term} #{term}", date_of_birth: date_term)
+              name_match_only_record = described_class.create(name: "#{term} #{term}", date_of_birth: non_matching_date_term)
+              dob_match_only_record = described_class.create(name: non_matching_term, date_of_birth: date_term)
+              non_matching_record = described_class.create(name: non_matching_term, date_of_birth: non_matching_date_term)
 
-            expect(scope).to include(matching_record)
-            expect(scope).to_not include(name_match_only_record)
-            expect(scope).to_not include(dob_match_only_record)
-            expect(scope).to_not include(non_matching_record)
+              expect(scope).to include(matching_record)
+              expect(scope).to_not include(name_match_only_record)
+              expect(scope).to_not include(dob_match_only_record)
+              expect(scope).to_not include(non_matching_record)
+            end
+          end
+
+          context "when the name matches but the date of birth does not" do
+            it "returns records where only the name matches" do
+              name_match_only_record = described_class.create(name: "#{term} #{term}", date_of_birth: non_matching_date_term)
+              dob_match_only_record = described_class.create(name: non_matching_term, date_of_birth: date_term)
+              non_matching_record = described_class.create(name: non_matching_term, date_of_birth: non_matching_date_term)
+
+              expect(scope).to include(name_match_only_record)
+              expect(scope).to_not include(dob_match_only_record)
+              expect(scope).to_not include(non_matching_record)
+            end
           end
 
           context "when the name is blank" do
