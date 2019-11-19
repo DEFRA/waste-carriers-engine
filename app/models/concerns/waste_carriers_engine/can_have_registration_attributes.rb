@@ -103,6 +103,14 @@ module WasteCarriersEngine
         business_type == "overseas"
       end
 
+      def upper_tier?
+        tier == "UPPER"
+      end
+
+      def lower_tier?
+        tier == "LOWER"
+      end
+
       # Some business types should not have a company_no
       def company_no_required?
         return false if overseas?

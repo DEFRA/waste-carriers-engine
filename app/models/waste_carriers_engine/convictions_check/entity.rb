@@ -50,7 +50,14 @@ module WasteCarriersEngine
       }
 
       scope :matching_people, lambda { |first_name:, last_name:, date_of_birth:|
-        matching_person_name(first_name: first_name, last_name: last_name).matching_date_of_birth(date_of_birth)
+        name_matches = matching_person_name(first_name: first_name, last_name: last_name)
+        name_and_dob_matches = name_matches.matching_date_of_birth(date_of_birth)
+
+        if name_and_dob_matches.present?
+          name_and_dob_matches
+        else
+          name_matches
+        end
       }
 
       def self.matching_organisations(name:, company_no: nil)
