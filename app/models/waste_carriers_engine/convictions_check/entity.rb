@@ -56,11 +56,10 @@ module WasteCarriersEngine
       def self.matching_organisations(name:, company_no: nil)
         raise ArgumentError if name.blank?
 
-        results = matching_organisation_name(name)
+        results = []
+        results += matching_company_number(company_no) if company_no.present?
+        results += matching_organisation_name(name)
 
-        return results unless company_no.present?
-
-        results += matching_company_number(company_no)
         results.uniq
       end
 
