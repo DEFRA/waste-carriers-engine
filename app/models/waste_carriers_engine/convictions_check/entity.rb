@@ -81,15 +81,34 @@ module WasteCarriersEngine
       private_class_method def self.org_name_search_term(term)
         return if term.blank?
 
-        # Trim trailing full stops
-        term_without_trailing_full_stops = term.gsub(/\.$/, "")
+        # The steps for processing the org name must be done in this order:
 
-        # Remove the words we want to ignore
-        word_array = term_without_trailing_full_stops.downcase.split(" ")
+        # 1. Remove trailing full stops
+        without_full_stops = term.gsub(/\.$/, "")
+        # 2. Remove common org words
+        without_org_words = term_without_ignorable_org_words(without_full_stops)
+        # 3. Escape special characters for regex
+        escaped = ::Regexp.escape(without_org_words)
+        # 4. Treat punctuation as optional when matching
+        term_with_optional_punctuation(escaped)
+      end
+
+      private_class_method def self.term_without_ignorable_org_words(term)
+        word_array = term.downcase.split(" ")
         word_array.reject! { |word| IGNORABLE_ORG_NAME_WORDS.include?(word) }
-        term_without_ignorable_words = word_array.join(" ")
+        word_array.join(" ")
+      end
 
-        ::Regexp.escape(term_without_ignorable_words)
+      private_class_method def self.term_with_optional_punctuation(term)
+        # These are characters we want to treat as optional
+        punctuation_chars = %w[. , / # ! $ % ^ & * ; : { } = - _ ` ~ ( )]
+
+        chars_array = term.scan(/./)
+        chars_array.each_with_index do |char, index|
+          chars_array[index] = "#{char}?" if punctuation_chars.include?(char)
+        end
+
+        chars_array.join
       end
     end
   end

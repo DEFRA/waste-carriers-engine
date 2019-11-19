@@ -40,17 +40,17 @@ module WasteCarriersEngine
             expect(scope).to include(upcased_record)
           end
 
-          context "when the search term ends with a ." do
-            let(:term) { "foo." }
+          context "when the search term contains punctuation" do
+            let(:term) { "Waste Not (Want Not)." }
 
-            it "treats the . as an optional match" do
-              record_with_trailing_full_stop = described_class.create(name: "foo.")
-              record_without_trailing_full_stop = described_class.create(name: "foo")
-              record_with_full_stop_somewhere_else = described_class.create(name: "f.oo")
+            it "treats them as optional" do
+              record_with_all_punctuation = described_class.create(name: term)
+              record_with_some_punctuation = described_class.create(name: "Waste Not (Want Not)")
+              record_with_no_punctuation = described_class.create(name: "Waste Not Want Not")
 
-              expect(scope).to include(record_with_trailing_full_stop)
-              expect(scope).to include(record_without_trailing_full_stop)
-              expect(scope).to_not include(record_with_full_stop_somewhere_else)
+              expect(scope).to include(record_with_all_punctuation)
+              expect(scope).to include(record_with_some_punctuation)
+              expect(scope).to include(record_with_no_punctuation)
             end
           end
 
