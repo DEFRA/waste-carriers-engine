@@ -18,7 +18,7 @@ module WasteCarriersEngine
     end
 
     def registration
-      Registration.where(reg_identifier: reg_identifier).first
+      @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
     end
 
     def fee_including_possible_type_change
