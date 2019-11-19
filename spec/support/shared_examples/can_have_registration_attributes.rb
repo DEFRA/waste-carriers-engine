@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "Can have registration attributes" do |factory:|
+  let(:resource) { build(factory) }
+
   include_examples(
     "Can reference single document in collection",
     proc { create(factory, :has_required_data, :has_addresses) },
@@ -9,8 +11,6 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     WasteCarriersEngine::Address.new,
     :addresses
   )
-
-  let(:resource) { build(factory) }
 
   describe "#charity?" do
     test_values = {
@@ -24,6 +24,46 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
           resource.business_type = business_type.to_s
           expect(resource.charity?).to eq(result)
         end
+      end
+    end
+  end
+
+  describe "#lower_tier?" do
+    let(:resource) { build(factory, tier: tier) }
+
+    context "when a registration's tier is set to 'LOWER'" do
+      let(:tier) { "LOWER" }
+
+      it "returns true" do
+        expect(resource.lower_tier?).to be_truthy
+      end
+    end
+
+    context "when a registration's tier is not set to 'LOWER'" do
+      let(:tier) { "FOO" }
+
+      it "returns false" do
+        expect(resource.lower_tier?).to be_falsey
+      end
+    end
+  end
+
+  describe "#upper_tier?" do
+    let(:resource) { build(factory, tier: tier) }
+
+    context "when a registration's tier is set to 'UPPER'" do
+      let(:tier) { "UPPER" }
+
+      it "returns true" do
+        expect(resource.upper_tier?).to be_truthy
+      end
+    end
+
+    context "when a registration's tier is not set to 'UPPER'" do
+      let(:tier) { "FOO" }
+
+      it "returns false" do
+        expect(resource.upper_tier?).to be_falsey
       end
     end
   end

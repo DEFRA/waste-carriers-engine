@@ -36,7 +36,7 @@ module WasteCarriersEngine
     private
 
     def renewable_tier?
-      tier == "UPPER"
+      upper_tier?
     end
 
     def renewable_status?
