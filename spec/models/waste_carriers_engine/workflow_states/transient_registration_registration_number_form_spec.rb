@@ -28,7 +28,7 @@ module WasteCarriersEngine
           context "when the business used to be a partnership and is now an LLP" do
             before do
               transient_registration.business_type = "limitedLiabilityPartnership"
-              Registration.where(reg_identifier: transient_registration.reg_identifier).first.update_attributes(business_type: "partnership")
+              transient_registration.registration.update_attributes(business_type: "partnership")
             end
 
             it "changes to :company_name_form after the 'next' event" do
