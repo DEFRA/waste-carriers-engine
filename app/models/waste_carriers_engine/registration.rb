@@ -33,6 +33,8 @@ module WasteCarriersEngine
       renewable_tier? && renewable_status? && renewable_date?
     end
 
+    alias renewable? can_start_renewal?
+
     private
 
     def renewable_tier?

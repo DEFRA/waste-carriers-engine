@@ -124,6 +124,10 @@ module WasteCarriersEngine
         conviction_sign_offs.last.rejected?
       end
 
+      def renewable?
+        false
+      end
+
       def main_people
         return [] unless key_people.present?
 
