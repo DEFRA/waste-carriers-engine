@@ -108,11 +108,11 @@ module WasteCarriersEngine
 
       private_class_method def self.term_with_optional_punctuation(term)
         # These are characters we want to treat as optional
-        punctuation_chars = %w[. , / # ! $ % ^ & * ; : { } = - _ ` ~ ( )]
+        optional_characters = %w[. , / # ! $ % ^ & * ; : { } = - _ ` ~ ( )]
 
         chars_array = term.scan(/./)
         chars_array.each_with_index do |char, index|
-          chars_array[index] = "#{char}?" if punctuation_chars.include?(char)
+          chars_array[index] = "#{char}?" if optional_characters.include?(char)
         end
 
         chars_array.join
