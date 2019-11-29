@@ -25,18 +25,11 @@ module WasteCarriersEngine
     field :manualOrder, as: :manual_order,           type: String
     field :order_item_reference,                     type: String
 
+    # TODO: Move to a service
     def self.new_order(transient_registration, method, current_user)
-      order = Order.new
+      order = new_order_for(current_user)
 
       card_count = transient_registration.temp_cards
-
-      order[:order_id] = order.generate_id
-      order[:order_code] = order[:order_id]
-      order[:currency] = "GBP"
-
-      order[:date_created] = Time.current
-      order[:date_last_updated] = order[:date_created]
-      order[:updated_by_user] = current_user.email
 
       order[:order_items] = [OrderItem.new_renewal_item]
       order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?
@@ -49,6 +42,20 @@ module WasteCarriersEngine
 
       order.add_bank_transfer_attributes if method == :bank_transfer
       order.add_worldpay_attributes if method == :worldpay
+
+      order
+    end
+
+    def self.new_order_for(user)
+      order = Order.new
+
+      order[:order_id] = order.generate_id
+      order[:order_code] = order[:order_id]
+      order[:currency] = "GBP"
+
+      order[:date_created] = Time.current
+      order[:date_last_updated] = order[:date_created]
+      order[:updated_by_user] = user.email
 
       order
     end
