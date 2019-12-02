@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ModuleLength
   module CanUseOrderCopyCardsWorkflow
     extend ActiveSupport::Concern
     include Mongoid::Document
@@ -33,13 +32,13 @@ module WasteCarriersEngine
                       to: :bank_transfer_form,
                       unless: :paying_by_card?
 
+          # TODO: after: :complete_order
           transitions from: :bank_transfer_form,
                       to: :completed
-                      # TODO: after: :complete_order
 
+          # TODO: after: :complete_order
           transitions from: :worldpay_form,
                       to: :completed
-                      # TODO: after: :complete_order
         end
 
         event :back do
@@ -62,7 +61,7 @@ module WasteCarriersEngine
       temp_payment_method == "card"
     end
 
-    def complete_order
+    def _complete_order
       # TODO
     end
   end
