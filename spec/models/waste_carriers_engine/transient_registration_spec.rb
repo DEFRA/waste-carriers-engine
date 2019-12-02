@@ -34,6 +34,10 @@ module WasteCarriersEngine
                             factory: :transient_registration
     end
 
+    describe "conviction scopes" do
+      it_should_behave_like "Can filter conviction status"
+    end
+
     describe "#rejected_conviction_checks?" do
       before do
         allow(transient_registration).to receive(:conviction_sign_offs).and_return(conviction_sign_offs)
