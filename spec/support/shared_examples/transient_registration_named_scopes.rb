@@ -76,7 +76,7 @@ RSpec.shared_examples "TransientRegistration named scopes" do
   describe "conviction check scopes" do
     let(:convictions_renewal) do
       create(
-        :transient_registration,
+        :renewing_registration,
         :has_required_data,
         :requires_conviction_check,
         workflow_state: :renewal_received_form

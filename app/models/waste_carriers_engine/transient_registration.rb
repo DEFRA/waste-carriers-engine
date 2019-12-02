@@ -9,9 +9,6 @@ module WasteCarriersEngine
     include CanHaveRegistrationAttributes
     include CanStripWhitespace
 
-    # TODO: Swap me with the base registration workflow for new registrations
-    include CanUseRenewingRegistrationWorkflow
-
     store_in collection: "transient_registrations"
 
     before_save :update_last_modified

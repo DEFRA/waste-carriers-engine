@@ -6,6 +6,10 @@ module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
     subject(:renewing_registration) { build(:renewing_registration, :has_required_data) }
 
+    describe "scopes" do
+      it_should_behave_like "TransientRegistration named scopes"
+    end
+
     describe "workflow_state" do
       context "when a RenewingRegistration is created" do
         it "has the state :renewal_start_form" do

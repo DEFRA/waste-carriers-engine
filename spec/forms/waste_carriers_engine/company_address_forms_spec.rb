@@ -53,7 +53,7 @@ module WasteCarriersEngine
 
     context "when a form with a valid transient registration exists and the transient registration already has an address" do
       let(:transient_registration) do
-        build(:transient_registration,
+        build(:renewing_registration,
               :has_postcode,
               :has_addresses,
               workflow_state: "company_address_form")
