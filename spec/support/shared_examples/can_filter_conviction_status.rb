@@ -45,6 +45,44 @@ RSpec.shared_examples "Can filter conviction status" do
     record
   end
 
+  let(:no_status_pending) do
+    record = described_class.new(
+      conviction_sign_offs: [
+        WasteCarriersEngine::ConvictionSignOff.new
+      ],
+      metaData: { status: "PENDING" }
+    )
+    # Skip the validation so we don't have to include addresses, etc
+    record.save(validate: false)
+    record.conviction_sign_offs.first.unset(:workflow_state)
+    record
+  end
+
+  let(:no_status_active) do
+    record = described_class.new(
+      conviction_sign_offs: [
+        WasteCarriersEngine::ConvictionSignOff.new
+      ],
+      metaData: { status: "ACTIVE" }
+    )
+    # Skip the validation so we don't have to include addresses, etc
+    record.save(validate: false)
+    record.conviction_sign_offs.first.unset(:workflow_state)
+    record
+  end
+
+  let(:no_status_approved) do
+    record = described_class.new(
+      conviction_sign_offs: [
+        WasteCarriersEngine::ConvictionSignOff.new(confirmed: "yes")
+      ]
+    )
+    # Skip the validation so we don't have to include addresses, etc
+    record.save(validate: false)
+    record.conviction_sign_offs.first.unset(:workflow_state)
+    record
+  end
+
   describe "convictions_possible_match" do
     let(:scope) { described_class.convictions_possible_match }
 
@@ -86,6 +124,20 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).to_not include(checks_in_progress)
       expect(scope).to_not include(approved)
       expect(scope).to include(rejected)
+    end
+  end
+
+  describe "convictions_new_without_status" do
+    let(:scope) { described_class.convictions_new_without_status }
+
+    it "only returns results with the correct status" do
+      expect(scope).to_not include(possible_match)
+      expect(scope).to_not include(checks_in_progress)
+      expect(scope).to_not include(approved)
+      expect(scope).to_not include(rejected)
+      expect(scope).to include(no_status_pending)
+      expect(scope).to_not include(no_status_active)
+      expect(scope).to_not include(no_status_approved)
     end
   end
 end
