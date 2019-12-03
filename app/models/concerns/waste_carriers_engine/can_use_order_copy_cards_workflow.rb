@@ -17,7 +17,8 @@ module WasteCarriersEngine
 
         state :copy_cards_payment_form
         state :worldpay_form
-        state :bank_transfer_form
+        state :copy_cards_bank_transfer_form
+        state :completed
 
         # Transitions
         event :next do
@@ -29,11 +30,11 @@ module WasteCarriersEngine
                       if: :paying_by_card?
 
           transitions from: :copy_cards_payment_form,
-                      to: :bank_transfer_form,
+                      to: :copy_cards_bank_transfer_form,
                       unless: :paying_by_card?
 
           # TODO: after: :complete_order
-          transitions from: :bank_transfer_form,
+          transitions from: :copy_cards_bank_transfer_form,
                       to: :completed
 
           # TODO: after: :complete_order
@@ -48,7 +49,7 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :copy_cards_payment_form
 
-          transitions from: :bank_transfer_form,
+          transitions from: :copy_cards_bank_transfer_form,
                       to: :copy_cards_payment_form
         end
       end
@@ -63,6 +64,9 @@ module WasteCarriersEngine
 
     def _complete_order
       # TODO
+      # copy data to registration
+      # update reegistration status (can be pending / awaiting payment) maybe not needed
+      # delete transient object
     end
   end
 end

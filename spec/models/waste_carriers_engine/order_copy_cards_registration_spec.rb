@@ -6,7 +6,13 @@ module WasteCarriersEngine
   RSpec.describe OrderCopyCardsRegistration, type: :model do
     subject(:order_copy_cards_registration) { build(:order_copy_cards_registration) }
 
-    include_examples("Can use order copy cards workflow")
+    context "default status" do
+      context "when a OrderCopyCardsRegistration is created" do
+        it "has the state of :copy_cards_form" do
+          expect(order_copy_cards_registration).to have_state(:copy_cards_form)
+        end
+      end
+    end
 
     context "Validations" do
       describe "reg_identifier" do
