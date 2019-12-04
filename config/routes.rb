@@ -9,6 +9,33 @@ WasteCarriersEngine::Engine.routes.draw do
             path: "renew",
             path_names: { new: "/:reg_identifier" }
 
+  # Order copy cards flow
+  resources :copy_cards_forms,
+            only: %i[new create],
+            path: "order-copy-cards",
+            path_names: { new: "/:reg_identifier" }
+
+  resources :copy_cards_payment_forms,
+            only: %i[new create],
+            path: "order-copy-cards-payment",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+                  to: "copy_cards_payment_forms#go_back",
+                  as: "back",
+                  on: :collection
+            end
+
+  resources :copy_cards_bank_transfer_forms,
+            only: %i[new create],
+            path: "order-copy-cards-bank-transfer",
+            path_names: { new: "/:reg_identifier" } do
+              get "back/:reg_identifier",
+                  to: "copy_cards_bank_transfer_forms#go_back",
+                  as: "back",
+                  on: :collection
+            end
+  # End of order copy cards flow
+
   resources :location_forms,
             only: %i[new create],
             path: "location",
