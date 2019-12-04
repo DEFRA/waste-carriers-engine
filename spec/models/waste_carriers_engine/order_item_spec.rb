@@ -10,7 +10,7 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:card_charge).and_return(1_000)
     end
 
-    let(:transient_registration) { build(:transient_registration, :has_required_data) }
+    let(:transient_registration) { build(:renewing_registration, :has_required_data) }
 
     describe "new_renewal_item" do
       let(:order_item) { described_class.new_renewal_item }

@@ -39,6 +39,10 @@ module WasteCarriersEngine
       renewal_application_submitted? && super
     end
 
+    def prepare_for_payment(mode, user)
+      FinanceDetails.new_renewal_finance_details(self, mode, user)
+    end
+
     def company_no_changed?
       return false unless company_no_required?
 

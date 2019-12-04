@@ -13,7 +13,7 @@ RSpec.shared_examples "WorldpayService valid unsuccessful action" do |valid_acti
   before do
     allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
-    WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user)
+    transient_registration.prepare_for_payment(:worldpay, current_user)
   end
 
   let(:order) { transient_registration.finance_details.orders.first }

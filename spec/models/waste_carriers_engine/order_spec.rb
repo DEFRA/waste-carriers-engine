@@ -155,7 +155,7 @@ module WasteCarriersEngine
     end
 
     describe "update_after_worldpay" do
-      let(:finance_details) { FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user) }
+      let(:finance_details) { transient_registration.prepare_for_payment(:worldpay, current_user) }
       let(:order) { finance_details.orders.first }
 
       it "copies the worldpay status to the order" do

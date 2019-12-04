@@ -51,7 +51,7 @@ module WasteCarriersEngine
 
         describe "#success" do
           before do
-            FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
+            transient_registration.prepare_for_payment(:worldpay, user)
           end
 
           let(:order) do
@@ -150,7 +150,7 @@ module WasteCarriersEngine
 
         describe "#pending" do
           before do
-            FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
+            transient_registration.prepare_for_payment(:worldpay, user)
           end
 
           let(:order) do
