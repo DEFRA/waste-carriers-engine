@@ -39,7 +39,7 @@ FactoryBot.define do
 
     trait :has_finance_details do
       after(:build, :create) do |renewing_registration|
-        WasteCarriersEngine::FinanceDetails.new_finance_details(renewing_registration, :worldpay, build(:user))
+        renewing_registration.prepare_for_payment(:worldpay, build(:user))
       end
     end
 

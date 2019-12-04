@@ -20,7 +20,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
       let(:reg_id) { transient_registration[:reg_identifier] }
 
       before do
-        WasteCarriersEngine::FinanceDetails.new_finance_details(transient_registration, :worldpay, user)
+        transient_registration.prepare_for_payment(:worldpay, user)
       end
 
       let(:order) do

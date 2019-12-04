@@ -10,11 +10,11 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:card_charge).and_return(1_000)
     end
 
-    let(:transient_registration) { build(:transient_registration, :has_required_data, temp_cards: 0) }
+    let(:transient_registration) { build(:renewing_registration, :has_required_data, temp_cards: 0) }
     let(:current_user) { build(:user) }
 
     describe "new_finance_details" do
-      let(:finance_details) { FinanceDetails.new_finance_details(transient_registration, :worldpay, current_user) }
+      let(:finance_details) { transient_registration.prepare_for_payment(:worldpay, current_user) }
 
       it "should include 1 order" do
         order_count = finance_details.orders.length
