@@ -31,7 +31,7 @@ module WasteCarriersEngine
         event :reject do
           transitions from: :checks_in_progress,
                       to: :rejected,
-                      after: :revoke_parent
+                      after: :refuse_or_revoke_parent
         end
       end
     end
@@ -44,10 +44,14 @@ module WasteCarriersEngine
       self.confirmed_by = current_user.email
     end
 
-    def revoke_parent
+    def refuse_or_revoke_parent
       return unless _parent&.metaData
 
-      _parent.metaData.revoke!
+      if _parent.pending?
+        _parent.metaData.refuse!
+      else
+        _parent.metaData.revoke!
+      end
     end
   end
 end
