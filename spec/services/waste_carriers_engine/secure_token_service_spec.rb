@@ -31,6 +31,5 @@ module WasteCarriersEngine
         end
       end
     end
-
   end
 end
