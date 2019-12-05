@@ -102,6 +102,10 @@ module WasteCarriersEngine
           conviction_sign_off.workflow_state = "checks_in_progress"
         end
 
+        it "does not update confirmed" do
+          expect(conviction_sign_off.confirmed).to eq("no")
+        end
+
         it "updates confirmed_at" do
           conviction_sign_off.reject(user)
           expect(conviction_sign_off.confirmed_at).to be_a(DateTime)
