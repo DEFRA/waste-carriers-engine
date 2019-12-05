@@ -3,7 +3,6 @@
 require "securerandom"
 
 module WasteCarriersEngine
-
   # SecureTokenService generates a random base58 string of length 24.
   #
   # SecureRandom::base58 is used to generate the 24-character unique tokens, so
