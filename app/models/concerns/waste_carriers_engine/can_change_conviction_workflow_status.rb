@@ -31,7 +31,8 @@ module WasteCarriersEngine
         event :reject do
           transitions from: :checks_in_progress,
                       to: :rejected,
-                      after: :refuse_or_revoke_parent
+                      after: %i[refuse_or_revoke_parent
+                                update_confirmed_info]
         end
       end
     end
