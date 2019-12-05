@@ -20,7 +20,7 @@ module WasteCarriersEngine
         end
       end
 
-      it "generates a different result each time its called" do
+      it "generates a different result each time it is called" do
         results = []
         10.times do
           latest = described_class.run
