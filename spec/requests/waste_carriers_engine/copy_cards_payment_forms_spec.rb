@@ -122,16 +122,15 @@ module WasteCarriersEngine
         end
 
         context "when a matching registration exists" do
-          let(:registration) { create(:registration, :has_required_data, :is_active) }
+          let(:transient_registration) { create(:order_copy_cards_registration) }
 
           before do
-            order_copy_cards_registration = OrderCopyCardsRegistration.new(reg_identifier: registration.reg_identifier)
-            order_copy_cards_registration.workflow_state = "copy_cards_payment_form"
-            order_copy_cards_registration.save
+            transient_registration.workflow_state = "copy_cards_payment_form"
+            transient_registration.save
           end
 
           context "when valid params are submitted" do
-            let(:valid_params) { { reg_identifier: registration.reg_identifier, temp_payment_method: temp_payment_method } }
+            let(:valid_params) { { reg_identifier: transient_registration.reg_identifier, temp_payment_method: temp_payment_method } }
 
             context "when the temp payment method is `card`" do
               let(:temp_payment_method) { "card" }
@@ -139,7 +138,7 @@ module WasteCarriersEngine
               it "updates the transient registration with correct data, returns a 302 response and redirects to the worldpay form" do
                 post copy_cards_payment_forms_path, copy_cards_payment_form: valid_params
 
-                transient_registration = OrderCopyCardsRegistration.find_by(reg_identifier: registration.reg_identifier)
+                transient_registration.reload
 
                 expect(transient_registration.temp_payment_method).to eq("card")
                 expect(response).to have_http_status(302)
@@ -153,7 +152,7 @@ module WasteCarriersEngine
               it "updates the transient registration with correct data, returns a 302 response and redirects to the bank transfer form" do
                 post copy_cards_payment_forms_path, copy_cards_payment_form: valid_params
 
-                transient_registration = OrderCopyCardsRegistration.find_by(reg_identifier: registration.reg_identifier)
+                transient_registration.reload
 
                 expect(transient_registration.temp_payment_method).to eq("bank_transfer")
                 expect(response).to have_http_status(302)
@@ -163,7 +162,7 @@ module WasteCarriersEngine
           end
 
           context "when invalid params are submitted" do
-            let(:invalid_params) { { reg_identifier: registration.reg_identifier, temp_payment_method: "foo" } }
+            let(:invalid_params) { { reg_identifier: transient_registration.reg_identifier, temp_payment_method: "foo" } }
 
             it "returns a 200 response and render the new copy cards form" do
               post copy_cards_payment_forms_path, copy_cards_payment_form: invalid_params

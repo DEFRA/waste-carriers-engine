@@ -35,7 +35,7 @@ module WasteCarriersEngine
     end
 
     def find_or_initialize_transient_registration(reg_identifier)
-      @transient_registration = RenewingRegistration.where(reg_identifier: reg_identifier).first ||
+      @transient_registration = TransientRegistration.where(reg_identifier: reg_identifier).first ||
                                 RenewingRegistration.new(reg_identifier: reg_identifier)
     end
 
