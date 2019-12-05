@@ -29,28 +29,12 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#reg_identifier" do
+    describe "#token" do
       let(:base_form) { build(:base_form, :has_required_data) }
 
-      context "when the reg_identifier meets the requirements" do
-        it "is valid" do
-          expect(base_form).to be_valid
-        end
-      end
-
-      context "when a reg_identifier is blank" do
+      context "when a token is blank" do
         before do
-          base_form.transient_registration.reg_identifier = nil
-        end
-
-        it "is not valid" do
-          expect(base_form).to_not be_valid
-        end
-      end
-
-      context "when a reg_identifier is in the wrong format" do
-        before do
-          base_form.transient_registration.reg_identifier = "foo"
+          base_form.transient_registration.token = nil
         end
 
         it "is not valid" do
@@ -69,7 +53,7 @@ module WasteCarriersEngine
         let(:form) { BusinessTypeForm.new(transient_registration) }
 
         before do
-          # Make reg_identifier valid for the form, but not the transient object
+          # Make reg_identifier invalid for the transient object
           transient_registration.reg_identifier = "foo"
         end
 

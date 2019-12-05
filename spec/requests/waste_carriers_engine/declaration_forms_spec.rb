@@ -34,7 +34,7 @@ module WasteCarriersEngine
 
           let(:params) do
             {
-              reg_identifier: transient_registration.reg_identifier,
+              token: transient_registration.token,
               declaration: 1
             }
           end
@@ -69,13 +69,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_declaration_forms_path(transient_registration[:reg_identifier])
+              get back_declaration_forms_path(transient_registration[:token])
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the check_your_answers form" do
-              get back_declaration_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:reg_identifier]))
+              get back_declaration_forms_path(transient_registration[:token])
+              expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:token]))
             end
           end
         end
@@ -90,13 +90,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_declaration_forms_path(transient_registration[:reg_identifier])
+              get back_declaration_forms_path(transient_registration[:token])
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_declaration_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+              get back_declaration_forms_path(transient_registration[:token])
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end
         end

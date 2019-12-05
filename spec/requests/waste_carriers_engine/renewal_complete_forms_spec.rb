@@ -20,13 +20,13 @@ module WasteCarriersEngine
           end
 
           it "redirects to the renewal_start_form" do
-            get new_renewal_complete_form_path(registration.reg_identifier)
-            expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
+            get new_renewal_complete_form_path(registration.token)
+            expect(response).to redirect_to(new_renewal_start_form_path(registration.token))
           end
 
           it "does not renew the registration" do
             old_expires_on = registration.reload.expires_on
-            get new_renewal_complete_form_path(registration.reg_identifier)
+            get new_renewal_complete_form_path(registration.token)
             expect(registration.reload.expires_on).to eq(old_expires_on)
           end
         end
@@ -43,14 +43,14 @@ module WasteCarriersEngine
 
           context "when the workflow_state is correct" do
             it "loads the page" do
-              get new_renewal_complete_form_path(transient_registration.reg_identifier)
+              get new_renewal_complete_form_path(transient_registration.token)
               expect(response).to have_http_status(200)
             end
 
             it "renews the registration" do
-              registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+              registration = Registration.where(token: transient_registration.token).first
               old_expires_on = registration.expires_on
-              get new_renewal_complete_form_path(transient_registration.reg_identifier)
+              get new_renewal_complete_form_path(transient_registration.token)
               expect(registration.reload.expires_on).to_not eq(old_expires_on)
             end
           end
@@ -61,14 +61,14 @@ module WasteCarriersEngine
             end
 
             it "redirects to the correct page" do
-              get new_renewal_complete_form_path(transient_registration.reg_identifier)
-              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration.reg_identifier))
+              get new_renewal_complete_form_path(transient_registration.token)
+              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration.token))
             end
 
             it "does not renew the registration" do
-              registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
+              registration = Registration.where(token: transient_registration.token).first
               old_expires_on = registration.expires_on
-              get new_renewal_complete_form_path(transient_registration.reg_identifier)
+              get new_renewal_complete_form_path(transient_registration.token)
               expect(registration.reload.expires_on).to eq(old_expires_on)
             end
           end

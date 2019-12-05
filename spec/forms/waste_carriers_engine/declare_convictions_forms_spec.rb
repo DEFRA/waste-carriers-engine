@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:declare_convictions_form) { build(:declare_convictions_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: declare_convictions_form.reg_identifier,
+            token: declare_convictions_form.token,
             declared_convictions: declare_convictions_form.declared_convictions
           }
         end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         let(:declare_convictions_form) { build(:declare_convictions_form, :has_required_data) }
         let(:invalid_params) do
           {
-            reg_identifier: declare_convictions_form.reg_identifier,
+            token: declare_convictions_form.token,
             declared_convictions: "foo"
           }
         end

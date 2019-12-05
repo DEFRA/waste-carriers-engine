@@ -13,14 +13,14 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          it "redirects to the invalid reg_identifier error page" do
+          it "redirects to the invalid token error page" do
             get new_copy_cards_form_path("CBDU999999999")
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
 
-        context "when the reg_identifier doesn't match the format" do
-          it "redirects to the invalid reg_identifier error page" do
+        context "when the token doesn't match the format" do
+          it "redirects to the invalid token error page" do
             get new_copy_cards_form_path("foo")
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -31,7 +31,7 @@ module WasteCarriersEngine
             let(:registration) { create(:registration, :has_required_data, :is_pending) }
 
             it "redirects to the page" do
-              get new_copy_cards_form_path(registration.reg_identifier)
+              get new_copy_cards_form_path(registration.token)
 
               expect(response).to redirect_to(page_path("invalid"))
             end
@@ -41,13 +41,13 @@ module WasteCarriersEngine
             let(:registration) { create(:registration, :has_required_data, :is_active) }
 
             it "renders the appropriate template" do
-              get new_copy_cards_form_path(registration.reg_identifier)
+              get new_copy_cards_form_path(registration.token)
 
               expect(response).to render_template("waste_carriers_engine/copy_cards_forms/new")
             end
 
             it "responds to the GET request with a 200 status code" do
-              get new_copy_cards_form_path(registration.reg_identifier)
+              get new_copy_cards_form_path(registration.token)
 
               expect(response.code).to eq("200")
             end
@@ -82,9 +82,9 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          let(:invalid_params) { { reg_identifier: "CBDU99999" } }
+          let(:invalid_params) { { token: "CBDU99999" } }
 
-          it "redirects to the invalid reg_identifier error page" do
+          it "redirects to the invalid token error page" do
             post copy_cards_forms_path, copy_cards_form: invalid_params
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -98,10 +98,10 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the reg_identifier doesn't match the format" do
-          let(:invalid_params) { { reg_identifier: "foo" } }
+        context "when the token doesn't match the format" do
+          let(:invalid_params) { { token: "foo" } }
 
-          it "redirects to the invalid reg_identifier error page" do
+          it "redirects to the invalid token error page" do
             post copy_cards_forms_path, copy_cards_form: invalid_params
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -119,24 +119,24 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data, :is_active) }
 
           context "when valid params are submitted" do
-            let(:valid_params) { { reg_identifier: registration.reg_identifier, temp_cards: 3 } }
+            let(:valid_params) { { token: registration.token, temp_cards: 3 } }
 
             it "creates a transient registration with correct data, returns a 302 response and redirects to the copy cards payment form" do
               expected_tr_count = OrderCopyCardsRegistration.count + 1
 
               post copy_cards_forms_path, copy_cards_form: valid_params
 
-              transient_registration = OrderCopyCardsRegistration.find_by(reg_identifier: registration.reg_identifier)
+              transient_registration = OrderCopyCardsRegistration.find_by(token: registration.token)
 
               expect(expected_tr_count).to eq(OrderCopyCardsRegistration.count)
               expect(transient_registration.temp_cards).to eq(3)
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_copy_cards_payment_form_path(valid_params[:reg_identifier]))
+              expect(response).to redirect_to(new_copy_cards_payment_form_path(valid_params[:token]))
             end
           end
 
           context "when invalid params are submitted" do
-            let(:invalid_params) { { reg_identifier: registration.reg_identifier, temp_cards: 0 } }
+            let(:invalid_params) { { token: registration.token, temp_cards: 0 } }
 
             it "returns a 200 response and render the new copy cards form" do
               post copy_cards_forms_path, copy_cards_form: invalid_params
@@ -150,7 +150,7 @@ module WasteCarriersEngine
 
       context "when a user is not signed in" do
         let(:registration) { create(:registration, :has_required_data) }
-        let(:valid_params) { { reg_identifier: registration[:reg_identifier] } }
+        let(:valid_params) { { token: registration[:token] } }
 
         before(:each) do
           user = create(:user)

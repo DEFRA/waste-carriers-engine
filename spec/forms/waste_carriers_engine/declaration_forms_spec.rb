@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:declaration_form) { build(:declaration_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: declaration_form.reg_identifier,
+            token: declaration_form.token,
             declaration: 1
           }
         end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         let(:declaration_form) { build(:declaration_form, :has_required_data) }
         let(:invalid_params) do
           {
-            reg_identifier: "foo",
+            token: "foo",
             declaration: "foo"
           }
         end

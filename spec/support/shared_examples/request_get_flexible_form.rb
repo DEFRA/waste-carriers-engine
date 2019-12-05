@@ -13,20 +13,6 @@ RSpec.shared_examples "GET flexible form" do |form|
       sign_in(user)
     end
 
-    context "when no renewal is in progress" do
-      let(:registration) do
-        create(:registration,
-               :has_required_data,
-               :expires_soon,
-               account_email: user.email)
-      end
-
-      it "redirects to the renewal_start_form" do
-        get new_path_for(form, registration)
-        expect(response).to redirect_to(new_renewal_start_form_path(registration[:reg_identifier]))
-      end
-    end
-
     context "when a renewal is in progress" do
       let(:transient_registration) do
         create(:renewing_registration,
@@ -97,7 +83,6 @@ RSpec.shared_examples "GET flexible form" do |form|
 
   # Should call a method like new_location_form_path("CBDU1234")
   def new_path_for(form, transient_registration)
-    reg_id = transient_registration[:reg_identifier] if transient_registration.present?
-    send("new_#{form}_path", reg_id)
+    send("new_#{form}_path", transient_registration.token)
   end
 end

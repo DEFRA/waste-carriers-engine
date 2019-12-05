@@ -10,7 +10,7 @@ module WasteCarriersEngine
       context "when the form is valid" do
         let(:valid_params) do
           {
-            reg_identifier: register_in_scotland_form.reg_identifier
+            token: register_in_scotland_form.token
           }
         end
 

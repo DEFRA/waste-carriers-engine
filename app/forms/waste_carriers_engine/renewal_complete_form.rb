@@ -22,7 +22,7 @@ module WasteCarriersEngine
     private
 
     def build_certificate_link
-      registration = Registration.where(reg_identifier: reg_identifier).first
+      registration = @transient_registration.registration
       return unless registration.present?
 
       id = registration.id

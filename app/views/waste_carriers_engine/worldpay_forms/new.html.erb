@@ -18,7 +18,7 @@
       <p><%= t(".paragraph_3") %></p>
       <p><%= t(".paragraph_4") %></p>
 
-      <%= f.hidden_field :reg_identifier, value: @worldpay_form.reg_identifier %>
+      <%= f.hidden_field :token, value: @worldpay_form.token %>
       <div class="form-group">
         <%= f.submit t(".next_button"), class: "button" %>
       </div>
