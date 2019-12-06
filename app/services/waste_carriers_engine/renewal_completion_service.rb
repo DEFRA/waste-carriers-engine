@@ -78,6 +78,7 @@ module WasteCarriersEngine
     def copy_data_from_transient_registration
       registration_attributes = @registration.attributes.except("_id", "financeDetails", "past_registrations")
       renewal_attributes = @transient_registration.attributes.except("_id",
+                                                                     "token",
                                                                      "financeDetails",
                                                                      "temp_cards",
                                                                      "temp_company_postcode",
