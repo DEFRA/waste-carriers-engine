@@ -13,8 +13,9 @@ module WasteCarriersEngine
     describe "run" do
       before { allow(Time).to receive(:current).and_return(current_time) }
 
-      context "when there is no unpaid balance" do
+      context "when there is no unpaid balance or pending convictions check" do
         before { allow(registration).to receive(:unpaid_balance?).and_return(false) }
+        before { allow(registration).to receive(:pending_manual_conviction_check?).and_return(false) }
 
         it "updates the date_activated" do
           registration.metaData.update_attributes(date_activated: nil)
@@ -32,6 +33,16 @@ module WasteCarriersEngine
 
         it "raises an error" do
           message = "Registration #{registration.reg_identifier} cannot be activated due to unpaid balance"
+
+          expect { service }.to raise_error(RuntimeError, message)
+        end
+      end
+
+      context "when the registration has a pending convictions check" do
+        before { allow(registration).to receive(:pending_manual_conviction_check?).and_return(true) }
+
+        it "raises an error" do
+          message = "Registration #{registration.reg_identifier} cannot be activated due to pending convictions check"
 
           expect { service }.to raise_error(RuntimeError, message)
         end

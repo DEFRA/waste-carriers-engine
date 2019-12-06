@@ -16,13 +16,31 @@ module WasteCarriersEngine
     end
 
     def can_be_completed?
-      raise_unpaid_balance_error if @registration.unpaid_balance?
+      balance_is_paid? && no_pending_conviction_check?
+    end
 
-      true
+    def balance_is_paid?
+      if @registration.unpaid_balance?
+        raise_unpaid_balance_error
+      else
+        true
+      end
+    end
+
+    def no_pending_conviction_check?
+      if @registration.pending_manual_conviction_check?
+        raise_convictions_check_error
+      else
+        true
+      end
     end
 
     def raise_unpaid_balance_error
       raise "Registration #{@registration.reg_identifier} cannot be activated due to unpaid balance"
+    end
+
+    def raise_convictions_check_error
+      raise "Registration #{@registration.reg_identifier} cannot be activated due to pending convictions check"
     end
   end
 end
