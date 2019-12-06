@@ -4,13 +4,13 @@
 WasteCarriersEngine::Engine.routes.draw do
   resources :registrations, only: [:index] unless Rails.env.production?
 
-  # Order copy cards flow
-  resources :copy_cards_forms,
-            only: %i[new create],
-            path: "order-copy-cards",
-            path_names: { new: "" }
-
   scope "/:token" do
+    # Order copy cards flow
+    resources :copy_cards_forms,
+              only: %i[new create],
+              path: "order-copy-cards",
+              path_names: { new: "" }
+
     resources :copy_cards_payment_forms,
               only: %i[new create],
               path: "order-copy-cards-payment",
