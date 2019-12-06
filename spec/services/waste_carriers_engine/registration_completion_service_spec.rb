@@ -32,9 +32,7 @@ module WasteCarriersEngine
         before { allow(registration).to receive(:unpaid_balance?).and_return(true) }
 
         it "raises an error" do
-          message = "Registration #{registration.reg_identifier} cannot be activated due to unpaid balance"
-
-          expect { service }.to raise_error(RuntimeError, message)
+          expect { service }.to raise_error(UnpaidBalanceError)
         end
       end
 
@@ -42,9 +40,7 @@ module WasteCarriersEngine
         before { allow(registration).to receive(:pending_manual_conviction_check?).and_return(true) }
 
         it "raises an error" do
-          message = "Registration #{registration.reg_identifier} cannot be activated due to pending convictions check"
-
-          expect { service }.to raise_error(RuntimeError, message)
+          expect { service }.to raise_error(PendingConvictionsError)
         end
       end
     end
