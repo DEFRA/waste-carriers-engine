@@ -19,7 +19,7 @@
             <li>
               <%= person.first_name %> <%= person.last_name %>
               <%= button_to(t(".delete_person_link"),
-                  delete_person_main_people_forms_path(person.id),
+                  delete_person_main_people_forms_path(token: @main_people_form.token, id: person.id),
                   class: "button-link",
                   method: :delete,
                   params: { reg_identifier: @main_people_form.reg_identifier }) %>
