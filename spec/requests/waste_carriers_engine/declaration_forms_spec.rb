@@ -32,20 +32,15 @@ module WasteCarriersEngine
                    workflow_state: "declaration_form")
           end
 
-          let(:params) do
-            {
-              token: transient_registration.token,
-              declaration: 1
-            }
-          end
+          let(:params) { { declaration: 1 } }
 
           it "creates a new conviction_search_result for the registration" do
-            post declaration_forms_path, declaration_form: params
+            post_form_with_params("declaration_form", transient_registration.token, params)
             expect(transient_registration.reload.conviction_search_result).to_not eq(nil)
           end
 
           it "creates a new conviction_search_result for the key people" do
-            post declaration_forms_path, declaration_form: params
+            post_form_with_params("declaration_form", transient_registration.token, params)
             expect(transient_registration.reload.key_people.first.conviction_search_result).to_not eq(nil)
           end
         end
