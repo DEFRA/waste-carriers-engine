@@ -100,11 +100,38 @@ module WasteCarriersEngine
       context "when the reject event happens" do
         before do
           conviction_sign_off.workflow_state = "checks_in_progress"
-          conviction_sign_off.reject
         end
 
-        it "updates the transient_registration's metaData.status" do
-          expect(transient_registration.metaData.status).to eq("REVOKED")
+        it "does not update confirmed" do
+          expect(conviction_sign_off.confirmed).to eq("no")
+        end
+
+        it "updates confirmed_at" do
+          conviction_sign_off.reject(user)
+          expect(conviction_sign_off.confirmed_at).to be_a(DateTime)
+        end
+
+        it "updates confirmed_by" do
+          conviction_sign_off.reject(user)
+          expect(conviction_sign_off.confirmed_by).to eq(user.email)
+        end
+
+        context "when the metaData status is pending" do
+          before { transient_registration.metaData.status = :PENDING }
+
+          it "updates the metaData status to refused" do
+            conviction_sign_off.reject(user)
+            expect(transient_registration.metaData.status).to eq("REFUSED")
+          end
+        end
+
+        context "when the metaData status is not pending" do
+          before { transient_registration.metaData.status = :ACTIVE }
+
+          it "updates the metaData status to revoked" do
+            conviction_sign_off.reject(user)
+            expect(transient_registration.metaData.status).to eq("REVOKED")
+          end
         end
       end
     end
