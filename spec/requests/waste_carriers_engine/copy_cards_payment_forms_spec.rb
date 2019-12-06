@@ -15,6 +15,7 @@ module WasteCarriersEngine
         context "when no matching registration exists" do
           it "redirects to the invalid token error page" do
             get new_copy_cards_payment_form_path("CBDU999999999")
+
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
@@ -22,39 +23,35 @@ module WasteCarriersEngine
         context "when the token doesn't match the format" do
           it "redirects to the invalid token error page" do
             get new_copy_cards_payment_form_path("foo")
+
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
 
-        context "when a matching registration exists" do
+        context "when a matching transient registration exists" do
           before do
-            order_copy_cards_registration = OrderCopyCardsRegistration.new(token: registration.token)
             order_copy_cards_registration.workflow_state = "copy_cards_payment_form"
             order_copy_cards_registration.save
           end
 
           context "when the given registration is not active" do
             let(:registration) { create(:registration, :has_required_data, :is_pending) }
+            let(:order_copy_cards_registration) { OrderCopyCardsRegistration.new(reg_identifier: registration.reg_identifier) }
 
             it "redirects to the page" do
-              get new_copy_cards_payment_form_path(registration.token)
+              get new_copy_cards_payment_form_path(order_copy_cards_registration.token)
 
               expect(response).to redirect_to(page_path("invalid"))
             end
           end
 
           context "when the given registration is active" do
-            let(:registration) { create(:registration, :has_required_data, :is_active) }
+            let(:order_copy_cards_registration) { create(:order_copy_cards_registration) }
 
-            it "renders the appropriate template" do
-              get new_copy_cards_payment_form_path(registration.token)
+            it "responds to the GET request with a 200 status code and renders the appropriate template" do
+              get new_copy_cards_payment_form_path(order_copy_cards_registration.token)
 
               expect(response).to render_template("waste_carriers_engine/copy_cards_payment_forms/new")
-            end
-
-            it "responds to the GET request with a 200 status code" do
-              get new_copy_cards_payment_form_path(registration.token)
-
               expect(response.code).to eq("200")
             end
           end
@@ -87,63 +84,39 @@ module WasteCarriersEngine
           sign_in(user)
         end
 
-        context "when no matching registration exists" do
-          let(:invalid_params) { { token: "CBDU99999" } }
-
-          it "redirects to the invalid token error page" do
-            post copy_cards_payment_forms_path, copy_cards_payment_form: invalid_params
-            expect(response).to redirect_to(page_path("invalid"))
-          end
-
-          it "does not create a new transient registration" do
+        context "when the token is invalid" do
+          it "redirects to the invalid token error page and does not create a new transient registration" do
             original_tr_count = OrderCopyCardsRegistration.count
-            post copy_cards_payment_forms_path, copy_cards_payment_form: invalid_params
-            updated_tr_count = OrderCopyCardsRegistration.count
 
-            expect(original_tr_count).to eq(updated_tr_count)
-          end
-        end
+            post copy_cards_payment_forms_path("FOO")
 
-        context "when the token doesn't match the format" do
-          let(:invalid_params) { { token: "foo" } }
-
-          it "redirects to the invalid token error page" do
-            post copy_cards_payment_forms_path, copy_cards_payment_form: invalid_params
+            expect(OrderCopyCardsRegistration.count).to eq(original_tr_count)
             expect(response).to redirect_to(page_path("invalid"))
-          end
-
-          it "does not create a new transient registration" do
-            original_tr_count = OrderCopyCardsRegistration.count
-            post copy_cards_payment_forms_path, copy_cards_payment_form: invalid_params
-            updated_tr_count = OrderCopyCardsRegistration.count
-
-            expect(original_tr_count).to eq(updated_tr_count)
           end
         end
 
         context "when a matching registration exists" do
-          let(:transient_registration) { create(:order_copy_cards_registration) }
+          let(:order_copy_cards_registration) { create(:order_copy_cards_registration) }
 
           before do
-            order_copy_cards_registration = OrderCopyCardsRegistration.new(token: registration.token)
             order_copy_cards_registration.workflow_state = "copy_cards_payment_form"
             order_copy_cards_registration.save
           end
 
           context "when valid params are submitted" do
-            let(:valid_params) { { token: registration.token, temp_payment_method: temp_payment_method } }
+            let(:valid_params) { { temp_payment_method: temp_payment_method } }
 
             context "when the temp payment method is `card`" do
               let(:temp_payment_method) { "card" }
 
               it "updates the transient registration with correct data, returns a 302 response and redirects to the worldpay form" do
-                post copy_cards_payment_forms_path, copy_cards_payment_form: valid_params
+                post copy_cards_payment_forms_path(order_copy_cards_registration.token), copy_cards_payment_form: valid_params
 
-                transient_registration = OrderCopyCardsRegistration.find_by(token: registration.token)
+                order_copy_cards_registration.reload
 
-                expect(transient_registration.temp_payment_method).to eq("card")
+                expect(order_copy_cards_registration.temp_payment_method).to eq("card")
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_worldpay_form_path(valid_params[:token]))
+                expect(response).to redirect_to(new_worldpay_form_path(order_copy_cards_registration.token))
               end
             end
 
@@ -151,22 +124,22 @@ module WasteCarriersEngine
               let(:temp_payment_method) { "bank_transfer" }
 
               it "updates the transient registration with correct data, returns a 302 response and redirects to the bank transfer form" do
-                post copy_cards_payment_forms_path, copy_cards_payment_form: valid_params
+                post copy_cards_payment_forms_path(order_copy_cards_registration.token), copy_cards_payment_form: valid_params
 
-                transient_registration = OrderCopyCardsRegistration.find_by(token: registration.token)
+                order_copy_cards_registration.reload
 
-                expect(transient_registration.temp_payment_method).to eq("bank_transfer")
+                expect(order_copy_cards_registration.temp_payment_method).to eq("bank_transfer")
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_copy_cards_bank_transfer_form_path(valid_params[:token]))
+                expect(response).to redirect_to(new_copy_cards_bank_transfer_form_path(order_copy_cards_registration.token))
               end
             end
           end
 
           context "when invalid params are submitted" do
-            let(:invalid_params) { { token: registration.token, temp_payment_method: "foo" } }
+            let(:invalid_params) { { temp_payment_method: "foo" } }
 
             it "returns a 200 response and render the new copy cards form" do
-              post copy_cards_payment_forms_path, copy_cards_payment_form: invalid_params
+              post copy_cards_payment_forms_path(order_copy_cards_registration.token), copy_cards_payment_form: invalid_params
 
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/copy_cards_payment_forms/new")
@@ -177,23 +150,16 @@ module WasteCarriersEngine
 
       context "when a user is not signed in" do
         let(:registration) { create(:registration, :has_required_data) }
-        let(:valid_params) { { token: registration[:token] } }
 
         before(:each) do
           user = create(:user)
           sign_out(user)
         end
 
-        it "returns a 302 response" do
-          post copy_cards_payment_forms_path, renewal_start_form: valid_params
+        it "returns a 302 response and redirects to the sign in page" do
+          post copy_cards_payment_forms_path("foo")
 
           expect(response).to have_http_status(302)
-        end
-
-        it "redirects to the sign in page" do
-          post copy_cards_payment_forms_path, renewal_start_form: valid_params
-
-          expect(response).to redirect_to(new_user_session_path)
         end
       end
     end
