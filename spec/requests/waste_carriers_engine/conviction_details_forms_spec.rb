@@ -103,18 +103,12 @@ module WasteCarriersEngine
           context "when invalid params are submitted" do
             let(:invalid_params) do
               {
-                token: "foo",
                 first_name: "",
                 last_name: "",
                 dob_day: "31",
                 dob_month: "02",
                 dob_year: "2000"
               }
-            end
-
-            it "returns a 302 response" do
-              post conviction_details_forms_path(transient_registration.token), conviction_details_form: invalid_params
-              expect(response).to have_http_status(302)
             end
 
             it "does not increase the total number of people" do
@@ -135,19 +129,11 @@ module WasteCarriersEngine
                 expect(transient_registration.reload.key_people.first.first_name).to eq(existing_main_person.first_name)
               end
             end
-
-            context "when the submit params say to add another" do
-              it "returns a 302 response" do
-                post conviction_details_forms_path(transient_registration.token), conviction_details_form: invalid_params, commit: "Add another person"
-                expect(response).to have_http_status(302)
-              end
-            end
           end
 
           context "when blank params are submitted" do
             let(:blank_params) do
               {
-                token: "foo",
                 first_name: "",
                 last_name: "",
                 position: "",
@@ -175,7 +161,6 @@ module WasteCarriersEngine
 
           let(:valid_params) do
             {
-              token: transient_registration[:token],
               first_name: "Foo",
               last_name: "Bar",
               position: "Baz",
