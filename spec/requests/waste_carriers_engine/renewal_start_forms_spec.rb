@@ -32,7 +32,7 @@ module WasteCarriersEngine
               let(:registration) { create(:registration, :has_required_data, :expires_soon, account_email: user.email) }
 
               it "returns a success response" do
-                get new_renewal_start_form_path(registration[:token])
+                get new_renewal_start_form_path(registration.reg_identifier)
                 expect(response).to have_http_status(200)
               end
 
