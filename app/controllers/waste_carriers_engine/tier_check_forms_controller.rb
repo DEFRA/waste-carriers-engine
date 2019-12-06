@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.require(:tier_check_form).permit(:temp_tier_check)
+      params.fetch(:tier_check_form, {}).permit(:temp_tier_check)
     end
   end
 end
