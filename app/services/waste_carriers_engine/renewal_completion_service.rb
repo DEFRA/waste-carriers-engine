@@ -82,15 +82,15 @@ module WasteCarriersEngine
     def copy_data_from_transient_registration
       registration_attributes = registration.attributes.except("_id", "financeDetails", "past_registrations")
       renewal_attributes = transient_registration.attributes.except("_id",
-                                                                     "financeDetails",
-                                                                     "temp_cards",
-                                                                     "temp_company_postcode",
-                                                                     "temp_contact_postcode",
-                                                                     "temp_os_places_error",
-                                                                     "temp_payment_method",
-                                                                     "temp_tier_check",
-                                                                     "_type",
-                                                                     "workflow_state")
+                                                                    "financeDetails",
+                                                                    "temp_cards",
+                                                                    "temp_company_postcode",
+                                                                    "temp_contact_postcode",
+                                                                    "temp_os_places_error",
+                                                                    "temp_payment_method",
+                                                                    "temp_tier_check",
+                                                                    "_type",
+                                                                    "workflow_state")
 
       remove_unused_attributes(registration_attributes, renewal_attributes)
 
