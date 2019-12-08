@@ -18,7 +18,7 @@ module WasteCarriersEngine
         state :copy_cards_payment_form
         state :worldpay_form
         state :copy_cards_bank_transfer_form
-        state :completed
+        state :copy_cards_order_completed_form
 
         # Transitions
         event :next do
@@ -35,11 +35,11 @@ module WasteCarriersEngine
 
           # TODO: after: :complete_order
           transitions from: :copy_cards_bank_transfer_form,
-                      to: :completed
+                      to: :copy_cards_order_completed_form
 
           # TODO: after: :complete_order
           transitions from: :worldpay_form,
-                      to: :completed
+                      to: :copy_cards_order_completed_form
         end
 
         event :back do
