@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-# This is the main servise for permission checks on both user permissions and registration status used in the `FormController`.
+# This is the main servise for permission checks on both user permissions and
+# registration status used in the `FormController`.
 # This will be used to run the correct checks based on the type of flow / transient object the user is dealing with.
 module WasteCarriersEngine
   class FlowPermissionChecksService < BaseService
-    class MissingFlowPermissionChecksService < StandardError; end;
+    class MissingFlowPermissionChecksService < StandardError; end
 
     attr_reader :transient_registration, :user
 
