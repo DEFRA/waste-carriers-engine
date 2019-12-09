@@ -26,6 +26,10 @@ module WasteCarriersEngine
         it "activates the registration" do
           expect { service }.to change { registration.active? }.from(false).to(true)
         end
+
+        it "sends a confirmation email" do
+          expect { service }.to change { ActionMailer::Base.deliveries.count }.from(0).to(1)
+        end
       end
 
       context "when the balance is unpaid" do

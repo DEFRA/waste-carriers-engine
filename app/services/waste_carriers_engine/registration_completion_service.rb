@@ -9,6 +9,8 @@ module WasteCarriersEngine
       @registration = registration
 
       activate_registration if can_be_completed?
+
+      send_confirmation_email
     end
 
     private
@@ -32,6 +34,12 @@ module WasteCarriersEngine
       raise PendingConvictionsError if @registration.pending_manual_conviction_check?
 
       true
+    end
+
+    def send_confirmation_email
+      NewRegistrationMailer.registration_activated(@registration).deliver_now
+    rescue StandardError => e
+      Airbrake.notify(e, registration_no: @registration.reg_identifier) if defined?(Airbrake)
     end
   end
 end
