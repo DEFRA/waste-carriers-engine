@@ -28,7 +28,7 @@ module WasteCarriersEngine
         end
 
         it "sends a confirmation email" do
-          expect { service }.to change { ActionMailer::Base.deliveries.count }.from(0).to(1)
+          expect { service }.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
       end
 
