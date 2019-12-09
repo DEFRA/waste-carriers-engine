@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FormRequestHelpers
-  def post_form_with_params(form, token, params={})
+  def post_form_with_params(form, token, params = {})
     post create_path_for(form, token), params_for_form(form, params)
   end
 

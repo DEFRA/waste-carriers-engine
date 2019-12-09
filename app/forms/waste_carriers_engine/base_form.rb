@@ -14,7 +14,11 @@ module WasteCarriersEngine
     # If the record is new, and not yet persisted (which it is when the start
     # page is first submitted) then we have nothing to validate hence the check
     validates :token, presence: true, if: -> { transient_registration&.persisted? }
-    validates :reg_identifier, "waste_carriers_engine/reg_identifier": true, if: -> { transient_registration&.persisted? }
+    validates(
+      :reg_identifier,
+      "waste_carriers_engine/reg_identifier": true,
+      if: -> { transient_registration&.persisted? }
+    )
 
     validate :transient_registration_valid?
 

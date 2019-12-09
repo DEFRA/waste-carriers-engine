@@ -22,7 +22,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:contact_name_form) { build(:contact_name_form, :has_required_data) }
-        let(:invalid_params) { { first_name: "",  last_name: "" } }
+        let(:invalid_params) { { first_name: "", last_name: "" } }
 
         it "should not submit" do
           expect(contact_name_form.submit(invalid_params)).to eq(false)
