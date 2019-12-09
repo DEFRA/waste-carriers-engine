@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:tier_check_form) { build(:tier_check_form, :has_required_data) }
-        let(:invalid_params) { { token: "foo" } }
+        let(:invalid_params) { { temp_tier_check: "foo" } }
 
         it "should not submit" do
           expect(tier_check_form.submit(invalid_params)).to eq(false)
