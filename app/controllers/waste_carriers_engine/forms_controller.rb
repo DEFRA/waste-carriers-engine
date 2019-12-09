@@ -75,7 +75,13 @@ module WasteCarriersEngine
     end
 
     def setup_checks_pass?
-      transient_registration_is_valid? && user_has_permission? && can_be_renewed? && state_is_correct?
+      result = FlowPermissionChecksService.run(user: current_user, transient_registration: @transient_registration)
+
+      return true if result.pass? && state_is_correct?
+
+      redirect_to page_path(result.error_state) unless result.pass?
+
+      false
     end
 
     def set_workflow_state
@@ -96,21 +102,6 @@ module WasteCarriersEngine
     end
 
     # Guards
-
-    def transient_registration_is_valid?
-      return true if @transient_registration.valid?
-
-      redirect_to page_path("invalid")
-      false
-    end
-
-    def user_has_permission?
-      return true if can? :update, @transient_registration
-
-      redirect_to page_path("permission")
-      false
-    end
-
     def state_is_correct?
       return true if form_matches_state?
 
@@ -120,13 +111,6 @@ module WasteCarriersEngine
 
     def form_matches_state?
       controller_name == "#{@transient_registration.workflow_state}s"
-    end
-
-    def can_be_renewed?
-      return true if @transient_registration.can_be_renewed?
-
-      redirect_to page_path("unrenewable")
-      false
     end
 
     # http://jacopretorius.net/2014/01/force-page-to-reload-on-browser-back-in-rails.html
