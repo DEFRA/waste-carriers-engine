@@ -4,7 +4,7 @@
 
 <%= t(".salutation") %><%= @registration.first_name %>
 
-<% if @registration.lower? %>
+<% if @registration.lower_tier? %>
 <%= t(".paragraph1_lower") %>
 
 <%= t(".paragraph2_lower") %>
@@ -13,9 +13,9 @@
 <%= t(".bullet2_lower") %>
 
 <% else %>
-<%= t(".paragraph1_upper", reg_type: @registration.tier_and_registration_type_description) %>
+<%= t(".paragraph1_upper.#{@registration.registration_type}") %>
 
-<%= t(".paragraph2_upper", reg_type: @registration.tier_and_registration_type_description) %>
+<%= t(".paragraph2_upper.#{@registration.registration_type}") %>
 
 <%= t(".bullet1_upper") %>
 <%= t(".bullet2_upper") %>
@@ -41,9 +41,9 @@
 <%= @registration.registered_address.postcode %>
 
 <%= t(".contact_number") %><%= @registration.phone_number %>
-<%= t(".registered_on", date: format_as_ordinal_date_only(@registration.date_registered)) %>
+<%= t(".registered_on", date: @registration.metaData.date_registered) %>
 
-<%= t(".update_website1_html", link: link_to("sign in", new_user_session_url)) %>
+<%= t(".update_website1_html", link: "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
 
 ===================================================================================
 

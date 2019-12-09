@@ -47,7 +47,11 @@
         <tr>
           <td bgcolor="#00823B" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
             <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
-              <%= t(".reg_complete", registration_description: @registration.tier_and_registration_type_description) %>
+              <% if @registration.lower_tier? %>
+                <%= t(".reg_complete.lower") %>
+              <% else %>
+                <%= t(".reg_complete.upper.#{@registration.registration_type}") %>
+              <% end %>
             </p>
 
             <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0;">
@@ -71,7 +75,7 @@
               <%= @registration.first_name %>
             </p>
 
-            <% if @registration.lower? %>
+            <% if @registration.lower_tier? %>
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
                 <%= t(".paragraph1_lower") %>
               </p>
@@ -90,11 +94,11 @@
               </ul>
             <% else %>
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 30px 0;">
-                <%= t(".paragraph1_upper", reg_type: @registration.tier_and_registration_type_description) %>
+                <%= t(".paragraph1_upper.#{@registration.registration_type}") %>
               </p>
 
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".paragraph2_upper", reg_type: @registration.tier_and_registration_type_description) %>
+                <%= t(".paragraph2_upper.#{@registration.registration_type}") %>
               </p>
 
               <ul>
@@ -162,11 +166,11 @@
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;">
-              <%= t(".registered_on", date: format_as_ordinal_date_only(@registration.date_registered)) %>
+              <%= t(".registered_on", date: @registration.metaData.date_registered) %>
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 30px 0;">
-              <%= t(".update_website1_html", link: link_to("sign in", new_user_session_url)) %>
+              <%= t(".update_website1_html", link: "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
             </p>
 
             <ul>
