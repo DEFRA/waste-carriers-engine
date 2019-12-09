@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:waste_types_form) { build(:waste_types_form, :has_required_data) }
-        let(:invalid_params) { { token: "foo" } }
+        let(:invalid_params) { { only_amf: "foo" } }
 
         it "should not submit" do
           expect(waste_types_form.submit(invalid_params)).to eq(false)
