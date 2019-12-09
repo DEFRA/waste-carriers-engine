@@ -25,8 +25,6 @@
       <%= render("waste_carriers_engine/shared/manual_address", form: @contact_address_manual_form, f: f, overseas: @contact_address_manual_form.business_is_overseas?) %>
     <% end %>
 
-    <%= f.hidden_field :token, value: @contact_address_manual_form.token %>
-
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

@@ -25,8 +25,6 @@
 
     <p><%= link_to t(".privacy_link_text"), page_path("privacy"),  target: "_blank" %></p>
 
-    <%= f.hidden_field :token, value: @declaration_form.token %>
-
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
