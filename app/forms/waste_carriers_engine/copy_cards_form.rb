@@ -2,10 +2,6 @@
 
 module WasteCarriersEngine
   class CopyCardsForm < CardsForm
-    def self.can_navigate_flexibly?
-      true
-    end
-
     validates(
       :temp_cards,
       numericality: {
@@ -14,5 +10,9 @@ module WasteCarriersEngine
         less_than_or_equal_to: MAX_TEMP_CARDS
       }
     )
+
+    def self.can_navigate_flexibly?
+      true
+    end
   end
 end

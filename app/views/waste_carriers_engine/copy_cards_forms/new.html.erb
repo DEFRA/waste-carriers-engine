@@ -9,7 +9,7 @@
     <div class="panel">
       <span class="bold"><%= t(".contact_address.heading")%> </span>
 
-      <% displayable_address(@transient_registration.registration.contact_address).each do |address_line| %>
+      <% displayable_address(@transient_registration.contact_address).each do |address_line| %>
         <br/>
         <%= address_line %>
       <% end %>
