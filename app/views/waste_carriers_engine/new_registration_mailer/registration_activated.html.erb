@@ -12,14 +12,14 @@
     <title>Waste Carriers Service</title>
 </head>
 
-<body style="font-family: Helvetica, Arial, sans-serif;font-size: 16px;margin: 0;color:#0b0c0c">
+<body style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td width="100%" height="53px" bgcolor="#0b0c0c">
       <table width="580" cellpadding="0" cellspacing="0" border="0" align="center">
         <tr>
           <td width="100%" bgcolor="#0b0c0c" valign="middle">
-            <%= email_image_tag("govuk_logotype_email.png", {:alt => 'GOV.UK', :border => '0'}) %>
+            <%= email_image_tag("govuk_logotype_email.png", { alt: "GOV.UK", border: "0"}) %>
           </td>
         </tr>
       </table>
@@ -40,18 +40,23 @@
         </tr>
         <tr>
           <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
-            <p style="font-weight: 400;font-size: 16px;line-height: 1 ;margin: 10px 0 10px 0;">&nbsp;</p>
+            <p style="font-weight: 400; font-size: 16px; line-height: 1; margin: 10px 0 10px 0;">&nbsp;</p>
           </td>
           <td width="25%">&nbsp;</td>
         </tr>
         <tr>
           <td bgcolor="#00823B" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
-            <p style="font-size: 36px; font-weight: bold; text-align: center; color:#ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;"><%= t('registration_mailer.welcome_email.reg_complete', registration_description: @registration.tier_and_registration_type_description) %></p>
-
-            <p style="font-size: 19px; text-align: center; color:#ffffff; line-height: 1.315789474; margin: 0;"><%= t 'registration_mailer.welcome_email.reg_complete_number' %>
+            <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
+              <%= t(".reg_complete", registration_description: @registration.tier_and_registration_type_description) %>
             </p>
 
-            <p style="font-size: 36px; font-weight: bold; text-align: center; color:#ffffff; line-height: 1.315789474; margin: 15px 0px 30px 0px;"><%= @registration.regIdentifier %></p>
+            <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0;">
+              <%= t(".reg_complete_number") %>
+            </p>
+
+            <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 15px 0px 30px 0px;">
+              <%= @registration.reg_identifier %>
+            </p>
           </td>
           <td width="25%">&nbsp;</td>
         </tr>
@@ -59,82 +64,118 @@
           <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
 
             <p style="font-size: 19px; line-height: 1.315789474; margin: 30px 0 15px 0; font-weight: bold;">
-              <%= t 'registration_mailer.welcome_email.reg_certificate_info' %>
+              <%= t(".reg_certificate_info") %>
             </p>
 
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 30px 0 15px 0;">
-              <%= @registration.firstName%>
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 30px 0 15px 0;">
+              <%= @registration.first_name %>
             </p>
 
             <% if @registration.lower? %>
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.paragraph1_lower' %></p>
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t(".paragraph1_lower") %>
+              </p>
 
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.paragraph2_lower' %></p>
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t(".paragraph2_lower") %>
+              </p>
 
-            <ul>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.bullet1_lower' %></li>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 30px 0;"><%=t 'registration_mailer.welcome_email.bullet2_lower' %></li>
-            </ul>
-
+              <ul>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
+                  <%= t(".bullet1_lower") %>
+                </li>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 30px 0;">
+                  <%= t(".bullet2_lower") %>
+                </li>
+              </ul>
             <% else %>
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 30px 0;"><%=t 'registration_mailer.welcome_email.paragraph1_upper', :regType => @registration.tier_and_registration_type_description %></p>
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 30px 0;">
+                <%= t(".paragraph1_upper", reg_type: @registration.tier_and_registration_type_description) %>
+              </p>
 
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.paragraph2_upper', :regType => @registration.tier_and_registration_type_description %></p>
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t(".paragraph2_upper", reg_type: @registration.tier_and_registration_type_description) %>
+              </p>
 
-            <ul>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.bullet1_upper' %></li>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;"><%=t 'registration_mailer.welcome_email.bullet2_upper' %></li>
-            </ul>
+              <ul>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
+                  <%= t(".bullet1_upper") %>
+                </li>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
+                  <%= t(".bullet2_upper") %>
+                </li>
+              </ul>
 
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.paragraph3_upper' %></p>
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t(".paragraph3_upper") %>
+              </p>
 
-            <ul>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.bullet3_upper' %></li>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.bullet4_upper' %></li>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.bullet5_upper' %></li>
-              <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;"><%=t 'registration_mailer.welcome_email.bullet6_upper' %></li>
-            </ul>
-
+              <ul>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
+                  <%= t(".bullet3_upper") %>
+                </li>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
+                  <%= t(".bullet4_upper") %>
+                </li>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
+                  <%= t(".bullet5_upper") %>
+                </li>
+                <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
+                  <%= t(".bullet6_upper") %>
+                </li>
+              </ul>
             <% end %>
 
-            <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474;margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.heading_update_registration' %></p>
-
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.paragraph3' %></p>
-
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-            <%= @registration.firstName%>&nbsp;<%= @registration.lastName%></p>
-
-            <% address = @registration.registered_address %>
-
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-            <%= address.houseNumber %></p>
-
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-            <%= address.addressLine1 %></p>
-
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-            <%= address.addressLine2 %></p>
-
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-            <%= address.dependentLocality %></p>
-
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-            <%= address.townCity%></p>
+            <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
+              <%= t(".heading_update_registration") %>
+            </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;">
-            <%= address.postcode%></p>
+              <%= t(".paragraph3") %>
+            </p>
+
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
+              <%= @registration.first_name %>&nbsp;<%= @registration.last_name %>
+            </p>
+
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
+              <%= @registration.registered_address.house_number %>
+            </p>
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
+              <%= @registration.registered_address.address_line_1 %>
+            </p>
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
+              <%= @registration.registered_address.address_line_2 %>
+            </p>
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
+              <%= @registration.registered_address.dependent_locality %>
+            </p>
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
+              <%= @registration.registered_address.town_city %>
+            </p>
+            <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+              <%= @registration.registered_address.postcode %>
+            </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-            <%=t 'registration_mailer.welcome_email.contactNumber'%><%= @registration.phoneNumber%></p>
+              <%= t(".contact_number") %><%= @registration.phone_number %>
+            </p>
 
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;"><%= t 'registration_mailer.welcome_email.registeredOn', date: format_as_ordinal_date_only(@registration.date_registered) %></p>
+            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;">
+              <%= t(".registered_on", date: format_as_ordinal_date_only(@registration.date_registered)) %>
+            </p>
 
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 30px 0;"><%=t 'registration_mailer.welcome_email.updateWebsite1_html',:link=>link_to('sign in', new_user_session_url)%>
+            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 30px 0;">
+              <%= t(".update_website1_html", link: link_to("sign in", new_user_session_url)) %>
             </p>
 
             <ul>
-              <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 15px 0;"><%=t 'registration_mailer.welcome_email.footer_bullet1' %></li>
-              <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 30px 0;"><%=t 'registration_mailer.welcome_email.footer_bullet2' %></li>
+              <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 15px 0;">
+                <%= t(".footer_bullet1") %>
+              </li>
+              <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 30px 0;">
+                <%= t(".footer_bullet2") %>
+              </li>
             </ul>
 
           </td>

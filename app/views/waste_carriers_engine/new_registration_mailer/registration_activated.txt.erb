@@ -1,52 +1,51 @@
-<%= t 'registration_mailer.welcome_email.reg_number_html', :reg => @registration.regIdentifier %>
+<%= t(".reg_number_html", reg: @registration.reg_identifier %>
 
 ===================================================================================
 
-<%=t 'registration_mailer.welcome_email.salutation' %><%= @registration.firstName%>
+<%= t(".salutation") %><%= @registration.first_name %>
 
 <% if @registration.lower? %>
-<%=t 'registration_mailer.welcome_email.paragraph1_lower' %>
+<%= t(".paragraph1_lower") %>
 
-<%=t 'registration_mailer.welcome_email.paragraph2_lower' %>
+<%= t(".paragraph2_lower") %>
 
-<%=t 'registration_mailer.welcome_email.bullet1_lower' %>
-<%=t 'registration_mailer.welcome_email.bullet2_lower' %>
+<%= t(".bullet1_lower") %>
+<%= t(".bullet2_lower") %>
 
 <% else %>
-<%=t 'registration_mailer.welcome_email.paragraph1_upper', :regType => @registration.tier_and_registration_type_description %>
+<%= t(".paragraph1_upper", reg_type: @registration.tier_and_registration_type_description) %>
 
-<%=t 'registration_mailer.welcome_email.paragraph2_upper', :regType => @registration.tier_and_registration_type_description %>
+<%= t(".paragraph2_upper", reg_type: @registration.tier_and_registration_type_description) %>
 
-<%=t 'registration_mailer.welcome_email.bullet1_upper' %>
-<%=t 'registration_mailer.welcome_email.bullet2_upper' %>
+<%= t(".bullet1_upper") %>
+<%= t(".bullet2_upper") %>
 
-<%=t 'registration_mailer.welcome_email.paragraph3_upper' %>
-<%=t 'registration_mailer.welcome_email.bullet3_upper' %>
-<%=t 'registration_mailer.welcome_email.bullet4_upper' %>
-<%=t 'registration_mailer.welcome_email.bullet5_upper' %>
-<%=t 'registration_mailer.welcome_email.bullet6_upper' %>
+<%= t(".paragraph3_upper") %>
+<%= t(".bullet3_upper") %>
+<%= t(".bullet4_upper") %>
+<%= t(".bullet5_upper") %>
+<%= t(".bullet6_upper") %>
 <% end %>
 
 ===================================================================================
 
-<%=t 'registration_mailer.welcome_email.heading_update_registration' %>
+<%= t(".heading_update_registration") %>
 
-<%=t 'registration_mailer.welcome_email.paragraph3' %>
-<% address = @registration.registered_address %>
-<%= @registration.firstName%> <%= @registration.lastName%>
-<%= address.houseNumber %>
-<%= address.addressLine1 %>
-<%= address.addressLine2 %>
-<%= address.dependentLocality %>
-<%= address.townCity%>
-<%= address.postcode%>
+<%= t(".paragraph3") %>
+<%= @registration.first_name %> <%= @registration.last_name %>
+<%= @registration.registered_address.house_number %>
+<%= @registration.registered_address.address_line_1 %>
+<%= @registration.registered_address.address_line_2 %>
+<%= @registration.registered_address.dependent_locality %>
+<%= @registration.registered_address.town_city %>
+<%= @registration.registered_address.postcode %>
 
-<%= t 'registration_mailer.welcome_email.contactNumber'%><%= @registration.phoneNumber%>
-<%= t 'registration_mailer.welcome_email.registeredOn', date: format_as_ordinal_date_only(@registration.date_registered) %>
+<%= t(".contact_number") %><%= @registration.phone_number %>
+<%= t(".registered_on", date: format_as_ordinal_date_only(@registration.date_registered)) %>
 
-<%=t 'registration_mailer.welcome_email.updateWebsite1_html',:link=>link_to('sign in', new_user_session_url)%>
+<%= t(".update_website1_html", link: link_to("sign in", new_user_session_url)) %>
 
 ===================================================================================
 
-<%=t 'registration_mailer.welcome_email.footer_bullet1' %>
-<%=t 'registration_mailer.welcome_email.footer_bullet2' %>
+<%= t(".footer_bullet1") %>
+<%= t(".footer_bullet2") %>
