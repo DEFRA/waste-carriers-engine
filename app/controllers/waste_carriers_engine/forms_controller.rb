@@ -39,9 +39,13 @@ module WasteCarriersEngine
       return redirect_to(page_path("invalid")) unless find_or_initialize_transient_registration(params[:token])
     end
 
+    # We're not really memoizing this instance variable here, so we don't think
+    # this cop is valid in this context
+    # rubocop:disable Naming/MemoizedInstanceVariableName
     def find_or_initialize_transient_registration(token)
       @transient_registration ||= TransientRegistration.where(token: token).first
     end
+    # rubocop:enable Naming/MemoizedInstanceVariableName
 
     # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
     # and the token param
