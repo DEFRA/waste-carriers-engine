@@ -1,37 +1,37 @@
-<%= t(".reg_number_html", reg: @registration.reg_identifier %>
+<%= t(".section_1.reg_number_html", reg: @registration.reg_identifier %>
 
 ===================================================================================
 
 <%= t(".salutation") %><%= @registration.first_name %>
 
 <% if @registration.lower_tier? %>
-<%= t(".paragraph1_lower") %>
+<%= t(".section_3.lower.paragraph_1") %>
 
-<%= t(".paragraph2_lower") %>
+<%= t(".section_3.lower.paragraph_2") %>
 
-<%= t(".bullet1_lower") %>
-<%= t(".bullet2_lower") %>
+- <%= t(".section_3.lower.list_1.item_1") %>
+- <%= t(".section_3.lower.list_1.item_2") %>
 
 <% else %>
-<%= t(".paragraph1_upper.#{@registration.registration_type}") %>
+<%= t(".section_3.upper.paragraph_1.#{@registration.registration_type}") %>
 
-<%= t(".paragraph2_upper.#{@registration.registration_type}") %>
+<%= t(".section_3.upper.paragraph_2.#{@registration.registration_type}") %>
 
-<%= t(".bullet1_upper") %>
-<%= t(".bullet2_upper") %>
+- <%= t(".section_3.upper.list_1.item_1") %>
+- <%= t(".section_3.upper.list_1.item_2") %>
 
-<%= t(".paragraph3_upper") %>
-<%= t(".bullet3_upper") %>
-<%= t(".bullet4_upper") %>
-<%= t(".bullet5_upper") %>
-<%= t(".bullet6_upper") %>
+<%= t(".section_3.upper.paragraph_3") %>
+- <%= t(".section_3.upper.list_2.item_1") %>
+- <%= t(".section_3.upper.list_2.item_2") %>
+- <%= t(".section_3.upper.list_2.item_3") %>
+- <%= t(".section_3.upper.list_2.item_4") %>
 <% end %>
 
 ===================================================================================
 
-<%= t(".heading_update_registration") %>
+<%= t(".section_4.heading") %>
 
-<%= t(".paragraph3") %>
+<%= t(".section_4.paragraph_1") %>
 <%= @registration.first_name %> <%= @registration.last_name %>
 <%= @registration.registered_address.house_number %>
 <%= @registration.registered_address.address_line_1 %>
@@ -40,12 +40,12 @@
 <%= @registration.registered_address.town_city %>
 <%= @registration.registered_address.postcode %>
 
-<%= t(".contact_number") %><%= @registration.phone_number %>
-<%= t(".registered_on", date: @registration.metaData.date_registered) %>
+<%= t(".section_4.contact_number") %><%= @registration.phone_number %>
+<%= t(".section_4.registered_on", date: @registration.metaData.date_registered) %>
 
-<%= t(".update_website1_html", link: "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
+<%= t(".section_4.update_website_link", link: "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
 
 ===================================================================================
 
-<%= t(".footer_bullet1") %>
-<%= t(".footer_bullet2") %>
+<%= t(".footer.item_1") %>
+<%= t(".footer.item_2") %>

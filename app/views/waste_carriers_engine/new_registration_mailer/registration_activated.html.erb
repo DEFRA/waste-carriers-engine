@@ -48,14 +48,14 @@
           <td bgcolor="#00823B" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
             <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
               <% if @registration.lower_tier? %>
-                <%= t(".reg_complete.lower") %>
+                <%= t(".section_1.reg_complete.lower") %>
               <% else %>
-                <%= t(".reg_complete.upper.#{@registration.registration_type}") %>
+                <%= t(".section_1.reg_complete.upper.#{@registration.registration_type}") %>
               <% end %>
             </p>
 
             <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0;">
-              <%= t(".reg_complete_number") %>
+              <%= t(".section_1.reg_complete_number") %>
             </p>
 
             <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 15px 0px 30px 0px;">
@@ -68,7 +68,7 @@
           <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
 
             <p style="font-size: 19px; line-height: 1.315789474; margin: 30px 0 15px 0; font-weight: bold;">
-              <%= t(".reg_certificate_info") %>
+              <%= t(".section_2.reg_certificate_info") %>
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474; margin: 30px 0 15px 0;">
@@ -77,65 +77,65 @@
 
             <% if @registration.lower_tier? %>
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".paragraph1_lower") %>
+                <%= t(".section_3.lower.paragraph_1") %>
               </p>
 
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".paragraph2_lower") %>
+                <%= t(".section_3.lower.paragraph_2") %>
               </p>
 
               <ul>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".bullet1_lower") %>
+                  <%= t(".section_3.lower.list_1.item_1") %>
                 </li>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 30px 0;">
-                  <%= t(".bullet2_lower") %>
+                  <%= t(".section_3.lower.list_1.item_2") %>
                 </li>
               </ul>
             <% else %>
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 30px 0;">
-                <%= t(".paragraph1_upper.#{@registration.registration_type}") %>
+                <%= t(".section_3.upper.paragraph_1.#{@registration.registration_type}") %>
               </p>
 
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".paragraph2_upper.#{@registration.registration_type}") %>
+                <%= t(".section_3.upper.paragraph_2.#{@registration.registration_type}") %>
               </p>
 
               <ul>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".bullet1_upper") %>
+                  <%= t(".section_3.upper.list_1.item_1") %>
                 </li>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
-                  <%= t(".bullet2_upper") %>
+                  <%= t(".section_3.upper.list_1.item_2") %>
                 </li>
               </ul>
 
               <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".paragraph3_upper") %>
+                <%= t(".section_3.upper.paragraph_3") %>
               </p>
 
               <ul>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".bullet3_upper") %>
+                  <%= t(".section_3.upper.list_2.item_1") %>
                 </li>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".bullet4_upper") %>
+                  <%= t(".section_3.upper.list_2.item_2") %>
                 </li>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".bullet5_upper") %>
+                  <%= t(".section_3.upper.list_2.item_3") %>
                 </li>
                 <li style="font-size: 16px; line-height: 1.125; margin: 0 0 45px 0;">
-                  <%= t(".bullet6_upper") %>
+                  <%= t(".section_3.upper.list_2.item_4") %>
                 </li>
               </ul>
             <% end %>
 
             <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
-              <%= t(".heading_update_registration") %>
+              <%= t(".section_4.heading") %>
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;">
-              <%= t(".paragraph3") %>
+              <%= t(".section_4.paragraph_1") %>
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474; margin: 0;">
@@ -162,23 +162,23 @@
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0;">
-              <%= t(".contact_number") %><%= @registration.phone_number %>
+              <%= t(".section_4.contact_number", number: @registration.phone_number) %>
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;">
-              <%= t(".registered_on", date: @registration.metaData.date_registered) %>
+              <%= t(".section_4.registered_on", date: @registration.metaData.date_registered) %>
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 30px 0;">
-              <%= t(".update_website1_html", link: "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
+              <%= t(".section_4.update_website_link_html", link: "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
             </p>
 
             <ul>
               <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 15px 0;">
-                <%= t(".footer_bullet1") %>
+                <%= t(".footer.item_1") %>
               </li>
               <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 30px 0;">
-                <%= t(".footer_bullet2") %>
+                <%= t(".footer.item_2") %>
               </li>
             </ul>
 
