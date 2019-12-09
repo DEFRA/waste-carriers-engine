@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_renewal_information_forms_path(@renewal_information_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_renewal_information_forms_path(@renewal_information_form.token)) %>
 
 <div class="text">
   <% if @renewal_information_form.errors.any? %>
