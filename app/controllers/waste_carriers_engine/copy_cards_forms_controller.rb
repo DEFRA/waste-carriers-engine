@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class CopyCardsFormsController < FormsController
-    include OrderCopyCardsPermissionChecks
-
     def new
       super(CopyCardsForm, "copy_cards_form")
     end
