@@ -1,0 +1,11 @@
+en:
+  waste_carriers_engine:
+    copy_cards_forms:
+      new:
+        heading: "Order registration cards for %{reg_identifier}"
+        temp_cards_label: "Number of cards at £5 each"
+        next_button: "Continue"
+        check_the_address: "Check the address to post the cards to:"
+        total_cost_info: "The total cost will be shown on the next page"
+        contact_address:
+          heading: "Contact address:"
