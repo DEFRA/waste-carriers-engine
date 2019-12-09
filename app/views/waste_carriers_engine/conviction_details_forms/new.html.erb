@@ -15,8 +15,7 @@
             <%= button_to(t(".delete_person_link"),
                 delete_person_conviction_details_forms_path(token: @conviction_details_form.token, id: person.id),
                 class: "button-link",
-                method: :delete,
-                params: { reg_identifier: @conviction_details_form.reg_identifier }) %>
+                method: :delete) %>
           </li>
         <% end %>
       </ul>
