@@ -1,0 +1,12 @@
+en:
+  waste_carriers_engine:
+    copy_cards_bank_transfer_forms:
+      new:
+        next_button: Continue
+        heading: "Details for bank transfer"
+        subheading_panel: "Make sure the customer includes their CBDU number as the payment reference, or we won’t be able to match the payment."
+        bank_details:
+          heading: "Bank details"
+          sort_code: "Sort code"
+          account_number: "Account number"
+

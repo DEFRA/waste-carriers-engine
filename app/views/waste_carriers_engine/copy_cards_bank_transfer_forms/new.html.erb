@@ -1,0 +1,107 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_copy_cards_bank_transfer_forms_path(@copy_cards_bank_transfer_form.reg_identifier)) %>
+
+<div class="text">
+  <%= form_for(@copy_cards_bank_transfer_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @copy_cards_bank_transfer_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <div class="panel">
+      <%= t(".subheading_panel") %>
+    </div>
+
+    <h2 class="heading-medium">
+      <%= t("bank_details.heading") %>
+    </h2>
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td><%= t(".uk_payment_table.reference_number.label") %></td>
+            <td><%= @copy_cards_bank_transfer_form.reg_identifier %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.total_cost.label") %></td>
+            <td>£<%= display_pence_as_pounds(@copy_cards_bank_transfer_form.total_to_pay) %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.account_name.label") %></td>
+            <td><%= t(".uk_payment_table.account_name.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.bank_name.label") %></td>
+            <td><%= t(".uk_payment_table.bank_name.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.bank_address.label") %></td>
+            <td><%= t(".uk_payment_table.bank_address.value").join("<br>").html_safe %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.sort_code.label") %></td>
+            <td><%= t(".uk_payment_table.sort_code.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.account_number.label") %></td>
+            <td><%= t(".uk_payment_table.account_number.value") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><%= t(".paragraph_4") %></p>
+
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td><%= t(".international_payment_table.iban.label") %></td>
+            <td><%= t(".international_payment_table.iban.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".international_payment_table.swift.label") %></td>
+            <td><%= t(".international_payment_table.swift.value") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><%= t(".paragraph_5") %></p>
+
+    <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
+
+    <p><%= t(".paragraph_6") %></p>
+
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <td><%= t(".send_confirmation_table.email.label") %></td>
+            <td><%= mail_to(t(".send_confirmation_table.email.value")) %></td>
+          </tr>
+          <tr>
+            <td><%= t(".send_confirmation_table.fax.label") %></td>
+            <td><%= t(".send_confirmation_table.fax.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".send_confirmation_table.post.label") %></td>
+            <td><%= t(".send_confirmation_table.post.value").join("<br>").html_safe %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-group notice">
+      <i class="icon icon-important">
+        <span class="visually-hidden">Warning</span>
+      </i>
+      <strong class="bold-small">
+        <%= t(".paragraph_7") %>
+      </strong>
+    </div>
+
+    <%= f.hidden_field :reg_identifier, value: @copy_cards_bank_transfer_form.reg_identifier %>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
