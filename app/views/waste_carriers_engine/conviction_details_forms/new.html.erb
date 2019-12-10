@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_conviction_details_forms_path(@conviction_details_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_conviction_details_forms_path(@conviction_details_form.token)) %>
 
 <div class="grid-row">
   <div class="column-two-thirds">
@@ -13,10 +13,9 @@
           <li>
             <%= person.first_name %> <%= person.last_name %>
             <%= button_to(t(".delete_person_link"),
-                delete_person_conviction_details_forms_path(person.id),
+                delete_person_conviction_details_forms_path(token: @conviction_details_form.token, id: person.id),
                 class: "button-link",
-                method: :delete,
-                params: { reg_identifier: @conviction_details_form.reg_identifier }) %>
+                method: :delete) %>
           </li>
         <% end %>
       </ul>

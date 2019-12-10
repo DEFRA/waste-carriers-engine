@@ -393,13 +393,17 @@ module WasteCarriersEngine
         end
 
         context "when a registration is activated" do
-          let(:registration) { build(:registration, :is_pending) }
+          let(:registration) { create(:registration, :has_required_data, :is_pending) }
+
+          before { allow(Rails.configuration).to receive(:expires_after).and_return(3) }
 
           it "sets expires_on 3 years in the future" do
             expect(registration.expires_on).to be_nil
-            registration.metaData.activate
+
+            registration.metaData.activate!
+
             # Use .to_i to ignore milliseconds when comparing time
-            expect(registration.expires_on.to_i).to eq(3.years.from_now.to_i)
+            expect(registration.reload.expires_on.to_i).to eq(3.years.from_now.to_i)
           end
         end
 

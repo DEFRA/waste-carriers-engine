@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
       context "when the form is valid" do
         let(:valid_params) do
-          { reg_identifier: conviction_details_form.reg_identifier,
+          { token: conviction_details_form.token,
             first_name: conviction_details_form.first_name,
             last_name: conviction_details_form.last_name,
             position: conviction_details_form.position,
@@ -29,7 +29,7 @@ module WasteCarriersEngine
       end
 
       context "when the form is not valid" do
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { token: "foo" } }
 
         it "should not submit" do
           expect(conviction_details_form.submit(invalid_params)).to eq(false)
@@ -38,7 +38,7 @@ module WasteCarriersEngine
 
       context "when the form is blank" do
         let(:blank_params) do
-          { reg_identifier: conviction_details_form.reg_identifier,
+          { token: conviction_details_form.token,
             first_name: "",
             last_name: "",
             position: "",

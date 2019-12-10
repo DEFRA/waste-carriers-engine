@@ -19,7 +19,7 @@
 
   <%= render("waste_carriers_engine/shared/dob", form: @conviction_details_form, f: f) %>
 
-  <%= f.hidden_field :reg_identifier, value: @conviction_details_form.reg_identifier %>
+  <%= f.hidden_field :token, value: @conviction_details_form.token %>
 
   <div class="form-group">
     <%= f.submit t(".add_person_link"), class: "button-link" %>

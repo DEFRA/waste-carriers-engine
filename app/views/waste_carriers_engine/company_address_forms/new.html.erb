@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_company_address_forms_path(@company_address_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_company_address_forms_path(@company_address_form.token)) %>
 
 <div class="text">
   <%= form_for(@company_address_form) do |f| %>
@@ -20,7 +20,6 @@
       <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_address_forms_path(@company_address_form.reg_identifier)) %>
     </div>
 
-    <%= f.hidden_field :reg_identifier, value: @company_address_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

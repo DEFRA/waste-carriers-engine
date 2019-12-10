@@ -10,7 +10,7 @@ FactoryBot.define do
       total_amount { order_items.sum { |item| item[:amount] } }
     end
 
-    trait :has_coy_cards_item do
+    trait :has_copy_cards_item do
       order_items do
         [WasteCarriersEngine::OrderItem.new_copy_cards_item(1)]
       end

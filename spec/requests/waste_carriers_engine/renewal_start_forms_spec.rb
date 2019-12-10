@@ -13,14 +13,14 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          it "redirects to the invalid reg_identifier error page" do
+          it "redirects to the invalid token error page" do
             get new_renewal_start_form_path("CBDU999999999")
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
 
-        context "when the reg_identifier doesn't match the format" do
-          it "redirects to the invalid reg_identifier error page" do
+        context "when the token doesn't match the format" do
+          it "redirects to the invalid token error page" do
             get new_renewal_start_form_path("foo")
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -32,7 +32,7 @@ module WasteCarriersEngine
               let(:registration) { create(:registration, :has_required_data, :expires_soon, account_email: user.email) }
 
               it "returns a success response" do
-                get new_renewal_start_form_path(registration[:reg_identifier])
+                get new_renewal_start_form_path(registration.reg_identifier)
                 expect(response).to have_http_status(200)
               end
 
@@ -40,7 +40,7 @@ module WasteCarriersEngine
                 before(:each) { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
 
                 it "redirects to the unrenewable error page" do
-                  get new_renewal_start_form_path(registration[:reg_identifier])
+                  get new_renewal_start_form_path(registration.reg_identifier)
                   expect(response).to redirect_to(page_path("unrenewable"))
                 end
               end
@@ -56,7 +56,7 @@ module WasteCarriersEngine
                 end
 
                 it "returns a success response" do
-                  get new_renewal_start_form_path(transient_registration[:reg_identifier])
+                  get new_renewal_start_form_path(transient_registration[:token])
                   expect(response).to have_http_status(200)
                 end
               end
@@ -70,8 +70,8 @@ module WasteCarriersEngine
                 end
 
                 it "redirects to the form for the current state" do
-                  get new_renewal_start_form_path(transient_registration[:reg_identifier])
-                  expect(response).to redirect_to(new_location_form_path(transient_registration[:reg_identifier]))
+                  get new_renewal_start_form_path(transient_registration[:token])
+                  expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
                 end
               end
             end
@@ -87,7 +87,7 @@ module WasteCarriersEngine
               end
 
               it "redirects to the permissions error page" do
-                get new_renewal_start_form_path(registration[:reg_identifier])
+                get new_renewal_start_form_path(registration.reg_identifier)
                 expect(response).to redirect_to(page_path("permission"))
               end
             end
@@ -101,7 +101,7 @@ module WasteCarriersEngine
               end
 
               it "redirects to the permissions error page" do
-                get new_renewal_start_form_path(transient_registration[:reg_identifier])
+                get new_renewal_start_form_path(transient_registration[:token])
                 expect(response).to redirect_to(page_path("permission"))
               end
             end
@@ -136,33 +136,34 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          let(:invalid_params) { { reg_identifier: "CBDU99999" } }
+          let(:invalid_registration) { "CBDU99999" }
 
-          it "redirects to the invalid reg_identifier error page" do
-            post renewal_start_forms_path, renewal_start_form: invalid_params
+          it "redirects to the invalid token error page" do
+            post renewal_start_forms_path(invalid_registration)
+
             expect(response).to redirect_to(page_path("invalid"))
           end
 
           it "does not create a new transient registration" do
             original_tr_count = RenewingRegistration.count
-            post renewal_start_forms_path, renewal_start_form: invalid_params
+            post renewal_start_forms_path(invalid_registration)
             updated_tr_count = RenewingRegistration.count
 
             expect(original_tr_count).to eq(updated_tr_count)
           end
         end
 
-        context "when the reg_identifier doesn't match the format" do
-          let(:invalid_params) { { reg_identifier: "foo" } }
+        context "when the token doesn't match the format" do
+          let(:invalid_renewal) { "foo" }
 
-          it "redirects to the invalid reg_identifier error page" do
-            post renewal_start_forms_path, renewal_start_form: invalid_params
+          it "redirects to the invalid token error page" do
+            post renewal_start_forms_path(invalid_renewal)
             expect(response).to redirect_to(page_path("invalid"))
           end
 
           it "does not create a new transient registration" do
             original_tr_count = RenewingRegistration.count
-            post renewal_start_forms_path, renewal_start_form: invalid_params
+            post renewal_start_forms_path(invalid_renewal)
             updated_tr_count = RenewingRegistration.count
 
             expect(original_tr_count).to eq(updated_tr_count)
@@ -181,52 +182,43 @@ module WasteCarriersEngine
               end
 
               context "when valid params are submitted" do
-                let(:valid_params) { { reg_identifier: registration.reg_identifier } }
+                let(:valid_registration) { registration.reg_identifier }
 
                 it "creates a new transient registration" do
                   expected_tr_count = RenewingRegistration.count + 1
-                  post renewal_start_forms_path, renewal_start_form: valid_params
+                  post renewal_start_forms_path(valid_registration)
                   updated_tr_count = RenewingRegistration.count
 
                   expect(expected_tr_count).to eq(updated_tr_count)
                 end
 
                 it "creates a transient registration with correct data" do
-                  post renewal_start_forms_path, renewal_start_form: valid_params
-                  transient_registration = RenewingRegistration.where(reg_identifier: registration.reg_identifier).first
+                  post renewal_start_forms_path(valid_registration)
+                  transient_registration = RenewingRegistration.where(reg_identifier: valid_registration).first
 
                   expect(transient_registration.reg_identifier).to eq(registration.reg_identifier)
                   expect(transient_registration.company_name).to eq(registration.company_name)
                 end
 
                 it "returns a 302 response" do
-                  post renewal_start_forms_path, renewal_start_form: valid_params
+                  post renewal_start_forms_path(valid_registration)
                   expect(response).to have_http_status(302)
                 end
 
                 it "redirects to the business type form" do
-                  post renewal_start_forms_path, renewal_start_form: valid_params
-                  expect(response).to redirect_to(new_location_form_path(valid_params[:reg_identifier]))
+                  post renewal_start_forms_path(valid_registration)
+                  transient_registration = RenewingRegistration.where(reg_identifier: valid_registration).first
+
+                  expect(response).to redirect_to(new_location_form_path(transient_registration.token))
                 end
 
                 context "when the registration cannot be renewed" do
                   before(:each) { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
 
                   it "redirects to the unrenewable error page" do
-                    get new_renewal_start_form_path(registration[:reg_identifier])
+                    get new_renewal_start_form_path(valid_registration)
                     expect(response).to redirect_to(page_path("unrenewable"))
                   end
-                end
-              end
-
-              context "when invalid params are submitted" do
-                let(:invalid_params) { { reg_identifier: "foo" } }
-
-                it "does not create a new transient registration" do
-                  original_tr_count = RenewingRegistration.count
-                  post renewal_start_forms_path, renewal_start_form: invalid_params
-                  updated_tr_count = RenewingRegistration.count
-                  expect(original_tr_count).to eq(updated_tr_count)
                 end
               end
             end
@@ -240,16 +232,16 @@ module WasteCarriersEngine
                      workflow_state: "renewal_start_form")
             end
 
-            let(:valid_params) { { reg_identifier: transient_registration.reg_identifier } }
+            let(:valid_renewal) { transient_registration.token }
 
             it "returns a 302 response" do
-              post renewal_start_forms_path, renewal_start_form: valid_params
+              post renewal_start_forms_path(valid_renewal)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the business type form" do
-              post renewal_start_forms_path, renewal_start_form: valid_params
-              expect(response).to redirect_to(new_location_form_path(valid_params[:reg_identifier]))
+              post renewal_start_forms_path(valid_renewal)
+              expect(response).to redirect_to(new_location_form_path(valid_renewal))
             end
 
             it "does not create a new transient registration" do
@@ -257,7 +249,7 @@ module WasteCarriersEngine
               transient_registration.touch
 
               original_tr_count = RenewingRegistration.count
-              post renewal_start_forms_path, renewal_start_form: valid_params
+              post renewal_start_forms_path(valid_renewal)
               updated_tr_count = RenewingRegistration.count
 
               expect(original_tr_count).to eq(updated_tr_count)
@@ -271,16 +263,14 @@ module WasteCarriersEngine
                        workflow_state: "other_businesses_form")
               end
 
-              let(:valid_params) { { reg_identifier: transient_registration.reg_identifier } }
-
               it "returns a 302 response" do
-                post renewal_start_forms_path, renewal_start_form: valid_params
+                post renewal_start_forms_path(valid_renewal)
                 expect(response).to have_http_status(302)
               end
 
               it "redirects to the correct form" do
-                post renewal_start_forms_path, renewal_start_form: valid_params
-                expect(response).to redirect_to(new_other_businesses_form_path(valid_params[:reg_identifier]))
+                post renewal_start_forms_path(valid_renewal)
+                expect(response).to redirect_to(new_other_businesses_form_path(valid_renewal))
               end
 
               it "does not create a new transient registration" do
@@ -288,7 +278,7 @@ module WasteCarriersEngine
                 transient_registration.touch
 
                 original_tr_count = RenewingRegistration.count
-                post renewal_start_forms_path, renewal_start_form: valid_params
+                post renewal_start_forms_path(valid_renewal)
                 updated_tr_count = RenewingRegistration.count
 
                 expect(original_tr_count).to eq(updated_tr_count)
@@ -305,10 +295,10 @@ module WasteCarriersEngine
                      :expires_soon,
                      account_email: "not-#{user.email}")
             end
-            let(:valid_params) { { reg_identifier: registration.reg_identifier } }
+            let(:valid_registration) { registration.reg_identifier }
 
             it "redirects to the permissions error page" do
-              post renewal_start_forms_path, renewal_start_form: valid_params
+              post renewal_start_forms_path(valid_registration)
               expect(response).to redirect_to(page_path("permission"))
             end
           end
@@ -320,10 +310,10 @@ module WasteCarriersEngine
                      account_email: "not-#{user.email}",
                      workflow_state: "renewal_start_form")
             end
-            let(:valid_params) { { reg_identifier: transient_registration.reg_identifier } }
+            let(:valid_renewal) { transient_registration.token }
 
             it "redirects to the permissions error page" do
-              post renewal_start_forms_path, renewal_start_form: valid_params
+              post renewal_start_forms_path(valid_renewal)
               expect(response).to redirect_to(page_path("permission"))
             end
           end
@@ -332,7 +322,7 @@ module WasteCarriersEngine
 
       context "when a user is not signed in" do
         let(:registration) { create(:registration, :has_required_data) }
-        let(:valid_params) { { reg_identifier: registration[:reg_identifier] } }
+        let(:valid_registration) { registration.reg_identifier }
 
         before(:each) do
           user = create(:user)
@@ -340,18 +330,18 @@ module WasteCarriersEngine
         end
 
         it "returns a 302 response" do
-          post renewal_start_forms_path, renewal_start_form: valid_params
+          post renewal_start_forms_path(valid_registration)
           expect(response).to have_http_status(302)
         end
 
         it "redirects to the sign in page" do
-          post renewal_start_forms_path, renewal_start_form: valid_params
+          post renewal_start_forms_path(valid_registration)
           expect(response).to redirect_to(new_user_session_path)
         end
 
         it "does not create a new transient registration" do
           original_tr_count = RenewingRegistration.count
-          post renewal_start_forms_path, renewal_start_form: valid_params
+          post renewal_start_forms_path(valid_registration)
           updated_tr_count = RenewingRegistration.count
           expect(original_tr_count).to eq(updated_tr_count)
         end

@@ -24,7 +24,6 @@ module WasteCarriersEngine
           context "when valid params are submitted" do
             let(:valid_params) do
               {
-                reg_identifier: transient_registration[:reg_identifier],
                 first_name: "Foo",
                 last_name: "Bar",
                 dob_day: "1",
@@ -35,23 +34,23 @@ module WasteCarriersEngine
 
             it "increases the number of key_people" do
               key_people_count = transient_registration.key_people.count
-              post main_people_forms_path, main_people_form: valid_params
+              post main_people_forms_path(transient_registration.token), main_people_form: valid_params
               expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
             end
 
             it "updates the transient registration" do
-              post main_people_forms_path, main_people_form: valid_params
+              post main_people_forms_path(transient_registration.token), main_people_form: valid_params
               expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
             end
 
             it "returns a 302 response" do
-              post main_people_forms_path, main_people_form: valid_params
+              post main_people_forms_path(transient_registration.token), main_people_form: valid_params
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the declare_convictions form" do
-              post main_people_forms_path, main_people_form: valid_params
-              expect(response).to redirect_to(new_declare_convictions_form_path(transient_registration[:reg_identifier]))
+              post main_people_forms_path(transient_registration.token), main_people_form: valid_params
+              expect(response).to redirect_to(new_declare_convictions_form_path(transient_registration[:token]))
             end
 
             context "when there is already a main person" do
@@ -63,7 +62,7 @@ module WasteCarriersEngine
 
               context "when there can be multiple main people" do
                 it "does not replace the existing main person" do
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.first.first_name).to eq(existing_main_person.first_name)
                 end
               end
@@ -75,12 +74,12 @@ module WasteCarriersEngine
 
                 it "does not increase the number of key_people" do
                   key_people_count = transient_registration.key_people.count
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.count).to eq(key_people_count)
                 end
 
                 it "replaces the existing main person" do
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.first.first_name).to_not eq(existing_main_person.first_name)
                 end
               end
@@ -96,12 +95,12 @@ module WasteCarriersEngine
               context "when there can be multiple key people" do
                 it "increases the number of key people" do
                   key_people_count = transient_registration.key_people.count
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
                 end
 
                 it "does not replace the relevant conviction person" do
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.first.first_name).to eq(relevant_conviction_person.first_name)
                 end
               end
@@ -113,17 +112,17 @@ module WasteCarriersEngine
 
                 it "increases the number of key_people" do
                   key_people_count = transient_registration.key_people.count
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
                 end
 
                 it "adds the new main person" do
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
                 end
 
                 it "does not replace the relevant conviction person" do
-                  post main_people_forms_path, main_people_form: valid_params
+                  post main_people_forms_path(transient_registration.token), main_people_form: valid_params
                   expect(transient_registration.reload.key_people.first.first_name).to eq(relevant_conviction_person.first_name)
                 end
               end
@@ -131,8 +130,8 @@ module WasteCarriersEngine
 
             context "when the submit params say to add another" do
               it "redirects to the main_people form" do
-                post main_people_forms_path, main_people_form: valid_params, commit: "Add another person"
-                expect(response).to redirect_to(new_main_people_form_path(transient_registration[:reg_identifier]))
+                post main_people_forms_path(transient_registration.token), main_people_form: valid_params, commit: "Add another person"
+                expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
               end
             end
           end
@@ -140,7 +139,6 @@ module WasteCarriersEngine
           context "when invalid params are submitted" do
             let(:invalid_params) do
               {
-                reg_identifier: "foo",
                 first_name: "",
                 last_name: "",
                 dob_day: "31",
@@ -149,14 +147,9 @@ module WasteCarriersEngine
               }
             end
 
-            it "returns a 302 response" do
-              post main_people_forms_path, main_people_form: invalid_params
-              expect(response).to have_http_status(302)
-            end
-
             it "does not increase the number of key_people" do
               key_people_count = transient_registration.key_people.count
-              post main_people_forms_path, main_people_form: invalid_params
+              post main_people_forms_path(transient_registration.token), main_people_form: invalid_params
               expect(transient_registration.reload.key_people.count).to eq(key_people_count)
             end
 
@@ -168,15 +161,8 @@ module WasteCarriersEngine
               end
 
               it "does not replace the existing main person" do
-                post main_people_forms_path, main_people_form: invalid_params
+                post main_people_forms_path(transient_registration.token), main_people_form: invalid_params
                 expect(transient_registration.reload.key_people.first.first_name).to eq(existing_main_person.first_name)
-              end
-            end
-
-            context "when the submit params say to add another" do
-              it "returns a 302 response" do
-                post main_people_forms_path, main_people_form: invalid_params, commit: "Add another person"
-                expect(response).to have_http_status(302)
               end
             end
           end
@@ -184,7 +170,6 @@ module WasteCarriersEngine
           context "when blank params are submitted" do
             let(:blank_params) do
               {
-                reg_identifier: "foo",
                 first_name: "",
                 last_name: "",
                 dob_day: "",
@@ -195,7 +180,7 @@ module WasteCarriersEngine
 
             it "does not increase the number of key people" do
               key_people_count = transient_registration.key_people.count
-              post main_people_forms_path, main_people_form: blank_params
+              post main_people_forms_path(transient_registration.token), main_people_form: blank_params
               expect(transient_registration.reload.key_people.count).to eq(key_people_count)
             end
           end
@@ -211,7 +196,6 @@ module WasteCarriersEngine
 
           let(:valid_params) do
             {
-              reg_identifier: transient_registration[:reg_identifier],
               first_name: "Foo",
               last_name: "Bar",
               dob_day: "1",
@@ -221,18 +205,18 @@ module WasteCarriersEngine
           end
 
           it "does not update the transient registration" do
-            post main_people_forms_path, main_people_form: valid_params
+            post main_people_forms_path(transient_registration.token), main_people_form: valid_params
             expect(transient_registration.reload.key_people).to_not exist
           end
 
           it "returns a 302 response" do
-            post main_people_forms_path, main_people_form: valid_params
+            post main_people_forms_path(transient_registration.token), main_people_form: valid_params
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the correct form for the state" do
-            post main_people_forms_path, main_people_form: valid_params
-            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+            post main_people_forms_path(transient_registration.token), main_people_form: valid_params
+            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end
       end
@@ -255,7 +239,7 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_main_people_forms_path(transient_registration[:reg_identifier])
+              get back_main_people_forms_path(transient_registration[:token])
               expect(response).to have_http_status(302)
             end
 
@@ -263,8 +247,8 @@ module WasteCarriersEngine
               before(:each) { transient_registration.update_attributes(addresses: [build(:address, :registered, :from_os_places)]) }
 
               it "redirects to the company_address form" do
-                get back_main_people_forms_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_company_address_form_path(transient_registration[:reg_identifier]))
+                get back_main_people_forms_path(transient_registration[:token])
+                expect(response).to redirect_to(new_company_address_form_path(transient_registration[:token]))
               end
             end
 
@@ -272,8 +256,8 @@ module WasteCarriersEngine
               before(:each) { transient_registration.update_attributes(addresses: [build(:address, :registered, :manual_uk)]) }
 
               it "redirects to the company_address_manual form" do
-                get back_main_people_forms_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:reg_identifier]))
+                get back_main_people_forms_path(transient_registration[:token])
+                expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:token]))
               end
             end
           end
@@ -289,13 +273,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_main_people_forms_path(transient_registration[:reg_identifier])
+              get back_main_people_forms_path(transient_registration[:token])
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_main_people_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+              get back_main_people_forms_path(transient_registration[:token])
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end
         end
@@ -327,28 +311,28 @@ module WasteCarriersEngine
 
             context "when the delete person action is triggered" do
               it "returns a 302 response" do
-                delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+                delete delete_person_main_people_forms_path(main_person_a[:id], token: transient_registration.token)
                 expect(response).to have_http_status(302)
               end
 
               it "redirects to the main people form" do
-                delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
-                expect(response).to redirect_to(new_main_people_form_path(transient_registration[:reg_identifier]))
+                delete delete_person_main_people_forms_path(main_person_a[:id], token: transient_registration.token)
+                expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
               end
 
               it "reduces the number of key_people" do
                 key_people_count = transient_registration.key_people.count
-                delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+                delete delete_person_main_people_forms_path(main_person_a[:id], token: transient_registration.token)
                 expect(transient_registration.reload.key_people.count).to eq(key_people_count - 1)
               end
 
               it "removes the main person" do
-                delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+                delete delete_person_main_people_forms_path(main_person_a[:id], token: transient_registration.token)
                 expect(transient_registration.reload.key_people.where(id: main_person_a[:id]).count).to eq(0)
               end
 
               it "does not modify the other key_people" do
-                delete delete_person_main_people_forms_path(main_person_a[:id]), reg_identifier: transient_registration.reg_identifier
+                delete delete_person_main_people_forms_path(main_person_a[:id], token: transient_registration.token)
                 expect(transient_registration.reload.key_people.where(id: main_person_b[:id]).count).to eq(1)
               end
             end

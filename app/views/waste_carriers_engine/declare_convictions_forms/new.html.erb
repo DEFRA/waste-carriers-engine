@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_declare_convictions_forms_path(@declare_convictions_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_declare_convictions_forms_path(@declare_convictions_form.token)) %>
 
 <div class="text">
   <%= form_for(@declare_convictions_form) do |f| %>
@@ -47,8 +47,6 @@
         </div>
       </details>
     </div>
-
-    <%= f.hidden_field :reg_identifier, value: @declare_convictions_form.reg_identifier %>
 
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>

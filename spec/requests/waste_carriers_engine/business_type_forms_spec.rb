@@ -29,13 +29,15 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_business_type_forms_path(transient_registration[:reg_identifier])
+              get back_business_type_forms_path(transient_registration.token)
+
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the location form" do
-              get back_business_type_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_location_form_path(transient_registration[:reg_identifier]))
+              get back_business_type_forms_path(transient_registration.token)
+
+              expect(response).to redirect_to(new_location_form_path(transient_registration.token))
             end
           end
         end
@@ -50,13 +52,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_business_type_forms_path(transient_registration[:reg_identifier])
+              get back_business_type_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_business_type_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_location_form_path(transient_registration[:reg_identifier]))
+              get back_business_type_forms_path(transient_registration.token)
+              expect(response).to redirect_to(new_location_form_path(transient_registration.token))
             end
           end
         end

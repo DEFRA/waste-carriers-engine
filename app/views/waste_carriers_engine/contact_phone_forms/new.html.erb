@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_contact_phone_forms_path(@contact_phone_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_contact_phone_forms_path(@contact_phone_form.token)) %>
 
 <div class="text">
   <%= form_for(@contact_phone_form) do |f| %>
@@ -20,8 +20,6 @@
         <%= f.telephone_field :phone_number, value: @contact_phone_form.phone_number, class: "form-control" %>
       </fieldset>
     </div>
-
-    <%= f.hidden_field :reg_identifier, value: @contact_phone_form.reg_identifier %>
 
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>

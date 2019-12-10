@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class CopyCardsBankTransferFormsController < FormsController
-    include OrderCopyCardsPermissionChecks
-
     def new
       return unless super(CopyCardsBankTransferForm, "copy_cards_bank_transfer_form")
 

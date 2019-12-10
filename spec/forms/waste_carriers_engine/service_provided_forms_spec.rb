@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:service_provided_form) { build(:service_provided_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: service_provided_form.reg_identifier,
+            token: service_provided_form.token,
             is_main_service: service_provided_form.is_main_service
           }
         end
@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:service_provided_form) { build(:service_provided_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { is_main_service: "foo" } }
 
         it "should not submit" do
           expect(service_provided_form.submit(invalid_params)).to eq(false)

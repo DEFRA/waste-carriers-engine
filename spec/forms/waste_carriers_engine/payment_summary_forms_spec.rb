@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:payment_summary_form) { build(:payment_summary_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: payment_summary_form.reg_identifier,
+            token: payment_summary_form.token,
             temp_payment_method: payment_summary_form.temp_payment_method
           }
         end
@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:payment_summary_form) { build(:payment_summary_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { temp_payment_method: "foo" } }
 
         it "should not submit" do
           expect(payment_summary_form.submit(invalid_params)).to eq(false)

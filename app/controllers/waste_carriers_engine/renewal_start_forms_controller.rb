@@ -9,5 +9,12 @@ module WasteCarriersEngine
     def create
       super(RenewalStartForm, "renewal_start_form")
     end
+
+    private
+
+    def find_or_initialize_transient_registration(token)
+      @transient_registration = RenewingRegistration.where(token: token).first ||
+                                RenewingRegistration.new(reg_identifier: token)
+    end
   end
 end

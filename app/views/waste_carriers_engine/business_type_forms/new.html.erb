@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_business_type_forms_path(@business_type_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_business_type_forms_path(@business_type_form.token)) %>
 
 <div class="text">
   <%= form_for(@business_type_form) do |f| %>
@@ -45,7 +45,6 @@
 
     <p><%= t(".help") %></p>
 
-    <%= f.hidden_field :reg_identifier, value: @business_type_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

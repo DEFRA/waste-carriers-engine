@@ -13,7 +13,7 @@ FactoryBot.define do
     end
 
     trait :has_copy_cards_order do
-      orders { [build(:order, :has_coy_cards_item)] }
+      orders { [build(:order, :has_copy_cards_item)] }
       after(:build, :create, &:update_balance)
     end
 

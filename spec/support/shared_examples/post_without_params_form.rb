@@ -13,27 +13,11 @@ RSpec.shared_examples "POST without params form" do |form|
       sign_in(user)
     end
 
-    context "when no renewal is in progress" do
-      let(:registration) do
-        create(:registration,
-               :has_required_data,
-               :expires_soon,
-               account_email: user.email)
-      end
+    context "when the token is invalid" do
+      it "redirects to the invalid page" do
+        post_form_with_params(form, "foo")
 
-      let(:params) do
-        { reg_identifier: registration.reg_identifier }
-      end
-
-      it "redirects to the renewal_start_form" do
-        post_form_with_params(form, params)
-        expect(response).to redirect_to(new_renewal_start_form_path(registration[:reg_identifier]))
-      end
-
-      it "does not create a transient registration" do
-        post_form_with_params(form, params)
-        matching_transient_regs = WasteCarriersEngine::RenewingRegistration.where(reg_identifier: registration.reg_identifier)
-        expect(matching_transient_regs.length).to eq(0)
+        expect(response).to redirect_to(page_path("invalid"))
       end
     end
 
@@ -47,10 +31,6 @@ RSpec.shared_examples "POST without params form" do |form|
                account_email: user.email)
       end
 
-      let(:params) do
-        { reg_identifier: transient_registration.reg_identifier }
-      end
-
       context "when the workflow_state matches the requested form" do
         before do
           transient_registration.update_attributes(workflow_state: form)
@@ -59,29 +39,20 @@ RSpec.shared_examples "POST without params form" do |form|
         context "when the params are valid" do
           it "changes the workflow_state" do
             state_before_request = transient_registration[:workflow_state]
-            post_form_with_params(form, params)
+            post_form_with_params(form, transient_registration.token)
             expect(transient_registration.reload[:workflow_state]).to_not eq(state_before_request)
           end
 
           it "redirects to the next page" do
-            post_form_with_params(form, params)
+            post_form_with_params(form, transient_registration.token)
             expect(response).to have_http_status(302)
           end
         end
 
-        context "when the reg_identifier is invalid" do
-          before do
-            params[:reg_identifier] = "foo"
-          end
+        context "when the token is invalid" do
+          it "redirects to the invalid error page" do
+            post_form_with_params(form, "foo")
 
-          it "does not update the transient_registration, including workflow_state" do
-            transient_reg_before_submitting = transient_registration
-            post_form_with_params(form, params)
-            expect(transient_registration.reload).to eq(transient_reg_before_submitting)
-          end
-
-          it "redirects to the invalid reg_identifier error page" do
-            post_form_with_params(form, params)
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
@@ -91,12 +62,12 @@ RSpec.shared_examples "POST without params form" do |form|
 
           it "does not update the transient registration, including workflow_state" do
             transient_reg_before_submitting = transient_registration
-            post_form_with_params(form, params)
+            post_form_with_params(form, transient_registration.token)
             expect(transient_registration.reload).to eq(transient_reg_before_submitting)
           end
 
           it "redirects to the unrenewable error page" do
-            post_form_with_params(form, params)
+            post_form_with_params(form, transient_registration.token)
             expect(response).to redirect_to(page_path("unrenewable"))
           end
         end
@@ -112,20 +83,17 @@ RSpec.shared_examples "POST without params form" do |form|
                               "payment_summary_form"
                             end
           transient_registration.update_attributes(workflow_state: different_state)
-
-          # We should submit valid params so we don't trigger the wrong error
-          params[:reg_identifier] = transient_registration.reg_identifier
         end
 
         it "does not update the transient_registration, including workflow_state" do
           transient_reg_before_submitting = transient_registration
-          post_form_with_params(form, params)
+          post_form_with_params(form, transient_registration.token)
           expect(transient_registration.reload).to eq(transient_reg_before_submitting)
         end
 
         it "redirects to the correct form for the workflow_state" do
           workflow_state = transient_registration[:workflow_state]
-          post_form_with_params(form, params)
+          post_form_with_params(form, transient_registration.token)
           expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
         end
       end

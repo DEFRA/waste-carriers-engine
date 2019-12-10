@@ -4,8 +4,8 @@ module WasteCarriersEngine
   # Builds the URL we use to redirect users to Worldpay.
   # This should include URLs for our own service, which Worldpay will redirect users to after payment.
   class WorldpayUrlService
-    def initialize(reg_identifier, base_url)
-      @reg_identifier = reg_identifier
+    def initialize(token, base_url)
+      @token = token
       @base_url = base_url
     end
 
@@ -29,7 +29,7 @@ module WasteCarriersEngine
     def build_path_for(action)
       path = "#{action}_worldpay_forms_path"
       url = [Rails.configuration.host,
-             WasteCarriersEngine::Engine.routes.url_helpers.public_send(path, @reg_identifier)]
+             WasteCarriersEngine::Engine.routes.url_helpers.public_send(path, token: @token)]
       CGI.escape(url.join)
     end
   end

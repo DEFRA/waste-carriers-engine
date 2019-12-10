@@ -8,10 +8,8 @@ module WasteCarriersEngine
       let(:copy_cards_bank_transfer_form) { build(:copy_cards_bank_transfer_form, :has_required_data) }
 
       context "when the form is valid" do
-        let(:valid_params) { { reg_identifier: copy_cards_bank_transfer_form.reg_identifier } }
-
         it "should submit" do
-          expect(copy_cards_bank_transfer_form.submit(valid_params)).to eq(true)
+          expect(copy_cards_bank_transfer_form.submit({})).to eq(true)
         end
       end
 

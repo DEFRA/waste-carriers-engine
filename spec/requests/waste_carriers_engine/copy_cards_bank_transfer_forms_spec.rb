@@ -19,7 +19,7 @@ module WasteCarriersEngine
           it "creates a plain new order on the transient registration every time is called" do
             expect(transient_registration.finance_details).to be_nil
 
-            get new_copy_cards_bank_transfer_form_path(transient_registration[:reg_identifier])
+            get new_copy_cards_bank_transfer_form_path(transient_registration.token)
 
             first_finance_details = transient_registration.reload.finance_details
             order = first_finance_details.orders.first
@@ -31,7 +31,7 @@ module WasteCarriersEngine
             expect(order_item.type).to eq("COPY_CARDS")
             expect(order_item.amount).to eq(1_500)
 
-            get new_copy_cards_bank_transfer_form_path(transient_registration[:reg_identifier])
+            get new_copy_cards_bank_transfer_form_path(transient_registration.token)
 
             second_finance_details = transient_registration.reload.finance_details
 
@@ -61,7 +61,7 @@ module WasteCarriersEngine
           it "deletes the transient object and copy all finance details to the registration and redirects to the completion page" do
             registration = transient_registration.registration
 
-            post_form_with_params(:copy_cards_bank_transfer_form, reg_identifier: transient_registration.reg_identifier)
+            post_form_with_params(:copy_cards_bank_transfer_form, transient_registration.token)
 
             finance_details = registration.reload.finance_details
             order = finance_details.orders.first
@@ -76,7 +76,7 @@ module WasteCarriersEngine
             expect(order_item.type).to eq("COPY_CARDS")
             expect(order_item.amount).to eq(500)
 
-            expect(response).to redirect_to(new_copy_cards_order_completed_form_path(transient_registration[:reg_identifier]))
+            expect(response).to redirect_to(new_copy_cards_order_completed_form_path(transient_registration.token))
           end
         end
       end
@@ -96,14 +96,14 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration[:reg_identifier])
+              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
 
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the payment_summary form" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration[:reg_identifier]))
+              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
+              expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
             end
           end
         end
@@ -115,13 +115,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration[:reg_identifier])
+              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration[:reg_identifier]))
+              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
+              expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
             end
           end
         end
