@@ -23,7 +23,7 @@ module WasteCarriersEngine
           end
 
           it "creates a new order" do
-            get new_bank_transfer_form_path(transient_registration[:reg_identifier])
+            get new_bank_transfer_form_path(transient_registration.token)
             expect(transient_registration.reload.finance_details.orders.count).to eq(1)
           end
 
@@ -34,13 +34,13 @@ module WasteCarriersEngine
             end
 
             it "replaces the old order" do
-              get new_bank_transfer_form_path(transient_registration[:reg_identifier])
+              get new_bank_transfer_form_path(transient_registration.token)
               expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq(nil)
             end
 
             it "does not increase the order count" do
               old_order_count = transient_registration.finance_details.orders.count
-              get new_bank_transfer_form_path(transient_registration[:reg_identifier])
+              get new_bank_transfer_form_path(transient_registration.token)
               expect(transient_registration.reload.finance_details.orders.count).to eq(old_order_count)
             end
           end
@@ -79,7 +79,7 @@ module WasteCarriersEngine
 
                 expect(transient_registration.reload.metaData.route).to be_nil
 
-                post_form_with_params(:bank_transfer_form, reg_identifier: transient_registration.reg_identifier)
+                post_form_with_params(:bank_transfer_form, transient_registration.token)
 
                 expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
               end
@@ -107,13 +107,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_bank_transfer_forms_path(transient_registration[:reg_identifier])
+              get back_bank_transfer_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the payment_summary form" do
-              get back_bank_transfer_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration[:reg_identifier]))
+              get back_bank_transfer_forms_path(transient_registration.token)
+              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration.token))
             end
           end
         end
@@ -129,13 +129,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_bank_transfer_forms_path(transient_registration[:reg_identifier])
+              get back_bank_transfer_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_bank_transfer_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+              get back_bank_transfer_forms_path(transient_registration.token)
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
             end
           end
         end

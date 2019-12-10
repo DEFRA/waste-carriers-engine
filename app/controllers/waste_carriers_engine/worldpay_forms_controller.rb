@@ -46,7 +46,7 @@ module WasteCarriersEngine
     end
 
     def respond_to_acceptable_payment(action)
-      return unless valid_transient_registration?(params[:reg_identifier])
+      return unless valid_transient_registration?(params[:token])
 
       if response_is_valid?(action, params)
         log_and_send_worldpay_response(true, action)
@@ -60,7 +60,7 @@ module WasteCarriersEngine
     end
 
     def respond_to_unsuccessful_payment(action)
-      return unless valid_transient_registration?(params[:reg_identifier])
+      return unless valid_transient_registration?(params[:token])
 
       if response_is_valid?(action, params)
         log_and_send_worldpay_response(true, action)
@@ -73,8 +73,8 @@ module WasteCarriersEngine
       go_back
     end
 
-    def valid_transient_registration?(reg_identifier)
-      find_or_initialize_transient_registration(reg_identifier)
+    def valid_transient_registration?(token)
+      find_or_initialize_transient_registration(token)
       setup_checks_pass?
     end
 

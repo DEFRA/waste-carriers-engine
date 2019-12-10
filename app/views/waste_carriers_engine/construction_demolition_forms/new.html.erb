@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_construction_demolition_forms_path(@construction_demolition_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_construction_demolition_forms_path(@construction_demolition_form.token)) %>
 
 <div class="text">
   <%= form_for(@construction_demolition_form) do |f| %>
@@ -39,8 +39,6 @@
         </div>
       </details>
     </div>
-
-    <%= f.hidden_field :reg_identifier, value: @construction_demolition_form.reg_identifier %>
 
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>

@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:waste_types_form) { build(:waste_types_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: waste_types_form.reg_identifier,
+            token: waste_types_form.token,
             only_amf: waste_types_form.only_amf
           }
         end
@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:waste_types_form) { build(:waste_types_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { only_amf: "foo" } }
 
         it "should not submit" do
           expect(waste_types_form.submit(invalid_params)).to eq(false)

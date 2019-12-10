@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_tier_check_forms_path(@tier_check_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_tier_check_forms_path(@tier_check_form.token)) %>
 
 <div class="text">
   <%= form_for(@tier_check_form) do |f| %>
@@ -31,7 +31,6 @@
 
     <p class="form-hint"><%= t(".paragraph_2") %></p>
 
-    <%= f.hidden_field :reg_identifier, value: @tier_check_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_renewal_information_forms_path(@renewal_information_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_renewal_information_forms_path(@renewal_information_form.token)) %>
 
 <div class="text">
   <% if @renewal_information_form.errors.any? %>
@@ -28,7 +28,6 @@
 
       <p><%= t(".paragraph_5", reg_identifier: @renewal_information_form.reg_identifier, total_charge: display_pence_as_pounds(@renewal_information_form.total_fee)) %></p>
 
-      <%= f.hidden_field :reg_identifier, value: @renewal_information_form.reg_identifier %>
       <div class="form-group">
         <%= f.submit t(".next_button"), class: "button" %>
       </div>

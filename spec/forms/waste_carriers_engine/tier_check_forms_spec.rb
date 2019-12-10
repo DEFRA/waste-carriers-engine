@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:tier_check_form) { build(:tier_check_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: tier_check_form.reg_identifier,
+            token: tier_check_form.token,
             temp_tier_check: tier_check_form.temp_tier_check
           }
         end
@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:tier_check_form) { build(:tier_check_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { temp_tier_check: "foo" } }
 
         it "should not submit" do
           expect(tier_check_form.submit(invalid_params)).to eq(false)

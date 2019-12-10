@@ -29,7 +29,7 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
+              get back_construction_demolition_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
@@ -37,8 +37,8 @@ module WasteCarriersEngine
               before(:each) { transient_registration.update_attributes(other_businesses: "no") }
 
               it "redirects to the other_businesses form" do
-                get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:reg_identifier]))
+                get back_construction_demolition_forms_path(transient_registration.token)
+                expect(response).to redirect_to(new_other_businesses_form_path(transient_registration.token))
               end
             end
 
@@ -46,8 +46,8 @@ module WasteCarriersEngine
               before(:each) { transient_registration.update_attributes(other_businesses: "yes") }
 
               it "redirects to the service_provided form" do
-                get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_service_provided_form_path(transient_registration[:reg_identifier]))
+                get back_construction_demolition_forms_path(transient_registration.token)
+                expect(response).to redirect_to(new_service_provided_form_path(transient_registration.token))
               end
             end
           end
@@ -63,13 +63,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
+              get back_construction_demolition_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_construction_demolition_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+              get back_construction_demolition_forms_path(transient_registration.token)
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
             end
           end
         end

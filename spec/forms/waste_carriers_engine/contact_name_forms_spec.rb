@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:contact_name_form) { build(:contact_name_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: contact_name_form.reg_identifier,
+            token: contact_name_form.token,
             first_name: contact_name_form.first_name,
             last_name: contact_name_form.last_name
           }
@@ -22,7 +22,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:contact_name_form) { build(:contact_name_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { first_name: "", last_name: "" } }
 
         it "should not submit" do
           expect(contact_name_form.submit(invalid_params)).to eq(false)

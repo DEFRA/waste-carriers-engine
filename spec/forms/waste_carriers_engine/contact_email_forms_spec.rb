@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:contact_email_form) { build(:contact_email_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: contact_email_form.reg_identifier,
+            token: contact_email_form.token,
             contact_email: contact_email_form.contact_email,
             confirmed_email: contact_email_form.contact_email
           }

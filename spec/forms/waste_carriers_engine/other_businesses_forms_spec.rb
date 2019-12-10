@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:other_businesses_form) { build(:other_businesses_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: other_businesses_form.reg_identifier,
+            token: other_businesses_form.token,
             other_businesses: other_businesses_form.other_businesses
           }
         end
@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:other_businesses_form) { build(:other_businesses_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { other_businesses: "foo" } }
 
         it "should not submit" do
           expect(other_businesses_form.submit(invalid_params)).to eq(false)

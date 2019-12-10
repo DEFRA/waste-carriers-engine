@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_register_in_scotland_forms_path(@register_in_scotland_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_register_in_scotland_forms_path(@register_in_scotland_form.token)) %>
 
 <div class="text">
   <%= form_for(@register_in_scotland_form) do |f| %>
@@ -12,7 +12,6 @@
       <p><%= t(".paragraph_3") %></p>
     </div>
 
-    <%= f.hidden_field :reg_identifier, value: @register_in_scotland_form.reg_identifier %>
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>

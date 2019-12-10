@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_service_provided_forms_path(@service_provided_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_service_provided_forms_path(@service_provided_form.token)) %>
 
 <div class="text">
   <%= form_for(@service_provided_form) do |f| %>
@@ -26,8 +26,6 @@
         </div>
       </fieldset>
     </div>
-
-    <%= f.hidden_field :reg_identifier, value: @service_provided_form.reg_identifier %>
 
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>

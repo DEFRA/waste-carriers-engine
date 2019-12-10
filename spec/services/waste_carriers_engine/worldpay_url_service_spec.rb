@@ -12,9 +12,9 @@ module WasteCarriersEngine
       create(:renewing_registration,
              :has_required_data)
     end
-    let(:reg_id) { transient_registration.reg_identifier }
+    let(:token) { transient_registration.token }
     let(:link_base) { "https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=" }
-    let(:worldpay_url_service) { WorldpayUrlService.new(reg_id, link_base) }
+    let(:worldpay_url_service) { WorldpayUrlService.new(token, link_base) }
 
     describe "format_url" do
       let(:url) { worldpay_url_service.format_link }
@@ -25,27 +25,27 @@ module WasteCarriersEngine
       end
 
       it "includes the success URL" do
-        success_url = "&successURL=" + CGI.escape("#{root}/worldpay/success/#{reg_id}")
+        success_url = "&successURL=" + CGI.escape("#{root}/#{token}/worldpay/success")
         expect(url).to include(success_url)
       end
 
       it "includes the pending URL" do
-        pending_url = "&pendingURL=" + CGI.escape("#{root}/worldpay/pending/#{reg_id}")
+        pending_url = "&pendingURL=" + CGI.escape("#{root}/#{token}/worldpay/pending")
         expect(url).to include(pending_url)
       end
 
       it "includes the failure URL" do
-        failure_url = "&failureURL=" + CGI.escape("#{root}/worldpay/failure/#{reg_id}")
+        failure_url = "&failureURL=" + CGI.escape("#{root}/#{token}/worldpay/failure")
         expect(url).to include(failure_url)
       end
 
       it "includes the cancel URL" do
-        cancel_url = "&cancelURL=" + CGI.escape("#{root}/worldpay/cancel/#{reg_id}")
+        cancel_url = "&cancelURL=" + CGI.escape("#{root}/#{token}/worldpay/cancel")
         expect(url).to include(cancel_url)
       end
 
       it "includes the error URL" do
-        error_url = "&errorURL=" + CGI.escape("#{root}/worldpay/error/#{reg_id}")
+        error_url = "&errorURL=" + CGI.escape("#{root}/#{token}/worldpay/error")
         expect(url).to include(error_url)
       end
     end

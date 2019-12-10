@@ -17,11 +17,5 @@ module WasteCarriersEngine
     def set_up_finance_details
       @transient_registration.prepare_for_payment(:bank_transfer, current_user)
     end
-
-    def transient_registration_attributes
-      # TODO: Remvoe when default empty params
-      # Nothing to submit
-      params.fetch(:bank_transfer_form).permit
-    end
   end
 end

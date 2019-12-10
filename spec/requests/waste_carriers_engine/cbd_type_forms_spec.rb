@@ -29,7 +29,7 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_cbd_type_forms_path(transient_registration[:reg_identifier])
+              get back_cbd_type_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
@@ -37,8 +37,8 @@ module WasteCarriersEngine
               before(:each) { transient_registration.update_attributes(other_businesses: "no") }
 
               it "redirects to the construction_demolition form" do
-                get back_cbd_type_forms_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
+                get back_cbd_type_forms_path(transient_registration.token)
+                expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration.token))
               end
             end
 
@@ -49,8 +49,8 @@ module WasteCarriersEngine
               end
 
               it "redirects to the waste_types form" do
-                get back_cbd_type_forms_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_waste_types_form_path(transient_registration[:reg_identifier]))
+                get back_cbd_type_forms_path(transient_registration.token)
+                expect(response).to redirect_to(new_waste_types_form_path(transient_registration.token))
               end
             end
 
@@ -61,8 +61,8 @@ module WasteCarriersEngine
               end
 
               it "redirects to the construction_demolition form" do
-                get back_cbd_type_forms_path(transient_registration[:reg_identifier])
-                expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration[:reg_identifier]))
+                get back_cbd_type_forms_path(transient_registration.token)
+                expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration.token))
               end
             end
           end
@@ -78,13 +78,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_cbd_type_forms_path(transient_registration[:reg_identifier])
+              get back_cbd_type_forms_path(transient_registration.token)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_cbd_type_forms_path(transient_registration[:reg_identifier])
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:reg_identifier]))
+              get back_cbd_type_forms_path(transient_registration.token)
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
             end
           end
         end

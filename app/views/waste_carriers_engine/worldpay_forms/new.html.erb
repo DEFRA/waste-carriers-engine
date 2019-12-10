@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_worldpay_forms_path(@worldpay_form.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_worldpay_forms_path(@worldpay_form.token)) %>
 
 <div class="text">
   <% if @worldpay_form.errors.any? %>
@@ -18,7 +18,6 @@
       <p><%= t(".paragraph_3") %></p>
       <p><%= t(".paragraph_4") %></p>
 
-      <%= f.hidden_field :reg_identifier, value: @worldpay_form.reg_identifier %>
       <div class="form-group">
         <%= f.submit t(".next_button"), class: "button" %>
       </div>

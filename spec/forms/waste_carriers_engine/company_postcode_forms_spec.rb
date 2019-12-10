@@ -12,7 +12,7 @@ module WasteCarriersEngine
     describe "#submit" do
       context "when the form is valid" do
         let(:company_postcode_form) { build(:company_postcode_form, :has_required_data) }
-        let(:valid_params) { { reg_identifier: company_postcode_form.reg_identifier, temp_company_postcode: "BS1 5AH" } }
+        let(:valid_params) { { token: company_postcode_form.token, temp_company_postcode: "BS1 5AH" } }
 
         it "should submit" do
           expect(company_postcode_form.submit(valid_params)).to eq(true)
@@ -43,7 +43,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:company_postcode_form) { build(:company_postcode_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { token: "foo" } }
 
         it "should not submit" do
           expect(company_postcode_form.submit(invalid_params)).to eq(false)

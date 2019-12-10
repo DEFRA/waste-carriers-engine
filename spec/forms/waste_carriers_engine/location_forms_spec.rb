@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:location_form) { build(:location_form, :has_required_data) }
         let(:valid_params) do
           {
-            reg_identifier: location_form.reg_identifier,
+            token: location_form.token,
             location: location_form.location
           }
         end
@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:location_form) { build(:location_form, :has_required_data) }
-        let(:invalid_params) { { reg_identifier: "foo" } }
+        let(:invalid_params) { { location: "foo" } }
 
         it "should not submit" do
           expect(location_form.submit(invalid_params)).to eq(false)

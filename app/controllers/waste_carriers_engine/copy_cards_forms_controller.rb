@@ -16,9 +16,9 @@ module WasteCarriersEngine
       params.fetch(:copy_cards_form).permit(:temp_cards)
     end
 
-    def find_or_initialize_transient_registration(reg_identifier)
-      @transient_registration = OrderCopyCardsRegistration.where(reg_identifier: reg_identifier).first ||
-                                OrderCopyCardsRegistration.new(reg_identifier: reg_identifier)
+    def find_or_initialize_transient_registration(token)
+      @transient_registration = OrderCopyCardsRegistration.where(token: token).first ||
+                                OrderCopyCardsRegistration.new(reg_identifier: token)
     end
   end
 end
