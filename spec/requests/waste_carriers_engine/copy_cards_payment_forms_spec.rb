@@ -20,7 +20,7 @@ module WasteCarriersEngine
         end
 
         context "when a matching registration exists" do
-          let(:order_copy_cards_registration) { create(:order_copy_cards_registration, workflow_state: "copy_cards_payment_form") }
+          let(:order_copy_cards_registration) { create(:order_copy_cards_registration, :has_finance_details, workflow_state: "copy_cards_payment_form") }
 
           it "renders the appropriate template and responds with a 200 status code" do
             get new_copy_cards_payment_form_path(order_copy_cards_registration.token)
@@ -69,7 +69,7 @@ module WasteCarriersEngine
         end
 
         context "when a matching registration exists" do
-          let(:order_copy_cards_registration) { create(:order_copy_cards_registration, workflow_state: "copy_cards_payment_form") }
+          let(:order_copy_cards_registration) { create(:order_copy_cards_registration, :has_finance_details, workflow_state: "copy_cards_payment_form") }
 
           context "when valid params are submitted" do
             let(:valid_params) { { temp_payment_method: temp_payment_method } }
