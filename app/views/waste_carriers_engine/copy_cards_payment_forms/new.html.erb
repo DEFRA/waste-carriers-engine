@@ -1,0 +1,80 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_copy_cards_payment_forms_path(reg_identifier: @transient_registration.reg_identifier)) %>
+
+<div class="text">
+  <%= form_for(@copy_cards_payment_form) do |f| %>
+    <% if flash[:error].present? %>
+      <div class="error-summary" role="alert">
+        <h2 class="heading-medium error-summary-heading"><%= t(".payment_error_heading") %></h2>
+
+        <ul class="error-summary-list">
+          <p><%= flash[:error] %></p>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= render("waste_carriers_engine/shared/errors", object: @copy_cards_payment_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <div class="form-group">
+      <table>
+        <tbody>
+          <tr>
+            <th>
+              <span class="strong">
+                <% if @transient_registration.temp_cards > 1 %>
+                  <%= t(
+                        ".total_cost.multiples",
+                        cards: @transient_registration.temp_cards,
+                        cost: display_pence_as_pounds(@transient_registration.total_registration_card_charge)
+                      )
+                  %>
+                <% else %>
+                  <%= t(".total_cost.single") %>
+                <% end %>
+              </span>
+            </th>
+            <td><span class="strong">£<%= display_pence_as_pounds(@transient_registration.total_registration_card_charge) %></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><%= t(".vat_message") %></p>
+
+    <div class="form-group <%= "form-group-error" if @copy_cards_payment_form.errors[:temp_payment_method].any? %>">
+      <h2 class="heading-medium">
+        <%= t(".payment_method.subheading") %>
+      </h2>
+      <p class='form-hint'><%= t(".payment_method.legend") %></p>
+
+      <fieldset id="temp_payment_method">
+        <% if @copy_cards_payment_form.errors[:temp_payment_method].any? %>
+          <span class="error-message"><%= @copy_cards_payment_form.errors[:temp_payment_method].join(", ") %></span>
+        <% end %>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_payment_method, "card" %>
+          <%= f.label :temp_payment_method, value: "card", class: "form-label" do %>
+            <%= t(".options.card") %>
+            <span class='form-hint'><%= t(".hint_pay_by_card") %></span>
+          <% end %>
+        </div>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_payment_method, "bank_transfer" %>
+          <%= f.label :temp_payment_method, value: "bank_transfer", class: "form-label" do %>
+            <%= t(".options.bank_transfer") %>
+            <span class='form-hint'><%= t(".hint_pay_by_bank_transfer") %></span>
+          <% end %>
+        </div>
+      </fieldset>
+    </div>
+
+    <%= f.hidden_field :reg_identifier, value: @copy_cards_payment_form.reg_identifier %>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
