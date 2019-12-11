@@ -7,12 +7,12 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":copy_cards_bank_transfer_form state transitions" do
         context "on next" do
-          it "can transition from a :copy_cards_bank_transfer_form state to a :completed" do
+          it "can transition from a :copy_cards_bank_transfer_form state to a :copy_cards_order_completed_form" do
             order_copy_cards_registration.workflow_state = :copy_cards_bank_transfer_form
 
             order_copy_cards_registration.next
 
-            expect(order_copy_cards_registration.workflow_state).to eq("completed")
+            expect(order_copy_cards_registration.workflow_state).to eq("copy_cards_order_completed_form")
           end
         end
 

@@ -30,6 +30,11 @@ WasteCarriersEngine::Engine.routes.draw do
                     as: "back",
                     on: :collection
               end
+
+    resources :copy_cards_order_completed_forms,
+              only: %i[new create],
+              path: "order-copy-cards-complete",
+              path_names: { new: "" }
     # End of order copy cards flow
 
     resources :renewal_start_forms,
