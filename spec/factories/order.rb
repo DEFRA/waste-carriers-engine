@@ -7,7 +7,13 @@ FactoryBot.define do
         [WasteCarriersEngine::OrderItem.new_renewal_item,
          WasteCarriersEngine::OrderItem.new_copy_cards_item(1)]
       end
+      total_amount { order_items.sum { |item| item[:amount] } }
+    end
 
+    trait :has_copy_cards_item do
+      order_items do
+        [WasteCarriersEngine::OrderItem.new_copy_cards_item(1)]
+      end
       total_amount { order_items.sum { |item| item[:amount] } }
     end
   end
