@@ -17,17 +17,11 @@ module WasteCarriersEngine
     private
 
     def complete_order_copy_cards
-      create_past_registration
-
       update_registration
 
       delete_transient_registration
 
       send_confirmation_email
-    end
-
-    def create_past_registration
-      PastRegistration.build_past_registration(registration)
     end
 
     def update_registration

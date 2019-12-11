@@ -22,9 +22,6 @@ module WasteCarriersEngine
         transient_order = double(:transient_order)
         transient_payment = double(:transient_payment)
 
-        # Creates a past registration
-        expect(PastRegistration).to receive(:build_past_registration).with(registration)
-
         # Merge finance details
         allow(registration).to receive(:finance_details).and_return(finance_details)
         allow(transient_registration).to receive(:finance_details).and_return(transient_finance_details)
