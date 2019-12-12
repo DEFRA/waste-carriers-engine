@@ -1,0 +1,43 @@
+<%= render("waste_carriers_engine/shared/back", back_path: Rails.application.routes.url_helpers.root_path) %>
+
+<div class="text">
+  <%= form_for(@copy_cards_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @copy_cards_form) %>
+
+    <h1 class="heading-large"><%= t(".heading", reg_identifier: @transient_registration.reg_identifier) %></h1>
+
+    <p><%= t(".check_the_address") %></p>
+    <div class="panel">
+      <span class="bold"><%= t(".contact_address.heading")%> </span>
+
+      <% displayable_address(@transient_registration.contact_address).each do |address_line| %>
+        <br/>
+        <%= address_line %>
+      <% end %>
+    </div>
+
+    <div class="form-group <%= "form-group-error" if @copy_cards_form.errors[:temp_cards].any? %>">
+      <fieldset id="temp_cards">
+        <% if @copy_cards_form.errors[:temp_cards].any? %>
+          <span class="error-message"><%= @copy_cards_form.errors[:temp_cards].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :temp_cards, t(".temp_cards_label"), class: "form-label" %>
+        <%= f.number_field(
+              :temp_cards,
+              value: (@copy_cards_form.temp_cards || 0),
+              class: "form-control",
+              min: 0,
+              max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS
+            )
+        %>
+      </fieldset>
+    </div>
+
+    <p> <%= t(".total_cost_info") %> </p>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>

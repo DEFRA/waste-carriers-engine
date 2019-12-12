@@ -17,6 +17,7 @@ module WasteCarriersEngine
     end
 
     config.autoload_paths << "#{config.root}/app/forms/concerns"
+    config.autoload_paths << "#{config.root}/app/services/concerns"
 
     # Load I18n translation files from engine before loading ones from the host app
     # This means values in the host app can override those in the engine
