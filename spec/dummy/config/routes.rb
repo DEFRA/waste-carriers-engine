@@ -7,4 +7,9 @@ Rails.application.routes.draw do
   end
 
   root "waste_carriers_engine/registrations#index"
+
+  resources :registrations,
+            only: :show,
+            param: :reg_identifier,
+            path: "/bo/registrations"
 end

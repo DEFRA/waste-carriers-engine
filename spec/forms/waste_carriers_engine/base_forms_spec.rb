@@ -37,8 +37,20 @@ module WasteCarriersEngine
           base_form.transient_registration.token = nil
         end
 
-        it "is not valid" do
-          expect(base_form).to_not be_valid
+        context "when the resource is a transient_registration" do
+          it "is not valid" do
+            expect(base_form).to_not be_valid
+          end
+        end
+
+        context "when the resource is not a transient_registration" do
+          before do
+            allow(base_form.transient_registration).to receive(:is_a?).with(TransientRegistration).and_return(false)
+          end
+
+          it "is valid" do
+            expect(base_form).to be_valid
+          end
         end
       end
     end
