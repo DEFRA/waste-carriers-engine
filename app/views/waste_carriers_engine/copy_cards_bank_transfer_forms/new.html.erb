@@ -1,0 +1,82 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_copy_cards_bank_transfer_forms_path(@copy_cards_bank_transfer_form.reg_identifier)) %>
+
+<div class="text">
+  <%= form_for(@copy_cards_bank_transfer_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @copy_cards_bank_transfer_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <div class="panel">
+      <%= t(".subheading_panel") %>
+    </div>
+
+    <div class="form-group">
+      <table>
+        <legend>
+          <h2 class="heading-medium">
+            <%= t(".uk_payment_table.heading") %>
+          </h2>
+        </legend>
+
+        <tbody>
+          <tr>
+            <th><%= t(".uk_payment_table.sort_code.label") %></th>
+            <td><%= t(".uk_payment_table.sort_code.value") %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.account_number.label") %></td>
+            <td><%= t(".uk_payment_table.account_number.value") %></td>
+          </tr>
+          <tr>
+            <th><%= t(".uk_payment_table.reference_number.label") %></th>
+            <td><%= @copy_cards_bank_transfer_form.reg_identifier %></td>
+          </tr>
+          <tr>
+            <td><%= t(".uk_payment_table.total_cost.label") %></td>
+            <td>£<%= display_pence_as_pounds(@copy_cards_bank_transfer_form.total_to_pay) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>
+        <%= t(".overseas_payments.heading") %>
+      </summary>
+      <div class="panel">
+        <%= t(".overseas_payments.iban") %><br/><br/>
+        <%= t(".overseas_payments.swiftbic") %><br/><br/>
+        <%= t(".overseas_payments.currency") %>
+      </div>
+    </details>
+
+    <div class="form-group">
+      <table>
+        <legend>
+          <h2 class="heading-medium">
+            <%= t(".send_confirmation.heading") %>
+          </h2>
+
+          <div class="panel">
+            <%= t(".send_confirmation.sub_heading") %>
+          </div>
+        </legend>
+
+        <tbody>
+          <tr>
+            <th><%= t(".email_us.label") %></th>
+            <td><%= t(".email_us.value") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      <%= t(".cards_info") %>
+    </p>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
