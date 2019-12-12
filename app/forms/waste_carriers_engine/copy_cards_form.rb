@@ -3,7 +3,7 @@
 module WasteCarriersEngine
   class CopyCardsForm < CardsForm
     def self.can_navigate_flexibly?
-      true
+      false
     end
 
     validates(

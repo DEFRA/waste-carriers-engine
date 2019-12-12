@@ -56,13 +56,10 @@ module WasteCarriersEngine
               # Using `let!` for now.
               let!(:transient_registration) { create(:order_copy_cards_registration, :copy_cards_payment_form_state) }
 
-              it "respond with a 200 status, updates the workflow state and  prepopulate data on the view" do
+              it "redirects to the correct workflow state form" do
                 get new_copy_cards_form_path(transient_registration.registration.reg_identifier)
 
-                expect(response).to render_template("waste_carriers_engine/copy_cards_forms/new")
-                expect(response.code).to eq("200")
-                expect(transient_registration.reload.workflow_state).to eq(:copy_cards_forms)
-                expect(response.body).to include("value=\"#{transient_registration.temp_cards}\"")
+                expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
               end
             end
           end
