@@ -5,7 +5,7 @@ module WasteCarriersEngine
     include CanUseOrderCopyCardsWorkflow
 
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
-    delegate :contact_address, to: :registration
+    delegate :contact_address, :contact_email, to: :registration
 
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
