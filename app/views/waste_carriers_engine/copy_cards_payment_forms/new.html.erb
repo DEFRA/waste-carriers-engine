@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_copy_cards_payment_forms_path(reg_identifier: @transient_registration.reg_identifier)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_copy_cards_payment_forms_path(token: @transient_registration.token)) %>
 
 <div class="text">
   <%= form_for(@copy_cards_payment_form) do |f| %>
