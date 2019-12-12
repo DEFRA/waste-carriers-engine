@@ -4,8 +4,8 @@ en:
       new:
         heading: "Payment summary"
         total_cost:
-          single: "1 registration card total cost"
-          multiples: "%{cards} registration cards total cost"
+          one: "1 registration card total cost"
+          other: "%{count} registration cards total cost"
         vat_message: "VAT does not apply"
         payment_method:
           subheading: "Payment method"

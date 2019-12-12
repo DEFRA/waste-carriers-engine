@@ -22,16 +22,7 @@
           <tr>
             <th>
               <span class="strong">
-                <% if @transient_registration.temp_cards > 1 %>
-                  <%= t(
-                        ".total_cost.multiples",
-                        cards: @transient_registration.temp_cards,
-                        cost: display_pence_as_pounds(@transient_registration.total_registration_card_charge)
-                      )
-                  %>
-                <% else %>
-                  <%= t(".total_cost.single") %>
-                <% end %>
+                <%= t(".total_cost", count: @transient_registration.temp_cards) %>
               </span>
             </th>
             <td><span class="strong">£<%= display_pence_as_pounds(@transient_registration.total_registration_card_charge) %></span></td>
@@ -46,7 +37,7 @@
       <h2 class="heading-medium">
         <%= t(".payment_method.subheading") %>
       </h2>
-      <p class='form-hint'><%= t(".payment_method.legend") %></p>
+      <p class="form-hint"><%= t(".payment_method.legend") %></p>
 
       <fieldset id="temp_payment_method">
         <% if @copy_cards_payment_form.errors[:temp_payment_method].any? %>
@@ -57,7 +48,7 @@
           <%= f.radio_button :temp_payment_method, "card" %>
           <%= f.label :temp_payment_method, value: "card", class: "form-label" do %>
             <%= t(".options.card") %>
-            <span class='form-hint'><%= t(".hint_pay_by_card") %></span>
+            <span class="form-hint"><%= t(".hint_pay_by_card") %></span>
           <% end %>
         </div>
 
@@ -65,13 +56,11 @@
           <%= f.radio_button :temp_payment_method, "bank_transfer" %>
           <%= f.label :temp_payment_method, value: "bank_transfer", class: "form-label" do %>
             <%= t(".options.bank_transfer") %>
-            <span class='form-hint'><%= t(".hint_pay_by_bank_transfer") %></span>
+            <span class="form-hint"><%= t(".hint_pay_by_bank_transfer") %></span>
           <% end %>
         </div>
       </fieldset>
     </div>
-
-    <%= f.hidden_field :reg_identifier, value: @copy_cards_payment_form.reg_identifier %>
 
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
