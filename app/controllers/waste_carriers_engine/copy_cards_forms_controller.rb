@@ -16,9 +16,11 @@ module WasteCarriersEngine
       params.fetch(:copy_cards_form).permit(:temp_cards)
     end
 
+    # rubocop:disable Naming/MemoizedInstanceVariableName
     def find_or_initialize_transient_registration(token)
-      @transient_registration = OrderCopyCardsRegistration.where(token: token).first ||
-                                OrderCopyCardsRegistration.new(reg_identifier: token)
+      @transient_registration ||= OrderCopyCardsRegistration.where(reg_identifier: token).first ||
+                                  OrderCopyCardsRegistration.new(reg_identifier: token)
     end
+    # rubocop:enable Naming/MemoizedInstanceVariableName
   end
 end

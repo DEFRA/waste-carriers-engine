@@ -8,5 +8,10 @@ FactoryBot.define do
       temp_cards { 1 }
       finance_details { build(:finance_details, :has_copy_cards_order) }
     end
+
+    trait :copy_cards_payment_form_state do
+      workflow_state { :copy_cards_payment_form }
+      temp_cards { 1 }
+    end
   end
 end
