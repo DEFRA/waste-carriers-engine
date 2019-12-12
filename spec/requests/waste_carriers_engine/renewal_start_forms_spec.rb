@@ -69,8 +69,17 @@ module WasteCarriersEngine
                          workflow_state: "location_form")
                 end
 
+                context "when the token is a reg_identifier" do
+                  it "redirects to the form for the current state" do
+                    get new_renewal_start_form_path(transient_registration.registration.reg_identifier)
+
+                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                  end
+                end
+
                 it "redirects to the form for the current state" do
                   get new_renewal_start_form_path(transient_registration[:token])
+
                   expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
                 end
               end
