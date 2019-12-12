@@ -50,14 +50,18 @@ module WasteCarriersEngine
             end
 
             context "when an order is in progress" do
-              # TODO: Discuss at dev meeting.
-              # When the `let`ed attribute is passed by as an attribute, it does not get initialised up until the
-              # request have been made. This means that the DB will be empty when the request executes.
-              # Using `let!` for now.
               let!(:transient_registration) { create(:order_copy_cards_registration, :copy_cards_payment_form_state) }
 
+              context "when the token is a reg_identifier" do
+                it "redirects to the correct workflow state form" do
+                  get new_copy_cards_form_path(transient_registration.registration.reg_identifier)
+
+                  expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
+                end
+              end
+
               it "redirects to the correct workflow state form" do
-                get new_copy_cards_form_path(transient_registration.registration.reg_identifier)
+                get new_copy_cards_form_path(transient_registration.token)
 
                 expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
               end
