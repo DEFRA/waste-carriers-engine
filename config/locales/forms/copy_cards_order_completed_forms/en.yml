@@ -1,0 +1,13 @@
+en:
+  waste_carriers_engine:
+    copy_cards_order_completed_forms:
+      new:
+        heading: "Confirmation of order"
+        awaiting_payment_message_html: "Order is awaiting payment.<br>We've sent an email with payment details to %{email}."
+        payment_success_message_html: "Order completed.<br>Payment has cleared.<br>We have sent a confirmation email to %{email}."
+        details_table:
+          cards_label: "Number of cards ordered"
+          total_cost: "Total cost"
+          reference: "Reference"
+        dashboard: "Go to registration search"
+        details_page: "Details for %{reg_identifier}"
