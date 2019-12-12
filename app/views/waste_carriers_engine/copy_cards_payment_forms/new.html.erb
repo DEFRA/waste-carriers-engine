@@ -34,12 +34,13 @@
     <p><%= t(".vat_message") %></p>
 
     <div class="form-group <%= "form-group-error" if @copy_cards_payment_form.errors[:temp_payment_method].any? %>">
-      <h2 class="heading-medium">
-        <%= t(".payment_method.subheading") %>
-      </h2>
-      <p class="form-hint"><%= t(".payment_method.legend") %></p>
-
       <fieldset id="temp_payment_method">
+        <legend>
+          <h2 class="bold">
+            <%= t(".payment_method.subheading") %>
+          </h2>
+          <p class="form-hint"><%= t(".payment_method.legend") %></p>
+        </legend>
         <% if @copy_cards_payment_form.errors[:temp_payment_method].any? %>
           <span class="error-message"><%= @copy_cards_payment_form.errors[:temp_payment_method].join(", ") %></span>
         <% end %>
