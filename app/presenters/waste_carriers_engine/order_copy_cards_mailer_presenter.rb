@@ -2,7 +2,7 @@
 
 module WasteCarriersEngine
   class OrderCopyCardsMailerPresenter < BasePresenter
-    def initialize(registration, copy_cards_order, view_context=nil)
+    def initialize(registration, copy_cards_order, view_context = nil)
       @copy_cards_order = copy_cards_order
 
       super(registration, view_context)
@@ -13,11 +13,11 @@ module WasteCarriersEngine
     end
 
     def order_description
-      @_cards_count ||= copy_cards_order.order_items.first.description
+      @_order_description ||= copy_cards_order.order_items.first.description
     end
 
     def ordered_on_formatted_string
-      @_ordered_on ||= copy_cards_order.date_created.to_datetime.to_formatted_s(:day_month_year)
+      @_ordered_on_formatted_string ||= copy_cards_order.date_created.to_datetime.to_formatted_s(:day_month_year)
     end
 
     def total_paid
