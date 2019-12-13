@@ -17,7 +17,7 @@
       <div class="form-group">
         <label class="form-label"><%= t(".preset_postcode_label") %></label>
         <span class="postcode"><%= @company_address_manual_form.postcode %></span>
-        <%= link_to(t(".postcode_change_link"), back_company_address_manual_forms_path(@company_address_manual_form.reg_identifier)) %>
+        <%= link_to(t(".postcode_change_link"), back_company_address_manual_forms_path(@company_address_manual_form.token)) %>
       </div>
     <% end %>
 
