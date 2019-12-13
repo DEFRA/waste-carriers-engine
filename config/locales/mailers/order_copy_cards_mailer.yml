@@ -1,0 +1,20 @@
+en:
+  waste_carriers_engine:
+    order_copy_cards_mailer:
+      send_order_completed_email:
+        subject: "We’re printing your waste carriers registration cards"
+        dear: "Dear %{full_name}"
+        heading: "We’re printing your waste carriers registration cards. They should arrive within 10 working days."
+        receipt:
+          heading: "Receipt"
+          order: "Order: %{description}"
+          ordered_on: "Ordered on: %{formatted_time}"
+          reference: "Carrier registration number: %{reg_identifier}."
+          paid: "Paid: £%{total_paid} by debit or credit card."
+        contact_us:
+          heading: "If you need to contact us"
+          address:
+            line_1: "Environment Agency"
+            line_2: "Telephone 03708 506 506, Monday to Friday (8am to 6pm)"
+            email: "enquiries@environment-agency.gov.uk"
+        footer: "This is an automated email, please do not reply."
