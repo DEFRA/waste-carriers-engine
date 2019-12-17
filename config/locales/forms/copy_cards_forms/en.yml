@@ -16,5 +16,5 @@ en:
           attributes:
             temp_cards:
               not_a_number: "You must enter a number between 1 and 999"
-              greater_than_or_equal_to: "You must enter a number between 1 and 99"
+              greater_than_or_equal_to: "You must enter a number between 1 and 999"
               not_an_integer: "You must enter a number between 1 and 999"
