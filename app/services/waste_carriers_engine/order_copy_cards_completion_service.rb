@@ -35,10 +35,17 @@ module WasteCarriersEngine
     end
 
     def send_confirmation_email
-      # TODO
-      # RenewalMailer.send_renewal_complete_email(registration).deliver_now
-      # rescue StandardError => e
-      #   Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)
+      if @transient_registration.unpaid_balance?
+        # TODO: OrderCopyCardsMailer.send_awaiting_payment_email(registration, copy_cards_order).deliver_now
+      else
+        OrderCopyCardsMailer.send_order_completed_email(registration, copy_cards_order).deliver_now
+      end
+    rescue StandardError => e
+      Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)
+    end
+
+    def copy_cards_order
+      @_copy_cards_order ||= transient_registration.finance_details.orders.last
     end
   end
 end

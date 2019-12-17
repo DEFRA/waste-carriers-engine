@@ -16,11 +16,17 @@ module WasteCarriersEngine
         )
       end
 
-      it "completes an order" do
+      skip "TODO: when the registration have not been paid in full" do
+        pending "completes an order and sends an awaiting payment email" do
+        end
+      end
+
+      it "completes an order and sends a confirmation email" do
         orders = double(:orders)
         payments = double(:payments)
         transient_order = double(:transient_order)
         transient_payment = double(:transient_payment)
+        mailer = double(:mailer)
 
         # Merge finance details
         allow(registration).to receive(:finance_details).and_return(finance_details)
@@ -28,8 +34,8 @@ module WasteCarriersEngine
         expect(finance_details).to receive(:update_balance)
 
         ## Merge orders
-        expect(finance_details).to receive(:orders).and_return(orders).twice
-        expect(transient_finance_details).to receive(:orders).and_return([transient_order]).twice
+        allow(finance_details).to receive(:orders).and_return(orders)
+        allow(transient_finance_details).to receive(:orders).and_return([transient_order])
         expect(orders).to receive(:<<).with(transient_order)
 
         ## Merge payments
@@ -42,6 +48,11 @@ module WasteCarriersEngine
 
         # Save registration
         expect(registration).to receive(:save!)
+
+        # Send email
+        expect(transient_registration).to receive(:unpaid_balance?).and_return(false)
+        expect(OrderCopyCardsMailer).to receive(:send_order_completed_email).and_return(mailer)
+        expect(mailer).to receive(:deliver_now)
 
         described_class.run(transient_registration)
       end
