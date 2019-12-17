@@ -33,7 +33,7 @@
           </tr>
           <tr>
             <td><%= t(".uk_payment_table.total_cost.label") %></td>
-            <td>£<%= display_pence_as_pounds(@copy_cards_bank_transfer_form.total_to_pay) %></td>
+            <td>£<%= display_pence_as_pounds(@transient_registration.finance_details.balance) %></td>
           </tr>
         </tbody>
       </table>
