@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: Rails.application.routes.url_helpers.root_path) %>
+<%= render("waste_carriers_engine/shared/back", back_path: Rails.application.routes.url_helpers.registration_path(@transient_registration.reg_identifier)) %>
 
 <div class="text">
   <%= form_for(@copy_cards_form) do |f| %>
