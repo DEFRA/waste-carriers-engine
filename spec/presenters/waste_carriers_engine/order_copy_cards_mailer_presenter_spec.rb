@@ -30,7 +30,7 @@ module WasteCarriersEngine
     end
 
     describe "#ordered_on_formatted_string" do
-      it "returns the order items count" do
+      it "returns the date the order was created as a string eg '31 October 2010'" do
         expect(order).to receive(:date_created).and_return(Time.parse("2010-10-31").to_datetime)
 
         expect(subject.ordered_on_formatted_string).to eq("31 October 2010")
