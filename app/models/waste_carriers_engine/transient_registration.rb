@@ -27,6 +27,7 @@ module WasteCarriersEngine
     scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
     scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
 
+    # TODO: Move to renewal registration
     def total_to_pay
       charges = [Rails.configuration.renewal_charge]
       charges << Rails.configuration.type_change_charge if registration_type_changed?
