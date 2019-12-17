@@ -24,7 +24,7 @@
     </table>
   </div>
   <div class="form-group">
-    <%= link_to t(".dashboard"), Rails.application.routes.url_helpers.root_path, class: "button" %>
+    <%= link_to t(".dashboard"), "/bo", class: "button" %>
     <%= link_to t(".details_page", reg_identifier: @transient_registration.reg_identifier), Rails.application.routes.url_helpers.registration_path(@transient_registration.reg_identifier), class: "button" %>
   </div>
 </div>

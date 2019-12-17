@@ -22,4 +22,4 @@ en:
         waste_carriers_engine/copy_cards_payment_form:
           attributes:
             temp_payment_method:
-              inclusion: "Select card or Alternative payment"
+              inclusion: "Select card or alternative payment"
