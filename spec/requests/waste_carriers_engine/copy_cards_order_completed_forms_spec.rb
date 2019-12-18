@@ -29,8 +29,9 @@ module WasteCarriersEngine
           end
 
           context "when the workflow_state is correct" do
-            it "deletes the transient object and copy all finance details to the registration and load the confirmation page" do
+            it "deletes the transient object, copy all finance details to the registration, load the confirmation page and sends an email" do
               registration = transient_registration.registration
+              previous_email_count = ActionMailer::Base.deliveries.count
 
               get new_copy_cards_order_completed_form_path(transient_registration.token)
 
@@ -47,6 +48,7 @@ module WasteCarriersEngine
               expect(order_item.amount).to eq(500)
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/copy_cards_order_completed_forms/new")
+              expect(ActionMailer::Base.deliveries.count).to eq(previous_email_count + 1)
             end
           end
         end
