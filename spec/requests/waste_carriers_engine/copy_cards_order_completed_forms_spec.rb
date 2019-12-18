@@ -38,7 +38,6 @@ module WasteCarriersEngine
               order = finance_details.orders.first
               order_item = order.order_items.first
 
-              # TODO: Discuss bug with Reload and Let at next dev meeting
               expect(WasteCarriersEngine::TransientRegistration.count).to eq(0)
 
               expect(finance_details.orders.count).to eq(1)
