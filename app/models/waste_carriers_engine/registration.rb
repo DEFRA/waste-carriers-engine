@@ -27,6 +27,8 @@ module WasteCarriersEngine
     validates :tier,
               inclusion: { in: %w[UPPER LOWER] }
 
+    scope :active, -> { where("metaData.status" => "ACTIVE") }
+
     alias pending_manual_conviction_check? conviction_check_required?
     alias pending_payment? unpaid_balance?
 
