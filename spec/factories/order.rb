@@ -11,6 +11,8 @@ FactoryBot.define do
     end
 
     trait :has_copy_cards_item do
+      date_created { Time.now }
+
       order_items do
         [WasteCarriersEngine::OrderItem.new_copy_cards_item(1)]
       end

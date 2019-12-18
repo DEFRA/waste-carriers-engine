@@ -18,3 +18,41 @@ en:
             line_2: "Telephone 03708 506 506, Monday to Friday (8am to 6pm)"
             email: "enquiries@environment-agency.gov.uk"
         footer: "This is an automated email, please do not reply."
+      send_awaiting_payment_email:
+        subject: "You need to pay for your waste carriers registration card order"
+        dear: "Dear %{full_name}"
+        heading: "You need to pay for your waste carriers registration card order"
+        paragraph_1: "You ordered %{description} on %{formatted_date} for carrier registration number %{reg_identifier}."
+        paragraph_2: "We cannot print the cards until we receive confirmation that you have paid."
+        pay_by_bank_transfer:
+          heading: "1. Pay by bank transfer (Bacs) with these details"
+          payment_due: "Payment due"
+          use_this_reference: "Use this reference"
+          sort_code:
+            label: "Sort code"
+            value: "60-70-80"
+          account_number:
+            label: "Account number"
+            value: "1001 4411"
+        after_paying:
+          heading: "2. Then send us confirmation that you have paid"
+          email_us:
+            label: "Email us"
+            email: "ea_fsc_ar@sscl.gse.gov.uk"
+          fax:
+            label: "Fax"
+            value: "01733 464 892"
+          send_a_letter: "Or send a letter to:"
+          address:
+            - Environment Agency
+            - SSCL Banking Team
+            - PO Box 263
+            - Peterborough
+            - PE2 8YD
+        contact_us:
+          heading: "If you need to contact us"
+          address:
+            line_1: "Environment Agency"
+            line_2: "Telephone 03708 506 506, Monday to Friday (8am to 6pm)"
+            email: "enquiries@environment-agency.gov.uk"
+        footer: "This is an automated email, please do not reply."

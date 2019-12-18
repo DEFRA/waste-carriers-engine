@@ -36,7 +36,7 @@ module WasteCarriersEngine
 
     def send_confirmation_email
       if @transient_registration.unpaid_balance?
-        # TODO: OrderCopyCardsMailer.send_awaiting_payment_email(registration, copy_cards_order).deliver_now
+        OrderCopyCardsMailer.send_awaiting_payment_email(registration, copy_cards_order).deliver_now
       else
         OrderCopyCardsMailer.send_order_completed_email(registration, copy_cards_order).deliver_now
       end
