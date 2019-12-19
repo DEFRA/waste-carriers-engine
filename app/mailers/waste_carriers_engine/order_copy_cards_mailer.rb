@@ -4,10 +4,10 @@ module WasteCarriersEngine
   class OrderCopyCardsMailer < BaseMailer
     def send_order_completed_email(registration, order)
       @presenter = OrderCopyCardsMailerPresenter.new(registration, order)
-      total_cards = order.order_items.first.quantity
+
       subject = I18n.t(
         ".waste_carriers_engine.order_copy_cards_mailer.send_order_completed_email.subject",
-        count: total_cards
+        count: @presenter.total_cards
       )
 
       mail(to: @presenter.contact_email,

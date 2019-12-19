@@ -28,6 +28,10 @@ FactoryBot.define do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end
 
+    trait :has_copy_cards_order do
+      finance_details { build(:finance_details, :has_copy_cards_order) }
+    end
+
     trait :has_required_overseas_data do
       account_email { "foo@example.com" }
       business_type { "overseas" }
