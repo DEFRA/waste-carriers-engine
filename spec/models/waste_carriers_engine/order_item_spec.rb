@@ -67,7 +67,6 @@ module WasteCarriersEngine
           expect(order_item.description).to eq("1 registration card")
         end
       end
-
     end
   end
 end
