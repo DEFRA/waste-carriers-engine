@@ -13,7 +13,11 @@ module WasteCarriersEngine
     end
 
     def order_description
-      @_order_description ||= copy_cards_order.order_items.first.description
+      @_order_description ||= order_item.description
+    end
+
+    def total_cards
+      @_total_cards ||= order_item.quantity
     end
 
     def ordered_on_formatted_string
@@ -27,5 +31,9 @@ module WasteCarriersEngine
     private
 
     attr_reader :copy_cards_order
+
+    def order_item
+      @_order_item ||= copy_cards_order.order_items.first
+    end
   end
 end

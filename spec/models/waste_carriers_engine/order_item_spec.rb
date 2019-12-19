@@ -23,6 +23,10 @@ module WasteCarriersEngine
         expect(order_item.amount).to eq(10_000)
       end
 
+      it "should set the correct quantity" do
+        expect(order_item.quantity).to eq(1)
+      end
+
       it "should set the correct description" do
         expect(order_item.description).to eq("Renewal of registration")
       end
@@ -33,6 +37,10 @@ module WasteCarriersEngine
 
       it "should have a type of 'EDIT'" do
         expect(order_item.type).to eq(described_class::TYPES[:edit])
+      end
+
+      it "should set the correct quantity" do
+        expect(order_item.quantity).to eq(1)
       end
 
       it "should set the correct amount" do
@@ -54,6 +62,10 @@ module WasteCarriersEngine
 
       it "should set the correct amount" do
         expect(order_item.amount).to eq(3_000)
+      end
+
+      it "should set the correct quantity" do
+        expect(order_item.quantity).to eq(3)
       end
 
       it "should set the correct description" do

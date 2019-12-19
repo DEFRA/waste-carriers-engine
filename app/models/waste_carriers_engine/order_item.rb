@@ -13,6 +13,7 @@ module WasteCarriersEngine
     )
 
     field :amount,                          type: Integer
+    field :quantity,                        type: Integer
     field :currency,                        type: String
     field :lastUpdated, as: :last_updated,  type: DateTime
     field :description,                     type: String
@@ -22,9 +23,10 @@ module WasteCarriersEngine
     def self.new_renewal_item
       order_item = OrderItem.base_order_item
 
-      order_item[:amount] = Rails.configuration.renewal_charge
-      order_item[:description] = "Renewal of registration"
-      order_item[:type] = TYPES[:renew]
+      order_item.amount = Rails.configuration.renewal_charge
+      order_item.description = "Renewal of registration"
+      order_item.type = TYPES[:renew]
+      order_item.quantity = 1
 
       order_item
     end
@@ -32,9 +34,10 @@ module WasteCarriersEngine
     def self.new_type_change_item
       order_item = OrderItem.base_order_item
 
-      order_item[:amount] = Rails.configuration.type_change_charge
-      order_item[:description] = "changing carrier type during renewal"
-      order_item[:type] = TYPES[:edit]
+      order_item.amount = Rails.configuration.type_change_charge
+      order_item.description = "changing carrier type during renewal"
+      order_item.type = TYPES[:edit]
+      order_item.quantity = 1
 
       order_item
     end
@@ -42,19 +45,20 @@ module WasteCarriersEngine
     def self.new_copy_cards_item(cards)
       order_item = OrderItem.base_order_item
 
-      order_item[:amount] = cards * Rails.configuration.card_charge
+      order_item.amount = cards * Rails.configuration.card_charge
 
-      order_item[:description] = "#{cards} registration cards"
-      order_item[:description] = "1 registration card" if cards == 1
+      order_item.description = "#{cards} registration cards"
+      order_item.description = "1 registration card" if cards == 1
+      order_item.quantity = cards
 
-      order_item[:type] = TYPES[:copy_cards]
+      order_item.type = TYPES[:copy_cards]
 
       order_item
     end
 
     def self.base_order_item
       order_item = OrderItem.new
-      order_item[:currency] = "GBP"
+      order_item.currency = "GBP"
       order_item
     end
   end
