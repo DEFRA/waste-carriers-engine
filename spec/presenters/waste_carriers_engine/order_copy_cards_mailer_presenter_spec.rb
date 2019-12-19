@@ -17,6 +17,18 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#total_cards" do
+      it "returns the order item's quantity" do
+        order_item = double(:order_item)
+        result = double(:result)
+
+        expect(order).to receive(:order_items).and_return([order_item])
+        expect(order_item).to receive(:quantity).and_return(result)
+
+        expect(subject.total_cards).to eq(result)
+      end
+    end
+
     describe "#order_description" do
       it "returns the order's description" do
         order_item = double(:order_item)
