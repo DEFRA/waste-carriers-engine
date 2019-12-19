@@ -45,7 +45,8 @@ module WasteCarriersEngine
     end
 
     describe "new_copy_cards_item" do
-      let(:order_item) { described_class.new_copy_cards_item(3) }
+      let(:cards) { 3 }
+      let(:order_item) { described_class.new_copy_cards_item(cards) }
 
       it "should have a type of 'COPY_CARDS'" do
         expect(order_item.type).to eq(described_class::TYPES[:copy_cards])
@@ -58,6 +59,15 @@ module WasteCarriersEngine
       it "should set the correct description" do
         expect(order_item.description).to eq("3 registration cards")
       end
+
+      context "when the number of cards is 1" do
+        let(:cards) { 1 }
+
+        it "should set the correct description" do
+          expect(order_item.description).to eq("1 registration card")
+        end
+      end
+
     end
   end
 end
