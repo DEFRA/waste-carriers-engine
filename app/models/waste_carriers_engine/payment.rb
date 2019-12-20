@@ -11,7 +11,7 @@ module WasteCarriersEngine
     field :currency,                                              type: String
     field :mac_code,                                              type: String
     field :dateReceived, as: :date_received,                      type: Date
-    field :dateEntered, as: :date_entered,                        type: Date
+    field :dateEntered, as: :date_entered,                        type: DateTime
     field :dateReceived_year, as: :date_received_year,            type: Integer
     field :dateReceived_month, as: :date_received_month,          type: Integer
     field :dateReceived_day, as: :date_received_day,              type: Integer
