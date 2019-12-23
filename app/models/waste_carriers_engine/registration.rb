@@ -38,6 +38,12 @@ module WasteCarriersEngine
       renewable_tier? && renewable_status? && renewable_date?
     end
 
+    def expire!
+      metaData.status = "EXPIRED"
+
+      save!
+    end
+
     private
 
     def renewable_tier?
