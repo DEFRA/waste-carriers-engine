@@ -79,7 +79,7 @@ module WasteCarriersEngine
 
       address1 = [address.house_number, address.address_line_1].join(" ")
       address2 = address.address_line_2
-      postcode = address.postcode.presence || "00000"
+      postcode = address.postcode.presence || "UNKNOWN"
       city = address.town_city
       country_code = look_up_country_code(address.country)
 
