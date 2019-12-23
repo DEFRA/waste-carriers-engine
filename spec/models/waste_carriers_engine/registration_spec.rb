@@ -45,6 +45,16 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#expire!" do
+      it "update the registration status to expired" do
+        registration = create(:registration, :is_active, :has_required_data)
+
+        registration.expire!
+
+        expect(registration).to be_expired
+      end
+    end
+
     describe "#tier" do
       context "when a registration has no tier" do
         let(:registration) { build(:registration, :has_required_data, tier: nil) }
