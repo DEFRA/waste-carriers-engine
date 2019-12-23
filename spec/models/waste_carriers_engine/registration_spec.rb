@@ -45,6 +45,44 @@ module WasteCarriersEngine
       end
     end
 
+    describe "scopes" do
+      describe ".active" do
+        it "returns active registrations" do
+          active_registration = create(:registration, :has_required_data, :is_active)
+          revoked_registration = create(:registration, :has_required_data, :is_revoked)
+
+          result = described_class.active
+
+          expect(result).to include(active_registration)
+          expect(result).to_not include(revoked_registration)
+        end
+      end
+
+      describe ".expired_at_end_of_today" do
+        it "returns registrations that have expired at the end of current day" do
+          expired_registration = create(:registration, :has_required_data, expires_on: Time.now.beginning_of_day + 4.hours)
+          active_registration = create(:registration, :has_required_data, expires_on: Time.now.end_of_day + 4.hours)
+
+          result = described_class.expired_at_end_of_today
+
+          expect(result).to include(expired_registration)
+          expect(result).to_not include(active_registration)
+        end
+      end
+
+      describe ".upper_tier" do
+        it "returns upper tier registrations" do
+          upper_tier_registration = create(:registration, :has_required_data, tier: "UPPER")
+          lower_tier_registration = create(:registration, :has_required_data, tier: "LOWER")
+
+          result = described_class.upper_tier
+
+          expect(result).to include(upper_tier_registration)
+          expect(result).to_not include(lower_tier_registration)
+        end
+      end
+    end
+
     describe "#tier" do
       context "when a registration has no tier" do
         let(:registration) { build(:registration, :has_required_data, tier: nil) }

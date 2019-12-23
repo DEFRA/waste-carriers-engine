@@ -28,6 +28,8 @@ module WasteCarriersEngine
               inclusion: { in: %w[UPPER LOWER] }
 
     scope :active, -> { where("metaData.status" => "ACTIVE") }
+    scope :expired_at_end_of_today, -> { where(:expires_on.lte => Time.now.in_time_zone("London").end_of_day) }
+    scope :upper_tier, -> { where(tier: "UPPER") }
 
     alias pending_manual_conviction_check? conviction_check_required?
     alias pending_payment? unpaid_balance?
