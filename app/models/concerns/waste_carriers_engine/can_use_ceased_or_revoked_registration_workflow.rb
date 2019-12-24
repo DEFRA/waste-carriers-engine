@@ -5,7 +5,6 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include Mongoid::Document
 
-    # rubocop:disable Metrics/BlockLength
     included do
       include AASM
 
@@ -34,6 +33,5 @@ module WasteCarriersEngine
         end
       end
     end
-    # rubocop:enable Metrics/BlockLength
   end
 end
