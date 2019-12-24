@@ -37,6 +37,27 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" }
     # End of order copy cards flow
 
+    # Ceased or revoked flow
+    resources :cease_or_revoke_form,
+              only: %i[new create],
+              path: "ceased-or-revoked",
+              path_names: { new: "" }
+
+    resources :ceased_or_revoked_confirm_form,
+              only: %i[new create],
+              path: "ceased-or-revoked-confirm",
+              path_names: { new: "" } do
+                get "back",
+                    to: "ceased_or_revoked_confirm_form#go_back",
+                    as: "back",
+                    on: :collection
+              end
+
+    resources :ceased_or_revoked_completed_form,
+              only: %i[create],
+              path: "ceased-or-revoked-complete"
+    # End of ceased or revoked flow
+
     resources :renewal_start_forms,
               only: %i[new create],
               path: "renew",
