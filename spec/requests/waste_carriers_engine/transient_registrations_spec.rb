@@ -13,12 +13,8 @@ module WasteCarriersEngine
         end
 
         context "when a valid transient registration exists" do
-          let(:transient_registration) do
-            create(:renewing_registration,
-                   :has_required_data)
-          end
-
           it "deletes the transient registration, returns a 302 status and redirects to the registration page" do
+            transient_registration = create(:renewing_registration, :has_required_data)
             expected_count = TransientRegistration.count - 1
 
             get delete_transient_registration_path(transient_registration[:token])
