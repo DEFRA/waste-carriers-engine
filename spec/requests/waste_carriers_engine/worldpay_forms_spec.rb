@@ -26,7 +26,7 @@ module WasteCarriersEngine
           it "redirects to worldpay", vcr: true do
             VCR.use_cassette("worldpay_redirect") do
               get new_worldpay_form_path(token)
-              expect(response.location).to include("https://secure-test.worldpay.com")
+              expect(response.location).to include("https://payments-test.worldpay.com/")
             end
           end
 
