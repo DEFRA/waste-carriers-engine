@@ -29,6 +29,16 @@ module WasteCarriersEngine
         end
       end
 
+      context "when the transient object is an CeasedOrRevokedRegistration" do
+        let(:transient_registration) { CeasedOrRevokedRegistration.new }
+
+        it "runs the correct permission check service and return a result" do
+          expect(CeasedOrRevokedRegistrationPermissionChecksService).to receive(:run).with(params).and_return(result)
+
+          expect(described_class.run(params)).to eq(result)
+        end
+      end
+
       context "when there is no permission check service for the given transient object" do
         let(:transient_registration) { double(:transient_registration) }
 
