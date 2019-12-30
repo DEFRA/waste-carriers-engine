@@ -16,11 +16,14 @@ module WasteCarriersEngine
           it "deletes the transient registration, returns a 302 status and redirects to the registration page" do
             transient_registration = create(:renewing_registration, :has_required_data)
             expected_count = TransientRegistration.count - 1
+            redirect_path = Rails.application.routes.url_helpers.registration_path(
+              reg_identifier: transient_registration.reg_identifier
+            )
 
             get delete_transient_registration_path(transient_registration[:token])
 
             expect(response).to have_http_status(302)
-            expect(response).to redirect_to(Rails.application.routes.url_helpers.registration_path(reg_identifier: transient_registration.reg_identifier))
+            expect(response).to redirect_to(redirect_path)
             expect(TransientRegistration.count).to eq(expected_count)
           end
         end
