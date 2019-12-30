@@ -6,7 +6,7 @@ module WasteCarriersEngine
 
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
-    delegate :status, to: :registration
+    delegate :company_name, :registration_type, :tier, :contact_address, to: :registration
 
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
