@@ -4,6 +4,10 @@
 WasteCarriersEngine::Engine.routes.draw do
   resources :registrations, only: [:index] unless Rails.env.production?
 
+  get "transient-registration/:token/destroy",
+    to: "transient_registrations#destroy",
+    as: "delete_transient_registration"
+
   scope "/:token" do
     # Order copy cards flow
     resources :copy_cards_forms,
