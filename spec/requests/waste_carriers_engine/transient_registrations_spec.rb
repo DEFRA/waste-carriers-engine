@@ -19,7 +19,6 @@ module WasteCarriersEngine
           end
 
           it "deletes the transient registration, returns a 302 status and redirects to the registration page" do
-            reg_identifier = transient_registration.reg_identifier
             expected_count = TransientRegistration.count - 1
 
             get delete_transient_registration_path(transient_registration[:token])
