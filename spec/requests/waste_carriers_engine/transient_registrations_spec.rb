@@ -20,7 +20,7 @@ module WasteCarriersEngine
             get delete_transient_registration_path(transient_registration[:token])
 
             expect(response).to have_http_status(302)
-            expect(response).to redirect_to(registrations_path(reg_identifier: transient_registration.reg_identifier))
+            expect(response).to redirect_to(Rails.application.routes.url_helpers.registration_path(reg_identifier: transient_registration.reg_identifier))
             expect(TransientRegistration.count).to eq(expected_count)
           end
         end

@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
       transient_registration.destroy!
 
-      redirect_to registrations_path(reg_identifier: transient_registration.reg_identifier)
+      redirect_to Rails.application.routes.url_helpers.registration_path(reg_identifier: transient_registration.reg_identifier)
     end
   end
 end
