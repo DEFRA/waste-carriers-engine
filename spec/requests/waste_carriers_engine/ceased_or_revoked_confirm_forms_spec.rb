@@ -79,7 +79,6 @@ module WasteCarriersEngine
           context "when the workflow_state is correct" do
             it "deletes the transient object, copy data to the registration, redirects to the main dashboard page" do
               registration = transient_registration.registration
-              previous_email_count = ActionMailer::Base.deliveries.count
 
               post ceased_or_revoked_confirm_forms_path(transient_registration.token)
 

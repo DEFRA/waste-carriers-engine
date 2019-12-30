@@ -13,7 +13,7 @@ module WasteCarriersEngine
 
       status = @transient_registration.status
       ceased_or_revoked = I18n.t(
-        "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.ceased_or_revoked.#{status}",
+        "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.ceased_or_revoked.#{status}"
       )
       message = I18n.t(
         "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.submit_message",
@@ -23,7 +23,7 @@ module WasteCarriersEngine
 
       flash[:message] = message
 
-      return redirect_to("/")
+      redirect_to("/")
     end
   end
 end
