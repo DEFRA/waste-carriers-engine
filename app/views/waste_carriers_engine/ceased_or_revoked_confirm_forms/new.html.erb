@@ -1,0 +1,29 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_ceased_or_revoked_confirm_forms_path(token: @transient_registration.token)) %>
+
+<div class="text">
+  <%= form_for(@ceased_or_revoked_confirm_form) do |f| %>
+    <h1 class="heading-large">
+      <%= t(".heading", reg_identifier: @transient_registration.reg_identifier, revoke_or_cease: t(".revoke_or_cease.#{@transient_registration.status}")) %>
+    </h1>
+
+    <div class="panel wcr-panel wcr-panel-border-all">
+      <h2 class="heading-medium"><%= @ceased_or_revoked_confirm_form.company_name %></h2>
+
+      <p class="lede">
+        <%= t(".tier.#{@ceased_or_revoked_confirm_form.tier.downcase}") %> -
+        <%= t(".registration_type.#{@ceased_or_revoked_confirm_form.registration_type}") %>
+      </p>
+      <p>
+        <%= displayable_address(@ceased_or_revoked_confirm_form.contact_address).join(", ") %>
+      </p>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button", revoke_or_cease: t(".revoke_or_cease.#{@transient_registration.status}")), class: "button" %>
+
+      <div class="form-button-link">
+        <%= link_to t(".cancel"), delete_transient_registration_path(@ceased_or_revoked_confirm_form.transient_registration.token) %>
+      </div>
+    </div>
+  <% end %>
+</div>
