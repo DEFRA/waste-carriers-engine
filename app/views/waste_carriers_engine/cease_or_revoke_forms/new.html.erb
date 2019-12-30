@@ -1,0 +1,62 @@
+<%= render("waste_carriers_engine/shared/back", back_path: Rails.application.routes.url_helpers.registration_path(@transient_registration.reg_identifier)) %>
+
+<div class="text">
+  <%= form_for(@cease_or_revoke_form) do |f| %>
+    <%= f.fields_for :metaData do |f| %>
+      <%= render("waste_carriers_engine/shared/errors", object: @cease_or_revoke_form) %>
+
+      <h1 class="heading-large"><%= t(".heading", reg_identifier: @transient_registration.reg_identifier) %></h1>
+
+      <div class="panel wcr-panel wcr-panel-border-all">
+        <h2 class="heading-medium"><%= @cease_or_revoke_form.company_name %></h2>
+
+        <p class="lede">
+          <%= t(".tier.#{@cease_or_revoke_form.tier.downcase}") %> -
+          <%= t(".registration_type.#{@cease_or_revoke_form.registration_type}") %>
+        </p>
+        <p>
+          <%= displayable_address(@cease_or_revoke_form.contact_address).join(", ") %>
+        </p>
+      </div>
+
+      <div class="form-group <%= "form-group-error" if @cease_or_revoke_form.errors[:status].any? %>">
+        <fieldset>
+          <legend>
+            <p>
+              <%= t(".cease_or_revoke.legend") %>
+            </p>
+          </legend>
+
+          <% if @cease_or_revoke_form.errors[:status].any? %>
+            <span class="error-message"><%= @cease_or_revoke_form.errors[:status].join(", ") %></span>
+          <% end %>
+
+          <div class="multiple-choice">
+            <%= f.radio_button :status, "REVOKED", checked: @transient_registration.metaData&.status == "REVOKED" %>
+            <%= f.label :status, t(".cease_or_revoke.options.revoke"), value: "REVOKED" %>
+          </div>
+
+          <div class="multiple-choice">
+            <%= f.radio_button :status, "INACTIVE", checked: @transient_registration.metaData&.status == "INACTIVE" %>
+            <%= f.label :status, t(".cease_or_revoke.options.cease"), value: "INACTIVE" %>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="form-group <%= "form-group-error" if @cease_or_revoke_form.errors[:revoked_reason].any? %>">
+        <fieldset>
+          <% if @cease_or_revoke_form.errors[:revoked_reason].any? %>
+            <span class="error-message"><%= @cease_or_revoke_form.errors[:revoked_reason].join(", ") %></span>
+          <% end %>
+
+          <%= f.label :revoked_reason, t(".cease_or_revoke.reason"), class: "form-label" %>
+          <%= f.text_area :revoked_reason, class: "form-control form-control-3-4", rows: 5, value: @transient_registration.metaData&.revoked_reason %>
+        </fieldset>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit t(".next_button"), class: "button" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
