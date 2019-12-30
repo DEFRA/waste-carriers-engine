@@ -17,9 +17,8 @@ en:
           legend: "What do you want to do?"
           options:
             revoke: "Revoke"
-            cease: "De-register"
+            cease: "Cease"
           reason: "Reason"
-        total_cost_info: "The total cost will be shown on the next page"
         contact_address:
           heading: "Contact address:"
         next_button: "Confirm"
