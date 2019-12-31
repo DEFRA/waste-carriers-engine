@@ -20,5 +20,5 @@ en:
       create:
         submit_message: "%{reg_identifier} has been %{revoked_or_ceased}"
         revoked_or_ceased:
-          revoke: "revoked"
+          revoked: "revoked"
           inactive: "ceased"

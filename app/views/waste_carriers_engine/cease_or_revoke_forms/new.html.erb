@@ -7,17 +7,7 @@
 
       <h1 class="heading-large"><%= t(".heading", reg_identifier: @transient_registration.reg_identifier) %></h1>
 
-      <div class="panel wcr-panel wcr-panel-border-all">
-        <h2 class="heading-medium"><%= @cease_or_revoke_form.company_name %></h2>
-
-        <p class="lede">
-          <%= t(".tier.#{@cease_or_revoke_form.tier.downcase}") %> -
-          <%= t(".registration_type.#{@cease_or_revoke_form.registration_type}") %>
-        </p>
-        <p>
-          <%= displayable_address(@cease_or_revoke_form.contact_address).join(", ") %>
-        </p>
-      </div>
+      <%= render "shared/company_details_panel", registration: @cease_or_revoke_form %>
 
       <div class="form-group <%= "form-group-error" if @cease_or_revoke_form.errors[:status].any? %>">
         <fieldset>
