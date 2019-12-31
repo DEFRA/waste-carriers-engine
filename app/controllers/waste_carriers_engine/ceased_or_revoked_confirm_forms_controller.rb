@@ -15,6 +15,7 @@ module WasteCarriersEngine
       ceased_or_revoked = I18n.t(
         "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.ceased_or_revoked.#{status}"
       )
+
       message = I18n.t(
         "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.submit_message",
         reg_identifier: @transient_registration.reg_identifier,

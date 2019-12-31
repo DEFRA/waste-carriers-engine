@@ -1,0 +1,10 @@
+en:
+  shared:
+    company_details_panel:
+      registration_type:
+        carrier_dealer: "Carrier and dealer"
+        broker_dealer: "Broker and dealer"
+        carrier_broker_dealer: "Carrier, broker and dealer"
+      tier:
+        upper: "Upper tier"
+        lower: "Lower tier"
