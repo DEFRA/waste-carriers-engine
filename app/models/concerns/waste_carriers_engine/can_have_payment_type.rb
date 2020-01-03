@@ -48,7 +48,7 @@ module WasteCarriersEngine
       end
 
       def refund?
-        payment_type = REFUND
+        payment_type == REFUND
       end
 
       def writeoff_small?
