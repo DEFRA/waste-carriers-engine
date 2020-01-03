@@ -4,6 +4,19 @@ module WasteCarriersEngine
   class Payment
     include Mongoid::Document
 
+    PAYMENT_TYPES = [
+      CASH = "CASH",
+      CHEQUE = "CHEQUE",
+      POSTALORDER = "POSTALORDER",
+      BANKTRANSFER = "BANKTRANSFER",
+      WORLDPAY = "WORLDPAY",
+      WORLDPAY_MISSED = "WORLDPAY_MISSED",
+      REFUND = "REFUND",
+      WRITEOFFSMALL = "WRITEOFFSMALL",
+      WRITEOFFLARGE = "WRITEOFFLARGE",
+      REVERSAL = "REVERSAL"
+    ].freeze
+
     embedded_in :finance_details, class_name: "WasteCarriersEngine::FinanceDetails"
 
     field :orderKey, as: :order_key,                              type: String
@@ -20,6 +33,14 @@ module WasteCarriersEngine
     field :updatedByUser, as: :updated_by_user,                   type: String
     field :comment,                                               type: String
     field :paymentType, as: :payment_type,                        type: String
+
+    scope :refundable, (lambda do
+      where(
+        payment_type: {
+          "$in" => [CASH, CHEQUE, POSTALORDER, BANKTRANSFER, WORLDPAY, WORLDPAY_MISSED]
+        }
+      )
+    end)
 
     def self.new_from_worldpay(order, current_user)
       payment = Payment.new

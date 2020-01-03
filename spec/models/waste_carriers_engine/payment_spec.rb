@@ -7,6 +7,27 @@ module WasteCarriersEngine
     let(:transient_registration) { build(:renewing_registration, :has_required_data) }
     let(:current_user) { build(:user) }
 
+    describe "scopes" do
+      describe ".refundable" do
+        let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
+
+        it "returns a list of payments that have a type which can be refunded" do
+          cash_payment = WasteCarriersEngine::Payment.new(payment_type: "CASH")
+          refund_payment = WasteCarriersEngine::Payment.new(payment_type: "REFUND")
+
+          transient_registration.finance_details.payments << cash_payment
+          transient_registration.finance_details.payments << refund_payment
+          transient_registration.save
+          transient_registration.reload
+
+          result = transient_registration.finance_details.payments.refundable
+
+          expect(result).to include(cash_payment)
+          expect(result).to_not include(refund_payment)
+        end
+      end
+    end
+
     describe "new_from_worldpay" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
