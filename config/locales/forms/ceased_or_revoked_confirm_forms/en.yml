@@ -6,13 +6,6 @@ en:
         revoke_or_cease:
           revoked: "revoke"
           inactive: "cease"
-        tier:
-          upper: "Upper tier"
-          lower: "Lower tier"
-        registration_type:
-          carrier_dealer: "Carrier and dealer"
-          broker_dealer: "Broker and dealer"
-          carrier_broker_dealer: "Carrier, broker and dealer"
         contact_address:
           heading: "Contact address:"
         next_button: "Confirm %{revoke_or_cease}"
@@ -20,5 +13,5 @@ en:
       create:
         submit_message: "%{reg_identifier} has been %{revoked_or_ceased}"
         revoked_or_ceased:
-          revoke: "revoked"
+          revoked: "revoked"
           inactive: "ceased"

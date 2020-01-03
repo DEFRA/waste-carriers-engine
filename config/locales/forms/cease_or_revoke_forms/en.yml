@@ -3,13 +3,6 @@ en:
     cease_or_revoke_forms:
       new:
         heading: "Revoke or cease registration %{reg_identifier}"
-        tier:
-          upper: "Upper tier"
-          lower: "Lower tier"
-        registration_type:
-          carrier_dealer: "Carrier and dealer"
-          broker_dealer: "Broker and dealer"
-          carrier_broker_dealer: "Carrier, broker and dealer"
         reason:
           label: "Reason"
           help_text: "Maximum 500 characters"
