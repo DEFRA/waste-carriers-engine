@@ -5,6 +5,7 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include Mongoid::Document
 
+    # rubocop:disable Metrics/BlockLength
     included do
       PAYMENT_TYPES = [
         CASH = "CASH",
@@ -63,5 +64,6 @@ module WasteCarriersEngine
         payment_type == REVERSAL
       end
     end
+    # rubocop:enable Metrics/BlockLength
   end
 end
