@@ -11,7 +11,7 @@ module WasteCarriersEngine
 
     describe "default attributes" do
       describe ".currency" do
-        it "initialize a currencty to GBP" do
+        it "initialize currency as GBP" do
           payment = described_class.new
 
           expect(payment.currency).to eq("GBP")
