@@ -13,7 +13,7 @@ module WasteCarriersEngine
 
       status = @transient_registration.status
       ceased_or_revoked = I18n.t(
-        "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.ceased_or_revoked.#{status}"
+        "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.revoked_or_ceased.#{status}"
       )
 
       message = I18n.t(
