@@ -4,18 +4,19 @@ require "rest-client"
 
 module WasteCarriersEngine
   class WorldpayService
+    include CanSendWorldpayRequest
+
     def initialize(transient_registration, order, current_user, params = nil)
       @transient_registration = transient_registration
       @order = order
-      @url = Rails.configuration.worldpay_url
-      @username = Rails.configuration.worldpay_username
-      @password = Rails.configuration.worldpay_password
       @params = prepare_params(params)
       @current_user = current_user
     end
 
     def prepare_for_payment
-      response = send_request
+      xml_service = WorldpayXmlService.new(@transient_registration, @order, @current_user)
+      xml = xml_service.build_xml
+      response = send_request(xml)
       reference = parse_response(response)
 
       if reference.present?
@@ -74,27 +75,6 @@ module WasteCarriersEngine
       params[:paymentStatus] = "CANCELLED" if params[:paymentStatus].nil?
 
       params
-    end
-
-    def send_request
-      xml_service = WorldpayXmlService.new(@transient_registration, @order, @current_user)
-      xml = xml_service.build_xml
-
-      Rails.logger.debug "Sending initial request to WorldPay"
-
-      begin
-        response = RestClient::Request.execute(
-          method: :get,
-          url: @url,
-          payload: xml,
-          headers: {
-            "Authorization" => "Basic " + Base64.encode64(@username + ":" + @password).to_s
-          }
-        )
-
-        Rails.logger.debug "Received response from WorldPay"
-        response
-      end
     end
 
     def parse_response(response)
