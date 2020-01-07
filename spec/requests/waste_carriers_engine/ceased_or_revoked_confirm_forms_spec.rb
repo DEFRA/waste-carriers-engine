@@ -88,7 +88,7 @@ module WasteCarriersEngine
               expect(registration.metaData.status).to eq("REVOKED")
               expect(registration.metaData.revokedReason).to eq("Revoked Reason")
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(root_path)
+              expect(response).to redirect_to("/bo")
             end
           end
         end
