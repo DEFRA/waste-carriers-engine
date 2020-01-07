@@ -24,7 +24,7 @@ module WasteCarriersEngine
 
       flash[:message] = message
 
-      redirect_to("/")
+      redirect_to("/bo")
     end
   end
 end
