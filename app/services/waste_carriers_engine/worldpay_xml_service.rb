@@ -4,6 +4,8 @@ require "countries"
 
 module WasteCarriersEngine
   class WorldpayXmlService
+    include CanBuildWorldpayXml
+
     def initialize(transient_registration, order, current_user)
       @transient_registration = transient_registration
       @order = order
@@ -11,8 +13,6 @@ module WasteCarriersEngine
     end
 
     def build_xml
-      merchant_code = Rails.configuration.worldpay_merchantcode
-
       builder = Nokogiri::XML::Builder.new do |xml|
         build_doctype(xml)
 
@@ -27,14 +27,6 @@ module WasteCarriersEngine
     end
 
     private
-
-    def build_doctype(xml)
-      xml.doc.create_internal_subset(
-        "paymentService",
-        "-//WorldPay/DTD WorldPay PaymentService v1/EN",
-        "http://dtd.worldpay.com/paymentService_v1.dtd"
-      )
-    end
 
     def build_order(xml)
       order_code = @order.order_code
