@@ -1,5 +1,10 @@
-<div class="error-summary flash-error" role="alert" aria-labelledby="error-summary-heading" tabindex="-1">
-  <span id="error-summary-heading">
+<div class="error-summary" role="alert" aria-labelledby="error-summary-heading-1">
+  <h2 class="heading-medium error-summary-heading" id="error-summary-heading-1">
     <%= message %>
-  </span>
+  </h2>
+  <% if details.present? %>
+    <p>
+      <%= details %>
+    </p>
+  <% end %>
 </div>
