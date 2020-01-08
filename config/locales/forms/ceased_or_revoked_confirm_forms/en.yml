@@ -11,7 +11,7 @@ en:
         next_button: "Confirm %{revoke_or_cease}"
         cancel: "Cancel"
       create:
-        submit_message: "%{reg_identifier} has been %{revoked_or_ceased}"
-        revoked_or_ceased:
+        submit_message: "%{reg_identifier} has been %{ceased_or_revoked}"
+        ceased_or_revoked:
           revoked: "revoked"
           inactive: "ceased"

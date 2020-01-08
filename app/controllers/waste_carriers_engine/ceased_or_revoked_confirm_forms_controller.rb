@@ -19,7 +19,7 @@ module WasteCarriersEngine
       message = I18n.t(
         "waste_carriers_engine.ceased_or_revoked_confirm_forms.create.submit_message",
         reg_identifier: @transient_registration.reg_identifier,
-        revoked_or_ceased: ceased_or_revoked
+        ceased_or_revoked: ceased_or_revoked
       )
 
       flash[:message] = message
