@@ -17,7 +17,7 @@ module WasteCarriersEngine
       it "send an email using the correct information" do
         expect(mail.from).to eq(["test@example.com"])
 
-        expect(mail.subject).to eq("We’re printing your waste carriers registration cards")
+        expect(mail.subject).to eq("We’re printing your waste carriers registration card")
 
         expect(mail.body.encoded).to include(registration.reg_identifier)
       end
