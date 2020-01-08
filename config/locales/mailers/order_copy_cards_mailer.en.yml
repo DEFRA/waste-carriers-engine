@@ -3,8 +3,8 @@ en:
     order_copy_cards_mailer:
       send_order_completed_email:
         subject:
-          one: "We’re printing your waste carriers registration cards"
-          other: "We’re printing your waste carriers registration card"
+          one: "We’re printing your waste carriers registration card"
+          other: "We’re printing your waste carriers registration cards"
         dear: "Dear %{full_name}"
         heading:
           one: "We’re printing your waste carriers registration card. It should arrive within 10 working days"
