@@ -17,10 +17,10 @@ module WasteCarriersEngine
     end
 
     # rubocop:disable Naming/MemoizedInstanceVariableName
-    def find_or_initialize_transient_registration(_id)
-      @transient_registration ||= CeasedOrRevokedRegistration.where(reg_identifier: _id).first ||
-                                  CeasedOrRevokedRegistration.where(_id: _id).first ||
-                                  CeasedOrRevokedRegistration.new(reg_identifier: _id)
+    def find_or_initialize_transient_registration(id)
+      @transient_registration ||= CeasedOrRevokedRegistration.where(reg_identifier: id).first ||
+                                  CeasedOrRevokedRegistration.where(_id: id).first ||
+                                  CeasedOrRevokedRegistration.new(reg_identifier: id)
     end
     # rubocop:enable Naming/MemoizedInstanceVariableName
   end

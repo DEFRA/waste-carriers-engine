@@ -73,8 +73,8 @@ module WasteCarriersEngine
       go_back
     end
 
-    def valid_transient_registration?(_id)
-      find_or_initialize_transient_registration(_id)
+    def valid_transient_registration?(id)
+      find_or_initialize_transient_registration(id)
       setup_checks_pass?
     end
 

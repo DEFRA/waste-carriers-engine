@@ -42,15 +42,15 @@ module WasteCarriersEngine
     # We're not really memoizing this instance variable here, so we don't think
     # this cop is valid in this context
     # rubocop:disable Naming/MemoizedInstanceVariableName
-    def find_or_initialize_transient_registration(_id)
-      @transient_registration ||= TransientRegistration.where(_id: _id).first
+    def find_or_initialize_transient_registration(id)
+      @transient_registration ||= TransientRegistration.where(_id: id).first
     end
     # rubocop:enable Naming/MemoizedInstanceVariableName
 
     # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
     # and the _id param
-    def set_up_form(form_class, form, _id, get_request = false)
-      find_or_initialize_transient_registration(_id)
+    def set_up_form(form_class, form, id, get_request = false)
+      find_or_initialize_transient_registration(id)
 
       set_workflow_state if get_request
 
