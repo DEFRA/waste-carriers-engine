@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:location_form) { build(:location_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: location_form.token,
+            _id: location_form._id,
             location: location_form.location
           }
         end

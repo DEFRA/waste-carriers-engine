@@ -13,7 +13,7 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          it "redirects to the invalid token error page" do
+          it "redirects to the invalid _id error page" do
             get new_copy_cards_payment_form_path("CBDU999999999")
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
           let(:order_copy_cards_registration) { create(:order_copy_cards_registration, :has_finance_details, workflow_state: "copy_cards_payment_form") }
 
           it "renders the appropriate template and responds with a 200 status code" do
-            get new_copy_cards_payment_form_path(order_copy_cards_registration.token)
+            get new_copy_cards_payment_form_path(order_copy_cards_registration._id)
 
             expect(response).to render_template("waste_carriers_engine/copy_cards_payment_forms/new")
             expect(response.code).to eq("200")
@@ -61,7 +61,7 @@ module WasteCarriersEngine
           it "does not create a new transient registration and redirects to the invalid page" do
             original_tr_count = OrderCopyCardsRegistration.count
 
-            post copy_cards_payment_forms_path(token: "CBDU222")
+            post copy_cards_payment_forms_path(_id: "CBDU222")
 
             expect(response).to redirect_to(page_path("invalid"))
             expect(OrderCopyCardsRegistration.count).to eq(original_tr_count)
@@ -78,13 +78,13 @@ module WasteCarriersEngine
               let(:temp_payment_method) { "card" }
 
               it "updates the transient registration with correct data, returns a 302 response and redirects to the worldpay form" do
-                post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), copy_cards_payment_form: valid_params
+                post copy_cards_payment_forms_path(_id: order_copy_cards_registration._id), copy_cards_payment_form: valid_params
 
                 order_copy_cards_registration.reload
 
                 expect(order_copy_cards_registration.temp_payment_method).to eq("card")
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_worldpay_form_path(order_copy_cards_registration.token))
+                expect(response).to redirect_to(new_worldpay_form_path(order_copy_cards_registration._id))
               end
             end
 
@@ -92,13 +92,13 @@ module WasteCarriersEngine
               let(:temp_payment_method) { "bank_transfer" }
 
               it "updates the transient registration with correct data, returns a 302 response and redirects to the bank transfer form" do
-                post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), copy_cards_payment_form: valid_params
+                post copy_cards_payment_forms_path(_id: order_copy_cards_registration._id), copy_cards_payment_form: valid_params
 
                 order_copy_cards_registration.reload
 
                 expect(order_copy_cards_registration.temp_payment_method).to eq("bank_transfer")
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_copy_cards_bank_transfer_form_path(order_copy_cards_registration.token))
+                expect(response).to redirect_to(new_copy_cards_bank_transfer_form_path(order_copy_cards_registration._id))
               end
             end
           end
@@ -107,7 +107,7 @@ module WasteCarriersEngine
             let(:invalid_params) { { temp_payment_method: "foo" } }
 
             it "returns a 200 response and render the new copy cards form" do
-              post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), copy_cards_payment_form: invalid_params
+              post copy_cards_payment_forms_path(_id: order_copy_cards_registration._id), copy_cards_payment_form: invalid_params
 
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/copy_cards_payment_forms/new")
@@ -123,13 +123,13 @@ module WasteCarriersEngine
         end
 
         it "returns a 302 response" do
-          post copy_cards_payment_forms_path(token: "1234")
+          post copy_cards_payment_forms_path(_id: "1234")
 
           expect(response).to have_http_status(302)
         end
 
         it "redirects to the sign in page" do
-          post copy_cards_payment_forms_path(token: "1234")
+          post copy_cards_payment_forms_path(_id: "1234")
 
           expect(response).to redirect_to(new_user_session_path)
         end

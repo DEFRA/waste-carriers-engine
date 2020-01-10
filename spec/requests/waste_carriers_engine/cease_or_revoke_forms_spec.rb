@@ -13,15 +13,15 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          it "redirects to the invalid token error page" do
+          it "redirects to the invalid _id error page" do
             get new_cease_or_revoke_form_path("CBDU999999999")
 
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
 
-        context "when the token doesn't match the format" do
-          it "redirects to the invalid token error page" do
+        context "when the _id doesn't match the format" do
+          it "redirects to the invalid _id error page" do
             get new_cease_or_revoke_form_path("foo")
 
             expect(response).to redirect_to(page_path("invalid"))
@@ -52,18 +52,18 @@ module WasteCarriersEngine
             context "when an order is in progress" do
               let!(:transient_registration) { create(:ceased_or_revoked_registration, workflow_state: "ceased_or_revoked_confirm_form") }
 
-              context "when the token is a reg_identifier" do
+              context "when the _id is a reg_identifier" do
                 it "redirects to the correct workflow state form" do
                   get new_cease_or_revoke_form_path(transient_registration.registration.reg_identifier)
 
-                  expect(response).to redirect_to(new_ceased_or_revoked_confirm_form_path(transient_registration.token))
+                  expect(response).to redirect_to(new_ceased_or_revoked_confirm_form_path(transient_registration._id))
                 end
               end
 
               it "redirects to the correct workflow state form" do
-                get new_cease_or_revoke_form_path(transient_registration.token)
+                get new_cease_or_revoke_form_path(transient_registration._id)
 
-                expect(response).to redirect_to(new_ceased_or_revoked_confirm_form_path(transient_registration.token))
+                expect(response).to redirect_to(new_ceased_or_revoked_confirm_form_path(transient_registration._id))
               end
             end
           end
@@ -94,7 +94,7 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          it "redirects to the invalid token error page and does not create a new transient registration" do
+          it "redirects to the invalid _id error page and does not create a new transient registration" do
             original_tr_count = CeasedOrRevokedRegistration.count
 
             post cease_or_revoke_forms_path("CBDU99999")
@@ -104,8 +104,8 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the token doesn't match the format" do
-          it "redirects to the invalid token error page and does not create a new transient registration" do
+        context "when the _id doesn't match the format" do
+          it "redirects to the invalid _id error page and does not create a new transient registration" do
             original_tr_count = CeasedOrRevokedRegistration.count
 
             post cease_or_revoke_forms_path("foo")
@@ -119,7 +119,7 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data, :is_active) }
 
           context "when valid params are submitted" do
-            let(:valid_params) { { token: registration.reg_identifier, metaData: { status: "REVOKED", revoked_reason: "Some reason" } } }
+            let(:valid_params) { { _id: registration.reg_identifier, metaData: { status: "REVOKED", revoked_reason: "Some reason" } } }
 
             it "creates a transient registration with correct data, returns a 302 response and redirects to the " do
               expected_tr_count = CeasedOrRevokedRegistration.count + 1
@@ -133,12 +133,12 @@ module WasteCarriersEngine
               expect(transient_registration.metaData.revoked_reason).to eq("Some reason")
 
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_ceased_or_revoked_confirm_form_path(transient_registration.token))
+              expect(response).to redirect_to(new_ceased_or_revoked_confirm_form_path(transient_registration._id))
             end
           end
 
           context "when invalid params are submitted" do
-            let(:invalid_params) { { token: registration.reg_identifier, metaData: {} } }
+            let(:invalid_params) { { _id: registration.reg_identifier, metaData: {} } }
 
             it "returns a 200 response and render the new form" do
               post cease_or_revoke_forms_path(registration.reg_identifier), cease_or_revoke_form: invalid_params
@@ -152,7 +152,7 @@ module WasteCarriersEngine
 
       context "when a user is not signed in" do
         let(:registration) { create(:registration, :has_required_data) }
-        let(:valid_params) { { token: registration.reg_identifier } }
+        let(:valid_params) { { _id: registration.reg_identifier } }
 
         before(:each) do
           user = create(:user)

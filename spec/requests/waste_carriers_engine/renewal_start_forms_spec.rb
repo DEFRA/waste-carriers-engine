@@ -13,14 +13,14 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          it "redirects to the invalid token error page" do
+          it "redirects to the invalid _id error page" do
             get new_renewal_start_form_path("CBDU999999999")
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
 
-        context "when the token doesn't match the format" do
-          it "redirects to the invalid token error page" do
+        context "when the _id doesn't match the format" do
+          it "redirects to the invalid _id error page" do
             get new_renewal_start_form_path("foo")
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -56,7 +56,7 @@ module WasteCarriersEngine
                 end
 
                 it "returns a success response" do
-                  get new_renewal_start_form_path(transient_registration[:token])
+                  get new_renewal_start_form_path(transient_registration[:_id])
                   expect(response).to have_http_status(200)
                 end
               end
@@ -69,18 +69,18 @@ module WasteCarriersEngine
                          workflow_state: "location_form")
                 end
 
-                context "when the token is a reg_identifier" do
+                context "when the _id is a reg_identifier" do
                   it "redirects to the form for the current state" do
                     get new_renewal_start_form_path(transient_registration.registration.reg_identifier)
 
-                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                    expect(response).to redirect_to(new_location_form_path(transient_registration[:_id]))
                   end
                 end
 
                 it "redirects to the form for the current state" do
-                  get new_renewal_start_form_path(transient_registration[:token])
+                  get new_renewal_start_form_path(transient_registration[:_id])
 
-                  expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                  expect(response).to redirect_to(new_location_form_path(transient_registration[:_id]))
                 end
               end
             end
@@ -110,7 +110,7 @@ module WasteCarriersEngine
               end
 
               it "redirects to the permissions error page" do
-                get new_renewal_start_form_path(transient_registration[:token])
+                get new_renewal_start_form_path(transient_registration[:_id])
                 expect(response).to redirect_to(page_path("permission"))
               end
             end
@@ -147,7 +147,7 @@ module WasteCarriersEngine
         context "when no matching registration exists" do
           let(:invalid_registration) { "CBDU99999" }
 
-          it "redirects to the invalid token error page" do
+          it "redirects to the invalid _id error page" do
             post renewal_start_forms_path(invalid_registration)
 
             expect(response).to redirect_to(page_path("invalid"))
@@ -162,10 +162,10 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the token doesn't match the format" do
+        context "when the _id doesn't match the format" do
           let(:invalid_renewal) { "foo" }
 
-          it "redirects to the invalid token error page" do
+          it "redirects to the invalid _id error page" do
             post renewal_start_forms_path(invalid_renewal)
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -218,7 +218,7 @@ module WasteCarriersEngine
                   post renewal_start_forms_path(valid_registration)
                   transient_registration = RenewingRegistration.where(reg_identifier: valid_registration).first
 
-                  expect(response).to redirect_to(new_location_form_path(transient_registration.token))
+                  expect(response).to redirect_to(new_location_form_path(transient_registration._id))
                 end
 
                 context "when the registration cannot be renewed" do
@@ -241,7 +241,7 @@ module WasteCarriersEngine
                      workflow_state: "renewal_start_form")
             end
 
-            let(:valid_renewal) { transient_registration.token }
+            let(:valid_renewal) { transient_registration._id }
 
             it "returns a 302 response" do
               post renewal_start_forms_path(valid_renewal)
@@ -319,7 +319,7 @@ module WasteCarriersEngine
                      account_email: "not-#{user.email}",
                      workflow_state: "renewal_start_form")
             end
-            let(:valid_renewal) { transient_registration.token }
+            let(:valid_renewal) { transient_registration._id }
 
             it "redirects to the permissions error page" do
               post renewal_start_forms_path(valid_renewal)

@@ -13,7 +13,7 @@ module WasteCarriersEngine
         end
 
         context "when no matching registration exists" do
-          it "redirects to the invalid token error page" do
+          it "redirects to the invalid _id error page" do
             get new_ceased_or_revoked_confirm_form_path("CBDU999999999")
             expect(response).to redirect_to(page_path("invalid"))
           end
@@ -31,7 +31,7 @@ module WasteCarriersEngine
           end
 
           it "renders the appropriate template and responds with a 200 status code" do
-            get new_ceased_or_revoked_confirm_form_path(transient_registration.token)
+            get new_ceased_or_revoked_confirm_form_path(transient_registration._id)
 
             expect(response).to render_template("waste_carriers_engine/ceased_or_revoked_confirm_forms/new")
             expect(response.code).to eq("200")
@@ -80,7 +80,7 @@ module WasteCarriersEngine
             it "deletes the transient object, copy data to the registration, redirects to the main dashboard page" do
               registration = transient_registration.registration
 
-              post ceased_or_revoked_confirm_forms_path(transient_registration.token)
+              post ceased_or_revoked_confirm_forms_path(transient_registration._id)
 
               registration.reload
 

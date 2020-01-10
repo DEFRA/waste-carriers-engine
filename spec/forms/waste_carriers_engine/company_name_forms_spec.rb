@@ -8,7 +8,7 @@ module WasteCarriersEngine
       context "when the form is valid" do
         let(:company_name_form) { build(:company_name_form, :has_required_data) }
         let(:valid_params) do
-          { token: company_name_form.token, company_name: company_name_form.company_name }
+          { _id: company_name_form._id, company_name: company_name_form.company_name }
         end
 
         it "should submit" do

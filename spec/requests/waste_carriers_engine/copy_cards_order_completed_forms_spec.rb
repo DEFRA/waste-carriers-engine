@@ -33,7 +33,7 @@ module WasteCarriersEngine
               registration = transient_registration.registration
               previous_email_count = ActionMailer::Base.deliveries.count
 
-              get new_copy_cards_order_completed_form_path(transient_registration.token)
+              get new_copy_cards_order_completed_form_path(transient_registration._id)
 
               finance_details = registration.reload.finance_details
               order = finance_details.orders.first

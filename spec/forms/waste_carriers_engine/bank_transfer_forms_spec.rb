@@ -8,7 +8,7 @@ module WasteCarriersEngine
       let(:bank_transfer_form) { build(:bank_transfer_form, :has_required_data) }
 
       context "when the form is valid" do
-        let(:valid_params) { { token: bank_transfer_form.token } }
+        let(:valid_params) { { _id: bank_transfer_form._id } }
 
         it "should submit" do
           expect(bank_transfer_form.submit(valid_params)).to eq(true)

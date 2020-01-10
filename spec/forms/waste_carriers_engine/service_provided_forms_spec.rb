@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:service_provided_form) { build(:service_provided_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: service_provided_form.token,
+            _id: service_provided_form._id,
             is_main_service: service_provided_form.is_main_service
           }
         end

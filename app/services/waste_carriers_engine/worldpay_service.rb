@@ -20,7 +20,7 @@ module WasteCarriersEngine
       reference = parse_response(response)
 
       if reference.present?
-        worldpay_url_service = WorldpayUrlService.new(@transient_registration.token, reference[:link])
+        worldpay_url_service = WorldpayUrlService.new(@transient_registration._id, reference[:link])
         url = worldpay_url_service.format_link
 
         {

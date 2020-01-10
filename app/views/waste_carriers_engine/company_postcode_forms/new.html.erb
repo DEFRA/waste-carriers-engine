@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_company_postcode_forms_path(@company_postcode_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_company_postcode_forms_path(@company_postcode_form._id)) %>
 
 <div class="text">
   <%= form_for(@company_postcode_form) do |f| %>
@@ -31,7 +31,7 @@
 
     <% if @company_postcode_form.errors.added?(:temp_company_postcode, :no_results) %>
       <div class="form-group">
-        <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_postcode_forms_path(@company_postcode_form.token)) %>
+        <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_postcode_forms_path(@company_postcode_form._id)) %>
       </div>
     <% end %>
   <% end %>

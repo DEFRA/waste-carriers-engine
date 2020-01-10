@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_company_address_manual_forms_path(@company_address_manual_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_company_address_manual_forms_path(@company_address_manual_form._id)) %>
 
 <div class="text">
   <%= form_for(@company_address_manual_form) do |f| %>
@@ -17,7 +17,7 @@
       <div class="form-group">
         <label class="form-label"><%= t(".preset_postcode_label") %></label>
         <span class="postcode"><%= @company_address_manual_form.postcode %></span>
-        <%= link_to(t(".postcode_change_link"), back_company_address_manual_forms_path(@company_address_manual_form.token)) %>
+        <%= link_to(t(".postcode_change_link"), back_company_address_manual_forms_path(@company_address_manual_form._id)) %>
       </div>
     <% end %>
 

@@ -29,13 +29,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_service_provided_forms_path(transient_registration[:token])
+              get back_service_provided_forms_path(transient_registration[:_id])
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the other_businesses form" do
-              get back_service_provided_forms_path(transient_registration[:token])
-              expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:token]))
+              get back_service_provided_forms_path(transient_registration[:_id])
+              expect(response).to redirect_to(new_other_businesses_form_path(transient_registration[:_id]))
             end
           end
         end
@@ -50,13 +50,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_service_provided_forms_path(transient_registration[:token])
+              get back_service_provided_forms_path(transient_registration[:_id])
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_service_provided_forms_path(transient_registration[:token])
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
+              get back_service_provided_forms_path(transient_registration[:_id])
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:_id]))
             end
           end
         end

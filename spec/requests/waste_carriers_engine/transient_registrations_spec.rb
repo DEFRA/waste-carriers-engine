@@ -20,7 +20,7 @@ module WasteCarriersEngine
               reg_identifier: transient_registration.reg_identifier
             )
 
-            get delete_transient_registration_path(transient_registration[:token])
+            get delete_transient_registration_path(transient_registration[:_id])
 
             expect(response).to have_http_status(302)
             expect(response).to redirect_to(redirect_path)

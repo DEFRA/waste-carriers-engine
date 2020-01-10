@@ -8,7 +8,7 @@ module WasteCarriersEngine
       let(:renewal_information_form) { build(:renewal_information_form, :has_required_data) }
 
       context "when the form is valid" do
-        let(:valid_params) { { token: renewal_information_form.token } }
+        let(:valid_params) { { _id: renewal_information_form._id } }
 
         it "should submit" do
           expect(renewal_information_form.submit(valid_params)).to eq(true)

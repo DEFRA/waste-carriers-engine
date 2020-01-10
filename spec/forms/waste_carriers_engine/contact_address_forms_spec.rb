@@ -13,7 +13,7 @@ module WasteCarriersEngine
         let(:contact_address_form) { build(:contact_address_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: contact_address_form.token,
+            _id: contact_address_form._id,
             contact_address: {
               uprn: "340116"
             }
@@ -27,7 +27,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:contact_address_form) { build(:contact_address_form, :has_required_data) }
-        let(:invalid_params) { { token: "foo" } }
+        let(:invalid_params) { { _id: "foo" } }
 
         it "should not submit" do
           expect(contact_address_form.submit(invalid_params)).to eq(false)

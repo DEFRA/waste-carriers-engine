@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:construction_demolition_form) { build(:construction_demolition_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: construction_demolition_form.token,
+            _id: construction_demolition_form._id,
             construction_waste: construction_demolition_form.construction_waste
           }
         end

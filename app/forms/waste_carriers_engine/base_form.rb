@@ -10,18 +10,8 @@ module WasteCarriersEngine
     attr_reader :transient_registration
 
     delegate :reg_identifier, to: :transient_registration
-    # Registrations don't have tokens, so don't try to delegate.
-    delegate :token, to: :transient_registration, if: lambda {
-      transient_registration&.is_a?(TransientRegistration)
-    }
+    delegate :_id, to: :transient_registration
 
-    # If the record is new, and not yet persisted (which it is when the start
-    # page is first submitted) then we have nothing to validate, hence the check.
-    # Registrations also don't have tokens, so don't try to validate them.
-    validates :token, presence: true, if: lambda {
-      transient_registration&.persisted? &&
-        transient_registration&.is_a?(TransientRegistration)
-    }
     validates(
       :reg_identifier,
       "waste_carriers_engine/reg_identifier": true,

@@ -59,18 +59,18 @@ RSpec.shared_examples "POST form" do |form, options|
             # Otherwise, expect the value submitted in params
             expected_value = valid_params[test_attribute] unless expected_value.present?
 
-            post_form_with_params(form, transient_registration.token, valid_params)
+            post_form_with_params(form, transient_registration._id, valid_params)
             expect(transient_registration.reload[test_attribute]).to eq(expected_value)
           end
 
           it "changes the workflow_state" do
             state_before_request = transient_registration[:workflow_state]
-            post_form_with_params(form, transient_registration.token, valid_params)
+            post_form_with_params(form, transient_registration._id, valid_params)
             expect(transient_registration.reload[:workflow_state]).to_not eq(state_before_request)
           end
 
           it "redirects to the next page" do
-            post_form_with_params(form, transient_registration.token, valid_params)
+            post_form_with_params(form, transient_registration._id, valid_params)
             expect(response).to have_http_status(302)
           end
         end
@@ -78,12 +78,12 @@ RSpec.shared_examples "POST form" do |form, options|
         context "when the params are invalid" do
           it "does not update the transient registration, including workflow_state" do
             transient_reg_before_submitting = transient_registration
-            post_form_with_params(form, transient_registration.token, invalid_params)
+            post_form_with_params(form, transient_registration._id, invalid_params)
             expect(transient_registration.reload).to eq(transient_reg_before_submitting)
           end
 
           it "show the form again" do
-            post_form_with_params(form, transient_registration.token, invalid_params)
+            post_form_with_params(form, transient_registration._id, invalid_params)
             expect(response).to render_template("#{form}s/new")
           end
         end
@@ -92,7 +92,7 @@ RSpec.shared_examples "POST form" do |form, options|
           it "does not throw an error" do
             # rubocop:disable Style/BlockDelimiters
             expect {
-              post_form_with_params(form, transient_registration.token)
+              post_form_with_params(form, transient_registration._id)
             }.not_to raise_error
             # rubocop:enable Style/BlockDelimiters
           end
@@ -103,12 +103,12 @@ RSpec.shared_examples "POST form" do |form, options|
 
           it "does not update the transient registration, including workflow_state" do
             transient_reg_before_submitting = transient_registration
-            post_form_with_params(form, transient_registration.token, valid_params)
+            post_form_with_params(form, transient_registration._id, valid_params)
             expect(transient_registration.reload).to eq(transient_reg_before_submitting)
           end
 
           it "redirects to the unrenewable error page" do
-            post_form_with_params(form, transient_registration.token, valid_params)
+            post_form_with_params(form, transient_registration._id, valid_params)
             expect(response).to redirect_to(page_path("unrenewable"))
           end
         end
@@ -128,13 +128,13 @@ RSpec.shared_examples "POST form" do |form, options|
 
         it "does not update the transient_registration, including workflow_state" do
           transient_reg_before_submitting = transient_registration
-          post_form_with_params(form, transient_registration.token, valid_params)
+          post_form_with_params(form, transient_registration._id, valid_params)
           expect(transient_registration.reload).to eq(transient_reg_before_submitting)
         end
 
         it "redirects to the correct form for the workflow_state" do
           workflow_state = transient_registration[:workflow_state]
-          post_form_with_params(form, transient_registration.token, valid_params)
+          post_form_with_params(form, transient_registration._id, valid_params)
           expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
         end
       end
@@ -143,6 +143,6 @@ RSpec.shared_examples "POST form" do |form, options|
 
   # Should call a method like new_location_form_path("CBDU1234")
   def new_path_for(form, transient_registration)
-    send("new_#{form}_path", transient_registration.token)
+    send("new_#{form}_path", transient_registration._id)
   end
 end

@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_main_people_forms_path(@main_people_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_main_people_forms_path(@main_people_form._id)) %>
 
 <% if @main_people_form.can_only_have_one_main_person? %>
   <div class="text">
@@ -19,7 +19,7 @@
             <li>
               <%= person.first_name %> <%= person.last_name %>
               <%= button_to(t(".delete_person_link"),
-                  delete_person_main_people_forms_path(token: @main_people_form.token, id: person.id),
+                  delete_person_main_people_forms_path(_id: @main_people_form._id, id: person.id),
                   class: "button-link",
                   method: :delete) %>
             </li>

@@ -7,7 +7,7 @@ module WasteCarriersEngine
     end
 
     def create
-      find_or_initialize_transient_registration(params[:token])
+      find_or_initialize_transient_registration(params[:_id])
 
       CeasedOrRevokedCompletionService.run(@transient_registration)
 

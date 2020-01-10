@@ -5,7 +5,7 @@ module WasteCarriersEngine
     before_action :authenticate_user!
 
     def destroy
-      transient_registration = TransientRegistration.find_by(token: params[:token])
+      transient_registration = TransientRegistration.find_by(_id: params[:_id])
       redirect_path = Rails.application.routes.url_helpers.registration_path(
         reg_identifier: transient_registration.reg_identifier
       )

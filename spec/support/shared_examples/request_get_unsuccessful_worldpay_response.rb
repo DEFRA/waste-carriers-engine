@@ -17,7 +17,6 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
                account_email: user.email,
                workflow_state: "worldpay_form")
       end
-      let(:token) { transient_registration.token }
 
       before do
         transient_registration.prepare_for_payment(:worldpay, user)
@@ -36,7 +35,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
       let(:validation_action) { "valid_#{action}?".to_sym }
       let(:path) do
         path_route = "#{action}_worldpay_forms_path".to_sym
-        public_send(path_route, token)
+        public_send(path_route, transient_registration._id)
       end
 
       context "when the params are valid" do
@@ -46,7 +45,8 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
 
         it "redirects to payment_summary_form" do
           get path, params
-          expect(response).to redirect_to(new_payment_summary_form_path(token))
+
+          expect(response).to redirect_to(new_payment_summary_form_path(transient_registration._id))
         end
       end
 
@@ -57,7 +57,8 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
 
         it "redirects to payment_summary_form" do
           get path, params
-          expect(response).to redirect_to(new_payment_summary_form_path(token))
+
+          expect(response).to redirect_to(new_payment_summary_form_path(transient_registration._id))
         end
       end
     end

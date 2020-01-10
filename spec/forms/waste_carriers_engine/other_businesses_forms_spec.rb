@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:other_businesses_form) { build(:other_businesses_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: other_businesses_form.token,
+            _id: other_businesses_form._id,
             other_businesses: other_businesses_form.other_businesses
           }
         end

@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:waste_types_form) { build(:waste_types_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: waste_types_form.token,
+            _id: waste_types_form._id,
             only_amf: waste_types_form.only_amf
           }
         end

@@ -25,10 +25,6 @@ module WasteCarriersEngine
                             factory: :transient_registration
     end
 
-    describe "secure token" do
-      it_should_behave_like "Having a secure token"
-    end
-
     describe "registration attributes" do
       it_should_behave_like "Can have registration attributes",
                             factory: :transient_registration

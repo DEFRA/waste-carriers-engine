@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:contact_phone_form) { build(:contact_phone_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: contact_phone_form.token,
+            _id: contact_phone_form._id,
             phone_number: contact_phone_form.phone_number
           }
         end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         let(:contact_phone_form) { build(:contact_phone_form, :has_required_data) }
         let(:invalid_params) do
           {
-            token: "foo",
+            _id: "foo",
             phone_number: "foo"
           }
         end

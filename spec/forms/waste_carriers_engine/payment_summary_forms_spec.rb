@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:payment_summary_form) { build(:payment_summary_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: payment_summary_form.token,
+            _id: payment_summary_form._id,
             temp_payment_method: payment_summary_form.temp_payment_method
           }
         end

@@ -20,19 +20,18 @@ module WasteCarriersEngine
                  account_email: user.email,
                  workflow_state: "worldpay_form")
         end
-        let(:token) { transient_registration[:token] }
 
         describe "#new" do
           it "redirects to worldpay", vcr: true do
             VCR.use_cassette("worldpay_redirect") do
-              get new_worldpay_form_path(token)
+              get new_worldpay_form_path(transient_registration._id)
               expect(response.location).to include("https://payments-test.worldpay.com/")
             end
           end
 
           it "creates a new finance_details" do
             VCR.use_cassette("worldpay_redirect") do
-              get new_worldpay_form_path(token)
+              get new_worldpay_form_path(transient_registration._id)
               expect(transient_registration.reload.finance_details).to_not eq(nil)
             end
           end
@@ -43,8 +42,8 @@ module WasteCarriersEngine
             end
 
             it "redirects to payment_summary_form" do
-              get new_worldpay_form_path(token)
-              expect(response).to redirect_to(new_payment_summary_form_path(token))
+              get new_worldpay_form_path(transient_registration._id)
+              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration._id))
             end
           end
         end
@@ -61,7 +60,7 @@ module WasteCarriersEngine
           let(:params) do
             {
               orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-              token: token
+              _id: transient_registration._id
             }
           end
 
@@ -72,8 +71,9 @@ module WasteCarriersEngine
             end
 
             it "redirects to renewal_complete_form" do
-              get success_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_renewal_complete_form_path(token))
+              get success_worldpay_forms_path(transient_registration._id), params
+
+              expect(response).to redirect_to(new_renewal_complete_form_path(transient_registration._id))
             end
 
             it "updates the transient registration metadata attributes from application configuration" do
@@ -81,7 +81,7 @@ module WasteCarriersEngine
 
               expect(transient_registration.reload.metaData.route).to be_nil
 
-              get success_worldpay_forms_path(token), params
+              get success_worldpay_forms_path(transient_registration._id), params
 
               expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
             end
@@ -92,8 +92,9 @@ module WasteCarriersEngine
               end
 
               it "redirects to renewal_received_form" do
-                get success_worldpay_forms_path(token), params
-                expect(response).to redirect_to(new_renewal_received_form_path(token))
+                get success_worldpay_forms_path(transient_registration._id), params
+
+                expect(response).to redirect_to(new_renewal_received_form_path(transient_registration._id))
               end
 
               it "updates the transient registration metadata attributes from application configuration" do
@@ -101,7 +102,7 @@ module WasteCarriersEngine
 
                 expect(transient_registration.reload.metaData.route).to be_nil
 
-                get success_worldpay_forms_path(token), params
+                get success_worldpay_forms_path(transient_registration._id), params
 
                 expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
               end
@@ -113,7 +114,7 @@ module WasteCarriersEngine
                 end
 
                 it "does not raise an error" do
-                  expect { get success_worldpay_forms_path(token), params }.to_not raise_error
+                  expect { get success_worldpay_forms_path(transient_registration._id), params }.to_not raise_error
                 end
               end
             end
@@ -125,8 +126,8 @@ module WasteCarriersEngine
             end
 
             it "redirects to payment_summary_form" do
-              get success_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_payment_summary_form_path(token))
+              get success_worldpay_forms_path(transient_registration._id), params
+              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration._id))
             end
           end
 
@@ -136,13 +137,13 @@ module WasteCarriersEngine
             end
 
             it "redirects to payment_summary_form" do
-              get success_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_payment_summary_form_path(token))
+              get success_worldpay_forms_path(transient_registration._id), params
+              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration._id))
             end
 
             it "does not update the payment" do
               unmodified_payment = transient_registration.finance_details.payments.first
-              get success_worldpay_forms_path(token), params
+              get success_worldpay_forms_path(transient_registration._id), params
               expect(transient_registration.reload.finance_details.payments.first).to eq(unmodified_payment)
             end
           end
@@ -160,7 +161,7 @@ module WasteCarriersEngine
           let(:params) do
             {
               orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-              token: token
+              _id: transient_registration._id
             }
           end
 
@@ -171,8 +172,8 @@ module WasteCarriersEngine
             end
 
             it "redirects to renewal_received_form" do
-              get pending_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_renewal_received_form_path(token))
+              get pending_worldpay_forms_path(transient_registration._id), params
+              expect(response).to redirect_to(new_renewal_received_form_path(transient_registration._id))
             end
           end
 
@@ -182,8 +183,8 @@ module WasteCarriersEngine
             end
 
             it "redirects to payment_summary_form" do
-              get pending_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_payment_summary_form_path(token))
+              get pending_worldpay_forms_path(transient_registration._id), params
+              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration._id))
             end
           end
         end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module FormRequestHelpers
-  def post_form_with_params(form, token, params = {})
-    post create_path_for(form, token), params_for_form(form, params)
+  def post_form_with_params(form, _id, params = {})
+    post create_path_for(form, _id), params_for_form(form, params)
   end
 
   # Should call a method like location_forms_path
-  def create_path_for(form, token)
-    public_send("#{form}s_path", token)
+  def create_path_for(form, _id)
+    public_send("#{form}s_path", _id)
   end
 
   # Should output a hash like { location_forms: params }

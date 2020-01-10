@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
       context "when the form is valid" do
         let(:valid_params) do
-          { token: main_people_form.token,
+          { _id: main_people_form._id,
             first_name: main_people_form.first_name,
             last_name: main_people_form.last_name,
             dob_year: main_people_form.dob_year,
@@ -28,7 +28,7 @@ module WasteCarriersEngine
       end
 
       context "when the form is not valid" do
-        let(:invalid_params) { { token: "foo" } }
+        let(:invalid_params) { { _id: "foo" } }
 
         it "should not submit" do
           expect(main_people_form.submit(invalid_params)).to eq(false)
@@ -37,7 +37,7 @@ module WasteCarriersEngine
 
       context "when the form is blank" do
         let(:blank_params) do
-          { token: main_people_form.token,
+          { _id: main_people_form._id,
             first_name: "",
             last_name: "",
             dob_year: "",

@@ -6,22 +6,22 @@ module WasteCarriersEngine
 
     before_action :authenticate_user!
     before_action :back_button_cache_buster
-    before_action :validate_token
+    before_action :validate__id
 
     # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
     def new(form_class, form)
-      set_up_form(form_class, form, params[:token], true)
+      set_up_form(form_class, form, params[:_id], true)
     end
 
     # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
     def create(form_class, form)
-      return false unless set_up_form(form_class, form, params[:token])
+      return false unless set_up_form(form_class, form, params[:_id])
 
       submit_form(instance_variable_get("@#{form}"), transient_registration_attributes)
     end
 
     def go_back
-      find_or_initialize_transient_registration(params[:token])
+      find_or_initialize_transient_registration(params[:_id])
 
       @transient_registration.back! if form_matches_state?
       redirect_to_correct_form
@@ -35,22 +35,22 @@ module WasteCarriersEngine
       params.permit
     end
 
-    def validate_token
-      return redirect_to(page_path("invalid")) unless find_or_initialize_transient_registration(params[:token])
+    def validate__id
+      return redirect_to(page_path("invalid")) unless find_or_initialize_transient_registration(params[:_id])
     end
 
     # We're not really memoizing this instance variable here, so we don't think
     # this cop is valid in this context
     # rubocop:disable Naming/MemoizedInstanceVariableName
-    def find_or_initialize_transient_registration(token)
-      @transient_registration ||= TransientRegistration.where(token: token).first
+    def find_or_initialize_transient_registration(_id)
+      @transient_registration ||= TransientRegistration.where(_id: _id).first
     end
     # rubocop:enable Naming/MemoizedInstanceVariableName
 
     # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
-    # and the token param
-    def set_up_form(form_class, form, token, get_request = false)
-      find_or_initialize_transient_registration(token)
+    # and the _id param
+    def set_up_form(form_class, form, _id, get_request = false)
+      find_or_initialize_transient_registration(_id)
 
       set_workflow_state if get_request
 
@@ -77,10 +77,10 @@ module WasteCarriersEngine
       redirect_to form_path
     end
 
-    # Get the path based on the workflow state, with token as params, ie:
-    # new_state_name_path/:token
+    # Get the path based on the workflow state, with _id as params, ie:
+    # new_state_name_path/:_id
     def form_path
-      send("new_#{@transient_registration.workflow_state}_path".to_sym, @transient_registration.token)
+      send("new_#{@transient_registration.workflow_state}_path".to_sym, @transient_registration._id)
     end
 
     def setup_checks_pass?

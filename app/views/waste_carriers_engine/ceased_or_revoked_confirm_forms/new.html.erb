@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_ceased_or_revoked_confirm_forms_path(token: @transient_registration.token)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_ceased_or_revoked_confirm_forms_path(_id: @transient_registration._id)) %>
 
 <div class="text">
   <%= form_for(@ceased_or_revoked_confirm_form) do |f| %>
@@ -12,7 +12,7 @@
       <%= f.submit t(".next_button", revoke_or_cease: t(".revoke_or_cease.#{@transient_registration.status}")), class: "button" %>
 
       <div class="form-button-link">
-        <%= link_to t(".cancel"), delete_transient_registration_path(@ceased_or_revoked_confirm_form.transient_registration.token) %>
+        <%= link_to t(".cancel"), delete_transient_registration_path(@ceased_or_revoked_confirm_form.transient_registration._id) %>
       </div>
     </div>
   <% end %>

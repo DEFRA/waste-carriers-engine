@@ -33,18 +33,18 @@ module WasteCarriersEngine
             end
 
             it "updates the transient registration" do
-              post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+              post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
               expect(transient_registration.reload.registered_address.house_number).to eq("42")
             end
 
             it "returns a 302 response" do
-              post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+              post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the main_people form" do
-              post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
-              expect(response).to redirect_to(new_main_people_form_path(transient_registration.token))
+              post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
+              expect(response).to redirect_to(new_main_people_form_path(transient_registration._id))
             end
 
             context "when the transient registration already has addresses" do
@@ -58,24 +58,24 @@ module WasteCarriersEngine
 
               it "should have have the same number of addresses before and after submitting" do
                 number_of_addresses = transient_registration.addresses.count
-                post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+                post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)
               end
 
               it "removes the old registered address" do
                 old_registered_address = transient_registration.registered_address
-                post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+                post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
                 expect(transient_registration.reload.registered_address).to_not eq(old_registered_address)
               end
 
               it "adds the new registered address" do
-                post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+                post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
                 expect(transient_registration.reload.registered_address.address_line_1).to eq("Foo Terrace")
               end
 
               it "does not modify the existing contact address" do
                 old_contact_address = transient_registration.contact_address
-                post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+                post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
                 expect(transient_registration.reload.contact_address).to eq(old_contact_address)
               end
             end
@@ -101,18 +101,18 @@ module WasteCarriersEngine
           end
 
           it "does not update the transient registration" do
-            post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+            post company_address_forms_path(transient_registration._id), company_address_form: valid_params
             expect(transient_registration.reload.addresses.count).to eq(0)
           end
 
           it "returns a 302 response" do
-            post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+            post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
             expect(response).to have_http_status(302)
           end
 
           it "redirects to the correct form for the state" do
-            post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
-            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
+            post company_address_manual_forms_path(transient_registration._id), company_address_manual_form: valid_params
+            expect(response).to redirect_to(new_renewal_start_form_path(transient_registration._id))
           end
         end
       end
@@ -135,7 +135,7 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_company_address_manual_forms_path(transient_registration.token)
+              get back_company_address_manual_forms_path(transient_registration._id)
               expect(response).to have_http_status(302)
             end
 
@@ -143,8 +143,8 @@ module WasteCarriersEngine
               before(:each) { transient_registration.update_attributes(location: "overseas") }
 
               it "redirects to the company_name form" do
-                get back_company_address_manual_forms_path(transient_registration.token)
-                expect(response).to redirect_to(new_company_name_form_path(transient_registration.token))
+                get back_company_address_manual_forms_path(transient_registration._id)
+                expect(response).to redirect_to(new_company_name_form_path(transient_registration._id))
               end
             end
 
@@ -152,8 +152,8 @@ module WasteCarriersEngine
               before(:each) { transient_registration.update_attributes(location: "england") }
 
               it "redirects to the company_postcode form" do
-                get back_company_address_manual_forms_path(transient_registration.token)
-                expect(response).to redirect_to(new_company_postcode_form_path(transient_registration.token))
+                get back_company_address_manual_forms_path(transient_registration._id)
+                expect(response).to redirect_to(new_company_postcode_form_path(transient_registration._id))
               end
             end
           end
@@ -169,13 +169,13 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response" do
-              get back_company_address_manual_forms_path(transient_registration.token)
+              get back_company_address_manual_forms_path(transient_registration._id)
               expect(response).to have_http_status(302)
             end
 
             it "redirects to the correct form for the state" do
-              get back_company_address_manual_forms_path(transient_registration.token)
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
+              get back_company_address_manual_forms_path(transient_registration._id)
+              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration._id))
             end
           end
         end

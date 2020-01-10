@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:tier_check_form) { build(:tier_check_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: tier_check_form.token,
+            _id: tier_check_form._id,
             temp_tier_check: tier_check_form.temp_tier_check
           }
         end

@@ -11,7 +11,7 @@ module WasteCarriersEngine
     describe "#submit" do
       let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
       context "when the form is valid" do
-        let(:valid_params) { { token: check_your_answers_form.token } }
+        let(:valid_params) { { _id: check_your_answers_form._id } }
 
         it "should submit" do
           expect(check_your_answers_form.submit(valid_params)).to be_truthy

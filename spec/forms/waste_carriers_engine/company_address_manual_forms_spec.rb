@@ -69,7 +69,7 @@ module WasteCarriersEngine
         let(:company_address_manual_form) { build(:company_address_manual_form, :has_required_data) }
         let(:valid_params) do
           {
-            token: company_address_manual_form.token,
+            _id: company_address_manual_form._id,
             company_address: {
               house_number: "32",
               address_line_1: "My House Road",
@@ -87,7 +87,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         let(:company_address_manual_form) { build(:company_address_manual_form, :has_required_data) }
-        let(:invalid_params) { { token: "foo" } }
+        let(:invalid_params) { { _id: "foo" } }
 
         it "should not submit" do
           expect(company_address_manual_form.submit(invalid_params)).to eq(false)
