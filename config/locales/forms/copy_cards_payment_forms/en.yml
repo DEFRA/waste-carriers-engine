@@ -2,6 +2,7 @@ en:
   waste_carriers_engine:
     copy_cards_payment_forms:
       new:
+        title: "Registration cards payment summary"
         heading: "Payment summary"
         total_cost:
           one: "1 registration card total cost"

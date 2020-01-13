@@ -2,6 +2,7 @@ en:
   waste_carriers_engine:
     copy_cards_forms:
       new:
+        title: "Order registration cards"
         heading: "Order registration cards for %{reg_identifier}"
         temp_cards_label: "Number of cards at £5 each"
         next_button: "Continue"

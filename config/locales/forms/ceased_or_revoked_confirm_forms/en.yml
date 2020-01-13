@@ -2,6 +2,7 @@ en:
   waste_carriers_engine:
     ceased_or_revoked_confirm_forms:
       new:
+        title: "Confirm cease or revoke"
         heading: "Confirm %{revoke_or_cease} for registration %{reg_identifier}"
         revoke_or_cease:
           revoked: "revoke"
