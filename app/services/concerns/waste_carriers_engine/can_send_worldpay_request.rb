@@ -9,7 +9,7 @@ module WasteCarriersEngine
       private
 
       def send_request(xml)
-        Rails.logger.debug "Sending initial request to WorldPay: #{xml}"
+        Rails.logger.debug "Sending initial request to WorldPay"
 
         begin
           response = RestClient::Request.execute(
@@ -21,7 +21,7 @@ module WasteCarriersEngine
             }
           )
 
-          Rails.logger.debug "Received response from WorldPay: #{response}"
+          Rails.logger.debug "Received response from WorldPay"
 
           response
         end
