@@ -26,6 +26,11 @@ module WasteCarriersEngine
       finance_details
     end
 
+    # This amount is used in a large number of finance operations.
+    def amount_in_excess
+      @_amount_in_excess ||= balance <= 0 ? (balance * -1) : 0
+    end
+
     def update_balance
       order_balance = orders.sum { |item| item[:total_amount] }
       # Select payments where the type is not WORLDPAY, or if it is, the status is AUTHORISED
