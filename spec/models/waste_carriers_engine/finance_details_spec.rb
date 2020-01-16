@@ -64,6 +64,40 @@ module WasteCarriersEngine
       end
     end
 
+    describe "amount_to_pay" do
+      let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
+
+      subject { transient_registration.finance_details }
+
+      before do
+        transient_registration.finance_details.balance = balance
+      end
+
+      context "when the balance is 0" do
+        let(:balance) { 0 }
+
+        it "returns 0" do
+          expect(subject.amount_to_pay).to be_zero
+        end
+      end
+
+      context "when the balance is more than 0" do
+        let(:balance) { 4 }
+
+        it "returns the balance" do
+          expect(subject.amount_to_pay).to eq(4)
+        end
+      end
+
+      context "when the balaance is less than 0" do
+        let(:balance) { -4 }
+
+        it "returns 0" do
+          expect(subject.amount_to_pay).to be_zero
+        end
+      end
+    end
+
     describe "update_balance" do
       let(:finance_details) { build(:finance_details) }
 

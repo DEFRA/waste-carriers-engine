@@ -26,9 +26,13 @@ module WasteCarriersEngine
       finance_details
     end
 
-    # This amount is used in a large number of finance operations.
+    # This amounts are used in a number of finance operations.
     def amount_in_excess
       @_amount_in_excess ||= balance <= 0 ? (balance * -1) : 0
+    end
+
+    def amount_to_pay
+      @_amount_to_pay ||= [0, balance].max
     end
 
     def update_balance
