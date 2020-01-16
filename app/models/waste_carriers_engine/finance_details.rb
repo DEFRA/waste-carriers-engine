@@ -28,11 +28,11 @@ module WasteCarriersEngine
 
     # These amounts are used in a number of finance operations.
     def overpaid_balance
-      @_amount_in_excess ||= balance <= 0 ? (balance * -1) : 0
+      @_overpaid_balance ||= balance <= 0 ? (balance * -1) : 0
     end
 
     def unpaid_balance
-      @_amount_to_pay ||= [0, balance].max
+      @_unpaid_balance ||= [0, balance].max
     end
 
     def update_balance
