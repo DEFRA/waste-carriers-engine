@@ -30,7 +30,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "amount_in_excess" do
+    describe "overpaid_balance" do
       let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
       subject { transient_registration.finance_details }
@@ -43,7 +43,7 @@ module WasteCarriersEngine
         let(:balance) { 0 }
 
         it "returns 0" do
-          expect(subject.amount_in_excess).to be_zero
+          expect(subject.overpaid_balance).to be_zero
         end
       end
 
@@ -51,7 +51,7 @@ module WasteCarriersEngine
         let(:balance) { -4 }
 
         it "returns the balance but in positive" do
-          expect(subject.amount_in_excess).to eq(4)
+          expect(subject.overpaid_balance).to eq(4)
         end
       end
 
@@ -59,12 +59,12 @@ module WasteCarriersEngine
         let(:balance) { 4 }
 
         it "returns 0" do
-          expect(subject.amount_in_excess).to be_zero
+          expect(subject.overpaid_balance).to be_zero
         end
       end
     end
 
-    describe "amount_to_pay" do
+    describe "unpaid_balance" do
       let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
       subject { transient_registration.finance_details }
@@ -77,7 +77,7 @@ module WasteCarriersEngine
         let(:balance) { 0 }
 
         it "returns 0" do
-          expect(subject.amount_to_pay).to be_zero
+          expect(subject.unpaid_balance).to be_zero
         end
       end
 
@@ -85,7 +85,7 @@ module WasteCarriersEngine
         let(:balance) { 4 }
 
         it "returns the balance" do
-          expect(subject.amount_to_pay).to eq(4)
+          expect(subject.unpaid_balance).to eq(4)
         end
       end
 
@@ -93,7 +93,7 @@ module WasteCarriersEngine
         let(:balance) { -4 }
 
         it "returns 0" do
-          expect(subject.amount_to_pay).to be_zero
+          expect(subject.unpaid_balance).to be_zero
         end
       end
     end
