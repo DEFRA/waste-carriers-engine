@@ -26,7 +26,7 @@ module WasteCarriersEngine
       finance_details
     end
 
-    # This amounts are used in a number of finance operations.
+    # These amounts are used in a number of finance operations.
     def overpaid_balance
       @_amount_in_excess ||= balance <= 0 ? (balance * -1) : 0
     end
