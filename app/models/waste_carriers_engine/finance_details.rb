@@ -35,6 +35,11 @@ module WasteCarriersEngine
       @_unpaid_balance ||= [0, balance].max
     end
 
+    # This returns any amount of difference of the balance from 0
+    def zero_difference_balance
+      @_zero_difference_balance ||= [overpaid_balance, unpaid_balance].max
+    end
+
     def update_balance
       order_balance = orders.sum { |item| item[:total_amount] }
       # Select payments where the type is not WORLDPAY, or if it is, the status is AUTHORISED
