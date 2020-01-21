@@ -11,6 +11,7 @@ module WasteCarriersEngine
       def send_request(xml)
         Rails.logger.debug "Sending initial request to WorldPay"
 
+        response = nil
         begin
           response = RestClient::Request.execute(
             method: :get,
@@ -22,9 +23,12 @@ module WasteCarriersEngine
           )
 
           Rails.logger.debug "Received response from WorldPay"
-
-          response
+        rescue StandardError => e
+          Rails.logger.error("Error sending refund to worldpay: #{e}")
+          Airbrake.notify(e, message: "Error on WorldPay refund request")
         end
+
+        response
       end
 
       def url
