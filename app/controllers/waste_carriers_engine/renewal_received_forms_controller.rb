@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class RenewalReceivedFormsController < FormsController
+    helper JourneyLinksHelper
+
     def new
       super(RenewalReceivedForm, "renewal_received_form")
     end

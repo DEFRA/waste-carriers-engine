@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class RenewalCompleteFormsController < FormsController
+    helper JourneyLinksHelper
+
     def new
       return unless super(RenewalCompleteForm, "renewal_complete_form")
 

@@ -46,15 +46,6 @@ module WasteCarriersEngine
       end
     end
 
-    def dashboard_link(current_user)
-      return unless current_user.present?
-
-      id = current_user.id
-      root = Rails.configuration.wcrs_frontend_url
-      I18n.t("waste_carriers_engine.dashboard_link", root: root, id: id)
-      # "#{root}/user/#{id}/registrations"
-    end
-
     def displayable_address(address)
       return [] unless address.present?
 

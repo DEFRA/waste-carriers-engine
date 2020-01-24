@@ -1,7 +1,6 @@
 ---
 en:
   waste_carriers_engine:
-    dashboard_link: "%{root}/user/%{id}/registrations"
     errors:
       messages:
         weak_password: Your password is not strong enough. It must include at least one lowercase letter, uppercase letter and number

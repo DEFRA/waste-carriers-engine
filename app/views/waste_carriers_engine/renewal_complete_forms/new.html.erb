@@ -49,7 +49,7 @@
 
       <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
 
-      <%= link_to t(".next_button"), dashboard_link(current_user), class: 'button' %>
+      <%= link_to t(".next_button"), renewal_finished_link(reg_identifier: @renewal_complete_form.reg_identifier), class: 'button' %>
     <% end %>
   <% end %>
 </div>
