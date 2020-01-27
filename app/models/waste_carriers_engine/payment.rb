@@ -55,7 +55,7 @@ module WasteCarriersEngine
       payment[:date_received_day] = params[:date_received_day]
       payment[:date_received_month] = params[:date_received_month]
       payment[:date_received_year] = params[:date_received_year]
-      payment[:order_key] = order[:order_code]
+      payment[:order_key] = SecureRandom.uuid.split("-").last
       payment[:payment_type] = params[:payment_type]
       payment[:registration_reference] = params[:registration_reference]
       payment[:updated_by_user] = params[:updated_by_user]
