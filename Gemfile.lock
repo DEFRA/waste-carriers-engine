@@ -338,7 +338,7 @@ DEPENDENCIES
   rails_12factor
   rspec-rails (~> 3.6)
   secure_headers (~> 5.0)
-  simplecov
+  simplecov (~> 0.17.1)
   spring
   timecop
   turbolinks
