@@ -88,7 +88,7 @@ module WasteCarriersEngine
         { id: reference_id, link: reference_link }
       else
         Rails.logger.error "Could not parse Worldpay response: #{response}"
-        return nil
+        nil
       end
     end
 
