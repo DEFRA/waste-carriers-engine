@@ -79,6 +79,13 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.5)
     database_cleaner (1.8.1)
+    database_cleaner-mongo (1.8.0)
+      database_cleaner (~> 1.8.0)
+      mongo
+    database_cleaner-mongoid (1.8.0)
+      database_cleaner (~> 1.8.0)
+      database_cleaner-mongo (~> 1.8.0)
+      mongoid
     debug_inspector (0.0.3)
     defra_ruby_style (0.1.4)
       rubocop (~> 0.79)
@@ -322,7 +329,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake (= 5.8.1)
   cancancan (~> 1.10)
-  database_cleaner
+  database_cleaner-mongoid (~> 1.8.0)
   defra_ruby_style
   devise (>= 4.4.3)
   dotenv-rails
