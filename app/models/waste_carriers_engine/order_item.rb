@@ -15,7 +15,7 @@ module WasteCarriersEngine
 
     field :amount,                          type: Integer
     field :quantity,                        type: Integer
-    field :currency,                        type: String,   default: "GBP"
+    field :currency,                        type: String, default: "GBP"
     field :lastUpdated, as: :last_updated,  type: DateTime
     field :description,                     type: String
     field :reference,                       type: String
