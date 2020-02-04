@@ -42,6 +42,9 @@ Gem::Specification.new do |s|
   s.add_dependency "defra_ruby_validators"
   s.add_dependency "uk_postcode"
 
+  # defra_ruby_alert is a gem we created to manage airbrake across projects
+  s.add_dependency "defra_ruby_alert", "~> 1.0.0"
+
   # Used to build and parse XML requests
   s.add_dependency "nokogiri"
 
