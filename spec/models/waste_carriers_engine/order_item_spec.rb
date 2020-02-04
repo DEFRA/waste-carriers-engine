@@ -12,7 +12,7 @@ module WasteCarriersEngine
 
     let(:transient_registration) { build(:renewing_registration, :has_required_data) }
 
-    describle ".new_charge_adjust_item"
+    describe ".new_charge_adjust_item" do
       it "returns an instance of itself of type :charge_adjust" do
         result = described.new_charge_adjust_item
 
