@@ -14,7 +14,7 @@ module WasteCarriersEngine
 
     describe ".new_charge_adjust_item" do
       it "returns an instance of itself of type :charge_adjust" do
-        result = described.new_charge_adjust_item
+        result = described_class.new_charge_adjust_item
 
         expect(result.type).to eq("CHARGE_ADJUST")
       end
