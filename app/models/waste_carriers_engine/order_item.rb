@@ -9,12 +9,13 @@ module WasteCarriersEngine
     TYPES = HashWithIndifferentAccess.new(
       renew: "RENEW",
       edit: "EDIT",
-      copy_cards: "COPY_CARDS"
+      copy_cards: "COPY_CARDS",
+      charge_adjust: "CHARGE_ADJUST"
     )
 
     field :amount,                          type: Integer
     field :quantity,                        type: Integer
-    field :currency,                        type: String
+    field :currency,                        type: String,   default: "GBP"
     field :lastUpdated, as: :last_updated,  type: DateTime
     field :description,                     type: String
     field :reference,                       type: String
@@ -29,6 +30,10 @@ module WasteCarriersEngine
       order_item.quantity = 1
 
       order_item
+    end
+
+    def self.new_charge_adjust_item
+      new(type: TYPES[:charge_adjust])
     end
 
     def self.new_type_change_item

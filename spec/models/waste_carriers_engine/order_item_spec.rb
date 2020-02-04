@@ -12,6 +12,14 @@ module WasteCarriersEngine
 
     let(:transient_registration) { build(:renewing_registration, :has_required_data) }
 
+    describle ".new_charge_adjust_item"
+      it "returns an instance of itself of type :charge_adjust" do
+        result = described.new_charge_adjust_item
+
+        expect(result.type).to eq("CHARGE_ADJUST")
+      end
+    end
+
     describe "new_renewal_item" do
       let(:order_item) { described_class.new_renewal_item }
 
