@@ -20,7 +20,7 @@ module WasteCarriersEngine
         REVERSAL = "REVERSAL"
       ].freeze
 
-      RECEIVABLE_PAYMENT_TYPES = [CASH, CHEQUE, POSTALORDER, BANKTRANSFER, WORLDPAY, WORLDPAY_MISSED]
+      RECEIVABLE_PAYMENT_TYPES = [CASH, CHEQUE, POSTALORDER, BANKTRANSFER, WORLDPAY, WORLDPAY_MISSED].freeze
 
       field :paymentType, as: :payment_type, type: String
 
