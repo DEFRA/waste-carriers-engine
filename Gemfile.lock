@@ -4,6 +4,7 @@ PATH
     waste_carriers_engine (0.0.1)
       aasm (~> 4.12)
       countries
+      defra_ruby_alert (~> 1.0.0)
       defra_ruby_validators
       high_voltage (~> 3.0)
       jbuilder (~> 2.0)
@@ -80,6 +81,8 @@ GEM
     crass (1.0.5)
     database_cleaner (1.8.2)
     debug_inspector (0.0.3)
+    defra_ruby_alert (1.0.0)
+      airbrake (~> 5.8.1)
     defra_ruby_style (0.1.4)
       rubocop (~> 0.79)
     defra_ruby_validators (2.2.0)
@@ -154,9 +157,9 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     method_source (0.9.2)
-    mime-types (3.3)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.0904)
+    mime-types-data (3.2019.1009)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.12.2)
@@ -180,7 +183,7 @@ GEM
     parallel (1.19.1)
     parser (2.7.0.2)
       ast (~> 2.4.0)
-    phonelib (0.6.37)
+    phonelib (0.6.41)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -320,7 +323,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake (= 5.8.1)
   cancancan (~> 1.10)
   database_cleaner
   defra_ruby_style

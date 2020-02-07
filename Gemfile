@@ -8,10 +8,6 @@ ruby "2.4.2"
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# Use Airbrake for error reporting to Errbit
-# Version 6 and above cause errors with Errbit, so use 5.8.1 for now
-gem "airbrake", "5.8.1"
-
 # GOV.UK styling
 gem "govuk_elements_rails", "~> 3.1"
 gem "govuk_template", "~> 0.23"
