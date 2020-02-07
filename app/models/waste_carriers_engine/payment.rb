@@ -21,13 +21,8 @@ module WasteCarriersEngine
     field :updatedByUser, as: :updated_by_user,                   type: String
     field :comment,                                               type: String
 
-    scope :refundable, (lambda do
-      where(
-        payment_type: {
-          "$in" => [CASH, CHEQUE, POSTALORDER, BANKTRANSFER, WORLDPAY, WORLDPAY_MISSED]
-        }
-      )
-    end)
+    scope :refundable, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
+    scope :reversible, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
 
     def self.new_from_worldpay(order, current_user)
       payment = Payment.new
