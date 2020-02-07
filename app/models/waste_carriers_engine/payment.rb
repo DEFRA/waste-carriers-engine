@@ -22,7 +22,7 @@ module WasteCarriersEngine
     field :comment,                                               type: String
 
     scope :refundable, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
-    scope :reversable, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
+    scope :reversible, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
 
     def self.new_from_worldpay(order, current_user)
       payment = Payment.new

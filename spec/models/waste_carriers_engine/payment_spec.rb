@@ -39,7 +39,7 @@ module WasteCarriersEngine
         end
       end
 
-      describe ".reversable" do
+      describe ".reversible" do
         let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
         it "returns a list of payments that have a type which can be reversed" do
@@ -51,7 +51,7 @@ module WasteCarriersEngine
           transient_registration.save
           transient_registration.reload
 
-          result = transient_registration.finance_details.payments.reversable
+          result = transient_registration.finance_details.payments.reversible
 
           expect(result).to include(cash_payment)
           expect(result).to_not include(refund_payment)
