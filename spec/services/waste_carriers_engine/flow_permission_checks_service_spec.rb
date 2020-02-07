@@ -19,6 +19,16 @@ module WasteCarriersEngine
         end
       end
 
+      context "when the transient object is an edit registration" do
+        let(:transient_registration) { EditRegistration.new }
+
+        it "runs the correct permission check service and return a result" do
+          expect(EditRegistrationPermissionChecksService).to receive(:run).with(params).and_return(result)
+
+          expect(described_class.run(params)).to eq(result)
+        end
+      end
+
       context "when the transient object is an order copy cards registration" do
         let(:transient_registration) { OrderCopyCardsRegistration.new }
 

@@ -24,6 +24,8 @@ module WasteCarriersEngine
       case transient_registration
       when RenewingRegistration
         RenewingRegistrationPermissionChecksService.run(params)
+      when EditRegistration
+        EditRegistrationPermissionChecksService.run(params)
       when OrderCopyCardsRegistration
         OrderCopyCardsRegistrationPermissionChecksService.run(params)
       when CeasedOrRevokedRegistration
