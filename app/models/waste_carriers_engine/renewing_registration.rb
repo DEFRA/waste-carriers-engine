@@ -2,12 +2,29 @@
 
 module WasteCarriersEngine
   class RenewingRegistration < TransientRegistration
+    include CanCopyDataFromRegistration
     include CanUseRenewingRegistrationWorkflow
 
     validate :no_renewal_in_progress?, on: :create
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
-    after_initialize :copy_data_from_registration
+    COPY_DATA_OPTIONS = {
+      ignorable_attributes: %w[_id
+                               otherBusinesses
+                               isMainService
+                               constructionWaste
+                               onlyAMF
+                               addresses
+                               key_people
+                               financeDetails
+                               declaredConvictions
+                               conviction_search_result
+                               conviction_sign_offs
+                               declaration
+                               past_registrations
+                               copy_cards],
+      remove_invalid_attributes: true
+    }.freeze
 
     # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
     def registration_type_changed?
@@ -115,47 +132,6 @@ module WasteCarriersEngine
       return unless RenewingRegistration.where(reg_identifier: reg_identifier).exists?
 
       errors.add(:reg_identifier, :renewal_in_progress)
-    end
-
-    def copy_data_from_registration
-      # Don't try to get Registration data with an invalid reg_identifier
-      return unless valid? && new_record?
-
-      # Don't copy object IDs as Mongo should generate new unique ones
-      # Don't copy smart answers as we want users to use the latest version of the questions
-      attributes = registration.attributes.except("_id",
-                                                  "otherBusinesses",
-                                                  "isMainService",
-                                                  "constructionWaste",
-                                                  "onlyAMF",
-                                                  "addresses",
-                                                  "key_people",
-                                                  "financeDetails",
-                                                  "declaredConvictions",
-                                                  "conviction_search_result",
-                                                  "conviction_sign_offs",
-                                                  "declaration",
-                                                  "past_registrations",
-                                                  "copy_cards")
-
-      assign_attributes(strip_whitespace(attributes))
-      remove_invalid_attributes
-    end
-
-    def remove_invalid_attributes
-      remove_invalid_phone_numbers
-      remove_revoked_reason
-    end
-
-    def remove_invalid_phone_numbers
-      validator = DefraRuby::Validators::PhoneNumberValidator.new(attributes: :phone_number)
-      return if validator.validate_each(self, :phone_number, phone_number)
-
-      self.phone_number = nil
-    end
-
-    def remove_revoked_reason
-      metaData.revoked_reason = nil
     end
   end
 end
