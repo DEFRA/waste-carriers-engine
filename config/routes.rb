@@ -58,6 +58,13 @@ WasteCarriersEngine::Engine.routes.draw do
               end
     # End of ceased or revoked flow
 
+    # Edit flow
+    resources :edit_forms,
+              only: %i[new create],
+              path: "edit",
+              path_names: { new: "" }
+    # End of edit flow
+
     resources :renewal_start_forms,
               only: %i[new create],
               path: "renew",
