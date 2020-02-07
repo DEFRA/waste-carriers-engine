@@ -1,3 +1,6 @@
 <div class="text">
   <h1 class="heading-large"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
+  <pre>
+    <%= JSON.pretty_generate(@edit_form.transient_registration.attributes) %>
+  </pre>
 </div>
