@@ -2,13 +2,17 @@
 
 module WasteCarriersEngine
   class RenewalCompletionService
+    class CannotComplete < StandardError; end
+    class ZeroBalance < StandardError; end
+    class WrongWorkflowState < StandardError; end
+    class PendingConvictionCheck < StandardError; end
+
     include CanMergeFinanceDetails
 
-    attr_reader :transient_registration, :registration
+    attr_reader :transient_registration
 
     def initialize(transient_registration)
       @transient_registration = transient_registration
-      @registration = find_original_registration
     end
 
     def can_be_completed?
@@ -25,7 +29,7 @@ module WasteCarriersEngine
     end
 
     def complete_renewal
-      return :error unless can_be_completed?
+      raise_completion_error unless can_be_completed?
 
       copy_names_to_contact_address
       create_past_registration
@@ -36,8 +40,24 @@ module WasteCarriersEngine
 
     private
 
-    def find_original_registration
-      Registration.where(reg_identifier: transient_registration.reg_identifier).first
+    def registration
+      @registration ||= Registration.where(reg_identifier: transient_registration.reg_identifier).first
+    end
+
+    def raise_completion_error
+      # TODO: Temporaty debugging code for issue https://eaflood.atlassian.net/browse/RUBY-885
+      message = "Registration number: #{transient_registration.reg_identifier}"
+
+      raise(WrongWorkflowState, message) unless transient_registration.renewal_application_submitted?
+      raise(StillUnpaidBalance, message) if transient_registration.unpaid_balance?
+      raise(PendingConvictionCheck, message) if transient_registration.pending_manual_conviction_check?
+
+      unless %w[ACTIVE EXPIRED].include?(registration.metaData.status)
+        message = "#{message}. Status: #{registration.metaData.status}"
+        raise(WrongStatus, message)
+      end
+
+      raise(CannotComplete, message)
     end
 
     def copy_names_to_contact_address
