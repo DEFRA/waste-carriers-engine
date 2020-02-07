@@ -168,12 +168,55 @@ module WasteCarriersEngine
       end
 
       context "when the renewal cannot be completed" do
-        before do
-          registration.update_attributes!(metaData: build(:metaData, :has_required_data, status: "REVOKED"))
+        context "when the renewal is in the wrong status" do
+          before do
+            registration.update_attributes!(metaData: build(:metaData, :has_required_data, status: "REVOKED"))
+          end
+
+          it "raises a WrongStatus error" do
+            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::WrongStatus)
+          end
         end
 
-        it "returns :error" do
-          expect(renewal_completion_service.complete_renewal).to eq(:error)
+        context "when the renewal balance is not 0" do
+          before do
+            transient_registration.finance_details.balance = 34
+            transient_registration.save
+          end
+
+          it "raises a StillUnpaidBalance error" do
+            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::StillUnpaidBalance)
+          end
+        end
+
+        context "when the workflow state is incorrect" do
+          before do
+            transient_registration.workflow_state = :worldpay_form
+            transient_registration.save
+          end
+
+          it "raises a WrongWorkflowState error" do
+            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::WrongWorkflowState)
+          end
+        end
+
+        context "when there are pending conviction checks" do
+          let(:transient_registration) do
+            create(
+              :renewing_registration,
+              :has_required_data,
+              :has_addresses,
+              :has_key_people,
+              :has_paid_order,
+              :requires_conviction_check,
+              company_name: "FooBiz",
+              workflow_state: "renewal_complete_form"
+            )
+          end
+
+          it "raises a PendingConvictionCheck error" do
+            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::PendingConvictionCheck)
+          end
         end
       end
 

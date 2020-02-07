@@ -3,9 +3,10 @@
 module WasteCarriersEngine
   class RenewalCompletionService
     class CannotComplete < StandardError; end
-    class ZeroBalance < StandardError; end
+    class StillUnpaidBalance < StandardError; end
     class WrongWorkflowState < StandardError; end
     class PendingConvictionCheck < StandardError; end
+    class WrongStatus < StandardError; end
 
     include CanMergeFinanceDetails
 
