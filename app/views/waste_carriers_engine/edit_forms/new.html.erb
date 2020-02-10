@@ -1,17 +1,250 @@
-<div class="text">
-  <%= form_for(@edit_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @edit_form) %>
+<%= form_for(@edit_form) do |f| %>
+  <%= render("waste_carriers_engine/shared/errors", object: @edit_form) %>
 
-    <h1 class="heading-large"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="heading-large"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
 
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
+      <p>
+        <%= t(".edit_meta.created_at",
+              created_at: "TODO - DATE GOES HERE") %>
+      </p>
+      <p>
+        <span class="strong">
+          <%= t(".edit_meta.warning") %>
+        </span>
+      </p>
+
+      <%= render("waste_carriers_engine/shared/edit_actions", f: f) %>
     </div>
+  </div>
 
-    <hr>
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <table class="edit_table">
+        <caption>
+          <h2 class="heading-medium"><%= t(".sections.registration_and_account.heading") %></h2>
+        </caption>
+        <tbody>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.registration_and_account.labels.tier") %>
+            </td>
+            <td>
+              TODO - tier goes here
+            </td>
+            <td class="change_link_column">
+              <%= t(".edit_links.no_edit") %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.registration_and_account.labels.registration_type") %>
+            </td>
+            <td>
+              TODO - registration_type goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.fee") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.registration_type") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.registration_and_account.labels.account_email") %>
+            </td>
+            <td>
+              TODO - account_email goes here
+            </td>
+            <td class="change_link_column">
+              <%= t(".edit_links.no_edit") %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <pre>
-      <%= JSON.pretty_generate(@edit_form.transient_registration.attributes) %>
-    </pre>
-  <% end %>
-</div>
+      <table class="edit_table">
+        <caption>
+          <h2 class="heading-medium"><%= t(".sections.business.heading") %></h2>
+        </caption>
+        <tbody>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.business.labels.business_type") %>
+            </td>
+            <td>
+              TODO - business_type goes here
+            </td>
+            <td class="change_link_column">
+              <%= t(".edit_links.no_edit") %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.business.labels.company_name") %>
+            </td>
+            <td>
+              TODO - company_name goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.company_name") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.business.labels.company_no") %>
+            </td>
+            <td>
+              TODO - company_no goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.company_no") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.business.labels.key_people") %>
+            </td>
+            <td>
+              TODO - key_people goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.key_people") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.business.labels.registered_address") %>
+            </td>
+            <td>
+              TODO - registered_address goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.registered_address") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+
+      <table class="edit_table">
+        <caption>
+          <h2 class="heading-medium"><%= t(".sections.contact.heading") %></h2>
+        </caption>
+        <tbody>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.contact.labels.contact_name") %>
+            </td>
+            <td>
+              TODO - contact_name goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.contact_name") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.contact.labels.phone_number") %>
+            </td>
+            <td>
+              TODO - phone_number goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.phone_number") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.contact.labels.contact_email") %>
+            </td>
+            <td>
+              TODO - contact_email goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.contact_email") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.contact.labels.contact_address") %>
+            </td>
+            <td>
+              TODO - contact_address goes here
+            </td>
+            <td class="change_link_column">
+              <%= link_to "#" do %>
+                <%= t(".edit_links.default") %>
+                <span class="visually-hidden">
+                  <%= t(".edit_links.visually_hidden.contact_address") %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="edit_table">
+        <caption>
+          <h2 class="heading-medium"><%= t(".sections.location.heading") %></h2>
+        </caption>
+        <tbody>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.location.labels.location") %>
+            </td>
+            <td>
+              TODO - location goes here
+            </td>
+            <td class="change_link_column">
+              <%= t(".edit_links.no_edit") %>
+            </td>
+          </tr>
+        </table>
+    </div>
+  </div>
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <br>
+      <%= render("waste_carriers_engine/shared/edit_actions", f: f) %>
+    </div>
+  </div>
+<% end %>

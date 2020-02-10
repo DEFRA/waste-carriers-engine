@@ -3,5 +3,81 @@ en:
     edit_forms:
       new:
         title: Edit a registration
-        heading: Edit %{reg_identifier}
-        next_button: Continue
+        heading: Edit %{reg_identifier} registration
+        edit_meta:
+          created_at: "Edit started %{created_at}."
+          warning: You need to confirm these changes if you want to keep them.
+        sections:
+          registration_and_account:
+            heading: Registration and account
+            labels:
+              tier: Tier
+              registration_type: Type
+              account_email: Account email
+            values:
+              tier:
+                upper: Upper tier
+                lower: Lower tier
+              registration_type:
+                carrier_dealer: Carrier and dealer
+                broker_dealer: Broker and dealer
+                carrier_broker_dealer: Carrier, broker and dealer
+          business:
+            heading: Waste carrier business details
+            labels:
+              business_type: Type
+              company_name: Name
+              company_no: Company number
+              key_people: Main people
+              registered_address: Address
+            values:
+              type:
+                individual: Individual or sole trader
+                limited_company: Limited company
+                partnership: Partnership
+                limited_liability_partnership: Limited liability partnership
+                local_authority: Local authority or public body
+                charity: Charity or trust
+              main_people:
+                localAuthority: chief executive
+                limitedCompany: director
+                limitedLiabilityPartnership: member
+                overseas: business owner
+                partnership: partner
+                soleTrader: business owner
+          contact:
+            heading: Contact details
+            labels:
+              contact_name: Name
+              phone_number: Phone number
+              contact_email: Email address
+              contact_address: Address
+          location:
+            heading: Principal place of business
+            labels:
+              location: Location
+            values:
+              england: England
+              wales: Wales
+              scotland: Scotland
+              northern_ireland: Northern Ireland
+              overseas: Not in the United Kingdom
+        edit_links:
+          default: Change
+          no_edit: Cannot edit
+          fee: Change (£40 fee)
+          visually_hidden:
+            registration_type: registration type
+            company_name: business name
+            company_no: company number
+            key_people: main people
+            registered_address: business address
+            contact_name: contact name
+            phone_number: contact phone
+            contact_email: contact email
+            contact_address: contact address
+    shared:
+      edit_actions:
+        next_button: Confirm changes
+        button_linker: or
+        cancel_button: Cancel
