@@ -10,7 +10,7 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1580122188">
+            <order orderCode="1581334122">
               <description>Your Waste Carrier Registration CBDU1</description>
               <amount currencyCode="GBP" value="11000" exponent="2"/>
               <orderContent>Waste Carrier Registration renewal: CBDU1 for Acme Waste</orderContent>
@@ -20,7 +20,7 @@ http_interactions:
                 <include code="ECMC-SSL"/>
               </paymentMethodMask>
               <shopper>
-                <shopperEmailAddress>user933@example.com</shopperEmailAddress>
+                <shopperEmailAddress>user1@example.com</shopperEmailAddress>
               </shopper>
               <billingAddress>
                 <address>
@@ -44,7 +44,7 @@ http_interactions:
       Authorization:
       - Basic <API_KEY>
       Content-Length:
-      - '1130'
+      - '1128'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
@@ -55,11 +55,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 27 Jan 2020 10:49:48 GMT
+      - Mon, 10 Feb 2020 11:29:57 GMT
       Server:
       - Apache
       Content-Length:
-      - '538'
+      - '536'
       P3p:
       - CP="NON"
       Set-Cookie:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1580122188"><reference id="3168264040">https://payments-test.worldpay.com/app/hpp/integration/wpg/corporate?OrderKey=MERCHANT_CODE%5E1580122188&amp;Ticket=00158055418861702vtiZr1bdgbSWSA77thAG4g</reference></orderStatus></reply></paymentService>
-    http_version: 
-  recorded_at: Mon, 27 Jan 2020 10:49:48 GMT
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1581334122"><reference id="3170632814">https://payments-test.worldpay.com/app/hpp/integration/wpg/corporate?OrderKey=MERCHANT_CODE%5E1581334122&amp;Ticket=00158176619776602LqIFF5031SqOUIWDA-5RpQ</reference></orderStatus></reply></paymentService>
+    http_version:
+  recorded_at: Mon, 10 Feb 2020 11:28:43 GMT
 recorded_with: VCR 4.0.0
