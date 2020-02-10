@@ -6,8 +6,9 @@ module WasteCarriersEngine
       super(EditForm, "edit_form")
     end
 
-    # Override this method as user shouldn't be able to "submit" this page
-    def create; end
+    def create
+      super(EditForm, "edit_form")
+    end
 
     private
 
