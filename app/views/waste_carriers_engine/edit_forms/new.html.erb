@@ -1,6 +1,17 @@
 <div class="text">
-  <h1 class="heading-large"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
-  <pre>
-    <%= JSON.pretty_generate(@edit_form.transient_registration.attributes) %>
-  </pre>
+  <%= form_for(@edit_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @edit_form) %>
+
+    <h1 class="heading-large"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+
+    <hr>
+
+    <pre>
+      <%= JSON.pretty_generate(@edit_form.transient_registration.attributes) %>
+    </pre>
+  <% end %>
 </div>

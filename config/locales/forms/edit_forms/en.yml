@@ -4,3 +4,4 @@ en:
       new:
         title: Edit a registration
         heading: Edit %{reg_identifier}
+        next_button: Continue
