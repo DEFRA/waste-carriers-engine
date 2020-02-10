@@ -63,6 +63,11 @@ WasteCarriersEngine::Engine.routes.draw do
               only: %i[new create],
               path: "edit",
               path_names: { new: "" }
+
+    resources :edit_complete_forms,
+              only: %i[new create],
+              path: "edit-complete",
+              path_names: { new: "" }
     # End of edit flow
 
     resources :renewal_start_forms,
