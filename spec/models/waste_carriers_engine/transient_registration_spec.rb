@@ -19,6 +19,20 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#update_created_at" do
+      context "when a new transient registration is created" do
+        it "updates the transient registration's created_at" do
+          time = double(:time)
+
+          expect(Time).to receive(:current).and_return(time)
+
+          expect(transient_registration).to receive(:created_at=).with(time)
+
+          transient_registration.save
+        end
+      end
+    end
+
     describe "search" do
       it_should_behave_like "Search scopes",
                             record_class: WasteCarriersEngine::TransientRegistration,
