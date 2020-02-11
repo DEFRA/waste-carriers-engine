@@ -6,8 +6,7 @@
       <h1 class="heading-large"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
 
       <p>
-        <%= t(".edit_meta.created_at",
-              created_at: "TODO - DATE GOES HERE") %>
+        <%= @presenter.created_at %>
       </p>
       <p>
         <span class="strong">
