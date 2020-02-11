@@ -8,12 +8,12 @@ module WasteCarriersEngine
     include CanFilterConvictionStatus
     include CanHaveRegistrationAttributes
     include CanHaveSecureToken
+    include CanSetCreatedAt
     include CanStripWhitespace
 
     store_in collection: "transient_registrations"
 
     before_save :update_last_modified
-    before_create :update_created_at
 
     # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
     field :temp_cards, type: Integer
@@ -22,7 +22,6 @@ module WasteCarriersEngine
     field :temp_os_places_error, type: String # 'yes' or 'no' - should refactor to boolean
     field :temp_payment_method, type: String
     field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
-    field :created_at, type: DateTime
 
     scope :in_progress, -> { where(:workflow_state.nin => %w[renewal_complete_form renewal_received_form]) }
     scope :submitted, -> { where(:workflow_state.in => %w[renewal_complete_form renewal_received_form]) }
@@ -63,10 +62,6 @@ module WasteCarriersEngine
       metaData.route = Rails.configuration.metadata_route
 
       save
-    end
-
-    def update_created_at
-      self.created_at = Time.current
     end
   end
 end
