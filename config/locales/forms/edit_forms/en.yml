@@ -14,14 +14,6 @@ en:
               tier: Tier
               registration_type: Type
               account_email: Account email
-            values:
-              tier:
-                UPPER: Upper tier
-                LOWER: Lower tier
-              registration_type:
-                carrier_dealer: Carrier and dealer
-                broker_dealer: Broker and dealer
-                carrier_broker_dealer: Carrier, broker and dealer
           business:
             heading: Waste carrier business details
             labels:
@@ -30,21 +22,6 @@ en:
               company_no: Company number
               main_people: Main people
               registered_address: Address
-            values:
-              business_type:
-                soleTrader: Individual or sole trader
-                limitedCompany: Limited company
-                partnership: Partnership
-                limitedLiabilityPartnership: Limited liability partnership
-                localAuthority: Local authority or public body
-                charity: Charity or trust
-              main_people:
-                localAuthority: chief executive
-                limitedCompany: director
-                limitedLiabilityPartnership: member
-                overseas: business owner
-                partnership: partner
-                soleTrader: business owner
           contact:
             heading: Contact details
             labels:
@@ -56,14 +33,6 @@ en:
             heading: Principal place of business
             labels:
               location: Location
-            values:
-              location:
-                england: England
-                wales: Wales
-                scotland: Scotland
-                northern_ireland: Northern Ireland
-                overseas: Not in the United Kingdom
-                not_set: "n/a"
         edit_links:
           default: Change
           no_edit: Cannot edit
@@ -78,6 +47,35 @@ en:
             contact_email: contact email
             contact_address: contact address
             location: location
+        values:
+          business_type:
+            soleTrader: Individual or sole trader
+            limitedCompany: Limited company
+            partnership: Partnership
+            limitedLiabilityPartnership: Limited liability partnership
+            localAuthority: Local authority or public body
+            charity: Charity or trust
+          main_people:
+            localAuthority: chief executive
+            limitedCompany: director
+            limitedLiabilityPartnership: member
+            overseas: business owner
+            partnership: partner
+            soleTrader: business owner
+          location:
+            england: England
+            wales: Wales
+            scotland: Scotland
+            northern_ireland: Northern Ireland
+            overseas: Not in the United Kingdom
+            not_set: "n/a"
+          registration_type:
+            carrier_dealer: Carrier and dealer
+            broker_dealer: Broker and dealer
+            carrier_broker_dealer: Carrier, broker and dealer
+          tier:
+            UPPER: Upper tier
+            LOWER: Lower tier
     shared:
       edit_actions:
         next_button: Confirm changes

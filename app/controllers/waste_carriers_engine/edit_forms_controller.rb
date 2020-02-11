@@ -3,7 +3,9 @@
 module WasteCarriersEngine
   class EditFormsController < FormsController
     def new
-      super(EditForm, "edit_form")
+      return unless super(EditForm, "edit_form")
+
+      @presenter = EditFormPresenter.new(@edit_form, view_context)
     end
 
     def create

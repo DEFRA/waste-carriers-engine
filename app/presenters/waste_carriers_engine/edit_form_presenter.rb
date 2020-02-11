@@ -1,0 +1,77 @@
+# frozen_string_literal: true
+
+module WasteCarriersEngine
+  class EditFormPresenter < BasePresenter
+    LOCALES_KEY = ".waste_carriers_engine.edit_forms.new.values"
+
+    def account_email
+      transient_registration.account_email
+    end
+
+    def business_type
+      I18n.t("#{LOCALES_KEY}.business_type.#{transient_registration.business_type}")
+    end
+
+    def company_name
+      transient_registration.company_name
+    end
+
+    def company_no
+      transient_registration.company_no
+    end
+
+    def contact_address
+      transient_registration.contact_address
+    end
+
+    def contact_name
+      "#{transient_registration.first_name} #{transient_registration.last_name}"
+    end
+
+    def contact_email
+      transient_registration.contact_email
+    end
+
+    def location
+      current_location = transient_registration.location || "not_set"
+
+      I18n.t("#{LOCALES_KEY}.location.#{current_location}")
+    end
+
+    def main_people_with_roles
+      formatted_people = []
+      transient_registration.main_people.each do |person|
+        formatted_people << format_main_person(person)
+      end
+
+      formatted_people
+    end
+
+    def phone_number
+      transient_registration.phone_number
+    end
+
+    def registered_address
+      transient_registration.registered_address
+    end
+
+    def registration_type
+      I18n.t("#{LOCALES_KEY}.registration_type.#{transient_registration.registration_type}")
+    end
+
+    def tier
+      I18n.t("#{LOCALES_KEY}.tier.#{transient_registration.tier}")
+    end
+
+    private
+
+    def format_main_person(person)
+      role = I18n.t("#{LOCALES_KEY}.main_people.#{transient_registration.business_type}")
+      "#{person_name(person)} (#{role})"
+    end
+
+    def person_name(person)
+      "#{person.first_name} #{person.last_name}"
+    end
+  end
+end

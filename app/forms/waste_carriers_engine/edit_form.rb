@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class EditForm < BaseForm
-    include CanDisplayDataOverview
-
     after_initialize :persist_registration
 
     private
