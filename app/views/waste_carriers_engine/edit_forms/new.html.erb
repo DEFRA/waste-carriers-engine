@@ -115,14 +115,19 @@
               <%= t(".sections.business.labels.main_people") %>
             </td>
             <td>
-              <ul class="list list-bullet">
-                <% @edit_form.main_people.each do |person| %>
-                  <li>
-                    <%= person.first_name %> <%= person.last_name %>
-                    (<%= t(".sections.business.values.main_people.#{@edit_form.business_type}") %>)
-                  </li>
-                <% end %>
-              </ul>
+              <% if @edit_form.main_people.count == 1 %>
+                <%= @edit_form.main_people.first.first_name %> <%= @edit_form.main_people.first.last_name %>
+                (<%= t(".sections.business.values.main_people.#{@edit_form.business_type}") %>)
+              <% else %>
+                <ul class="list list-bullet people_list">
+                  <% @edit_form.main_people.each do |person| %>
+                    <li>
+                      <%= person.first_name %> <%= person.last_name %>
+                      (<%= t(".sections.business.values.main_people.#{@edit_form.business_type}") %>)
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
             </td>
             <td class="change_link_column">
               <%= link_to "#" do %>
