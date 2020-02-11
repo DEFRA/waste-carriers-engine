@@ -99,17 +99,19 @@
               <% end %>
             </td>
           </tr>
-          <tr>
-            <td class="label_column">
-              <%= t(".sections.business.labels.company_no") %>
-            </td>
-            <td>
-              <%= @edit_form.company_no %>
-            </td>
-            <td class="change_link_column">
-              <%= t(".edit_links.no_edit") %>
-            </td>
-          </tr>
+          <% if @edit_form.company_no.present? %>
+            <tr>
+              <td class="label_column">
+                <%= t(".sections.business.labels.company_no") %>
+              </td>
+              <td>
+                <%= @edit_form.company_no %>
+              </td>
+              <td class="change_link_column">
+                <%= t(".edit_links.no_edit") %>
+              </td>
+            </tr>
+          <% end %>
           <tr>
             <td class="label_column">
               <%= t(".sections.business.labels.main_people") %>
