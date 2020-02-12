@@ -27,7 +27,9 @@ en:
         upper_renewal_html: "Your registration will last %{expires_after_pluralized} and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change."
         year: "year"
         update_phone: "You can do this by calling the Environment Agency."
-        registered_as: "An upper tier waste %{registration_type}"
+        registered_as:
+          lower: "A lower tier waste carrier, broker and dealer"
+          upper: "An upper tier waste %{registration_type}"
         carrier_dealer: "carrier and dealer"
         broker_dealer: "broker and dealer"
         carrier_broker_dealer: "carrier, broker and dealer"
