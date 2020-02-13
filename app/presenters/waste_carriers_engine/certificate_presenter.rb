@@ -45,7 +45,9 @@ module WasteCarriersEngine
     end
 
     def tier_and_registration_type
-      I18n.t("#{LOCALES_KEY}.registered_as",
+      return I18n.t("#{LOCALES_KEY}.registered_as.lower") if lower_tier?
+
+      I18n.t("#{LOCALES_KEY}.registered_as.upper.",
              registration_type: I18n.t("#{LOCALES_KEY}.#{registrationType}"))
     end
 
