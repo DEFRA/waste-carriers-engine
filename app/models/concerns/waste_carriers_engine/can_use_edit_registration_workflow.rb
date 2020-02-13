@@ -48,6 +48,9 @@ module WasteCarriersEngine
           transitions from: :company_name_form,
                       to: :edit_form
 
+          transitions from: :main_people_form,
+                      to: :edit_form
+
           transitions from: :contact_name_form,
                       to: :edit_form
 
@@ -72,6 +75,9 @@ module WasteCarriersEngine
                       to: :edit_form
 
           transitions from: :company_name_form,
+                      to: :edit_form
+
+          transitions from: :main_people_form,
                       to: :edit_form
 
           transitions from: :contact_name_form,
