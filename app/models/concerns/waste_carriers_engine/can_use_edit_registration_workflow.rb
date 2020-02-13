@@ -42,6 +42,24 @@ module WasteCarriersEngine
 
         # Transitions
         event :next do
+          transitions from: :cbd_type_form,
+                      to: :edit_form
+
+          transitions from: :company_name_form,
+                      to: :edit_form
+
+          transitions from: :contact_name_form,
+                      to: :edit_form
+
+          transitions from: :contact_phone_form,
+                      to: :edit_form
+
+          transitions from: :contact_email_form,
+                      to: :edit_form
+
+          transitions from: :location_form,
+                      to: :edit_form
+
           transitions from: :edit_form,
                       to: :declaration_form
 
@@ -50,6 +68,24 @@ module WasteCarriersEngine
         end
 
         event :back do
+          transitions from: :cbd_type_form,
+                      to: :edit_form
+
+          transitions from: :company_name_form,
+                      to: :edit_form
+
+          transitions from: :contact_name_form,
+                      to: :edit_form
+
+          transitions from: :contact_phone_form,
+                      to: :edit_form
+
+          transitions from: :contact_email_form,
+                      to: :edit_form
+
+          transitions from: :location_form,
+                      to: :edit_form
+
           transitions from: :declaration_form,
                       to: :edit_form
         end
