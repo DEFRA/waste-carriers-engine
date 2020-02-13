@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       delete_transient_registration
 
-      send_confirmation_email
+      send_confirmation_email if valid_user_email_address?
     end
 
     def update_registration
@@ -46,6 +46,14 @@ module WasteCarriersEngine
 
     def copy_cards_order
       @_copy_cards_order ||= transient_registration.finance_details.orders.last
+    end
+
+    def valid_user_email_address?
+      email = @transient_registration.contact_email
+      return false if email.blank?
+      return false if email == WasteCarriersEngine.configuration.assisted_digital_email
+
+      true
     end
   end
 end

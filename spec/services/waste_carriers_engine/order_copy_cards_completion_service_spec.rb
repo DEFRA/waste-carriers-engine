@@ -5,6 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe OrderCopyCardsCompletionService do
     describe ".run" do
+      let(:contact_email) { "foo@example.com" }
       let(:finance_details) { double(:finance_details) }
       let(:transient_finance_details) { double(:transient_finance_details) }
       let(:registration) { double(:registration, finance_details: finance_details) }
@@ -12,7 +13,8 @@ module WasteCarriersEngine
         double(
           :transient_registration,
           registration: registration,
-          finance_details: transient_finance_details
+          finance_details: transient_finance_details,
+          contact_email: contact_email
         )
       end
 
@@ -88,6 +90,82 @@ module WasteCarriersEngine
         expect(mailer).to receive(:deliver_now)
 
         described_class.run(transient_registration)
+      end
+
+      context "when the contact email is blank" do
+        let(:contact_email) { nil }
+
+        it "does not send an email" do
+          orders = double(:orders)
+          payments = double(:payments)
+          transient_order = double(:transient_order)
+          transient_payment = double(:transient_payment)
+
+          # Merge finance details
+          allow(registration).to receive(:finance_details).and_return(finance_details)
+          allow(transient_registration).to receive(:finance_details).and_return(transient_finance_details)
+          expect(finance_details).to receive(:update_balance)
+
+          ## Merge orders
+          allow(finance_details).to receive(:orders).and_return(orders)
+          allow(transient_finance_details).to receive(:orders).and_return([transient_order])
+          expect(orders).to receive(:<<).with(transient_order)
+
+          ## Merge payments
+          expect(finance_details).to receive(:payments).and_return(payments).twice
+          expect(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
+          expect(payments).to receive(:<<).with(transient_payment)
+
+          # Deletes transient registration
+          expect(transient_registration).to receive(:delete)
+
+          # Save registration
+          expect(registration).to receive(:save!)
+
+          # Don't send email
+          expect(OrderCopyCardsMailer).to_not receive(:send_order_completed_email)
+
+          described_class.run(transient_registration)
+        end
+      end
+
+      context "when the contact email is the AD default" do
+        before do
+          allow(WasteCarriersEngine.configuration).to receive(:assisted_digital_email).and_return(contact_email)
+        end
+
+        it "does not send an email" do
+          orders = double(:orders)
+          payments = double(:payments)
+          transient_order = double(:transient_order)
+          transient_payment = double(:transient_payment)
+
+          # Merge finance details
+          allow(registration).to receive(:finance_details).and_return(finance_details)
+          allow(transient_registration).to receive(:finance_details).and_return(transient_finance_details)
+          expect(finance_details).to receive(:update_balance)
+
+          ## Merge orders
+          allow(finance_details).to receive(:orders).and_return(orders)
+          allow(transient_finance_details).to receive(:orders).and_return([transient_order])
+          expect(orders).to receive(:<<).with(transient_order)
+
+          ## Merge payments
+          expect(finance_details).to receive(:payments).and_return(payments).twice
+          expect(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
+          expect(payments).to receive(:<<).with(transient_payment)
+
+          # Deletes transient registration
+          expect(transient_registration).to receive(:delete)
+
+          # Save registration
+          expect(registration).to receive(:save!)
+
+          # Don't send email
+          expect(OrderCopyCardsMailer).to_not receive(:send_order_completed_email)
+
+          described_class.run(transient_registration)
+        end
       end
     end
   end
