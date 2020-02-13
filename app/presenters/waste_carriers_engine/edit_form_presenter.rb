@@ -74,8 +74,12 @@ module WasteCarriersEngine
     private
 
     def format_main_person(person)
-      role = I18n.t("#{LOCALES_KEY}.main_people.#{transient_registration.business_type}")
-      "#{person_name(person)} (#{role})"
+      role = I18n.t("#{LOCALES_KEY}.main_people.#{transient_registration.business_type}", default: "")
+      if role.present?
+        "#{person_name(person)} (#{role})"
+      else
+        person_name(person)
+      end
     end
 
     def person_name(person)

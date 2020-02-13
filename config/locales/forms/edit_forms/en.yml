@@ -55,6 +55,9 @@ en:
             limitedLiabilityPartnership: Limited liability partnership
             localAuthority: Local authority or public body
             charity: Charity or trust
+            overseas: Overseas
+            publicBody: Public body
+            authority: Local or regulatory authority
           main_people:
             localAuthority: chief executive
             limitedCompany: director
@@ -68,7 +71,7 @@ en:
             scotland: Scotland
             northern_ireland: Northern Ireland
             overseas: Not in the United Kingdom
-            not_set: "n/a"
+            not_set: "-"
           registration_type:
             carrier_dealer: Carrier and dealer
             broker_dealer: Broker and dealer
