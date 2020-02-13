@@ -62,6 +62,8 @@ module WasteCarriersEngine
     end
 
     def registration_type
+      return if transient_registration.registration_type.blank?
+
       I18n.t("#{LOCALES_KEY}.registration_type.#{transient_registration.registration_type}")
     end
 

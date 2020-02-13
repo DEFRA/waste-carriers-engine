@@ -36,22 +36,24 @@
               <%= t(".edit_links.no_edit") %>
             </td>
           </tr>
-          <tr>
-            <td class="label_column">
-              <%= t(".sections.registration_and_account.labels.registration_type") %>
-            </td>
-            <td>
-              <%= @presenter.registration_type %>
-            </td>
-            <td class="change_link_column">
-              <%= link_to "#" do %>
-                <%= t(".edit_links.fee") %>
-                <span class="visually-hidden">
-                  <%= t(".edit_links.visually_hidden.registration_type") %>
-                </span>
-              <% end %>
-            </td>
-          </tr>
+          <% if @presenter.registration_type.present? %>
+            <tr>
+              <td class="label_column">
+                <%= t(".sections.registration_and_account.labels.registration_type") %>
+              </td>
+              <td>
+                <%= @presenter.registration_type %>
+              </td>
+              <td class="change_link_column">
+                <%= link_to "#" do %>
+                  <%= t(".edit_links.fee") %>
+                  <span class="visually-hidden">
+                    <%= t(".edit_links.visually_hidden.registration_type") %>
+                  </span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
           <tr>
             <td class="label_column">
               <%= t(".sections.registration_and_account.labels.account_email") %>
@@ -111,32 +113,34 @@
               </td>
             </tr>
           <% end %>
-          <tr>
-            <td class="label_column">
-              <%= t(".sections.business.labels.main_people") %>
-            </td>
-            <td>
-              <% if @presenter.main_people_with_roles.count == 1 %>
-                <%= @presenter.main_people_with_roles.first %>
-              <% else %>
-                <ul class="list list-bullet people_list">
-                  <% @edit_form.main_people_with_roles.each do |person| %>
-                    <li>
-                      <%= person %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
-            </td>
-            <td class="change_link_column">
-              <%= link_to "#" do %>
-                <%= t(".edit_links.default") %>
-                <span class="visually-hidden">
-                  <%= t(".edit_links.visually_hidden.main_people") %>
-                </span>
-              <% end %>
-            </td>
-          </tr>
+          <% if @presenter.main_people_with_roles.any? %>
+            <tr>
+              <td class="label_column">
+                <%= t(".sections.business.labels.main_people") %>
+              </td>
+              <td>
+                <% if @presenter.main_people_with_roles.count == 1 %>
+                  <%= @presenter.main_people_with_roles.first %>
+                <% else %>
+                  <ul class="list list-bullet people_list">
+                    <% @presenter.main_people_with_roles.each do |person| %>
+                      <li>
+                        <%= person %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </td>
+              <td class="change_link_column">
+                <%= link_to "#" do %>
+                  <%= t(".edit_links.default") %>
+                  <span class="visually-hidden">
+                    <%= t(".edit_links.visually_hidden.main_people") %>
+                  </span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
           <tr>
             <td class="label_column">
               <%= t(".sections.business.labels.registered_address") %>
