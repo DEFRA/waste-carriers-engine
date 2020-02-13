@@ -104,6 +104,7 @@ module WasteCarriersEngine
       registration_attributes = registration.attributes.except("_id", "financeDetails", "past_registrations")
       renewal_attributes = transient_registration.attributes.except("_id",
                                                                     "token",
+                                                                    "created_at",
                                                                     "financeDetails",
                                                                     "temp_cards",
                                                                     "temp_company_postcode",

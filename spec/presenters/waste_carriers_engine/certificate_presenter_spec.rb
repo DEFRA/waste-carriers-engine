@@ -90,20 +90,32 @@ module WasteCarriersEngine
     end
 
     describe "#tier_and_registration_type" do
-      let(:registration) { create(:registration, :has_required_data) }
+      context "when the registration is upper tier" do
+        let(:registration) { create(:registration, :has_required_data) }
 
-      test_values = {
-        carrier_dealer: "An upper tier waste carrier and dealer",
-        broker_dealer: "An upper tier waste broker and dealer",
-        carrier_broker_dealer: "An upper tier waste carrier, broker and dealer"
-      }
-      test_values.each do |carrier_type, expected|
-        context "when the registration is a '#{carrier_type}'" do
-          it "returns '#{expected}'" do
-            registration.registration_type = carrier_type
-            presenter = CertificatePresenter.new(registration, view)
-            expect(presenter.tier_and_registration_type).to eq(expected)
+        test_values = {
+          carrier_dealer: "An upper tier waste carrier and dealer",
+          broker_dealer: "An upper tier waste broker and dealer",
+          carrier_broker_dealer: "An upper tier waste carrier, broker and dealer"
+        }
+        test_values.each do |carrier_type, expected|
+          context "and is a '#{carrier_type}'" do
+            it "returns '#{expected}'" do
+              registration.registration_type = carrier_type
+              presenter = CertificatePresenter.new(registration, view)
+              expect(presenter.tier_and_registration_type).to eq(expected)
+            end
           end
+        end
+      end
+
+      context "when the registration is lower tier" do
+        let(:registration) { create(:registration, :has_required_data, tier: "LOWER") }
+        expected_value = "A lower tier waste carrier, broker and dealer"
+
+        it "returns '#{expected_value}'" do
+          presenter = CertificatePresenter.new(registration, view)
+          expect(presenter.tier_and_registration_type).to eq(expected_value)
         end
       end
     end

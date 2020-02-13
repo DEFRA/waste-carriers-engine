@@ -8,6 +8,7 @@ module WasteCarriersEngine
     include CanFilterConvictionStatus
     include CanHaveRegistrationAttributes
     include CanHaveSecureToken
+    include CanSetCreatedAt
     include CanStripWhitespace
 
     store_in collection: "transient_registrations"
