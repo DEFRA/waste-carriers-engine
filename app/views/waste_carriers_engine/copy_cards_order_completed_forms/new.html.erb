@@ -1,9 +1,9 @@
 <h1 class="heading-large"><%= t(".heading") %></h1>
 
 <% if @transient_registration.temp_payment_method == "card" %>
-  <%= render("shared/success", message: t(".payment_success_message_html", email: @transient_registration.contact_email)) %>
+  <%= render("shared/success", message: t(".payment_success_message.#{@transient_registration.ad_contact_email?}_html", email: @transient_registration.contact_email)) %>
 <% else %>
-  <%= render("shared/message", message: t(".awaiting_payment_message_html", email: @transient_registration.contact_email)) %>
+  <%= render("shared/message", message: t(".awaiting_payment_message.#{@transient_registration.ad_contact_email?}_html", email: @transient_registration.contact_email)) %>
 <% end %>
 
 <div class="text">

@@ -23,6 +23,8 @@ module WasteCarriersEngine
   end
 
   class Configuration
+    # AD config
+    attr_accessor :assisted_digital_email
     # Companies house API config
     attr_reader :companies_house_host, :companies_house_api_key
 

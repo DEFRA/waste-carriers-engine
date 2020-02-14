@@ -48,6 +48,17 @@ module WasteCarriersEngine
               expect(response).to render_template("waste_carriers_engine/edit_forms/new")
               expect(response.code).to eq("200")
             end
+
+            context "when the registration business type is an old frontend one" do
+              let(:registration) { create(:registration, :has_required_data, :is_active, business_type: "publicBody") }
+
+              it "responds to the GET request with a 200 status code and renders the appropriate template" do
+                get new_edit_form_path(registration.reg_identifier)
+
+                expect(response).to render_template("waste_carriers_engine/edit_forms/new")
+                expect(response.code).to eq("200")
+              end
+            end
           end
         end
       end
