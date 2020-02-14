@@ -27,7 +27,7 @@ module WasteCarriersEngine
       double(:registration,
              business_type: business_type,
              company_name: company_name,
-             registrationType: registration_type,
+             registration_type: registration_type,
              main_people: main_people,
              metaData: metaData,
              lower_tier?: lower_tier,

@@ -6,7 +6,7 @@ module WasteCarriersEngine
     LOCALES_KEY = ".waste_carriers_engine.pdfs.certificate"
 
     # For sole traders, we want to display the name of the trader. There
-    # will only be name, but the list_main_people method still works for
+    # will only be one person, but the list_main_people method still works for
     # finding and formatting that single person.
     def carrier_name
       if upper_tier_sole_trader?
@@ -27,9 +27,11 @@ module WasteCarriersEngine
     # registration on the right. Because this heading is dynamic based on the
     # business type, we have a method for it in the presenter.
     def complex_organisation_heading
-      return I18n.t("#{LOCALES_KEY}.partners") if business_type == "partnership"
-
-      I18n.t("#{LOCALES_KEY}.business_name_if_applicable")
+      if upper_tier_partnership?
+        I18n.t("#{LOCALES_KEY}.partners")
+      else
+        I18n.t("#{LOCALES_KEY}.business_name_if_applicable")
+      end
     end
 
     def complex_organisation_name
@@ -41,10 +43,12 @@ module WasteCarriersEngine
     end
 
     def tier_and_registration_type
-      return I18n.t("#{LOCALES_KEY}.registered_as.lower") if lower_tier?
-
-      I18n.t("#{LOCALES_KEY}.registered_as.upper.",
-             registration_type: I18n.t("#{LOCALES_KEY}.#{registrationType}"))
+      if lower_tier?
+        I18n.t("#{LOCALES_KEY}.registered_as.lower")
+      else
+        I18n.t("#{LOCALES_KEY}.registered_as.upper.",
+               registration_type: I18n.t("#{LOCALES_KEY}.#{registration_type}"))
+      end
     end
 
     def list_main_people
