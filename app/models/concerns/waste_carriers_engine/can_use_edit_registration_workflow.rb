@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ModuleLength
   module CanUseEditRegistrationWorkflow
     extend ActiveSupport::Concern
     include Mongoid::Document
@@ -209,4 +210,5 @@ module WasteCarriersEngine
       contact_address.manually_entered?
     end
   end
+  # rubocop:enable Metrics/ModuleLength
 end
