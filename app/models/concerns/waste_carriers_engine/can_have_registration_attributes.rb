@@ -111,6 +111,10 @@ module WasteCarriersEngine
         tier == "LOWER"
       end
 
+      def ad_contact_email?
+        contact_email.blank? || contact_email == WasteCarriersEngine.configuration.assisted_digital_email
+      end
+
       # Some business types should not have a company_no
       def company_no_required?
         return false if overseas?
