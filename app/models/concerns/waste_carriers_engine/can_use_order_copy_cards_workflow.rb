@@ -33,11 +33,9 @@ module WasteCarriersEngine
                       to: :copy_cards_bank_transfer_form,
                       unless: :paying_by_card?
 
-          # TODO: after: :complete_order
           transitions from: :copy_cards_bank_transfer_form,
                       to: :copy_cards_order_completed_form
 
-          # TODO: after: :complete_order
           transitions from: :worldpay_form,
                       to: :copy_cards_order_completed_form
         end
@@ -60,13 +58,6 @@ module WasteCarriersEngine
 
     def paying_by_card?
       temp_payment_method == "card"
-    end
-
-    def _complete_order
-      # TODO
-      # copy data to registration
-      # update reegistration status (can be pending / awaiting payment) maybe not needed
-      # delete transient object
     end
   end
 end
