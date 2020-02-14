@@ -42,6 +42,42 @@ module WasteCarriersEngine
         state :edit_complete_form
 
         # Transitions
+
+        event :edit_cbd_type do
+          transitions from: :edit_form,
+                      to: :cbd_type_form
+        end
+
+        event :edit_company_name do
+          transitions from: :edit_form,
+                      to: :company_name_form
+        end
+
+        event :edit_main_people do
+          transitions from: :edit_form,
+                      to: :main_people_form
+        end
+
+        event :edit_contact_name do
+          transitions from: :edit_form,
+                      to: :contact_name_form
+        end
+
+        event :edit_contact_phone do
+          transitions from: :edit_form,
+                      to: :contact_phone_form
+        end
+
+        event :edit_contact_email do
+          transitions from: :edit_form,
+                      to: :contact_email_form
+        end
+
+        event :edit_location do
+          transitions from: :edit_form,
+                      to: :location_form
+        end
+
         event :next do
           # Registration and account
           transitions from: :cbd_type_form,
