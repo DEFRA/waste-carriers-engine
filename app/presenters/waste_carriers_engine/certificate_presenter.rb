@@ -5,28 +5,27 @@ module WasteCarriersEngine
 
     LOCALES_KEY = ".waste_carriers_engine.pdfs.certificate"
 
+    # For sole traders, we want to display the name of the trader. There
+    # will only be name, but the list_main_people method still works for
+    # finding and formatting that single person.
     def carrier_name
-      return company_name unless upper_tier? && business_type == "soleTrader"
-
-      # Based on the logic found in the existing certificate, we simply display
-      # the company name field unless its a sole trader, in which case we take
-      # the details entered into key people. For sole traders there will only be
-      # one, but the list_main_people method still works for finding and
-      # formatting the result found
-      list_main_people
+      if upper_tier_sole_trader?
+        list_main_people
+      else
+        company_name
+      end
     end
 
-    # By complex we mean is there a need to display extra detail in the
-    # document. If its a soletrader we display we display an extra section,
-    # which in the case of partners is a list of their names, and for sole
-    # traders its their business name.
+    # If it's an upper tier sole trader or partnership, we need to display an
+    # extra section. For partners, it's a list of their names, and for sole
+    # traders, it's their business name.
     def complex_organisation_details?
-      upper_tier? && %w[soleTrader partnership].include?(business_type)
+      upper_tier_sole_trader? || upper_tier_partnership?
     end
 
     # The certificate displays headings on the left, and values from the
     # registration on the right. Because this heading is dynamic based on the
-    # business type, we have a method for it in the presenter
+    # business type, we have a method for it in the presenter.
     def complex_organisation_heading
       return I18n.t("#{LOCALES_KEY}.partners") if business_type == "partnership"
 
@@ -34,12 +33,11 @@ module WasteCarriersEngine
     end
 
     def complex_organisation_name
-      return company_name unless business_type == "partnership"
-
-      # Based on the logic found in the existing certificate, we simply display
-      # the company name field unless its a partnership, in which case we list
-      # out all the partners
-      list_main_people
+      if upper_tier_partnership?
+        list_main_people
+      else
+        company_name
+      end
     end
 
     def tier_and_registration_type
@@ -75,6 +73,14 @@ module WasteCarriersEngine
         Rails.configuration.expires_after,
         I18n.t("#{LOCALES_KEY}.year")
       )
+    end
+
+    def upper_tier_sole_trader?
+      upper_tier? && business_type == "soleTrader"
+    end
+
+    def upper_tier_partnership?
+      upper_tier? && business_type == "partnership"
     end
   end
 end

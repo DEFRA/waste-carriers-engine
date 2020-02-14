@@ -97,17 +97,28 @@ module WasteCarriersEngine
     end
 
     describe "#complex_organisation_heading" do
-      context "when the registration business type is 'partnership'" do
-        let(:business_type) { "partnership" }
+      context "when the registration is lower tier" do
+        let(:lower_tier) { true }
+        let(:upper_tier) { false }
 
-        it "returns 'Partners'" do
-          expect(subject.complex_organisation_heading).to eq("Partners")
+        it "returns a generic title" do
+          expect(subject.complex_organisation_heading).to eq("Business name (if applicable)")
         end
       end
 
-      context "when the registration business type is NOT 'partnership'" do
-        it "returns a generic title" do
-          expect(subject.complex_organisation_heading).to eq("Business name (if applicable)")
+      context "when the registration is upper tier" do
+        context "when the registration business type is 'partnership'" do
+          let(:business_type) { "partnership" }
+
+          it "returns 'Partners'" do
+            expect(subject.complex_organisation_heading).to eq("Partners")
+          end
+        end
+
+        context "when the registration business type is NOT 'partnership'" do
+          it "returns a generic title" do
+            expect(subject.complex_organisation_heading).to eq("Business name (if applicable)")
+          end
         end
       end
     end
