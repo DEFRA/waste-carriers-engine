@@ -58,6 +58,15 @@ module WasteCarriersEngine
                       to: :main_people_form
         end
 
+        event :edit_company_address do
+          transitions from: :edit_form,
+                      to: :company_address_manual_form,
+                      if: :based_overseas?
+
+          transitions from: :edit_form,
+                      to: :company_postcode_form
+        end
+
         event :edit_contact_name do
           transitions from: :edit_form,
                       to: :contact_name_form
@@ -71,6 +80,15 @@ module WasteCarriersEngine
         event :edit_contact_email do
           transitions from: :edit_form,
                       to: :contact_email_form
+        end
+
+        event :edit_contact_address do
+          transitions from: :edit_form,
+                      to: :contact_address_manual_form,
+                      if: :based_overseas?
+
+          transitions from: :edit_form,
+                      to: :contact_postcode_form
         end
 
         event :edit_location do
