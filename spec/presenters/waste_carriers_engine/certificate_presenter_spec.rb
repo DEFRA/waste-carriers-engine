@@ -120,32 +120,6 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#expires_after_pluralized" do
-      let(:registration) { create(:registration, :has_required_data) }
-
-      context "when the config is set to 1 year" do
-        before do
-          allow(Rails.configuration).to receive(:expires_after).and_return(1)
-        end
-
-        it "returns '1 year'" do
-          presenter = CertificatePresenter.new(registration, view)
-          expect(presenter.expires_after_pluralized).to eq("1 year")
-        end
-      end
-
-      context "when the config is set to 3 years" do
-        before do
-          allow(Rails.configuration).to receive(:expires_after).and_return(3)
-        end
-
-        it "returns '3 years'" do
-          presenter = CertificatePresenter.new(registration, view)
-          expect(presenter.expires_after_pluralized).to eq("3 years")
-        end
-      end
-    end
-
     describe "#list_main_people" do
       let(:registration) { create(:registration, :has_required_data, :has_mulitiple_key_people) }
 
@@ -170,6 +144,45 @@ module WasteCarriersEngine
         it "returns 'false'" do
           presenter = CertificatePresenter.new(registration, view)
           expect(presenter.assisted_digital?).to be false
+        end
+      end
+    end
+
+    describe "#renewal_message" do
+      let(:registration) { create(:registration, :has_required_data) }
+
+      context "when the registration is lower tier" do
+        before { registration.tier = "LOWER" }
+
+        it "returns the correct message" do
+          presenter = CertificatePresenter.new(registration, view)
+          expect(presenter.renewal_message).to eq("Your registration will last indefinitely so does not need to be renewed but you must update your registration details if they change, within 28 days of the change.")
+        end
+      end
+
+      context "when the registration is upper tier" do
+        before { registration.tier = "UPPER" }
+
+        context "when the config is set to 1 year" do
+          before do
+            allow(Rails.configuration).to receive(:expires_after).and_return(1)
+          end
+
+          it "returns '1 year'" do
+            presenter = CertificatePresenter.new(registration, view)
+            expect(presenter.renewal_message).to eq("Your registration will last 1 year and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change.")
+          end
+        end
+
+        context "when the config is set to 3 years" do
+          before do
+            allow(Rails.configuration).to receive(:expires_after).and_return(3)
+          end
+
+          it "returns '3 years'" do
+            presenter = CertificatePresenter.new(registration, view)
+            expect(presenter.renewal_message).to eq("Your registration will last 3 years and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change.")
+          end
         end
       end
     end

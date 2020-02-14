@@ -136,7 +136,7 @@
 
             <!-- Renewal details section -->
             <div class="renewal">
-              <p class="certificate_text"><%= t ".upper_renewal_html", expires_after_pluralized: @presenter.expires_after_pluralized %></p>
+              <p class="certificate_text"><%= @presenter.renewal_message %></p>
               <% if @presenter.assisted_digital? %>
                 <p class="certificate_text"><%= t ".update_phone" %></p>
               <% end %>
