@@ -147,5 +147,77 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "edit redirect paths" do
+      let(:token) { create(:edit_registration).token }
+      let(:user) { create(:user) }
+
+      before(:each) do
+        sign_in(user)
+      end
+
+      describe "GET edit_cbd_type" do
+        it "redirects to the cbd_type form" do
+          get cbd_type_edit_forms_path(token)
+          expect(response).to redirect_to(new_cbd_type_form_path(token))
+        end
+      end
+
+      describe "GET edit_company_name" do
+        it "redirects to the company_name form" do
+          get company_name_edit_forms_path(token)
+          expect(response).to redirect_to(new_company_name_form_path(token))
+        end
+      end
+
+      describe "GET edit_company_address" do
+        it "redirects to the company postcode form" do
+          get company_address_edit_forms_path(token)
+          expect(response).to redirect_to(new_company_postcode_form_path(token))
+        end
+      end
+
+      describe "GET edit_main_people" do
+        it "redirects to the main_people form" do
+          get main_people_edit_forms_path(token)
+          expect(response).to redirect_to(new_main_people_form_path(token))
+        end
+      end
+
+      describe "GET edit_contact_name" do
+        it "redirects to the contact_name form" do
+          get contact_name_edit_forms_path(token)
+          expect(response).to redirect_to(new_contact_name_form_path(token))
+        end
+      end
+
+      describe "GET edit_contact_phone" do
+        it "redirects to the contact_phone form" do
+          get contact_phone_edit_forms_path(token)
+          expect(response).to redirect_to(new_contact_phone_form_path(token))
+        end
+      end
+
+      describe "GET edit_contact_email" do
+        it "redirects to the contact_email form" do
+          get contact_email_edit_forms_path(token)
+          expect(response).to redirect_to(new_contact_email_form_path(token))
+        end
+      end
+
+      describe "GET edit_contact_address" do
+        it "redirects to the contact postcode form" do
+          get contact_address_edit_forms_path(token)
+          expect(response).to redirect_to(new_contact_postcode_form_path(token))
+        end
+      end
+
+      describe "GET edit_location" do
+        it "redirects to the location form" do
+          get location_edit_forms_path(token)
+          expect(response).to redirect_to(new_location_form_path(token))
+        end
+      end
+    end
   end
 end

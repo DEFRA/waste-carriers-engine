@@ -62,7 +62,52 @@ WasteCarriersEngine::Engine.routes.draw do
     resources :edit_forms,
               only: %i[new create],
               path: "edit",
-              path_names: { new: "" }
+              path_names: { new: "" } do
+                get "cbd_type",
+                    to: "edit_forms#edit_cbd_type",
+                    as: "cbd_type",
+                    on: :collection
+
+                get "company_name",
+                    to: "edit_forms#edit_company_name",
+                    as: "company_name",
+                    on: :collection
+
+                get "main_people",
+                    to: "edit_forms#edit_main_people",
+                    as: "main_people",
+                    on: :collection
+
+                get "company_address",
+                    to: "edit_forms#edit_company_address",
+                    as: "company_address",
+                    on: :collection
+
+                get "contact_name",
+                    to: "edit_forms#edit_contact_name",
+                    as: "contact_name",
+                    on: :collection
+
+                get "contact_phone",
+                    to: "edit_forms#edit_contact_phone",
+                    as: "contact_phone",
+                    on: :collection
+
+                get "contact_email",
+                    to: "edit_forms#edit_contact_email",
+                    as: "contact_email",
+                    on: :collection
+
+                get "contact_address",
+                    to: "edit_forms#edit_contact_address",
+                    as: "contact_address",
+                    on: :collection
+
+                get "location",
+                    to: "edit_forms#edit_location",
+                    as: "location",
+                    on: :collection
+              end
 
     resources :edit_complete_forms,
               only: %i[new create],
