@@ -6,7 +6,7 @@ module WasteCarriersEngine
     LOCALES_KEY = ".waste_carriers_engine.pdfs.certificate"
 
     def carrier_name
-      return company_name unless business_type == "soleTrader"
+      return company_name unless upper_tier? && business_type == "soleTrader"
 
       # Based on the logic found in the existing certificate, we simply display
       # the company name field unless its a sole trader, in which case we take
@@ -21,9 +21,7 @@ module WasteCarriersEngine
     # which in the case of partners is a list of their names, and for sole
     # traders its their business name.
     def complex_organisation_details?
-      return false unless %w[soleTrader partnership].include?(business_type)
-
-      true
+      upper_tier? && %w[soleTrader partnership].include?(business_type)
     end
 
     # The certificate displays headings on the left, and values from the

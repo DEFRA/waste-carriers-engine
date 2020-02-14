@@ -41,34 +41,56 @@ module WasteCarriersEngine
     end
 
     describe "#carrier_name" do
-      context "when the registration business type is 'soleTrader'" do
-        let(:business_type) { "soleTrader" }
-        let(:main_people) { [person_a] }
+      context "when the registration is lower tier" do
+        let(:lower_tier) { true }
+        let(:upper_tier) { false }
 
-        it "returns the carrier's name" do
-          expect(subject.carrier_name).to eq("#{person_a.first_name} #{person_a.last_name}")
+        it "returns the company name" do
+          expect(subject.carrier_name).to eq(company_name)
         end
       end
 
-      context "when the registration business type is NOT 'sole trader'" do
-        it "returns the company name" do
-          expect(subject.carrier_name).to eq(company_name)
+      context "when the registration is upper tier" do
+        context "when the registration business type is 'soleTrader'" do
+          let(:business_type) { "soleTrader" }
+          let(:main_people) { [person_a] }
+
+          it "returns the carrier's name" do
+            expect(subject.carrier_name).to eq("#{person_a.first_name} #{person_a.last_name}")
+          end
+        end
+
+        context "when the registration business type is NOT 'sole trader'" do
+          it "returns the company name" do
+            expect(subject.carrier_name).to eq(company_name)
+          end
         end
       end
     end
 
     describe "#complex_organisation_details?" do
-      test_values = {
-        limitedCompany: false,
-        soleTrader: true,
-        partnership: true
-      }
-      test_values.each do |type, expected|
-        context "when the registration business type is '#{type}'" do
-          let(:business_type) { type.to_s }
+      context "when the registration is lower tier" do
+        let(:lower_tier) { true }
+        let(:upper_tier) { false }
 
-          it "returns '#{expected}'" do
-            expect(subject.complex_organisation_details?).to eq(expected)
+        it "returns 'false'" do
+          expect(subject.complex_organisation_details?).to eq(false)
+        end
+      end
+
+      context "when the registration is upper tier" do
+        test_values = {
+          limitedCompany: false,
+          soleTrader: true,
+          partnership: true
+        }
+        test_values.each do |type, expected|
+          context "when the registration business type is '#{type}'" do
+            let(:business_type) { type.to_s }
+
+            it "returns '#{expected}'" do
+              expect(subject.complex_organisation_details?).to eq(expected)
+            end
           end
         end
       end
