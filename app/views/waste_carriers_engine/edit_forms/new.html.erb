@@ -1,3 +1,5 @@
+<%= render("waste_carriers_engine/shared/back", back_path: Rails.application.routes.url_helpers.registration_path(@edit_form.reg_identifier)) %>
+
 <%= form_for(@edit_form) do |f| %>
   <%= render("waste_carriers_engine/shared/errors", object: @edit_form) %>
 
