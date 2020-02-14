@@ -45,7 +45,7 @@
                 <%= @presenter.registration_type %>
               </td>
               <td class="change_link_column">
-                <%= link_to "#" do %>
+                <%= link_to cbd_type_edit_forms_path(@presenter.token) do %>
                   <%= t(".edit_links.fee") %>
                   <span class="visually-hidden">
                     <%= t(".edit_links.visually_hidden.registration_type") %>
@@ -92,7 +92,7 @@
               <%= @presenter.company_name %>
             </td>
             <td class="change_link_column">
-              <%= link_to "#" do %>
+              <%= link_to company_name_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
                   <%= t(".edit_links.visually_hidden.company_name") %>
@@ -132,7 +132,7 @@
                 <% end %>
               </td>
               <td class="change_link_column">
-                <%= link_to "#" do %>
+                <%= link_to main_people_edit_forms_path(@presenter.token) do %>
                   <%= t(".edit_links.default") %>
                   <span class="visually-hidden">
                     <%= t(".edit_links.visually_hidden.main_people") %>
@@ -153,7 +153,7 @@
               </ul>
             </td>
             <td class="change_link_column">
-              <%= link_to "#" do %>
+              <%= link_to company_address_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
                   <%= t(".edit_links.visually_hidden.registered_address") %>
@@ -176,7 +176,7 @@
               <%= @presenter.contact_name %>
             </td>
             <td class="change_link_column">
-              <%= link_to "#" do %>
+              <%= link_to contact_name_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
                   <%= t(".edit_links.visually_hidden.contact_name") %>
@@ -192,7 +192,7 @@
               <%= @presenter.phone_number %>
             </td>
             <td class="change_link_column">
-              <%= link_to "#" do %>
+              <%= link_to contact_phone_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
                   <%= t(".edit_links.visually_hidden.phone_number") %>
@@ -208,7 +208,7 @@
               <%= @presenter.contact_email %>
             </td>
             <td class="change_link_column">
-              <%= link_to "#" do %>
+              <%= link_to contact_email_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
                   <%= t(".edit_links.visually_hidden.contact_email") %>
@@ -228,7 +228,7 @@
               </ul>
             </td>
             <td class="change_link_column">
-              <%= link_to "#" do %>
+              <%= link_to contact_address_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
                   <%= t(".edit_links.visually_hidden.contact_address") %>
@@ -252,7 +252,7 @@
               <%= @presenter.location %>
             </td>
             <td class="change_link_column">
-              <%= link_to "#" do %>
+              <%= link_to location_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
                   <%= t(".edit_links.visually_hidden.location") %>
