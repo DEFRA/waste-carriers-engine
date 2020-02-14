@@ -12,7 +12,7 @@ module WasteCarriersEngine
 
     let(:person_a) { double(:key_person, first_name: "Kate", last_name: "Franklin", person_type: "KEY") }
     let(:person_b) { double(:key_person, first_name: "Ryan", last_name: "Gosling", person_type: "KEY") }
-    let(:key_people) { [person_a, person_b] }
+    let(:main_people) { [person_a, person_b] }
 
     let(:route) { "DIGITAL" }
     let(:metaData) do
@@ -28,7 +28,7 @@ module WasteCarriersEngine
              business_type: business_type,
              company_name: company_name,
              registrationType: registration_type,
-             key_people: key_people,
+             main_people: main_people,
              metaData: metaData,
              lower_tier?: lower_tier,
              upper_tier?: upper_tier)
@@ -43,7 +43,7 @@ module WasteCarriersEngine
     describe "#carrier_name" do
       context "when the registration business type is 'soleTrader'" do
         let(:business_type) { "soleTrader" }
-        let(:key_people) { [person_a] }
+        let(:main_people) { [person_a] }
 
         it "returns the carrier's name" do
           expect(subject.carrier_name).to eq("#{person_a.first_name} #{person_a.last_name}")
