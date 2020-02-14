@@ -51,13 +51,6 @@ module WasteCarriersEngine
              registration_type: I18n.t("#{LOCALES_KEY}.#{registrationType}"))
     end
 
-    def expires_after_pluralized
-      ActionController::Base.helpers.pluralize(
-        Rails.configuration.expires_after,
-        I18n.t("#{LOCALES_KEY}.year")
-      )
-    end
-
     def list_main_people
       list = key_people
              .select { |person| person.person_type == "KEY" }
@@ -65,8 +58,25 @@ module WasteCarriersEngine
       list.join("<br>").html_safe
     end
 
+    def renewal_message
+      if lower_tier?
+        I18n.t("#{LOCALES_KEY}.lower_renewal")
+      else
+        I18n.t("#{LOCALES_KEY}.upper_renewal", expires_after_pluralized: expires_after_pluralized)
+      end
+    end
+
     def assisted_digital?
       metaData.route == "ASSISTED_DIGITAL"
+    end
+
+    private
+
+    def expires_after_pluralized
+      ActionController::Base.helpers.pluralize(
+        Rails.configuration.expires_after,
+        I18n.t("#{LOCALES_KEY}.year")
+      )
     end
   end
 end
