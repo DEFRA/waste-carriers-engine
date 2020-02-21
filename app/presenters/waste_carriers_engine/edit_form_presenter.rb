@@ -4,6 +4,22 @@ module WasteCarriersEngine
   class EditFormPresenter < BasePresenter
     LOCALES_KEY = ".waste_carriers_engine.edit_forms.new.values"
 
+    def created_at
+      formatted_datetime = transient_registration.created_at.to_formatted_s(:time_on_day_month_year)
+
+      I18n.t(".waste_carriers_engine.edit_forms.new.edit_meta.created_at", created_at: formatted_datetime)
+    end
+
+    def updated_at
+      formatted_datetime = transient_registration.metaData.last_modified.to_formatted_s(:time_on_day_month_year)
+
+      I18n.t(".waste_carriers_engine.edit_forms.new.edit_meta.updated_at", updated_at: formatted_datetime)
+    end
+
+    def display_updated_at?
+      transient_registration.created_at < transient_registration.metaData.last_modified
+    end
+
     def account_email
       transient_registration.account_email
     end
@@ -30,12 +46,6 @@ module WasteCarriersEngine
 
     def contact_email
       transient_registration.contact_email
-    end
-
-    def created_at
-      formatted_datetime = transient_registration.created_at.to_formatted_s(:time_on_day_month_year)
-
-      I18n.t(".waste_carriers_engine.edit_forms.new.edit_meta.created_at", created_at: formatted_datetime)
     end
 
     def location

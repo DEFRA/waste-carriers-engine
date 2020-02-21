@@ -10,6 +10,11 @@
       <p>
         <%= @presenter.created_at %>
       </p>
+      <% if @presenter.display_updated_at? %>
+        <p>
+          <%= @presenter.updated_at %>
+        </p>
+      <% end %>
       <p>
         <span class="strong">
           <%= t(".edit_meta.warning") %>

@@ -5,7 +5,8 @@ en:
         title: Edit a registration
         heading: Edit %{reg_identifier} registration
         edit_meta:
-          created_at: "Edit started %{created_at}."
+          created_at: "This edit was started at %{created_at}."
+          updated_at: "It was last updated at %{updated_at}. There may be unsaved changes."
           warning: You need to confirm these changes if you want to keep them.
         sections:
           registration_and_account:
