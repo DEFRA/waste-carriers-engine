@@ -4,22 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe EditRegistration, type: :model do
-    subject(:edit_registration) { build(:edit_registration) }
-
     describe "#workflow_state" do
-      context ":edit_complete_form state transitions" do
-        it "does not respond to the 'back' event" do
-          edit_registration.workflow_state = :edit_complete_form
-
-          expect(edit_registration).to_not allow_event(:back)
-        end
-
-        it "does not respond to the 'next' event" do
-          edit_registration.workflow_state = :edit_complete_form
-
-          expect(edit_registration).to_not allow_event(:next)
-        end
-      end
+      it_behaves_like "a fixed final state",
+                      current_state: :edit_complete_form,
+                      factory: :edit_registration
     end
   end
 end
