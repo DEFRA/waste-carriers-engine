@@ -5,7 +5,7 @@ module WasteCarriersEngine
     LOCALES_KEY = ".waste_carriers_engine.edit_forms.new.values"
 
     def account_email
-      transient_registration.account_email
+      transient_registration.registration.account_email
     end
 
     def business_type

@@ -36,6 +36,7 @@ module WasteCarriersEngine
         let(:edit_registration) { described_class.new(reg_identifier: registration.reg_identifier) }
 
         copyable_properties = Registration.attribute_names - %w[_id
+                                                                account_email
                                                                 addresses
                                                                 key_people
                                                                 financeDetails
