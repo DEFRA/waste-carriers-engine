@@ -99,11 +99,6 @@ module WasteCarriersEngine
         location == "overseas" || business_type == "overseas"
       end
 
-      # Concerns don't support alias_method, so this is here until we can deprecate it!
-      def business_is_overseas?
-        overseas?
-      end
-
       def upper_tier?
         tier == "UPPER"
       end

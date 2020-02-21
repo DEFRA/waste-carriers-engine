@@ -5,7 +5,7 @@ module WasteCarriersEngine
     include CanClearAddressFinderError
     include CanValidateManualAddress
 
-    delegate :business_is_overseas?, :contact_address, to: :transient_registration
+    delegate :overseas?, :contact_address, to: :transient_registration
     delegate :house_number, :address_line_1, :postcode, to: :contact_address, allow_nil: true
     delegate :address_line_2, :town_city, :country, to: :contact_address, allow_nil: true
 
@@ -30,7 +30,7 @@ module WasteCarriersEngine
     def saved_address_still_valid?
       temp_postcode = transient_registration.temp_contact_postcode
 
-      business_is_overseas? || temp_postcode.nil? || temp_postcode == postcode
+      overseas? || temp_postcode.nil? || temp_postcode == postcode
     end
   end
 end
