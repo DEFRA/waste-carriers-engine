@@ -41,7 +41,11 @@ module WasteCarriersEngine
         state :declaration_form
         state :edit_complete_form
 
-        # Transitions
+        # Cancel an edit
+        state :confirm_edit_cancelled_form
+        state :edit_cancelled_form
+
+        # Transition to individual edit forms
 
         event :edit_cbd_type do
           transitions from: :edit_form,
@@ -94,6 +98,12 @@ module WasteCarriersEngine
         event :edit_location do
           transitions from: :edit_form,
                       to: :location_form
+        end
+
+        # Cancellation
+        event :cancel_edit do
+          transitions from: :edit_form,
+                      to: :confirm_edit_cancelled_form
         end
 
         event :next do
@@ -164,6 +174,10 @@ module WasteCarriersEngine
 
           transitions from: :declaration_form,
                       to: :edit_complete_form
+
+          # Cancel an edit
+          transitions from: :confirm_edit_cancelled_form,
+                      to: :edit_cancelled_form
         end
 
         event :back do
@@ -222,6 +236,10 @@ module WasteCarriersEngine
 
           # Complete an edit
           transitions from: :declaration_form,
+                      to: :edit_form
+
+          # Cancelling the edit process
+          transitions from: :confirm_edit_cancelled_form,
                       to: :edit_form
         end
 

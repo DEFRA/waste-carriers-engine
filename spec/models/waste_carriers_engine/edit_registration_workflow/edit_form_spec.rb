@@ -20,7 +20,8 @@ module WasteCarriersEngine
         ]
         transitionable_states = non_address_editable_form_states + %i[company_postcode_form
                                                                       contact_postcode_form
-                                                                      declaration_form]
+                                                                      declaration_form
+                                                                      confirm_edit_cancelled_form]
 
         context "when an EditRegistration's state is #{current_state}" do
           it "can only transition to the allowed states" do
@@ -63,6 +64,12 @@ module WasteCarriersEngine
           it "changes to declaration_form after the 'next' event" do
             expected_state = :declaration_form
             event = :next
+            expect(subject).to transition_from(current_state).to(expected_state).on_event(event)
+          end
+
+          it "changes to confirm_edit_cancelled after the 'cancel_edit' event" do
+            expected_state = :confirm_edit_cancelled_form
+            event = :cancel_edit
             expect(subject).to transition_from(current_state).to(expected_state).on_event(event)
           end
         end
