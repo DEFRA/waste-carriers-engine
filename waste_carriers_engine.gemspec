@@ -45,6 +45,10 @@ Gem::Specification.new do |s|
   # defra_ruby_alert is a gem we created to manage airbrake across projects
   s.add_dependency "defra_ruby_alert", "~> 1.0.0"
 
+  # Used as part of testing. When enabled adds a /last-email route from which
+  # details of the last email sent by the app can be accessed
+  s.add_dependency "defra_ruby_email"
+
   # Used to build and parse XML requests
   s.add_dependency "nokogiri"
 

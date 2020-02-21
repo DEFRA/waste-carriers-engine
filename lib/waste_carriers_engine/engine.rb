@@ -4,6 +4,7 @@ require "aasm"
 require "mongoid"
 require "high_voltage"
 require "defra_ruby/alert"
+require "defra_ruby_email"
 require "defra_ruby_validators"
 
 module WasteCarriersEngine

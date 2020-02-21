@@ -21,7 +21,7 @@ module WasteCarriersEngine
     end
 
     def account_email
-      transient_registration.account_email
+      transient_registration.registration.account_email
     end
 
     def business_type

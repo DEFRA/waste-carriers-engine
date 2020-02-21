@@ -9,6 +9,7 @@ module WasteCarriersEngine
 
     COPY_DATA_OPTIONS = {
       ignorable_attributes: %w[_id
+                               account_email
                                addresses
                                key_people
                                financeDetails

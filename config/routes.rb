@@ -531,6 +531,8 @@ WasteCarriersEngine::Engine.routes.draw do
               end
   end
 
+  mount DefraRubyEmail::Engine => "/email"
+
   # See http://patrickperey.com/railscast-053-handling-exceptions/
   get "(errors)/:status",
       to: "errors#show",
