@@ -107,11 +107,31 @@ WasteCarriersEngine::Engine.routes.draw do
                     to: "edit_forms#edit_location",
                     as: "location",
                     on: :collection
+
+                get "cancel",
+                    to: "edit_forms#cancel",
+                    as: "cancel",
+                    on: :collection
               end
 
     resources :edit_complete_forms,
               only: %i[new create],
               path: "edit-complete",
+              path_names: { new: "" }
+
+    resources :confirm_edit_cancelled_forms,
+              only: %i[new create],
+              path: "confirm-edit-cancelled",
+              path_names: { new: "" } do
+                get "back",
+                    to: "confirm_edit_cancelled_forms#go_back",
+                    as: "back",
+                    on: :collection
+              end
+
+    resources :edit_cancelled_forms,
+              only: %i[new create],
+              path: "edit-cancelled",
               path_names: { new: "" }
     # End of edit flow
 
