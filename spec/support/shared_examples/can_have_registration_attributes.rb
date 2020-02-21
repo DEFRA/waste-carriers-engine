@@ -28,6 +28,39 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
+  describe "#overseas?" do
+    let(:business_type) { nil }
+    let(:resource) { build(factory, location: location, business_type: business_type) }
+
+    context "when the location is outside the UK" do
+      let(:location) { "overseas" }
+
+      it "returns true" do
+        expect(resource.overseas?).to be_truthy
+      end
+    end
+
+    context "when the location is not outside the UK" do
+      let(:location) { nil }
+
+      context "when the business_type is overseas" do
+        let(:business_type) { "overseas" }
+
+        it "returns true" do
+          expect(resource.overseas?).to be_truthy
+        end
+      end
+
+      context "when the business_type is not overseas" do
+        let(:business_type) { "soleTrader" }
+
+        it "returns false" do
+          expect(resource.overseas?).to be_falsey
+        end
+      end
+    end
+  end
+
   describe "#lower_tier?" do
     let(:resource) { build(factory, tier: tier) }
 
