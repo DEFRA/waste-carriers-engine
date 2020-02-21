@@ -25,8 +25,10 @@ module WasteCarriersEngine
           end
 
           context "when the workflow_state is correct" do
-            it "loads the page" do
+            it "deletes the transient object" do
               get new_edit_complete_form_path(transient_registration.token)
+
+              expect(WasteCarriersEngine::TransientRegistration.count).to eq(0)
               expect(response).to have_http_status(200)
             end
           end
