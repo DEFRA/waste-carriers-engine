@@ -9,12 +9,14 @@ module WasteCarriersEngine
       double(:edit_registration,
              registration: registration)
     end
-    let(:service) { described_class.run(edit_registration: edit_registration) }
 
     describe ".run" do
       context "when given an edit_registration" do
-        it "returns the registration" do
-          expect(service).to eq(registration)
+        it "deletes the edit_registration" do
+          # Deletes transient registration
+          expect(edit_registration).to receive(:delete)
+
+          described_class.run(edit_registration: edit_registration)
         end
       end
     end
