@@ -35,6 +35,7 @@ module WasteCarriersEngine
 
           context "when the workflow_state is correct" do
             it "updates the registration with the new data and deletes the transient object" do
+              old_account_email = registration.account_email
               old_finance_details = registration.finance_details
 
               get new_edit_complete_form_path(transient_registration.token)
@@ -52,7 +53,8 @@ module WasteCarriersEngine
               expect(registration.registered_address.postcode).to eq(updated_registered_address.postcode)
               expect(registration.contact_address.postcode).to eq(updated_contact_address.postcode)
 
-              # But don't modify finance details
+              # But don't modify finance details or other non-editable attributes
+              expect(registration.account_email).to eq(old_account_email)
               expect(registration.finance_details).to eq(old_finance_details)
 
               # Delete the transient registration
