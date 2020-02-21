@@ -37,6 +37,7 @@ module WasteCarriersEngine
             it "updates the registration with the new data and deletes the transient object" do
               old_account_email = registration.account_email
               old_finance_details = registration.finance_details
+              old_relevant_people = registration.relevant_people
 
               get new_edit_complete_form_path(transient_registration.token)
               registration.reload
@@ -56,6 +57,7 @@ module WasteCarriersEngine
               # But don't modify finance details or other non-editable attributes
               expect(registration.account_email).to eq(old_account_email)
               expect(registration.finance_details).to eq(old_finance_details)
+              expect(registration.relevant_people).to eq(old_relevant_people)
 
               # Delete the transient registration
               expect(WasteCarriersEngine::TransientRegistration.count).to eq(0)
