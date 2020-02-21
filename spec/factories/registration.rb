@@ -17,6 +17,7 @@ FactoryBot.define do
       metaData { build(:metaData, :has_required_data) }
 
       has_addresses
+      has_paid_finance_details
 
       key_people do
         [build(:key_person, :has_required_data, :main),
@@ -26,6 +27,10 @@ FactoryBot.define do
 
     trait :has_addresses do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
+    end
+
+    trait :has_paid_finance_details do
+      finance_details { build(:finance_details, :has_paid_order_and_payment) }
     end
 
     trait :has_copy_cards_order do

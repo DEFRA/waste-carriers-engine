@@ -36,12 +36,12 @@ module WasteCarriersEngine
               get new_copy_cards_order_completed_form_path(transient_registration.token)
 
               finance_details = registration.reload.finance_details
-              order = finance_details.orders.first
+              order = finance_details.orders.last
               order_item = order.order_items.first
 
               expect(WasteCarriersEngine::TransientRegistration.count).to eq(0)
 
-              expect(finance_details.orders.count).to eq(1)
+              expect(finance_details.orders.count).to eq(2)
               expect(finance_details.balance).to eq(500)
               expect(order.order_items.count).to eq(1)
               expect(order_item.type).to eq("COPY_CARDS")
