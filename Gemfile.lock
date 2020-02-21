@@ -5,6 +5,7 @@ PATH
       aasm (~> 4.12)
       countries
       defra_ruby_alert (~> 1.0.0)
+      defra_ruby_email
       defra_ruby_validators
       high_voltage (~> 3.0)
       jbuilder (~> 2.0)
@@ -83,6 +84,8 @@ GEM
     debug_inspector (0.0.3)
     defra_ruby_alert (1.0.0)
       airbrake (~> 5.8.1)
+    defra_ruby_email (0.2.0)
+      rails (~> 4.2.11.1)
     defra_ruby_style (0.1.4)
       rubocop (~> 0.79)
     defra_ruby_validators (2.3.1)
