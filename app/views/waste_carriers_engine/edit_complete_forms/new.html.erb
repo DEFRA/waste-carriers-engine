@@ -1,3 +1,5 @@
 <div class="column-two-thirds">
   <h1 class="heading-large"><%= t(".heading") %></h1>
+  <p><%= t(".paragraph_1") %></p>
+  <p><%= link_to t(".next_button"), Rails.application.routes.url_helpers.registration_path(@transient_registration.reg_identifier), class: "button" %></p>
 </div>
