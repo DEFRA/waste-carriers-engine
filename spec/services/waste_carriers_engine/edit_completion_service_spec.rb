@@ -32,16 +32,27 @@ module WasteCarriersEngine
     let(:attributes) do
       copyable_attributes.merge(uncopyable_attributes)
     end
+
+    let(:first_name) { "Foo" }
+    let(:last_name) { "Bar" }
+    let(:contact_address) { double(:address) }
+
     let(:registration) { double(:edit_registration) }
     let(:edit_registration) do
       double(:edit_registration,
              attributes: attributes,
-             registration: registration)
+             registration: registration,
+             contact_address: contact_address,
+             first_name: first_name,
+             last_name: last_name)
     end
 
     describe ".run" do
       context "when given an edit_registration" do
-        it "deletes the edit_registration" do
+        it "updates the registration and deletes the edit_registration" do
+          # Sets up the contact address data
+          expect(contact_address).to receive(:first_name=).with(first_name)
+          expect(contact_address).to receive(:last_name=).with(last_name)
           # Updates the registration
           expect(registration).to receive(:write_attributes).with(copyable_attributes)
           expect(registration).to receive(:save!)

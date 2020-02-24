@@ -6,11 +6,17 @@ module WasteCarriersEngine
       @edit_registration = edit_registration
       @registration = @edit_registration.registration
 
+      copy_names_to_contact_address
       copy_data_to_registration
       delete_transient_registration
     end
 
     private
+
+    def copy_names_to_contact_address
+      @edit_registration.contact_address.first_name = @edit_registration.first_name
+      @edit_registration.contact_address.last_name = @edit_registration.last_name
+    end
 
     def copy_data_to_registration
       copy_attributes
