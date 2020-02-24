@@ -3,7 +3,9 @@
 module WasteCarriersEngine
   class EditCompleteFormsController < FormsController
     def new
-      super(EditCompleteForm, "edit_complete_form")
+      return unless super(EditCompleteForm, "edit_complete_form")
+
+      EditCompletionService.run(edit_registration: @transient_registration)
     end
 
     # Overwrite create and go_back as you shouldn't be able to submit or go back
