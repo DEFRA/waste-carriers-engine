@@ -13,7 +13,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <% unless @contact_address_manual_form.business_is_overseas? %>
+    <% unless @contact_address_manual_form.overseas? %>
       <div class="form-group">
         <label class="form-label"><%= t(".preset_postcode_label") %></label>
         <span class="postcode"><%= @contact_address_manual_form.postcode %></span>
@@ -22,7 +22,7 @@
     <% end %>
 
     <%= f.fields_for :contact_address do |f| %>
-      <%= render("waste_carriers_engine/shared/manual_address", form: @contact_address_manual_form, f: f, overseas: @contact_address_manual_form.business_is_overseas?) %>
+      <%= render("waste_carriers_engine/shared/manual_address", form: @contact_address_manual_form, f: f, overseas: @contact_address_manual_form.overseas?) %>
     <% end %>
 
     <div class="form-group">

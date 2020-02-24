@@ -96,11 +96,7 @@ module WasteCarriersEngine
       end
 
       def overseas?
-        location == "overseas"
-      end
-
-      def business_is_overseas?
-        business_type == "overseas"
+        location == "overseas" || business_type == "overseas"
       end
 
       def upper_tier?
