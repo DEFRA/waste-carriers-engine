@@ -61,6 +61,75 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
+  describe "#uk_location?" do
+    let(:resource) { build(factory, location: location) }
+
+    %w[england scotland wales northern_ireland].each do |uk_location|
+      context "when the location is #{uk_location}" do
+        let(:location) { uk_location }
+
+        it "returns true" do
+          expect(resource.uk_location?).to be_truthy
+        end
+      end
+    end
+
+    context "when the location is overseas" do
+      let(:location) { "overseas" }
+
+      it "returns false" do
+        expect(resource.uk_location?).to be_falsey
+      end
+    end
+
+    context "when the location is nil" do
+      let(:location) { nil }
+
+      it "returns false" do
+        expect(resource.uk_location?).to be_falsey
+      end
+    end
+  end
+
+  describe "#overseas?" do
+    let(:location) { nil }
+    let(:business_type) { nil }
+    let(:resource) { build(factory, location: location, business_type: business_type) }
+
+    context "when the location is within the UK" do
+      it "returns false" do
+        expect(resource).to receive(:uk_location?).and_return(false)
+        expect(resource.overseas?).to be_falsey
+      end
+    end
+
+    context "when the location is outside the UK" do
+      let(:location) { "overseas" }
+
+      it "returns true" do
+        expect(resource.overseas?).to be_truthy
+      end
+    end
+
+    context "when the location is nil" do
+      context "when the business_type is overseas" do
+        let(:business_type) { "overseas" }
+
+        it "returns true" do
+          expect(resource.overseas?).to be_truthy
+        end
+      end
+
+      context "when the business_type is not overseas" do
+        let(:business_type) { "soleTrader" }
+
+        it "returns false" do
+          expect(resource.overseas?).to be_falsey
+        end
+      end
+    end
+  end
+
   describe "#lower_tier?" do
     let(:resource) { build(factory, tier: tier) }
 

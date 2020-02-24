@@ -95,7 +95,13 @@ module WasteCarriersEngine
         business_type == "charity"
       end
 
+      def uk_location?
+        %w[england scotland wales northern_ireland].include?(location)
+      end
+
       def overseas?
+        return false if uk_location?
+
         location == "overseas" || business_type == "overseas"
       end
 
