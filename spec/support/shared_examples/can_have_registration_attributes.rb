@@ -65,7 +65,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
 
     context "when the location is within the UK" do
       it "returns false" do
-        expect(resource).to receive(:uk_location?).and_return(false)
+        expect(resource).to receive(:uk_location?).and_return(true)
         expect(resource.overseas?).to be_falsey
       end
     end
