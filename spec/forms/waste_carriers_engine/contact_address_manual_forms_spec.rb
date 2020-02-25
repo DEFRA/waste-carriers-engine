@@ -211,9 +211,10 @@ module WasteCarriersEngine
             contact_address_manual_form.contact_address.country = nil
           end
 
-          context "when the business_type is not overseas" do
+          context "when the business is not overseas" do
             before(:each) do
-              contact_address_manual_form.transient_registration.business_type = "limitedContact"
+              contact_address_manual_form.transient_registration.location = "england"
+              contact_address_manual_form.transient_registration.business_type = "limitedCompany"
             end
 
             it "is valid" do
@@ -221,8 +222,9 @@ module WasteCarriersEngine
             end
           end
 
-          context "when the business_type is overseas" do
+          context "when the business is overseas" do
             before(:each) do
+              contact_address_manual_form.transient_registration.location = "overseas"
               contact_address_manual_form.transient_registration.business_type = "overseas"
             end
 

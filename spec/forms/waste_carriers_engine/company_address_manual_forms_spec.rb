@@ -18,8 +18,9 @@ module WasteCarriersEngine
         # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
         let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
 
-        context "when the business type is overseas" do
+        context "when the business is overseas" do
           before(:each) do
+            transient_registration.location = "overseas"
             transient_registration.business_type = "overseas"
           end
 
@@ -211,8 +212,9 @@ module WasteCarriersEngine
             transient_registration.company_address.country = nil
           end
 
-          context "when the business_type is not overseas" do
+          context "when the business is not overseas" do
             before(:each) do
+              company_address_manual_form.transient_registration.location = "england"
               company_address_manual_form.transient_registration.business_type = "limitedCompany"
             end
 
@@ -221,8 +223,9 @@ module WasteCarriersEngine
             end
           end
 
-          context "when the business_type is overseas" do
+          context "when the business is overseas" do
             before(:each) do
+              company_address_manual_form.transient_registration.location = "overseas"
               company_address_manual_form.transient_registration.business_type = "overseas"
             end
 
