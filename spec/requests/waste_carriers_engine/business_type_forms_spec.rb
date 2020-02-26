@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "BusinessTypeForms", type: :request do
     include_examples "GET flexible form", "business_type_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "business_type_form",
                      valid_params: { business_type: "limitedCompany" },
                      invalid_params: { business_type: "foo" },

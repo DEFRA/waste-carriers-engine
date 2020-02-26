@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "DeclareConvictionsForms", type: :request do
     include_examples "GET flexible form", "declare_convictions_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "declare_convictions_form",
                      valid_params: { declared_convictions: "yes" },
                      invalid_params: { declared_convictions: "foo" },

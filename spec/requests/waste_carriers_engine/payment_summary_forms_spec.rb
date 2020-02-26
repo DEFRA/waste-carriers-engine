@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "PaymentSummaryForms", type: :request do
     include_examples "GET locked-in form", "payment_summary_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "payment_summary_form",
                      valid_params: { temp_payment_method: "card" },
                      invalid_params: { temp_payment_method: "foo" },

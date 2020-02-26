@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "CompanyNameForms", type: :request do
     include_examples "GET flexible form", "company_name_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "company_name_form",
                      valid_params: { company_name: "WasteCo Ltd" },
                      invalid_params: { company_name: "" },

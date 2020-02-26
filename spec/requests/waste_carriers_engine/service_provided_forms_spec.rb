@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "ServiceProvidedForms", type: :request do
     include_examples "GET flexible form", "service_provided_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "service_provided_form",
                      valid_params: { is_main_service: "yes" },
                      invalid_params: { is_main_service: "foo" },
