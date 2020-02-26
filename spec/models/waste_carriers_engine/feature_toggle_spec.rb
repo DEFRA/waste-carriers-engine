@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module WasteCarrierssEngine
+module WasteCarriersEngine
   RSpec.describe FeatureToggle do
     describe ".active?" do
       context "when a feature toggle config exist" do
@@ -42,7 +42,7 @@ module WasteCarrierssEngine
 
         context "when the feature toggle is an environment variable" do
           it "returns true" do
-            ENV["env_variable_test_feature"] = "true"
+            ENV["ENV_VARIABLE_TEST_FEATURE"] = "true"
 
             expect(described_class.active?("env_variable_test_feature")).to be_truthy
           end
