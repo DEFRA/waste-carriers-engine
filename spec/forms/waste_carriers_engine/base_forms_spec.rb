@@ -46,6 +46,7 @@ module WasteCarriersEngine
         context "when the resource is not a transient_registration" do
           before do
             allow(base_form.transient_registration).to receive(:is_a?).with(TransientRegistration).and_return(false)
+            allow(base_form.transient_registration).to receive(:is_a?).with(NewRegistration)
           end
 
           it "is valid" do
