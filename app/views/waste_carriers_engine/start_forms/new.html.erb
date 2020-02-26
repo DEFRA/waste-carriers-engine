@@ -1,0 +1,34 @@
+<div class="text">
+  <%= form_for(@start_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @start_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <div class="form-group <%= "form-group-error" if @start_form.errors[:start_option].any? %>">
+      <fieldset id="start_option">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
+        </legend>
+
+        <% if @start_form.errors[:start_option].any? %>
+          <span class="error-message"><%= @start_form.errors[:start_option].join(", ") %></span>
+        <% end %>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :start_option, 'new' %>
+          <%= f.label :start_option, t(".options.new"), value: 'new' %>
+        </div>
+        <div class="multiple-choice">
+          <%= f.radio_button :start_option, 'renew' %>
+          <%= f.label :start_option, t(".options.renew"), value: 'renew' %>
+        </div>
+      </fieldset>
+    </div>
+
+    <%= hidden_field_tag :token, @start_form.token %>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
