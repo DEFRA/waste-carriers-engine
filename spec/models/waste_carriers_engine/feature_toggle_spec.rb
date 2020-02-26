@@ -33,6 +33,20 @@ module WasteCarrierssEngine
             expect(described_class.active?("broken_test_feature_2")).to be_falsey
           end
         end
+
+        context "when the feature toggle is a string containing 'true'" do
+          it "returns true" do
+            expect(described_class.active?("string_true_test_feature")).to be_truthy
+          end
+        end
+
+        context "when the feature toggle is an environment variable" do
+          it "returns true" do
+            ENV["env_variable_test_feature"] = "true"
+
+            expect(described_class.active?("env_variable_test_feature")).to be_truthy
+          end
+        end
       end
 
       context "when a feature toggle config does not exist" do

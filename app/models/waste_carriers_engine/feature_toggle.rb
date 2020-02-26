@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 require "yaml"
+require "erb"
 
 module WasteCarriersEngine
   class FeatureToggle
     def self.active?(feature_name)
-      feature_toggles[feature_name] && feature_toggles[feature_name][:active] == true
+      feature_toggles[feature_name] && (
+        feature_toggles[feature_name][:active] == true ||
+        feature_toggles[feature_name][:active] == "true"
+      )
     end
 
     class << self
@@ -18,7 +22,7 @@ module WasteCarriersEngine
       # rubocop:enable Style/ClassVars
 
       def load_feature_toggles
-        HashWithIndifferentAccess.new(YAML.load_file(file_path))
+        HashWithIndifferentAccess.new(YAML.safe_load(ERB.new(File.read(file_path)).result))
       end
 
       def file_path
