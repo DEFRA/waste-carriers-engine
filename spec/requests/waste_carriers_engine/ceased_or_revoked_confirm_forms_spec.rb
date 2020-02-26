@@ -47,12 +47,9 @@ module WasteCarriersEngine
 
         it "returns a 302 response" do
           get new_ceased_or_revoked_confirm_form_path("foo")
-          expect(response).to have_http_status(302)
-        end
 
-        it "redirects to the sign in page" do
-          get new_ceased_or_revoked_confirm_form_path("foo")
-          expect(response).to redirect_to(new_user_session_path)
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(page_path("invalid"))
         end
       end
     end

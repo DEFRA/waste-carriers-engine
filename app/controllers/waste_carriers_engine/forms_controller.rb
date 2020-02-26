@@ -4,7 +4,6 @@ module WasteCarriersEngine
   class FormsController < ApplicationController
     include ActionView::Helpers::UrlHelper
 
-    before_action :authenticate_user!
     before_action :back_button_cache_buster
     before_action :validate_token
 

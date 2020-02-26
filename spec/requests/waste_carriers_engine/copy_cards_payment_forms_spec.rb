@@ -37,14 +37,11 @@ module WasteCarriersEngine
           sign_out(user)
         end
 
-        it "returns a 302 response" do
+        it "returns a 302 response and redirects to the invalid page" do
           get new_copy_cards_payment_form_path("foo")
-          expect(response).to have_http_status(302)
-        end
 
-        it "redirects to the sign in page" do
-          get new_copy_cards_payment_form_path("foo")
-          expect(response).to redirect_to(new_user_session_path)
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(page_path("invalid"))
         end
       end
     end
@@ -122,16 +119,11 @@ module WasteCarriersEngine
           sign_out(user)
         end
 
-        it "returns a 302 response" do
+        it "returns a 302 response and redirects to an invalid page" do
           post copy_cards_payment_forms_path(token: "1234")
 
           expect(response).to have_http_status(302)
-        end
-
-        it "redirects to the sign in page" do
-          post copy_cards_payment_forms_path(token: "1234")
-
-          expect(response).to redirect_to(new_user_session_path)
+          expect(response).to redirect_to(page_path("invalid"))
         end
       end
     end

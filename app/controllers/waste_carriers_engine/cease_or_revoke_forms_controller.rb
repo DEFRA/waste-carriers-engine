@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class CeaseOrRevokeFormsController < FormsController
+    prepend_before_action :authenticate_user!
+
     def new
       super(CeaseOrRevokeForm, "cease_or_revoke_form")
     end
