@@ -4,11 +4,28 @@
 WasteCarriersEngine::Engine.routes.draw do
   resources :registrations, only: [:index] unless Rails.env.production?
 
+  resources :start_forms,
+            only: %i[new create],
+            path: "start",
+            path_names: { new: "" }
+
   get "transient-registration/:token/destroy",
       to: "transient_registrations#destroy",
       as: "delete_transient_registration"
 
   scope "/:token" do
+    # New registration flow
+    resources :renew_registration_forms,
+              only: %i[new create],
+              path: "renew-registration",
+              path_names: { new: "" } do
+                get "back",
+                    to: "renew_registration_forms#go_back",
+                    as: "back",
+                    on: :collection
+              end
+    # End of new registration flow
+
     # Order copy cards flow
     resources :copy_cards_forms,
               only: %i[new create],
