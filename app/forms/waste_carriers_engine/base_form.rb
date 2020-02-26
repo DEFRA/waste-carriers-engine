@@ -25,7 +25,7 @@ module WasteCarriersEngine
     validates(
       :reg_identifier,
       "waste_carriers_engine/reg_identifier": true,
-      if: -> { transient_registration&.persisted? }
+      if: :should_validate_reg_identifier?
     )
 
     validate :transient_registration_valid?
@@ -69,6 +69,10 @@ module WasteCarriersEngine
       transient_registration.errors.each do |_attribute, message|
         errors[:base] << message
       end
+    end
+
+    def should_validate_reg_identifier?
+      transient_registration&.persisted? && !transient_registration.is_a?(NewRegistration)
     end
   end
 end
