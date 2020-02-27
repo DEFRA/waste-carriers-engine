@@ -20,7 +20,7 @@ module WasteCarriersEngine
     end
 
     def create_past_registration
-      PastRegistration.build_past_registration(@registration)
+      PastRegistration.build_past_registration(@registration, :edit)
     end
 
     def copy_data_to_registration
