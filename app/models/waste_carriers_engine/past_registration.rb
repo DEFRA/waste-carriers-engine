@@ -7,10 +7,14 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanHaveRegistrationAttributes
 
+    field :cause, type: String
+
     embedded_in :registration, class_name: "WasteCarriersEngine::Registration"
 
-    def self.build_past_registration(registration)
+    def self.build_past_registration(registration, cause = nil)
       past_registration = PastRegistration.new
+      past_registration.cause = cause if cause.present?
+
       return if past_registration.version_already_backed_up?(registration)
 
       past_registration.registration = registration
@@ -23,11 +27,18 @@ module WasteCarriersEngine
     end
 
     def version_already_backed_up?(registration)
+      # Always create new versions for edits
+      return false if new_version_due_to_edit?
+
       # Collect all expires_on dates from past registrations
       matching_expires_on = registration.past_registrations.map(&:expires_on)
       # Check if the current expires_on is included - this indicates that this version of
       # the registration has already been backed up.
       return true if matching_expires_on.include?(registration.expires_on)
+    end
+
+    def new_version_due_to_edit?
+      cause == "edit"
     end
   end
 end

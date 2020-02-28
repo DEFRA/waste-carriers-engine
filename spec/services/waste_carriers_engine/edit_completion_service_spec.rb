@@ -53,6 +53,8 @@ module WasteCarriersEngine
           # Sets up the contact address data
           expect(contact_address).to receive(:first_name=).with(first_name)
           expect(contact_address).to receive(:last_name=).with(last_name)
+          # Creates a past_registration
+          expect(PastRegistration).to receive(:build_past_registration).with(registration, :edit)
           # Updates the registration
           expect(registration).to receive(:write_attributes).with(copyable_attributes)
           expect(registration).to receive(:save!)
