@@ -122,23 +122,7 @@ module WasteCarriersEngine
                             factory: :renewing_registration
     end
 
-    describe "#registration_type_changed?" do
-      context "when a RenewingRegistration is created" do
-        it "should return false" do
-          expect(renewing_registration.registration_type_changed?).to eq(false)
-        end
-
-        context "when the registration_type is updated" do
-          before(:each) do
-            renewing_registration.registration_type = "broker_dealer"
-          end
-
-          it "should return true" do
-            expect(renewing_registration.registration_type_changed?).to eq(true)
-          end
-        end
-      end
-    end
+    it_should_behave_like "Can check if registration type changed"
 
     describe "#renewal_application_submitted?" do
       context "when the workflow_state is not a completed one" do

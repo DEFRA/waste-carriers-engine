@@ -68,5 +68,7 @@ module WasteCarriersEngine
         end
       end
     end
+
+    it_should_behave_like "Can check if registration type changed"
   end
 end
