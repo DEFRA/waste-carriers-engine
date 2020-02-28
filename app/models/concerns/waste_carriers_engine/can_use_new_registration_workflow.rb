@@ -11,6 +11,7 @@ module WasteCarriersEngine
       field :workflow_state, type: String
 
       aasm column: :workflow_state do
+        state :start_form, initial: true
       end
     end
   end
