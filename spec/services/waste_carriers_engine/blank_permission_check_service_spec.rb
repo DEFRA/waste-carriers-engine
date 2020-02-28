@@ -12,6 +12,7 @@ module WasteCarriersEngine
     describe ".run" do
       it "returns a valid result" do
         expect(PermissionChecksResult).to receive(:new).and_return(result)
+        expect(result).to receive(:pass!)
 
         expect(described_class.run(params)).to eq(result)
       end
