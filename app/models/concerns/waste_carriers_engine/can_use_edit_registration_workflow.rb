@@ -41,6 +41,7 @@ module WasteCarriersEngine
         state :declaration_form
         state :edit_complete_form
         state :payment_summary_form
+        state :bank_transfer_form
 
         # Cancel an edit
         state :confirm_edit_cancelled_form
@@ -182,6 +183,9 @@ module WasteCarriersEngine
                       if: :registration_type_changed?
 
           transitions from: :payment_summary_form,
+                      to: :bank_transfer_form
+
+          transitions from: :bank_transfer_form,
                       to: :edit_complete_form
 
           # Cancel an edit
@@ -249,6 +253,9 @@ module WasteCarriersEngine
 
           transitions from: :payment_summary_form,
                       to: :declaration_form
+
+          transitions from: :bank_transfer_form,
+                      to: :payment_summary_form
 
           # Cancelling the edit process
           transitions from: :confirm_edit_cancelled_form,

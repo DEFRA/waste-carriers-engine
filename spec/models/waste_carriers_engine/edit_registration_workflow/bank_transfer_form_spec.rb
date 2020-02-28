@@ -6,9 +6,9 @@ module WasteCarriersEngine
   RSpec.describe EditRegistration, type: :model do
     describe "#workflow_state" do
       it_behaves_like "a simple bidirectional transition",
-                      previous_state: :declaration_form,
-                      current_state: :payment_summary_form,
-                      next_state: :bank_transfer_form,
+                      previous_state: :payment_summary_form,
+                      current_state: :bank_transfer_form,
+                      next_state: :edit_complete_form,
                       factory: :edit_registration
     end
   end
