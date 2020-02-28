@@ -26,5 +26,13 @@ module WasteCarriersEngine
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
     end
+
+    def prepare_for_payment(mode, user)
+      EditFinanceDetailsBuilderService.run(
+        user: user,
+        transient_registration: self,
+        payment_method: mode
+      )
+    end
   end
 end
