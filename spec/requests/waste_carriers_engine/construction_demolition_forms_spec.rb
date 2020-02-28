@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "ConstructionDemolitionForms", type: :request do
     include_examples "GET flexible form", "construction_demolition_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "construction_demolition_form",
                      valid_params: { construction_waste: "yes" },
                      invalid_params: { construction_waste: "foo" },

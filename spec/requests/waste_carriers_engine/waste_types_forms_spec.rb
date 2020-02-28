@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "WasteTypesForms", type: :request do
     include_examples "GET flexible form", "waste_types_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "waste_types_form",
                      valid_params: { only_amf: "yes" },
                      invalid_params: { only_amf: "foo" },

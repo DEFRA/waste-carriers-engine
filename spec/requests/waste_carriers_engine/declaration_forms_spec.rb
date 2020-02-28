@@ -10,7 +10,7 @@ module WasteCarriersEngine
 
     include_examples "GET locked-in form", "declaration_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "declaration_form",
                      valid_params: { declaration: 1 },
                      invalid_params: { declaration: "foo" },

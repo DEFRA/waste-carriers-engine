@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "LocationForms", type: :request do
     include_examples "GET flexible form", "location_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "location_form",
                      valid_params: { location: "england" },
                      invalid_params: { location: "foo" },

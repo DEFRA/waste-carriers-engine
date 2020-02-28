@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "rails_helper"
+
 module WasteCarriersEngine
   RSpec.describe OrderCopyCardsRegistration do
     subject(:order_copy_cards_registration) { build(:order_copy_cards_registration) }

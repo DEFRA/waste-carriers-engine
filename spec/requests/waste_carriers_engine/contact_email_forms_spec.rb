@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "ContactEmailForms", type: :request do
     include_examples "GET flexible form", "contact_email_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "contact_email_form",
                      valid_params: { contact_email: "bar.baz@example.com",
                                      confirmed_email: "bar.baz@example.com" },
