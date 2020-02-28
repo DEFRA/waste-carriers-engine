@@ -27,19 +27,39 @@ module WasteCarriersEngine
         expect(past_registration.registered_address).to eq(registration.registered_address)
       end
 
-      context "if there is already a past_registration for this version of the registration" do
+      context "if :edit is given as an argument" do
+        let(:past_registration) { PastRegistration.build_past_registration(registration, :edit) }
+
+        it "sets the cause to 'edit'" do
+          expect(past_registration.cause).to eq("edit")
+        end
+      end
+
+      context "if there is already a past_registration with the same expiry date" do
         before do
           PastRegistration.build_past_registration(registration)
         end
 
-        it "returns nil" do
-          expect(past_registration).to eq(nil)
+        context "if the new version is not an edit" do
+          it "returns nil" do
+            expect(past_registration).to eq(nil)
+          end
+
+          it "does not create a new past_registration" do
+            past_registration_count = registration.past_registrations.count
+            past_registration
+            expect(registration.reload.past_registrations.count).to eq(past_registration_count)
+          end
         end
 
-        it "does not create a new past_registration" do
-          past_registration_count = registration.past_registrations.count
-          past_registration
-          expect(registration.reload.past_registrations.count).to eq(past_registration_count)
+        context "if the new version is an edit" do
+          let(:past_registration) { PastRegistration.build_past_registration(registration, :edit) }
+
+          it "does create a new past_registration" do
+            past_registration_count = registration.past_registrations.count
+            past_registration
+            expect(registration.reload.past_registrations.count).to eq(past_registration_count + 1)
+          end
         end
       end
     end
