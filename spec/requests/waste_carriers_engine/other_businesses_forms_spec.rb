@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "OtherBusinessesForms", type: :request do
     include_examples "GET flexible form", "other_businesses_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "other_businesses_form",
                      valid_params: { other_businesses: "yes" },
                      invalid_params: { other_businesses: "foo" },

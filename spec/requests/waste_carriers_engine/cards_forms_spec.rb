@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "CardsForms", type: :request do
     include_examples "GET locked-in form", "cards_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "cards_form",
                      valid_params: { temp_cards: 2 },
                      invalid_params: { temp_cards: 999_999 },

@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class CopyCardsFormsController < FormsController
+    prepend_before_action :authenticate_user!
+
     def new
       super(CopyCardsForm, "copy_cards_form")
     end

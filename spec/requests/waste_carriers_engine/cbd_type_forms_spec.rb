@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "CbdTypeForms", type: :request do
     include_examples "GET flexible form", "cbd_type_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "cbd_type_form",
                      valid_params: { registration_type: "broker_dealer" },
                      invalid_params: { registration_type: "foo" },

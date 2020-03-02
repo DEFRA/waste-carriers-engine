@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "ContactPhoneForms", type: :request do
     include_examples "GET flexible form", "contact_phone_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "contact_phone_form",
                      valid_params: { phone_number: "01234 567890" },
                      invalid_params: { phone_number: "foo" },

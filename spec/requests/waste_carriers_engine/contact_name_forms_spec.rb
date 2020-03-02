@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "ContactNameForms", type: :request do
     include_examples "GET flexible form", "contact_name_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "contact_name_form",
                      valid_params: { first_name: "Foo",
                                      last_name: "Bar" },

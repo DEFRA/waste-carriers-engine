@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "TierCheckForms", type: :request do
     include_examples "GET flexible form", "tier_check_form"
 
-    include_examples "POST form",
+    include_examples "POST renewal form",
                      "tier_check_form",
                      valid_params: { temp_tier_check: "yes" },
                      invalid_params: { temp_tier_check: "foo" },

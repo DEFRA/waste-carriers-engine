@@ -30,6 +30,8 @@ module WasteCarriersEngine
         OrderCopyCardsRegistrationPermissionChecksService.run(params)
       when CeasedOrRevokedRegistration
         CeasedOrRevokedRegistrationPermissionChecksService.run(params)
+      when NewRegistration
+        BlankPermissionCheckService.run(params)
       else
         raise MissingFlowPermissionChecksService, "No permission service found for #{transient_registration.class}"
       end
