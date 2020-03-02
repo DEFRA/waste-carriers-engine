@@ -31,7 +31,7 @@ module WasteCarriersEngine
       end
 
       context "when a new registration token is not passed to the request and params are invalid" do
-        it "does creates a new transient registration of type NewRegistration" do
+        it "does not creates a new transient registration of type NewRegistration" do
           expect(WasteCarriersEngine::NewRegistration.count).to eq(0)
 
           post new_start_form_path({})
