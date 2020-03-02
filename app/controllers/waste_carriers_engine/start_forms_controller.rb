@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class StartFormsController < FormsController
-    include WasteCarriersEngine::CanSkipFormAuthentication
-
     def new
       super(StartForm, "start_form")
     end
