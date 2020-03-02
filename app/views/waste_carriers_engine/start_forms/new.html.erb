@@ -15,12 +15,12 @@
         <% end %>
 
         <div class="multiple-choice">
-          <%= f.radio_button :start_option, 'new' %>
-          <%= f.label :start_option, t(".options.new"), value: 'new' %>
+          <%= f.radio_button :start_option, WasteCarriersEngine::StartForm::NEW %>
+          <%= f.label :start_option, t(".options.new"), value: WasteCarriersEngine::StartForm::NEW %>
         </div>
         <div class="multiple-choice">
-          <%= f.radio_button :start_option, 'renew' %>
-          <%= f.label :start_option, t(".options.renew"), value: 'renew' %>
+          <%= f.radio_button :start_option, WasteCarriersEngine::StartForm::RENEW %>
+          <%= f.label :start_option, t(".options.renew"), value: WasteCarriersEngine::StartForm::RENEW %>
         </div>
       </fieldset>
     </div>
