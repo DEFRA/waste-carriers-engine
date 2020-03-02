@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.fetch(:renew_registration_form, {}).permit()
+      params.fetch(:renew_registration_form, {})
     end
   end
 end
