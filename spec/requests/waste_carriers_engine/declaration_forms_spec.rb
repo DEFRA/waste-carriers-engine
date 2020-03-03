@@ -10,11 +10,24 @@ module WasteCarriersEngine
 
     include_examples "GET locked-in form", "declaration_form"
 
-    include_examples "POST renewal form",
-                     "declaration_form",
-                     valid_params: { declaration: 1 },
-                     invalid_params: { declaration: "foo" },
-                     test_attribute: :declaration
+    describe "POST declaration_form_path" do
+      include_examples "POST renewal form",
+                       "declaration_form",
+                       valid_params: { declaration: 1 },
+                       invalid_params: { declaration: "foo" },
+                       test_attribute: :declaration
+
+      context "When the transient_registration is a new registration" do
+        let(:transient_registration) do
+          create(:new_registration, workflow_state: "declaration_form")
+        end
+
+        include_examples "POST form",
+                         "declaration_form",
+                         valid_params: { declaration: 1 },
+                         invalid_params: { declaration: "foo" }
+      end
+    end
 
     describe "POST declaration_forms_path" do
       context "when a valid user is signed in" do

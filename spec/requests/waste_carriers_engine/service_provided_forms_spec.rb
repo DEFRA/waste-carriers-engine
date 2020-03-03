@@ -6,11 +6,24 @@ module WasteCarriersEngine
   RSpec.describe "ServiceProvidedForms", type: :request do
     include_examples "GET flexible form", "service_provided_form"
 
-    include_examples "POST renewal form",
-                     "service_provided_form",
-                     valid_params: { is_main_service: "yes" },
-                     invalid_params: { is_main_service: "foo" },
-                     test_attribute: :is_main_service
+    describe "POST service_provided_form_path" do
+      include_examples "POST renewal form",
+                       "service_provided_form",
+                       valid_params: { is_main_service: "yes" },
+                       invalid_params: { is_main_service: "foo" },
+                       test_attribute: :is_main_service
+
+      context "When the transient_registration is a new registration" do
+        let(:transient_registration) do
+          create(:new_registration, workflow_state: "service_provided_form")
+        end
+
+        include_examples "POST form",
+                         "service_provided_form",
+                         valid_params: { is_main_service: "yes" },
+                         invalid_params: { is_main_service: "foo" }
+      end
+    end
 
     describe "GET back_service_provided_forms_path" do
       context "when a valid user is signed in" do
