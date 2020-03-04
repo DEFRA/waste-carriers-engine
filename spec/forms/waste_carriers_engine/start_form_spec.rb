@@ -8,7 +8,7 @@ module WasteCarriersEngine
       let(:start_form) { build(:start_form) }
 
       context "when the form is valid" do
-        let(:valid_params) { { start_option: "new" } }
+        let(:valid_params) { { temp_start_option: "new" } }
 
         it "should submit" do
           expect(start_form.submit(valid_params)).to eq(true)

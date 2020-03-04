@@ -4,6 +4,6 @@ module WasteCarriersEngine
   class NewRegistration < TransientRegistration
     include CanUseNewRegistrationWorkflow
 
-    field :start_option, type: String
+    field :temp_start_option, type: String
   end
 end

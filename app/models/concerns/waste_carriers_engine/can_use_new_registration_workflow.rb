@@ -47,7 +47,7 @@ module WasteCarriersEngine
       private
 
       def should_renew?
-        start_option == WasteCarriersEngine::StartForm::RENEW
+        temp_start_option == WasteCarriersEngine::StartForm::RENEW
       end
     end
   end

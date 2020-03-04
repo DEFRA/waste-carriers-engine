@@ -7,8 +7,8 @@ module WasteCarriersEngine
       NEW = "new"
     ].freeze
 
-    delegate :start_option, to: :transient_registration
+    delegate :temp_start_option, to: :transient_registration
 
-    validates :start_option, inclusion: { in: START_OPTIONS }
+    validates :temp_start_option, inclusion: { in: START_OPTIONS }
   end
 end

@@ -4,23 +4,23 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <div class="form-group <%= "form-group-error" if @start_form.errors[:start_option].any? %>">
-      <fieldset id="start_option">
+    <div class="form-group <%= "form-group-error" if @start_form.errors[:temp_start_option].any? %>">
+      <fieldset id="temp_start_option">
         <legend class="visuallyhidden">
           <%= t(".heading") %>
         </legend>
 
-        <% if @start_form.errors[:start_option].any? %>
-          <span class="error-message"><%= @start_form.errors[:start_option].join(", ") %></span>
+        <% if @start_form.errors[:temp_start_option].any? %>
+          <span class="error-message"><%= @start_form.errors[:temp_start_option].join(", ") %></span>
         <% end %>
 
         <div class="multiple-choice">
-          <%= f.radio_button :start_option, WasteCarriersEngine::StartForm::NEW %>
-          <%= f.label :start_option, t(".options.new"), value: WasteCarriersEngine::StartForm::NEW %>
+          <%= f.radio_button :temp_start_option, WasteCarriersEngine::StartForm::NEW %>
+          <%= f.label :temp_start_option, t(".options.new"), value: WasteCarriersEngine::StartForm::NEW %>
         </div>
         <div class="multiple-choice">
-          <%= f.radio_button :start_option, WasteCarriersEngine::StartForm::RENEW %>
-          <%= f.label :start_option, t(".options.renew"), value: WasteCarriersEngine::StartForm::RENEW %>
+          <%= f.radio_button :temp_start_option, WasteCarriersEngine::StartForm::RENEW %>
+          <%= f.label :temp_start_option, t(".options.renew"), value: WasteCarriersEngine::StartForm::RENEW %>
         </div>
       </fieldset>
     </div>

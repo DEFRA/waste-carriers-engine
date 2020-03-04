@@ -17,7 +17,7 @@ module WasteCarriersEngine
       let(:new_registration) { create(:new_registration, workflow_state: "start_form") }
 
       context "when a new registration token is not passed to the request and params are valid" do
-        let(:params) { { start_form: { start_option: "new" } } }
+        let(:params) { { start_form: { temp_start_option: "new" } } }
 
         it "creates a new transient registration of type NewRegistration" do
           expect(WasteCarriersEngine::NewRegistration.count).to eq(0)
@@ -41,7 +41,7 @@ module WasteCarriersEngine
       end
 
       context "when the start option is `new`" do
-        let(:params) { { start_form: { start_option: "new" }, token: new_registration.token } }
+        let(:params) { { start_form: { temp_start_option: "new" }, token: new_registration.token } }
 
         it "updates the transient registration workflow and redirects to the location_form with a 302 status code" do
           post new_start_form_path(params)
@@ -55,7 +55,7 @@ module WasteCarriersEngine
       end
 
       context "when the start option is `renew`" do
-        let(:params) { { start_form: { start_option: "renew" }, token: new_registration.token } }
+        let(:params) { { start_form: { temp_start_option: "renew" }, token: new_registration.token } }
 
         it "updates the transient registration workflow and redirects to the renew_registration_form with a 302 status code" do
           post new_start_form_path(params)
@@ -68,7 +68,7 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the start_option is empty" do
+      context "when the temp_start_option is empty" do
         it "renders the :new template with a 200 status code" do
           post new_start_form_path
 

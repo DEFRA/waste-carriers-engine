@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.fetch(:start_form, {}).permit(:start_option)
+      params.fetch(:start_form, {}).permit(:temp_start_option)
     end
 
     def find_or_initialize_transient_registration(token)
