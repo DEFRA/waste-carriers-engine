@@ -20,7 +20,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
     end
 
     context "when no transient registration is found" do
-      it "redirects to the incalid page" do
+      it "redirects to the invalid page" do
         post_form_with_params(form, "foo")
 
         expect(response).to redirect_to(page_path("invalid"))
