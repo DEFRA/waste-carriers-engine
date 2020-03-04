@@ -12,7 +12,9 @@ en:
           options:
             revoke: "Revoke"
             cease: "Cease"
-          reason: "Reason"
+          reason:
+            label: "Reason"
+            hint: "Maximum 500 characters"
         contact_address:
           heading: "Contact address:"
         next_button: "Confirm"
