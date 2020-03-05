@@ -6,11 +6,24 @@ module WasteCarriersEngine
   RSpec.describe "LocationForms", type: :request do
     include_examples "GET flexible form", "location_form"
 
-    include_examples "POST renewal form",
-                     "location_form",
-                     valid_params: { location: "england" },
-                     invalid_params: { location: "foo" },
-                     test_attribute: :location
+    describe "POST location_form_path" do
+      include_examples "POST renewal form",
+                       "location_form",
+                       valid_params: { location: "england" },
+                       invalid_params: { location: "foo" },
+                       test_attribute: :location
+
+      context "When the transient_registration is a new registration" do
+        let(:transient_registration) do
+          create(:new_registration, workflow_state: "location_form")
+        end
+
+        include_examples "POST form",
+                         "location_form",
+                         valid_params: { location: "england" },
+                         invalid_params: { location: "foo" }
+      end
+    end
 
     describe "GET back_location_forms_path" do
       context "when a valid user is signed in" do

@@ -12,21 +12,13 @@ module WasteCarriersEngine
           context "when the temp_start_option is `renew`" do
             let(:temp_start_option) { WasteCarriersEngine::StartForm::RENEW }
 
-            it "can transition from a :start_form state to a :renew_registration_form" do
-              new_registration.next
-
-              expect(new_registration.workflow_state).to eq("renew_registration_form")
-            end
+            include_examples "has next transition", next_state: "renew_registration_form"
           end
 
           context "when the temp_start_option is `new`" do
             let(:temp_start_option) { WasteCarriersEngine::StartForm::NEW }
 
-            it "can transition from a :start_form state to a :location_form" do
-              new_registration.next
-
-              expect(new_registration.workflow_state).to eq("location_form")
-            end
+            include_examples "has next transition", next_state: "location_form"
           end
         end
       end

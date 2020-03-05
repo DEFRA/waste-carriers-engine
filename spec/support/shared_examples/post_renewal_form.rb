@@ -20,7 +20,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
     end
 
     context "when no transient registration is found" do
-      it "redirects to the incalid page" do
+      it "redirects to the invalid page" do
         post_form_with_params(form, "foo")
 
         expect(response).to redirect_to(page_path("invalid"))
@@ -48,6 +48,8 @@ RSpec.shared_examples "POST renewal form" do |form, options|
         end
 
         context "when the params are valid" do
+          # NOTE: Keep me and put in shared POST.
+          # Fix so we test all persisted data. Data comes from options.
           it "updates the transient registration" do
             # If we've specified the value we want to get after updating, use that
             # Otherwise, expect the value submitted in params
@@ -83,6 +85,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
         end
 
         context "when the params are empty" do
+          # NOTE: Kill it
           it "does not throw an error" do
             # rubocop:disable Style/BlockDelimiters
             expect {
@@ -108,6 +111,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
         end
       end
 
+      # Externalise is own shared scenario
       context "when the workflow_state does not match the requested form" do
         before do
           # We need to pick a different but also valid state for the transient_registration
