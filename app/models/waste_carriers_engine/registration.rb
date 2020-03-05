@@ -25,11 +25,11 @@ module WasteCarriersEngine
               uniqueness: true
 
     validates :tier,
-              inclusion: { in: %w[UPPER LOWER] }
+              inclusion: { in: TIERS }
 
     scope :active, -> { where("metaData.status" => "ACTIVE") }
     scope :expired_at_end_of_today, -> { where(:expires_on.lte => Time.now.in_time_zone("London").end_of_day) }
-    scope :upper_tier, -> { where(tier: "UPPER") }
+    scope :upper_tier, -> { where(tier: UPPER_TIER) }
 
     alias pending_manual_conviction_check? conviction_check_required?
     alias pending_payment? unpaid_balance?
