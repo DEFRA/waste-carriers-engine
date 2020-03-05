@@ -12,14 +12,14 @@ module WasteCarriersEngine
           context "if the users has convictions to declare" do
             subject { build(:new_registration, workflow_state: "declare_convictions_form", declared_convictions: "yes") }
 
-            include_examples "can transition next to", next_state: "conviction_details_form"
+            include_examples "has next transition", next_state: "conviction_details_form"
           end
 
-          include_examples "can transition next to", next_state: "contact_name_form"
+          include_examples "has next transition", next_state: "contact_name_form"
         end
 
         context "on back" do
-          include_examples "can transition back to", previous_state: "main_people_form"
+          include_examples "has back transition", previous_state: "main_people_form"
         end
       end
     end

@@ -9,7 +9,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":renew_registration_form state transitions" do
         context "on back" do
-          include_examples "can transition back to", previous_state: "start_form"
+          include_examples "has back transition", previous_state: "start_form"
         end
       end
     end

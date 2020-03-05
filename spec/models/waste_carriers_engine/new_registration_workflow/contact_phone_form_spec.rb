@@ -9,11 +9,11 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":contact_phone_form state transitions" do
         context "on next" do
-          include_examples "can transition next to", next_state: "contact_email_form"
+          include_examples "has next transition", next_state: "contact_email_form"
         end
 
         context "on back" do
-          include_examples "can transition back to", previous_state: "contact_name_form"
+          include_examples "has back transition", previous_state: "contact_name_form"
         end
       end
     end

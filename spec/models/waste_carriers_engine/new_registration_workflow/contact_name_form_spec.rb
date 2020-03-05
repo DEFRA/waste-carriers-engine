@@ -9,17 +9,17 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":contact_name_form state transitions" do
         context "on next" do
-          include_examples "can transition next to", next_state: "contact_phone_form"
+          include_examples "has next transition", next_state: "contact_phone_form"
         end
 
         context "on back" do
           context "When the user has convictions to declare" do
             subject { build(:new_registration, workflow_state: "contact_name_form", declared_convictions: "yes") }
 
-            include_examples "can transition back to", previous_state: "conviction_details_form"
+            include_examples "has back transition", previous_state: "conviction_details_form"
           end
 
-          include_examples "can transition back to", previous_state: "declare_convictions_form"
+          include_examples "has back transition", previous_state: "declare_convictions_form"
         end
       end
     end

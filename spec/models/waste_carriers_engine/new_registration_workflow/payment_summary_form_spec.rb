@@ -12,14 +12,14 @@ module WasteCarriersEngine
           context "when the user choose to pay by card" do
             subject { build(:new_registration, workflow_state: "payment_summary_form", temp_payment_method: "card") }
 
-            include_examples "can transition next to", next_state: "worldpay_form"
+            include_examples "has next transition", next_state: "worldpay_form"
           end
 
-          include_examples "can transition next to", next_state: "bank_transfer_form"
+          include_examples "has next transition", next_state: "bank_transfer_form"
         end
 
         context "on back" do
-          include_examples "can transition back to", previous_state: "cards_form"
+          include_examples "has back transition", previous_state: "cards_form"
         end
       end
     end

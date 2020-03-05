@@ -9,11 +9,11 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":registration_number_form state transitions" do
         context "on next" do
-          include_examples "can transition next to", next_state: "company_name_form"
+          include_examples "has next transition", next_state: "company_name_form"
         end
 
         context "on back" do
-          include_examples "can transition back to", previous_state: "cbd_type_form"
+          include_examples "has back transition", previous_state: "cbd_type_form"
         end
       end
     end

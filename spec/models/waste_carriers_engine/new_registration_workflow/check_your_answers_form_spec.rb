@@ -9,7 +9,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":check_your_answers_form state transitions" do
         context "on next" do
-          include_examples "can transition next to", next_state: "declaration_form"
+          include_examples "has next transition", next_state: "declaration_form"
         end
 
         context "on back" do
@@ -17,10 +17,10 @@ module WasteCarriersEngine
             let(:contact_address) { build(:address, :contact, :manual_uk) }
             subject { build(:new_registration, workflow_state: "check_your_answers_form", contact_address: contact_address) }
 
-            include_examples "can transition back to", previous_state: "contact_address_manual_form"
+            include_examples "has back transition", previous_state: "contact_address_manual_form"
           end
 
-          include_examples "can transition back to", previous_state: "contact_address_form"
+          include_examples "has back transition", previous_state: "contact_address_form"
         end
       end
     end

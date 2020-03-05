@@ -12,20 +12,20 @@ module WasteCarriersEngine
           context "when a company registration number is required" do
             subject { build(:new_registration, workflow_state: "cbd_type_form", business_type: "limitedCompany") }
 
-            include_examples "can transition next to", next_state: "registration_number_form"
+            include_examples "has next transition", next_state: "registration_number_form"
           end
 
-          include_examples "can transition next to", next_state: "company_name_form"
+          include_examples "has next transition", next_state: "company_name_form"
         end
 
         context "on back" do
           context "when the waste is the main business of the company" do
             subject { build(:new_registration, workflow_state: "cbd_type_form", is_main_service: "yes") }
 
-            include_examples "can transition back to", previous_state: "waste_types_form"
+            include_examples "has back transition", previous_state: "waste_types_form"
           end
 
-          include_examples "can transition back to", previous_state: "construction_demolition_form"
+          include_examples "has back transition", previous_state: "construction_demolition_form"
         end
       end
     end
