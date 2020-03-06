@@ -1,0 +1,43 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_edit_payment_summary_forms_path(token: @transient_registration.token)) %>
+
+<div class="text">
+  <%= form_for(@edit_payment_summary_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @edit_payment_summary_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <div class="form-group <%= "form-group-error" if @edit_payment_summary_form.errors[:temp_payment_method].any? %>">
+      <fieldset id="temp_payment_method">
+        <legend>
+          <h2 class="bold">
+            <%= t(".payment_method.subheading") %>
+          </h2>
+          <p class="form-hint"><%= t(".payment_method.legend") %></p>
+        </legend>
+        <% if @edit_payment_summary_form.errors[:temp_payment_method].any? %>
+          <span class="error-message"><%= @edit_payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
+        <% end %>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_payment_method, "card" %>
+          <%= f.label :temp_payment_method, value: "card", class: "form-label" do %>
+            <%= t(".options.card") %>
+            <span class="form-hint"><%= t(".hint_pay_by_card") %></span>
+          <% end %>
+        </div>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_payment_method, "bank_transfer" %>
+          <%= f.label :temp_payment_method, value: "bank_transfer", class: "form-label" do %>
+            <%= t(".options.bank_transfer") %>
+            <span class="form-hint"><%= t(".hint_pay_by_bank_transfer") %></span>
+          <% end %>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>

@@ -7,8 +7,8 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       it_behaves_like "a simple bidirectional transition",
                       previous_state: :declaration_form,
-                      current_state: :payment_summary_form,
-                      next_state: :bank_transfer_form,
+                      current_state: :edit_payment_summary_form,
+                      next_state: :edit_bank_transfer_form,
                       factory: :edit_registration
     end
   end

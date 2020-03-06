@@ -20,8 +20,8 @@ module WasteCarriersEngine
         context "when the registration type has changed" do
           before(:each) { transient_registration.registration_type = "broker_dealer" }
 
-          it "changes to :payment_summary_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:declaration_form).to(:payment_summary_form).on_event(:next)
+          it "changes to :edit_payment_summary_form after the 'next' event" do
+            expect(transient_registration).to transition_from(:declaration_form).to(:edit_payment_summary_form).on_event(:next)
           end
         end
 
