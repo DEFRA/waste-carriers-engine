@@ -12,8 +12,11 @@ module WasteCarriersEngine
           context "when the business type is a lower tier specific type" do
             subject { build(:new_registration, workflow_state: "business_type_form", business_type: "charity") }
 
-            # TODO: Fix when implementing lower tier flow
-            include_examples "has next transition", next_state: "cannot_renew_lower_tier_form"
+            include_examples "has next transition", next_state: "company_name_form"
+
+            it "updates the tier of the object to LOWER" do
+              expect { subject.next }.to change { subject.tier }.to(WasteCarriersEngine::NewRegistration::LOWER_TIER)
+            end
           end
 
           include_examples "has next transition", next_state: "other_businesses_form"
