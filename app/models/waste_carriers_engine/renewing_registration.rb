@@ -73,6 +73,12 @@ module WasteCarriersEngine
       # registration.
       old_company_no = registration.company_no.to_s.strip
 
+      # It was previously possible to save a company_no with lowercase letters e.g. ni123456. This is no longer
+      # possible because the check against Comapnies House fails when we search with lowercase registration numbers. The
+      # value has to be made uppercase. So to avoid the renewal being blocked because it thinks the numbers don't match
+      # we upcase the old_company_no
+      old_company_no.upcase!
+
       # It was previously valid to have company_nos with less than 8 digits
       # The form prepends 0s to make up the length, so we should do this for the old number to match
       old_company_no = "0#{old_company_no}" while old_company_no.length < 8
