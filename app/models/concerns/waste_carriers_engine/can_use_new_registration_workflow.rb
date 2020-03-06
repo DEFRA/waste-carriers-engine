@@ -61,8 +61,7 @@ module WasteCarriersEngine
         state :worldpay_form
         state :bank_transfer_form
 
-        state :renewal_complete_form
-        state :renewal_received_form
+        state :registration_completed_form
 
         # Transitions
         event :next do
@@ -190,6 +189,10 @@ module WasteCarriersEngine
           # End registered address
 
           transitions from: :main_people_form,
+                      to: :contact_name_form,
+                      if: :lower_tier?
+
+          transitions from: :main_people_form,
                       to: :declare_convictions_form
 
           transitions from: :declare_convictions_form,
@@ -238,6 +241,10 @@ module WasteCarriersEngine
 
           transitions from: :check_your_answers_form,
                       to: :declaration_form
+
+          transitions from: :declaration_form,
+                      to: :registration_completed_form,
+                      if: :lower_tier?
 
           transitions from: :declaration_form,
                       to: :cards_form
@@ -374,6 +381,10 @@ module WasteCarriersEngine
 
           transitions from: :conviction_details_form,
                       to: :declare_convictions_form
+
+          transitions from: :contact_name_form,
+                      to: :main_people_form,
+                      if: :lower_tier?
 
           transitions from: :contact_name_form,
                       to: :conviction_details_form,

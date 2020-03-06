@@ -19,6 +19,12 @@ module WasteCarriersEngine
             include_examples "has back transition", previous_state: "conviction_details_form"
           end
 
+          context "When the registration is a lower tier" do
+            subject { build(:new_registration, :lower, workflow_state: "contact_name_form") }
+
+            include_examples "has back transition", previous_state: "main_people_form"
+          end
+
           include_examples "has back transition", previous_state: "declare_convictions_form"
         end
       end
