@@ -1,0 +1,29 @@
+en:
+  waste_carriers_engine:
+    shared:
+      bank_transfer_details:
+        uk_payment_table:
+          heading: "Bank details"
+          sort_code:
+            label: Sort code
+            value: 60-70-80
+          account_number:
+            label: Account number
+            value: "10014411"
+          reference_number:
+            label: Payment reference
+            hint: We cannot complete your registration without this
+          payment_due:
+            label: Payment due
+        overseas_payments:
+          heading: "Overseas payments"
+          iban: "IBAN: GB23 NWBK 607080 10014411"
+          swiftbic: "SWIFTBIC: NWBK GB2L"
+          currency: "Currency: Sterling"
+        send_confirmation:
+          heading: "Email us your registration number %{reg_identifier} to confirm you’ve paid"
+          email_us:
+            label: "Email us"
+            value: "ea_fsc_ar@sscl.gse.gov.uk"
+          payment_reference:
+            label: "Payment reference"

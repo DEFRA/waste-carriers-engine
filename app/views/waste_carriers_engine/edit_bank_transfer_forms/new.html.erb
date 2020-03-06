@@ -6,6 +6,10 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <%= render("waste_carriers_engine/shared/bank_transfer_details",
+        reg_identifier: @edit_bank_transfer_form.reg_identifier,
+        payment_due: @edit_bank_transfer_form.transient_registration.finance_details.balance) %>
+
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
     </div>
