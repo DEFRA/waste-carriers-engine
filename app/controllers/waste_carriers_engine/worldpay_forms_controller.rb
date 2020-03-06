@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class WorldpayFormsController < FormsController
     def new
@@ -145,3 +146,4 @@ module WasteCarriersEngine
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

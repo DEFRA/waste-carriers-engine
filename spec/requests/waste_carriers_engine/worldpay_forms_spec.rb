@@ -63,7 +63,8 @@ module WasteCarriersEngine
           end
 
           let(:mac) do
-            data = [order_key,
+            data = [
+              order_key,
               order.total_amount,
               "GBP",
               "AUTHORISED",
