@@ -4,6 +4,7 @@ module WasteCarriersEngine
   class RenewingRegistration < TransientRegistration
     include CanCopyDataFromRegistration
     include CanUseRenewingRegistrationWorkflow
+    include CanUseLock
 
     validate :no_renewal_in_progress?, on: :create
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true

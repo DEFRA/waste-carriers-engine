@@ -65,6 +65,7 @@ module WasteCarriersEngine
 
         it "copies the registration's route from the transient_registration to the registration" do
           transient_registration.metaData.route = "ASSISTED_DIGITAL_FROM_TRANSIENT_REGISTRATION"
+          transient_registration.save
 
           renewal_completion_service.complete_renewal
 

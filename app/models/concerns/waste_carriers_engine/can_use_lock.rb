@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Warning: Do not extend it in TransientRegistration.
+# The Mongoid::Locker gem has trouble dealing with STI and it will cause errors.
 module WasteCarriersEngine
   module CanUseLock
     extend ActiveSupport::Concern

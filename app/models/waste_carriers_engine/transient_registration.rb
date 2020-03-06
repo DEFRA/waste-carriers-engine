@@ -10,7 +10,6 @@ module WasteCarriersEngine
     include CanHaveSecureToken
     include CanSetCreatedAt
     include CanStripWhitespace
-    include CanUseLock
 
     store_in collection: "transient_registrations"
 
