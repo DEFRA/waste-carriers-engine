@@ -64,8 +64,6 @@ module WasteCarriersEngine
         state :renewal_complete_form
         state :renewal_received_form
 
-        state :cannot_renew_lower_tier_form
-
         # Transitions
         event :next do
           # Start
@@ -110,8 +108,9 @@ module WasteCarriersEngine
           # End location
 
           transitions from: :business_type_form,
-                      to: :cannot_renew_lower_tier_form,
-                      if: :switch_to_lower_tier_based_on_business_type?
+                      to: :company_name_form,
+                      if: :switch_to_lower_tier_based_on_business_type?,
+                      after: :switch_to_lower_tier
 
           transitions from: :business_type_form,
                       to: :other_businesses_form
@@ -133,18 +132,22 @@ module WasteCarriersEngine
                       to: :construction_demolition_form
 
           transitions from: :waste_types_form,
-                      to: :cannot_renew_lower_tier_form,
-                      if: :switch_to_lower_tier_based_on_smart_answers?
+                      to: :company_name_form,
+                      if: :switch_to_lower_tier_based_on_smart_answers?,
+                      after: :switch_to_lower_tier
 
           transitions from: :waste_types_form,
-                      to: :cbd_type_form
+                      to: :cbd_type_form,
+                      after: :switch_to_upper_tier
 
           transitions from: :construction_demolition_form,
-                      to: :cannot_renew_lower_tier_form,
-                      if: :switch_to_lower_tier_based_on_smart_answers?
+                      to: :company_name_form,
+                      if: :switch_to_lower_tier_based_on_smart_answers?,
+                      after: :switch_to_lower_tier
 
           transitions from: :construction_demolition_form,
-                      to: :cbd_type_form
+                      to: :cbd_type_form,
+                      after: :switch_to_upper_tier
 
           # End smart answers
 
@@ -325,7 +328,19 @@ module WasteCarriersEngine
 
           transitions from: :company_name_form,
                       to: :cbd_type_form,
-                      if: :skip_registration_number?
+                      if: %i[skip_registration_number? upper_tier?]
+
+          transitions from: :company_name_form,
+                      to: :construction_demolition_form,
+                      if: %i[lower_tier? waste_is_main_service?]
+
+          transitions from: :company_name_form,
+                      to: :waste_types_form,
+                      if: :lower_tier?
+
+          transitions from: :company_name_form,
+                      to: :business_type_form,
+                      if: :switch_to_lower_tier_based_on_business_type?
 
           transitions from: :company_name_form,
                       to: :registration_number_form
@@ -405,24 +420,6 @@ module WasteCarriersEngine
 
           transitions from: :payment_summary_form,
                       to: :cards_form
-
-          # TODO: Remove this ones once we implement lower-tier journey
-          # Exit routes from renewals process
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :business_type_form,
-                      if: :switch_to_lower_tier_based_on_business_type?
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :construction_demolition_form,
-                      if: :only_carries_own_waste?
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :waste_types_form,
-                      if: :waste_is_main_service?
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :construction_demolition_form
         end
 
         event :skip_to_manual_address do
@@ -504,6 +501,14 @@ module WasteCarriersEngine
 
       def paying_by_card?
         temp_payment_method == "card"
+      end
+
+      def switch_to_lower_tier
+        update_attributes(tier: WasteCarriersEngine::NewRegistration::LOWER_TIER)
+      end
+
+      def switch_to_upper_tier
+        update_attributes(tier: WasteCarriersEngine::NewRegistration::UPPER_TIER)
       end
     end
     # rubocop:enable Metrics/BlockLength
