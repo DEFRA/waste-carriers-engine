@@ -357,6 +357,53 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#company_no_changed?" do
+      context "when the renewal is for an business type that doesn't require a company number" do
+        before(:each) { renewing_registration.business_type = "soleTrader" }
+
+        it "returns false" do
+          expect(renewing_registration.company_no_changed?).to eq(false)
+        end
+      end
+
+      context "when the renewal is for an business type that does require a company number" do
+        context "but the original registration was for a partnership" do
+          before(:each) { renewing_registration.registration.business_type = "partnership" }
+
+          it "returns false" do
+            expect(renewing_registration.company_no_changed?).to eq(false)
+          end
+        end
+
+        context "and the original registration has spaces in the company number" do
+          before(:each) { renewing_registration.registration.company_no = "  09360070  " }
+
+          it "returns false" do
+            expect(renewing_registration.company_no_changed?).to eq(false)
+          end
+        end
+
+        context "and the original registration has lowercase characters in the company number" do
+          before(:each) do
+            renewing_registration.registration.company_no = "ni123456"
+            renewing_registration.company_no = "NI123456"
+          end
+
+          it "returns false" do
+            expect(renewing_registration.company_no_changed?).to eq(false)
+          end
+        end
+
+        context "and the company numbers don't match" do
+          before(:each) { renewing_registration.company_no = "NI123456" }
+
+          it "returns true" do
+            expect(renewing_registration.company_no_changed?).to eq(true)
+          end
+        end
+      end
+    end
+
     describe "#pending_manual_conviction_check?" do
       context "when the renewal is not in a completed workflow_state" do
         it "returns false" do
