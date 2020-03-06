@@ -19,12 +19,10 @@ module WasteCarriersEngine
         end
 
         context "on back" do
-          context "when the the registration is upper tier" do
-            context "when the business does not requires a registration number" do
-              subject { build(:new_registration, :upper, workflow_state: "company_name_form", location: "overseas") }
+          context "when the business does not requires a registration number and the registration is upper tier" do
+            subject { build(:new_registration, :upper, workflow_state: "company_name_form", location: "overseas") }
 
-              include_examples "has back transition", previous_state: "cbd_type_form"
-            end
+            include_examples "has back transition", previous_state: "cbd_type_form"
           end
 
           context "when the registration is lower tier" do
