@@ -85,6 +85,17 @@ module WasteCarriersEngine
           end
 
           context "when the params are valid and the balance is paid" do
+            let(:params) do
+              {
+                orderKey: order_key,
+                token: token,
+                paymentAmount: order.total_amount,
+                paymentCurrency: "GBP",
+                paymentStatus: "AUTHORISED",
+                mac: mac
+              }
+            end
+
             it "add a new payment to the registration, redirects to renewal_complete_form, updates the metadata route and is idempotent." do
               allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
               expected_payments_count = transient_registration.finance_details.payments.count + 1
@@ -133,8 +144,15 @@ module WasteCarriersEngine
           end
 
           context "when the params are invalid" do
-            before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_success?).and_return(false)
+            let(:params) do
+              {
+                orderKey: order_key,
+                token: token,
+                paymentAmount: order.total_amount,
+                paymentCurrency: "GBP",
+                paymentStatus: "AUTHORISED",
+                mac: "FOO"
+              }
             end
 
             it "redirects to payment_summary_form" do

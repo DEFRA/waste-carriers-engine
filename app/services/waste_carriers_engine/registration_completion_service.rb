@@ -8,7 +8,9 @@ module WasteCarriersEngine
     def run(registration:)
       @registration = registration
 
-      activate_registration if can_be_completed?
+      registration.with_lock do
+        activate_registration if can_be_completed?
+      end
 
       send_confirmation_email
     end

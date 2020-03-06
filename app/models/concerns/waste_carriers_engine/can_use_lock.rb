@@ -5,9 +5,12 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
 
     include Mongoid::Document
-    include Mongoid::Locker
 
     included do
+      # Including mongoId::Locker outside of this will generate errors when using the lock.
+      # Reason unknow for now.
+      include Mongoid::Locker
+
       field :locking_name, type: String
       field :locked_at, type: Time
 

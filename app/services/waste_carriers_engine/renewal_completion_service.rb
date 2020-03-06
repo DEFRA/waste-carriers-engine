@@ -30,13 +30,17 @@ module WasteCarriersEngine
     end
 
     def complete_renewal
-      raise_completion_error unless can_be_completed?
+      transient_registration.with_lock do
+        registration.with_lock do
+          raise_completion_error unless can_be_completed?
 
-      copy_names_to_contact_address
-      create_past_registration
-      update_registration
-      delete_transient_registration
-      send_confirmation_email
+          copy_names_to_contact_address
+          create_past_registration
+          update_registration
+          delete_transient_registration
+          send_confirmation_email
+        end
+      end
     end
 
     private
