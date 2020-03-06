@@ -173,6 +173,8 @@ GEM
       mongo (>= 2.4.1, < 3.0.0)
       origin (~> 2.3)
       tzinfo (>= 0.3.37)
+    mongoid-locker (2.0.0)
+      mongoid (>= 5.0, < 8)
     multi_json (1.14.1)
     multipart-post (2.1.1)
     netrc (0.11.0)
@@ -338,6 +340,7 @@ DEPENDENCIES
   jquery-rails
   loofah (>= 2.2.1)
   mongoid (~> 5.2)
+  mongoid-locker
   pry-byebug
   rails-html-sanitizer (>= 1.0.4)
   rails_12factor
