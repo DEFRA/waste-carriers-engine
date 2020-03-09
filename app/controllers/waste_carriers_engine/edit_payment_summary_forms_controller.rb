@@ -3,7 +3,9 @@
 module WasteCarriersEngine
   class EditPaymentSummaryFormsController < FormsController
     def new
-      super(EditPaymentSummaryForm, "edit_payment_summary_form")
+      return unless super(EditPaymentSummaryForm, "edit_payment_summary_form")
+
+      set_up_finance_details
     end
 
     def create
@@ -18,6 +20,12 @@ module WasteCarriersEngine
 
     def fetch_presenters
       @order_and_total_presenter = OrderAndTotalPresenter.new(@edit_payment_summary_form, view_context)
+    end
+
+    def set_up_finance_details
+      return if @transient_registration.finance_details.present?
+
+      @transient_registration.prepare_for_payment(:unknown, current_user)
     end
   end
 end

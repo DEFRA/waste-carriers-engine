@@ -20,13 +20,39 @@ module WasteCarriersEngine
         end
 
         context "when a matching registration exists" do
-          let(:edit_registration) { create(:edit_registration, :has_finance_details, workflow_state: "edit_payment_summary_form") }
+          let(:edit_registration) do
+            create(:edit_registration,
+                   :has_finance_details,
+                   workflow_state: "edit_payment_summary_form")
+          end
 
           it "renders the appropriate template and responds with a 200 status code" do
             get new_edit_payment_summary_form_path(edit_registration.token)
 
             expect(response).to render_template("waste_carriers_engine/edit_payment_summary_forms/new")
             expect(response.code).to eq("200")
+          end
+
+          context "when it already has a finance_details" do
+            it "does not modify the finance_details" do
+              expect { get new_edit_payment_summary_form_path(edit_registration.token) }.to_not change { edit_registration.finance_details }
+            end
+          end
+
+          context "when it does not have a finance_details" do
+            let(:edit_registration) do
+              create(:edit_registration,
+                     :has_changed_registration_type,
+                     workflow_state: "edit_payment_summary_form")
+            end
+
+            it "creates a new finance_details" do
+              expect(edit_registration.finance_details).to be_nil
+
+              get new_edit_payment_summary_form_path(edit_registration.token)
+
+              expect(edit_registration.reload.finance_details).to_not be_nil
+            end
           end
         end
       end
