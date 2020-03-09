@@ -7,6 +7,7 @@ module WasteCarriersEngine
     include CanFilterConvictionStatus
     include CanHaveRegistrationAttributes
     include CanGenerateRegIdentifier
+    include CanUseLock
 
     store_in collection: "registrations"
 
