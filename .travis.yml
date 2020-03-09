@@ -1,6 +1,21 @@
+dist: trusty
+
+addons:
+  sonarcloud:
+    organization: "defra"
+
+language: ruby
+rvm: 2.4.2
+cache: bundler
+
+# Travis CI uses shallow clone to speed up build times, but a truncated SCM
+# history may cause issues when SonarCloud computes blame data. To avoid this,
+# you can access the full SCM history with `depth: false`
+git:
+  depth: false
+
 env:
   global:
-    - CC_TEST_REPORTER_ID=be55758aa1e0f8d601613fa05cb3d025ce0a8555144b63ac277b5113edbbe3bc
     - WCRS_REGISTRATION_EXPIRES_AFTER=3
     - WCRS_REGISTRATION_RENEWAL_WINDOW=3
     - WCRS_REGISTRATION_GRACE_WINDOW=5
@@ -19,40 +34,22 @@ env:
   matrix:
     secure: Kcymo4dlw9/N7roosBvEvIzhpTSWhvQwzrL6iWowBNsdsQ/H3o+MBQteoL0rYtJVche3sRVhmqXo5YIQ8CUk5oYD8S4oFwWSMODe6XnO/odBsDC3mtzc8YCILVMsnni504KDxxSz7Zl3SZ0JbAyUGNBi1HQ3EuXylvCv3QnDE20UcUvb+OpilqgDzsjFaOb/FKEgUZuXF8TisiCtpU3CR7HFV/Fw37cYvtHK5mUNNTmW88laTvR3l2eel3SRIl8PUUWWyRgtu7h2n4gq3cbV9SIs/AgDEEvGkVhsWgK2l6yPbGtMVWjVihbo71KX0ec0yTxliD8WTvlao6R7Iwagp/jg11evJMYUVx+1GkLGfxzZcVmIOwYdNFcVROPBAB8TVbbd+wdO8W93tVHEnDHQBM6Ol2qxCC0RNWi3ElD2Sg6rx34ECEhlK8tWoyZTHTlWGz32ctt6fNftJOPM0euQhLpr7ZBz7GqfJMYy5+tCm110SmLXvxe5cotoIofJ29U2DkZACa0sSPkQSnco/xA0aYXOL1fPCPFyRwmN8wXBMxZi6SeGtC47Zg5I2e447zinvv+4hsMlwESiwvCMGEGBmBIKuMg5Nqk0o3lPE4bfRiDkAiHOrLAhhUBQxM4sE5wyg81jr172E1gDVgSAU1hkCyRGObqzaDaH/cybOc397ic=
 
-language: ruby
-rvm: 2.4.2
-cache: bundler
-
-# Travis CI clones repositories to a depth of 50 commits, which is only really
-# useful if you are performing git operations.
-# https://docs.travis-ci.com/user/customizing-the-build/#Git-Clone-Depth
-git:
-  depth: 3
 services:
   - mongodb
+
 before_install:
   - export TZ=UTC
+  - gem install -v 1.17.3 bundler --no-rdoc --no-ri
   - sudo apt-get install xvfb -y
   - sudo apt-get install ttf-liberation -y
   - sudo apt-get install wkhtmltopdf -y
-  - gem install -v 1.17.2 bundler --no-rdoc --no-ri
+
 before_script:
   # Set up Mongo databases
   - mongo waste-carriers-test --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
   - mongo waste-carriers-users-test --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
-  # Setup to support the CodeClimate test coverage submission
-  # As per CodeClimate's documentation, they suggest only running
-  # ./cc-test-reporter commands on travis-ci push builds only. Hence we wrap all
-  # the codeclimate test coverage related commands in a check that tests if we
-  # are in a pull request or not.
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter; fi
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then chmod +x ./cc-test-reporter; fi
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter before-build; fi
-  # Run rubocop. It's installed as a dependency (hence no install step) as this
-  # allows projects to control the version they are using (rather than getting)
-  # surprise build failures.
-  - bundle exec rubocop
+
 script:
+  - bundle exec rubocop --format=json --out=rubocop-result.json
   - bundle exec rspec
-after_script:
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  - sonar-scanner

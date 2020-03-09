@@ -1,8 +1,8 @@
 # Waste Carriers engine
 
 [![Build Status](https://travis-ci.com/DEFRA/waste-carriers-engine.svg?branch=master)](https://travis-ci.com/DEFRA/waste-carriers-engine)
-[![Maintainability](https://api.codeclimate.com/v1/badges/2fee55bc96a9c8942729/maintainability)](https://codeclimate.com/github/DEFRA/waste-carriers-engine/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/2fee55bc96a9c8942729/test_coverage)](https://codeclimate.com/github/DEFRA/waste-carriers-engine/test_coverage)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-carriers-engine&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DEFRA_waste-carriers-engine)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-carriers-engine&metric=coverage)](https://sonarcloud.io/dashboard?id=DEFRA_waste-carriers-engine)
 [![security](https://hakiri.io/github/DEFRA/waste-carriers-engine/master.svg)](https://hakiri.io/github/DEFRA/waste-carriers-engine/master)
 
 The 'Register as a waste carrier' service allows businesses, who deal with waste and have to register according to the regulations, to register online. Once registered, businesses can sign in again to edit their registrations if needed.
