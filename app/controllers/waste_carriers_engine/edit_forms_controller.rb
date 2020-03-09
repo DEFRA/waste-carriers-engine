@@ -3,9 +3,7 @@
 module WasteCarriersEngine
   class EditFormsController < FormsController
     def new
-      return unless super(EditForm, "edit_form")
-
-      @presenter = EditFormPresenter.new(@edit_form, view_context)
+      super(EditForm, "edit_form")
     end
 
     def create
@@ -65,6 +63,10 @@ module WasteCarriersEngine
 
       @transient_registration.send("#{transition}!".to_sym)
       redirect_to_correct_form
+    end
+
+    def fetch_presenters
+      @presenter = EditFormPresenter.new(@edit_form, view_context)
     end
   end
 end
