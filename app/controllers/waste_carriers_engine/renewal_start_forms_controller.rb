@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class RenewalStartFormsController < FormsController
+    prepend_before_action :authenticate_user!
+
     def new
       super(RenewalStartForm, "renewal_start_form")
     end

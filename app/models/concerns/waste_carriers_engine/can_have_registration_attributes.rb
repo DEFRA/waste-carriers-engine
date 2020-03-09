@@ -7,6 +7,7 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include Mongoid::Document
     include CanReferenceSingleDocumentInCollection
+    include CanHaveTier
 
     # Rubocop sees a module as a block, and as such is not very forgiving in how
     # many lines it allows. In the case of this concern we have to list out all
@@ -61,7 +62,6 @@ module WasteCarriersEngine
       field :regIdentifier, as: :reg_identifier,                            type: String
       field :registrationType, as: :registration_type,                      type: String
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
-      field :tier,                                                          type: String
       field :uuid,                                                          type: String
       # rubocop:enable Metrics/LineLength
 
@@ -103,14 +103,6 @@ module WasteCarriersEngine
         return false if uk_location?
 
         location == "overseas" || business_type == "overseas"
-      end
-
-      def upper_tier?
-        tier == "UPPER"
-      end
-
-      def lower_tier?
-        tier == "LOWER"
       end
 
       def ad_contact_email?

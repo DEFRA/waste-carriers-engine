@@ -6,11 +6,24 @@ module WasteCarriersEngine
   RSpec.describe "OtherBusinessesForms", type: :request do
     include_examples "GET flexible form", "other_businesses_form"
 
-    include_examples "POST renewal form",
-                     "other_businesses_form",
-                     valid_params: { other_businesses: "yes" },
-                     invalid_params: { other_businesses: "foo" },
-                     test_attribute: :other_businesses
+    describe "POST other_businesses_form_path" do
+      include_examples "POST renewal form",
+                       "other_businesses_form",
+                       valid_params: { other_businesses: "yes" },
+                       invalid_params: { other_businesses: "foo" },
+                       test_attribute: :other_businesses
+
+      context "When the transient_registration is a new registration" do
+        let(:transient_registration) do
+          create(:new_registration, workflow_state: "other_businesses_form")
+        end
+
+        include_examples "POST form",
+                         "other_businesses_form",
+                         valid_params: { other_businesses: "yes" },
+                         invalid_params: { other_businesses: "foo" }
+      end
+    end
 
     describe "GET back_other_businesses_forms_path" do
       context "when a valid user is signed in" do

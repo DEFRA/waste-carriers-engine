@@ -8,9 +8,9 @@ module WasteCarriersEngine
       # Use the existing reg_identifier if one is already set, eg. through seeding
       return if reg_identifier
 
-      self.reg_identifier = if tier == "UPPER"
+      self.reg_identifier = if tier == WasteCarriersEngine::TransientRegistration::UPPER_TIER
                               "CBDU#{latest_counter}"
-                            elsif tier == "LOWER"
+                            elsif tier == WasteCarriersEngine::TransientRegistration::LOWER_TIER
                               "CBDL#{latest_counter}"
                             end
     end

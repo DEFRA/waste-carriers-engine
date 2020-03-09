@@ -1,0 +1,17 @@
+en:
+  waste_carriers_engine:
+    start_forms:
+      new:
+        title: Registration start
+        heading: Is this a new registration?
+        options:
+          new: "Yes"
+          renew: "No, I want to renew an existing registration"
+        next_button: Continue
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/start_form:
+          attributes:
+            temp_start_option:
+              inclusion: "You must answer this question"

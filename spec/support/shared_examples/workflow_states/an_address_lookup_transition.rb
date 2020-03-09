@@ -12,12 +12,6 @@ RSpec.shared_examples "an address lookup transition" do |next_state_if_not_skipp
 
       before(:each) { subject.temp_os_places_error = nil }
 
-      it "can only transition to either #{previous_state}, #{next_state}, or #{alt_state}" do
-        permitted_states = Helpers::WorkflowStates.permitted_states(subject)
-
-        expect(permitted_states).to match_array([previous_state, next_state, alt_state])
-      end
-
       it "changes to #{next_state} after the 'next' event" do
         expect(subject).to transition_from(current_state).to(next_state).on_event(:next)
       end
@@ -38,12 +32,6 @@ RSpec.shared_examples "an address lookup transition" do |next_state_if_not_skipp
       next_state = "#{address_type}_address_manual_form".to_sym
 
       before(:each) { subject.temp_os_places_error = true }
-
-      it "can only transition to either #{previous_state} or #{next_state}" do
-        permitted_states = Helpers::WorkflowStates.permitted_states(subject)
-
-        expect(permitted_states).to match_array([previous_state, next_state])
-      end
 
       it "changes to #{next_state} after the 'next' event" do
         expect(subject).to transition_from(current_state).to(next_state).on_event(:next)

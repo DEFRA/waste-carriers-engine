@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class EditFormsController < FormsController
+    prepend_before_action :authenticate_user!
+
     def new
       super(EditForm, "edit_form")
     end
