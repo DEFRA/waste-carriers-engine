@@ -64,6 +64,25 @@ module WasteCarriersEngine
 
               expect(response).to have_http_status(200)
             end
+
+            context "when the edit included a charge" do
+              let(:transient_registration) do
+                create(:edit_registration,
+                       :has_finance_details,
+                       workflow_state: "edit_complete_form")
+              end
+
+              it "updates the registration with the new finance_details" do
+                old_balance = registration.finance_details.balance
+                old_order_count = registration.finance_details.orders.count
+
+                get new_edit_complete_form_path(transient_registration.token)
+                registration.reload
+
+                expect(registration.finance_details.balance).to_not eq(old_balance)
+                expect(registration.finance_details.orders.count).to eq(old_order_count + 1)
+              end
+            end
           end
 
           context "when the workflow_state is not correct" do
