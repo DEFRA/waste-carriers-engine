@@ -32,11 +32,15 @@ module WasteCarriersEngine
     def complete_renewal
       raise_completion_error unless can_be_completed?
 
-      copy_names_to_contact_address
-      create_past_registration
-      update_registration
-      delete_transient_registration
-      send_confirmation_email
+      registration.with_lock do
+        transient_registration.with_lock do
+          copy_names_to_contact_address
+          create_past_registration
+          update_registration
+          delete_transient_registration
+          send_confirmation_email
+        end
+      end
     end
 
     private
@@ -113,7 +117,9 @@ module WasteCarriersEngine
                                                                     "temp_payment_method",
                                                                     "temp_tier_check",
                                                                     "_type",
-                                                                    "workflow_state")
+                                                                    "workflow_state",
+                                                                    "locking_name",
+                                                                    "locked_at")
 
       remove_unused_attributes(registration_attributes, renewal_attributes)
 

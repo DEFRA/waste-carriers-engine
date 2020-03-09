@@ -58,32 +58,57 @@ module WasteCarriersEngine
             transient_registration.finance_details.orders.first
           end
 
+          let(:order_key) do
+            "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}"
+          end
+
+          let(:mac) do
+            data = [
+              order_key,
+              order.total_amount,
+              "GBP",
+              "AUTHORISED",
+              Rails.configuration.worldpay_macsecret
+            ]
+
+            Digest::MD5.hexdigest(data.join).to_s
+          end
+
           let(:params) do
             {
-              orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-              token: token
+              orderKey: order_key,
+              token: token,
+              paymentAmount: order.total_amount,
+              paymentCurrency: "GBP",
+              paymentStatus: "AUTHORISED",
+              mac: mac
             }
           end
 
           context "when the params are valid and the balance is paid" do
-            before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_success?).and_return(true)
-              transient_registration.finance_details.update_attributes(balance: 0)
+            let(:params) do
+              {
+                orderKey: order_key,
+                token: token,
+                paymentAmount: order.total_amount,
+                paymentCurrency: "GBP",
+                paymentStatus: "AUTHORISED",
+                mac: mac
+              }
             end
 
-            it "redirects to renewal_complete_form" do
-              get success_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_renewal_complete_form_path(token))
-            end
-
-            it "updates the transient registration metadata attributes from application configuration" do
+            it "add a new payment to the registration, redirects to renewal_complete_form, updates the metadata route and is idempotent." do
               allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
-
-              expect(transient_registration.reload.metaData.route).to be_nil
+              expected_payments_count = transient_registration.finance_details.payments.count + 1
 
               get success_worldpay_forms_path(token), params
+              get success_worldpay_forms_path(token), params
 
-              expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
+              transient_registration.reload
+
+              expect(response).to redirect_to(new_renewal_complete_form_path(token))
+              expect(transient_registration.metaData.route).to eq("ASSISTED_DIGITAL")
+              expect(transient_registration.finance_details.payments.count).to eq(expected_payments_count)
             end
 
             context "when it has been flagged for conviction checks" do
@@ -120,8 +145,15 @@ module WasteCarriersEngine
           end
 
           context "when the params are invalid" do
-            before do
-              allow_any_instance_of(WorldpayService).to receive(:valid_success?).and_return(false)
+            let(:params) do
+              {
+                orderKey: order_key,
+                token: token,
+                paymentAmount: order.total_amount,
+                paymentCurrency: "GBP",
+                paymentStatus: "AUTHORISED",
+                mac: "FOO"
+              }
             end
 
             it "redirects to payment_summary_form" do
