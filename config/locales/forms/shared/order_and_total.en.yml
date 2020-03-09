@@ -9,3 +9,4 @@ en:
             one: "1 registration card total cost"
             other: "%{count} registration cards total cost"
           charge_adjust: "Charge adjust"
+        total_cost: "Total charge"

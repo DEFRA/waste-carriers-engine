@@ -1,0 +1,17 @@
+<div class="form-group">
+  <table>
+    <tbody>
+      <% presenter.order_items.each do |item| %>
+        <%= render("waste_carriers_engine/shared/order_item", item: item) %>
+      <% end %>
+      <tr>
+        <th>
+          <span class="strong">
+            <%= t(".total_cost") %>
+          </span>
+        </th>
+        <td><span class="strong">£<%= display_pence_as_pounds(presenter.total_cost) %></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
