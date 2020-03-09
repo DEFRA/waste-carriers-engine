@@ -59,6 +59,7 @@ en:
             overseas: Overseas
             publicBody: Public body
             authority: Local or regulatory authority
+            charity: Charity or trust
           main_people:
             localAuthority: chief executive
             limitedCompany: director
@@ -66,6 +67,7 @@ en:
             overseas: business owner
             partnership: partner
             soleTrader: business owner
+            charity: charity or trust owner
           location:
             england: England
             wales: Wales

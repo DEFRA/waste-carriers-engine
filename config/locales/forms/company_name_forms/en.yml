@@ -10,6 +10,7 @@ en:
           overseas: What's the name of the business or organisation?
           partnership: What's the name of the partnership?
           soleTrader: What's the name of the business?
+          charity: What's the name of the charity or trust?
         company_name_label:
           localAuthority: Local authority or public body name
           limitedCompany: Company trading name
@@ -17,6 +18,7 @@ en:
           overseas: Trading name
           partnership: Partnership trading name
           soleTrader: Business trading name
+          charity: Charity or trust registered name
         error_heading: Something is wrong
         next_button: Continue
   activemodel:

@@ -9,6 +9,7 @@ en:
           limitedLiabilityPartnership: What's the address of the limited liability partnership?
           partnership: What's the address of the partnership?
           soleTrader: What's the address of the business?
+          charity: What's the address of the charity or trust?
         postcode_label: Postcode
         postcode_change_link: "Change postcode"
         manual_address_link: "I cannot find the address in the list"

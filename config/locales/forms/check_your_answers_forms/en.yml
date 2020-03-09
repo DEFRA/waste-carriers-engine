@@ -25,6 +25,7 @@ en:
           localAuthority_html: "you are a <span class=\"strong\">local authority or public body</span>"
           partnership_html: "you are a <span class=\"strong\">partnership</span>"
           soleTrader_html: "you are a <span class=\"strong\">individual or sole trader</span>"
+          charity_html: "you are a <span class=\"strong\">charity or trust</span>"
         subheading_2: Registration type
         registration_type:
           carrier_dealer_html: "Your registration type is <span class=\"strong\">carrier and dealer</span> (you carry the waste yourselves)"
@@ -37,6 +38,7 @@ en:
           overseas: Business or organisation name
           partnership: Partnership name
           soleTrader: Business or organisation name
+          charity: Charity or trust name
         subheading_4: Companies House number
         subheading_5:
           limitedCompany: Company address
@@ -45,6 +47,7 @@ en:
           overseas: Business or organisation address
           partnership: Partnership address
           soleTrader: Business or organisation address
+          charity: Charity or trust address
         subheading_6:
           limitedCompany:
             one: Director
@@ -64,6 +67,9 @@ en:
           soleTrader:
             one: Business or organisation owner
             other: Business or organisation owners
+          charity:
+            one: Charity or trust owner
+            other: Charity or trust owners
         subheading_7: Relevant convictions
         declared_convictions:
           "yes": You told us you have relevant people with convictions in your business or organisation.

@@ -10,6 +10,7 @@ en:
           partnership: What's the address of the partnership?
           soleTrader: What's the address of the business?
           overseas: What's the address of the business or organisation?
+          charity: What's the address of the charity or trust?
         os_places_error_heading: Our address finder is not working
         os_places_error_text: Please enter the address below.
         preset_postcode_label: Postcode

@@ -9,6 +9,7 @@ en:
           limitedLiabilityPartnership: What's the address of the limited liability partnership?
           partnership: What's the address of the partnership?
           soleTrader: What's the address of the business?
+          charity: What's the address of the charity or trust?
         temp_company_postcode_label: Please enter a UK postcode
         temp_company_postcode_hint: For example, BS1 5AH
         error_heading: A problem to fix
