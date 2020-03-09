@@ -9,12 +9,6 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":main_people_form state transitions" do
         context "on next" do
-          context "when the registration is a lower tier" do
-            subject { build(:new_registration, :lower, workflow_state: "main_people_form") }
-
-            include_examples "has next transition", next_state: "contact_name_form"
-          end
-
           include_examples "has next transition", next_state: "declare_convictions_form"
         end
 

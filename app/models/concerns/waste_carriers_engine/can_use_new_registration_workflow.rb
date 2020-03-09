@@ -181,16 +181,20 @@ module WasteCarriersEngine
                       if: :skip_to_manual_address?
 
           transitions from: :company_address_form,
+                      to: :contact_name_form,
+                      if: :lower_tier?
+
+          transitions from: :company_address_form,
                       to: :main_people_form
+
+          transitions from: :company_address_manual_form,
+                      to: :contact_name_form,
+                      if: :lower_tier?
 
           transitions from: :company_address_manual_form,
                       to: :main_people_form
 
           # End registered address
-
-          transitions from: :main_people_form,
-                      to: :contact_name_form,
-                      if: :lower_tier?
 
           transitions from: :main_people_form,
                       to: :declare_convictions_form
@@ -383,7 +387,11 @@ module WasteCarriersEngine
                       to: :declare_convictions_form
 
           transitions from: :contact_name_form,
-                      to: :main_people_form,
+                      to: :company_address_manual_form,
+                      if: %i[lower_tier? registered_address_was_manually_entered?]
+
+          transitions from: :contact_name_form,
+                      to: :company_address_form,
                       if: :lower_tier?
 
           transitions from: :contact_name_form,
