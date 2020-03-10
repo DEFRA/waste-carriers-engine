@@ -3,7 +3,9 @@
 module WasteCarriersEngine
   class CheckYourAnswersFormsController < FormsController
     def new
-      super(CheckYourAnswersForm, "check_your_answers_form")
+      return unless super(CheckYourAnswersForm, "check_your_answers_form")
+
+      @presenter = CheckYourAnswersFormPresenter.new(@transient_registration)
     end
 
     def create

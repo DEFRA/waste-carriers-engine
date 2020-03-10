@@ -33,6 +33,8 @@ module WasteCarriersEngine
     end
 
     def minimum_main_people
+      return 0 if lower_tier?
+
       # Business type should always be set, but use 1 as the default, just in case
       return 1 unless business_type.present?
 

@@ -9,6 +9,7 @@ module WasteCarriersEngine
     delegate :first_name, :last_name, :location, :main_people, :phone_number, to: :transient_registration
     delegate :registration_type, :relevant_people, :tier, to: :transient_registration
     delegate :registered_address, :declared_convictions, to: :transient_registration
+    delegate :lower_tier?, :upper_tier?, to: :transient_registration
 
     # This has to be before the validations are called, otherwise it fails.
     def self.custom_error_messages(attribute, *errors)
@@ -33,7 +34,7 @@ module WasteCarriersEngine
     validates :contact_email, "defra_ruby/validators/email": {
       messages: custom_error_messages(:contact_email, :blank, :invalid_format)
     }
-    validates :declared_convictions, "waste_carriers_engine/yes_no": true
+    validates :declared_convictions, "waste_carriers_engine/yes_no": true, if: :upper_tier?
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true
     validates :location, "defra_ruby/validators/location": {
       allow_overseas: true,
@@ -41,8 +42,8 @@ module WasteCarriersEngine
     }
     validates :phone_number, "defra_ruby/validators/phone_number": true
     validates :registered_address, "waste_carriers_engine/address": true
-    validates :registration_type, "waste_carriers_engine/registration_type": true
-    validate :should_be_renewed
+    validates :registration_type, "waste_carriers_engine/registration_type": true, if: :upper_tier?
+    validate :should_be_renewed, if: :renewing_registration?
 
     validates_with KeyPeopleValidator
 
@@ -63,6 +64,10 @@ module WasteCarriersEngine
     end
 
     private
+
+    def renewing_registration?
+      transient_registration.is_a?(WasteCarriersEngine::RenewingRegistration)
+    end
 
     def valid
       valid?
