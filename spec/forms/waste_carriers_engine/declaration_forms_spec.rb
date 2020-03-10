@@ -17,6 +17,15 @@ module WasteCarriersEngine
         it "should submit" do
           expect(declaration_form.submit(valid_params)).to eq(true)
         end
+
+        context "when the transient registration is a new registration object" do
+          let(:declaration_form) { build(:declaration_form, :has_new_registration_data) }
+          let(:transient_registration) { declaration_form.transient_registration }
+
+          it "should assign a reg identifier number to the transient registration object" do
+            expect { declaration_form.submit(valid_params) }.to change { transient_registration.reg_identifier }.to("1")
+          end
+        end
       end
 
       context "when the form is not valid" do

@@ -16,6 +16,7 @@ FactoryBot.define do
 
       metaData { build(:metaData, :has_required_data) }
 
+      reg_identifier { "CBDU#{rand(10_000)}" }
       has_addresses
       has_paid_finance_details
 

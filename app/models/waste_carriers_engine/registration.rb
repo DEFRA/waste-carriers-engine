@@ -6,7 +6,6 @@ module WasteCarriersEngine
     include CanCheckRegistrationStatus
     include CanFilterConvictionStatus
     include CanHaveRegistrationAttributes
-    include CanGenerateRegIdentifier
     include CanUseLock
 
     store_in collection: "registrations"
@@ -14,7 +13,6 @@ module WasteCarriersEngine
     embeds_many :past_registrations, class_name: "WasteCarriersEngine::PastRegistration"
     accepts_nested_attributes_for :past_registrations
 
-    before_validation :generate_reg_identifier, on: :create
     before_save :update_last_modified
 
     validates :reg_identifier,
