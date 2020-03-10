@@ -24,25 +24,6 @@ module WasteCarriersEngine
           expect(registration_b).to_not be_valid
         end
       end
-
-      context "when a registration is created" do
-        let(:registration) { create(:registration, :has_required_data) }
-
-        it "should have a unique reg_identifier" do
-          expect(Registration.where(reg_identifier: registration.reg_identifier).count).to eq(1)
-        end
-
-        context "when another registration is created after that" do
-          let(:registration_b) { create(:registration, :has_required_data) }
-
-          it "should have a sequential reg_identifier" do
-            id_number_a = registration.reg_identifier.remove("CBDU")
-            id_number_b = registration_b.reg_identifier.remove("CBDU")
-
-            expect(id_number_b.to_i - id_number_a.to_i).to eq(1)
-          end
-        end
-      end
     end
 
     describe "scopes" do
