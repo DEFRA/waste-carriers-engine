@@ -2,6 +2,7 @@
 
 require "aasm"
 require "mongoid"
+require "mongoid/locker"
 require "high_voltage"
 require "defra_ruby/alert"
 require "defra_ruby_email"
