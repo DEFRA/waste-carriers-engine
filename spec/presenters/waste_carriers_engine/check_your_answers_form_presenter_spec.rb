@@ -25,7 +25,7 @@ module WasteCarriersEngine
     end
 
     describe "#renewal?" do
-      context "whent the object is of type RenewingRegistration" do
+      context "when the object is of type RenewingRegistration" do
         let(:object) { WasteCarriersEngine::RenewingRegistration.new }
 
         it "returns true" do
