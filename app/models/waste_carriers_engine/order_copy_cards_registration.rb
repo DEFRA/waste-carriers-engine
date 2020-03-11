@@ -3,6 +3,7 @@
 module WasteCarriersEngine
   class OrderCopyCardsRegistration < TransientRegistration
     include CanUseOrderCopyCardsWorkflow
+    include CanUseLock
 
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
