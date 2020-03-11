@@ -5,14 +5,12 @@ module WasteCarriersEngine
     def run
       counter_context = Counter.where(_id: "regid")
 
-      unless counter_context.any?
-        Counter.create(_id: "regid", seq: 1)
-      end
+      Counter.create(_id: "regid", seq: 1) unless counter_context.any?
 
-      counter = counter_context.find_one_and_update({ "$inc" => { seq: 1 }})
+      counter = counter_context.find_one_and_update("$inc" => { seq: 1 })
 
       while Registration.where(reg_identifier: /CBD[U|L]#{counter.seq}/).exists?
-        counter = counter_context.find_one_and_update({ "$inc" => { seq: 1 }})
+        counter = counter_context.find_one_and_update("$inc" => { seq: 1 })
       end
 
       counter.seq
