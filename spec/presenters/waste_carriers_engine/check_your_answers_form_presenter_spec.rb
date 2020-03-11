@@ -7,7 +7,7 @@ module WasteCarriersEngine
     subject { described_class.new(object) }
 
     describe "#new_registration?" do
-      context "whent the object is of type NewRegistration" do
+      context "when the object is of type NewRegistration" do
         let(:object) { WasteCarriersEngine::NewRegistration.new }
 
         it "returns true" do
