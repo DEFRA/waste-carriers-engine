@@ -3,11 +3,17 @@
 module WasteCarriersEngine
   class GenerateRegIdentifierService < BaseService
     def run
-      # Get the counter for reg_identifiers, or create it if it doesn't exist
-      counter = Counter.where(_id: "regid").first || Counter.create(_id: "regid", seq: 1)
+      counter_context = Counter.where(_id: "regid")
 
-      # Increment the counter until no reg_identifier is using it
-      counter.increment while Registration.where(reg_identifier: /CBD[U|L]#{counter.seq}/).exists?
+      unless counter_context.any?
+        Counter.create(_id: "regid", seq: 1)
+      end
+
+      counter = counter_context.find_one_and_update({ "$inc" => { seq: 1 }})
+
+      while Registration.where(reg_identifier: /CBD[U|L]#{counter.seq}/).exists?
+        counter = counter_context.find_one_and_update({ "$inc" => { seq: 1 }})
+      end
 
       counter.seq
     end

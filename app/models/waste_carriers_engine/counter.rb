@@ -4,11 +4,8 @@ module WasteCarriersEngine
   class Counter
     include Mongoid::Document
 
-    field :seq, type: Integer
+    store_in collection: "counters"
 
-    def increment
-      new_seq = seq + 1
-      update_attributes(seq: new_seq)
-    end
+    field :seq, type: Integer
   end
 end
