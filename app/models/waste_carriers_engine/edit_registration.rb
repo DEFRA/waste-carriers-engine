@@ -4,6 +4,7 @@ module WasteCarriersEngine
   class EditRegistration < TransientRegistration
     include CanCopyDataFromRegistration
     include CanUseEditRegistrationWorkflow
+    include CanUseLock
 
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
