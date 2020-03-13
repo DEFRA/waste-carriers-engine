@@ -19,18 +19,24 @@
     <div class="form-group">
       <table>
         <tbody>
-          <tr>
-            <td><%= t(".renewal_fee") %></td>
-            <td>£<%= display_pence_as_pounds(Rails.configuration.renewal_charge) %></td>
-          </tr>
-
-          <% if @payment_summary_form.type_change %>
+          <% if @presenter.renewal? %>
             <tr>
-              <td><%= t(".cbd_fee") %></td>
-              <td>£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
+              <td><%= t(".renewal_fee") %></td>
+              <td>£<%= display_pence_as_pounds(Rails.configuration.renewal_charge) %></td>
+            </tr>
+
+            <% if @transient_registration.registration_type_changed? %>
+              <tr>
+                <td><%= t(".cbd_fee") %></td>
+                <td>£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td><%= t(".registration_fee") %></td>
+              <td>£<%= display_pence_as_pounds(Rails.configuration.new_registration_charge) %></td>
             </tr>
           <% end %>
-
           <% if @payment_summary_form.registration_cards > 0 %>
             <tr>
               <td><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></td>
@@ -52,6 +58,7 @@
 
     <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:temp_payment_method].any? %>">
       <fieldset id="temp_payment_method">
+        <legend class="visuallyhidden"><%= t(".make_payment_subheading") %></legend>
 
         <% if @payment_summary_form.errors[:temp_payment_method].any? %>
           <span class="error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
@@ -60,16 +67,16 @@
         <div class="multiple-choice">
           <%= f.radio_button :temp_payment_method, "card" %>
           <%= f.label :temp_payment_method, value: "card", class: "form-label" do %>
-            <%= t(".options.card") %>
-            <span class='form-hint'><%= t(".hint_pay_by_card") %></span>
+            <%= t(".options.card.label") %>
+            <span class='form-hint'><%= t(".options.card.hint") %></span>
           <% end %>
         </div>
 
         <div class="multiple-choice">
           <%= f.radio_button :temp_payment_method, "bank_transfer" %>
           <%= f.label :temp_payment_method, value: "bank_transfer", class: "form-label" do %>
-            <%= t(".options.bank_transfer") %>
-            <span class='form-hint'><%= t(".hint_pay_by_bank_transfer") %></span>
+            <%= t(".options.bank_transfer.label") %>
+            <span class='form-hint'><%= t(".options.bank_transfer.hint") %></span>
           <% end %>
         </div>
       </fieldset>

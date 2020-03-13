@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CheckYourAnswersFormPresenter do
+  RSpec.describe ResourceTypeFormPresenter do
     subject { described_class.new(object) }
 
     describe "#new_registration?" do

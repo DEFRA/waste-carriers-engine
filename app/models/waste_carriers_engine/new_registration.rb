@@ -6,5 +6,11 @@ module WasteCarriersEngine
     include CanUseLock
 
     field :temp_start_option, type: String
+
+    private
+
+    def registration_type_base_charges
+      [Rails.configuration.new_registration_charge]
+    end
   end
 end
