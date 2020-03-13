@@ -7,6 +7,10 @@ module WasteCarriersEngine
 
     field :temp_start_option, type: String
 
+    def prepare_for_payment(*_args)
+      # TODO
+    end
+
     private
 
     def registration_type_base_charges
