@@ -2,7 +2,9 @@
 
 FactoryBot.define do
   factory :registration, class: WasteCarriersEngine::Registration do
-    reg_identifier { "CBDU#{rand(10_000)}" }
+    sequence :reg_identifier do |n|
+      "CBDU#{n}"
+    end
 
     trait :has_required_data do
       account_email { "foo@example.com" }
