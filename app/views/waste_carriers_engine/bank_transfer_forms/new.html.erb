@@ -18,15 +18,15 @@
 
         <tbody>
           <tr>
-            <th><%= t(".uk_payment_table.sort_code.label") %></th>
+            <th scope="col"><%= t(".uk_payment_table.sort_code.label") %></th>
             <td class="strong"><%= t(".uk_payment_table.sort_code.value") %></td>
           </tr>
           <tr>
-            <td><%= t(".uk_payment_table.account_number.label") %></td>
+            <th scope="col"><%= t(".uk_payment_table.account_number.label") %></td>
             <td class="strong"><%= t(".uk_payment_table.account_number.value") %></td>
           </tr>
           <tr>
-            <th>
+            <th scope="col">
               <%= t(".uk_payment_table.reference_number.label") %>
               <span class="form-hint">
                 <%= t(".uk_payment_table.reference_number.hint") %>
@@ -35,7 +35,7 @@
             <td class="strong"><%= @transient_registration.reg_identifier %></td>
           </tr>
           <tr>
-            <td><%= t(".uk_payment_table.total_cost.label") %></td>
+            <th scope="col"><%= t(".uk_payment_table.total_cost.label") %></td>
             <td class="strong">£<%= display_pence_as_pounds(@bank_transfer_form.total_to_pay) %></td>
           </tr>
         </tbody>
@@ -63,11 +63,11 @@
 
         <tbody>
           <tr>
-            <th><%= t(".email_us.label") %></th>
+            <th scope="col"><%= t(".email_us.label") %></th>
             <td class="strong"><%= t(".email_us.value") %></td>
           </tr>
           <tr>
-            <th><%= t(".payment_reference.label") %></th>
+            <th scope="col"><%= t(".payment_reference.label") %></th>
             <td class="strong"><%= @transient_registration.reg_identifier %></td>
           </tr>
         </tbody>
