@@ -23,7 +23,7 @@ module WasteCarriersEngine
           let(:transient_registration) { declaration_form.transient_registration }
 
           it "should assign a reg identifier number to the transient registration object" do
-            expect { declaration_form.submit(valid_params) }.to change { transient_registration.reg_identifier }.to("1")
+            expect { declaration_form.submit(valid_params) }.to change { transient_registration.reload.attributes["regIdentifier"] }.to("1")
           end
         end
       end
