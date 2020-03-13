@@ -1,7 +1,7 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_cards_forms_path(@cards_form.token)) %>
 
 <div class="text">
-  <%= form_for(@cards_form) do |f| %>
+  <%= form_for(@cards_form, html: { novalidate: true }) do |f| %>
     <%= render("waste_carriers_engine/shared/errors", object: @cards_form) %>
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
@@ -18,7 +18,7 @@
           <span class="error-message"><%= @cards_form.errors[:temp_cards].join(", ") %></span>
         <% end %>
 
-        <%= f.label :temp_cards, t(".temp_cards_label"), class: "form-label" %>
+        <%= f.label :temp_cards, t(".temp_cards_label", card_charge: display_pence_as_pounds(Rails.configuration.card_charge)), class: "form-label" %>
         <%= f.number_field(
               :temp_cards,
               value: (@cards_form.temp_cards || 0),
@@ -29,6 +29,8 @@
         %>
       </fieldset>
     </div>
+
+    <p><%= t(".paragraph_3") %></p>
 
     <div class="form-group">
       <%= f.submit t(".next_button"), class: "button" %>
