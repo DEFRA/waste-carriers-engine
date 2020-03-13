@@ -66,7 +66,66 @@ en:
         footer_list:
           item_1: "If you have enquiries please contact the Environment Agency helpline: 03708 506506"
           item_2: "This is an automated email, please do not reply"
-
+        bank_details:
+          paragraph_1: "Before we can complete your renewal, you need to:"
+          list_item_1: Pay the renewal charge.
+          list_item_2: Send us confirmation that you’ve paid the renewal charge.
+          paragraph_2: Your registration will not be renewed until both steps are complete.
+          subheading_1: 1. Pay the renewal charge
+          paragraph_3: Use our account details below to make your internet or telephone banking payment.
+          uk_payment_table:
+            reference_number:
+              label: Payment reference number
+            total_cost:
+              label: Payment due
+            account_name:
+              label: Account name
+              value: Environment Agency
+            bank_name:
+              label: Bank name
+              value: RBS/Natwest
+            bank_address:
+              label: Bank address
+              value:
+               - Royal Bank of Scotland plc
+               - London Corporate Service Centre
+               - CPB Services 2nd Floor
+               - 280 Bishopsgate
+               - London
+               - EC2M 4RB
+            sort_code:
+              label: Sort code
+              value: 60-70-80
+            account_number:
+              label: Account number
+              value: "10014411"
+          paragraph_4: "If you are paying from outside the United Kingdom, include the international banking references below:"
+          international_payment_table:
+            iban:
+              label: IBAN
+              value: GB23 NWBK6070 8010 0144 11
+            swift:
+              label: SWIFTBIC
+              value: NWBK GB2L
+          paragraph_5: Payments must be made in sterling.
+          subheading_2: 2. Send us confirmation of your payment
+          paragraph_6: Tell us the date, amount of your payment and payment reference number, so we can send you your registration. You can contact us by email, fax or in writing.
+          send_confirmation_table:
+            email:
+              label: Email
+              value: ea_fsc_ar@sscl.gse.gov.uk
+            fax:
+              label: Fax
+              value: "01733 464892"
+            post:
+              label: Postal address
+              value:
+                - Environment Agency
+                - SSCL Banking Team
+                - PO Box 263
+                - Peterborough
+                - PE2 8YD
+          paragraph_7: We need confirmation of your payment to complete your renewal. If you do not complete this step, the payment process could be delayed and prevent us from sending your renewal confirmation.
       send_renewal_received_processing_payment_email:
         subject: "Your application to renew waste carriers registration %{reg_identifier} has been received"
         heading:
