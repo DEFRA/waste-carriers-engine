@@ -11,6 +11,14 @@ module WasteCarriersEngine
       # TODO
     end
 
+    def reg_identifier
+      return unless super.present?
+
+      prefix = lower_tier? ? "CBDL" : "CBDU"
+
+      prefix + super.to_s
+    end
+
     private
 
     def registration_type_base_charges
