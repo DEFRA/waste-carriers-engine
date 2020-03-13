@@ -310,11 +310,15 @@ module WasteCarriersEngine
 
           transitions from: :company_name_form,
                       to: :construction_demolition_form,
-                      if: %i[lower_tier? does_not_deal_with_construction_waste?]
+                      if: %i[lower_tier? only_carries_own_waste?]
 
           transitions from: :company_name_form,
                       to: :waste_types_form,
-                      if: :lower_tier?
+                      if: %i[lower_tier? waste_is_main_service?]
+
+          transitions from: :company_name_form,
+                      to: :construction_demolition_form,
+                      if: %i[lower_tier?]
 
           transitions from: :company_name_form,
                       to: :cbd_type_form,
@@ -523,10 +527,6 @@ module WasteCarriersEngine
 
       def switch_to_lower_tier
         update_attributes(tier: WasteCarriersEngine::NewRegistration::LOWER_TIER)
-      end
-
-      def does_not_deal_with_construction_waste?
-        construction_waste == "no"
       end
 
       def not_only_amf?
