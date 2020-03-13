@@ -140,5 +140,12 @@ module WasteCarriersEngine
 
       errors.add(:reg_identifier, :renewal_in_progress)
     end
+
+    def registration_type_base_charges
+      charges = [Rails.configuration.renewal_charge]
+      charges << Rails.configuration.type_change_charge if registration_type_changed?
+
+      charges
+    end
   end
 end
