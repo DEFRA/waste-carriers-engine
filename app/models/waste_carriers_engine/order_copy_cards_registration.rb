@@ -14,7 +14,7 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment(mode, user)
-      OrderAdditionalCardsService.run(
+      BuildOrderCopyCardsFinanceDetailsService.run(
         cards_count: temp_cards,
         user: user,
         transient_registration: self,

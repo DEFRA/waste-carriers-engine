@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class OrderAdditionalCardsService < BaseService
+  class BuildOrderCopyCardsFinanceDetailsService < BaseService
     def run(cards_count:, user:, transient_registration:, payment_method:)
       finance_details = FinanceDetails.new
       finance_details.transient_registration = transient_registration

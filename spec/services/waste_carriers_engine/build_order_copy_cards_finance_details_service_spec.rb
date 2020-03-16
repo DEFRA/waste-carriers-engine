@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe OrderAdditionalCardsService do
+  RSpec.describe BuildOrderCopyCardsFinanceDetailsService do
     describe ".run" do
       let(:user) { double(:user) }
       let(:transient_registration) { double(:transient_registration) }

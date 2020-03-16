@@ -18,7 +18,7 @@ module WasteCarriersEngine
         expect(finance_details).to receive(:transient_registration=).with(transient_registration)
         expect(Order).to receive(:new_order_for).with(user).and_return(order)
         expect(transient_registration).to receive(:registration_type_changed?).and_return(true)
-        expect(OrderItem).to receive(:new_type_change_item).and_return(order_item)
+        expect(OrderItem).to receive(:new_type_change_item).with(:edit).and_return(order_item)
         expect(order).to receive(:generate_description)
         expect(order).to receive(:[]=).with(:order_items, [order_item])
         expect(order_item).to receive(:[]).with(:amount).and_return(40)
