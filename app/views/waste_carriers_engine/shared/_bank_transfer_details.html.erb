@@ -1,6 +1,6 @@
 <div class="form-group">
-  <table>
-    <legend>
+  <table aria-describedby="uk_payment_legend">
+    <legend id="uk_payment_legend">
       <h2 class="heading-medium">
         <%= t(".uk_payment_table.heading") %>
       </h2>
@@ -8,22 +8,22 @@
 
     <tbody>
       <tr>
-        <th><%= t(".uk_payment_table.sort_code.label") %></th>
+        <th scope="row"><%= t(".uk_payment_table.sort_code.label") %></th>
         <td><%= t(".uk_payment_table.sort_code.value") %></td>
       </tr>
       <tr>
-        <th><%= t(".uk_payment_table.account_number.label") %></th>
+        <th scope="row"><%= t(".uk_payment_table.account_number.label") %></th>
         <td><%= t(".uk_payment_table.account_number.value") %></td>
       </tr>
       <tr>
-        <th>
+        <th scope="row">
           <%= t(".uk_payment_table.reference_number.label") %>
           <span class="form-hint"><%= t(".uk_payment_table.reference_number.hint") %></span>
         </th>
         <td><%= reg_identifier %></td>
       </tr>
       <tr>
-        <th><%= t(".uk_payment_table.payment_due.label") %></th>
+        <th scope="row"><%= t(".uk_payment_table.payment_due.label") %></th>
         <td>£<%= display_pence_as_pounds(payment_due) %></td>
       </tr>
     </tbody>
@@ -42,8 +42,8 @@
 </details>
 
 <div class="form-group">
-  <table>
-    <legend>
+  <table aria-describedby="confirmation_legend">
+    <legend id="confirmation_legend">
       <h2 class="heading-medium">
         <%= t(".send_confirmation.heading", reg_identifier: reg_identifier) %>
       </h2>
@@ -51,11 +51,11 @@
 
     <tbody>
       <tr>
-        <th><%= t(".send_confirmation.email_us.label") %></th>
+        <th scope="row"><%= t(".send_confirmation.email_us.label") %></th>
         <td><%= t(".send_confirmation.email_us.value") %></td>
       </tr>
       <tr>
-        <th><%= t(".send_confirmation.payment_reference.label") %></th>
+        <th scope="row"><%= t(".send_confirmation.payment_reference.label") %></th>
         <td><%= reg_identifier %></td>
       </tr>
     </tbody>

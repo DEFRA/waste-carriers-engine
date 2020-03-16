@@ -39,6 +39,8 @@ module WasteCarriersEngine
         description_for_copy_cards
       when OrderItem::TYPES[:charge_adjust]
         description_for_charge_adjust
+      else
+        raise ArgumentError, "No description for #{item.type}"
       end
     end
 

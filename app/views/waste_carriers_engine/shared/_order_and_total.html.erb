@@ -1,11 +1,14 @@
 <div class="form-group">
-  <table>
+  <table aria-describedby="order_and_total_legend">
+    <legend id="order_and_total_legend" class="visually-hidden">
+      <%= t(".legend") %>
+    </legend>
     <tbody>
       <% presenter.order_items.each do |item| %>
         <%= render("waste_carriers_engine/shared/order_item", item: item) %>
       <% end %>
       <tr>
-        <th>
+        <th scope="row">
           <span class="strong">
             <%= t(".total_cost") %>
           </span>

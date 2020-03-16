@@ -137,8 +137,9 @@ module WasteCarriersEngine
       response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
     end
 
-    # A little hook to set up presenters used by the forms. Intended to be
-    # overwritten in subclasses when a presenter is required.
-    def fetch_presenters; end
+    def fetch_presenters
+      # A little hook to set up presenters used by the forms. Intended to be
+      # overwritten in subclasses when a presenter is required.
+    end
   end
 end
