@@ -2,6 +2,7 @@
 
 module WasteCarriersEngine
   class EditRegistration < TransientRegistration
+    include CanCheckIfRegistrationTypeChanged
     include CanCopyDataFromRegistration
     include CanUseEditRegistrationWorkflow
     include CanUseLock
