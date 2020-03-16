@@ -90,7 +90,11 @@ module WasteCarriersEngine
     end
 
     def generate_description
-      self.description = order_items.map(&:description).join(", plus ")
+      self.description = order_items.map(&:description)
+                                    .join(", plus ")
+
+      # Upcase the first letter. (TODO: Use .upcase_first when we switch to Rails 5)
+      description[0] = description[0].capitalize
     end
 
     def update_after_worldpay(status)
