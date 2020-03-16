@@ -41,7 +41,8 @@ module WasteCarriersEngine
     end
 
     describe "new_type_change_item" do
-      let(:order_item) { described_class.new_type_change_item }
+      let(:journey) {}
+      let(:order_item) { described_class.new_type_change_item(journey) }
 
       it "should have a type of 'EDIT'" do
         expect(order_item.type).to eq(described_class::TYPES[:edit])
@@ -55,8 +56,20 @@ module WasteCarriersEngine
         expect(order_item.amount).to eq(2_500)
       end
 
-      it "should set the correct description" do
-        expect(order_item.description).to eq("changing carrier type during renewal")
+      context "when the journey is :renewal" do
+        let(:journey) { :renewal }
+
+        it "should set the correct description" do
+          expect(order_item.description).to eq("changing carrier type during renewal")
+        end
+      end
+
+      context "when the journey is :edit" do
+        let(:journey) { :edit }
+
+        it "should set the correct description" do
+          expect(order_item.description).to eq("changing carrier type during edit")
+        end
       end
     end
 

@@ -32,7 +32,9 @@ module WasteCarriersEngine
       card_count = transient_registration.temp_cards
 
       order[:order_items] = [OrderItem.new_renewal_item]
-      order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?
+      if transient_registration.registration_type_changed?
+        order[:order_items] << OrderItem.new_type_change_item(:renewal)
+      end
       # TODO: Review whether card_count.present? is still necessary - this was a fix put in to deal with WC-498
       order[:order_items] << OrderItem.new_copy_cards_item(card_count) if card_count.present? && card_count.positive?
 
