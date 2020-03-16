@@ -20,8 +20,8 @@ module WasteCarriersEngine
     private
 
     def copy_names_to_contact_address
-      @transient_registration.contact_address.first_name = @transient_registration.first_name
-      @transient_registration.contact_address.last_name = @transient_registration.last_name
+      transient_registration.contact_address.first_name = transient_registration.first_name
+      transient_registration.contact_address.last_name = transient_registration.last_name
     end
 
     def create_past_registration
@@ -35,23 +35,23 @@ module WasteCarriersEngine
     end
 
     def delete_transient_registration
-      @transient_registration.delete
+      transient_registration.delete
     end
 
     def copy_attributes
-      copyable_attributes = @transient_registration.attributes.except("_id",
-                                                                      "token",
-                                                                      "account_email",
-                                                                      "created_at",
-                                                                      "financeDetails",
-                                                                      "temp_cards",
-                                                                      "temp_company_postcode",
-                                                                      "temp_contact_postcode",
-                                                                      "temp_os_places_error",
-                                                                      "temp_payment_method",
-                                                                      "temp_tier_check",
-                                                                      "_type",
-                                                                      "workflow_state")
+      copyable_attributes = transient_registration.attributes.except("_id",
+                                                                     "token",
+                                                                     "account_email",
+                                                                     "created_at",
+                                                                     "financeDetails",
+                                                                     "temp_cards",
+                                                                     "temp_company_postcode",
+                                                                     "temp_contact_postcode",
+                                                                     "temp_os_places_error",
+                                                                     "temp_payment_method",
+                                                                     "temp_tier_check",
+                                                                     "_type",
+                                                                     "workflow_state")
 
       registration.write_attributes(copyable_attributes)
     end
