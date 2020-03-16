@@ -6,6 +6,8 @@ module WasteCarriersEngine
 
     embedded_in :order, class_name: "WasteCarriersEngine::Order"
 
+    LOCALES_KEY = ".waste_carriers_engine.order_items.descriptions"
+
     TYPES = HashWithIndifferentAccess.new(
       renew: "RENEW",
       edit: "EDIT",
@@ -25,7 +27,7 @@ module WasteCarriersEngine
       order_item = OrderItem.base_order_item
 
       order_item.amount = Rails.configuration.renewal_charge
-      order_item.description = "Renewal of registration"
+      order_item.description = I18n.t("#{LOCALES_KEY}.renewal_item")
       order_item.type = TYPES[:renew]
       order_item.quantity = 1
 
@@ -40,7 +42,7 @@ module WasteCarriersEngine
       order_item = OrderItem.base_order_item
 
       order_item.amount = Rails.configuration.type_change_charge
-      order_item.description = "changing carrier type during renewal"
+      order_item.description = I18n.t("#{LOCALES_KEY}.type_change_item.renewal")
       order_item.type = TYPES[:edit]
       order_item.quantity = 1
 
@@ -52,8 +54,7 @@ module WasteCarriersEngine
 
       order_item.amount = cards * Rails.configuration.card_charge
 
-      order_item.description = "#{cards} registration cards"
-      order_item.description = "1 registration card" if cards == 1
+      order_item.description = I18n.t("#{LOCALES_KEY}.copy_cards_item", count: cards)
       order_item.quantity = cards
 
       order_item.type = TYPES[:copy_cards]

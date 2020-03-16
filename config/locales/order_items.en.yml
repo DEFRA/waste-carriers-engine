@@ -1,0 +1,11 @@
+en:
+  waste_carriers_engine:
+    order_items:
+      descriptions:
+        renewal_item: "renewal of registration"
+        type_change_item:
+          renewal: "changing carrier type during renewal"
+          edit: "changing carrier type during edit"
+        copy_cards_item:
+          one: "1 registration card"
+          other: "%{count} registration cards"
