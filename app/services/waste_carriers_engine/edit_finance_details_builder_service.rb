@@ -18,7 +18,7 @@ module WasteCarriersEngine
 
     def set_up_edit_order(user, payment_method, transient_registration)
       order = Order.new_order_for(user)
-      new_item = OrderItem.new_type_change_item if transient_registration.registration_type_changed?
+      new_item = OrderItem.new_type_change_item(:edit) if transient_registration.registration_type_changed?
 
       order[:order_items] = [new_item]
 
