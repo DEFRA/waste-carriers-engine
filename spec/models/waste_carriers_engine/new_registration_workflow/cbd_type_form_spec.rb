@@ -19,8 +19,8 @@ module WasteCarriersEngine
         end
 
         context "on back" do
-          context "when the waste is the main business of the company" do
-            subject { build(:new_registration, workflow_state: "cbd_type_form", is_main_service: "yes") }
+          context "when the company only deals with amf waste" do
+            subject { build(:new_registration, workflow_state: "cbd_type_form", only_amf: "no") }
 
             include_examples "has back transition", previous_state: "waste_types_form"
           end

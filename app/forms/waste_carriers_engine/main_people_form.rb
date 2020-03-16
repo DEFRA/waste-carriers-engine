@@ -6,6 +6,8 @@ module WasteCarriersEngine
 
     attr_accessor :business_type
 
+    delegate :lower_tier?, to: :transient_registration
+
     validates_with MainPersonValidator
 
     def initialize(transient_registration)

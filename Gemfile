@@ -17,6 +17,8 @@ gem "jquery-rails"
 
 # Use MongoDB as the database
 gem "mongoid", "~> 5.2"
+# Implement document-level locking
+gem "mongoid-locker"
 
 # Use CanCanCan for user roles and permissions
 # Version 2.0 doesn't support Mongoid, so we're locked to an earlier one

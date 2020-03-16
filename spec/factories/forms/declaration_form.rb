@@ -14,5 +14,17 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :has_new_registration_data do
+      initialize_with do
+        new(
+          create(
+            :new_registration,
+            workflow_state: "declaration_form",
+            declaration: 1
+          )
+        )
+      end
+    end
   end
 end

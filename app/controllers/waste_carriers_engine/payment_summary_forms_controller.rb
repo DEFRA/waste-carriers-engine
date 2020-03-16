@@ -3,10 +3,14 @@
 module WasteCarriersEngine
   class PaymentSummaryFormsController < FormsController
     def new
-      super(PaymentSummaryForm, "payment_summary_form")
+      return unless super(PaymentSummaryForm, "payment_summary_form")
+
+      @presenter = ResourceTypeFormPresenter.new(@transient_registration)
     end
 
     def create
+      @presenter = ResourceTypeFormPresenter.new(@transient_registration)
+
       super(PaymentSummaryForm, "payment_summary_form")
     end
 

@@ -3,11 +3,12 @@ en:
     cards_forms:
       new:
         title: Certificate and registration cards
-        heading: Certificate and registration cards
-        paragraph_1: You automatically get a certificate with your registration details, which can be shown to the relevant authorities. You’ll get a link to download this after payment.
-        paragraph_2: A registration card (copy card) is a convenient way of keeping your waste carrier registration details to hand. A card costs £%{card_charge}, and you can buy more through your online account after you’ve registered.
+        heading: Order registration cards if you need them
+        paragraph_1: We’ll send you a waste carrier registration certificate with your registration details. You can print it out to show you are registered.
+        paragraph_2: You can also buy wallet-sized registration cards for £%{card_charge} each.
         card_alt_text: A photo of an example registration card, showing the details of the registered business
-        temp_cards_label: Number of cards required
+        temp_cards_label: Number of cards at £%{card_charge} each
+        paragraph_3: The total cost for your registration will be shown on the next page.
         error_heading: Something is wrong
         next_button: Continue
   activemodel:
@@ -16,10 +17,7 @@ en:
         waste_carriers_engine/cards_form:
           attributes:
             temp_cards:
-              not_a_number: "You must enter a number"
-              greater_than_or_equal_to: "You cannot order a negative number of cards"
-              not_an_integer: "You must enter a whole number, not a fraction"
-            reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+              not_a_number: "Enter 0 or a number between 1 and 999"
+              greater_than_or_equal_to: "Enter 0 or a number between 1 and 999"
+              less_than_or_equal_to: "Enter 0 or a number between 1 and 999"
+              not_an_integer: "Enter 0 or a number between 1 and 999"

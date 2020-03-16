@@ -28,11 +28,10 @@ module WasteCarriersEngine
     scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
     scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
 
-    # TODO: Move to renewal registration
     def total_to_pay
-      charges = [Rails.configuration.renewal_charge]
-      charges << Rails.configuration.type_change_charge if registration_type_changed?
+      charges = registration_type_base_charges
       charges << total_registration_card_charge
+
       charges.sum
     end
 
@@ -62,6 +61,12 @@ module WasteCarriersEngine
       metaData.route = Rails.configuration.metadata_route
 
       save
+    end
+
+    private
+
+    def registration_type_base_charges
+      [] # default. Override on STI objects where necessary.
     end
   end
 end

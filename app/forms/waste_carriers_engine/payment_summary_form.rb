@@ -15,7 +15,6 @@ module WasteCarriersEngine
     def initialize(transient_registration)
       super
 
-      self.type_change = transient_registration.registration_type_changed?
       self.registration_cards = transient_registration.temp_cards || 0
       self.registration_card_charge = transient_registration.total_registration_card_charge
       self.total_charge = transient_registration.total_to_pay

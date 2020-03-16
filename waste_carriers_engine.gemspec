@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.2.11"
   # Use MongoDB as the database
   s.add_dependency "mongoid", "~> 5.2.0"
+  # Implement document-level locking
+  s.add_dependency "mongoid-locker"
   # Use jquery as the JavaScript library
   s.add_dependency "jquery-rails"
   # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

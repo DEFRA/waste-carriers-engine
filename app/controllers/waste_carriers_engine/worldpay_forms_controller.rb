@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class WorldpayFormsController < FormsController
     def new
@@ -17,23 +18,43 @@ module WasteCarriersEngine
     def create; end
 
     def success
-      respond_to_acceptable_payment(:success)
+      find_or_initialize_transient_registration(params[:token])
+
+      @transient_registration.with_lock do
+        respond_to_acceptable_payment(:success)
+      end
     end
 
     def pending
-      respond_to_acceptable_payment(:pending)
+      find_or_initialize_transient_registration(params[:token])
+
+      @transient_registration.with_lock do
+        respond_to_acceptable_payment(:pending)
+      end
     end
 
     def failure
-      respond_to_unsuccessful_payment(:failure)
+      find_or_initialize_transient_registration(params[:token])
+
+      @transient_registration.with_lock do
+        respond_to_unsuccessful_payment(:failure)
+      end
     end
 
     def cancel
-      respond_to_unsuccessful_payment(:cancel)
+      find_or_initialize_transient_registration(params[:token])
+
+      @transient_registration.with_lock do
+        respond_to_unsuccessful_payment(:cancel)
+      end
     end
 
     def error
-      respond_to_unsuccessful_payment(:error)
+      find_or_initialize_transient_registration(params[:token])
+
+      @transient_registration.with_lock do
+        respond_to_unsuccessful_payment(:error)
+      end
     end
 
     private
@@ -46,7 +67,7 @@ module WasteCarriersEngine
     end
 
     def respond_to_acceptable_payment(action)
-      return unless valid_transient_registration?(params[:token])
+      return unless valid_transient_registration?
 
       if response_is_valid?(action, params)
         log_and_send_worldpay_response(true, action)
@@ -60,7 +81,7 @@ module WasteCarriersEngine
     end
 
     def respond_to_unsuccessful_payment(action)
-      return unless valid_transient_registration?(params[:token])
+      return unless valid_transient_registration?
 
       if response_is_valid?(action, params)
         log_and_send_worldpay_response(true, action)
@@ -73,8 +94,7 @@ module WasteCarriersEngine
       go_back
     end
 
-    def valid_transient_registration?(token)
-      find_or_initialize_transient_registration(token)
+    def valid_transient_registration?
       setup_checks_pass?
     end
 
@@ -126,3 +146,4 @@ module WasteCarriersEngine
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

@@ -181,16 +181,20 @@ module WasteCarriersEngine
                       if: :skip_to_manual_address?
 
           transitions from: :company_address_form,
+                      to: :contact_name_form,
+                      if: :lower_tier?
+
+          transitions from: :company_address_form,
                       to: :main_people_form
+
+          transitions from: :company_address_manual_form,
+                      to: :contact_name_form,
+                      if: :lower_tier?
 
           transitions from: :company_address_manual_form,
                       to: :main_people_form
 
           # End registered address
-
-          transitions from: :main_people_form,
-                      to: :contact_name_form,
-                      if: :lower_tier?
 
           transitions from: :main_people_form,
                       to: :declare_convictions_form
@@ -300,6 +304,28 @@ module WasteCarriersEngine
                       to: :location_form
 
           # Smart answers
+          transitions from: :company_name_form,
+                      to: :business_type_form,
+                      if: :switch_to_lower_tier_based_on_business_type?
+
+          transitions from: :company_name_form,
+                      to: :construction_demolition_form,
+                      if: %i[lower_tier? only_carries_own_waste?]
+
+          transitions from: :company_name_form,
+                      to: :waste_types_form,
+                      if: %i[lower_tier? waste_is_main_service?]
+
+          transitions from: :company_name_form,
+                      to: :construction_demolition_form,
+                      if: %i[lower_tier?]
+
+          transitions from: :company_name_form,
+                      to: :cbd_type_form,
+                      if: :skip_registration_number?
+
+          transitions from: :company_name_form,
+                      to: :registration_number_form
 
           transitions from: :other_businesses_form,
                       to: :location_form,
@@ -323,7 +349,7 @@ module WasteCarriersEngine
 
           transitions from: :cbd_type_form,
                       to: :waste_types_form,
-                      if: :waste_is_main_service?
+                      if: :not_only_amf?
 
           transitions from: :cbd_type_form,
                       to: :construction_demolition_form
@@ -332,25 +358,6 @@ module WasteCarriersEngine
 
           transitions from: :registration_number_form,
                       to: :cbd_type_form
-
-          transitions from: :company_name_form,
-                      to: :cbd_type_form,
-                      if: %i[skip_registration_number? upper_tier?]
-
-          transitions from: :company_name_form,
-                      to: :construction_demolition_form,
-                      if: %i[lower_tier? waste_is_main_service?]
-
-          transitions from: :company_name_form,
-                      to: :waste_types_form,
-                      if: :lower_tier?
-
-          transitions from: :company_name_form,
-                      to: :business_type_form,
-                      if: :switch_to_lower_tier_based_on_business_type?
-
-          transitions from: :company_name_form,
-                      to: :registration_number_form
 
           # Registered address
 
@@ -383,7 +390,11 @@ module WasteCarriersEngine
                       to: :declare_convictions_form
 
           transitions from: :contact_name_form,
-                      to: :main_people_form,
+                      to: :company_address_manual_form,
+                      if: %i[lower_tier? registered_address_was_manually_entered?]
+
+          transitions from: :contact_name_form,
+                      to: :company_address_form,
                       if: :lower_tier?
 
           transitions from: :contact_name_form,
@@ -516,6 +527,10 @@ module WasteCarriersEngine
 
       def switch_to_lower_tier
         update_attributes(tier: WasteCarriersEngine::NewRegistration::LOWER_TIER)
+      end
+
+      def not_only_amf?
+        only_amf == "no"
       end
 
       def switch_to_upper_tier

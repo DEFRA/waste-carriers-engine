@@ -5,6 +5,7 @@ module WasteCarriersEngine
     include CanCheckIfRegistrationTypeChanged
     include CanCopyDataFromRegistration
     include CanUseRenewingRegistrationWorkflow
+    include CanUseLock
 
     validate :no_renewal_in_progress?, on: :create
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
@@ -131,6 +132,13 @@ module WasteCarriersEngine
       return unless RenewingRegistration.where(reg_identifier: reg_identifier).exists?
 
       errors.add(:reg_identifier, :renewal_in_progress)
+    end
+
+    def registration_type_base_charges
+      charges = [Rails.configuration.renewal_charge]
+      charges << Rails.configuration.type_change_charge if registration_type_changed?
+
+      charges
     end
   end
 end
