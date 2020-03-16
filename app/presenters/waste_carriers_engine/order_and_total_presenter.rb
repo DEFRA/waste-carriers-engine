@@ -23,7 +23,7 @@ module WasteCarriersEngine
     def add_order_item(item)
       formatted_item = {}
 
-      formatted_item[:cost] = item.amount
+      formatted_item[:amount] = item.amount
       formatted_item[:description] = description_for(item)
 
       formatted_item

@@ -32,15 +32,15 @@ module WasteCarriersEngine
         expected_list = [
           {
             description: "Charge for changing registration type",
-            cost: 4_000
+            amount: 4_000
           },
           {
             description: "2 registration cards total cost",
-            cost: 1_000
+            amount: 1_000
           },
           {
             description: "Charge adjust",
-            cost: 500
+            amount: 500
           }
         ]
         expect(subject.order_items).to eq(expected_list)
@@ -55,19 +55,19 @@ module WasteCarriersEngine
           expected_list = [
             {
               description: "Renewal of registration",
-              cost: 10_500
+              amount: 10_500
             },
             {
               description: "Additional charge for changing registration type",
-              cost: 4_000
+              amount: 4_000
             },
             {
               description: "2 registration cards total cost",
-              cost: 1_000
+              amount: 1_000
             },
             {
               description: "Charge adjust",
-              cost: 500
+              amount: 500
             }
           ]
           expect(subject.order_items).to eq(expected_list)
