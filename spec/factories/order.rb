@@ -23,7 +23,7 @@ FactoryBot.define do
       date_created { Time.now }
 
       order_items do
-        [WasteCarriersEngine::OrderItem.new_type_change_item]
+        [WasteCarriersEngine::OrderItem.new_type_change_item(:edit)]
       end
       total_amount { order_items.sum { |item| item[:amount] } }
     end
