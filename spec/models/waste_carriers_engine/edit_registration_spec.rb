@@ -6,6 +6,8 @@ module WasteCarriersEngine
   RSpec.describe EditRegistration, type: :model do
     subject(:edit_registration) { build(:edit_registration) }
 
+    it_should_behave_like "Can check if registration type changed"
+
     context "default status" do
       context "when an EditRegistration is created" do
         it "has the state of :edit_form" do
