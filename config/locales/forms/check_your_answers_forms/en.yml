@@ -4,9 +4,9 @@ en:
       new:
         title: "Check your answers"
         error_heading: "Something is wrong"
-        error_description_1: "We're missing some of the information we need to renew your registration:"
+        error_description_1: "We're missing some of the information we need to complete this application:"
         error_description_2: "Please go back and make sure all the required questions have been answered."
-        heading: "Check your answers before renewing your registration"
+        heading: "Check your answers"
         subheadings:
           you_told_us: "You told us:"
           registration: "Registration"
@@ -60,8 +60,8 @@ en:
           "yes": "you deal with waste from other businesses or households"
           "no": "you do not deal with waste from other businesses or households"
         main_service:
-          "yes": "you produce the waste as part of a service you provide"
-          "no": "you just collect or move waste created by your customers"
+          "yes": "you just collect or move waste created by your customers"
+          "no": "you produce the waste as part of a service you provide"
         only_amf: "you only deal with agricultural waste, animal by-products or waste from mines or quarries"
         construction_waste:
           "yes": "you deal with construction or demolition waste"
@@ -76,7 +76,7 @@ en:
             carrier_broker_dealer: "a carrier, broker and dealer (you carry waste yourselves and arrange for others to carry it)"
         date_of_birth: "Date of birth: %{dob}"
         declared_convictions:
-          "yes": "You told us there are no relevant people with convictions in your business or organisation."
+          "yes": "You told us there are relevant people with convictions in your business or organisation."
           "no": "You told us there are no relevant people with convictions in your business or organisation."
         next_button: Continue
   activemodel:
