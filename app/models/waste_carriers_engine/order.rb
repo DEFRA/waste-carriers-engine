@@ -36,7 +36,7 @@ module WasteCarriersEngine
       # TODO: Review whether card_count.present? is still necessary - this was a fix put in to deal with WC-498
       order[:order_items] << OrderItem.new_copy_cards_item(card_count) if card_count.present? && card_count.positive?
 
-      order.generate_description
+      order.set_description
 
       order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
 
@@ -87,14 +87,25 @@ module WasteCarriersEngine
       Time.now.to_i.to_s
     end
 
-    def generate_description
-      self.description = order_items.map(&:description).join(", plus ")
+    def set_description
+      self.description = generate_description
     end
 
     def update_after_worldpay(status)
       self.world_pay_status = status
       self.date_last_updated = Time.current
       save!
+    end
+
+    private
+
+    def generate_description
+      description = order_items.map(&:description)
+                               .join(", plus ")
+
+      description[0] = description[0].capitalize
+
+      description
     end
   end
 end

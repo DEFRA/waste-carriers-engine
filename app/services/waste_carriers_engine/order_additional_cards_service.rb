@@ -22,7 +22,7 @@ module WasteCarriersEngine
 
       order[:order_items] = [new_item]
 
-      order.generate_description
+      order.set_description
 
       order[:total_amount] = new_item[:amount]
 
