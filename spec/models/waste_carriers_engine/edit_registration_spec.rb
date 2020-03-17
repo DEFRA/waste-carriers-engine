@@ -70,5 +70,20 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "#prepare_for_payment" do
+      it "runs the EditFinanceDetailsBuilderService with the correct params" do
+        mode = "OFFLINE"
+        user = double(:user)
+
+        expect(BuildEditFinanceDetailsService).to receive(:run).with(
+          user: user,
+          transient_registration: subject,
+          payment_method: mode
+        )
+
+        subject.prepare_for_payment(mode, user)
+      end
+    end
   end
 end
