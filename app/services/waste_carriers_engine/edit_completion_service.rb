@@ -2,9 +2,14 @@
 
 module WasteCarriersEngine
   class EditCompletionService < BaseService
+    include CanMergeFinanceDetails
+
+    attr_reader :transient_registration
+
+    delegate :registration, to: :transient_registration
+
     def run(edit_registration:)
-      @edit_registration = edit_registration
-      @registration = @edit_registration.registration
+      @transient_registration = edit_registration
 
       copy_names_to_contact_address
       create_past_registration
@@ -15,39 +20,40 @@ module WasteCarriersEngine
     private
 
     def copy_names_to_contact_address
-      @edit_registration.contact_address.first_name = @edit_registration.first_name
-      @edit_registration.contact_address.last_name = @edit_registration.last_name
+      transient_registration.contact_address.first_name = transient_registration.first_name
+      transient_registration.contact_address.last_name = transient_registration.last_name
     end
 
     def create_past_registration
-      PastRegistration.build_past_registration(@registration, :edit)
+      PastRegistration.build_past_registration(registration, :edit)
     end
 
     def copy_data_to_registration
       copy_attributes
-      @registration.save!
+      merge_finance_details
+      registration.save!
     end
 
     def delete_transient_registration
-      @edit_registration.delete
+      transient_registration.delete
     end
 
     def copy_attributes
-      copyable_attributes = @edit_registration.attributes.except("_id",
-                                                                 "token",
-                                                                 "account_email",
-                                                                 "created_at",
-                                                                 "financeDetails",
-                                                                 "temp_cards",
-                                                                 "temp_company_postcode",
-                                                                 "temp_contact_postcode",
-                                                                 "temp_os_places_error",
-                                                                 "temp_payment_method",
-                                                                 "temp_tier_check",
-                                                                 "_type",
-                                                                 "workflow_state")
+      copyable_attributes = transient_registration.attributes.except("_id",
+                                                                     "token",
+                                                                     "account_email",
+                                                                     "created_at",
+                                                                     "financeDetails",
+                                                                     "temp_cards",
+                                                                     "temp_company_postcode",
+                                                                     "temp_contact_postcode",
+                                                                     "temp_os_places_error",
+                                                                     "temp_payment_method",
+                                                                     "temp_tier_check",
+                                                                     "_type",
+                                                                     "workflow_state")
 
-      @registration.write_attributes(copyable_attributes)
+      registration.write_attributes(copyable_attributes)
     end
   end
 end

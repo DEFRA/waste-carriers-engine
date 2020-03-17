@@ -6,6 +6,8 @@ module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
     subject(:renewing_registration) { build(:renewing_registration, :has_required_data) }
 
+    it_should_behave_like "Can check if registration type changed"
+
     describe "scopes" do
       it_should_behave_like "TransientRegistration named scopes"
     end
@@ -120,24 +122,6 @@ module WasteCarriersEngine
     describe "status" do
       it_should_behave_like "Can check registration status",
                             factory: :renewing_registration
-    end
-
-    describe "#registration_type_changed?" do
-      context "when a RenewingRegistration is created" do
-        it "should return false" do
-          expect(renewing_registration.registration_type_changed?).to eq(false)
-        end
-
-        context "when the registration_type is updated" do
-          before(:each) do
-            renewing_registration.registration_type = "broker_dealer"
-          end
-
-          it "should return true" do
-            expect(renewing_registration.registration_type_changed?).to eq(true)
-          end
-        end
-      end
     end
 
     describe "#renewal_application_submitted?" do

@@ -2,6 +2,7 @@
 
 module WasteCarriersEngine
   class RenewingRegistration < TransientRegistration
+    include CanCheckIfRegistrationTypeChanged
     include CanCopyDataFromRegistration
     include CanUseRenewingRegistrationWorkflow
     include CanUseLock
@@ -26,14 +27,6 @@ module WasteCarriersEngine
                                copy_cards],
       remove_invalid_attributes: true
     }.freeze
-
-    # Check if the user has changed the registration type, as this incurs an additional 40GBP charge
-    def registration_type_changed?
-      # Don't compare registration types if the new one hasn't been set
-      return false unless registration_type
-
-      registration.registration_type != registration_type
-    end
 
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
