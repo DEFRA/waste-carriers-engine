@@ -9,12 +9,20 @@ module WasteCarriersEngine
 
     # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
     def new(form_class, form)
-      set_up_form(form_class, form, params[:token], true)
+      return false unless set_up_form(form_class, form, params[:token], true)
+
+      fetch_presenters
+
+      # Return 'true' by default so the `return unless super(...)` bits in
+      # subclassed controllers don't fail.
+      true
     end
 
     # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
     def create(form_class, form)
       return false unless set_up_form(form_class, form, params[:token])
+
+      fetch_presenters
 
       submit_form(instance_variable_get("@#{form}"), transient_registration_attributes)
     end
@@ -127,6 +135,11 @@ module WasteCarriersEngine
       response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
       response.headers["Pragma"] = "no-cache"
       response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    end
+
+    def fetch_presenters
+      # A little hook to set up presenters used by the forms. Intended to be
+      # overwritten in subclasses when a presenter is required.
     end
   end
 end
