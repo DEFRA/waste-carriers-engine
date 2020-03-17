@@ -78,7 +78,7 @@ module WasteCarriersEngine
         end
 
         it "should have the correct description" do
-          expect(order.description).to eq("Renewal of registration, plus changing carrier type during renewal")
+          expect(order.description).to eq("Renewal of registration, plus changing carrier type")
         end
       end
 

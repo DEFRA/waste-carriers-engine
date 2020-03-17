@@ -38,11 +38,11 @@ module WasteCarriersEngine
       new(type: TYPES[:charge_adjust])
     end
 
-    def self.new_type_change_item(journey)
+    def self.new_type_change_item
       order_item = OrderItem.base_order_item
 
       order_item.amount = Rails.configuration.type_change_charge
-      order_item.description = I18n.t("#{LOCALES_KEY}.type_change_item.#{journey}")
+      order_item.description = I18n.t("#{LOCALES_KEY}.type_change_item")
       order_item.type = TYPES[:edit]
       order_item.quantity = 1
 
