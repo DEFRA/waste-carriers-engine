@@ -12,7 +12,8 @@ module WasteCarriersEngine
       renew: "RENEW",
       edit: "EDIT",
       copy_cards: "COPY_CARDS",
-      charge_adjust: "CHARGE_ADJUST"
+      charge_adjust: "CHARGE_ADJUST",
+      new_registration: "NEW"
     )
 
     field :amount,                          type: Integer
@@ -29,6 +30,17 @@ module WasteCarriersEngine
       order_item.amount = Rails.configuration.renewal_charge
       order_item.description = I18n.t("#{LOCALES_KEY}.renewal_item")
       order_item.type = TYPES[:renew]
+      order_item.quantity = 1
+
+      order_item
+    end
+
+    def self.new_registration_item
+      order_item = OrderItem.base_order_item
+
+      order_item.amount = Rails.configuration.new_registration_charge
+      order_item.description = I18n.t("#{LOCALES_KEY}.new_registration_item")
+      order_item.type = TYPES[:new_registration]
       order_item.quantity = 1
 
       order_item

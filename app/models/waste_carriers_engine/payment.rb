@@ -24,7 +24,7 @@ module WasteCarriersEngine
     scope :refundable, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
     scope :reversible, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
 
-    def self.new_from_worldpay(order, current_user)
+    def self.new_from_worldpay(order, user_email)
       payment = Payment.new
 
       payment[:order_key] = order[:order_code]
@@ -33,7 +33,7 @@ module WasteCarriersEngine
       payment[:payment_type] = "WORLDPAY"
       payment[:registration_reference] = "Worldpay"
       payment[:comment] = "Paid via Worldpay"
-      payment[:updated_by_user] = current_user.email
+      payment[:updated_by_user] = user_email
       payment.finance_details = order.finance_details
 
       payment

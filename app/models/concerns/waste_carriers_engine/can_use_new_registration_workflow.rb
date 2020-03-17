@@ -442,6 +442,12 @@ module WasteCarriersEngine
 
           transitions from: :payment_summary_form,
                       to: :cards_form
+
+          transitions from: :worldpay_form,
+                      to: :payment_summary_form
+
+          transitions from: :bank_transfer_form,
+                      to: :payment_summary_form
         end
 
         event :skip_to_manual_address do

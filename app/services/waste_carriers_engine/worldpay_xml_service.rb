@@ -6,10 +6,9 @@ module WasteCarriersEngine
   class WorldpayXmlService
     include CanBuildWorldpayXml
 
-    def initialize(transient_registration, order, current_user)
+    def initialize(transient_registration, order)
       @transient_registration = transient_registration
       @order = order
-      @current_user = current_user
     end
 
     def build_xml
@@ -39,7 +38,11 @@ module WasteCarriersEngine
 
         xml.amount(currencyCode: "GBP", value: value, exponent: "2")
 
-        xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_name}"
+        if @transient_registration.is_a?(WasteCarriersEngine::RenewingRegistration)
+          xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_name}"
+        else
+          xml.orderContent "Waste Carrier Registration: #{reg_identifier} for #{company_name}"
+        end
 
         build_payment_methods(xml)
         build_shopper(xml)

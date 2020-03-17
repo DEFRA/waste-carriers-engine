@@ -7,8 +7,11 @@ module WasteCarriersEngine
 
     field :temp_start_option, type: String
 
-    def prepare_for_payment(*_args)
-      # TODO
+    def prepare_for_payment(mode, _user)
+      BuildNewRegistrationFinanceDetailsService.run(
+        transient_registration: self,
+        payment_method: mode
+      )
     end
 
     def reg_identifier

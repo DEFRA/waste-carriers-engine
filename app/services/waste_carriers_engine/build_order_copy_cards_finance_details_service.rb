@@ -17,7 +17,7 @@ module WasteCarriersEngine
     private
 
     def additional_cards_order(user, cards_count, payment_method)
-      order = Order.new_order_for(user)
+      order = Order.new_order_for(user.email)
       new_item = OrderItem.new_copy_cards_item(cards_count)
 
       order[:order_items] = [new_item]

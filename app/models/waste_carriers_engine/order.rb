@@ -27,7 +27,7 @@ module WasteCarriersEngine
 
     # TODO: Move to a service
     def self.new_order(transient_registration, method, current_user)
-      order = new_order_for(current_user)
+      order = new_order_for(current_user.email)
 
       card_count = transient_registration.temp_cards
 
@@ -46,7 +46,7 @@ module WasteCarriersEngine
       order
     end
 
-    def self.new_order_for(user)
+    def self.new_order_for(user_email)
       order = Order.new
 
       order[:order_id] = order.generate_id
@@ -55,7 +55,7 @@ module WasteCarriersEngine
 
       order[:date_created] = Time.current
       order[:date_last_updated] = order[:date_created]
-      order[:updated_by_user] = user.email
+      order[:updated_by_user] = user_email
 
       order
     end

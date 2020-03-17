@@ -6,6 +6,7 @@ module WasteCarriersEngine
   RSpec.describe OrderItem, type: :model do
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_000)
+      allow(Rails.configuration).to receive(:new_registration_charge).and_return(12_000)
       allow(Rails.configuration).to receive(:type_change_charge).and_return(2_500)
       allow(Rails.configuration).to receive(:card_charge).and_return(1_000)
     end
@@ -37,6 +38,26 @@ module WasteCarriersEngine
 
       it "should set the correct description" do
         expect(order_item.description).to eq("renewal of registration")
+      end
+    end
+
+    describe "new_registration_item" do
+      let(:order_item) { described_class.new_registration_item }
+
+      it "should have a type of 'RENEW'" do
+        expect(order_item.type).to eq(described_class::TYPES[:new_registration])
+      end
+
+      it "should set the correct amount" do
+        expect(order_item.amount).to eq(12_000)
+      end
+
+      it "should set the correct quantity" do
+        expect(order_item.quantity).to eq(1)
+      end
+
+      it "should set the correct description" do
+        expect(order_item.description).to eq("initial registration")
       end
     end
 

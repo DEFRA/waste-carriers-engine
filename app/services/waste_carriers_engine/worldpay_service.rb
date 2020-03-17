@@ -14,7 +14,7 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      xml_service = WorldpayXmlService.new(@transient_registration, @order, @current_user)
+      xml_service = WorldpayXmlService.new(@transient_registration, @order)
       xml = xml_service.build_xml
       response = send_request(xml)
       reference = parse_response(response)
@@ -93,16 +93,20 @@ module WasteCarriersEngine
     end
 
     def new_payment_object(order)
-      Payment.new_from_worldpay(order, @current_user)
+      Payment.new_from_worldpay(order, user_email)
     end
 
     def update_saved_data
-      payment = Payment.new_from_worldpay(@order, @current_user)
+      payment = Payment.new_from_worldpay(@order, user_email)
       payment.update_after_worldpay(@params)
       @order.update_after_worldpay(@params[:paymentStatus])
 
       @transient_registration.finance_details.update_balance
       @transient_registration.finance_details.save!
+    end
+
+    def user_email
+      @current_user&.email || @transient_registration.contact_email
     end
   end
 end

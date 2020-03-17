@@ -27,6 +27,21 @@ module WasteCarriersEngine
             expect(transient_registration.reload.finance_details.orders.count).to eq(1)
           end
 
+          context "when the transient_registration is a new registration" do
+            let(:transient_registration) do
+              create(:new_registration,
+                     contact_email: user.email,
+                     workflow_state: "bank_transfer_form",
+                     temp_cards: 2)
+            end
+
+            it "creates a new order" do
+              get new_bank_transfer_form_path(transient_registration.token)
+
+              expect(transient_registration.reload.finance_details.orders.count).to eq(1)
+            end
+          end
+
           context "when a worldpay order already exists" do
             before do
               transient_registration.prepare_for_payment(:worldpay, user)
