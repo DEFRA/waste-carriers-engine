@@ -30,7 +30,7 @@ module WasteCarriersEngine
         order.order_items << OrderItem.new_copy_cards_item(transient_registration.temp_cards)
       end
 
-      order.generate_description
+      order.set_description
       order.total_amount = order.order_items.sum(&:amount)
 
       order.add_bank_transfer_attributes if payment_method == :bank_transfer

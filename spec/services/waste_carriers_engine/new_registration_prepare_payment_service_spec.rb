@@ -19,7 +19,7 @@ module WasteCarriersEngine
         expect(Order).to receive(:new_order_for).with("user@example.com").and_return(order)
         expect(OrderItem).to receive(:new_copy_cards_item).with(2).and_return(order_item_cards)
         expect(OrderItem).to receive(:new_registration_item).and_return(order_item_registration)
-        expect(order).to receive(:generate_description)
+        expect(order).to receive(:set_description)
         expect(order).to receive(:order_items=).with([])
         expect(order).to receive(:total_amount=).with(30)
 
