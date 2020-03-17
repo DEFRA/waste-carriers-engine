@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class NewRegistrationPreparePaymentService < BaseService
+  class BuildNewRegistrationFinanceDetailsService < BaseService
     attr_reader :transient_registration
 
     def run(transient_registration:, payment_method:)

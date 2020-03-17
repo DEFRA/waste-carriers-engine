@@ -8,7 +8,7 @@ module WasteCarriersEngine
     field :temp_start_option, type: String
 
     def prepare_for_payment(mode, _user)
-      NewRegistrationPreparePaymentService.run(
+      BuildNewRegistrationFinanceDetailsService.run(
         transient_registration: self,
         payment_method: mode
       )
