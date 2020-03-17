@@ -142,6 +142,16 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
+    resources :edit_bank_transfer_forms,
+              only: %i[new create],
+              path: "edit-bank-transfer",
+              path_names: { new: "" } do
+                get "back",
+                    to: "edit_bank_transfer_forms#go_back",
+                    as: "back",
+                    on: :collection
+              end
+
     resources :edit_complete_forms,
               only: %i[new create],
               path: "edit-complete",
