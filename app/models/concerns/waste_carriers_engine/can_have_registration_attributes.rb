@@ -112,6 +112,7 @@ module WasteCarriersEngine
       # Some business types should not have a company_no
       def company_no_required?
         return false if overseas?
+        return false if lower_tier?
 
         %w[limitedCompany limitedLiabilityPartnership].include?(business_type)
       end

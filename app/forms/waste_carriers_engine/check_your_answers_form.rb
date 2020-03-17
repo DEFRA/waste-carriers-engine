@@ -9,7 +9,7 @@ module WasteCarriersEngine
     delegate :first_name, :last_name, :location, :main_people, :phone_number, to: :transient_registration
     delegate :registration_type, :relevant_people, :tier, to: :transient_registration
     delegate :registered_address, :declared_convictions, to: :transient_registration
-    delegate :lower_tier?, :upper_tier?, to: :transient_registration
+    delegate :lower_tier?, :upper_tier?, :company_no_required?, to: :transient_registration
 
     # This has to be before the validations are called, otherwise it fails.
     def self.custom_error_messages(attribute, *errors)
@@ -89,10 +89,6 @@ module WasteCarriersEngine
 
       errors.add(:company_no, :changed)
       false
-    end
-
-    def company_no_required?
-      transient_registration.company_no_required?
     end
   end
 end
