@@ -57,7 +57,7 @@ module WasteCarriersEngine
       end
 
       it "should set the correct description" do
-        expect(order_item.description).to eq("Initial Registration")
+        expect(order_item.description).to eq("initial registration")
       end
     end
 

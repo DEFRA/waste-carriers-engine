@@ -39,7 +39,7 @@ module WasteCarriersEngine
       order_item = OrderItem.base_order_item
 
       order_item.amount = Rails.configuration.new_registration_charge
-      order_item.description = "Initial Registration"
+      order_item.description = I18n.t("#{LOCALES_KEY}.new_registration_item")
       order_item.type = TYPES[:new_registration]
       order_item.quantity = 1
 

@@ -3,6 +3,7 @@ en:
     order_items:
       descriptions:
         renewal_item: "renewal of registration"
+        new_registration_item: "initial registration"
         type_change_item: "changing carrier type"
         copy_cards_item:
           one: "1 registration card"
