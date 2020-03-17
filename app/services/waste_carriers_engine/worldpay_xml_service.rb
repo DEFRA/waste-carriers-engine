@@ -38,7 +38,11 @@ module WasteCarriersEngine
 
         xml.amount(currencyCode: "GBP", value: value, exponent: "2")
 
-        xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_name}"
+        if @transient_registration.is_a?(WasteCarriersEngine::RenewingRegistration)
+          xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_name}"
+        else
+          xml.orderContent "Waste Carrier Registration: #{reg_identifier} for #{company_name}"
+        end
 
         build_payment_methods(xml)
         build_shopper(xml)

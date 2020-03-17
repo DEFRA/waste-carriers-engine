@@ -37,6 +37,23 @@ module WasteCarriersEngine
             end
           end
 
+          context "when the transient_registration is a new registration" do
+            let(:transient_registration) do
+              create(:new_registration,
+                     :has_addresses,
+                     contact_email: user.email,
+                     workflow_state: "worldpay_form",
+                     temp_cards: 2)
+            end
+
+            it "creates a new finance_details" do
+              VCR.use_cassette("worldpay_redirect") do
+                get new_worldpay_form_path(token)
+                expect(transient_registration.reload.finance_details).to_not eq(nil)
+              end
+            end
+          end
+
           context "when there is an error setting up the worldpay url" do
             before do
               allow_any_instance_of(WorldpayService).to receive(:prepare_for_payment).and_return(:error)
