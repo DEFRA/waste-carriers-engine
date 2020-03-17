@@ -4,9 +4,9 @@ en:
       new:
         title: "Check your answers"
         error_heading: "Something is wrong"
-        error_description_1: "We're missing some of the information we need to renew your registration:"
+        error_description_1: "We're missing some of the information we need to complete this application:"
         error_description_2: "Please go back and make sure all the required questions have been answered."
-        heading: "Check your answers before renewing your registration"
+        heading: "Check your answers"
         subheadings:
           you_told_us: "You told us:"
           registration: "Registration"

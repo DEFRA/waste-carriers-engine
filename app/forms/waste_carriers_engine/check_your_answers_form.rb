@@ -92,7 +92,7 @@ module WasteCarriersEngine
     end
 
     def company_no_required?
-      transient_registration.company_no_required?
+      transient_registration.company_no_required? && transient_registration.upper_tier?
     end
   end
 end
