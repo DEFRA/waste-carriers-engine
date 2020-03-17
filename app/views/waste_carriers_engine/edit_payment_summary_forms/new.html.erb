@@ -1,0 +1,17 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_edit_payment_summary_forms_path(token: @transient_registration.token)) %>
+
+<div class="text">
+  <%= form_for(@edit_payment_summary_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @edit_payment_summary_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <%= render("waste_carriers_engine/shared/order_and_total", presenter: @order_and_total_presenter) %>
+
+    <%= render("waste_carriers_engine/shared/payment_summary_options", form: @edit_payment_summary_form, f: f) %>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
