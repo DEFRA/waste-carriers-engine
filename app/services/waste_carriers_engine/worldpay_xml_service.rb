@@ -6,10 +6,9 @@ module WasteCarriersEngine
   class WorldpayXmlService
     include CanBuildWorldpayXml
 
-    def initialize(transient_registration, order, current_user)
+    def initialize(transient_registration, order)
       @transient_registration = transient_registration
       @order = order
-      @current_user = current_user
     end
 
     def build_xml

@@ -67,7 +67,7 @@ module WasteCarriersEngine
       end
 
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_worldpay(order, current_user) }
+      let(:payment) { Payment.new_from_worldpay(order, current_user.email) }
 
       it "should set the correct order_key" do
         expect(payment.order_key).to eq("1514764800")
@@ -177,7 +177,7 @@ module WasteCarriersEngine
 
     describe "update_after_worldpay" do
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_worldpay(order, current_user) }
+      let(:payment) { Payment.new_from_worldpay(order, current_user.email) }
 
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do

@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe OrderAdditionalCardsService do
     describe ".run" do
-      let(:user) { double(:user) }
+      let(:user) { double(:user, email: "user@example.com") }
       let(:transient_registration) { double(:transient_registration) }
       let(:order) { double(:order) }
 
@@ -16,7 +16,7 @@ module WasteCarriersEngine
 
         expect(FinanceDetails).to receive(:new).and_return(finance_details)
         expect(finance_details).to receive(:transient_registration=).with(transient_registration)
-        expect(Order).to receive(:new_order_for).with(user).and_return(order)
+        expect(Order).to receive(:new_order_for).with("user@example.com").and_return(order)
         expect(OrderItem).to receive(:new_copy_cards_item).with(2).and_return(order_item)
         expect(order).to receive(:generate_description)
         expect(order).to receive(:[]=).with(:order_items, [order_item])
