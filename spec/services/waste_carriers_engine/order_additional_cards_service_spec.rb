@@ -18,7 +18,7 @@ module WasteCarriersEngine
         expect(finance_details).to receive(:transient_registration=).with(transient_registration)
         expect(Order).to receive(:new_order_for).with(user).and_return(order)
         expect(OrderItem).to receive(:new_copy_cards_item).with(2).and_return(order_item)
-        expect(order).to receive(:generate_description)
+        expect(order).to receive(:set_description)
         expect(order).to receive(:[]=).with(:order_items, [order_item])
         expect(order_item).to receive(:[]).with(:amount).and_return(10)
         expect(order).to receive(:[]=).with(:total_amount, 10)
