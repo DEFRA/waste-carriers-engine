@@ -7,6 +7,8 @@ module WasteCarriersEngine
 
     field :temp_start_option, type: String
 
+    after_initialize :build_meta_data
+
     def prepare_for_payment(mode, _user)
       BuildNewRegistrationFinanceDetailsService.run(
         transient_registration: self,
@@ -26,6 +28,10 @@ module WasteCarriersEngine
 
     def registration_type_base_charges
       [Rails.configuration.new_registration_charge]
+    end
+
+    def build_meta_data
+      build_metaData unless metaData.present?
     end
   end
 end
