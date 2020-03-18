@@ -25,6 +25,11 @@ WasteCarriersEngine::Engine.routes.draw do
                     as: "back",
                     on: :collection
               end
+
+    resources :registration_received_pending_payment_forms,
+              only: :new,
+              path: "registration-received-pending-payment",
+              path_names: { new: "" }
     # End of new registration flow
 
     # Order copy cards flow

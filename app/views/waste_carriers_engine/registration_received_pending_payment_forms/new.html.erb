@@ -1,0 +1,26 @@
+<div class="column-two-thirds">
+  <div class="govuk-box-highlight govuk-box-highlight_blue">
+    <h1 class="heading-xlarge"><%= t(".heading") %></h1>
+    <h2 class="heading-large"><%= t(".highlight_text") %><br>
+    <span class="strong"><%= @registration.reg_identifier %></span></p>
+  </div>
+
+  <p><%= t(".paragraph_1", email: @registration.contact_email) %></p>
+  <p><%= t(".paragraph_2") %></p>
+
+  <ul class="list list-bullet">
+    <% t(".list_1").each do |list_item| %>
+      <li><%= list_item %></li>
+    <% end %>
+  </ul>
+
+  <div class="panel">
+    <p>
+      <%= t(".contact.paragraph_1") %>
+      <a href="mailto:<%= t(".contact.email") %>nccc-carrierbroker@environment-agency.gov.uk"><%= t(".contact.email") %></a>
+      <%= t(".contact.text") %>
+    </p>
+  </div>
+
+  <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+</div>
