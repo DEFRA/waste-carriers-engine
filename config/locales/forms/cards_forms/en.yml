@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     cards_forms:
       new:
-        title: Certificate and registration cards
+        title: Order registration cards if you need them
         heading: Order registration cards if you need them
         paragraph_1: We’ll send you a waste carrier registration certificate with your registration details. You can print it out to show you are registered.
         paragraph_2: You can also buy wallet-sized registration cards for £%{card_charge} each.
