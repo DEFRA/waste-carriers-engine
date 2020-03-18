@@ -4,7 +4,7 @@ module WasteCarriersEngine
   class UnpaidBalanceError < StandardError; end
   class PendingConvictionsError < StandardError; end
 
-  class RegistrationCompletionService < BaseService
+  class RegistrationActivationService < BaseService
     def run(registration:)
       @registration = registration
 
