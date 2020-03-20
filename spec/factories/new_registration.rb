@@ -23,6 +23,12 @@ FactoryBot.define do
       end
     end
 
+    trait :requires_conviction_check do
+      key_people { [build(:key_person, :matched_conviction_search_result)] }
+      conviction_search_result { build(:conviction_search_result, :match_result_yes) }
+      conviction_sign_offs { [build(:conviction_sign_off)] }
+    end
+
     trait :upper do
       tier { WasteCarriersEngine::NewRegistration::UPPER_TIER }
     end
