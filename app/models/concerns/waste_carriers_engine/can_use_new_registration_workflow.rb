@@ -270,6 +270,12 @@ module WasteCarriersEngine
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
+
+          transitions from: :worldpay_form,
+                      to: :registration_completed_form,
+                      # TODO: This don't get triggered if in the `success`
+                      # callback block, hence we went for `after`
+                      after: :set_metadata_route
         end
 
         # Transitions

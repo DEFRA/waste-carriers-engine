@@ -1,0 +1,25 @@
+en:
+  waste_carriers_engine:
+    registration_completed_forms:
+      new:
+        title: Registration complete
+        heading: Registration complete
+        highlight_text: "Your registration number is"
+        paragraph_1: "We’ve sent a registration confirmation and certificate to %{email}."
+        subheading_1: "What happens next"
+        list_1:
+          - "Your organisation's details will appear on the public register within 5 days."
+          - "We will contact you on this email address before this registration is due to expire in %{expires_on}."
+          - "If we cannot reach you when the renewal is due, you’ll have to pay more for a new upper tier registration."
+        email:
+          heading: "Email"
+          value: "nccc-carrierbroker@environment-agency.gov.uk"
+        telephone:
+          heading: "Telephone"
+          value: "03708 506 506"
+        subheading_2: "If your details change"
+        paragraph_2: "If any of the details you've given us change, you must update them within 28 days by contacting the Environment Agency."
+        subheading_3: "Registration checks"
+        paragraph_3: "Waste carrier registrations are subject to checks. Deliberately providing false details, or not complying with carrier rules, can lead to de-registration and prosecution."
+        survey_link_text: What did you think of the service?
+        survey_link_hint: (takes 30 seconds)

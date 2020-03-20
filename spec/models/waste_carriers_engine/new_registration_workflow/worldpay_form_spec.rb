@@ -8,6 +8,10 @@ module WasteCarriersEngine
 
     describe "#workflow_state" do
       context ":worldpay_form state transitions" do
+        context "on next" do
+          include_examples "has next transition", next_state: "registration_completed_form"
+        end
+
         context "on back" do
           include_examples "has back transition", previous_state: "payment_summary_form"
         end
