@@ -63,6 +63,7 @@ module WasteCarriersEngine
 
         state :registration_completed_form
         state :registration_received_pending_payment_form
+        state :registration_received_pending_conviction_form
 
         # Transitions
         event :next do
@@ -267,6 +268,13 @@ module WasteCarriersEngine
           # Registration completion forms
           transitions from: :bank_transfer_form,
                       to: :registration_received_pending_payment_form,
+                      # TODO: This don't get triggered if in the `success`
+                      # callback block, hence we went for `after`
+                      after: :set_metadata_route
+
+          transitions from: :worldpay_form,
+                      to: :registration_received_pending_conviction_form,
+                      if: :conviction_check_required?,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route

@@ -10,6 +10,12 @@ module WasteCarriersEngine
       context ":worldpay_form state transitions" do
         context "on next" do
           include_examples "has next transition", next_state: "registration_completed_form"
+
+          context "when there are pending convictions" do
+            subject { build(:new_registration, :requires_conviction_check, workflow_state: "worldpay_form") }
+
+            include_examples "has next transition", next_state: "registration_received_pending_conviction_form"
+          end
         end
 
         context "on back" do
