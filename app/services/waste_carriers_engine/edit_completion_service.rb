@@ -30,7 +30,7 @@ module WasteCarriersEngine
 
     def copy_data_to_registration
       copy_attributes
-      merge_finance_details
+      merge_finance_details if transient_registration.registration_type_changed?
       registration.save!
     end
 
