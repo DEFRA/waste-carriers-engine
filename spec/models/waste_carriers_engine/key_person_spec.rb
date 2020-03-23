@@ -4,24 +4,48 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe KeyPerson, type: :model do
-    describe "#dob" do
-      context "when the provided fields make a valid date" do
-        # Can't use factories as we have to trigger the after_initialize method at correct time
-        let(:key_person) { KeyPerson.new(dob_day: 1, dob_month: 2, dob_year: 2000) }
+    context "Initialization" do
+      describe "#set_individual_dob_fields" do
+        context "when there is a valid dob" do
+          let(:key_person) { KeyPerson.new(dob: Date.new(2000, 2, 1)) }
 
-        it "should return the date when setting date of birth" do
-          expect(key_person.dob).to eq(Date.new(key_person.dob_year,
-                                                key_person.dob_month,
-                                                key_person.dob_day))
+          it "assigns the correct values to the individual fields" do
+            expect(key_person.dob_year).to eq(2000)
+            expect(key_person.dob_month).to eq(2)
+            expect(key_person.dob_day).to eq(1)
+          end
+        end
+
+        context "when there is not a valid dob" do
+          let(:key_person) { KeyPerson.new }
+
+          it "does not assign values to the individual fields" do
+            expect(key_person.dob_day).to be_nil
+            expect(key_person.dob_month).to be_nil
+            expect(key_person.dob_year).to be_nil
+          end
         end
       end
 
-      context "when the provided fields don't make a valid date" do
-        # Can't use factories as we have to trigger the after_initialize method at correct time
-        let(:key_person) { KeyPerson.new(dob_day: 31, dob_month: 2, dob_year: 2000) }
+      describe "#set_date_of_birth" do
+        context "when the provided fields make a valid date" do
+          # Can't use factories as we have to trigger the after_initialize method at correct time
+          let(:key_person) { KeyPerson.new(dob_day: 1, dob_month: 2, dob_year: 2000) }
 
-        it "should return nil when setting date of birth" do
-          expect(key_person.dob).to eq(nil)
+          it "should return the date when setting date of birth" do
+            expect(key_person.dob).to eq(Date.new(key_person.dob_year,
+                                                  key_person.dob_month,
+                                                  key_person.dob_day))
+          end
+        end
+
+        context "when the provided fields don't make a valid date" do
+          # Can't use factories as we have to trigger the after_initialize method at correct time
+          let(:key_person) { KeyPerson.new(dob_day: 31, dob_month: 2, dob_year: 2000) }
+
+          it "should return nil when setting date of birth" do
+            expect(key_person.dob).to eq(nil)
+          end
         end
       end
     end
