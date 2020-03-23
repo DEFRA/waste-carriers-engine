@@ -33,7 +33,7 @@ WasteCarriersEngine::Engine.routes.draw do
 
     resources :registration_received_pending_conviction_forms,
               only: :new,
-              path: "registration-received-pending-conviction",
+              path: "registration-received",
               path_names: { new: "" }
 
     # End of new registration flow
