@@ -18,5 +18,14 @@ FactoryBot.define do
       end
       total_amount { order_items.sum { |item| item[:amount] } }
     end
+
+    trait :has_type_change_item do
+      date_created { Time.now }
+
+      order_items do
+        [WasteCarriersEngine::OrderItem.new_type_change_item]
+      end
+      total_amount { order_items.sum { |item| item[:amount] } }
+    end
   end
 end
