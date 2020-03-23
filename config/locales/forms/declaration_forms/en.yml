@@ -16,7 +16,7 @@ en:
         waste_carriers_engine/declaration_form:
           attributes:
             declaration:
-              inclusion: "You cannot renew if you do not understand and agree with the declaration"
+              inclusion: "You cannot continue if you do not understand and agree with the declaration"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
