@@ -1,0 +1,41 @@
+<div class="column-two-thirds">
+  <div class="govuk-box-highlight">
+    <h1 class="heading-xlarge"><%= t(".heading") %></h1>
+
+    <p class="font-large"><%= t(".highlight_text") %><br>
+
+    <span class="strong"><%= @registration.reg_identifier %></span></p>
+  </div>
+
+  <p><%= t(".paragraph_1", email: @registration.contact_email) %></p>
+
+  <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
+
+  <ul class="list list-bullet">
+    <% t(".list_1").each do |list_item| %>
+      <li><%= list_item %></li>
+    <% end %>
+  </ul>
+
+  <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
+
+  <p><%= t(".paragraph_2") %></p>
+
+  <p>
+    <%= t(".email.heading") %>
+    <br>
+    <a href="mailto:<%= t(".email.value") %>nccc-carrierbroker@environment-agency.gov.uk"><%= t(".email.value") %></a>
+  </p>
+
+  <p>
+    <%= t(".telephone.heading") %>
+    <br>
+    <a href="mailto:<%= t(".telephone.value") %>nccc-carrierbroker@environment-agency.gov.uk"><%= t(".telephone.value") %></a>
+  </p>
+
+  <h2 class="heading-medium"><%= t(".subheading_3") %></h2>
+
+  <p><%= t(".paragraph_3") %></p>
+
+  <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+</div>

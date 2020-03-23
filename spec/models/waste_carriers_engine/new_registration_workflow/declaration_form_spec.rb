@@ -12,7 +12,7 @@ module WasteCarriersEngine
           context "when the registration is a lower tier" do
             subject { build(:new_registration, :lower, workflow_state: "declaration_form") }
 
-            include_examples "has next transition", next_state: "registration_completed_form"
+            include_examples "has next transition", next_state: "lower_tier_registration_completed_form"
           end
 
           include_examples "has next transition", next_state: "cards_form"

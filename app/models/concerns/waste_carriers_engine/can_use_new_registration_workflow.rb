@@ -63,6 +63,7 @@ module WasteCarriersEngine
 
         state :registration_completed_form
         state :registration_received_pending_payment_form
+        state :lower_tier_registration_completed_form
 
         # Transitions
         event :next do
@@ -248,7 +249,7 @@ module WasteCarriersEngine
                       to: :declaration_form
 
           transitions from: :declaration_form,
-                      to: :registration_completed_form,
+                      to: :lower_tier_registration_completed_form,
                       if: :lower_tier?
 
           transitions from: :declaration_form,

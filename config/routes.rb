@@ -30,6 +30,11 @@ WasteCarriersEngine::Engine.routes.draw do
               only: :new,
               path: "registration-received-pending-payment",
               path_names: { new: "" }
+
+    resources :lower_tier_registration_completed_forms,
+              only: :new,
+              path: "lower-tier-registration-completed",
+              path_names: { new: "" }
     # End of new registration flow
 
     # Order copy cards flow
