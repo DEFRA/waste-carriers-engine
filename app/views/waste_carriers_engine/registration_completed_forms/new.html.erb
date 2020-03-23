@@ -12,7 +12,7 @@
   <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
 
   <ul class="list list-bullet">
-    <% t(".list_1", expires_on: @registration.expires_on.to_formatted_s(:month_year)).each do |list_item| %>
+    <% t(".list_1.#{@registration.tier}", expires_on: @registration.expires_on&.to_formatted_s(:month_year)).each do |list_item| %>
       <li><%= list_item %></li>
     <% end %>
   </ul>

@@ -23,6 +23,20 @@ FactoryBot.define do
       end
     end
 
+    trait :has_required_lower_tier_data do
+      location { "england" }
+      declared_convictions { "no" }
+
+      metaData { build(:metaData, route: "DIGITAL") }
+
+      sequence :reg_identifier
+
+      has_addresses
+      has_postcode
+      has_key_people
+      lower
+    end
+
     trait :requires_conviction_check do
       key_people { [build(:key_person, :matched_conviction_search_result)] }
       conviction_search_result { build(:conviction_search_result, :match_result_yes) }

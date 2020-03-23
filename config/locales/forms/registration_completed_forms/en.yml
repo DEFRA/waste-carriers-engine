@@ -8,9 +8,13 @@ en:
         paragraph_1: "We’ve sent a registration confirmation and certificate to %{email}."
         subheading_1: "What happens next"
         list_1:
-          - "Your organisation's details will appear on the public register within 5 days."
-          - "We will contact you on this email address before this registration is due to expire in %{expires_on}."
-          - "If we cannot reach you when the renewal is due, you’ll have to pay more for a new upper tier registration."
+          UPPER:
+            - "Your organisation's details will appear on the public register within 5 days."
+            - "We will contact you on this email address before this registration is due to expire in %{expires_on}."
+            - "If we cannot reach you when the renewal is due, you’ll have to pay more for a new upper tier registration."
+          LOWER:
+            - "Your organisation's details will appear on the public register within 5 days."
+            - "Lower tier registrations do not expire."
         email:
           heading: "Email"
           value: "nccc-carrierbroker@environment-agency.gov.uk"

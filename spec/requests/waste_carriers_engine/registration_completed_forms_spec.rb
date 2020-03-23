@@ -22,6 +22,31 @@ module WasteCarriersEngine
           )
         end
 
+        context "when the new registration is a lower tier registration" do
+          let(:transient_registration) do
+            create(
+              :new_registration,
+              :has_required_lower_tier_data,
+              workflow_state: "registration_completed_form"
+            )
+          end
+
+          it "returns a 200 status, renders the :new template, creates a new registration and deletes the transient registration" do
+            reg_identifier = transient_registration.reg_identifier
+            new_registrations_count = WasteCarriersEngine::NewRegistration.count
+
+            get new_registration_completed_form_path(transient_registration.token)
+
+            registration = WasteCarriersEngine::Registration.find_by(reg_identifier: reg_identifier)
+
+            expect(response).to have_http_status(200)
+            expect(response).to render_template(:new)
+            expect(registration).to be_valid
+            expect(registration).to be_active
+            expect(WasteCarriersEngine::NewRegistration.count).to eq(new_registrations_count - 1)
+          end
+        end
+
         context "when the workflow_state is correct" do
           before do
             transient_registration.finance_details = build(:finance_details, :has_paid_order_and_payment)
