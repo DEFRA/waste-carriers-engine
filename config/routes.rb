@@ -35,6 +35,7 @@ WasteCarriersEngine::Engine.routes.draw do
               only: :new,
               path: "registration-received-pending-conviction",
               path_names: { new: "" }
+
     # End of new registration flow
 
     # Order copy cards flow
