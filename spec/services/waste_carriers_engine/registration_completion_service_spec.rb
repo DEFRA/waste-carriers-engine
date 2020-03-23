@@ -4,58 +4,52 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RegistrationCompletionService do
-    let(:registration) { create(:registration, :has_required_data, :is_pending) }
+    describe ".run" do
+      let(:transient_registration) do
+        create(
+          :new_registration,
+          :has_required_data
+        )
+      end
 
-    let(:service) { RegistrationCompletionService.run(registration: registration) }
+      it "generates a new registration and copy data to it" do
+        registration_scope = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier)
 
-    let(:current_time) { Time.new(2020, 1, 1) }
+        expect(registration_scope.any?).to be_falsey
 
-    describe "run" do
-      before { allow(Time).to receive(:current).and_return(current_time) }
+        registration = described_class.run(transient_registration)
 
-      context "when there is no unpaid balance or pending convictions check" do
-        before { allow(registration).to receive(:unpaid_balance?).and_return(false) }
-        before { allow(registration).to receive(:pending_manual_conviction_check?).and_return(false) }
+        expect(registration.reg_identifier).to be_present
+        expect(registration.contact_address).to be_present
+        expect(registration.company_address).to be_present
+        expect(registration.expires_on).to be_present
+        expect(registration.metaData.route).to be_present
+        expect(registration.metaData.date_registered).to be_present
+        expect(registration).to be_pending
+      end
 
-        it "updates the date_activated" do
-          registration.metaData.update_attributes(date_activated: nil)
+      it "deletes the transient registration" do
+        token = transient_registration.token
 
-          expect { service }.to change { registration.metaData.reload.date_activated }.to(current_time)
+        described_class.run(transient_registration)
+
+        new_registration_scope = WasteCarriersEngine::NewRegistration.where(token: token)
+
+        expect(new_registration_scope.any?).to be_falsey
+      end
+
+      context "when the balance have been cleared and there are no pending convictions checks" do
+        let(:finance_details) { build(:finance_details, :has_paid_order_and_payment) }
+
+        before do
+          transient_registration.finance_details = finance_details
+          transient_registration.save
         end
 
         it "activates the registration" do
-          expect { service }.to change { registration.active? }.from(false).to(true)
-        end
+          registration = described_class.run(transient_registration)
 
-        it "sends a confirmation email" do
-          expect { service }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        end
-      end
-
-      context "when the balance is unpaid" do
-        before { allow(registration).to receive(:unpaid_balance?).and_return(true) }
-
-        it "raises an error" do
-          expect { service }.to raise_error(UnpaidBalanceError)
-        end
-      end
-
-      context "when the registration has a pending convictions check" do
-        before { allow(registration).to receive(:pending_manual_conviction_check?).and_return(true) }
-
-        it "raises an error" do
-          expect { service }.to raise_error(PendingConvictionsError)
-        end
-      end
-
-      context "when the mailer fails" do
-        before do
-          allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
-          allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_raise(StandardError)
-        end
-
-        it "does not raise an error" do
-          expect { service }.to_not raise_error
+          expect(registration).to be_active
         end
       end
     end

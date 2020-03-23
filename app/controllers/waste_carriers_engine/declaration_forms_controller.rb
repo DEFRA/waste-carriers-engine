@@ -19,7 +19,8 @@ module WasteCarriersEngine
     end
 
     def should_check_convictions?
-      @transient_registration.is_a?(RenewingRegistration) || @transient_registration.is_a?(NewRegistration)
+      (@transient_registration.is_a?(RenewingRegistration) || @transient_registration.is_a?(NewRegistration)) &&
+        @transient_registration.upper_tier?
     end
   end
 end
