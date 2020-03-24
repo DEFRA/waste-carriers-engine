@@ -41,7 +41,7 @@ module WasteCarriersEngine
             include_examples "has back transition", previous_state: "construction_demolition_form"
           end
 
-          context "when the company only deals with amf waste" do
+          context "when the company deals with more than amf waste" do
             subject { build(:new_registration, workflow_state: "your_tier_form", only_amf: "no") }
 
             include_examples "has back transition", previous_state: "waste_types_form"
