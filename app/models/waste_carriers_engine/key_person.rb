@@ -10,6 +10,7 @@ module WasteCarriersEngine
 
     accepts_nested_attributes_for :conviction_search_result
 
+    after_initialize :set_individual_dob_fields
     after_initialize :set_date_of_birth
 
     field :first_name,  type: String
@@ -38,6 +39,15 @@ module WasteCarriersEngine
       errors.add(:dob, :invalid_date)
     rescue TypeError
       errors.add(:dob, :invalid_date)
+    end
+
+    def set_individual_dob_fields
+      return if dob_year.present? && dob_month.present? && dob_day.present?
+      return if dob.blank?
+
+      self.dob_year = dob.year
+      self.dob_month = dob.month
+      self.dob_day = dob.mday
     end
   end
 end
