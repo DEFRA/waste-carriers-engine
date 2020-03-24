@@ -1,0 +1,25 @@
+en:
+  waste_carriers_engine:
+    your_tier_forms:
+      new:
+        title: Your tier
+        heading:
+          UPPER: "You need to register as an upper tier waste carrier"
+          LOWER: "You need to register as a lower tier waste carrier"
+        paragraph_1:
+          UPPER: "It will cost £154 to register as an upper tier waste carrier for 3 years. You will have to renew every 3 years."
+          LOWER: "There is no charge to register as a lower tier waste carrier. Your registration will not expire."
+        details:
+          summary: "What are lower and upper tiers?"
+          paragraph_1: "You are lower tier if you:"
+          list_1:
+            - "only carry waste produced by your own business unless it’s construction or demolition waste"
+            - "only work with animal by-products, mining and quarry waste or waste from agricultural premises"
+            - "are a charity or voluntary organisation"
+          paragraph_2: "If none of the lower tier criteria apply, you are upper tier. Examples include if you:"
+          list_2:
+            - "carry other people's waste"
+            - "carry your own construction or demolition waste"
+            - "arrange for waste from other businesses to be carried, recovered or disposed of"
+            - "buy or sell waste, or use an agent to do so"
+        next_button: Continue

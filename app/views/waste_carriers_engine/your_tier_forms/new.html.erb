@@ -1,0 +1,37 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_your_tier_forms_path(@your_tier_form.token)) %>
+
+<div class="text">
+  <%= form_for(@your_tier_form) do |f| %>
+    <h1 class="heading-large"><%= t(".heading.#{@transient_registration.tier}") %></h1>
+
+    <div class="form-group">
+      <p><%= t(".paragraph_1.#{@transient_registration.tier}") %></p>
+
+      <details>
+        <summary><span class="summary"><%= t(".details.summary") %></span></summary>
+
+        <div class="panel panel-border-narrow">
+          <p><%= t(".details.paragraph_1") %></p>
+
+          <ul class="list list-bullet">
+            <% t(".details.list_1").each do |list_item| %>
+              <li><%= list_item %></li>
+            <% end %>
+          </ul>
+
+          <p><%= t(".details.paragraph_2") %></p>
+
+          <ul class="list list-bullet">
+            <% t(".details.list_2").each do |list_item| %>
+              <li><%= list_item %></li>
+            <% end %>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
