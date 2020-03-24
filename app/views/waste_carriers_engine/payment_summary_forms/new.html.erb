@@ -2,15 +2,7 @@
 
 <div class="text">
   <%= form_for(@payment_summary_form) do |f| %>
-    <% if flash[:error].present? %>
-      <div class="error-summary" role="alert">
-        <h2 class="heading-medium error-summary-heading"><%= t(".payment_error_heading") %></h2>
-
-        <ul class="error-summary-list">
-          <p><%= flash[:error] %></p>
-        </ul>
-      </div>
-    <% end %>
+    <%= render("waste_carriers_engine/shared/payment_errors") %>
 
     <%= render("waste_carriers_engine/shared/errors", object: @payment_summary_form) %>
 

@@ -40,6 +40,8 @@ module WasteCarriersEngine
 
         if @transient_registration.is_a?(WasteCarriersEngine::RenewingRegistration)
           xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_name}"
+        elsif @transient_registration.is_a?(WasteCarriersEngine::EditRegistration)
+          xml.orderContent "Waste Carrier Registration edit: #{reg_identifier} for #{company_name}"
         else
           xml.orderContent "Waste Carrier Registration: #{reg_identifier} for #{company_name}"
         end
