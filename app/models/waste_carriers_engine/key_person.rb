@@ -42,7 +42,7 @@ module WasteCarriersEngine
     end
 
     def set_individual_dob_fields
-      return if dob_year.present? & dob_month.present? & dob_day.present?
+      return if dob_year.present? && dob_month.present? && dob_day.present?
       return if dob.blank?
 
       self.dob_year = dob.year
