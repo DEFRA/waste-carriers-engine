@@ -3,7 +3,6 @@ en:
     payment_summary_forms:
       new:
         title: Payment summary
-        payment_error_heading: A problem with your payment
         heading: Payment summary
         renewal_fee: Renewal of registration
         registration_fee: Initial registration

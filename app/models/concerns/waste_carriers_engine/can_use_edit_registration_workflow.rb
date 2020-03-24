@@ -41,6 +41,7 @@ module WasteCarriersEngine
         state :declaration_form
         state :edit_payment_summary_form
         state :edit_bank_transfer_form
+        state :worldpay_form
         state :edit_complete_form
 
         # Cancel an edit
@@ -183,9 +184,16 @@ module WasteCarriersEngine
                       if: :registration_type_changed?
 
           transitions from: :edit_payment_summary_form,
+                      to: :worldpay_form,
+                      if: :paying_by_card?
+
+          transitions from: :edit_payment_summary_form,
                       to: :edit_bank_transfer_form
 
           transitions from: :edit_bank_transfer_form,
+                      to: :edit_complete_form
+
+          transitions from: :worldpay_form,
                       to: :edit_complete_form
 
           # Cancel an edit
@@ -257,6 +265,9 @@ module WasteCarriersEngine
           transitions from: :edit_bank_transfer_form,
                       to: :edit_payment_summary_form
 
+          transitions from: :worldpay_form,
+                      to: :edit_payment_summary_form
+
           # Cancelling the edit process
           transitions from: :confirm_edit_cancelled_form,
                       to: :edit_form
@@ -287,6 +298,10 @@ module WasteCarriersEngine
 
     def skip_to_manual_address?
       temp_os_places_error
+    end
+
+    def paying_by_card?
+      temp_payment_method == "card"
     end
   end
   # rubocop:enable Metrics/ModuleLength
