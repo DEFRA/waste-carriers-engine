@@ -35,5 +35,9 @@ module WasteCarriersEngine
         payment_method: mode
       )
     end
+
+    def location_changed_from_overseas?
+      registration.overseas? && uk_location?
+    end
   end
 end
