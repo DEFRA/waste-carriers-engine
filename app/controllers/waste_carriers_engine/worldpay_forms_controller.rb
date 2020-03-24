@@ -7,6 +7,7 @@ module WasteCarriersEngine
       super(WorldpayForm, "worldpay_form")
 
       payment_info = prepare_for_payment
+
       if payment_info == :error
         flash[:error] = I18n.t(".waste_carriers_engine.worldpay_forms.new.setup_error")
         go_back

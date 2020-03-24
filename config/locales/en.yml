@@ -16,6 +16,8 @@ en:
         dob_year: Year
         dob_month: Month
         dob_day: Day
+      payment_errors:
+        payment_error_heading: A problem with your payment
       errors:
         heading: A problem to fix
       manual_address:
