@@ -85,5 +85,55 @@ module WasteCarriersEngine
         subject.prepare_for_payment(mode, user)
       end
     end
+
+    describe "#location_changed_from_overseas?" do
+      context "when the registration is has an overseas location" do
+        before { subject.registration.location = "overseas" }
+
+        context "when the edit_registration has a UK location" do
+          before { subject.location = "england" }
+
+          it "returns true" do
+            expect(subject.location_changed_from_overseas?).to be_truthy
+          end
+        end
+
+        context "when the edit_registration does not have a UK location" do
+          before { subject.location = "overseas" }
+
+          it "returns false" do
+            expect(subject.location_changed_from_overseas?).to be_falsey
+          end
+        end
+      end
+
+      context "when the registration is has an overseas business type" do
+        before { subject.registration.business_type = "overseas" }
+
+        context "when the edit_registration has a UK location" do
+          before { subject.location = "england" }
+
+          it "returns true" do
+            expect(subject.location_changed_from_overseas?).to be_truthy
+          end
+        end
+
+        context "when the edit_registration does not have a UK location" do
+          before { subject.location = "overseas" }
+
+          it "returns false" do
+            expect(subject.location_changed_from_overseas?).to be_falsey
+          end
+        end
+      end
+
+      context "when the registration is not overseas" do
+        before { subject.registration.location = "england" }
+
+        it "returns false" do
+          expect(subject.location_changed_from_overseas?).to be_falsey
+        end
+      end
+    end
   end
 end
