@@ -32,7 +32,7 @@
         <p><%= t(".renewing_registration.expiry_date", expiry_date: @presenter.projected_renewal_end_date) %></p>
 
         <% if @check_your_answers_form.registration_type_changed? %>
-          <p><%= t(".renewing_registration.charge", charge: display_pence_as_pounds(Rails.configuration.type_change_charge)) %></p>
+          <p><%= t(".renewing_registration.charge", charge: display_pence_as_pounds(Rails.configuration.type_change_charge + Rails.configuration.renewal_charge)) %></p>
         <% else %>
           <p><%= t(".renewing_registration.charge", charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
         <% end %>
