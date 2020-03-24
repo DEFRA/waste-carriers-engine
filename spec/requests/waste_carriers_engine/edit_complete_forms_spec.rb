@@ -64,6 +64,28 @@ module WasteCarriersEngine
 
               expect(response).to have_http_status(200)
             end
+
+            context "when there is a change in registration type" do
+              let(:transient_registration) do
+                create(:edit_registration,
+                       :has_changed_registration_type,
+                       contact_email: updated_email,
+                       addresses: [updated_registered_address, updated_contact_address],
+                       key_people: [updated_person],
+                       workflow_state: "edit_complete_form")
+              end
+
+              it "generates a new order in the registration" do
+                old_orders_count = registration.finance_details.orders.count
+                transient_registration.prepare_for_payment(:bank_transfer, user)
+
+                get new_edit_complete_form_path(transient_registration.token)
+
+                registration.reload
+
+                expect(registration.finance_details.orders.count).to eq(old_orders_count + 1)
+              end
+            end
           end
 
           context "when the workflow_state is not correct" do
