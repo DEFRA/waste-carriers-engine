@@ -56,16 +56,13 @@ module WasteCarriersEngine
     end
 
     def age_cutoff_date
-      age_limits = {
-        limitedCompany: 16.years,
-        limitedLiabilityPartnership: 17.years,
-        localAuthority: 17.years,
-        overseas: 17.years,
-        partnership: 17.years,
-        soleTrader: 17.years
-      }
+      age_limit = if business_type == "limitedCompany"
+                    16.years
+                  else
+                    17.years
+                  end
 
-      (Date.today - age_limits[business_type.to_sym]) + 1.day
+      (Date.today - age_limit) + 1.day
     end
 
     def age_limit_error_message

@@ -308,32 +308,36 @@ module WasteCarriersEngine
           end
         end
 
-        shared_examples_for "age limits for main people" do |business_type, age_limit|
+        context "when the business type is limitedCompany" do
           before(:each) do
-            main_people_form.business_type = business_type
+            main_people_form.business_type = "limitedCompany"
           end
 
-          it "should be valid when at the age limit" do
-            main_people_form.dob = Date.today - age_limit.years
+          it "should be valid when 16 years old" do
+            main_people_form.dob = Date.today - 16.years
             expect(main_people_form).to be_valid
           end
 
-          it "should not be valid when under the age limit" do
-            main_people_form.dob = Date.today - (age_limit.years - 1.year)
+          it "should not be valid when less than 16 years old" do
+            main_people_form.dob = Date.today - 15.years
             expect(main_people_form).to_not be_valid
           end
         end
 
-        {
-          # Permutation table of business_type and age limit
-          "localAuthority" => 17,
-          "limitedCompany" => 16,
-          "limitedLiabilityPartnership" => 17,
-          "overseas" => 17,
-          "partnership" => 17,
-          "soleTrader" => 17
-        }.each do |business_type, age_limit|
-          it_behaves_like "age limits for main people", business_type, age_limit
+        context "when the business type is not limitedCompany" do
+          before(:each) do
+            main_people_form.business_type = "soleTrader"
+          end
+
+          it "should be valid when 17 years old" do
+            main_people_form.dob = Date.today - 17.years
+            expect(main_people_form).to be_valid
+          end
+
+          it "should not be valid when less than 17 years old" do
+            main_people_form.dob = Date.today - 16.years
+            expect(main_people_form).to_not be_valid
+          end
         end
       end
     end

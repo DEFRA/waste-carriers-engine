@@ -13,6 +13,8 @@ en:
           overseas: Business owner details
           partnership: Partner details
           soleTrader: Business owner details
+          authority: Chief executive details
+          publicBody: Chief executive details
         description_1:
           localAuthority: Enter the name and date of birth for each chief executive of the business.
           limitedCompany: Enter the name and date of birth for each director of the business.
@@ -20,6 +22,8 @@ en:
           overseas: Enter the name and date of birth for each owner of the business.
           partnership:  Enter the name and date of birth for each partner of the business.
           soleTrader: Enter the name and date of birth of the business owner.
+          authority: Enter the name and date of birth for each chief executive of the business.
+          publicBody: Enter the name and date of birth for each chief executive of the business.
         add_person_link: Add another person
         next_button: Continue
   activemodel:
@@ -43,6 +47,8 @@ en:
               age_limit_overseas: "Business owners must be 17 or older"
               age_limit_partnership: "Partners must be 17 or older"
               age_limit_soleTrader: "Business owners must be 17 or older"
+              age_limit_authority: "Chief executives must be 17 or older"
+              age_limit_publicBody: "Chief executives must be 17 or older"
               not_a_date: "You must enter a valid date"
               day_blank: "You must enter a day"
               day_integer: "The day must be a number"
