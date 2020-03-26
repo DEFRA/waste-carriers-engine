@@ -226,13 +226,6 @@ module WasteCarriersEngine
           end
         end
 
-        describe "GET edit_location" do
-          it "redirects to the location form" do
-            get location_edit_forms_path(token)
-            expect(response).to redirect_to(new_location_form_path(token))
-          end
-        end
-
         # Rather than heavily test all these near-identical controller actions, we'll just test cbd_type:
 
         context "when the token is not valid" do
