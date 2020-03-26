@@ -11,6 +11,8 @@ en:
           partnership: What's the name of the partnership?
           soleTrader: What's the name of the business?
           charity: What's the name of the charity or trust?
+          authority: What's the name of the local authority?
+          publicBody: What's the name of the public body?
         company_name_label:
           localAuthority: Local authority or public body name
           limitedCompany: Company trading name
@@ -19,6 +21,8 @@ en:
           partnership: Partnership trading name
           soleTrader: Business trading name
           charity: Charity or trust registered name
+          authority: Local authority name
+          publicBody: Public body name
         error_heading: Something is wrong
         next_button: Continue
   activemodel:

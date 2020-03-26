@@ -67,6 +67,8 @@ en:
             partnership: partner
             soleTrader: business owner
             charity: charity or trust owner
+            authority: chief executive
+            publicBody: chief executive
           location:
             england: England
             wales: Wales
