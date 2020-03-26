@@ -126,5 +126,11 @@ FactoryBot.define do
       has_paid_order
       is_submitted
     end
+
+    trait :revoked do
+      after(:build, :create) do |renewing_registration|
+        renewing_registration.metaData.revoke
+      end
+    end
   end
 end

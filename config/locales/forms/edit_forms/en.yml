@@ -47,7 +47,6 @@ en:
             phone_number: contact phone
             contact_email: contact email
             contact_address: contact address
-            location: location
         values:
           business_type:
             soleTrader: Individual or sole trader

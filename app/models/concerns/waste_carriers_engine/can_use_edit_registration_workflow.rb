@@ -20,7 +20,6 @@ module WasteCarriersEngine
         state :cbd_type_form
 
         # Business details
-        state :business_type_form
         state :company_name_form
         state :main_people_form
         state :company_postcode_form
@@ -34,9 +33,6 @@ module WasteCarriersEngine
         state :contact_postcode_form
         state :contact_address_form
         state :contact_address_manual_form
-
-        # Location
-        state :location_form
 
         # Complete an edit
         state :declaration_form
@@ -99,11 +95,6 @@ module WasteCarriersEngine
                       to: :contact_postcode_form
         end
 
-        event :edit_location do
-          transitions from: :edit_form,
-                      to: :location_form
-        end
-
         # Cancellation
         event :cancel_edit do
           transitions from: :edit_form,
@@ -116,9 +107,6 @@ module WasteCarriersEngine
                       to: :edit_form
 
           # Business details
-          transitions from: :business_type_form,
-                      to: :edit_form
-
           transitions from: :company_name_form,
                       to: :edit_form
 
@@ -171,14 +159,6 @@ module WasteCarriersEngine
           transitions from: :contact_address_manual_form,
                       to: :edit_form
 
-          # Location
-          transitions from: :location_form,
-                      to: :business_type_form,
-                      if: :location_changed_from_overseas?
-
-          transitions from: :location_form,
-                      to: :edit_form
-
           # Complete an edit
           transitions from: :edit_form,
                       to: :declaration_form
@@ -215,9 +195,6 @@ module WasteCarriersEngine
                       to: :edit_form
 
           # Business details
-          transitions from: :business_type_form,
-                      to: :location_form
-
           transitions from: :company_name_form,
                       to: :edit_form
 
@@ -261,10 +238,6 @@ module WasteCarriersEngine
 
           transitions from: :contact_address_manual_form,
                       to: :contact_postcode_form
-
-          # Location
-          transitions from: :location_form,
-                      to: :edit_form
 
           # Complete an edit
           transitions from: :declaration_form,

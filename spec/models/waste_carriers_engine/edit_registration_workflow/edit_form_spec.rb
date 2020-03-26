@@ -16,7 +16,6 @@ module WasteCarriersEngine
           contact_name_form
           contact_phone_form
           contact_email_form
-          location_form
         ]
         transitionable_states = non_address_editable_form_states + %i[company_postcode_form
                                                                       contact_postcode_form
@@ -40,6 +39,7 @@ module WasteCarriersEngine
 
           context "when the registration is not overseas" do
             before { edit_registration.location = "england" }
+
             it "changes to :company_postcode_form after the 'edit_company_address' event" do
               expect(subject).to transition_from(current_state).to(:company_postcode_form).on_event(:edit_company_address)
             end

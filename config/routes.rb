@@ -146,11 +146,6 @@ WasteCarriersEngine::Engine.routes.draw do
                     as: "contact_address",
                     on: :collection
 
-                get "location",
-                    to: "edit_forms#edit_location",
-                    as: "location",
-                    on: :collection
-
                 get "cancel",
                     to: "edit_forms#cancel",
                     as: "cancel",

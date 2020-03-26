@@ -265,7 +265,7 @@ module WasteCarriersEngine
 
     describe "#stuck?" do
       context "when the registration is not submitted" do
-        let(:renewing_registration) { build(:renewing_registration) }
+        let(:renewing_registration) { build(:renewing_registration, :has_required_data) }
 
         it "returns false" do
           expect(renewing_registration.stuck?).to eq(false)
@@ -273,8 +273,16 @@ module WasteCarriersEngine
       end
 
       context "when the registration is submitted" do
+        context "and has been revoked" do
+          let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :revoked) }
+
+          it "returns false" do
+            expect(renewing_registration.stuck?).to eq(false)
+          end
+        end
+
         context "and has an outstanding payment" do
-          let(:renewing_registration) { build(:renewing_registration, :has_unpaid_balance) }
+          let(:renewing_registration) { build(:renewing_registration, :has_required_data, :has_unpaid_balance) }
 
           it "returns false" do
             expect(renewing_registration.stuck?).to eq(false)
@@ -282,23 +290,15 @@ module WasteCarriersEngine
         end
 
         context "and has an outstanding conviction check" do
-          let(:renewing_registration) { build(:renewing_registration, :is_submitted, :requires_conviction_check) }
+          let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :requires_conviction_check) }
 
           it "returns false" do
             expect(renewing_registration.stuck?).to eq(false)
           end
         end
 
-        context "and has been refused" do
-          let(:renewing_registration) { build(:renewing_registration, :is_submitted, :has_rejected_conviction_sign_off) }
-
-          it "returns true" do
-            expect(renewing_registration.stuck?).to eq(true)
-          end
-        end
-
         context "and has no outstanding checks" do
-          let(:renewing_registration) { build(:renewing_registration, :is_submitted, :has_paid_balance) }
+          let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :has_paid_balance) }
 
           it "returns true" do
             expect(renewing_registration.stuck?).to eq(true)
