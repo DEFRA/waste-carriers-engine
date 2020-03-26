@@ -19,13 +19,7 @@ module WasteCarriersEngine
         end
 
         context "on back" do
-          context "when the company only deals with amf waste" do
-            subject { build(:new_registration, workflow_state: "cbd_type_form", only_amf: "no") }
-
-            include_examples "has back transition", previous_state: "waste_types_form"
-          end
-
-          include_examples "has back transition", previous_state: "construction_demolition_form"
+          include_examples "has back transition", previous_state: "your_tier_form"
         end
       end
     end

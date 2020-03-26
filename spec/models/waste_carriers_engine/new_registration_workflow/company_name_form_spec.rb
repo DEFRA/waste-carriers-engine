@@ -28,25 +28,7 @@ module WasteCarriersEngine
           context "when the registration is lower tier" do
             subject { build(:new_registration, :lower, workflow_state: "company_name_form") }
 
-            context "when the waste is the main service" do
-              subject { build(:new_registration, :lower, workflow_state: "company_name_form", is_main_service: "yes") }
-
-              include_examples "has back transition", previous_state: "waste_types_form"
-            end
-
-            context "when the company only carries own waste" do
-              subject { build(:new_registration, :lower, workflow_state: "company_name_form", other_businesses: "no") }
-
-              include_examples "has back transition", previous_state: "construction_demolition_form"
-            end
-
-            include_examples "has back transition", previous_state: "construction_demolition_form"
-          end
-
-          context "when the registration's company is a charity" do
-            subject { build(:new_registration, workflow_state: "company_name_form", business_type: "charity") }
-
-            include_examples "has back transition", previous_state: "business_type_form"
+            include_examples "has back transition", previous_state: "your_tier_form"
           end
 
           context "When the registration requires a company number" do
