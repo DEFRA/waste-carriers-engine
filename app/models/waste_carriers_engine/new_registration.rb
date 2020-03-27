@@ -6,6 +6,7 @@ module WasteCarriersEngine
     include CanUseLock
 
     field :temp_start_option, type: String
+    field :temp_lookup_number, type: String
 
     after_initialize :build_meta_data
 
