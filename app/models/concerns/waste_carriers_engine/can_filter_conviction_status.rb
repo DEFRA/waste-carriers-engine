@@ -6,7 +6,8 @@ module WasteCarriersEngine
 
     included do
       scope :convictions_possible_match, lambda {
-        where("conviction_sign_offs.0.workflow_state": "possible_match")
+        where("conviction_sign_offs.0.workflow_state": "possible_match",
+              :"conviction_sign_offs.0.confirmed".ne => "yes")
       }
       scope :convictions_checks_in_progress, lambda {
         where("conviction_sign_offs.0.workflow_state": "checks_in_progress")
