@@ -14,3 +14,11 @@ en:
           paragraph_2: "If you cannot find it, call the Environment Agency helpline on 03708 506506 (Monday to Friday, 8am to 6pm) or email"
           paragraph_2_email: nccc-carrierbroker@environment-agency.gov.uk
         next_button: Continue
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/renew_registration_form:
+          attributes:
+            temp_lookup_number:
+              invalid_format: "The registration number is not in a valid format"
+              cannot_be_renewed: "You can't renew this registration yet"
