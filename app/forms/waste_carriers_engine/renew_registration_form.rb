@@ -5,5 +5,11 @@ module WasteCarriersEngine
     delegate :temp_lookup_number, to: :transient_registration
 
     validates_with RenewalLookupValidator
+
+    def submit(params)
+      params[:temp_lookup_number].upcase! if params[:temp_lookup_number].present?
+
+      super
+    end
   end
 end

@@ -67,6 +67,17 @@ module WasteCarriersEngine
               expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
             end
+
+            context "when the params are lowercase" do
+              let(:valid_params) { { temp_lookup_number: registration.reg_identifier.downcase } }
+
+              it "returns a 302 response and redirects to the renewal_start form" do
+                post renew_registration_forms_path(transient_registration[:token]), renew_registration_form: valid_params
+
+                expect(response).to have_http_status(302)
+                expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
+              end
+            end
           end
 
           context "when valid params are submitted and the registration cannot be renewed" do
