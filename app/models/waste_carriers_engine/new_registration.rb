@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
     after_initialize :build_meta_data
 
-    def prepare_for_payment(mode, _user)
+    def prepare_for_payment(mode, _user = nil)
       BuildNewRegistrationFinanceDetailsService.run(
         transient_registration: self,
         payment_method: mode

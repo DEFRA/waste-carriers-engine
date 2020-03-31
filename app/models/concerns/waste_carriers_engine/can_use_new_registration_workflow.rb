@@ -259,7 +259,10 @@ module WasteCarriersEngine
 
           transitions from: :declaration_form,
                       to: :registration_completed_form,
-                      if: :lower_tier?
+                      if: :lower_tier?,
+                      # TODO: This don't get triggered if in the `success`
+                      # callback block, hence we went for `after`
+                      after: :set_metadata_route
 
           transitions from: :declaration_form,
                       to: :cards_form

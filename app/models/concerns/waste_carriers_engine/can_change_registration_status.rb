@@ -57,6 +57,8 @@ module WasteCarriersEngine
 
       # Transition effects
       def set_expiry_date
+        return if registration.lower_tier?
+
         registration.update_attributes(expires_on: Rails.configuration.expires_after.years.from_now)
       end
 

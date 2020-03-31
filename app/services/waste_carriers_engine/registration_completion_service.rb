@@ -8,11 +8,13 @@ module WasteCarriersEngine
       @transient_registration = transient_registration
 
       transient_registration.with_lock do
+        prepare_finance_details_for_lower_tier
+
         copy_names_to_contact_address
         copy_data_from_transient_registration
 
         set_reg_identifier
-        set_expiry_date
+        set_expiry_date if registration.upper_tier?
 
         update_meta_data
 
@@ -43,6 +45,13 @@ module WasteCarriersEngine
       transient_registration.contact_address.last_name = transient_registration.last_name
     end
 
+    def prepare_finance_details_for_lower_tier
+      return if transient_registration.upper_tier?
+
+      transient_registration.prepare_for_payment(:worldpay)
+      transient_registration.reload
+    end
+
     def update_meta_data
       registration.metaData.route = transient_registration.metaData.route
       registration.metaData.date_registered = Time.current
@@ -70,6 +79,9 @@ module WasteCarriersEngine
     end
 
     def copy_data_from_transient_registration
+      # Make sure data are loaded into attributes if setted on this instance
+      transient_registration.reload
+
       new_attributes = transient_registration.attributes.except(
         "_id",
         "reg_identifier",
