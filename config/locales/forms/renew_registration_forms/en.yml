@@ -20,5 +20,8 @@ en:
         waste_carriers_engine/renew_registration_form:
           attributes:
             temp_lookup_number:
-              invalid_format: "The registration number is not in a valid format"
-              cannot_be_renewed: "You can't renew this registration yet"
+              expired: "The registration number you entered has expired"
+              lower_tier: "This is a lower tier registration so never expires. Call our helpline on 03708 506506 if you think this is incorrect."
+              no_match: "Enter a valid registration number"
+              not_yet_renewable: "This registration is not eligible for renewal until %{date}"
+              unrenewable_status: "This number is not registered. Call our helpline on 03708 506506 if you think this is incorrect."
