@@ -8,6 +8,10 @@
 
     <div class="form-group <%= "form-group-error" if @renew_registration_form.errors[:temp_lookup_number].any? %>">
       <fieldset id="temp_lookup_number">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
+        </legend>
+
         <% if @renew_registration_form.errors[:temp_lookup_number].any? %>
           <span class="error-message"><%= @renew_registration_form.errors[:temp_lookup_number].join(", ") %></span>
         <% end %>
