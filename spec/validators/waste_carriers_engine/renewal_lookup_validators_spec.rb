@@ -17,12 +17,12 @@ module WasteCarriersEngine
 
     context "when there is no matching registration" do
       before do
-        expect(Registration).to receive(:where).and_return(nil)
+        expect(Registration).to receive(:where).and_return([])
       end
 
       it "is invalid and sets the correct error message" do
-        expect(subject).to receive_message_chain(:errors, :add).with(:temp_lookup_number, :no_match)
         expect(subject).to_not be_valid
+        expect(subject.errors[:temp_lookup_number].first).to include("no_match")
       end
     end
 
@@ -45,8 +45,8 @@ module WasteCarriersEngine
         let(:upper_tier) { false }
 
         it "is invalid and sets the correct error message" do
-          expect(subject).to receive_message_chain(:errors, :add).with(:temp_lookup_number, :lower_tier)
           expect(subject).to_not be_valid
+          expect(subject.errors[:temp_lookup_number].first).to include("lower_tier")
         end
       end
 
@@ -79,8 +79,8 @@ module WasteCarriersEngine
             let(:in_renewal_window) { false }
 
             it "is invalid and sets the correct error message" do
-              expect(subject).to receive_message_chain(:errors, :add).with(:temp_lookup_number, :not_yet_renewable, date_can_renew_from)
               expect(subject).to_not be_valid
+              expect(subject.errors[:temp_lookup_number].first).to include("not_yet_renewable")
             end
           end
 
@@ -103,16 +103,16 @@ module WasteCarriersEngine
           end
 
           context "when it's beyond the expiry grace period" do
-            let(:expired_check_service) { false }
+            let(:in_expiry_grace_window) { false }
 
             it "is invalid and sets the correct error message" do
-              expect(subject).to receive_message_chain(:errors, :add).with(:temp_lookup_number, :expired)
               expect(subject).to_not be_valid
+              expect(subject.errors[:temp_lookup_number].first).to include("expired")
             end
           end
 
           context "when it's within the expiry grace period" do
-            let(:expired_check_service) { true }
+            let(:in_expiry_grace_window) { true }
 
             it "is valid" do
               expect(subject).to be_valid
@@ -125,8 +125,8 @@ module WasteCarriersEngine
           let(:expired) { false }
 
           it "is invalid and sets the correct error message" do
-            expect(subject).to receive_message_chain(:errors, :add).with(:temp_lookup_number, :unrenewable_status)
             expect(subject).to_not be_valid
+            expect(subject.errors[:temp_lookup_number].first).to include("unrenewable_status")
           end
         end
       end
