@@ -20,7 +20,9 @@ en:
           value: "nccc-carrierbroker@environment-agency.gov.uk"
         telephone:
           heading: "Telephone"
-          value: "03708 506 506"
+          value:
+            display: "03708 506 506"
+            href: "03708506506"
         subheading_2: "If your details change"
         paragraph_2: "If any of the details you've given us change, you must update them within 28 days by contacting the Environment Agency."
         subheading_3: "Registration checks"
