@@ -7,7 +7,7 @@ module WasteCarriersEngine
     validates_with RenewalLookupValidator
 
     def submit(params)
-      params[:temp_lookup_number].upcase! if params[:temp_lookup_number].present?
+      params[:temp_lookup_number]&.upcase!
 
       super
     end
