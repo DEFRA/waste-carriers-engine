@@ -7,22 +7,16 @@
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
     <div class="form-group <%= "form-group-error" if @renew_registration_form.errors[:temp_lookup_number].any? %>">
-      <fieldset id="temp_lookup_number">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
+      <% if @renew_registration_form.errors[:temp_lookup_number].any? %>
+        <span class="error-message"><%= @renew_registration_form.errors[:temp_lookup_number].join(", ") %></span>
+      <% end %>
 
-        <% if @renew_registration_form.errors[:temp_lookup_number].any? %>
-          <span class="error-message"><%= @renew_registration_form.errors[:temp_lookup_number].join(", ") %></span>
-        <% end %>
+      <%= f.label :temp_lookup_number, class: "form-label" do %>
+        <%= t(".temp_lookup_number_label") %>
+        <span class="form-hint"><%= t(".temp_lookup_number_hint") %></span>
+      <% end %>
 
-        <%= f.label :temp_lookup_number, class: "form-label" do %>
-          <%= t(".temp_lookup_number_label") %>
-          <span class="form-hint"><%= t(".temp_lookup_number_hint") %></span>
-        <% end %>
-
-        <%= f.text_field :temp_lookup_number, value: @renew_registration_form.temp_lookup_number, class: "form-control" %>
-      </fieldset>
+      <%= f.text_field :temp_lookup_number, value: @renew_registration_form.temp_lookup_number, class: "form-control" %>
     </div>
 
     <div class="form-group">
