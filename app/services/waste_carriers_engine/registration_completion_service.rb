@@ -48,11 +48,9 @@ module WasteCarriersEngine
 
     def copy_key_people_from_transient_registration
       # Only copy relevant people if the user has declared convictions
-      if transient_registration.has_declared_convictions?
-        registration.key_people = transient_registration.key_people
-      else
-        registration.key_people = transient_registration.main_people
-      end
+      return registration.key_people = transient_registration.key_people if transient_registration.declared_convictions?
+
+      registration.key_people = transient_registration.main_people
     end
 
     def prepare_finance_details_for_lower_tier
@@ -88,6 +86,7 @@ module WasteCarriersEngine
       registration.reg_identifier = transient_registration.reg_identifier
     end
 
+    # rubocop:disable Metrics/MethodLength
     def copy_data_from_transient_registration
       # Make sure data are loaded into attributes if setted on this instance
       transient_registration.reload
@@ -114,5 +113,6 @@ module WasteCarriersEngine
 
       registration.write_attributes(new_attributes)
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

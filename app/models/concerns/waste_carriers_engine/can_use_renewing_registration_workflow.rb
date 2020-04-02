@@ -201,7 +201,7 @@ module WasteCarriersEngine
 
           transitions from: :declare_convictions_form,
                       to: :conviction_details_form,
-                      if: :has_declared_convictions?
+                      if: :declared_convictions?
 
           transitions from: :declare_convictions_form,
                       to: :contact_name_form
@@ -403,7 +403,7 @@ module WasteCarriersEngine
 
           transitions from: :contact_name_form,
                       to: :conviction_details_form,
-                      if: :has_declared_convictions?
+                      if: :declared_convictions?
 
           transitions from: :contact_name_form,
                       to: :declare_convictions_form

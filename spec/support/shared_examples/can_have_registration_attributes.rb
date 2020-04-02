@@ -28,12 +28,12 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
-  describe "#has_declared_convictions?" do
+  describe "#declared_convictions?" do
     context "when the resource has declared convictions" do
       let(:resource) { build(factory, declared_convictions: "yes") }
 
       it "returns true" do
-        expect(resource.has_declared_convictions?).to eq(true)
+        expect(resource.declared_convictions?).to eq(true)
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:resource) { build(factory, declared_convictions: "no") }
 
       it "returns false" do
-        expect(resource.has_declared_convictions?).to eq(false)
+        expect(resource.declared_convictions?).to eq(false)
       end
     end
   end

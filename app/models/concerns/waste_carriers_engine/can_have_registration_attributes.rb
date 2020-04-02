@@ -129,7 +129,7 @@ module WasteCarriersEngine
         key_people.where(person_type: "KEY")
       end
 
-      def has_declared_convictions?
+      def declared_convictions?
         declared_convictions == "yes"
       end
 
