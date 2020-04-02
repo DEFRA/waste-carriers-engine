@@ -17,25 +17,9 @@
     <% end %>
   </ul>
 
-  <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
+  <%= render "shared/contact_environment_agency" %>
 
-  <p><%= t(".paragraph_2") %></p>
+  <%= render "shared/registration_checks" %>
 
-  <p>
-    <%= t(".email.heading") %>
-    <br>
-    <a href="mailto:<%= t(".email.value") %>"><%= t(".email.value") %></a>
-  </p>
-
-  <p>
-    <%= t(".telephone.heading") %>
-    <br>
-    <a href="tel:<%= t(".telephone.value.href") %>"><%= t(".telephone.value.display") %></a>
-  </p>
-
-  <h2 class="heading-medium"><%= t(".subheading_3") %></h2>
-
-  <p><%= t(".paragraph_3") %></p>
-
-  <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+  <%= render "shared/link_to_survey" %>
 </div>
