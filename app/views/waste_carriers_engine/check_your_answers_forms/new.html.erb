@@ -139,7 +139,7 @@
 
         <p><%= t(".declared_convictions.#{@check_your_answers_form.declared_convictions}") %></p>
 
-        <% if @presenter.declared_convictions %>
+        <% if @presenter.declared_convictions? %>
           <% @presenter.relevant_people.each do |person| %>
             <ul class="list">
               <li><%= person.first_name %> <%= person.last_name %></li>

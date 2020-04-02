@@ -12,6 +12,7 @@ module WasteCarriersEngine
 
         copy_names_to_contact_address
         copy_data_from_transient_registration
+        copy_key_people_from_transient_registration
 
         set_reg_identifier
         set_expiry_date if registration.upper_tier?
@@ -43,6 +44,15 @@ module WasteCarriersEngine
     def copy_names_to_contact_address
       transient_registration.contact_address.first_name = transient_registration.first_name
       transient_registration.contact_address.last_name = transient_registration.last_name
+    end
+
+    def copy_key_people_from_transient_registration
+      # Only copy relevant people if the user has declared convictions
+      if transient_registration.has_declared_convictions?
+        registration.key_people = transient_registration.key_people
+      else
+        registration.key_people = transient_registration.main_people
+      end
     end
 
     def prepare_finance_details_for_lower_tier
@@ -98,7 +108,8 @@ module WasteCarriersEngine
         "_type",
         "workflow_state",
         "locking_name",
-        "locked_at"
+        "locked_at",
+        "key_people"
       )
 
       registration.write_attributes(new_attributes)

@@ -201,7 +201,7 @@ module WasteCarriersEngine
 
           transitions from: :declare_convictions_form,
                       to: :conviction_details_form,
-                      if: :declared_convictions?
+                      if: :has_declared_convictions?
 
           transitions from: :declare_convictions_form,
                       to: :contact_name_form
@@ -403,7 +403,7 @@ module WasteCarriersEngine
 
           transitions from: :contact_name_form,
                       to: :conviction_details_form,
-                      if: :declared_convictions?
+                      if: :has_declared_convictions?
 
           transitions from: :contact_name_form,
                       to: :declare_convictions_form
@@ -552,10 +552,6 @@ module WasteCarriersEngine
 
     def should_register_in_wales?
       location == "wales"
-    end
-
-    def declared_convictions?
-      declared_convictions == "yes"
     end
 
     def paying_by_card?

@@ -58,6 +58,10 @@ FactoryBot.define do
       end
     end
 
+    trait :declared_convictions do
+      declared_convictions { "yes" }
+    end
+
     trait :has_postcode do
       temp_company_postcode { "BS1 5AH" }
       temp_contact_postcode { "BS1 5AH" }
