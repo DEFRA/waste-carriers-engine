@@ -38,6 +38,25 @@ module WasteCarriersEngine
         expect(new_registration_scope.any?).to be_falsey
       end
 
+      context "when the registration is a lower tier registration" do
+        let(:transient_registration) do
+          create(
+            :new_registration,
+            :has_required_lower_tier_data
+          )
+        end
+
+        it "activates the registration, set up finance details and does not set an expire date" do
+          registration = described_class.run(transient_registration)
+
+          expect(registration.expires_on).to be_nil
+          expect(registration).to be_active
+          expect(registration.finance_details).to be_present
+          expect(registration.finance_details.orders.count).to eq(1)
+          expect(registration.finance_details.balance).to eq(0)
+        end
+      end
+
       context "when the balance have been cleared and there are no pending convictions checks" do
         let(:finance_details) { build(:finance_details, :has_paid_order_and_payment) }
 

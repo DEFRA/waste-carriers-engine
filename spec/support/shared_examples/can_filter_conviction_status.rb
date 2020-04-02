@@ -45,6 +45,17 @@ RSpec.shared_examples "Can filter conviction status" do
     record
   end
 
+  let(:old_confirmed_record) do
+    record = described_class.new(
+      conviction_sign_offs: [
+        WasteCarriersEngine::ConvictionSignOff.new(confirmed: "yes")
+      ]
+    )
+    # Skip the validation so we don't have to include addresses, etc
+    record.save(validate: false)
+    record
+  end
+
   let(:no_status_pending) do
     record = described_class.new(
       conviction_sign_offs: [
@@ -91,6 +102,10 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).to_not include(checks_in_progress)
       expect(scope).to_not include(approved)
       expect(scope).to_not include(rejected)
+      expect(scope).to_not include(old_confirmed_record)
+      expect(scope).to_not include(no_status_pending)
+      expect(scope).to_not include(no_status_active)
+      expect(scope).to_not include(no_status_approved)
     end
   end
 
@@ -102,6 +117,10 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).to include(checks_in_progress)
       expect(scope).to_not include(approved)
       expect(scope).to_not include(rejected)
+      expect(scope).to_not include(old_confirmed_record)
+      expect(scope).to_not include(no_status_pending)
+      expect(scope).to_not include(no_status_active)
+      expect(scope).to_not include(no_status_approved)
     end
   end
 
@@ -113,6 +132,10 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).to_not include(checks_in_progress)
       expect(scope).to include(approved)
       expect(scope).to_not include(rejected)
+      expect(scope).to_not include(old_confirmed_record)
+      expect(scope).to_not include(no_status_pending)
+      expect(scope).to_not include(no_status_active)
+      expect(scope).to_not include(no_status_approved)
     end
   end
 
@@ -124,6 +147,10 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).to_not include(checks_in_progress)
       expect(scope).to_not include(approved)
       expect(scope).to include(rejected)
+      expect(scope).to_not include(old_confirmed_record)
+      expect(scope).to_not include(no_status_pending)
+      expect(scope).to_not include(no_status_active)
+      expect(scope).to_not include(no_status_approved)
     end
   end
 
@@ -135,6 +162,7 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).to_not include(checks_in_progress)
       expect(scope).to_not include(approved)
       expect(scope).to_not include(rejected)
+      expect(scope).to_not include(old_confirmed_record)
       expect(scope).to include(no_status_pending)
       expect(scope).to_not include(no_status_active)
       expect(scope).to_not include(no_status_approved)

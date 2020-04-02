@@ -100,6 +100,8 @@ module WasteCarriersEngine
     private
 
     def generate_description
+      return unless order_items.any?
+
       description = order_items.map(&:description)
                                .join(", plus ")
 

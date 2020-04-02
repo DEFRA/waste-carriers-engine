@@ -24,9 +24,9 @@ module WasteCarriersEngine
 
       order.order_items = []
 
-      order.order_items << OrderItem.new_registration_item
+      order.order_items << OrderItem.new_registration_item if transient_registration.upper_tier?
 
-      if transient_registration.temp_cards.positive?
+      if transient_registration.temp_cards&.positive?
         order.order_items << OrderItem.new_copy_cards_item(transient_registration.temp_cards)
       end
 

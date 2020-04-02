@@ -8,11 +8,10 @@ en:
         paragraph_1: "We've sent a confirmation email to %{email}."
         subheading_1: "What happens next"
         paragraph_2: "We’ll check your details and let you know whether your application has been successful. We aim to do this within 10 working days."
-        paragraph_3: "You’re not legally entitled to operate as a waste carrier until we have received your payment and confirmed your registration."
+        paragraph_3: "You’re not legally entitled to operate as a waste carrier until we have confirmed your registration."
         contact:
           paragraph_1: "Contact the Environment Agency on"
           email: "nccc-carrierbroker@environment-agency.gov.uk"
           text: "or 03708 506506 within 28 days if you have questions about your registration."
         survey_link_text: What did you think of the service?
         survey_link_hint: (takes 30 seconds)
-
