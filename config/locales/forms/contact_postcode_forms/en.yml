@@ -4,7 +4,7 @@ en:
       new:
         title: Contact address postcode
         heading: What's the contact address?
-        detail_paragraph: We’ll only write to you about your waste carrier account, for example if you order copy cards.
+        detail_paragraph: We’ll only write to you if we cannot reach you via email.
         temp_contact_postcode_label: Please enter a UK postcode
         temp_contact_postcode_hint: For example, BS1 5AH
         error_heading: A problem to fix
