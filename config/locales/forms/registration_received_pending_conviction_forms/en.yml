@@ -3,7 +3,7 @@ en:
     registration_received_pending_conviction_forms:
       new:
         title: "Application received"
-        heading: "Application received."
+        heading: "Application received"
         highlight_text: "Please use this registration number if you contact us:"
         paragraph_1: "We've sent a confirmation email to %{email}."
         subheading_1: "What happens next"
