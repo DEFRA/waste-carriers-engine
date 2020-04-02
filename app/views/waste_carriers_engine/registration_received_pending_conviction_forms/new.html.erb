@@ -1,7 +1,7 @@
 <div class="column-two-thirds">
   <div class="govuk-box-highlight govuk-box-highlight_blue">
     <h1 class="heading-xlarge"><%= t(".heading") %></h1>
-    <h2 class="heading-large"><%= t(".highlight_text") %><br>
+    <p class="font-large bold"><%= t(".highlight_text") %><br>
     <span class="strong"><%= @registration.reg_identifier %></span></p>
   </div>
 
@@ -13,11 +13,9 @@
     <p><%= t(".paragraph_3") %></p>
   </div>
 
-  <p>
-    <%= t(".contact.paragraph_1") %>
-    <a href="mailto:<%= t(".contact.email") %>"><%= t(".contact.email") %></a>
-    <%= t(".contact.text") %>
-  </p>
+  <%= render "shared/contact_environment_agency" %>
 
-  <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+  <%= render "shared/registration_checks" %>
+
+  <%= render "shared/link_to_survey" %>
 </div>

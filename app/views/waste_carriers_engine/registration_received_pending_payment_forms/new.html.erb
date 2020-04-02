@@ -14,13 +14,9 @@
     <% end %>
   </ul>
 
-  <div class="panel">
-    <p>
-      <%= t(".contact.paragraph_1") %>
-      <a href="mailto:<%= t(".contact.email") %>"><%= t(".contact.email") %></a>
-      <%= t(".contact.text") %>
-    </p>
-  </div>
+  <%= render "shared/contact_environment_agency" %>
 
-  <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+  <%= render "shared/registration_checks" %>
+
+  <%= render "shared/link_to_survey" %>
 </div>
