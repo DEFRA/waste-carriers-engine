@@ -62,8 +62,8 @@
             <li><%= t(".main_service.#{@presenter.is_main_service}") %></li>
           <% end %>
 
-          <% if @presenter.only_amf == "yes" %>
-            <li><%= t(".only_amf") %></li>
+          <% if @presenter.only_amf.present? %>
+            <li><%= t(".only_amf.#{@presenter.only_amf}") %></li>
           <% end %>
 
           <% if @presenter.construction_waste.present? %>

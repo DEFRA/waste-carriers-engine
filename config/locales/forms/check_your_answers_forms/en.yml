@@ -62,7 +62,9 @@ en:
         main_service:
           "yes": "you just collect or move waste created by your customers"
           "no": "you produce the waste as part of a service you provide"
-        only_amf: "you only deal with agricultural waste, animal by-products or waste from mines or quarries"
+        only_amf:
+          "yes": "you only deal with agricultural waste, animal by-products or waste from mines or quarries"
+          "no": "you do not only deal with agricultural waste, animal by-products or waste from mines or quarries"
         construction_waste:
           "yes": "you deal with construction or demolition waste"
           "no": "you do not deal with construction or demolition waste"
