@@ -1,0 +1,21 @@
+<details>
+  <summary><span class="summary"><%= t(".summary") %></span></summary>
+
+  <div class="panel panel-border-narrow">
+    <p><%= t(".paragraph_1") %></p>
+
+    <ul class="list list-bullet">
+      <% t(".list_1").each do |list_item| %>
+        <li><%= list_item %></li>
+      <% end %>
+    </ul>
+
+    <p><%= t(".paragraph_2") %></p>
+
+    <ul class="list list-bullet">
+      <% t(".list_2").each do |list_item| %>
+        <li><%= list_item %></li>
+      <% end %>
+    </ul>
+  </div>
+</details>

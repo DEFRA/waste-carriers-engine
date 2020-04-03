@@ -7,27 +7,7 @@
     <div class="form-group">
       <p><%= t(".paragraph_1.#{@transient_registration.tier}") %></p>
 
-      <details>
-        <summary><span class="summary"><%= t(".details.summary") %></span></summary>
-
-        <div class="panel panel-border-narrow">
-          <p><%= t(".details.paragraph_1") %></p>
-
-          <ul class="list list-bullet">
-            <% t(".details.list_1").each do |list_item| %>
-              <li><%= list_item %></li>
-            <% end %>
-          </ul>
-
-          <p><%= t(".details.paragraph_2") %></p>
-
-          <ul class="list list-bullet">
-            <% t(".details.list_2").each do |list_item| %>
-              <li><%= list_item %></li>
-            <% end %>
-          </ul>
-        </div>
-      </details>
+      <%= render "shared/what_are_lower_and_upper_tier" %>
     </div>
 
     <div class="form-group">
