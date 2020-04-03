@@ -43,7 +43,7 @@ en:
           paragraph_1: "If any of the details you've given us change, you must update them within 28 days."
           contact_number: "Telephone number: %{number}"
           registered_on: "Registered on: %{date}"
-          update_website_link_html: "You can <a href='%{link}'>sign in</a> here to view your certificate or make a change to your registration."
         footer:
-          item_1: "If you have enquiries please contact the Environment Agency helpline: 03708 506506"
+          item_1: "If you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk or contact the Environment Agency helpline: 03708 506506"
+          item_1_html: "If you have enquiries please email <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a> or contact the Environment Agency helpline: 03708 506506"
           item_2: "This is an automated email, please do not reply"

@@ -45,7 +45,7 @@
           <td width="25%">&nbsp;</td>
         </tr>
         <tr>
-          <td bgcolor="#00823B" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
+          <td bgcolor="#28A197" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
             <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
               <% if @registration.lower_tier? %>
                 <%= t(".section_1.reg_complete.lower") %>
@@ -169,13 +169,9 @@
               <%= t(".section_4.registered_on", date: @registration.metaData.date_registered) %>
             </p>
 
-            <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 30px 0;">
-              <%= t(".section_4.update_website_link_html", link: "#{Rails.configuration.wcrs_frontend_url}/users/sign_in") %>
-            </p>
-
             <ul>
               <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 15px 0;">
-                <%= t(".footer.item_1") %>
+                <%= t(".footer.item_1_html") %>
               </li>
               <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 30px 0;">
                 <%= t(".footer.item_2") %>
