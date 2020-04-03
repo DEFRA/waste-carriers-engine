@@ -1,0 +1,21 @@
+en:
+  waste_carriers_engine:
+    check_your_tier_forms:
+      new:
+        paragraph: "If you are not sure, you can check by answering a few questions about your business activities."
+        title: Check your tier
+        heading: What kind of registration do you need?
+        options:
+          unknown: "Help me decide"
+          lower: "I need a lower tier registration"
+          upper: "I need an upper tier registration"
+        help: We’ll only use your answers to determine what tier your registration should be. Your answers do not affect what you can do as a registered waste carrier, or license you to perform certain activities.
+        error_heading: Something is wrong
+        next_button: Continue
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/check_your_tier_form:
+          attributes:
+            temp_check_your_tier:
+              inclusion: "Select help me decide, upper tier or lower tier"

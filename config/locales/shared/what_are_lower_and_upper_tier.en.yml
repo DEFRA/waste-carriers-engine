@@ -1,0 +1,15 @@
+en:
+  shared:
+    what_are_lower_and_upper_tier:
+      summary: "What are lower and upper tiers?"
+      paragraph_1: "You are lower tier if you:"
+      list_1:
+        - "only carry waste produced by your own business unless it’s construction or demolition waste"
+        - "only work with animal by-products, mining and quarry waste or waste from agricultural premises"
+        - "are a charity or voluntary organisation"
+      paragraph_2: "If none of the lower tier criteria apply, you are upper tier. Examples include if you:"
+      list_2:
+        - "carry other people's waste"
+        - "carry your own construction or demolition waste"
+        - "arrange for waste from other businesses to be carried, recovered or disposed of"
+        - "buy or sell waste, or use an agent to do so"

@@ -1,0 +1,49 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_check_your_tier_forms_path(@check_your_tier.token)) %>
+
+<div class="text">
+  <%= form_for(@check_your_tier) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @check_your_tier) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <p><%= t(".paragraph") %></p>
+
+    <div class="form-group <%= "form-group-error" if @check_your_tier.errors[:temp_check_your_tier].any? %>">
+      <fieldset id="temp_check_your_tier">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
+        </legend>
+
+        <% if @check_your_tier.errors[:temp_check_your_tier].any? %>
+          <span class="error-message"><%= @check_your_tier.errors[:temp_check_your_tier].join(", ") %></span>
+        <% end %>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_check_your_tier, 'unknown' %>
+          <%= f.label :temp_check_your_tier, t(".options.unknown"), value: 'unknown' %>
+        </div>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_check_your_tier, 'upper' %>
+          <%= f.label :temp_check_your_tier, t(".options.upper"), value: 'upper' %>
+        </div>
+
+        <div class="multiple-choice">
+          <%= f.radio_button :temp_check_your_tier, 'lower' %>
+          <%= f.label :temp_check_your_tier, t(".options.lower"), value: 'lower' %>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="form-group">
+      <%= render "shared/what_are_lower_and_upper_tier" %>
+    </div>
+
+    <div class="form-group">
+      <p class="form-hint"><%= t(".help") %></p>
+    </div>
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
