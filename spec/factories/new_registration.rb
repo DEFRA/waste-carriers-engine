@@ -11,6 +11,7 @@ FactoryBot.define do
 
       metaData { build(:metaData, route: "DIGITAL") }
 
+      temp_check_your_tier { "unknown" }
       sequence :reg_identifier
 
       has_addresses
