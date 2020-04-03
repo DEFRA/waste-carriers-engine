@@ -11,7 +11,7 @@ module WasteCarriersEngine
     end
 
     def minimum_relevant_people
-      return 1 if transient_registration.declared_convictions == "yes"
+      return 1 if transient_registration.declared_convictions?
 
       0
     end

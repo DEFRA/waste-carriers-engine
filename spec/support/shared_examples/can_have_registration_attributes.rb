@@ -28,6 +28,24 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
+  describe "#declared_convictions?" do
+    context "when the resource has declared convictions" do
+      let(:resource) { build(factory, declared_convictions: "yes") }
+
+      it "returns true" do
+        expect(resource.declared_convictions?).to eq(true)
+      end
+    end
+
+    context "when the resource has no declared convictions" do
+      let(:resource) { build(factory, declared_convictions: "no") }
+
+      it "returns false" do
+        expect(resource.declared_convictions?).to eq(false)
+      end
+    end
+  end
+
   describe "#uk_location?" do
     let(:resource) { build(factory, location: location) }
 

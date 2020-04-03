@@ -6,7 +6,7 @@ module WasteCarriersEngine
       @transient_registration = transient_registration
 
       check_for_matches
-      add_conviction_sign_off if declared_convictions? || matching_or_unknown_convictions?
+      add_conviction_sign_off if transient_registration.declared_convictions? || matching_or_unknown_convictions?
     end
 
     private
@@ -20,10 +20,6 @@ module WasteCarriersEngine
       conviction_sign_off.confirmed = "no"
 
       @transient_registration.conviction_sign_offs = [conviction_sign_off]
-    end
-
-    def declared_convictions?
-      @transient_registration.declared_convictions == "yes"
     end
 
     def matching_or_unknown_convictions?

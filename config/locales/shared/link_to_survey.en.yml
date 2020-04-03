@@ -1,0 +1,5 @@
+en:
+  shared:
+    link_to_survey:
+      survey_link_text: What did you think of the service?
+      survey_link_hint: (takes 30 seconds)

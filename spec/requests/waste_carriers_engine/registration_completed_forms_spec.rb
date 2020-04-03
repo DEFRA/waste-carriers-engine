@@ -65,6 +65,7 @@ module WasteCarriersEngine
             expect(response).to render_template(:new)
             expect(registration).to be_valid
             expect(registration).to be_active
+            expect(registration.key_people.count).to eq(1)
             expect(WasteCarriersEngine::NewRegistration.count).to eq(new_registrations_count - 1)
           end
         end

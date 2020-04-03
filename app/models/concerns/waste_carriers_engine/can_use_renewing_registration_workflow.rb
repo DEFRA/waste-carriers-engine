@@ -554,10 +554,6 @@ module WasteCarriersEngine
       location == "wales"
     end
 
-    def declared_convictions?
-      declared_convictions == "yes"
-    end
-
     def paying_by_card?
       temp_payment_method == "card"
     end

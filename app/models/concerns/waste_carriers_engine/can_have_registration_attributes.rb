@@ -129,6 +129,10 @@ module WasteCarriersEngine
         key_people.where(person_type: "KEY")
       end
 
+      def declared_convictions?
+        declared_convictions == "yes"
+      end
+
       def relevant_people
         return [] unless key_people.present?
 
