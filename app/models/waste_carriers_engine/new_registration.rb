@@ -7,6 +7,7 @@ module WasteCarriersEngine
 
     field :temp_start_option, type: String
     field :temp_lookup_number, type: String
+    field :temp_check_your_tier, type: String
 
     after_initialize :build_meta_data
 

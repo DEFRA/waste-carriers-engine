@@ -34,6 +34,7 @@ module WasteCarriersEngine
         state :construction_demolition_form
         state :waste_types_form
 
+        state :check_your_tier_form
         state :your_tier_form
 
         state :cbd_type_form
@@ -116,7 +117,15 @@ module WasteCarriersEngine
                       after: :switch_to_lower_tier
 
           transitions from: :business_type_form,
-                      to: :other_businesses_form
+                      to: :check_your_tier_form
+
+          transitions from: :check_your_tier_form,
+                      to: :other_businesses_form,
+                      if: :check_your_tier_unknown?
+
+          transitions from: :check_your_tier_form,
+                      to: :your_tier_form,
+                      after: :set_tier_from_check_your_tier_form
 
           transitions from: :your_tier_form,
                       to: :company_name_form,
@@ -337,6 +346,9 @@ module WasteCarriersEngine
           transitions from: :business_type_form,
                       to: :location_form
 
+          transitions from: :check_your_tier_form,
+                      to: :business_type_form
+
           # Smart answers
           transitions from: :company_name_form,
                       to: :your_tier_form,
@@ -345,6 +357,10 @@ module WasteCarriersEngine
           transitions from: :your_tier_form,
                       to: :business_type_form,
                       if: :switch_to_lower_tier_based_on_business_type?
+
+          transitions from: :your_tier_form,
+                      to: :check_your_tier_form,
+                      unless: :check_your_tier_unknown?
 
           transitions from: :your_tier_form,
                       to: :construction_demolition_form,
@@ -370,7 +386,7 @@ module WasteCarriersEngine
                       if: :overseas?
 
           transitions from: :other_businesses_form,
-                      to: :business_type_form
+                      to: :check_your_tier_form
 
           transitions from: :service_provided_form,
                       to: :other_businesses_form
@@ -577,6 +593,16 @@ module WasteCarriersEngine
 
       def switch_to_upper_tier
         update_attributes(tier: WasteCarriersEngine::NewRegistration::UPPER_TIER)
+      end
+
+      def check_your_tier_unknown?
+        temp_check_your_tier == "unknown"
+      end
+
+      def set_tier_from_check_your_tier_form
+        return switch_to_upper_tier if temp_check_your_tier == "upper"
+
+        switch_to_lower_tier
       end
     end
     # rubocop:enable Metrics/BlockLength

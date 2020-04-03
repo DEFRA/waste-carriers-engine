@@ -27,7 +27,7 @@ module WasteCarriersEngine
             include_examples "has back transition", previous_state: "location_form"
           end
 
-          include_examples "has back transition", previous_state: "business_type_form"
+          include_examples "has back transition", previous_state: "check_your_tier_form"
         end
       end
     end

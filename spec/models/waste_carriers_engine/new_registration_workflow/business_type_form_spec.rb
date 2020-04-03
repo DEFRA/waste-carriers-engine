@@ -19,7 +19,7 @@ module WasteCarriersEngine
             end
           end
 
-          include_examples "has next transition", next_state: "other_businesses_form"
+          include_examples "has next transition", next_state: "check_your_tier_form"
         end
 
         context "on back" do
