@@ -36,6 +36,16 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
+    resources :check_your_tier_forms,
+              only: %i[new create],
+              path: "check-your-tier",
+              path_names: { new: "" } do
+                get "back",
+                    to: "check_your_tier_forms#go_back",
+                    as: "back",
+                    on: :collection
+              end
+
     resources :registration_received_pending_payment_forms,
               only: :new,
               path: "registration-received-pending-payment",
