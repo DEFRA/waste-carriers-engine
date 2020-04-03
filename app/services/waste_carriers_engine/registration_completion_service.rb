@@ -104,6 +104,7 @@ module WasteCarriersEngine
         "temp_payment_method",
         "temp_lookup_number",
         "temp_tier_check",
+        "temp_check_your_tier",
         "_type",
         "workflow_state",
         "locking_name",
