@@ -115,5 +115,20 @@ FactoryBot.define do
     trait :is_expired do
       metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
     end
+
+    trait :has_required_lower_tier_data do
+      business_type { "limitedCompany" }
+      company_name { "Acme Waste" }
+      company_no { "09360070" } # We need to use a valid company number
+      contact_email { "foo@example.com" }
+      first_name { "Jane" }
+      last_name { "Doe" }
+      phone_number { "03708 506506" }
+      tier { "LOWER" }
+
+      metaData { build(:metaData, :has_required_data) }
+
+      has_addresses
+    end
   end
 end

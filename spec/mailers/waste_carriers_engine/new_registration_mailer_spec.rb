@@ -25,16 +25,26 @@ module WasteCarriersEngine
         expect(mail.subject).to eq(subject)
       end
 
-      it "includes the correct template in the body" do
-        expect(mail.body.encoded).to include("You are now registered")
+      context "when the registration is upper tier" do
+        it "includes the correct template in the body" do
+          expect(mail.body.encoded).to include("upper-tier")
+        end
+
+        it "includes the correct reg_identifier in the body" do
+          expect(mail.body.encoded).to include(registration.reg_identifier)
+        end
+
+        it "includes the correct address in the body" do
+          expect(mail.body.encoded).to include(registration.registered_address.town_city)
+        end
       end
 
-      it "includes the correct reg_identifier in the body" do
-        expect(mail.body.encoded).to include(registration.reg_identifier)
-      end
+      context "when the registration is lower tier" do
+        let(:registration) { create(:registration, :has_required_lower_tier_data) }
 
-      it "includes the correct address in the body" do
-        expect(mail.body.encoded).to include(registration.registered_address.town_city)
+        it "includes the correct template in the body" do
+          expect(mail.body.encoded).to include("TODO")
+        end
       end
 
       context "attachments" do

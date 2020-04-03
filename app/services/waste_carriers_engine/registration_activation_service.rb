@@ -39,7 +39,6 @@ module WasteCarriersEngine
     end
 
     def send_confirmation_email
-      # TODO: Add email sent for lower tier
       NewRegistrationMailer.registration_activated(@registration).deliver_now
     rescue StandardError => e
       Airbrake.notify(e, registration_no: @registration.reg_identifier) if defined?(Airbrake)
