@@ -1,0 +1,34 @@
+<%= t(".dear", name: "#{@registration.first_name} #{@registration.last_name}") %>
+
+<%= t(".section_1.heading") %>
+
+<%= t(".section_1.paragraph_1") %>
+
+<%= t(".section_2.heading") %>
+
+<%= t(".section_2.sort_code.label") %>: <%= t(".section_2.sort_code.value") %>
+<%= t(".section_2.account_number.label") %>: <%= t(".section_2.account_number.value") %>
+<%= t(".section_2.payment_reference.label") %>: <%= @registration.reg_identifier %>
+<%= t(".section_2.payment_due.label") %>: <%= @registration.finance_details.balance %>
+
+<%= t(".section_3.heading") %>
+
+<%= t(".section_3.iban.label") %>: <%= t(".section_3.iban.value") %>
+<%= t(".section_3.swiftbic.label") %>: <%= t(".section_3.swiftbic.value") %>
+<%= t(".section_3.currency.label") %>: <%= t(".section_3.currency.value") %>
+
+<%= t(".section_4.heading", reg_identifier: @registration.reg_identifier) %>
+
+<%= t(".section_4.paragraph_1") %> <%= t(".section_4.email_text") %>
+
+<%= t(".section_4.paragraph_2", reg_identifier: @registration.reg_identifier) %>
+
+<%= t(".section_4.paragraph_3") %>
+
+<%= t(".section_4.paragraph_4") %>
+
+<%= t(".section_4.paragraph_5") %>
+
+<%= t(".section_4.paragraph_6") %>
+
+<%= t(".section_4.paragraph_7") %>

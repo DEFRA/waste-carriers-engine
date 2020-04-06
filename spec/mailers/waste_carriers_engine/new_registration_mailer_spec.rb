@@ -81,5 +81,31 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "registration_pending_payment" do
+      let(:registration) { create(:registration, :has_required_data, :expires_later) }
+      let(:mail) { NewRegistrationMailer.registration_pending_payment(registration) }
+
+      it "uses the correct 'to' address" do
+        expect(mail.to).to eq([registration.contact_email])
+      end
+
+      it "uses the correct 'from' address" do
+        expect(mail.from).to eq(["test@example.com"])
+      end
+
+      it "uses the correct subject" do
+        subject = "Pay for your waste carriers registration"
+        expect(mail.subject).to eq(subject)
+      end
+
+      it "includes the correct template in the body" do
+        expect(mail.body.encoded).to include("You need to pay")
+      end
+
+      it "includes the correct reg_identifier in the body" do
+        expect(mail.body.encoded).to include(registration.reg_identifier)
+      end
+    end
   end
 end

@@ -1,0 +1,110 @@
+<!doctype html>
+<!--[if lt IE 7]>  <html class="ie ie6 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 7]>     <html class="ie ie7 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 8]>     <html class="ie ie8 lte9 lte8"> <![endif]-->
+<!--[if IE 9]>     <html class="ie ie9 lte9"> <![endif]-->
+<!--[if gt IE 9]>  <html> <![endif]-->
+<!--[if !IE]><!--> <html> <!--<![endif]-->
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Waste Carriers Service</title>
+</head>
+
+<body style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td width="100%" height="53px" bgcolor="#0b0c0c">
+      <table width="580" cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+          <td width="100%" bgcolor="#0b0c0c" valign="middle">
+            <%= email_image_tag("govuk_logotype_email.png", { alt: "GOV.UK", border: "0"}) %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p>
+  <%= t(".dear", name: "#{@registration.first_name} #{@registration.last_name}") %>
+</p>
+
+<h1>
+  <%= t(".section_1.heading") %>
+</h1>
+
+<p>
+  <%= t(".section_1.paragraph_1") %>
+</p>
+
+<h2>
+  <%= t(".section_2.heading") %>
+</h2>
+
+<ul>
+  <li>
+    <%= t(".section_2.sort_code.label") %>: <%= t(".section_2.sort_code.value") %>
+  </li>
+  <li>
+    <%= t(".section_2.account_number.label") %>: <%= t(".section_2.account_number.value") %>
+  </li>
+  <li>
+    <%= t(".section_2.payment_reference.label") %>: <%= @registration.reg_identifier %>
+  </li>
+  <li>
+    <%= t(".section_2.payment_due.label") %>: <%= @registration.finance_details.balance %>
+  </li>
+</ul>
+
+<h3>
+  <%= t(".section_3.heading") %>
+</h3>
+
+<ul>
+  <li>
+    <%= t(".section_3.iban.label") %>: <%= t(".section_3.iban.value") %>
+  </li>
+  <li>
+    <%= t(".section_3.swiftbic.label") %>: <%= t(".section_3.swiftbic.value") %>
+  </li>
+  <li>
+    <%= t(".section_3.currency.label") %>: <%= t(".section_3.currency.value") %>
+  </li>
+</ul>
+
+<h2>
+  <%= t(".section_4.heading", reg_identifier: @registration.reg_identifier) %>
+</h2>
+
+<p>
+  <%= t(".section_4.paragraph_1") %> <%= t(".section_4.email_text") %>
+</p>
+
+<p>
+  <%= t(".section_4.paragraph_2", reg_identifier: @registration.reg_identifier) %>
+</p>
+
+<p>
+  <%= t(".section_4.paragraph_3") %>
+</p>
+
+<p>
+  <%= t(".section_4.paragraph_4") %>
+</p>
+
+<p>
+  <%= t(".section_4.paragraph_5") %>
+</p>
+
+<p>
+  <%= t(".section_4.paragraph_6") %>
+</p>
+
+<p>
+  <%= t(".section_4.paragraph_7") %>
+</p>
+
+</body>
+</html>

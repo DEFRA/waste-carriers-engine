@@ -12,5 +12,13 @@ module WasteCarriersEngine
            from: from_email,
            subject: I18n.t(".waste_carriers_engine.new_registration_mailer.registration_activated.subject"))
     end
+
+    def registration_pending_payment(registration)
+      @registration = registration
+
+      mail(to: @registration.contact_email,
+           from: from_email,
+           subject: I18n.t(".waste_carriers_engine.new_registration_mailer.registration_pending_payment.subject"))
+    end
   end
 end

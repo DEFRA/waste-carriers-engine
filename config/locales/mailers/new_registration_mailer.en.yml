@@ -47,3 +47,44 @@ en:
           item_1: "If you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk or contact the Environment Agency helpline: 03708 506506"
           item_1_html: "If you have enquiries please email <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a> or contact the Environment Agency helpline: 03708 506506"
           item_2: "This is an automated email, please do not reply"
+      registration_pending_payment:
+        subject: "Pay for your waste carriers registration"
+        dear: "Dear %{name}"
+        section_1:
+          heading: "You need to pay for your waste carriers registration and then email us to confirm payment"
+          paragraph_1: "We cannot register you until your payment clears."
+        section_2:
+          heading: "Pay by bank transfer (Bacs) with these details"
+          sort_code:
+            label: "Sort code"
+            value: "60-70-80"
+          account_number:
+            label: "Account number"
+            value: "1001 4411"
+          payment_reference:
+            label: "Payment reference"
+          payment_due:
+            label: "Payment due"
+        section_3:
+          heading: "Overseas payments"
+          iban:
+            label: "IBAN"
+            value: "GB23 NWBK 607080 10014411"
+          swiftbic:
+            label: "SWIFTBIC"
+            value: "NWBK GB2L"
+          currency:
+            label: "Currency"
+            value: "Sterling"
+        section_4:
+          heading: "Email us your registration %{reg_identifier} to confirm you’ve paid"
+          paragraph_1: "Email us at"
+          email_text: "ea_fsc_ar@sscl.gse.gov.uk"
+          email_subject: "Payment confirmation registration %{reg_identifier}"
+          email_body: "Payment confirmation reference %{reg_identifier}\nDate paid:\nAmount:"
+          paragraph_2: "Payment reference %{reg_identifier}"
+          paragraph_3: "Allow 5 working days for your payment to reach us."
+          paragraph_4: "You’re not legally entitled to operate as a waste carrier until we have received your payment and confirmed your registration."
+          paragraph_5: "If any of your details change you must update your registration within 28 days."
+          paragraph_6: "If you have enquiries please contact the Environment Agency helpline 03708 506506."
+          paragraph_7: "This is an automated email, please do not reply."
