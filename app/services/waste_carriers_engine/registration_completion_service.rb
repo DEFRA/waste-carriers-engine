@@ -76,7 +76,6 @@ module WasteCarriersEngine
     def send_confirmation_email
       if registration.unpaid_balance?
         send_pending_payment_email
-      elsif registration.conviction_check_required?
         # TODO: Add email for pending convictions
         # Note that we will only send emails here if the registration has pending convictions or pending payments.
         # In the case when the registration can be completed, the registration activation email is sent from
