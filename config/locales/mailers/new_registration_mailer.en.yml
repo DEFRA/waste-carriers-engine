@@ -48,7 +48,7 @@ en:
           item_1_html: "If you have enquiries please email <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a> or contact the Environment Agency helpline: 03708 506506"
           item_2: "This is an automated email, please do not reply"
       registration_pending_payment:
-        subject: "Pay for your waste carriers registration"
+        subject: "Payment needed for waste carrier registration %{reg_identifier}"
         dear: "Dear %{name}"
         section_1:
           heading: "You need to pay for your waste carriers registration and then email us to confirm payment"

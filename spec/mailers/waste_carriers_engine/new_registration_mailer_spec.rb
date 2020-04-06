@@ -95,7 +95,7 @@ module WasteCarriersEngine
       end
 
       it "uses the correct subject" do
-        subject = "Pay for your waste carriers registration"
+        subject = "Payment needed for waste carrier registration #{registration.reg_identifier}"
         expect(mail.subject).to eq(subject)
       end
 
