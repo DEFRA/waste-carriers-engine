@@ -5,7 +5,7 @@ en:
         subject: "Waste Carrier Registration Complete"
         section_1:
           reg_complete:
-            lower: "You are now registered as a lower-tier waste carrier, broker and dealer"
+            lower: "You are now registered as a lower tier waste carrier, broker and dealer"
             upper:
               carrier_dealer: "You are now registered as an upper-tier waste carrier and dealer"
               broker_dealer: "You are now registered as an upper-tier waste broker and dealer"
