@@ -166,7 +166,7 @@
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;">
-              <%= t(".section_4.registered_on", date: @registration.metaData.date_registered) %>
+              <%= t(".section_4.registered_on", date: @registration.metaData.date_registered.to_formatted_s(:day_month_year)) %>
             </p>
 
             <p style="font-size: 19px; line-height: 1.315789474;margin: 0 0 15px 0;">
