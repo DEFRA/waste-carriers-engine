@@ -5,7 +5,7 @@ en:
         subject: "Waste Carrier Registration Complete"
         section_1:
           reg_complete:
-            lower: "You are now registered as a lower-tier waste carrier, broker and dealer"
+            lower: "You are now registered as a lower tier waste carrier, broker and dealer"
             upper:
               carrier_dealer: "You are now registered as an upper-tier waste carrier and dealer"
               broker_dealer: "You are now registered as an upper-tier waste broker and dealer"
@@ -40,7 +40,7 @@ en:
               item_4: "minimise the environmental impact of waste by prioritising waste prevention, reuse, recycling and recovery over disposal"
         section_4:
           heading: "Updating your details"
-          paragraph_1: "If any of the details you've given us change, you must update them within 28 days."
+          paragraph_1: "If any of the details you've given us change, you must update them within 28 days by contacting the Environment Agency."
           contact_number: "Telephone number: %{number}"
           registered_on: "Registered on: %{date}"
         footer:
