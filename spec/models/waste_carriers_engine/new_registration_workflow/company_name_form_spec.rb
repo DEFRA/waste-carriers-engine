@@ -28,6 +28,12 @@ module WasteCarriersEngine
           context "when the registration is lower tier" do
             subject { build(:new_registration, :lower, workflow_state: "company_name_form") }
 
+            context "when the check your tier answer is lower" do
+              subject { build(:new_registration, :lower, workflow_state: "company_name_form", temp_check_your_tier: "lower") }
+
+              include_examples "has back transition", previous_state: "check_your_tier_form"
+            end
+
             include_examples "has back transition", previous_state: "your_tier_form"
           end
 

@@ -11,7 +11,11 @@
 
       <div class="govuk-box-highlight">
         <h1 class="heading-xlarge"><%= t(".heading") %></h1>
-        <p class="font-large"><%= t(".highlight_text") %><br><span class="strong"><%= @renewal_complete_form.reg_identifier %></span></p>
+        <p class="font-large">
+          <%= t(".highlight_text") %>
+          <br>
+          <span class="strong" id="reg_identifier"><%= @renewal_complete_form.reg_identifier %></span>
+        </p>
       </div>
 
       <p><%= t(".paragraph_1", date: @renewal_complete_form.projected_renewal_end_date) %></p>

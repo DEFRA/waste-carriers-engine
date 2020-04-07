@@ -19,6 +19,12 @@ module WasteCarriersEngine
         end
 
         context "on back" do
+          context "when the answer to check your tier is upper" do
+            subject { build(:new_registration, workflow_state: "cbd_type_form", temp_check_your_tier: "upper") }
+
+            include_examples "has back transition", previous_state: "check_your_tier_form"
+          end
+
           include_examples "has back transition", previous_state: "your_tier_form"
         end
       end
