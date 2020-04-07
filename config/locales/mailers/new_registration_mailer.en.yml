@@ -81,7 +81,7 @@ en:
           paragraph_1: "Email us at"
           email_text: "ea_fsc_ar@sscl.gse.gov.uk"
           email_subject: "Payment confirmation registration %{reg_identifier}"
-          email_body: "Payment confirmation reference %{reg_identifier}\nDate paid:\nAmount:"
+          email_body: "Payment confirmation reference %{reg_identifier}%0D%0ADate paid:%0D%0AAmount:"
           paragraph_2: "Payment reference %{reg_identifier}"
           paragraph_3: "Allow 5 working days for your payment to reach us."
           paragraph_4: "You’re not legally entitled to operate as a waste carrier until we have received your payment and confirmed your registration."
