@@ -124,7 +124,13 @@ module WasteCarriersEngine
                       if: :check_your_tier_unknown?
 
           transitions from: :check_your_tier_form,
-                      to: :your_tier_form,
+                      to: :company_name_form,
+                      if: :check_your_tier_lower?,
+                      after: :set_tier_from_check_your_tier_form
+
+          transitions from: :check_your_tier_form,
+                      to: :cbd_type_form,
+                      if: :check_your_tier_upper?,
                       after: :set_tier_from_check_your_tier_form
 
           transitions from: :your_tier_form,
@@ -351,6 +357,10 @@ module WasteCarriersEngine
 
           # Smart answers
           transitions from: :company_name_form,
+                      to: :check_your_tier_form,
+                      if: :check_your_tier_lower?
+
+          transitions from: :company_name_form,
                       to: :your_tier_form,
                       if: :lower_tier?
 
@@ -400,6 +410,10 @@ module WasteCarriersEngine
 
           transitions from: :construction_demolition_form,
                       to: :service_provided_form
+
+          transitions from: :cbd_type_form,
+                      to: :check_your_tier_form,
+                      if: :check_your_tier_upper?
 
           transitions from: :cbd_type_form,
                       to: :your_tier_form
@@ -597,6 +611,14 @@ module WasteCarriersEngine
 
       def check_your_tier_unknown?
         temp_check_your_tier == "unknown"
+      end
+
+      def check_your_tier_lower?
+        temp_check_your_tier == "lower"
+      end
+
+      def check_your_tier_upper?
+        temp_check_your_tier == "upper"
       end
 
       def set_tier_from_check_your_tier_form
