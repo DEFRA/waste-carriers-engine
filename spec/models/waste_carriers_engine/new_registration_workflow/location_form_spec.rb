@@ -32,7 +32,7 @@ module WasteCarriersEngine
           context "when the location is not in the UK" do
             let(:location) { "overseas" }
 
-            include_examples "has next transition", next_state: "other_businesses_form"
+            include_examples "has next transition", next_state: "check_your_tier_form"
           end
 
           context "when the location is in england" do

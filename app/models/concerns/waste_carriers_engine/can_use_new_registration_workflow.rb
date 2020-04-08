@@ -94,7 +94,7 @@ module WasteCarriersEngine
                       if: :should_register_in_wales?
 
           transitions from: :location_form,
-                      to: :other_businesses_form,
+                      to: :check_your_tier_form,
                       if: :overseas?
 
           transitions from: :location_form,
@@ -353,6 +353,10 @@ module WasteCarriersEngine
                       to: :location_form
 
           transitions from: :check_your_tier_form,
+                      to: :location_form,
+                      if: :overseas?
+
+          transitions from: :check_your_tier_form,
                       to: :business_type_form
 
           # Smart answers
@@ -390,10 +394,6 @@ module WasteCarriersEngine
 
           transitions from: :company_name_form,
                       to: :registration_number_form
-
-          transitions from: :other_businesses_form,
-                      to: :location_form,
-                      if: :overseas?
 
           transitions from: :other_businesses_form,
                       to: :check_your_tier_form
