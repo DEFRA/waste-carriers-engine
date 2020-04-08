@@ -5,7 +5,7 @@ module WasteCarriersEngine
     def new
       return unless super(CheckYourAnswersForm, "check_your_answers_form")
 
-      @presenter = ResourceTypeFormPresenter.new(@transient_registration)
+      @presenter = CheckYourAnswersFormPresenter.new(@transient_registration)
     end
 
     def create

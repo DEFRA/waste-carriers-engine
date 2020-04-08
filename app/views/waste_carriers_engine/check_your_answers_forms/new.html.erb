@@ -53,7 +53,7 @@
 
         <li><%= t(".location.#{@check_your_answers_form.location}") %></li>
 
-        <% if show_smart_answers_results?(@presenter) %>
+        <% if @presenter.show_smart_answers_results? %>
           <% if @presenter.other_businesses.present? %>
             <li><%= t(".other_businesses.#{@presenter.other_businesses}") %></li>
           <% end %>
