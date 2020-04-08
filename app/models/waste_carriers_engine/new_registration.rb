@@ -26,6 +26,10 @@ module WasteCarriersEngine
       prefix + super.to_s
     end
 
+    def tier_known?
+      temp_check_your_tier.present? && temp_check_your_tier != "unknown"
+    end
+
     private
 
     def registration_type_base_charges
@@ -34,10 +38,6 @@ module WasteCarriersEngine
 
     def build_meta_data
       build_metaData unless metaData.present?
-    end
-
-    def tier_known?
-      temp_check_your_tier.present? && temp_check_your_tier != "unknown"
     end
   end
 end

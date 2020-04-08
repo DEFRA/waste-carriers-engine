@@ -10,6 +10,34 @@ module WasteCarriersEngine
       it_should_behave_like "TransientRegistration named scopes"
     end
 
+    describe "#tier_known?" do
+      subject(:new_registration) { build(:new_registration, temp_check_your_tier: temp_check_your_tier) }
+
+      context "when the temp_check_your_tier is not populated" do
+        let(:temp_check_your_tier) { nil }
+
+        it "returns false" do
+          expect(subject.tier_known?).to eq(false)
+        end
+      end
+
+      context "when the temp_check_your_tier is unknown" do
+        let(:temp_check_your_tier) { "unknown" }
+
+        it "returns false" do
+          expect(subject.tier_known?).to eq(false)
+        end
+      end
+
+      context "when the temp_check_your_tier is not unknown" do
+        let(:temp_check_your_tier) { "lower" }
+
+        it "returns true" do
+          expect(subject.tier_known?).to eq(true)
+        end
+      end
+    end
+
     describe "#reg_identifier" do
       context "if there is no reg_identifier number persisted in the db yet" do
         it "returns nil" do
