@@ -6,7 +6,7 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <div class="form-group <%= "form-group-error" if @renew_registration_form.errors[:temp_lookup_number].any? %>">
+    <div class="form-group <%= "form-group-error" if @renew_registration_form.errors[:temp_lookup_number].any? %>" id="temp_lookup_number">
       <% if @renew_registration_form.errors[:temp_lookup_number].any? %>
         <span class="error-message"><%= @renew_registration_form.errors[:temp_lookup_number].join(", ") %></span>
       <% end %>
