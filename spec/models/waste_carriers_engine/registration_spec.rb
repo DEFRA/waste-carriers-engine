@@ -39,6 +39,38 @@ module WasteCarriersEngine
         end
       end
 
+      describe ".active_and_expired" do
+        it "returns active and expired registrations" do
+          active = create(:registration, :has_required_data, :is_active)
+          expired = create(:registration, :has_required_data, :is_expired)
+          revoked = create(:registration, :has_required_data, :is_revoked)
+
+          result = described_class.active_and_expired
+
+          expect(result).to include(active)
+          expect(result).to include(expired)
+          expect(result).to_not include(revoked)
+        end
+      end
+
+      describe ".in_grace_window" do
+        it "returns registrations whose expired date is in the grace window" do
+          allow(Rails.configuration).to receive(:grace_window).and_return(3)
+
+          future_expire_date = create(:registration, :has_required_data, expires_on: 2.days.from_now)
+          past_in_grace_window = create(:registration, :has_required_data, expires_on: 1.day.ago)
+          edge_grace_window = create(:registration, :has_required_data, expires_on: 3.day.ago)
+          past_not_in_grace_window = create(:registration, :has_required_data, expires_on: 4.day.ago)
+
+          result = described_class.in_grace_window
+
+          expect(result).to include(future_expire_date)
+          expect(result).to include(past_in_grace_window)
+          expect(result).to include(edge_grace_window)
+          expect(result).to_not include(past_not_in_grace_window)
+        end
+      end
+
       describe ".expired_at_end_of_today" do
         it "returns registrations that have expired at the end of current day" do
           expired_registration = create(:registration, :has_required_data, expires_on: Time.now.beginning_of_day + 4.hours)
