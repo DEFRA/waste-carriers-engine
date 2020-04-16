@@ -29,9 +29,7 @@ module WasteCarriersEngine
     scope :active, -> { where("metaData.status" => "ACTIVE") }
     scope :expired_at_end_of_today, -> { where(:expires_on.lte => Time.now.in_time_zone("London").end_of_day) }
     scope :upper_tier, -> { where(tier: UPPER_TIER) }
-
     scope :active_and_expired, -> { where("metaData.status" => { :$in => %w[ACTIVE EXPIRED] }) }
-    scope :in_grace_window, -> { where(:expires_on.lte => Time.now.in_time_zone("London").end_of_day - Rails.configuration.grace_window.days) }
 
     def self.in_grace_window
       date = Time.now.in_time_zone("London").beginning_of_day - Rails.configuration.grace_window.days
