@@ -96,6 +96,55 @@ module WasteCarriersEngine
           end
         end
       end
+
+      context "when there is a pending convictions check" do
+        let(:transient_registration) do
+          create(
+            :new_registration,
+            :has_required_data,
+            :requires_conviction_check
+          )
+        end
+
+        context "when the balance has been paid" do
+          let(:finance_details) { build(:finance_details, :has_paid_order_and_payment) }
+
+          before do
+            transient_registration.finance_details = finance_details
+            transient_registration.save
+          end
+
+          it "sends a confirmation email" do
+            expect(NewRegistrationMailer).to receive(:registration_pending_conviction_check).and_call_original
+            expect { described_class.run(transient_registration) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          end
+
+          context "when the mailer fails" do
+            before do
+              allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
+              allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_raise(StandardError)
+            end
+
+            it "does not raise an error" do
+              expect { described_class.run(transient_registration) }.to_not raise_error
+            end
+          end
+        end
+
+        context "when there is an unpaid balance" do
+          let(:finance_details) { build(:finance_details, :has_required_data) }
+
+          before do
+            transient_registration.finance_details = finance_details
+            transient_registration.save
+          end
+
+          it "does not send the pending conviction check email" do
+            expect(NewRegistrationMailer).to_not receive(:registration_pending_conviction_check)
+            described_class.run(transient_registration)
+          end
+        end
+      end
     end
   end
 end

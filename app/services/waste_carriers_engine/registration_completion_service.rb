@@ -73,13 +73,14 @@ module WasteCarriersEngine
       transient_registration.delete
     end
 
+    # Note that we will only send emails here if the registration has pending convictions or pending payments.
+    # In the case when the registration can be completed, the registration activation email is sent from
+    # the RegistrationActivationService.
     def send_confirmation_email
       if registration.unpaid_balance?
         send_pending_payment_email
-        # TODO: Add email for pending convictions
-        # Note that we will only send emails here if the registration has pending convictions or pending payments.
-        # In the case when the registration can be completed, the registration activation email is sent from
-        # the RegistrationActivationService.
+      elsif registration.conviction_check_required?
+        send_pending_conviction_check_email
       end
     rescue StandardError => e
       Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)
@@ -87,6 +88,10 @@ module WasteCarriersEngine
 
     def send_pending_payment_email
       NewRegistrationMailer.registration_pending_payment(registration).deliver_now
+    end
+
+    def send_pending_conviction_check_email
+      NewRegistrationMailer.registration_pending_conviction_check(registration).deliver_now
     end
 
     def set_reg_identifier
