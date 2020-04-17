@@ -48,12 +48,12 @@
             <td width="25%">&nbsp;</td>
           </tr>
           <tr>
-            <td bgcolor="#28a197" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
+            <td bgcolor="#1d70b8" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
               <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
                 <%= t(".section_1.heading") %>
               </p>
 
-              <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0;">
+              <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0px 30px 0px 30px;">
                 <%= t(".section_1.paragraph_1") %>
               </p>
 
@@ -65,15 +65,29 @@
           </tr>
           <tr>
             <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
-              <%= t(".section_2.heading") %>
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 30px 0 15px 0;">
+                <%= t(".dear", name: "#{@registration.first_name} #{@registration.last_name}") %>
+              </p>
+
+              <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t(".section_2.heading") %>
+              </p>
 
               <ul>
-                <li><%= t(".section_2.list_item_1") %></li>
-                <li><%= t(".section_2.list_item_2") %></li>
-                <li><%= t(".section_2.list_item_3") %></li>
+                <li style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                  <%= t(".section_2.list_item_1") %>
+                </li>
+                <li style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                  <%= t(".section_2.list_item_2" ) %>
+                </li>
+                <li style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                  <%= t(".section_2.list_item_3_html") %>
+                </li>
               </ul>
 
-              <%= t(".section_3.paragraph_1") %>
+              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
+                <%= t(".section_3.paragraph_1") %>
+              </p>
             </td>
             <td width="25%">
               &nbsp;
