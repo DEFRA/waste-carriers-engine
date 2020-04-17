@@ -24,6 +24,6 @@ en:
           heading: "Email us your registration number %{reg_identifier} to confirm you’ve paid"
           email_us:
             label: "Email us"
-            value: "ea_fsc_ar@sscl.gse.gov.uk"
+            value: "ea_fsc_ar@gov.sscl.com"
           payment_reference:
             label: "Payment reference"

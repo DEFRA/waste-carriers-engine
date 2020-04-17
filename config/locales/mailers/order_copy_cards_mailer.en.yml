@@ -42,7 +42,7 @@ en:
           heading: "2. Then send us confirmation that you have paid"
           email_us:
             label: "Email us"
-            email: "ea_fsc_ar@sscl.gse.gov.uk"
+            email: "ea_fsc_ar@gov.sscl.com"
           fax:
             label: "Fax"
             value: "01733 464 892"

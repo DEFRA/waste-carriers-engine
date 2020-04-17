@@ -81,7 +81,7 @@ en:
         section_4:
           heading: "Email us your registration %{reg_identifier} to confirm you’ve paid"
           paragraph_1: "Email us at"
-          email_text: "ea_fsc_ar@sscl.gse.gov.uk"
+          email_text: "ea_fsc_ar@gov.sscl.com"
           email_subject: "Payment confirmation registration %{reg_identifier}"
           email_body: "Payment confirmation reference %{reg_identifier}%0D%0ADate paid:%0D%0AAmount:"
           paragraph_2: "Payment reference %{reg_identifier}"

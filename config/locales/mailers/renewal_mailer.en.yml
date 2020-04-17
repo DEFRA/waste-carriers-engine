@@ -113,7 +113,7 @@ en:
           send_confirmation_table:
             email:
               label: Email
-              value: ea_fsc_ar@sscl.gse.gov.uk
+              value: ea_fsc_ar@gov.sscl.com
             fax:
               label: Fax
               value: "01733 464892"
