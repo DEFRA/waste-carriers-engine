@@ -10,7 +10,7 @@ http_interactions:
         <!DOCTYPE paymentService PUBLIC "-//WorldPay/DTD WorldPay PaymentService v1/EN" "http://dtd.worldpay.com/paymentService_v1.dtd">
         <paymentService version="1.4" merchantCode="MERCHANT_CODE">
           <submit>
-            <order orderCode="1586161663">
+            <order orderCode="1587379307">
               <description>Your Waste Carrier Registration CBDU1</description>
               <amount currencyCode="GBP" value="11000" exponent="2"/>
               <orderContent>Waste Carrier Registration renewal: CBDU1 for Acme Waste</orderContent>
@@ -55,7 +55,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 06 Apr 2020 08:32:54 GMT
+      - Mon, 20 Apr 2020 10:41:48 GMT
       Server:
       - Apache
       Content-Length:
@@ -80,7 +80,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE paymentService PUBLIC "-//WorldPay//DTD WorldPay PaymentService v1//EN"
                                         "http://dtd.worldpay.com/paymentService_v1.dtd">
-        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1586161663"><reference id="3180252250">https://hpp-sandbox.worldpay.com/app/hpp/integration/wpg/corporate?OrderKey=MERCHANT_CODE%5E1586161663&amp;Ticket=00158659397498602xKvIo4Fv0jCfC3rpJ09sPQ</reference></orderStatus></reply></paymentService>
+        <paymentService version="1.4" merchantCode="MERCHANT_CODE"><reply><orderStatus orderCode="1587379307"><reference id="3182411113">https://hpp-sandbox.worldpay.com/app/hpp/integration/wpg/corporate?OrderKey=MERCHANT_CODE%5E1587379307&amp;Ticket=00158781130808102U6yT_TZwWyqmFQWHSq_Siw</reference></orderStatus></reply></paymentService>
     http_version: 
-  recorded_at: Mon, 06 Apr 2020 08:27:43 GMT
+  recorded_at: Mon, 20 Apr 2020 10:41:48 GMT
 recorded_with: VCR 4.0.0
