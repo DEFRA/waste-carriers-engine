@@ -99,7 +99,7 @@ en:
         section_2:
           heading: "We'll check your details and let you know whether your application has been successful."
           list_item_1: "We aim to do this within 10 working days."
-          list_item_2: "You’re not legally entitled to operate as a waste carrier until we have received your payment and confirmed your registration."
+          list_item_2: "You’re not legally entitled to operate as a waste carrier until we have confirmed your registration."
           list_item_3: "Contact the Environment Agency on nccc-carrierbroker@environment-agency.gov.uk or 03708 506506 if you have questions."
           list_item_3_html: "Contact the Environment Agency on <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a> or 03708 506506 if you have any questions."
         section_3:
