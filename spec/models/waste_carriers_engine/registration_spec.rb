@@ -66,7 +66,7 @@ module WasteCarriersEngine
 
           expect(result).to include(future_expire_date)
           expect(result).to include(past_in_grace_window)
-          expect(result).to include(edge_grace_window)
+          expect(result).to_not include(edge_grace_window)
           expect(result).to_not include(past_not_in_grace_window)
         end
       end
