@@ -32,7 +32,7 @@ module WasteCarriersEngine
     scope :active_and_expired, -> { where("metaData.status" => { :$in => %w[ACTIVE EXPIRED] }) }
 
     def self.in_grace_window
-      date = Time.now.in_time_zone("London").beginning_of_day - Rails.configuration.grace_window.days
+      date = Time.now.in_time_zone("London").beginning_of_day - Rails.configuration.grace_window.days + 1.day
 
       where(:expires_on.gte => date)
     end
