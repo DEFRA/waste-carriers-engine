@@ -61,16 +61,14 @@ module WasteCarriersEngine
             end
           end
 
-          it "changes to declaration_form after the 'next' event" do
-            expected_state = :declaration_form
-            event = :next
-            expect(subject).to transition_from(current_state).to(expected_state).on_event(event)
-          end
-
           it "changes to confirm_edit_cancelled after the 'cancel_edit' event" do
             expected_state = :confirm_edit_cancelled_form
             event = :cancel_edit
             expect(subject).to transition_from(current_state).to(expected_state).on_event(event)
+          end
+
+          context "on next" do
+            include_examples "has next transition", next_state: "declaration_form"
           end
         end
       end

@@ -3,12 +3,19 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe EditRegistration, type: :model do
+  RSpec.describe EditRegistration do
+    subject { build(:edit_registration, workflow_state: "contact_name_form") }
+
     describe "#workflow_state" do
-      it_behaves_like "a simple monodirectional transition",
-                      previous_and_next_state: :edit_form,
-                      current_state: :contact_name_form,
-                      factory: :edit_registration
+      context ":contact_name_form state transitions" do
+        context "on next" do
+          include_examples "has next transition", next_state: "edit_form"
+        end
+
+        context "on back" do
+          include_examples "has back transition", previous_state: "edit_form"
+        end
+      end
     end
   end
 end
