@@ -127,7 +127,7 @@ module WasteCarriersEngine
     end
 
     def remove_unused_attributes(registration_attributes, renewal_attributes)
-      registration_attributes.keys.each do |old_attribute|
+      registration_attributes.each_key do |old_attribute|
         # If attributes aren't included in the transient_registration, for example if the user skipped the tier check,
         # remove those attributes from the registration instead of leaving the existing values
         next if renewal_attributes.key?(old_attribute)
