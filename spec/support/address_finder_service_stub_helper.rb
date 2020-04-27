@@ -2,7 +2,7 @@
 
 module AddressFinderServiceStubHelper
   # rubocop:disable Metrics/MethodLength
-  def stub_address_finder_service(options={})
+  def stub_address_finder_service(options = {})
     address_json = [{
       "moniker" => "340116",
       "uprn" => "340116",
