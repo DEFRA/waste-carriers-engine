@@ -4,64 +4,43 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            workflow_state: "registration_number_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :registration_number_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "registration_number_form")
-        end
+      context ":registration_number_form state transitions" do
+        context "on next" do
+          include_examples "has next transition", next_state: "company_name_form"
 
-        it "changes to :renewal_information_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:registration_number_form).to(:renewal_information_form).on_event(:back)
-        end
+          context "when the company_no has changed" do
+            before { subject.company_no = "01234567" }
 
-        it "changes to :company_name_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:registration_number_form).to(:company_name_form).on_event(:next)
-        end
+            include_examples "has next transition", next_state: "cannot_renew_company_no_change_form"
 
-        context "when the company_no has changed" do
-          before do
-            transient_registration.company_no = "01234567"
+            context "when the business used to be a partnership and is now an LLP" do
+              before do
+                subject.business_type = "limitedLiabilityPartnership"
+                subject.registration.update_attributes(business_type: "partnership")
+              end
+
+              include_examples "has next transition", next_state: "company_name_form"
+            end
           end
 
-          context "when the business used to be a partnership and is now an LLP" do
+          context "when the old company_no had trailing whitespace in it" do
             before do
-              transient_registration.business_type = "limitedLiabilityPartnership"
-              transient_registration.registration.update_attributes(business_type: "partnership")
+              subject.registration.update_attributes(company_no: "#{subject.company_no} ")
             end
 
-            it "changes to :company_name_form after the 'next' event" do
-              expect(transient_registration).to transition_from(:registration_number_form).to(:company_name_form).on_event(:next)
-            end
-          end
-
-          context "when the business is a limited_company" do
-            before do
-              transient_registration.business_type = "limitedCompany"
-            end
-
-            it "changes to :cannot_renew_company_no_change_form after the 'next' event" do
-              expect(transient_registration).to transition_from(:registration_number_form).to(:cannot_renew_company_no_change_form).on_event(:next)
-            end
+            include_examples "has next transition", next_state: "company_name_form"
           end
         end
 
-        context "when the old company_no had trailing whitespace in it" do
-          before do
-            reg = Registration.where(reg_identifier: transient_registration.reg_identifier)
-            reg.update(company_no: "#{transient_registration.company_no} ")
-          end
-
-          context "when the business is a limited_company" do
-            before do
-              transient_registration.business_type = "limitedCompany"
-            end
-
-            it "changes to :company_name_form after the 'next' event" do
-              expect(transient_registration).to transition_from(:registration_number_form).to(:company_name_form).on_event(:next)
-            end
-          end
+        context "on back" do
+          include_examples "has back transition", previous_state: "renewal_information_form"
         end
       end
     end

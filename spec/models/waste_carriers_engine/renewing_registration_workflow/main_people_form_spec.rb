@@ -4,32 +4,32 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            addresses: addresses,
+            workflow_state: "main_people_form")
+    end
+    let(:addresses) { [] }
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :main_people_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "main_people_form")
+      context ":main_people_form state transitions" do
+        context "on next" do
+          include_examples "has next transition", next_state: "declare_convictions_form"
         end
 
-        context "when the registered address was selected from OS Places" do
-          before(:each) { transient_registration.addresses = [build(:address, :registered, :from_os_places)] }
+        context "on back" do
+          context "when the registered address was selected from OS Places" do
+            let(:addresses) { [build(:address, :registered, :from_os_places)] }
 
-          it "changes to :company_address_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:main_people_form).to(:company_address_form).on_event(:back)
+            include_examples "has back transition", previous_state: "company_address_form"
           end
-        end
 
-        context "when the registered address was entered manually" do
-          before(:each) { transient_registration.addresses = [build(:address, :registered, :manual_uk)] }
+          context "when the registered address was entered manually" do
+            let(:addresses) { [build(:address, :registered, :manual_uk)] }
 
-          it "changes to :company_address_manual_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:main_people_form).to(:company_address_manual_form).on_event(:back)
+            include_examples "has back transition", previous_state: "company_address_manual_form"
           end
-        end
-
-        it "changes to :declare_convictions_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:main_people_form).to(:declare_convictions_form).on_event(:next)
         end
       end
     end

@@ -4,20 +4,20 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            workflow_state: "waste_types_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :waste_types_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "waste_types_form")
+      context ":waste_types_form state transitions" do
+        context "on next" do
+          include_examples "has next transition", next_state: "cbd_type_form"
         end
 
-        it "transitions to :service_provided_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:waste_types_form).to(:service_provided_form).on_event(:back)
-        end
-
-        it "transitions to :cbd_type_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:waste_types_form).to(:cbd_type_form).on_event(:next)
+        context "on back" do
+          include_examples "has back transition", previous_state: "service_provided_form"
         end
       end
     end
