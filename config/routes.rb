@@ -2,8 +2,6 @@
 
 # rubocop:disable Metrics/BlockLength
 WasteCarriersEngine::Engine.routes.draw do
-  resources :registrations, only: [:index] unless Rails.env.production?
-
   resources :start_forms,
             only: %i[new create],
             path: "start",
