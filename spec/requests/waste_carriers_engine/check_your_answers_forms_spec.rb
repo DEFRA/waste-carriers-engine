@@ -28,13 +28,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the contact_address form" do
               get back_check_your_answers_forms_path(transient_registration.token)
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the contact_address form" do
-              get back_check_your_answers_forms_path(transient_registration.token)
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_contact_address_form_path(transient_registration.token))
             end
           end
@@ -48,14 +45,11 @@ module WasteCarriersEngine
                    workflow_state: "renewal_start_form")
           end
 
-          context "when the back action is triggered" do
+          context "when the back action is triggered and redirects to the correct form for the state" do
             it "returns a 302 response" do
               get back_check_your_answers_forms_path(transient_registration.token)
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get back_check_your_answers_forms_path(transient_registration.token)
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
             end
           end

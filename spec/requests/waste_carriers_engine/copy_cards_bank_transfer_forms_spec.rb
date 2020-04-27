@@ -80,14 +80,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the payment_summary form" do
               get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
 
               expect(response).to have_http_status(302)
-            end
-
-            it "redirects to the payment_summary form" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
               expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
             end
           end
@@ -99,13 +95,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the correct form for the state" do
               get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
             end
           end

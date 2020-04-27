@@ -36,18 +36,11 @@ module WasteCarriersEngine
               }
             end
 
-            it "updates the transient registration" do
+            it "updates the transient registration, returns a 302 response and redirects to the main_people form" do
               post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+
               expect(transient_registration.reload.company_address.uprn.to_s).to eq("340116")
-            end
-
-            it "returns a 302 response" do
-              post company_address_forms_path(transient_registration.token), company_address_form: valid_params
               expect(response).to have_http_status(302)
-            end
-
-            it "redirects to the main_people form" do
-              post company_address_forms_path(transient_registration.token), company_address_form: valid_params
               expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
             end
 
@@ -60,19 +53,12 @@ module WasteCarriersEngine
                        workflow_state: "company_address_form")
               end
 
-              it "should have have the same number of addresses before and after submitting" do
+              it "updates the old contact address and does not change the number of addresses" do
                 number_of_addresses = transient_registration.addresses.count
 
                 post company_address_forms_path(transient_registration.token), company_address_form: valid_params
 
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)
-              end
-
-              it "updates the old contact address" do
-                transient_registration.company_address.update_attributes(uprn: "123456")
-
-                post company_address_forms_path(transient_registration.token), company_address_form: valid_params
-
                 expect(transient_registration.reload.company_address.uprn).to eq(340_116)
               end
             end
@@ -101,18 +87,11 @@ module WasteCarriersEngine
             }
           end
 
-          it "does not update the transient registration" do
+          it "does not update the transient registration, returns a 302 response and redirects to the correct form for the state" do
             post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+
             expect(transient_registration.reload.addresses.count).to eq(0)
-          end
-
-          it "returns a 302 response" do
-            post company_address_forms_path(transient_registration.token), company_address_form: valid_params
             expect(response).to have_http_status(302)
-          end
-
-          it "redirects to the correct form for the state" do
-            post company_address_forms_path(transient_registration.token), company_address_form: valid_params
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end
@@ -136,13 +115,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the company_postcode form" do
               get back_company_address_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the company_postcode form" do
-              get back_company_address_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_company_postcode_form_path(transient_registration[:token]))
             end
           end
@@ -158,13 +134,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the correct form for the state" do
               get back_company_address_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get back_company_address_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end
@@ -189,13 +162,10 @@ module WasteCarriersEngine
           end
 
           context "when the skip_to_manual_address action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the company_address_manual form" do
               get skip_to_manual_address_company_address_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the company_address_manual form" do
-              get skip_to_manual_address_company_address_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:token]))
             end
           end
@@ -211,13 +181,10 @@ module WasteCarriersEngine
           end
 
           context "when the skip_to_manual_address action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the correct form for the state" do
               get skip_to_manual_address_company_address_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get skip_to_manual_address_company_address_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end

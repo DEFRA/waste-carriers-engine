@@ -83,20 +83,19 @@ module WasteCarriersEngine
           context "when valid params are submitted" do
             let(:valid_params) { { temp_payment_method: temp_payment_method } }
 
-            # TODO
-            # context "when the temp payment method is `card`" do
-            #   let(:temp_payment_method) { "card" }
-            #
-            #   it "updates the transient registration with correct data, returns a 302 response and redirects to the worldpay form" do
-            #     post edit_payment_summary_forms_path(token: edit_registration.token), edit_payment_summary_form: valid_params
-            #
-            #     edit_registration.reload
-            #
-            #     expect(edit_registration.temp_payment_method).to eq("card")
-            #     expect(response).to have_http_status(302)
-            #     expect(response).to redirect_to(new_worldpay_form_path(edit_registration.token))
-            #   end
-            # end
+            context "when the temp payment method is `card`" do
+              let(:temp_payment_method) { "card" }
+
+              it "updates the transient registration with correct data, returns a 302 response and redirects to the worldpay form" do
+                post edit_payment_summary_forms_path(token: edit_registration.token), edit_payment_summary_form: valid_params
+
+                edit_registration.reload
+
+                expect(edit_registration.temp_payment_method).to eq("card")
+                expect(response).to have_http_status(302)
+                expect(response).to redirect_to(new_worldpay_form_path(edit_registration.token))
+              end
+            end
 
             context "when the temp payment method is `bank_transfer`" do
               let(:temp_payment_method) { "bank_transfer" }
