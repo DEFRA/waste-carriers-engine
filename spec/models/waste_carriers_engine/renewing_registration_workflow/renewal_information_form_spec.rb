@@ -4,64 +4,58 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            business_type: business_type,
+            location: location,
+            workflow_state: "renewal_information_form")
+    end
+    let(:business_type) {}
+    let(:location) { "england" }
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :renewal_information_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "renewal_information_form")
-        end
+      context ":renewal_information_form state transitions" do
+        context "on next" do
+          context "when the business type is localAuthority" do
+            let(:business_type) { "localAuthority" }
 
-        it "changes to :cbd_type_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:renewal_information_form).to(:cbd_type_form).on_event(:back)
-        end
+            include_examples "has next transition", next_state: "company_name_form"
+          end
 
-        context "when the business type is localAuthority" do
-          before(:each) { transient_registration.business_type = "localAuthority" }
+          context "when the business type is limitedCompany" do
+            let(:business_type) { "limitedCompany" }
 
-          it "changes to :company_name_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:renewal_information_form).to(:company_name_form).on_event(:next)
+            include_examples "has next transition", next_state: "registration_number_form"
+          end
+
+          context "when the business type is limitedLiabilityPartnership" do
+            let(:business_type) { "limitedLiabilityPartnership" }
+
+            include_examples "has next transition", next_state: "registration_number_form"
+          end
+
+          context "when the location is overseas" do
+            let(:location) { "overseas" }
+
+            include_examples "has next transition", next_state: "company_name_form"
+          end
+
+          context "when the business type is partnership" do
+            let(:business_type) { "partnership" }
+
+            include_examples "has next transition", next_state: "company_name_form"
+          end
+
+          context "when the business type is soleTrader" do
+            let(:business_type) { "soleTrader" }
+
+            include_examples "has next transition", next_state: "company_name_form"
           end
         end
 
-        context "when the business type is limitedCompany" do
-          before(:each) { transient_registration.business_type = "limitedCompany" }
-
-          it "changes to :registration_number_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:renewal_information_form).to(:registration_number_form).on_event(:next)
-          end
-        end
-
-        context "when the business type is limitedLiabilityPartnership" do
-          before(:each) { transient_registration.business_type = "limitedLiabilityPartnership" }
-
-          it "changes to :registration_number_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:renewal_information_form).to(:registration_number_form).on_event(:next)
-          end
-        end
-
-        context "when the location is overseas" do
-          before(:each) { transient_registration.location = "overseas" }
-
-          it "changes to :company_name_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:renewal_information_form).to(:company_name_form).on_event(:next)
-          end
-        end
-
-        context "when the business type is partnership" do
-          before(:each) { transient_registration.business_type = "partnership" }
-
-          it "changes to :company_name_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:renewal_information_form).to(:company_name_form).on_event(:next)
-          end
-        end
-
-        context "when the business type is soleTrader" do
-          before(:each) { transient_registration.business_type = "soleTrader" }
-
-          it "changes to :company_name_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:renewal_information_form).to(:company_name_form).on_event(:next)
-          end
+        context "on back" do
+          include_examples "has back transition", previous_state: "cbd_type_form"
         end
       end
     end

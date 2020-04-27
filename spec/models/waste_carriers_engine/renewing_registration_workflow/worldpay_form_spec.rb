@@ -4,69 +4,61 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            :has_conviction_search_result,
+            :has_key_people,
+            :has_paid_balance,
+            workflow_state: "worldpay_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :worldpay_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 :has_conviction_search_result,
-                 :has_key_people,
-                 :has_paid_balance,
-                 workflow_state: "worldpay_form")
-        end
+      context ":worldpay_form state transitions" do
+        context "on next" do
+          context "when a conviction check is not required" do
+            before do
+              allow(subject).to receive(:conviction_check_required?).and_return(false)
+            end
 
-        it "changes to :payment_summary_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:worldpay_form).to(:payment_summary_form).on_event(:back)
-        end
+            context "when there is no pending WorldPay payment" do
+              before do
+                allow(subject).to receive(:pending_worldpay_payment?).and_return(false)
+              end
 
-        context "when a conviction check is not required" do
-          before do
-            allow(transient_registration).to receive(:conviction_check_required?).and_return(false)
+              it "does not send a confirmation email after the 'next' event" do
+                expect { subject.next! }.to_not change { ActionMailer::Base.deliveries.count }
+              end
+            end
+
+            context "when there is a pending WorldPay payment" do
+              before do
+                allow(subject).to receive(:pending_worldpay_payment?).and_return(true)
+              end
+
+              include_examples "has next transition", next_state: "renewal_received_form"
+
+              it "sends a confirmation email after the 'next' event" do
+                expect { subject.next! }.to change { ActionMailer::Base.deliveries.count }.by(1)
+              end
+            end
           end
 
-          context "when there is no pending WorldPay payment" do
+          context "when a conviction check is required" do
             before do
-              allow(transient_registration).to receive(:pending_worldpay_payment?).and_return(false)
+              allow(subject).to receive(:conviction_check_required?).and_return(true)
             end
 
-            it "does not send a confirmation email after the 'next' event" do
-              old_emails_sent_count = ActionMailer::Base.deliveries.count
-              transient_registration.next!
-              expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count)
-            end
-          end
-
-          context "when there is a pending WorldPay payment" do
-            before do
-              allow(transient_registration).to receive(:pending_worldpay_payment?).and_return(true)
-            end
-
-            it "changes to :renewal_received_form after the 'next' event" do
-              expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_received_form).on_event(:next)
-            end
+            include_examples "has next transition", next_state: "renewal_received_form"
 
             it "sends a confirmation email after the 'next' event" do
-              old_emails_sent_count = ActionMailer::Base.deliveries.count
-              transient_registration.next!
-              expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count + 1)
+              expect { subject.next! }.to change { ActionMailer::Base.deliveries.count }.by(1)
             end
           end
         end
 
-        context "when a conviction check is required" do
-          before do
-            allow(transient_registration).to receive(:conviction_check_required?).and_return(true)
-          end
-
-          it "changes to :renewal_received_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:worldpay_form).to(:renewal_received_form).on_event(:next)
-          end
-
-          it "sends a confirmation email after the 'next' event" do
-            old_emails_sent_count = ActionMailer::Base.deliveries.count
-            transient_registration.next!
-            expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count + 1)
-          end
+        context "on back" do
+          include_examples "has back transition", previous_state: "payment_summary_form"
         end
       end
     end

@@ -32,18 +32,11 @@ module WasteCarriersEngine
               stub_address_finder_service
             end
 
-            it "returns a 302 response" do
+            it "updates the transient registration, returns a 302 response and redirects to the contact_address form" do
               post contact_postcode_forms_path(transient_registration.token), contact_postcode_form: valid_params
-              expect(response).to have_http_status(302)
-            end
 
-            it "updates the transient registration" do
-              post contact_postcode_forms_path(transient_registration.token), contact_postcode_form: valid_params
               expect(transient_registration.reload[:temp_contact_postcode]).to eq(valid_params[:temp_contact_postcode])
-            end
-
-            it "redirects to the contact_address form" do
-              post contact_postcode_forms_path(transient_registration.token), contact_postcode_form: valid_params
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_contact_address_form_path(transient_registration[:token]))
             end
 
@@ -68,13 +61,10 @@ module WasteCarriersEngine
               }
             end
 
-            it "returns a 302 response" do
+            it "returns a 302 response and does not update the transient registration" do
               post contact_postcode_forms_path("foo"), contact_postcode_form: invalid_params
-              expect(response).to have_http_status(302)
-            end
 
-            it "does not update the transient registration" do
-              post contact_postcode_forms_path("foo"), contact_postcode_form: invalid_params
+              expect(response).to have_http_status(302)
               expect(transient_registration.reload[:temp_contact_postcode]).to_not eq(invalid_params[:temp_contact_postcode])
             end
           end
@@ -94,18 +84,11 @@ module WasteCarriersEngine
             }
           end
 
-          it "returns a 302 response" do
+          it "does not update the transient registration, returns a 302 response and redirects to the correct form for the state" do
             post contact_postcode_forms_path(transient_registration[:token]), contact_postcode_form: valid_params
-            expect(response).to have_http_status(302)
-          end
 
-          it "does not update the transient registration" do
-            post contact_postcode_forms_path(transient_registration[:token]), contact_postcode_form: valid_params
             expect(transient_registration.reload[:temp_contact_postcode]).to_not eq(valid_params[:temp_contact_postcode])
-          end
-
-          it "redirects to the correct form for the state" do
-            post contact_postcode_forms_path(transient_registration[:token]), contact_postcode_form: valid_params
+            expect(response).to have_http_status(302)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end
@@ -128,13 +111,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the contact_email form" do
               get back_contact_postcode_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the contact_email form" do
-              get back_contact_postcode_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_contact_email_form_path(transient_registration[:token]))
             end
           end
@@ -149,13 +129,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the correct form for the state" do
               get back_contact_postcode_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get back_contact_postcode_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end
@@ -180,13 +157,10 @@ module WasteCarriersEngine
           end
 
           context "when the skip_to_manual_address action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the contact_address_manual form" do
               get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the contact_address_manual form" do
-              get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_contact_address_manual_form_path(transient_registration[:token]))
             end
           end
@@ -202,13 +176,10 @@ module WasteCarriersEngine
           end
 
           context "when the skip_to_manual_address action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the correct form for the state" do
               get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get skip_to_manual_address_contact_postcode_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end

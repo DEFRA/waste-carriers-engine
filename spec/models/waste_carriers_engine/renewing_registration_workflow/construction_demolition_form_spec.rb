@@ -4,51 +4,47 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            workflow_state: "construction_demolition_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :construction_demolition_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "construction_demolition_form")
-        end
+      context ":construction_demolition_form state transitions" do
+        context "on next" do
+          context "when the registration should change to lower tier" do
+            before do
+              subject.other_businesses = "yes"
+              subject.is_main_service = "yes"
+              subject.only_amf = "yes"
+            end
 
-        context "when the business does not carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = "no" }
+            include_examples "has next transition", next_state: "cannot_renew_lower_tier_form"
+          end
 
-          it "transitions to :service_provided_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:construction_demolition_form).to(:other_businesses_form).on_event(:back)
+          context "when the registration should stay upper tier" do
+            before do
+              subject.other_businesses = "yes"
+              subject.is_main_service = "yes"
+              subject.only_amf = "no"
+            end
+
+            include_examples "has next transition", next_state: "cbd_type_form"
           end
         end
 
-        context "when the business does carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = "yes" }
+        context "on back" do
+          context "when the business does not carry waste for other businesses or households" do
+            before { subject.other_businesses = "no" }
 
-          it "transitions to :service_provided_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:construction_demolition_form).to(:service_provided_form).on_event(:back)
-          end
-        end
-
-        context "when the registration should change to lower tier" do
-          before(:each) do
-            transient_registration.other_businesses = "yes"
-            transient_registration.is_main_service = "yes"
-            transient_registration.only_amf = "yes"
+            include_examples "has back transition", previous_state: "other_businesses_form"
           end
 
-          it "transitions to :cannot_renew_lower_tier_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:construction_demolition_form).to(:cannot_renew_lower_tier_form).on_event(:next)
-          end
-        end
+          context "when the business does carry waste for other businesses or households" do
+            before { subject.other_businesses = "yes" }
 
-        context "when the registration should stay upper tier" do
-          before(:each) do
-            transient_registration.other_businesses = "yes"
-            transient_registration.is_main_service = "yes"
-            transient_registration.only_amf = "no"
-          end
-
-          it "transitions to :cbd_type_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:construction_demolition_form).to(:cbd_type_form).on_event(:next)
+            include_examples "has back transition", previous_state: "service_provided_form"
           end
         end
       end

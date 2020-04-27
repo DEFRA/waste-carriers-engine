@@ -4,32 +4,32 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            other_businesses: other_businesses,
+            workflow_state: "other_businesses_form")
+    end
+    let(:other_businesses) {}
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :other_businesses_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "other_businesses_form")
-        end
+      context ":other_businesses_form state transitions" do
+        context "on next" do
+          context "when the business does not carry waste for other businesses or households" do
+            let(:other_businesses) { "no" }
 
-        it "transitions to :tier_check_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:other_businesses_form).to(:tier_check_form).on_event(:back)
-        end
+            include_examples "has next transition", next_state: "construction_demolition_form"
+          end
 
-        context "when the business does not carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = "no" }
+          context "when the business does carry waste for other businesses or households" do
+            let(:other_businesses) { "yes" }
 
-          it "transitions to :construction_demolition_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:other_businesses_form).to(:construction_demolition_form).on_event(:next)
+            include_examples "has next transition", next_state: "service_provided_form"
           end
         end
 
-        context "when the business does carry waste for other businesses or households" do
-          before(:each) { transient_registration.other_businesses = "yes" }
-
-          it "transitions to :service_provided_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:other_businesses_form).to(:service_provided_form).on_event(:next)
-          end
+        context "on back" do
+          include_examples "has back transition", previous_state: "tier_check_form"
         end
       end
     end

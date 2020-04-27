@@ -25,14 +25,12 @@ RSpec.shared_examples "GET locked-in form" do |form|
           transient_registration.update_attributes(workflow_state: form)
         end
 
-        it "loads the form" do
-          get new_path_for(form, transient_registration)
-          expect(response).to have_http_status(200)
-        end
-
-        it "does not change the workflow_state" do
+        it "loads the form and does not change the workflow_state" do
           state_before_request = transient_registration[:workflow_state]
+
           get new_path_for(form, transient_registration)
+
+          expect(response).to have_http_status(200)
           expect(transient_registration.reload[:workflow_state]).to eq(state_before_request)
         end
       end
@@ -42,16 +40,13 @@ RSpec.shared_examples "GET locked-in form" do |form|
           transient_registration.update_attributes(workflow_state: "other_businesses_form")
         end
 
-        it "redirects to the saved workflow_state" do
+        it "does not change the workflow_state and redirects to the saved workflow_state" do
           workflow_state = transient_registration[:workflow_state]
-          get new_path_for(form, transient_registration)
-          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
-        end
 
-        it "does not change the workflow_state" do
-          state_before_request = transient_registration[:workflow_state]
           get new_path_for(form, transient_registration)
-          expect(transient_registration.reload[:workflow_state]).to eq(state_before_request)
+
+          expect(transient_registration.reload[:workflow_state]).to eq(workflow_state)
+          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
         end
       end
 
@@ -67,16 +62,13 @@ RSpec.shared_examples "GET locked-in form" do |form|
           transient_registration.update_attributes(workflow_state: different_state)
         end
 
-        it "redirects to the saved workflow_state" do
+        it "does not change the workflow_state and redirects to the saved workflow_state" do
           workflow_state = transient_registration[:workflow_state]
-          get new_path_for(form, transient_registration)
-          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
-        end
 
-        it "does not change the workflow_state" do
-          state_before_request = transient_registration[:workflow_state]
           get new_path_for(form, transient_registration)
-          expect(transient_registration.reload[:workflow_state]).to eq(state_before_request)
+
+          expect(transient_registration.reload[:workflow_state]).to eq(workflow_state)
+          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
         end
       end
     end

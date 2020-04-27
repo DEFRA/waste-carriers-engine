@@ -4,20 +4,22 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            workflow_state: "cannot_renew_type_change_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :cannot_renew_type_change_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "cannot_renew_type_change_form")
+      context ":cannot_renew_type_change_form state transitions" do
+        context "on next" do
+          it "does not respond to the 'next' event" do
+            expect(subject).to_not allow_event :next
+          end
         end
 
-        it "changes to :business_type_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:cannot_renew_type_change_form).to(:business_type_form).on_event(:back)
-        end
-
-        it "does not respond to the 'next' event" do
-          expect(transient_registration).to_not allow_event :next
+        context "on back" do
+          include_examples "has back transition", previous_state: "business_type_form"
         end
       end
     end

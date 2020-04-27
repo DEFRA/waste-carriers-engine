@@ -4,51 +4,15 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            workflow_state: "business_type_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :business_type_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "business_type_form")
-        end
-
-        context "when the 'back' event happens" do
-          shared_examples_for "'back' transition from business_type_form" do |location, back_state|
-            before(:each) do
-              transient_registration.location = location
-            end
-
-            it "should transition to the correct back state" do
-              expect(transient_registration).to transition_from(:business_type_form).to(back_state).on_event(:back)
-            end
-          end
-
-          {
-            # Permutation table of location and the state that should result
-            "england" => :location_form,
-            "northern_ireland" => :register_in_northern_ireland_form,
-            "scotland" => :register_in_scotland_form,
-            "wales" => :register_in_wales_form
-          }.each do |location, back_form|
-            it_behaves_like "'back' transition from business_type_form", location, back_form
-          end
-        end
-
-        context "when the 'next' event happens" do
-          shared_examples_for "'next' transition from business_type_form" do |(old_type, new_type), next_state|
-            before(:each) do
-              # Update original business_type
-              registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
-              registration.update_attributes(business_type: old_type)
-              # Update new business_type
-              transient_registration.business_type = new_type
-            end
-
-            it "should transition to the correct next state" do
-              expect(transient_registration).to transition_from(:business_type_form).to(next_state).on_event(:next)
-            end
-          end
-
+      context ":business_type_form state transitions" do
+        context "on next" do
           {
             # Permutation table of old business_type, new business_type and the state that should result
             # Example where the business_type doesn't change:
@@ -67,8 +31,34 @@ module WasteCarriersEngine
             %w[soleTrader limitedCompany] => :cannot_renew_type_change_form,
             # Example where the business_type was invalid to begin with:
             %w[foo limitedCompany] => :cannot_renew_type_change_form
-          }.each do |business_types, next_form|
-            it_behaves_like "'next' transition from business_type_form", business_types, next_form
+          }.each do |(old_type, new_type), expected_next_state|
+            context "when the old type is #{old_type} and the new type is #{new_type}" do
+              before do
+                # Update original business_type
+                registration = Registration.where(reg_identifier: subject.reg_identifier).first
+                registration.update_attributes(business_type: old_type)
+                # Update new business_type
+                subject.business_type = new_type
+              end
+
+              include_examples "has next transition", next_state: expected_next_state
+            end
+          end
+        end
+
+        context "on back" do
+          {
+            # Permutation table of location and the state that should result
+            "england" => :location_form,
+            "northern_ireland" => :register_in_northern_ireland_form,
+            "scotland" => :register_in_scotland_form,
+            "wales" => :register_in_wales_form
+          }.each do |location, expected_previous_state|
+            context "when the location is #{location}" do
+              before { subject.location = location }
+
+              include_examples "has back transition", previous_state: expected_previous_state
+            end
           end
         end
       end

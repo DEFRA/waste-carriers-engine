@@ -29,15 +29,13 @@ module WasteCarriersEngine
           end
 
           context "when the workflow_state is correct" do
-            it "loads the page" do
-              get new_renewal_complete_form_path(transient_registration.token)
-              expect(response).to have_http_status(200)
-            end
-
-            it "renews the registration" do
+            it "returns a 200 response and renews the registration" do
               registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
               old_expires_on = registration.expires_on
+
               get new_renewal_complete_form_path(transient_registration.token)
+
+              expect(response).to have_http_status(200)
               expect(registration.reload.expires_on).to_not eq(old_expires_on)
             end
           end
@@ -47,15 +45,13 @@ module WasteCarriersEngine
               transient_registration.update_attributes(workflow_state: "payment_summary_form")
             end
 
-            it "redirects to the correct page" do
-              get new_renewal_complete_form_path(transient_registration.token)
-              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration.token))
-            end
-
-            it "does not renew the registration" do
+            it "redirects to the correct page and does not renew the registration" do
               registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
               old_expires_on = registration.expires_on
+
               get new_renewal_complete_form_path(transient_registration.token)
+
+              expect(response).to redirect_to(new_payment_summary_form_path(transient_registration.token))
               expect(registration.reload.expires_on).to eq(old_expires_on)
             end
           end

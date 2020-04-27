@@ -4,47 +4,45 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            workflow_state: "cannot_renew_lower_tier_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :cannot_renew_lower_tier_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "cannot_renew_lower_tier_form")
-        end
-
-        context "when the tier change is due to the business type" do
-          before(:each) { transient_registration.business_type = "charity" }
-
-          it "changes to :business_type_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:cannot_renew_lower_tier_form).to(:business_type_form).on_event(:back)
+      context ":cannot_renew_lower_tier_form state transitions" do
+        context "on next" do
+          it "does not respond to the 'next' event" do
+            expect(subject).to_not allow_event :next
           end
         end
 
-        context "when the tier change is because the business only deals with certain waste types" do
-          before(:each) do
-            transient_registration.other_businesses = "yes"
-            transient_registration.is_main_service = "yes"
-            transient_registration.only_amf = "yes"
+        context "on back" do
+          context "when the tier change is due to the business type" do
+            before { subject.business_type = "charity" }
+
+            include_examples "has back transition", previous_state: "business_type_form"
           end
 
-          it "changes to :waste_types_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:cannot_renew_lower_tier_form).to(:waste_types_form).on_event(:back)
-          end
-        end
+          context "when the tier change is because the business only deals with certain waste types" do
+            before do
+              subject.other_businesses = "yes"
+              subject.is_main_service = "yes"
+              subject.only_amf = "yes"
+            end
 
-        context "when the tier change is because the business doesn't deal with construction waste" do
-          before(:each) do
-            transient_registration.other_businesses = "no"
-            transient_registration.construction_waste = "no"
+            include_examples "has back transition", previous_state: "waste_types_form"
           end
 
-          it "changes to :construction_demolition_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:cannot_renew_lower_tier_form).to(:construction_demolition_form).on_event(:back)
-          end
-        end
+          context "when the tier change is because the business doesn't deal with construction waste" do
+            before do
+              subject.other_businesses = "no"
+              subject.construction_waste = "no"
+            end
 
-        it "does not respond to the 'next' event" do
-          expect(transient_registration).to_not allow_event :next
+            include_examples "has back transition", previous_state: "construction_demolition_form"
+          end
         end
       end
     end

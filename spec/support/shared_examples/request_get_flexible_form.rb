@@ -45,13 +45,10 @@ RSpec.shared_examples "GET flexible form" do |form|
           transient_registration.update_attributes(workflow_state: saved_state)
         end
 
-        it "updates the workflow_state to match the requested page" do
+        it "updates the workflow_state to match the requested page and loads the requested page" do
           get new_path_for(form, transient_registration)
-          expect(transient_registration.reload[:workflow_state]).to eq(form)
-        end
 
-        it "loads the requested page" do
-          get new_path_for(form, transient_registration)
+          expect(transient_registration.reload[:workflow_state]).to eq(form)
           expect(response).to render_template("#{form}s/new")
         end
       end
@@ -67,15 +64,13 @@ RSpec.shared_examples "GET flexible form" do |form|
           transient_registration.update_attributes(workflow_state: saved_state)
         end
 
-        it "redirects to the saved workflow_state" do
+        it "does not change the workflow_state and redirects to the saved workflow_state" do
           workflow_state = transient_registration[:workflow_state]
-          get new_path_for(form, transient_registration)
-          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
-        end
 
-        it "does not change the workflow_state" do
           get new_path_for(form, transient_registration)
+
           expect(transient_registration.reload[:workflow_state]).to eq(saved_state)
+          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
         end
       end
     end

@@ -47,13 +47,10 @@ module WasteCarriersEngine
 
           let(:params) { { declaration: 1 } }
 
-          it "creates a new conviction_search_result for the registration" do
+          it "creates new conviction_search_results for the registration and key people" do
             post_form_with_params("declaration_form", transient_registration.token, params)
-            expect(transient_registration.reload.conviction_search_result).to_not eq(nil)
-          end
 
-          it "creates a new conviction_search_result for the key people" do
-            post_form_with_params("declaration_form", transient_registration.token, params)
+            expect(transient_registration.reload.conviction_search_result).to_not eq(nil)
             expect(transient_registration.reload.key_people.first.conviction_search_result).to_not eq(nil)
           end
         end
@@ -76,13 +73,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the check_your_answers form" do
               get back_declaration_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the check_your_answers form" do
-              get back_declaration_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:token]))
             end
           end
@@ -97,13 +91,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the correct form for the state" do
               get back_declaration_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get back_declaration_forms_path(transient_registration[:token])
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end

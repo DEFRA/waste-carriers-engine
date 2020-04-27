@@ -3,29 +3,26 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  # TODO: (?) Create test class and include concern?
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            :has_unpaid_balance,
+            workflow_state: "bank_transfer_form")
+    end
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :bank_transfer_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 :has_unpaid_balance,
-                 workflow_state: "bank_transfer_form")
+      context ":bank_transfer_form state transitions" do
+        context "on next" do
+          include_examples "has next transition", next_state: "renewal_received_form"
+
+          it "sends a confirmation email after the 'next' event" do
+            expect { subject.next! }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          end
         end
 
-        it "changes to :payment_summary_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:bank_transfer_form).to(:payment_summary_form).on_event(:back)
-        end
-
-        it "changes to :renewal_received_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:bank_transfer_form).to(:renewal_received_form).on_event(:next)
-        end
-
-        it "sends a confirmation email after the 'next' event" do
-          old_emails_sent_count = ActionMailer::Base.deliveries.count
-          transient_registration.next!
-          expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count + 1)
+        context "on back" do
+          include_examples "has back transition", previous_state: "payment_summary_form"
         end
       end
     end

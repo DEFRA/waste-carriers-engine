@@ -2,15 +2,15 @@
 
 FactoryBot.define do
   factory :renewing_registration, class: WasteCarriersEngine::RenewingRegistration do
+    # Create a new registration when initializing so we can copy its data
+    initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_soon).reg_identifier) }
+
     trait :has_required_data do
       location { "england" }
       declared_convictions { "no" }
       temp_cards { 1 }
 
       has_postcode
-
-      # Create a new registration when initializing so we can copy its data
-      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_soon).reg_identifier) }
     end
 
     trait :has_addresses do

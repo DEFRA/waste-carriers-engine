@@ -4,32 +4,32 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            temp_payment_method: temp_payment_method,
+            workflow_state: "payment_summary_form")
+    end
+    let(:temp_payment_method) {}
+
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :payment_summary_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "payment_summary_form")
-        end
+      context ":payment_summary_form state transitions" do
+        context "on next" do
+          context "when paying by card" do
+            let(:temp_payment_method) { "card" }
 
-        it "changes to :cards_form after the 'back' event" do
-          expect(transient_registration).to transition_from(:payment_summary_form).to(:cards_form).on_event(:back)
-        end
+            include_examples "has next transition", next_state: "worldpay_form"
+          end
 
-        context "when paying by card" do
-          before(:each) { transient_registration.temp_payment_method = "card" }
+          context "when paying by bank transfer" do
+            let(:temp_payment_method) { "bank_transfer" }
 
-          it "changes to :worldpay_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:payment_summary_form).to(:worldpay_form).on_event(:next)
+            include_examples "has next transition", next_state: "bank_transfer_form"
           end
         end
 
-        context "when paying by bank transfer" do
-          before(:each) { transient_registration.temp_payment_method = "bank_transfer" }
-
-          it "changes to :bank_transfer_form after the 'next' event" do
-            expect(transient_registration).to transition_from(:payment_summary_form).to(:bank_transfer_form).on_event(:next)
-          end
+        context "on back" do
+          include_examples "has back transition", previous_state: "cards_form"
         end
       end
     end
