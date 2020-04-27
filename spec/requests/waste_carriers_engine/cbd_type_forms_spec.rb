@@ -41,16 +41,13 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
-              get back_cbd_type_forms_path(transient_registration.token)
-              expect(response).to have_http_status(302)
-            end
-
             context "when the business doesn't carry waste for other businesses or households" do
               before(:each) { transient_registration.update_attributes(other_businesses: "no") }
 
-              it "redirects to the construction_demolition form" do
+              it "returns a 302 response and redirects to the construction_demolition form" do
                 get back_cbd_type_forms_path(transient_registration.token)
+
+                expect(response).to have_http_status(302)
                 expect(response).to redirect_to(new_construction_demolition_form_path(transient_registration.token))
               end
             end
@@ -61,8 +58,10 @@ module WasteCarriersEngine
                                                          is_main_service: "yes")
               end
 
-              it "redirects to the waste_types form" do
+              it "returns a 302 response and redirects to the waste_types form" do
                 get back_cbd_type_forms_path(transient_registration.token)
+
+                expect(response).to have_http_status(302)
                 expect(response).to redirect_to(new_waste_types_form_path(transient_registration.token))
               end
             end
@@ -90,13 +89,10 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response" do
+            it "returns a 302 response and redirects to the correct form for the state" do
               get back_cbd_type_forms_path(transient_registration.token)
-              expect(response).to have_http_status(302)
-            end
 
-            it "redirects to the correct form for the state" do
-              get back_cbd_type_forms_path(transient_registration.token)
+              expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
             end
           end
