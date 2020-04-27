@@ -3,35 +3,13 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RenewingRegistration, type: :model do
+  RSpec.describe RenewingRegistration do
     describe "#workflow_state" do
-      context "when a RenewingRegistration's state is :company_address_manual_form" do
-        let(:transient_registration) do
-          create(:renewing_registration,
-                 :has_required_data,
-                 workflow_state: "company_address_manual_form")
-        end
-
-        context "when the business is 'overseas'" do
-          before(:each) { transient_registration.location = "overseas" }
-
-          it "changes to :company_name_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:company_address_manual_form).to(:company_name_form).on_event(:back)
-          end
-        end
-
-        context "when the business is not 'overseas'" do
-          before(:each) { transient_registration.location = "england" }
-
-          it "changes to :company_postcode_form after the 'back' event" do
-            expect(transient_registration).to transition_from(:company_address_manual_form).to(:company_postcode_form).on_event(:back)
-          end
-        end
-
-        it "changes to :main_people_form after the 'next' event" do
-          expect(transient_registration).to transition_from(:company_address_manual_form).to(:main_people_form).on_event(:next)
-        end
-      end
+      it_behaves_like "a manual address transition",
+                      previous_state_if_overseas: :company_name_form,
+                      next_state: :main_people_form,
+                      address_type: "company",
+                      factory: :renewing_registration
     end
   end
 end
