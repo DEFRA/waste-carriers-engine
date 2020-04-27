@@ -5,8 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe ContactPostcodeForm, type: :model do
     before do
-      example_json = { postcode: "BS1 5AH" }
-      allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(example_json)
+      stub_address_finder_service
     end
 
     describe "#submit" do

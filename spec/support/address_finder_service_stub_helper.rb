@@ -2,7 +2,7 @@
 
 module AddressFinderServiceStubHelper
   # rubocop:disable Metrics/MethodLength
-  def stub_address_finder_service(options)
+  def stub_address_finder_service(options={})
     address_json = [{
       "moniker" => "340116",
       "uprn" => "340116",
@@ -28,8 +28,9 @@ module AddressFinderServiceStubHelper
       "doubleDependentLocality" => ""
     }.merge(options.stringify_keys)]
 
-    allow_any_instance_of(::WasteCarriersEngine::AddressFinderService)
-      .to receive(:search_by_postcode).and_return(address_json)
+    response = double(:response, results: address_json, successful?: true)
+
+    allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
   end
   # rubocop:enable Metrics/MethodLength
 end

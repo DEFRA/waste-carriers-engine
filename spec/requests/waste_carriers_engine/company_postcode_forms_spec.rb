@@ -30,28 +30,22 @@ module WasteCarriersEngine
             end
 
             before do
-              example_json = { postcode: "BS1 6AH" }
-              allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(example_json)
+              stub_address_finder_service
             end
 
-            it "returns a 302 response" do
+            it "returns a 302 response, updates the transient registration and redirects to the company_address form" do
               post company_postcode_forms_path(transient_registration.token), company_postcode_form: valid_params
+
               expect(response).to have_http_status(302)
-            end
-
-            it "updates the transient registration" do
-              post company_postcode_forms_path(transient_registration.token), company_postcode_form: valid_params
               expect(transient_registration.reload[:temp_company_postcode]).to eq(valid_params[:temp_company_postcode])
-            end
-
-            it "redirects to the company_address form" do
-              post company_postcode_forms_path(transient_registration.token), company_postcode_form: valid_params
               expect(response).to redirect_to(new_company_address_form_path(transient_registration[:token]))
             end
 
             context "when a postcode search returns an error" do
               before(:each) do
-                allow_any_instance_of(AddressFinderService).to receive(:search_by_postcode).and_return(:error)
+                response = double(:response, successful?: false, error: "foo")
+
+                allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
               end
 
               it "redirects to the company_address_manual form" do

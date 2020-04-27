@@ -36,18 +36,11 @@ module WasteCarriersEngine
               }
             end
 
-            it "updates the transient registration" do
+            it "updates the transient registration, returns a 302 response and redirects to the main_people form" do
               post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+
               expect(transient_registration.reload.company_address.uprn.to_s).to eq("340116")
-            end
-
-            it "returns a 302 response" do
-              post company_address_forms_path(transient_registration.token), company_address_form: valid_params
               expect(response).to have_http_status(302)
-            end
-
-            it "redirects to the main_people form" do
-              post company_address_forms_path(transient_registration.token), company_address_form: valid_params
               expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
             end
 

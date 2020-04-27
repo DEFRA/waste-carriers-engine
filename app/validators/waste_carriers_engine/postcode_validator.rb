@@ -28,15 +28,15 @@ module WasteCarriersEngine
     end
 
     def postcode_returns_results?(record, attribute, value)
-      address_finder = AddressFinderService.new(value)
-      case address_finder.search_by_postcode
-      when :not_found
+      response = AddressLookupService.run(value)
+
+      return true if response.successful?
+
+      if response.error.is_a?(DefraRuby::Address::NoMatchError)
         record.errors[attribute] << error_message(record, attribute, "no_results")
         false
-      when :error
-        record.transient_registration.temp_os_places_error = true
-        true
       else
+        record.transient_registration.temp_os_places_error = true
         true
       end
     end

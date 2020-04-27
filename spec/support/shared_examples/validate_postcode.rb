@@ -8,7 +8,9 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
     context "when a postcode meets the requirements" do
       before do
         example_json = { postcode: "BS1 5AH" }
-        allow_any_instance_of(WasteCarriersEngine::AddressFinderService).to receive(:search_by_postcode).and_return(example_json)
+        response = double(:response, results: [example_json], successful?: true)
+
+        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
       end
 
       it "is valid" do
@@ -50,7 +52,9 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
 
     context "when a postcode has no matches" do
       before do
-        allow_any_instance_of(WasteCarriersEngine::AddressFinderService).to receive(:search_by_postcode).and_return(:not_found)
+        response = double(:response, successful?: false, error: DefraRuby::Address::NoMatchError.new)
+
+        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
       end
 
       it "is not valid" do
@@ -60,7 +64,9 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
 
     context "when a postcode search returns an error" do
       before do
-        allow_any_instance_of(WasteCarriersEngine::AddressFinderService).to receive(:search_by_postcode).and_return(:error)
+        response = double(:response, successful?: false, error: "foo")
+
+        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
       end
 
       it "is valid" do

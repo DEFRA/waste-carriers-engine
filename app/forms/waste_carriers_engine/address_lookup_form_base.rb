@@ -10,14 +10,15 @@ module WasteCarriersEngine
 
     # Look up addresses based on the postcode
     def look_up_addresses
-      self.temp_addresses = []
+      self.temp_addresses = if postcode.present?
+                              request_matching_addresses
+                            else
+                              []
+                            end
+    end
 
-      return unless postcode.present?
-
-      address_finder = AddressFinderService.new(postcode)
-      temp_addresses = address_finder.search_by_postcode
-
-      self.temp_addresses = temp_addresses unless temp_addresses.is_a?(Symbol)
+    def request_matching_addresses
+      AddressLookupService.run(postcode).results
     end
 
     def create_address(uprn, type)
