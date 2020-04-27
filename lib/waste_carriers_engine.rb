@@ -27,6 +27,8 @@ module WasteCarriersEngine
     attr_accessor :assisted_digital_email
     # Companies house API config
     attr_reader :companies_house_host, :companies_house_api_key
+    # Address lookup config
+    attr_reader :address_host
 
     def initialize
       configure_airbrake_rails_properties
