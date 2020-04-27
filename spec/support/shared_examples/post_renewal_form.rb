@@ -20,18 +20,13 @@ RSpec.shared_examples "POST renewal form" do |form, options|
     end
 
     context "when no transient registration is found" do
-      it "redirects to the invalid page" do
-        post_form_with_params(form, "foo")
-
-        expect(response).to redirect_to(page_path("invalid"))
-      end
-
-      it "does not create a transient registration" do
+      it "does not create a transient registration and redirects to the invalid page" do
         count = WasteCarriersEngine::TransientRegistration.count
 
         post_form_with_params(form, "foo")
 
         expect(WasteCarriersEngine::TransientRegistration.count).to eq(count)
+        expect(response).to redirect_to(page_path("invalid"))
       end
     end
 
@@ -50,36 +45,26 @@ RSpec.shared_examples "POST renewal form" do |form, options|
         context "when the params are valid" do
           # NOTE: Keep me and put in shared POST.
           # Fix so we test all persisted data. Data comes from options.
-          it "updates the transient registration" do
+          it "updates the transient registration, changes the workflow_state and redirects to the next page" do
             # If we've specified the value we want to get after updating, use that
             # Otherwise, expect the value submitted in params
             expected_value = valid_params[test_attribute] unless expected_value.present?
+            state_before_request = transient_registration[:workflow_state]
 
             post_form_with_params(form, transient_registration.token, valid_params)
             expect(transient_registration.reload[test_attribute]).to eq(expected_value)
-          end
-
-          it "changes the workflow_state" do
-            state_before_request = transient_registration[:workflow_state]
-            post_form_with_params(form, transient_registration.token, valid_params)
             expect(transient_registration.reload[:workflow_state]).to_not eq(state_before_request)
-          end
-
-          it "redirects to the next page" do
-            post_form_with_params(form, transient_registration.token, valid_params)
             expect(response).to have_http_status(302)
           end
         end
 
         context "when the params are invalid" do
-          it "does not update the transient registration, including workflow_state" do
+          it "does not update the transient registration, including workflow_state, and shows the form again" do
             transient_reg_before_submitting = transient_registration
-            post_form_with_params(form, transient_registration.token, invalid_params)
-            expect(transient_registration.reload).to eq(transient_reg_before_submitting)
-          end
 
-          it "show the form again" do
             post_form_with_params(form, transient_registration.token, invalid_params)
+
+            expect(transient_registration.reload).to eq(transient_reg_before_submitting)
             expect(response).to render_template("#{form}s/new")
           end
         end
@@ -98,14 +83,12 @@ RSpec.shared_examples "POST renewal form" do |form, options|
         context "when the registration cannot be renewed" do
           before { transient_registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
 
-          it "does not update the transient registration, including workflow_state" do
+          it "does not update the transient registration, including workflow_state, and redirects to the unrenewable error page" do
             transient_reg_before_submitting = transient_registration
-            post_form_with_params(form, transient_registration.token, valid_params)
-            expect(transient_registration.reload).to eq(transient_reg_before_submitting)
-          end
 
-          it "redirects to the unrenewable error page" do
             post_form_with_params(form, transient_registration.token, valid_params)
+
+            expect(transient_registration.reload).to eq(transient_reg_before_submitting)
             expect(response).to redirect_to(page_path("unrenewable"))
           end
         end
@@ -124,15 +107,13 @@ RSpec.shared_examples "POST renewal form" do |form, options|
           transient_registration.update_attributes(workflow_state: different_state)
         end
 
-        it "does not update the transient_registration, including workflow_state" do
+        it "does not update the transient_registration, including workflow_state, and redirects to the correct form for the workflow_state" do
           transient_reg_before_submitting = transient_registration
-          post_form_with_params(form, transient_registration.token, valid_params)
-          expect(transient_registration.reload).to eq(transient_reg_before_submitting)
-        end
-
-        it "redirects to the correct form for the workflow_state" do
           workflow_state = transient_registration[:workflow_state]
+
           post_form_with_params(form, transient_registration.token, valid_params)
+
+          expect(transient_registration.reload).to eq(transient_reg_before_submitting)
           expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
         end
       end
