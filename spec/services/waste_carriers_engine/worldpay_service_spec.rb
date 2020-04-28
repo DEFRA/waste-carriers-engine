@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require "webmock/rspec"
 require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe WorldpayService do
+    let(:host) { "https://secure-test.worldpay.com" }
+
     let(:transient_registration) do
       create(:renewing_registration,
              :has_required_data,
@@ -96,33 +99,37 @@ module WasteCarriersEngine
         # Stub the WorldpayUrlService as we're testing that separately
         before do
           allow_any_instance_of(WorldpayUrlService).to receive(:format_link).and_return("LINK GOES HERE")
+
+          stub_request(:any, /.*#{host}.*/).to_return(
+            status: 200,
+            body: File.read("./spec/fixtures/worldpay_initial_request.xml")
+          )
         end
 
-        it "returns a link", vcr: true do
-          VCR.use_cassette("worldpay_initial_request") do
-            url = worldpay_service.prepare_for_payment[:url]
-            expect(url).to eq("LINK GOES HERE")
-          end
+        it "returns a link" do
+          url = worldpay_service.prepare_for_payment[:url]
+          expect(url).to eq("LINK GOES HERE")
         end
 
-        it "creates a new payment", vcr: true do
-          VCR.use_cassette("worldpay_initial_request") do
-            number_of_existing_payments = transient_registration.finance_details.payments.length
-            worldpay_service.prepare_for_payment
-            expect(transient_registration.finance_details.payments.length).to eq(number_of_existing_payments + 1)
-          end
+        it "creates a new payment" do
+          number_of_existing_payments = transient_registration.finance_details.payments.length
+          worldpay_service.prepare_for_payment
+          expect(transient_registration.finance_details.payments.length).to eq(number_of_existing_payments + 1)
         end
       end
 
       context "when the request is invalid" do
         before do
           allow_any_instance_of(WorldpayXmlService).to receive(:build_xml).and_return("foo")
+
+          stub_request(:any, /.*#{host}.*/).to_return(
+            status: 200,
+            body: File.read("./spec/fixtures/worldpay_initial_request_invalid.xml")
+          )
         end
 
-        it "returns :error", vcr: true do
-          VCR.use_cassette("worldpay_initial_request_invalid") do
-            expect(worldpay_service.prepare_for_payment).to eq(:error)
-          end
+        it "returns :error" do
+          expect(worldpay_service.prepare_for_payment).to eq(:error)
         end
       end
     end

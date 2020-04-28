@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require "webmock/rspec"
 require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "WorldpayForms", type: :request do
+    let(:host) { "https://secure-test.worldpay.com" }
+
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
       before(:each) do
@@ -23,13 +26,18 @@ module WasteCarriersEngine
         let(:token) { transient_registration[:token] }
 
         describe "#new" do
-          it "redirects to worldpay and creates a new finance_details", vcr: true do
-            VCR.use_cassette("worldpay_redirect") do
-              get new_worldpay_form_path(token)
+          before do
+            stub_request(:any, /.*#{host}.*/).to_return(
+              status: 200,
+              body: File.read("./spec/fixtures/worldpay_redirect.xml")
+            )
+          end
 
-              expect(response.location).to include("https://hpp-sandbox.worldpay.com/")
-              expect(transient_registration.reload.finance_details).to_not eq(nil)
-            end
+          it "redirects to worldpay and creates a new finance_details" do
+            get new_worldpay_form_path(token)
+
+            expect(response.location).to include("https://hpp-sandbox.worldpay.com/")
+            expect(transient_registration.reload.finance_details).to_not eq(nil)
           end
 
           context "when the transient_registration is a new registration" do
@@ -42,10 +50,8 @@ module WasteCarriersEngine
             end
 
             it "creates a new finance_details" do
-              VCR.use_cassette("worldpay_redirect") do
-                get new_worldpay_form_path(token)
-                expect(transient_registration.reload.finance_details).to_not eq(nil)
-              end
+              get new_worldpay_form_path(token)
+              expect(transient_registration.reload.finance_details).to_not eq(nil)
             end
           end
 
