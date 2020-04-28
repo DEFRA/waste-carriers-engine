@@ -37,6 +37,12 @@ module WasteCarriersEngine
       where(:expires_on.gte => date)
     end
 
+    def self.not_assisted_digital
+      assisted_digital_email = WasteCarriersEngine.configuration.assisted_digital_email
+
+      where("contactEmail" => { :$nin => [nil, assisted_digital_email] })
+    end
+
     alias pending_manual_conviction_check? conviction_check_required?
     alias pending_payment? unpaid_balance?
 
