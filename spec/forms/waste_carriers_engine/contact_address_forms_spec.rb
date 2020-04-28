@@ -4,11 +4,12 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe ContactAddressForm, type: :model do
+    before do
+      stub_address_finder_service(uprn: "340116")
+    end
+
     describe "#submit" do
       context "when the form is valid" do
-        before do
-          stub_address_finder_service(uprn: "340116")
-        end
 
         let(:contact_address_form) { build(:contact_address_form, :has_required_data) }
         let(:valid_params) do
