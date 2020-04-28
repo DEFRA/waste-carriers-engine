@@ -59,7 +59,6 @@ group :test do
   gem "factory_bot_rails", require: false
   gem "simplecov", "~> 0.17.1", require: false
   gem "timecop"
-  gem "vcr", "~> 4.0"
   gem "webmock", "~> 3.4"
 end
 gem "loofah", ">= 2.2.1"
