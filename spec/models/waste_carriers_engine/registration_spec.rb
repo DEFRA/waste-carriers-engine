@@ -62,8 +62,8 @@ module WasteCarriersEngine
           result = described_class.not_assisted_digital
 
           expect(result).to include(non_ad_registration)
-          expect(result).to_not include(ad_registration_1)
-          expect(result).to_not include(ad_registration_2)
+          expect(result).to_not include(ad_registration1)
+          expect(result).to_not include(ad_registration2)
         end
       end
 
