@@ -54,7 +54,7 @@ module WasteCarriersEngine
       end
 
       describe ".not_assisted_digital" do
-        it "returns registrations that are not assited digital" do
+        it "returns registrations that are not assisted digital" do
           ad_registration1 = create(:registration, :has_required_data, contact_email: nil)
           ad_registration2 = create(:registration, :has_required_data, contact_email: WasteCarriersEngine.configuration.assisted_digital_email)
           non_ad_registration = create(:registration, :has_required_data)
