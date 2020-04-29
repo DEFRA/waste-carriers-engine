@@ -53,20 +53,6 @@ module WasteCarriersEngine
         end
       end
 
-      describe ".not_assisted_digital" do
-        it "returns registrations that are not assisted digital" do
-          ad_registration1 = create(:registration, :has_required_data, contact_email: nil)
-          ad_registration2 = create(:registration, :has_required_data, contact_email: WasteCarriersEngine.configuration.assisted_digital_email)
-          non_ad_registration = create(:registration, :has_required_data)
-
-          result = described_class.not_assisted_digital
-
-          expect(result).to include(non_ad_registration)
-          expect(result).to_not include(ad_registration1)
-          expect(result).to_not include(ad_registration2)
-        end
-      end
-
       describe ".in_grace_window" do
         it "returns registrations whose expired date is in the grace window" do
           allow(Rails.configuration).to receive(:grace_window).and_return(3)
