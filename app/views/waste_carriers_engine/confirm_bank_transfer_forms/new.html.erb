@@ -1,7 +1,7 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_bank_transfer_forms_path(@bank_transfer_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", back_path: back_confirm_bank_transfer_forms_path(@confirm_bank_transfer_form.token)) %>
 
 <div class="text">
-  <%= form_for(@bank_transfer_form) do |f| %>
+  <%= form_for(@confirm_bank_transfer_form) do |f| %>
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
     <div class="panel">
@@ -36,7 +36,7 @@
           </tr>
           <tr>
             <th scope="col"><%= t(".uk_payment_table.total_cost.label") %></td>
-            <td class="strong">£<%= display_pence_as_pounds(@bank_transfer_form.total_to_pay) %></td>
+            <td class="strong">£<%= display_pence_as_pounds(@confirm_bank_transfer_form.total_to_pay) %></td>
           </tr>
         </tbody>
       </table>

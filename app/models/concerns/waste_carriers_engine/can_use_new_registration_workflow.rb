@@ -62,7 +62,7 @@ module WasteCarriersEngine
         state :cards_form
         state :payment_summary_form
         state :worldpay_form
-        state :bank_transfer_form
+        state :confirm_bank_transfer_form
 
         state :registration_completed_form
         state :registration_received_pending_payment_form
@@ -290,10 +290,10 @@ module WasteCarriersEngine
                       if: :paying_by_card?
 
           transitions from: :payment_summary_form,
-                      to: :bank_transfer_form
+                      to: :confirm_bank_transfer_form
 
           # Registration completion forms
-          transitions from: :bank_transfer_form,
+          transitions from: :confirm_bank_transfer_form,
                       to: :registration_received_pending_payment_form,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
@@ -517,7 +517,7 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :payment_summary_form
 
-          transitions from: :bank_transfer_form,
+          transitions from: :confirm_bank_transfer_form,
                       to: :payment_summary_form
         end
 

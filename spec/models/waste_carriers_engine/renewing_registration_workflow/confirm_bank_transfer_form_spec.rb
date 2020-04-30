@@ -8,11 +8,11 @@ module WasteCarriersEngine
       build(:renewing_registration,
             :has_required_data,
             :has_unpaid_balance,
-            workflow_state: "bank_transfer_form")
+            workflow_state: "confirm_bank_transfer_form")
     end
 
     describe "#workflow_state" do
-      context ":bank_transfer_form state transitions" do
+      context ":confirm_bank_transfer_form state transitions" do
         context "on next" do
           include_examples "has next transition", next_state: "renewal_received_form"
 

@@ -19,11 +19,11 @@ module WasteCarriersEngine
         end
       end
 
-      context "when transitioning from bank_transfer_form to renewal_received_form succesfully" do
+      context "when transitioning from confirm_bank_transfer_form to renewal_received_form succesfully" do
         it "set the transient registration metadata route" do
           expect(renewing_registration).to receive(:set_metadata_route).once
 
-          renewing_registration.update_attributes(workflow_state: :bank_transfer_form)
+          renewing_registration.update_attributes(workflow_state: :confirm_bank_transfer_form)
           renewing_registration.next
         end
       end
