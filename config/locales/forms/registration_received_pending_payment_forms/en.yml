@@ -5,6 +5,7 @@ en:
         title: "You must now pay by bank transfer"
         heading: "You must now pay by bank transfer."
         highlight_text: "Then email us your registration number:"
+        panel_text: "We cannot register you until your payment clears."
         paragraph_1: "We’ve sent an email to %{email} with the payment details and instructions."
         paragraph_2: "We will not register you until your payment clears."
         list_1:

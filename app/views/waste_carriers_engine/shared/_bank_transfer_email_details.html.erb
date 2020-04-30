@@ -1,0 +1,23 @@
+<div class="form-group">
+  <details>
+    <summary>
+      <%= t(".heading") %>
+    </summary>
+    <div class="panel">
+      <p>
+        <span class="bold"><%= t(".subject_label") %></span>
+        <br>
+        <%= t(".subject", reg_identifier: reg_identifier) %>
+      </p>
+      <p>
+        <span class="bold"><%= t(".body_label") %></span>
+        <br>
+        <%= t(".body_1", reg_identifier: reg_identifier) %>
+        <br>
+        <%= t(".body_2") %>
+        <br>
+        <%= t(".body_3", amount: display_pence_as_pounds(amount)) %>
+      </p>
+    </div>
+  </details>
+</div>

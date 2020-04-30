@@ -5,6 +5,18 @@
     <span class="strong" id="reg_identifier"><%= @registration.reg_identifier %></span></p>
   </div>
 
+  <div class="panel panel-border-wide">
+    <%= t(".panel_text") %>
+  </div>
+
+  <%= render("waste_carriers_engine/shared/bank_transfer_details",
+      reg_identifier: @registration.reg_identifier,
+      payment_due: @registration.finance_details.balance) %>
+
+  <%= render("waste_carriers_engine/shared/bank_transfer_email_details",
+      reg_identifier: @registration.reg_identifier,
+      amount: @registration.finance_details.balance) %>
+
   <p><%= t(".paragraph_1", email: @registration.contact_email) %></p>
   <p><%= t(".paragraph_2") %></p>
 

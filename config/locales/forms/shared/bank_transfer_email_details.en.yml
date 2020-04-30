@@ -1,0 +1,11 @@
+en:
+  waste_carriers_engine:
+    shared:
+      bank_transfer_email_details:
+        heading: "What to include when you email us"
+        subject_label: "Email subject:"
+        subject: "Waste carriers payment confirmation %{reg_identifier}"
+        body_label: "Email body:"
+        body_1: "Payment confirmation reference: %{reg_identifier}"
+        body_2: "Date paid:"
+        body_3: "Amount: £%{amount}"
