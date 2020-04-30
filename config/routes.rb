@@ -566,12 +566,12 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
-    resources :bank_transfer_forms,
+    resources :confirm_bank_transfer_forms,
               only: %i[new create],
-              path: "bank-transfer",
+              path: "confirm-bank-transfer",
               path_names: { new: "" } do
                 get "back",
-                    to: "bank_transfer_forms#go_back",
+                    to: "confirm_bank_transfer_forms#go_back",
                     as: "back",
                     on: :collection
               end

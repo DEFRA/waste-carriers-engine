@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class BankTransferForm < BaseForm
-    delegate :total_to_pay, to: :transient_registration
-
+  class ConfirmBankTransferForm < BaseForm
     def self.can_navigate_flexibly?
       false
     end

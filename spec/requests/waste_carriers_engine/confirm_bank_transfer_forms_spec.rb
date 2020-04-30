@@ -3,10 +3,10 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "BankTransferForms", type: :request do
-    include_examples "GET locked-in form", "bank_transfer_form"
+  RSpec.describe "ConfirmBankTransferForms", type: :request do
+    include_examples "GET locked-in form", "confirm_bank_transfer_form"
 
-    describe "GET new_bank_transfer_form" do
+    describe "GET new_confirm_bank_transfer_form" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
         before(:each) do
@@ -19,11 +19,11 @@ module WasteCarriersEngine
                    :has_required_data,
                    :has_unpaid_balance,
                    account_email: user.email,
-                   workflow_state: "bank_transfer_form")
+                   workflow_state: "confirm_bank_transfer_form")
           end
 
           it "creates a new order" do
-            get new_bank_transfer_form_path(transient_registration.token)
+            get new_confirm_bank_transfer_form_path(transient_registration.token)
             expect(transient_registration.reload.finance_details.orders.count).to eq(1)
           end
 
@@ -31,12 +31,12 @@ module WasteCarriersEngine
             let(:transient_registration) do
               create(:new_registration,
                      contact_email: user.email,
-                     workflow_state: "bank_transfer_form",
+                     workflow_state: "confirm_bank_transfer_form",
                      temp_cards: 2)
             end
 
             it "creates a new order" do
-              get new_bank_transfer_form_path(transient_registration.token)
+              get new_confirm_bank_transfer_form_path(transient_registration.token)
 
               expect(transient_registration.reload.finance_details.orders.count).to eq(1)
             end
@@ -51,7 +51,7 @@ module WasteCarriersEngine
             it "replaces the old order and does not increase the order count" do
               old_order_count = transient_registration.finance_details.orders.count
 
-              get new_bank_transfer_form_path(transient_registration.token)
+              get new_confirm_bank_transfer_form_path(transient_registration.token)
 
               expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq(nil)
               expect(transient_registration.reload.finance_details.orders.count).to eq(old_order_count)
@@ -61,9 +61,9 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "POST without params form", "bank_transfer_form"
+    include_examples "POST without params form", "confirm_bank_transfer_form"
 
-    describe "POST new_bank_transfer_form" do
+    describe "POST new_confirm_bank_transfer_form" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
 
@@ -83,7 +83,7 @@ module WasteCarriersEngine
 
           context "when the workflow_state matches the requested form" do
             before do
-              transient_registration.update_attributes(workflow_state: :bank_transfer_form)
+              transient_registration.update_attributes(workflow_state: :confirm_bank_transfer_form)
             end
 
             context "when the request is successful" do
@@ -92,7 +92,7 @@ module WasteCarriersEngine
 
                 expect(transient_registration.reload.metaData.route).to be_nil
 
-                post_form_with_params(:bank_transfer_form, transient_registration.token)
+                post_form_with_params(:confirm_bank_transfer_form, transient_registration.token)
 
                 expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
               end
@@ -102,7 +102,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "GET back_bank_transfer_forms_path" do
+    describe "GET back_confirm_bank_transfer_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
         before(:each) do
@@ -115,12 +115,12 @@ module WasteCarriersEngine
                    :has_required_data,
                    :has_unpaid_balance,
                    account_email: user.email,
-                   workflow_state: "bank_transfer_form")
+                   workflow_state: "confirm_bank_transfer_form")
           end
 
           context "when the back action is triggered" do
             it "returns a 302 response and redirects to the payment_summary form" do
-              get back_bank_transfer_forms_path(transient_registration.token)
+              get back_confirm_bank_transfer_forms_path(transient_registration.token)
 
               expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_payment_summary_form_path(transient_registration.token))
@@ -139,7 +139,7 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response and redirects to the correct form for the state" do
-              get back_bank_transfer_forms_path(transient_registration.token)
+              get back_confirm_bank_transfer_forms_path(transient_registration.token)
 
               expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))

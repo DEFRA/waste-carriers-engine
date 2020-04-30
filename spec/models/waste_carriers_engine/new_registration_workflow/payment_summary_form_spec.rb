@@ -15,7 +15,7 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "worldpay_form"
           end
 
-          include_examples "has next transition", next_state: "bank_transfer_form"
+          include_examples "has next transition", next_state: "confirm_bank_transfer_form"
         end
 
         context "on back" do

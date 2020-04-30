@@ -1,0 +1,24 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_confirm_bank_transfer_forms_path(@confirm_bank_transfer_form.token)) %>
+
+<div class="text">
+  <%= form_for(@confirm_bank_transfer_form) do |f| %>
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <p>
+      <%= t(".paragraph_1") %>
+    </p>
+
+    <p>
+      <%= t(".paragraph_2") %>
+    </p>
+
+    <p>
+      <%= link_to(t(".link_text"),
+                  back_confirm_bank_transfer_forms_path(@confirm_bank_transfer_form.token)) %>
+    </p>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>
