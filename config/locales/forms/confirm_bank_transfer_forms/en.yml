@@ -3,32 +3,8 @@ en:
     confirm_bank_transfer_forms:
       new:
         title: Pay by bank transfer
-        heading: Pay by bank transfer and email us to confirm payment
-        subheading_panel: We cannot register you until your payment clears.
-        uk_payment_table:
-          heading: "Bank details"
-          sort_code:
-            label: Sort code
-            value: 60-70-80
-          account_number:
-            label: Account number
-            value: "10014411"
-          reference_number:
-            label: Payment reference
-            hint: We cannot complete your registration without this
-          total_cost:
-            label: Payment due
-        overseas_payments:
-          heading: "Overseas payments"
-          iban: "IBAN: GB23 NWBK 607080 10014411"
-          swiftbic: "SWIFTBIC: NWBK GB2L"
-          currency: "Currency: Sterling"
-        send_confirmation:
-          heading: "Email us your registration number %{reg_identifier} to confirm you’ve paid"
-        email_us:
-          label: "Email us"
-          value: "ea_fsc_ar@gov.sscl.com"
-        payment_reference:
-          label: "Payment reference"
-        paragraph_1: "We’ll send you an email with these payment details and instructions."
-        next_button: Continue
+        heading: Registration takes longer if you pay by bank transfer
+        paragraph_1: "In order to pay by bank transfer, you will need to follow the instructions on the next screen and email us to confirm payment. This will take approximately 5 working days."
+        paragraph_2: "In most cases we can provide instant confirmation if you pay by card."
+        link_text: "Go back to pay by credit or debit card instead"
+        next_button: "Confirm you’ll pay by bank transfer"
