@@ -84,7 +84,7 @@ en:
           email_text: "ea_fsc_ar@gov.sscl.com"
           email_subject: "Payment confirmation registration %{reg_identifier}"
           email_body: "Payment confirmation reference %{reg_identifier}%0D%0ADate paid:%0D%0AAmount:"
-          paragraph_2: "Payment reference %{reg_identifier}"
+          paragraph_2: "When you email us, include the date you paid, the amount and the payment reference %{reg_identifier}."
           paragraph_3: "Allow 5 working days for your payment to reach us."
           paragraph_4: "You’re not legally entitled to operate as a waste carrier until we have received your payment and confirmed your registration."
           paragraph_5: "If any of your details change you must update your registration within 28 days."
