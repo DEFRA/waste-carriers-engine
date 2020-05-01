@@ -7,7 +7,6 @@ en:
         highlight_text: "Then email us your registration number:"
         panel_text: "We cannot register you until your payment clears."
         paragraph_1: "We’ve sent an email to %{email} with the payment details and instructions."
-        paragraph_2: "We will not register you until your payment clears."
         list_1:
           - "You’re not legally entitled to operate as a waste carrier until we have received your payment and confirmed your registration."
           - "Please allow 5 working days for your payment to reach us."
