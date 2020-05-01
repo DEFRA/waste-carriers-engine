@@ -59,6 +59,7 @@ module WasteCarriersEngine
 
         state :renewal_complete_form
         state :renewal_received_form
+        state :renewal_received_pending_payment_form
 
         state :cannot_renew_lower_tier_form
         state :cannot_renew_type_change_form

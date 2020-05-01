@@ -586,6 +586,11 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "renewal-received",
               path_names: { new: "" }
 
+    resources :renewal_received_pending_payment_forms,
+              only: %i[new create],
+              path: "renewal-received-pending-payment",
+              path_names: { new: "" }
+
     resources :cannot_renew_lower_tier_forms,
               only: %i[new create],
               path: "cannot-renew-lower-tier",
