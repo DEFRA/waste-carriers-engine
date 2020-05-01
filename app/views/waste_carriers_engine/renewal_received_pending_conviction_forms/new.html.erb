@@ -20,26 +20,16 @@
         </p>
       </div>
 
-      <p><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.contact_email) %></p>
+      <p><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.transient_registration.contact_email) %></p>
 
-      <% if @renewal_received_pending_conviction_form.pending_worldpay_payment %>
-        <h2 class="heading-medium"><%= t(".processing_payment_subheading") %></h2>
-        <p><%= t(".processing_payment_paragraph_1") %></p>
-      <% elsif @renewal_received_pending_conviction_form.pending_payment %>
-        <h2 class="heading-medium"><%= t(".awaiting_payment_subheading") %></h2>
-        <p><%= t(".awaiting_payment_paragraph_1") %></p>
-        <p><%= t(".awaiting_payment_paragraph_2") %></p>
-      <% end %>
-
-      <% if @renewal_received_pending_conviction_form.pending_convictions_check %>
-        <h2 class="heading-medium"><%= t(".conviction_check_subheading") %></h2>
-        <p><%= t(".conviction_check_paragraph_1") %></p>
-      <% end %>
+      <h2 class="heading-medium"><%= t(".subheading") %></h2>
 
       <p><%= t(".paragraph_2") %></p>
 
+      <p><%= t(".paragraph_3") %></p>
+
       <div class="panel panel-border-wide">
-        <p><%= t(".paragraph_3") %></p>
+        <p><%= t(".paragraph_4") %></p>
       </div>
 
       <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
