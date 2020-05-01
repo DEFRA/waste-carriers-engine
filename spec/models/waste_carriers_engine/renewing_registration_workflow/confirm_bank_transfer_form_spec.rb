@@ -14,7 +14,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":confirm_bank_transfer_form state transitions" do
         context "on next" do
-          include_examples "has next transition", next_state: "renewal_received_form"
+          include_examples "has next transition", next_state: "renewal_received_pending_payment_form"
 
           it "sends a confirmation email after the 'next' event" do
             expect { subject.next! }.to change { ActionMailer::Base.deliveries.count }.by(1)

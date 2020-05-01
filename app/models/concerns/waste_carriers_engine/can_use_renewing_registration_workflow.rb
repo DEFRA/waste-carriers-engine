@@ -275,7 +275,7 @@ module WasteCarriersEngine
                       after: :set_metadata_route
 
           transitions from: :confirm_bank_transfer_form,
-                      to: :renewal_received_form,
+                      to: :renewal_received_pending_payment_form,
                       success: :send_renewal_received_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
