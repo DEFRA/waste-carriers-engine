@@ -134,7 +134,7 @@ module WasteCarriersEngine
                 transient_registration.conviction_sign_offs = [build(:conviction_sign_off)]
               end
 
-              it "updates the transient registration metadata attributes from application configuration and redirects to renewal_received_form" do
+              it "updates the transient registration metadata attributes from application configuration and redirects to renewal_received_pending_conviction_form" do
                 allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
 
                 expect(transient_registration.reload.metaData.route).to be_nil
@@ -142,7 +142,7 @@ module WasteCarriersEngine
                 get success_worldpay_forms_path(token), params
 
                 expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
-                expect(response).to redirect_to(new_renewal_received_form_path(token))
+                expect(response).to redirect_to(new_renewal_received_pending_conviction_form_path(token))
               end
 
               context "when the mailer fails" do
@@ -214,9 +214,9 @@ module WasteCarriersEngine
               allow_any_instance_of(RenewingRegistration).to receive(:pending_worldpay_payment?).and_return(true)
             end
 
-            it "redirects to renewal_received_form" do
+            it "redirects to renewal_received_pending_payment_form" do
               get pending_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_renewal_received_form_path(token))
+              expect(response).to redirect_to(new_renewal_received_pending_payment_form_path(token))
             end
           end
 

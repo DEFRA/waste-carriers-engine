@@ -26,6 +26,8 @@ module WasteCarriersEngine
                 allow(subject).to receive(:pending_worldpay_payment?).and_return(false)
               end
 
+              include_examples "has next transition", next_state: "renewal_complete_form"
+
               it "does not send a confirmation email after the 'next' event" do
                 expect { subject.next! }.to_not change { ActionMailer::Base.deliveries.count }
               end
@@ -36,7 +38,7 @@ module WasteCarriersEngine
                 allow(subject).to receive(:pending_worldpay_payment?).and_return(true)
               end
 
-              include_examples "has next transition", next_state: "renewal_received_form"
+              include_examples "has next transition", next_state: "renewal_received_pending_payment_form"
 
               it "sends a confirmation email after the 'next' event" do
                 expect { subject.next! }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -49,7 +51,7 @@ module WasteCarriersEngine
               allow(subject).to receive(:conviction_check_required?).and_return(true)
             end
 
-            include_examples "has next transition", next_state: "renewal_received_form"
+            include_examples "has next transition", next_state: "renewal_received_pending_conviction_form"
 
             it "sends a confirmation email after the 'next' event" do
               expect { subject.next! }.to change { ActionMailer::Base.deliveries.count }.by(1)

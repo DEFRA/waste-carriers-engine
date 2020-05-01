@@ -58,7 +58,7 @@ module WasteCarriersEngine
         state :confirm_bank_transfer_form
 
         state :renewal_complete_form
-        state :renewal_received_form
+        state :renewal_received_pending_conviction_form
         state :renewal_received_pending_payment_form
 
         state :cannot_renew_lower_tier_form
@@ -261,8 +261,16 @@ module WasteCarriersEngine
                       to: :confirm_bank_transfer_form
 
           transitions from: :worldpay_form,
-                      to: :renewal_received_form,
-                      if: :pending_worldpay_payment_or_convictions_check?,
+                      to: :renewal_received_pending_payment_form,
+                      if: :pending_worldpay_payment?,
+                      success: :send_renewal_received_email,
+                      # TODO: This don't get triggered if in the `success`
+                      # callback block, hence we went for `after`
+                      after: :set_metadata_route
+
+          transitions from: :worldpay_form,
+                      to: :renewal_received_pending_conviction_form,
+                      if: :conviction_check_required?,
                       success: :send_renewal_received_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
@@ -557,10 +565,6 @@ module WasteCarriersEngine
 
     def paying_by_card?
       temp_payment_method == "card"
-    end
-
-    def pending_worldpay_payment_or_convictions_check?
-      pending_worldpay_payment? || conviction_check_required?
     end
 
     def send_renewal_received_email

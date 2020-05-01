@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
     describe "#workflow_state" do
       it_behaves_like "a fixed final state",
-                      current_state: :renewal_received_form,
+                      current_state: :renewal_received_pending_conviction_form,
                       factory: :renewing_registration
     end
   end

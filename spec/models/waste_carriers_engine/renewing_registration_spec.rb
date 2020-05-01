@@ -19,7 +19,7 @@ module WasteCarriersEngine
         end
       end
 
-      context "when transitioning from confirm_bank_transfer_form to renewal_received_form succesfully" do
+      context "when transitioning from confirm_bank_transfer_form to renewal_received_pending_payment_form successfully" do
         it "set the transient registration metadata route" do
           expect(renewing_registration).to receive(:set_metadata_route).once
 
@@ -28,20 +28,22 @@ module WasteCarriersEngine
         end
       end
 
-      context "when transitioning from worldpay_form to renewal_complete_form succesfully" do
+      context "when transitioning from worldpay_form to renewal_complete_form successfully" do
         it "set the transient registration metadata route" do
           expect(renewing_registration).to receive(:set_metadata_route).once
-          expect(renewing_registration).to receive(:pending_worldpay_payment_or_convictions_check?).and_return(false)
+          expect(renewing_registration).to receive(:pending_worldpay_payment?).and_return(false)
+          expect(renewing_registration).to receive(:conviction_check_required?).and_return(false)
 
           renewing_registration.update_attributes(workflow_state: :worldpay_form)
           renewing_registration.next
         end
       end
 
-      context "when transitioning from worldpay_form to renewal_received_form succesfully" do
+      context "when transitioning from worldpay_form to renewal_received_pending_conviction_form succesfully" do
         it "set the transient registration metadata route" do
           expect(renewing_registration).to receive(:set_metadata_route).once
-          expect(renewing_registration).to receive(:pending_worldpay_payment_or_convictions_check?).and_return(true)
+          expect(renewing_registration).to receive(:pending_worldpay_payment?).and_return(false)
+          expect(renewing_registration).to receive(:conviction_check_required?).and_return(true)
 
           renewing_registration.update_attributes(workflow_state: :worldpay_form)
           renewing_registration.next
