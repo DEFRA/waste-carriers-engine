@@ -3,9 +3,11 @@
 
     <h1 class="heading-large"><%= t(".error_heading") %></h1>
 
-    <% @renewal_received_pending_payment_form.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
+    <ul>
+      <% @renewal_received_pending_payment_form.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
 
   <% else %>
     <%= form_for(@renewal_received_pending_payment_form) do |f| %>
