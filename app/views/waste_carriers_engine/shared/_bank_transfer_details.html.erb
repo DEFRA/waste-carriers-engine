@@ -9,22 +9,22 @@
     <tbody>
       <tr>
         <th scope="row"><%= t(".uk_payment_table.sort_code.label") %></th>
-        <td><%= t(".uk_payment_table.sort_code.value") %></td>
+        <td><span class="bold"><%= t(".uk_payment_table.sort_code.value") %></span></td>
       </tr>
       <tr>
         <th scope="row"><%= t(".uk_payment_table.account_number.label") %></th>
-        <td><%= t(".uk_payment_table.account_number.value") %></td>
+        <td><span class="bold"><%= t(".uk_payment_table.account_number.value") %></span></td>
       </tr>
       <tr>
         <th scope="row">
           <%= t(".uk_payment_table.reference_number.label") %>
           <span class="form-hint"><%= t(".uk_payment_table.reference_number.hint") %></span>
         </th>
-        <td><%= reg_identifier %></td>
+        <td><span class="bold"><%= reg_identifier %></span></td>
       </tr>
       <tr>
         <th scope="row"><%= t(".uk_payment_table.payment_due.label") %></th>
-        <td>£<%= display_pence_as_pounds(payment_due) %></td>
+        <td><span class="bold">£<%= display_pence_as_pounds(payment_due) %></span></td>
       </tr>
     </tbody>
   </table>
@@ -52,11 +52,11 @@
     <tbody>
       <tr>
         <th scope="row"><%= t(".send_confirmation.email_us.label") %></th>
-        <td><%= t(".send_confirmation.email_us.value") %></td>
+        <td><span class="bold"><%= t(".send_confirmation.email_us.value") %></span></td>
       </tr>
       <tr>
         <th scope="row"><%= t(".send_confirmation.payment_reference.label") %></th>
-        <td><%= reg_identifier %></td>
+        <td><span class="bold"><%= reg_identifier %></span></td>
       </tr>
     </tbody>
   </table>
