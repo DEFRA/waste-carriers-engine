@@ -109,6 +109,14 @@ module WasteCarriersEngine
         contact_email.blank? || contact_email == WasteCarriersEngine.configuration.assisted_digital_email
       end
 
+      def pending_worldpay_payment?
+        return false unless finance_details.present? &&
+                            finance_details.orders.present? &&
+                            finance_details.orders.first.present?
+
+        Order.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
+      end
+
       # Some business types should not have a company_no
       def company_no_required?
         return false if overseas?

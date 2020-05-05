@@ -90,6 +90,20 @@ en:
           paragraph_5: "If any of your details change you must update your registration within 28 days."
           paragraph_6: "If you have enquiries please contact the Environment Agency helpline 03708 506506."
           paragraph_7: "This is an automated email, please do not reply."
+      registration_pending_worldpay_payment:
+        subject: "We’re processing your waste carrier registration %{reg_identifier}"
+        section_1:
+          heading: "We’re processing your payment"
+          paragraph_1: "Please use this reference number if you contact us:"
+        dear: "Dear %{name}"
+        section_2:
+          heading: "We have received your application"
+          list_item_1: "We’re currently processing your payment and will let you know when it has been received."
+          list_item_2: "You’re not legally entitled to operate as a waste carrier until we have confirmed your registration."
+          list_item_3: "Contact the Environment Agency on nccc-carrierbroker@environment-agency.gov.uk or 03708 506506 if you have questions."
+          list_item_3_html: "Contact the Environment Agency on <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a> or 03708 506506 if you have any questions."
+        section_3:
+          paragraph_1: This is an automated email, please do not reply.
       registration_pending_conviction_check:
         subject: "Application received for waste carrier registration %{reg_identifier}"
         section_1:

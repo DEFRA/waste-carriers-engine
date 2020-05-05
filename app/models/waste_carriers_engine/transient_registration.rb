@@ -45,14 +45,6 @@ module WasteCarriersEngine
       unpaid_balance?
     end
 
-    def pending_worldpay_payment?
-      return false unless finance_details.present? &&
-                          finance_details.orders.present? &&
-                          finance_details.orders.first.present?
-
-      Order.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
-    end
-
     def pending_manual_conviction_check?
       conviction_check_required?
     end
