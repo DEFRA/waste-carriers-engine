@@ -8,6 +8,12 @@ FactoryBot.define do
       payments { [] }
     end
 
+    trait :has_pending_worldpay_order do
+      has_required_data
+
+      orders { [build(:order, :has_pending_worldpay_status)] }
+    end
+
     trait :has_order do
       orders { [build(:order, :has_required_data)] }
     end

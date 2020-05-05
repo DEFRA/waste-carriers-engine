@@ -49,6 +49,11 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "registration-received-pending-payment",
               path_names: { new: "" }
 
+    resources :registration_received_pending_worldpay_payment_forms,
+              only: :new,
+              path: "registration-received-pending-worldpay-payment",
+              path_names: { new: "" }
+
     resources :registration_completed_forms,
               only: :new,
               path: "registration-completed",

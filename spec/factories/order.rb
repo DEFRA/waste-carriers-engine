@@ -10,6 +10,12 @@ FactoryBot.define do
       total_amount { order_items.sum { |item| item[:amount] } }
     end
 
+    trait :has_pending_worldpay_status do
+      has_required_data
+
+      world_pay_status { "SENT_FOR_AUTHORISATION" }
+    end
+
     trait :has_copy_cards_item do
       date_created { Time.now }
 
