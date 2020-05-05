@@ -13,7 +13,7 @@ FactoryBot.define do
     trait :has_pending_worldpay_status do
       has_required_data
 
-      worldPayStatus { "SENT_FOR_AUTHORISATION" }
+      world_pay_status { "SENT_FOR_AUTHORISATION" }
     end
 
     trait :has_copy_cards_item do
