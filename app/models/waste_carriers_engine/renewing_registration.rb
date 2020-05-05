@@ -28,9 +28,10 @@ module WasteCarriersEngine
       remove_invalid_attributes: true
     }.freeze
 
-    SUBMITTED_STATES = %w[renewal_received_pending_payment_form
+    SUBMITTED_STATES = %w[renewal_complete_form
                           renewal_received_pending_conviction_form
-                          renewal_complete_form].freeze
+                          renewal_received_pending_payment_form
+                          renewal_received_pending_worldpay_payment_form].freeze
 
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)

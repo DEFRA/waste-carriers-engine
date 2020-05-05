@@ -5,19 +5,13 @@ en:
         title: Renewal application received
         heading: Application received
         highlight_text: "Your registration number is still"
-        processing_worldpay_payment:
-          subheading: "Processing your payment"
-          paragraph_1: "We have sent a confirmation email to %{email}."
-          paragraph_2: We are currently processing your payment and will let you know when it has been received.
-          paragraph_3: Your registration will not be renewed until we have confirmed your registration.
-        bank_transfer:
-          panel_text: "We cannot register you until your payment clears."
-          subheading: "Next step: pay the renewal charge"
-          paragraph_1: "We’ve sent an email to %{email} with the payment details and instructions."
-          paragraph_2: "We will not register you until your payment clears."
-          list_1:
-            - "Please allow 5 working days for your payment to reach us."
-            - "Alternatively, contact us to pay by credit or debit card."
+        panel_text: "We cannot register you until your payment clears."
+        subheading: "Next step: pay the renewal charge"
+        paragraph_1: "We’ve sent an email to %{email} with the payment details and instructions."
+        paragraph_2: "We will not register you until your payment clears."
+        list_1:
+          - "Please allow 5 working days for your payment to reach us."
+          - "Alternatively, contact us to pay by credit or debit card."
         error_heading: Something is wrong
         next_button: Finished
   activemodel:

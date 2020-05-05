@@ -22,46 +22,29 @@
         </p>
       </div>
 
-      <% if @renewal_received_pending_payment_form.pending_worldpay_payment? %>
+      <div class="panel panel-border-wide">
+        <%= t(".panel_text") %>
+      </div>
 
-        <h2 class="heading-medium"><%= t(".processing_worldpay_payment.subheading") %></h2>
+      <h2 class="heading-medium"><%= t(".subheading") %></h2>
 
-        <p><%= t(".processing_worldpay_payment.paragraph_1",
-                 email: @renewal_received_pending_payment_form.transient_registration.contact_email) %></p>
+      <%= render("waste_carriers_engine/shared/bank_transfer_details",
+          reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
+          payment_due: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
 
-        <p><%= t(".processing_worldpay_payment.paragraph_2") %></p>
+      <%= render("waste_carriers_engine/shared/bank_transfer_email_details",
+          reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
+          amount: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
 
-        <div class="panel panel-border-wide">
-          <p><%= t(".processing_worldpay_payment.paragraph_3") %></p>
-        </div>
+      <p><%= t(".paragraph_1",
+               email: @renewal_received_pending_payment_form.transient_registration.contact_email) %></p>
+      <p><%= t(".paragraph_2") %></p>
 
-      <% else %>
-
-        <div class="panel panel-border-wide">
-          <%= t(".bank_transfer.panel_text") %>
-        </div>
-
-        <h2 class="heading-medium"><%= t(".bank_transfer.subheading") %></h2>
-
-        <%= render("waste_carriers_engine/shared/bank_transfer_details",
-            reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
-            payment_due: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
-
-        <%= render("waste_carriers_engine/shared/bank_transfer_email_details",
-            reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
-            amount: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
-
-        <p><%= t(".bank_transfer.paragraph_1",
-                 email: @renewal_received_pending_payment_form.transient_registration.contact_email) %></p>
-        <p><%= t(".bank_transfer.paragraph_2") %></p>
-
-        <ul class="list list-bullet">
-          <% t(".bank_transfer.list_1").each do |list_item| %>
-            <li><%= list_item %></li>
-          <% end %>
-        </ul>
-
-      <% end %>
+      <ul class="list list-bullet">
+        <% t(".list_1").each do |list_item| %>
+          <li><%= list_item %></li>
+        <% end %>
+      </ul>
 
       <%= render "shared/contact_environment_agency" %>
 

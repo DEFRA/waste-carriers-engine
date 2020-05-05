@@ -216,7 +216,7 @@ module WasteCarriersEngine
 
             it "redirects to renewal_received_pending_payment_form" do
               get pending_worldpay_forms_path(token), params
-              expect(response).to redirect_to(new_renewal_received_pending_payment_form_path(token))
+              expect(response).to redirect_to(new_renewal_received_pending_worldpay_payment_form_path(token))
             end
           end
 

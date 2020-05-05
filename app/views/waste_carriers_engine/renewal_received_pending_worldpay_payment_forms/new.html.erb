@@ -1,0 +1,46 @@
+<div class="column-two-thirds">
+  <% if @renewal_received_pending_worldpay_payment_form.errors.any? %>
+
+    <h1 class="heading-large"><%= t(".error_heading") %></h1>
+
+    <ul>
+      <% @renewal_received_pending_worldpay_payment_form.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+
+  <% else %>
+    <%= form_for(@renewal_received_pending_worldpay_payment_form) do |f| %>
+      <%= render("waste_carriers_engine/shared/errors", object: @renewal_received_pending_worldpay_payment_form) %>
+
+      <div class="govuk-box-highlight">
+        <h1 class="heading-xlarge"><%= t(".heading") %></h1>
+        <p class="font-large">
+          <%= t(".highlight_text") %>
+          <br>
+          <span class="strong" id="reg_identifier"><%= @renewal_received_pending_worldpay_payment_form.reg_identifier %></span>
+        </p>
+      </div>
+
+      <h2 class="heading-medium"><%= t(".subheading") %></h2>
+
+      <p><%= t(".paragraph_1",
+               email: @renewal_received_pending_worldpay_payment_form.transient_registration.contact_email) %></p>
+
+      <p><%= t(".paragraph_2") %></p>
+
+      <div class="panel panel-border-wide">
+        <p><%= t(".paragraph_3") %></p>
+      </div>
+
+      <%= render "shared/contact_environment_agency" %>
+
+      <%= render "shared/registration_checks" %>
+
+      <%= render "shared/link_to_survey" %>
+
+      <%= link_to t(".next_button"), renewal_finished_link(reg_identifier: @renewal_received_pending_worldpay_payment_form.reg_identifier), class: 'button' %>
+    <% end %>
+
+  <% end %>
+</div>

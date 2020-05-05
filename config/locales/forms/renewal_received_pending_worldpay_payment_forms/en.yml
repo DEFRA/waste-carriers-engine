@@ -1,0 +1,22 @@
+en:
+  waste_carriers_engine:
+    renewal_received_pending_worldpay_payment_forms:
+      new:
+        title: Renewal application received
+        heading: Application received
+        highlight_text: "Your registration number is still"
+        subheading: "Processing your payment"
+        paragraph_1: "We have sent a confirmation email to %{email}."
+        paragraph_2: We are currently processing your payment and will let you know when it has been received.
+        paragraph_3: Your registration will not be renewed until we have confirmed your registration.
+        error_heading: Something is wrong
+        next_button: Finished
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/renewal_received_pending_worldpay_payment_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"
