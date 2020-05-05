@@ -5,10 +5,10 @@ module WasteCarriersEngine
     before_action :validate_renew_token
 
     def new
-      # TODO - Should create a renewing registation
+      # TODO: Should create a renewing registation
       # @transient_registration = RenewingRegistration.create(reg_identifier: registration.reg_identifier)
 
-      # TODO - Should redirect to start renewing registration journey
+      # TODO: Should redirect to start renewing registration journey
       render text: "OK - I am a renew via magic link page - renewing #{registration.reg_identifier}"
     end
 
