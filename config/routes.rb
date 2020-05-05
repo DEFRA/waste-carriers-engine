@@ -630,6 +630,12 @@ WasteCarriersEngine::Engine.routes.draw do
       constraints: { status: /\d{3}/ },
       as: "error"
 
+  # Renew via magic link token
+  get "/renew/:token",
+      constraints: ->(_request) { WasteCarriersEngine::FeatureToggle.active?(:renew_via_magic_link) },
+      to: "renews#new",
+      as: "renew"
+
   # Static pages with HighVoltage
   resources :pages, only: [:show], controller: "pages"
 end

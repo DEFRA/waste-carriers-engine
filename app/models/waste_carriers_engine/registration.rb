@@ -31,6 +31,8 @@ module WasteCarriersEngine
     scope :upper_tier, -> { where(tier: UPPER_TIER) }
     scope :active_and_expired, -> { where("metaData.status" => { :$in => %w[ACTIVE EXPIRED] }) }
 
+    field :renew_token, type: String
+
     def self.in_grace_window
       date = Time.now.in_time_zone("London").beginning_of_day - Rails.configuration.grace_window.days + 1.day
 
@@ -42,6 +44,12 @@ module WasteCarriersEngine
 
     def can_start_renewal?
       renewable_tier? && renewable_status? && renewable_date?
+    end
+
+    def generate_renew_token!
+      self.renew_token = SecureTokenService.run
+
+      save!
     end
 
     def expire!

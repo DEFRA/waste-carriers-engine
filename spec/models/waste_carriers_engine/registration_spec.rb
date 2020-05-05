@@ -96,6 +96,25 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#generate_renew_token" do
+      let(:registration) { create(:registration, :has_required_data) }
+
+      it "generates a renew token and assign it to the registration every time it is called" do
+        old_renew_token = registration.renew_token
+
+        registration.generate_renew_token!
+
+        expect(registration.renew_token).to be_present
+        expect(registration.renew_token).to_not eq(old_renew_token)
+
+        old_renew_token = registration.renew_token
+
+        registration.generate_renew_token!
+
+        expect(registration.renew_token).to_not eq(old_renew_token)
+      end
+    end
+
     describe "#expire!" do
       it "update the registration status to expired" do
         registration = create(:registration, :is_active, :has_required_data)
