@@ -88,7 +88,7 @@ module WasteCarriersEngine
                :has_required_data,
                :has_addresses,
                :has_paid_balance,
-               workflow_state: "renewal_received_form")
+               workflow_state: "renewal_received_pending_payment_form")
       end
       let(:mail) { RenewalMailer.send_renewal_received_email(transient_registration) }
 

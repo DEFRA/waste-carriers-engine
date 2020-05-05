@@ -8,21 +8,21 @@ RSpec.shared_examples "TransientRegistration named scopes" do
   let(:submitted_renewal) do
     create(:renewing_registration,
            :has_required_data,
-           workflow_state: :renewal_received_form)
+           workflow_state: :renewal_received_pending_conviction_form)
   end
 
   let(:pending_payment_renewal) do
     create(:renewing_registration,
            :has_required_data,
            :has_unpaid_balance,
-           workflow_state: :renewal_received_form)
+           workflow_state: :renewal_received_pending_payment_form)
   end
 
   let(:pending_approval_renewal) do
     create(:renewing_registration,
            :has_required_data,
            :requires_conviction_check,
-           workflow_state: :renewal_received_form)
+           workflow_state: :renewal_received_pending_conviction_form)
   end
 
   describe "#in_progress" do

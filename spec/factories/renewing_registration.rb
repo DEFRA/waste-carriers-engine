@@ -34,7 +34,7 @@ FactoryBot.define do
     end
 
     trait :is_submitted do
-      workflow_state { "renewal_received_form" }
+      workflow_state { "renewal_received_pending_payment_form" }
     end
 
     trait :has_finance_details do

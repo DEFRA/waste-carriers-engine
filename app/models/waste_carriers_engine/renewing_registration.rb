@@ -28,6 +28,10 @@ module WasteCarriersEngine
       remove_invalid_attributes: true
     }.freeze
 
+    SUBMITTED_STATES = %w[renewal_received_pending_payment_form
+                          renewal_received_pending_conviction_form
+                          renewal_complete_form].freeze
+
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
     end
@@ -80,8 +84,7 @@ module WasteCarriersEngine
     end
 
     def renewal_application_submitted?
-      not_in_progress_states = %w[renewal_received_form renewal_complete_form]
-      not_in_progress_states.include?(workflow_state)
+      SUBMITTED_STATES.include?(workflow_state)
     end
 
     def can_be_renewed?

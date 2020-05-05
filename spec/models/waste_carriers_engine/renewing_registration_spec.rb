@@ -133,23 +133,17 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the workflow_state is renewal_received" do
-        before do
-          renewing_registration.workflow_state = "renewal_received_form"
-        end
+      %w[renewal_received_pending_payment_form
+         renewal_received_pending_conviction_form
+         renewal_complete_form].each do |valid_state|
+        context "when the workflow_state is #{valid_state}" do
+          before do
+            renewing_registration.workflow_state = valid_state
+          end
 
-        it "returns true" do
-          expect(renewing_registration.renewal_application_submitted?).to eq(true)
-        end
-      end
-
-      context "when the workflow_state is renewal_complete" do
-        before do
-          renewing_registration.workflow_state = "renewal_complete_form"
-        end
-
-        it "returns true" do
-          expect(renewing_registration.renewal_application_submitted?).to eq(true)
+          it "returns true" do
+            expect(renewing_registration.renewal_application_submitted?).to eq(true)
+          end
         end
       end
     end
@@ -318,7 +312,7 @@ module WasteCarriersEngine
 
       context "when the renewal is in a completed workflow_state" do
         before do
-          renewing_registration.workflow_state = "renewal_received_form"
+          renewing_registration.workflow_state = "renewal_received_pending_payment_form"
         end
 
         context "when there is no unpaid balance" do
@@ -399,7 +393,7 @@ module WasteCarriersEngine
 
       context "when the renewal is in a completed workflow_state" do
         before do
-          renewing_registration.workflow_state = "renewal_received_form"
+          renewing_registration.workflow_state = "renewal_received_pending_payment_form"
         end
 
         context "when conviction_check_required? is false" do
