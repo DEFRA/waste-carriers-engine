@@ -116,6 +116,7 @@ module WasteCarriersEngine
                                                                     "temp_os_places_error",
                                                                     "temp_payment_method",
                                                                     "temp_tier_check",
+                                                                    "from_magic_link",
                                                                     "_type",
                                                                     "workflow_state",
                                                                     "locking_name",
