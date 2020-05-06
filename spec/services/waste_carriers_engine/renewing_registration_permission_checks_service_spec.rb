@@ -33,8 +33,8 @@ module WasteCarriersEngine
         before do
           allow(transient_registration).to receive(:registration).and_return(registration)
 
-          expect(Ability).to receive(:new).with(user).and_return(ability)
-          expect(ability).to receive(:can?).with(:update, transient_registration).and_return(can)
+          allow(Ability).to receive(:new).with(user).and_return(ability)
+          allow(ability).to receive(:can?).with(:update, transient_registration).and_return(can)
         end
 
         context "when the user does not have the correct permissions" do
