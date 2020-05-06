@@ -3,6 +3,7 @@
 module WasteCarriersEngine
   class FormsController < ApplicationController
     include ActionView::Helpers::UrlHelper
+    include CanRedirectFormToCorrectPath
 
     before_action :back_button_cache_buster
     before_action :validate_token
@@ -78,16 +79,6 @@ module WasteCarriersEngine
           false
         end
       end
-    end
-
-    def redirect_to_correct_form
-      redirect_to form_path
-    end
-
-    # Get the path based on the workflow state, with token as params, ie:
-    # new_state_name_path/:token or start_state_name_path?token=:token
-    def form_path
-      send("new_#{@transient_registration.workflow_state}_path".to_sym, token: @transient_registration.token)
     end
 
     def setup_checks_pass?

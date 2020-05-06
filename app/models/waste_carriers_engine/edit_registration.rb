@@ -13,6 +13,7 @@ module WasteCarriersEngine
       ignorable_attributes: %w[_id
                                account_email
                                addresses
+                               renew_token
                                key_people
                                financeDetails
                                conviction_search_result

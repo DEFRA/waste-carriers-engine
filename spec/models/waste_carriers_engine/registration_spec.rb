@@ -582,6 +582,15 @@ module WasteCarriersEngine
                             factory: :registration
     end
 
+    describe "#renewal" do
+      it "returns a transient renewal" do
+        renewing_registration = create(:renewing_registration)
+        registration = renewing_registration.registration
+
+        expect(registration.renewal).to eq(renewing_registration)
+      end
+    end
+
     describe "#can_start_renewal?" do
       let(:registration) { build(:registration, :has_required_data) }
 

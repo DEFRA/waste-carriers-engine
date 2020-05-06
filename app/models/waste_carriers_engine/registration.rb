@@ -58,6 +58,10 @@ module WasteCarriersEngine
       save!
     end
 
+    def renewal
+      RenewingRegistration.where(reg_identifier: reg_identifier).first
+    end
+
     private
 
     def renewable_tier?

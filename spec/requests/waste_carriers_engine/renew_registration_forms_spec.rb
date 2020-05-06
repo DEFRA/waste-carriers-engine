@@ -106,17 +106,22 @@ module WasteCarriersEngine
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:new_registration,
-                   workflow_state: "contact_name_form")
+            create(:renewing_registration,
+                   workflow_state: "contact_name_form",
+                   account_email: user.email)
           end
 
           let(:valid_params) { { company_no: "01234567" } }
 
-          it "returns a 302 response and redirects to the correct form for the state" do
+          it "returns a 302 response, redirects to the correct form for the state and set magic link route to false" do
             post renew_registration_forms_path(transient_registration[:token]), renew_registration_form: valid_params
+
+            transient_registration.reload
 
             expect(response).to have_http_status(302)
             expect(response).to redirect_to(new_contact_name_form_path(transient_registration[:token]))
+
+            expect(transient_registration.from_magic_link).to be_falsey
           end
         end
       end

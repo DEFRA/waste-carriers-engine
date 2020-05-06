@@ -2,14 +2,15 @@
 
 module WasteCarriersEngine
   class RenewsController < ApplicationController
+    include CanRedirectFormToCorrectPath
+
     before_action :validate_renew_token
 
     def new
-      # TODO: Should create a renewing registation
-      # @transient_registration = RenewingRegistration.create(reg_identifier: registration.reg_identifier)
+      @transient_registration = fetch_transient_renewal
+      @transient_registration.update_attributes(from_magic_link: true)
 
-      # TODO: Should redirect to start renewing registration journey
-      render text: "OK - I am a renew via magic link page - renewing #{registration.reg_identifier}"
+      redirect_to_correct_form
     end
 
     private
@@ -23,6 +24,14 @@ module WasteCarriersEngine
 
     def registration
       @registration ||= Registration.find_by(renew_token: params[:token])
+    end
+
+    def fetch_transient_renewal
+      registration.renewal || new_renewal_from_magic_link
+    end
+
+    def new_renewal_from_magic_link
+      RenewingRegistration.create(reg_identifier: registration.reg_identifier)
     end
   end
 end

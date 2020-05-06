@@ -10,6 +10,7 @@ module WasteCarriersEngine
     end
 
     def user_has_permission?
+      return true if transient_registration.from_magic_link
       return true if can?(:update, transient_registration)
 
       permission_check_result.needs_permissions!

@@ -21,6 +21,8 @@ module WasteCarriersEngine
     def submit_form(form, params)
       respond_to do |format|
         if form.submit(params)
+          reset_magic_link_route
+
           format.html { redirect_to_renewal_journey }
           true
         else
@@ -32,6 +34,16 @@ module WasteCarriersEngine
 
     def redirect_to_renewal_journey
       redirect_to renewal_start_forms_path(token: @renew_registration_form.temp_lookup_number)
+    end
+
+    def reset_magic_link_route
+      renewing_registration = WasteCarriersEngine::RenewingRegistration.where(
+        reg_identifier: @renew_registration_form.temp_lookup_number
+      ).first
+
+      return unless renewing_registration
+
+      renewing_registration.update_attributes(from_magic_link: false)
     end
   end
 end

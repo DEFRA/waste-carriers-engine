@@ -11,13 +11,34 @@ module WasteCarriersEngine
       context "when the renew token is valid" do
         let(:registration) { create(:registration, :has_required_data) }
 
-        it "returns a 200 response" do
+        it "returns a 302 response, creates a new renewal registration and redirect to the renewal start form" do
           registration.generate_renew_token!
+          expected_count = WasteCarriersEngine::RenewingRegistration.count + 1
 
           get renew_path(token: registration.renew_token)
 
-          expect(response).to have_http_status(200)
-          expect(response.body).to include(registration.reg_identifier)
+          expect(response).to have_http_status(302)
+          expect(WasteCarriersEngine::RenewingRegistration.count).to eq(expected_count)
+
+          transient_registration = registration.renewal
+
+          expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
+        end
+
+        context "when a renewal is already in progress" do
+          let(:transient_registration) { create(:renewing_registration, :has_required_data, workflow_state: :business_type_form) }
+          let(:registration) { transient_registration.registration }
+
+          it "does not create a new renewal and redirects to the correct form" do
+            registration.generate_renew_token!
+            expected_count = WasteCarriersEngine::RenewingRegistration.count
+
+            get renew_path(token: registration.renew_token)
+
+            expect(response).to have_http_status(302)
+            expect(WasteCarriersEngine::RenewingRegistration.count).to eq(expected_count)
+            expect(response).to redirect_to(new_business_type_form_path(transient_registration.token))
+          end
         end
       end
     end

@@ -10,9 +10,12 @@ module WasteCarriersEngine
     validate :no_renewal_in_progress?, on: :create
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
+    field :from_magic_link, type: Boolean
+
     COPY_DATA_OPTIONS = {
       ignorable_attributes: %w[_id
                                otherBusinesses
+                               renew_token
                                isMainService
                                constructionWaste
                                onlyAMF
