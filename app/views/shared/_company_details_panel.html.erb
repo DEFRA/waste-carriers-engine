@@ -2,8 +2,11 @@
   <h2 class="heading-medium"><%= registration.company_name %></h2>
 
   <p class="lede">
-    <%= t(".tier.#{registration.tier.downcase}") %> -
-    <%= t(".registration_type.#{registration.registration_type}") %>
+    <%= t(".tier.#{registration.tier.downcase}") %>
+    <% if registration.upper_tier? %>
+      -
+      <%= t(".registration_type.#{registration.registration_type}") %>
+    <% end %>
   </p>
   <p>
     <%= displayable_address(registration.contact_address).join(", ") %>
