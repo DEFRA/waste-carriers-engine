@@ -7,7 +7,7 @@
 
       <h1 class="heading-large"><%= t(".heading", reg_identifier: @transient_registration.reg_identifier) %></h1>
 
-      <%= render "shared/company_details_panel", registration: @cease_or_revoke_form %>
+      <%= render "shared/company_details_panel", registration: @transient_registration %>
 
       <div class="form-group <%= "form-group-error" if @cease_or_revoke_form.errors[:status].any? %>">
         <fieldset>
