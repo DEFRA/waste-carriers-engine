@@ -453,6 +453,11 @@ module WasteCarriersEngine
             expect(registration.metaData).to transition_from(:PENDING).to(:REFUSED).on_event(:refuse)
           end
 
+          it "can be cancelled" do
+            expect(registration.metaData).to allow_event :cancel
+            expect(registration.metaData).to transition_from(:PENDING).to(:INACTIVE).on_event(:cancel)
+          end
+
           it "cannot be revoked" do
             expect(registration.metaData).to_not allow_event :revoke
           end

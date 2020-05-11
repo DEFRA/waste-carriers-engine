@@ -43,6 +43,11 @@ module WasteCarriersEngine
                       to: :REFUSED
         end
 
+        event :cancel do
+          transitions from: :PENDING,
+                      to: :INACTIVE
+        end
+
         event :expire do
           transitions from: :ACTIVE,
                       to: :EXPIRED
