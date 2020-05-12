@@ -3,6 +3,7 @@
 module WasteCarriersEngine
   class RegistrationReceivedPendingWorldpayPaymentFormsController < FormsController
     include UnsubmittableForm
+    include CannotGoBackForm
 
     def new
       return unless super(
@@ -17,7 +18,5 @@ module WasteCarriersEngine
         Rails.logger.error e
       end
     end
-
-    def go_back; end
   end
 end

@@ -3,6 +3,8 @@
 module WasteCarriersEngine
   class RenewalCompleteFormsController < FormsController
     include UnsubmittableForm
+    include CannotGoBackForm
+
     helper JourneyLinksHelper
 
     def new
@@ -16,7 +18,5 @@ module WasteCarriersEngine
         Rails.logger.error e
       end
     end
-
-    def go_back; end
   end
 end
