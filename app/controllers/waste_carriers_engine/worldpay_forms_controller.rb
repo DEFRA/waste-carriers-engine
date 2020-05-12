@@ -3,6 +3,8 @@
 # rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class WorldpayFormsController < FormsController
+    include UnsubmittableForm
+
     def new
       super(WorldpayForm, "worldpay_form")
 
@@ -15,8 +17,6 @@ module WasteCarriersEngine
         redirect_to payment_info[:url]
       end
     end
-
-    def create; end
 
     def success
       find_or_initialize_transient_registration(params[:token])
