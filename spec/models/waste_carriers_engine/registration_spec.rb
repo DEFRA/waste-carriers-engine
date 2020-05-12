@@ -61,11 +61,13 @@ module WasteCarriersEngine
           past_in_grace_window = create(:registration, :has_required_data, expires_on: 1.day.ago)
           edge_grace_window = create(:registration, :has_required_data, expires_on: 3.day.ago)
           past_not_in_grace_window = create(:registration, :has_required_data, expires_on: 4.day.ago)
+          lower_tier = create(:registration, :has_required_data, :lower_tier, expires_on: nil)
 
           result = described_class.in_grace_window
 
           expect(result).to include(future_expire_date)
           expect(result).to include(past_in_grace_window)
+          expect(result).to include(lower_tier)
           expect(result).to_not include(edge_grace_window)
           expect(result).to_not include(past_not_in_grace_window)
         end

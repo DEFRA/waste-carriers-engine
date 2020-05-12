@@ -29,6 +29,10 @@ FactoryBot.define do
       end
     end
 
+    trait :lower_tier do
+      tier { "LOWER" }
+    end
+
     trait :has_addresses do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end

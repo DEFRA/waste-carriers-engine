@@ -36,7 +36,7 @@ module WasteCarriersEngine
     def self.in_grace_window
       date = Time.now.in_time_zone("London").beginning_of_day - Rails.configuration.grace_window.days + 1.day
 
-      where(:expires_on.gte => date)
+      any_of({ :expires_on.gte => date }, { tier: LOWER_TIER })
     end
 
     alias pending_manual_conviction_check? conviction_check_required?
