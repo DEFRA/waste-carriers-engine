@@ -53,7 +53,7 @@ module WasteCarriersEngine
         end
       end
 
-      describe ".in_grace_window" do
+      describe ".lower_tier_or_in_grace_window" do
         it "returns registrations whose expired date is in the grace window" do
           allow(Rails.configuration).to receive(:grace_window).and_return(3)
 
@@ -63,7 +63,7 @@ module WasteCarriersEngine
           past_not_in_grace_window = create(:registration, :has_required_data, expires_on: 4.day.ago)
           lower_tier = create(:registration, :has_required_data, :lower_tier, expires_on: nil)
 
-          result = described_class.in_grace_window
+          result = described_class.lower_tier_or_in_grace_window
 
           expect(result).to include(future_expire_date)
           expect(result).to include(past_in_grace_window)
