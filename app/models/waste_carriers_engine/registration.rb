@@ -52,6 +52,10 @@ module WasteCarriersEngine
       save!
     end
 
+    def already_renewed?
+      check_service.date_can_renew_from > Time.now.in_time_zone("London").to_date
+    end
+
     def expire!
       metaData.status = "EXPIRED"
 
@@ -73,11 +77,14 @@ module WasteCarriersEngine
     end
 
     def renewable_date?
-      check_service = ExpiryCheckService.new(self)
       return true if check_service.in_expiry_grace_window?
       return false if check_service.expired?
 
       check_service.in_renewal_window?
+    end
+
+    def check_service
+      @_check_service ||= ExpiryCheckService.new(self)
     end
   end
 end

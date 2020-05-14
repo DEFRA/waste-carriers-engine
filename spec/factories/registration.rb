@@ -29,6 +29,10 @@ FactoryBot.define do
       end
     end
 
+    trait :already_renewed do
+      expires_on { Rails.configuration.expires_after.years.from_now.to_date }
+    end
+
     trait :lower_tier do
       tier { "LOWER" }
     end

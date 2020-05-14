@@ -26,6 +26,26 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#already_renewed?" do
+      let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
+
+      context "when the renewal start date is in the future" do
+        let(:expires_on) { 10.years.from_now }
+
+        it "returns true" do
+          expect(registration).to be_already_renewed
+        end
+      end
+
+      context "when the renewal start date is not in the future" do
+        let(:expires_on) { Time.now }
+
+        it "returns false" do
+          expect(registration).to_not be_already_renewed
+        end
+      end
+    end
+
     describe "scopes" do
       describe ".active" do
         it "returns active registrations" do
