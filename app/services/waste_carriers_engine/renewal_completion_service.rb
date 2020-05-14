@@ -71,7 +71,7 @@ module WasteCarriersEngine
     end
 
     def create_past_registration
-      PastRegistration.build_past_registration(registration)
+      PastRegistration.build_past_registration(registration, :renewal)
     end
 
     def update_registration

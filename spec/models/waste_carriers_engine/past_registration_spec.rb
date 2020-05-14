@@ -7,7 +7,7 @@ module WasteCarriersEngine
     let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
     describe "build_past_registration" do
-      let(:past_registration) { PastRegistration.build_past_registration(registration) }
+      let(:past_registration) { PastRegistration.build_past_registration(registration, :renewal) }
 
       it "creates a new past_registration" do
         past_registration_count = registration.past_registrations.count
@@ -37,18 +37,30 @@ module WasteCarriersEngine
 
       context "if there is already a past_registration with the same expiry date" do
         before do
-          PastRegistration.build_past_registration(registration)
+          PastRegistration.build_past_registration(registration, :edit)
         end
 
-        context "if the new version is not an edit" do
-          it "returns nil" do
-            expect(past_registration).to eq(nil)
+        context "if the new version is a renewal" do
+          context "if the past registration is a renewal" do
+            before do
+              PastRegistration.build_past_registration(registration, :renewal)
+            end
+
+            it "returns nil and does not create a new past_registration" do
+              past_registration_count = registration.past_registrations.count
+
+              expect(past_registration).to eq(nil)
+
+              expect(registration.reload.past_registrations.count).to eq(past_registration_count)
+            end
           end
 
-          it "does not create a new past_registration" do
-            past_registration_count = registration.past_registrations.count
-            past_registration
-            expect(registration.reload.past_registrations.count).to eq(past_registration_count)
+          context "if the past registration is not a renewal" do
+            it "does create a new past_registration" do
+              past_registration_count = registration.past_registrations.count
+              past_registration
+              expect(registration.reload.past_registrations.count).to eq(past_registration_count + 1)
+            end
           end
         end
 
