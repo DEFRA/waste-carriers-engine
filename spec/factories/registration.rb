@@ -33,6 +33,10 @@ FactoryBot.define do
       expires_on { Rails.configuration.expires_after.years.from_now.to_date }
     end
 
+    trait :past_renewal_window do
+      expires_on { Time.now.to_date - Rails.configuration.grace_window.days - 1 }
+    end
+
     trait :lower_tier do
       tier { "LOWER" }
     end

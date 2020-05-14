@@ -17,6 +17,10 @@ FactoryBot.define do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end
 
+    trait :expires_today do
+      initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_today).reg_identifier) }
+    end
+
     trait :has_key_people do
       key_people do
         [build(:key_person, :has_required_data, :unmatched_conviction_search_result, :main),

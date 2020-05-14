@@ -46,6 +46,26 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#past_renewal_window?" do
+      let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
+
+      context "when the registration has expired too long ago" do
+        let(:expires_on) { Time.now.to_date - Rails.configuration.grace_window.days - 1 }
+
+        it "returns true" do
+          expect(registration).to be_past_renewal_window
+        end
+      end
+
+      context "when the registration has not expired too long ago" do
+        let(:expires_on) { Time.now.to_date }
+
+        it "returns false" do
+          expect(registration).to_not be_past_renewal_window
+        end
+      end
+    end
+
     describe "scopes" do
       describe ".active" do
         it "returns active registrations" do

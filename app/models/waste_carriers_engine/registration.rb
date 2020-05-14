@@ -56,6 +56,10 @@ module WasteCarriersEngine
       check_service.date_can_renew_from > Time.now.in_time_zone("London").to_date
     end
 
+    def past_renewal_window?
+      !(check_service.expired? && check_service.in_expiry_grace_window?)
+    end
+
     def expire!
       metaData.status = "EXPIRED"
 
