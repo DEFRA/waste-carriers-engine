@@ -7,7 +7,7 @@ module WasteCarriersEngine
     let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
     describe "build_past_registration" do
-      let(:past_registration) { PastRegistration.build_past_registration(registration, :renewal) }
+      let(:past_registration) { PastRegistration.build_past_registration(registration) }
 
       it "creates a new past_registration" do
         past_registration_count = registration.past_registrations.count
@@ -43,7 +43,7 @@ module WasteCarriersEngine
         context "if the new version is a renewal" do
           context "if the past registration is a renewal" do
             before do
-              PastRegistration.build_past_registration(registration, :renewal)
+              PastRegistration.build_past_registration(registration)
             end
 
             it "returns nil and does not create a new past_registration" do
