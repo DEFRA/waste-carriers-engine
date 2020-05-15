@@ -30,7 +30,11 @@ FactoryBot.define do
     end
 
     trait :already_renewed do
-      expires_on { Rails.configuration.expires_after.years.from_now.to_date }
+      expires_soon
+
+      after :create do |registration|
+        WasteCarriersEngine::PastRegistration.build_past_registration(registration)
+      end
     end
 
     trait :lower_tier do
