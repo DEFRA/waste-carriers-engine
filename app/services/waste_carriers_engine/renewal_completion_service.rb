@@ -105,22 +105,29 @@ module WasteCarriersEngine
     end
 
     def copy_data_from_transient_registration
-      registration_attributes = registration.attributes.except("_id", "financeDetails", "past_registrations")
-      renewal_attributes = transient_registration.attributes.except("_id",
-                                                                    "token",
-                                                                    "created_at",
-                                                                    "financeDetails",
-                                                                    "temp_cards",
-                                                                    "temp_company_postcode",
-                                                                    "temp_contact_postcode",
-                                                                    "temp_os_places_error",
-                                                                    "temp_payment_method",
-                                                                    "temp_tier_check",
-                                                                    "from_magic_link",
-                                                                    "_type",
-                                                                    "workflow_state",
-                                                                    "locking_name",
-                                                                    "locked_at")
+      registration_attributes = registration.attributes.except(
+        "_id",
+        "financeDetails",
+        "past_registrations",
+        "renew_token"
+      )
+      renewal_attributes = transient_registration.attributes.except(
+        "_id",
+        "token",
+        "created_at",
+        "financeDetails",
+        "temp_cards",
+        "temp_company_postcode",
+        "temp_contact_postcode",
+        "temp_os_places_error",
+        "temp_payment_method",
+        "temp_tier_check",
+        "from_magic_link",
+        "_type",
+        "workflow_state",
+        "locking_name",
+        "locked_at"
+      )
 
       remove_unused_attributes(registration_attributes, renewal_attributes)
 

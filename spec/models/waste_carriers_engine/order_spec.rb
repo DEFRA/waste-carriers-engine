@@ -15,7 +15,7 @@ module WasteCarriersEngine
     let(:current_user) { build(:user) }
 
     describe "new_order" do
-      let(:order) { Order.new_order(transient_registration, :worldpay, current_user) }
+      let(:order) { Order.new_order(transient_registration, :worldpay, current_user.email) }
 
       it "should have a valid order_id" do
         Timecop.freeze(Time.new(2018, 1, 1)) do
