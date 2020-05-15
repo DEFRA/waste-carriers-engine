@@ -60,7 +60,7 @@ module WasteCarriersEngine
     end
 
     def past_renewal_window?
-      !(check_service.expired? && check_service.in_expiry_grace_window?)
+      check_service.expired? && !check_service.in_expiry_grace_window?
     end
 
     def expire!
