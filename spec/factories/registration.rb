@@ -29,6 +29,14 @@ FactoryBot.define do
       end
     end
 
+    trait :already_renewed do
+      expires_soon
+
+      after :create do |registration|
+        WasteCarriersEngine::PastRegistration.build_past_registration(registration)
+      end
+    end
+
     trait :lower_tier do
       tier { "LOWER" }
     end

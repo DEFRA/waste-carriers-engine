@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
     describe "GET renew_path" do
       context "when the renew token is valid" do
-        let(:registration) { create(:registration, :has_required_data) }
+        let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
         it "returns a 302 response, creates a new renewal registration and redirect to the renewal start form" do
           registration.generate_renew_token!
@@ -39,6 +39,21 @@ module WasteCarriersEngine
             expect(WasteCarriersEngine::RenewingRegistration.count).to eq(expected_count)
             expect(response).to redirect_to(new_business_type_form_path(transient_registration.token))
           end
+        end
+      end
+
+      context "when the registration has already been renewed" do
+        let(:registration) { create(:registration, :has_required_data, :already_renewed) }
+
+        it "returns a 200 response code and the correct template" do
+          allow(Rails.configuration).to receive(:renewal_window).and_return(3)
+
+          registration.generate_renew_token!
+
+          get renew_path(token: registration.renew_token)
+
+          expect(response).to have_http_status(200)
+          expect(response).to render_template(:already_renewed)
         end
       end
     end

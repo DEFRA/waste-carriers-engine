@@ -4,37 +4,37 @@ module WasteCarriersEngine
   # Contains methods related to dealing with dates in the service, for example
   # whether a date would be considered as expired.
   class ExpiryCheckService
-    attr_reader :expiry_date, :registration_date
+    attr_reader :registration
+
+    delegate :expires_on, to: :registration
 
     def initialize(registration)
       raise "ExpiryCheckService expects a registration" if registration.nil?
 
-      @registration_date = registration.metaData.date_registered
-      @expires_on = registration.expires_on
-      @expiry_date = corrected_expires_on
+      @registration = registration
     end
 
     # For more details about the renewal window check out
     # https://github.com/DEFRA/dst-guides/blob/master/services/wcr/renewal_window.md
     def date_can_renew_from
-      (@expiry_date.to_date - Rails.configuration.renewal_window.months)
+      (expiry_date.to_date - Rails.configuration.renewal_window.months)
     end
 
     def expiry_date_after_renewal
-      @expiry_date.to_date + Rails.configuration.expires_after.years
+      expiry_date.to_date + Rails.configuration.expires_after.years
     end
 
     def expired?
       # Registrations are expired on the date recorded for their expiry date e.g.
       # an expiry date of Mar 25 2018 means the registration was active up till
       # 24:00 on Mar 24 2018.
-      @expiry_date.to_date <= current_day
+      expiry_date.to_date <= current_day
     end
 
     def in_renewal_window?
       # If the registration expires in more than x months from now, its outside
       # the renewal window
-      @expiry_date.to_date < Rails.configuration.renewal_window.months.from_now
+      expiry_date.to_date < Rails.configuration.renewal_window.months.from_now
     end
 
     # Its important to note that a registration is expired on its expires_on date.
@@ -44,9 +44,17 @@ module WasteCarriersEngine
     # till Oct 4 (i.e. 1 + 3) when in fact we need to include the 1st as one of
     # our grace window days.
     def in_expiry_grace_window?
-      last_day_of_grace_window = (@expiry_date.to_date + Rails.configuration.grace_window.days) - 1.day
+      last_day_of_grace_window = (expiry_date.to_date + Rails.configuration.grace_window.days) - 1.day
 
-      current_day >= @expiry_date.to_date && current_day <= last_day_of_grace_window
+      current_day >= expiry_date.to_date && current_day <= last_day_of_grace_window
+    end
+
+    def registration_date
+      @_registration_date ||= registration.metaData.date_registered
+    end
+
+    def expiry_date
+      @_expiry_date ||= corrected_expires_on
     end
 
     private
@@ -57,11 +65,11 @@ module WasteCarriersEngine
     # not be the same as the UK date. So compensate to avoid flagging something
     # as expired on the wrong date.
     def corrected_expires_on
-      return Date.new(1970, 1, 1) if @expires_on.nil?
-      return @expires_on + 1.hour if registered_in_bst_and_expires_in_gmt?
-      return @expires_on - 1.hour if registered_in_gmt_and_expires_in_bst?
+      return Date.new(1970, 1, 1) if expires_on.nil?
+      return expires_on + 1.hour if registered_in_bst_and_expires_in_gmt?
+      return expires_on - 1.hour if registered_in_gmt_and_expires_in_bst?
 
-      @expires_on
+      expires_on
     end
 
     def registered_in_bst_and_expires_in_gmt?
@@ -73,11 +81,11 @@ module WasteCarriersEngine
     end
 
     def registered_in_daylight_savings?
-      @registration_date.in_time_zone("London").dst?
+      registration_date.in_time_zone("London").dst?
     end
 
     def expires_on_in_daylight_savings?
-      @expires_on.in_time_zone("London").dst?
+      expires_on.in_time_zone("London").dst?
     end
 
     # We store dates and times in UTC, but want to use the current date in the

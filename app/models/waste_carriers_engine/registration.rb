@@ -52,6 +52,13 @@ module WasteCarriersEngine
       save!
     end
 
+    def already_renewed?
+      period_after_last_window = Rails.configuration.expires_after.years + Rails.configuration.grace_window.months
+      registration_window = expires_on - period_after_last_window + 1.day
+
+      past_registrations.where(cause: nil, :expires_on.gte => registration_window).any?
+    end
+
     def expire!
       metaData.status = "EXPIRED"
 
@@ -73,11 +80,14 @@ module WasteCarriersEngine
     end
 
     def renewable_date?
-      check_service = ExpiryCheckService.new(self)
       return true if check_service.in_expiry_grace_window?
       return false if check_service.expired?
 
       check_service.in_renewal_window?
+    end
+
+    def check_service
+      @_check_service ||= ExpiryCheckService.new(self)
     end
   end
 end

@@ -26,6 +26,26 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#already_renewed?" do
+      let(:registration) { create(:registration, :has_required_data, :expires_soon) }
+
+      context "when the registraiton has already renewed" do
+        before do
+          PastRegistration.build_past_registration(registration)
+        end
+
+        it "returns true" do
+          expect(registration).to be_already_renewed
+        end
+      end
+
+      context "when the registraiton has not already renewed" do
+        it "returns false" do
+          expect(registration).to_not be_already_renewed
+        end
+      end
+    end
+
     describe "scopes" do
       describe ".active" do
         it "returns active registrations" do
