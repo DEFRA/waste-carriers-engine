@@ -80,36 +80,6 @@ module WasteCarriersEngine
           expect(response).to render_template(:invalid_magic_link)
         end
       end
-
-      context "when the registration has already been renewed" do
-        let(:registration) { create(:registration, :has_required_data, :already_renewed) }
-
-        it "returns a 200 response code and the correct template" do
-          allow(Rails.configuration).to receive(:renewal_window).and_return(3)
-
-          registration.generate_renew_token!
-
-          get renew_path(token: registration.renew_token)
-
-          expect(response).to have_http_status(200)
-          expect(response).to render_template(:already_renewed)
-        end
-      end
-
-      context "when is too late to renew" do
-        let(:registration) { create(:registration, :has_required_data, :past_renewal_window) }
-
-        it "returns a 200 response code and the correct template" do
-          allow(Rails.configuration).to receive(:renewal_window).and_return(3)
-
-          registration.generate_renew_token!
-
-          get renew_path(token: registration.renew_token)
-
-          expect(response).to have_http_status(200)
-          expect(response).to render_template(:past_renewal_window)
-        end
-      end
     end
   end
 end
