@@ -26,8 +26,8 @@ module WasteCarriersEngine
     field :order_item_reference,                     type: String
 
     # TODO: Move to a service
-    def self.new_order(transient_registration, method, current_user)
-      order = new_order_for(current_user.email)
+    def self.new_order(transient_registration, method, user_email)
+      order = new_order_for(user_email)
 
       card_count = transient_registration.temp_cards
 

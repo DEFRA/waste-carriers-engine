@@ -19,7 +19,13 @@ module WasteCarriersEngine
 
       past_registration.registration = registration
 
-      attributes = registration.attributes.except("_id", "past_registrations", "locking_name", "locked_at")
+      attributes = registration.attributes.except(
+        "_id",
+        "past_registrations",
+        "locking_name",
+        "locked_at",
+        "renew_token"
+      )
       past_registration.assign_attributes(attributes)
 
       past_registration.save!

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class RenewalCompletionService
     class CannotComplete < StandardError; end
@@ -104,28 +105,37 @@ module WasteCarriersEngine
       Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)
     end
 
+    # rubocop:disable Metrics/MethodLength
     def copy_data_from_transient_registration
-      registration_attributes = registration.attributes.except("_id", "financeDetails", "past_registrations")
-      renewal_attributes = transient_registration.attributes.except("_id",
-                                                                    "token",
-                                                                    "created_at",
-                                                                    "financeDetails",
-                                                                    "temp_cards",
-                                                                    "temp_company_postcode",
-                                                                    "temp_contact_postcode",
-                                                                    "temp_os_places_error",
-                                                                    "temp_payment_method",
-                                                                    "temp_tier_check",
-                                                                    "from_magic_link",
-                                                                    "_type",
-                                                                    "workflow_state",
-                                                                    "locking_name",
-                                                                    "locked_at")
+      registration_attributes = registration.attributes.except(
+        "_id",
+        "financeDetails",
+        "past_registrations",
+        "renew_token"
+      )
+      renewal_attributes = transient_registration.attributes.except(
+        "_id",
+        "token",
+        "created_at",
+        "financeDetails",
+        "temp_cards",
+        "temp_company_postcode",
+        "temp_contact_postcode",
+        "temp_os_places_error",
+        "temp_payment_method",
+        "temp_tier_check",
+        "from_magic_link",
+        "_type",
+        "workflow_state",
+        "locking_name",
+        "locked_at"
+      )
 
       remove_unused_attributes(registration_attributes, renewal_attributes)
 
       registration.write_attributes(renewal_attributes)
     end
+    # rubocop:enable Metrics/MethodLength
 
     def remove_unused_attributes(registration_attributes, renewal_attributes)
       registration_attributes.each_key do |old_attribute|
@@ -138,3 +148,4 @@ module WasteCarriersEngine
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
