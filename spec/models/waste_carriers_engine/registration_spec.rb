@@ -27,19 +27,19 @@ module WasteCarriersEngine
     end
 
     describe "#already_renewed?" do
-      let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
+      let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
-      context "when the renewal start date is in the future" do
-        let(:expires_on) { 10.years.from_now }
+      context "when the registraiton has already renewed" do
+        before do
+          PastRegistration.build_past_registration(registration)
+        end
 
         it "returns true" do
           expect(registration).to be_already_renewed
         end
       end
 
-      context "when the renewal start date is not in the future" do
-        let(:expires_on) { Time.now }
-
+      context "when the registraiton has not already renewed" do
         it "returns false" do
           expect(registration).to_not be_already_renewed
         end

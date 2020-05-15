@@ -4,7 +4,6 @@ module WasteCarriersEngine
   # Contains methods related to dealing with dates in the service, for example
   # whether a date would be considered as expired.
   class ExpiryCheckService
-    # attr_reader :expiry_date, :registration_date
     attr_reader :registration
 
     delegate :expires_on, to: :registration

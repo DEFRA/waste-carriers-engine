@@ -53,11 +53,14 @@ module WasteCarriersEngine
     end
 
     def already_renewed?
-      check_service.date_can_renew_from > Time.now.in_time_zone("London").to_date
+      period_after_last_window = Rails.configuration.expires_after.years + Rails.configuration.grace_window.months
+      registration_window = expires_on - period_after_last_window + 1.day
+
+      past_registrations.where(cause: nil, :expires_on.gte => registration_window).any?
     end
 
     def past_renewal_window?
-      !(check_service.expired? && check_service.in_expiry_grace_window?)
+      check_service.expired? && !check_service.in_expiry_grace_window?
     end
 
     def expire!

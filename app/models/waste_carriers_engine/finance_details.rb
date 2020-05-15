@@ -18,9 +18,10 @@ module WasteCarriersEngine
               presence: true
 
     def self.new_renewal_finance_details(transient_registration, method, current_user)
+      user_email = current_user&.email || transient_registration.contact_email
       finance_details = FinanceDetails.new
       finance_details.transient_registration = transient_registration
-      finance_details[:orders] = [Order.new_order(transient_registration, method, current_user)]
+      finance_details[:orders] = [Order.new_order(transient_registration, method, user_email)]
       finance_details.update_balance
       finance_details.save!
       finance_details

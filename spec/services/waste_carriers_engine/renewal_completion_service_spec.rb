@@ -30,6 +30,8 @@ module WasteCarriersEngine
           :has_outstanding_copy_card
         )
       )
+
+      registration.generate_renew_token!
     end
 
     describe "#complete_renewal" do
@@ -43,6 +45,14 @@ module WasteCarriersEngine
         it "copies attributes from the transient_registration to the registration" do
           renewal_completion_service.complete_renewal
           expect(registration.reload.company_name).to eq(transient_registration.company_name)
+        end
+
+        it "does not update the renew_token" do
+          old_token = registration.renew_token
+          renewal_completion_service.complete_renewal
+
+          registration.reload
+          expect(registration.renew_token).to eq(old_token)
         end
 
         it "copies nested attributes from the transient_registration to the registration" do
