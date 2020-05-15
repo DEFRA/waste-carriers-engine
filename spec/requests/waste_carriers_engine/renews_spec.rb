@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
     describe "GET renew_path" do
       context "when the renew token is valid" do
-        let(:registration) { create(:registration, :has_required_data, :expires_today) }
+        let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
         it "returns a 302 response, creates a new renewal registration and redirect to the renewal start form" do
           registration.generate_renew_token!
