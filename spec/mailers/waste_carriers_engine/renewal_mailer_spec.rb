@@ -125,12 +125,12 @@ module WasteCarriersEngine
         end
 
         it "uses the correct subject" do
-          subject = "Your application to renew waste carriers registration #{transient_registration.reg_identifier} is awaiting payment"
+          subject = "Payment needed for waste carrier registration #{transient_registration.reg_identifier}"
           expect(mail.subject).to eq(subject)
         end
 
         it "includes the correct template in the body" do
-          expect(mail.body.encoded).to include("Pay the renewal charge")
+          expect(mail.body.encoded).to include("You need to pay for your waste carriers registration")
         end
 
         it "includes the correct balance in the body" do
