@@ -6,6 +6,13 @@
 
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
+    <% if @transient_registration.upper_tier? %>
+      <p><%= t(".paragraph_1") %></p>
+      <p><%= t(".paragraph_2") %></p>
+      <p><%= t(".paragraph_3") %></p>
+      <p><%= t(".paragraph_4") %></p>
+    <% end %>
+
     <div class="form-group <%= "form-group-error" if @contact_email_form.errors[:contact_email].any? %>">
       <fieldset id="contact_email">
         <% if @contact_email_form.errors[:contact_email].any? %>

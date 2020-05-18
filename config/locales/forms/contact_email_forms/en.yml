@@ -4,9 +4,13 @@ en:
       new:
         title: Contact email address
         heading: What’s the contact email address?
+        paragraph_1: We will contact you on this email address when your registration is due to be renewed.
+        paragraph_2: If we cannot reach you, you’ll have to pay more for a new registration.
+        paragraph_3: Contact the Environment Agency if your email address changes after you register. We’ll include our contact details in the confirmation email we’ll send you.
+        paragraph_4: If you’re registering on behalf of someone else, provide their contact details and not yours.
         error_heading: Something is wrong
         contact_email_label: Email address
-        contact_email_hint: We’ll send a confirmation email to this address
+        contact_email_hint: We’ll send emails about this registration to this address
         confirmed_email_label: Confirm email address
         next_button: Continue
   activemodel:
