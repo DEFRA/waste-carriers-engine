@@ -39,11 +39,10 @@ services:
   - mongodb
 
 before_install:
-  - cat ~/.rvm/gemsets/global.gems
-  - cat ~/.rvm/gemsets/default.gems
-  # - rvm install
+  # - cat ~/.rvm/gemsets/global.gems
+  # - cat ~/.rvm/gemsets/default.gems
   - export TZ=UTC
-  - gem install -v 1.17.3 bundler --no-rdoc --no-ri
+  - gem install -v 1.17.3 bundler --no-ri
   - sudo apt-get install xvfb -y
   - sudo apt-get install ttf-liberation -y
   - sudo apt-get install wkhtmltopdf -y
