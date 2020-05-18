@@ -1,241 +1,143 @@
-<!doctype html>
-<!--[if lt IE 7]>  <html class="ie ie6 lte9 lte8 lte7"> <![endif]-->
-<!--[if IE 7]>     <html class="ie ie7 lte9 lte8 lte7"> <![endif]-->
-<!--[if IE 8]>     <html class="ie ie8 lte9 lte8"> <![endif]-->
-<!--[if IE 9]>     <html class="ie ie9 lte9"> <![endif]-->
-<!--[if gt IE 9]>  <html> <![endif]-->
-<!--[if !IE]><!-->
-<html>
-<!--<![endif]-->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 
 <head>
-  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-  <meta content="utf-8" http-equiv="encoding">
-  <!-- Use title if it's in the page YAML frontmatter -->
-  <title>Waste Carriers Service</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+        <!--
+        body {
+            margin: 0 !important
+        }
+        -->
+    </style>
 </head>
 
-<body style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c">
+<body style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c" fpstyle="1" ocsi="0">
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
     <tr>
       <td width="100%" height="53px" bgcolor="#0b0c0c">
         <table width="580" cellpadding="0" cellspacing="0" border="0" align="center">
           <tr>
             <td width="100%" bgcolor="#0b0c0c" valign="middle">
-              <%= email_image_tag("govuk_logotype_email.png", { alt: 'GOV.UK', border: '0' }) %>
+              <%= email_image_tag("govuk_logotype_email.png", { alt: "GOV.UK", border: "0"}) %>
             </td>
           </tr>
         </table>
       </td>
     </tr>
   </table>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF">
-    <tr>
-      <td width="100%">
-        <table width="580" cellpadding="0" cellspacing="0" border="0" align="center">
+
+  <table class="content" cellpadding="0" cellspacing="0" border="0" width="100%" align="center" style="border-collapse:collapse; max-width:580px; width:100%!important">
+      <tbody>
           <tr>
-            <td width="100%" class="header" style="padding-top: 10px;" colspan="2">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF">
-                <tr>
-                </tr>
-              </table>
-            </td>
+              <td width="10" valign="middle">
+                  <br>
+              </td>
+              <td style="font-family:Helvetica,Arial,sans-serif; font-size:19px; line-height:1.315789474; max-width:560px">
+                  <p style="margin:30px 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".dear", name: "#{@transient_registration.first_name} #{@transient_registration.last_name}") %>
+                  </p>
+
+                  <h1 style="margin:0 0 20px 0; padding:0; font-size:30px; line-height:38px; font-weight:bold; color:#0B0C0C">
+                    <%= t(".section_1.heading") %>
+                  </h1>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_1.paragraph_1") %>
+                  </p>
+
+                  <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
+                    <%= t(".section_2.heading") %>
+                  </p>
+
+                  <ul style="margin:0 0 20px 0; padding:0; list-style-type:none">
+                    <li style="margin:5px 0 5px; padding:0; font-size:19px; line-height:25px; color:#0B0C0C">
+                      <%= t(".section_2.sort_code.label") %>
+                      <span style="font-weight: bold; padding-left: 5px;">
+                        <%= t(".section_2.sort_code.value") %>
+                      </span>
+                    </li>
+                    <li style="margin:5px 0 5px; padding:0; font-size:19px; line-height:25px; color:#0B0C0C">
+                      <%= t(".section_2.account_number.label") %>
+                      <span style="font-weight: bold; padding-left: 5px;">
+                        <%= t(".section_2.account_number.value") %>
+                      </span>
+                    </li>
+                    <li style="margin:5px 0 5px; padding:0; font-size:19px; line-height:25px; color:#0B0C0C">
+                      <%= t(".section_2.payment_reference.label") %>
+                      <span style="font-weight: bold; padding-left: 5px;">
+                        <%= @transient_registration.reg_identifier %>
+                      </span>
+                    </li>
+                    <li style="margin:5px 0 5px; padding:0; font-size:19px; line-height:25px; color:#0B0C0C">
+                      <%= t(".section_2.payment_due.label") %>
+                      <span style="font-weight: bold; padding-left: 5px;">
+                        £<%= display_pence_as_pounds(@transient_registration.finance_details.balance) %>
+                      </span>
+                    </li>
+                  </ul>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; font-weight: bold; line-height:25px; color:#555555">
+                    <%= t(".section_3.heading") %>
+                  </p>
+
+                  <ul style="margin:0 0 20px 0; padding:0; list-style-type:none">
+                    <li style="margin:5px 0 5px; padding:0; font-size:19px; line-height: 25px; color: #555555">
+                      <%= t(".section_3.iban.label") %>: <%= t(".section_3.iban.value") %>
+                    </li>
+                    <li style="margin:5px 0 5px; padding:0; font-size:19px; line-height: 25px; color:#555555">
+                      <%= t(".section_3.swiftbic.label") %>: <%= t(".section_3.swiftbic.value") %>
+                    </li>
+                    <li style="margin:5px 0 5px; padding:0; font-size:19px; line-height: 25px; color: #555555">
+                      <%= t(".section_3.currency.label") %>: <%= t(".section_3.currency.value") %>
+                    </li>
+                  </ul>
+
+                  <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
+                    <%= t(".section_4.heading", reg_identifier: @transient_registration.reg_identifier) %>
+                  </p>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_4.paragraph_1") %>
+                    <a href="mailto:<%= t(".section_4.email_text") %>?subject=<%= t(".section_4.email_subject", reg_identifier: @transient_registration.reg_identifier) %>&body=<%= t(".section_4.email_body", reg_identifier: @transient_registration.reg_identifier) %>">
+                      <%= t(".section_4.email_text") %>
+                    </a>
+                  </p>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_4.paragraph_2", reg_identifier: @transient_registration.reg_identifier) %>
+                  </p>
+
+                  <br>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_4.paragraph_3") %>
+                  </p>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_4.paragraph_4") %>
+                  </p>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_4.paragraph_5") %>
+                  </p>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_4.paragraph_6") %>
+                  </p>
+
+                  <p style="margin:0 0 20px 0; font-size:19px; line-height:25px; color:#0B0C0C">
+                    <%= t(".section_4.paragraph_7") %>
+                  </p>
+              </td>
+              <td width="10" valign="middle">
+                  <br>
+              </td>
           </tr>
-          <tr>
-            <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
-              <p style="font-weight: 400; font-size: 16px; line-height: 1; margin: 10px 0 10px 0;">&nbsp;</p>
-            </td>
-            <td width="25%">&nbsp;</td>
-          </tr>
-          <tr>
-            <td bgcolor="#28a197" style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 30px 0;">
-              <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 30px 0px 15px 0px;">
-                <%= t(".heading.header.#{@transient_registration.registration_type}") %>
-              </p>
 
-              <p style="font-size: 19px; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 0;">
-                <%= t(".heading.number") %>
-              </p>
-
-              <p style="font-size: 36px; font-weight: bold; text-align: center; color: #ffffff; line-height: 1.315789474; margin: 15px 0px 30px 0px;">
-                <%= @transient_registration.reg_identifier %>
-              </p>
-            </td>
-            <td width="25%">&nbsp;</td>
-          </tr>
-          <tr>
-            <td width="75%" style="font-family: Helvetica, Arial, sans-serif;">
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.paragraph_1") %>
-              </p>
-
-              <ol>
-                <li style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                  <%= t(".bank_details.list_item_1") %>
-                </li>
-                <li style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                  <%= t(".bank_details.list_item_2") %>
-                </li>
-              </ol>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.paragraph_2") %>
-              </p>
-
-              <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.subheading_1") %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.paragraph_3") %>
-              </p>
-
-              <table style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <tbody>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.uk_payment_table.reference_number.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= @transient_registration.reg_identifier %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.uk_payment_table.total_cost.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">£<%= display_pence_as_pounds(@total_to_pay) %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.uk_payment_table.account_name.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.uk_payment_table.account_name.value") %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.uk_payment_table.bank_name.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.uk_payment_table.bank_name.value") %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.uk_payment_table.bank_address.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.uk_payment_table.bank_address.value").join("<br>").html_safe %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.uk_payment_table.sort_code.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.uk_payment_table.sort_code.value") %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.uk_payment_table.account_number.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.uk_payment_table.account_number.value") %>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.paragraph_4") %>
-              </p>
-
-              <table style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <tbody>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.international_payment_table.iban.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.international_payment_table.iban.value") %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                    <%= t(".bank_details.international_payment_table.swift.label") %>
-                  </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.international_payment_table.swift.value") %>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.paragraph_5") %>
-              </p>
-
-              <p style="font-size: 24px; font-weight: bold; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.subheading_2") %>
-              </p>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.paragraph_6") %>
-              </p>
-
-              <table style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <tbody>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.send_confirmation_table.email.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.send_confirmation_table.email.value") %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.send_confirmation_table.fax.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.send_confirmation_table.fax.value") %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 20px 10px 0;">
-                      <%= t(".bank_details.send_confirmation_table.post.label") %>
-                    </td>
-                    <td style="border-bottom: 1px solid #bfc1c3; padding: 10px 0 10px 0">
-                      <%= t(".bank_details.send_confirmation_table.post.value").join("<br>").html_safe %>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <p style="font-size: 19px; line-height: 1.315789474; margin: 0 0 15px 0;">
-                <%= t(".bank_details.paragraph_7") %>
-              </p>
-
-              <ul>
-                <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 15px 0;">
-                  <%= t(".footer_list.item_1") %>
-                </li>
-                <li style="font-size: 16px; color: #6f777b; line-height: 1.125; margin: 0 0 30px 0;">
-                  <%= t(".footer_list.item_2") %>
-                </li>
-              </ul>
-            </td>
-            <td width="25%">
-              &nbsp;
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
+      </tbody>
   </table>
 </body>
+
 </html>
