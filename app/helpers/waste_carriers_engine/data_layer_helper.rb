@@ -11,14 +11,15 @@ module WasteCarriersEngine
         output << "'#{key}': '#{value}'"
       end
 
-      output.join(",").html_safe
+      output.join(", ").html_safe
     end
 
     private
 
     def data_layer_hash(transient_registration)
       {
-        journey: data_layer_value_for_journey(transient_registration)
+        journey: data_layer_value_for_journey(transient_registration),
+        tier: data_layer_value_for_tier(transient_registration)
       }
     end
 
@@ -38,6 +39,16 @@ module WasteCarriersEngine
         :renew
       else
         raise UnexpectedSubtypeError, "No user journey found for #{subtype_name}"
+      end
+    end
+
+    def data_layer_value_for_tier(transient_registration)
+      if transient_registration.upper_tier?
+        :upper
+      elsif transient_registration.lower_tier?
+        :lower
+      else
+        :unknown
       end
     end
   end
