@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   module DataLayerHelper
+    class UnexpectedSubtypeError < StandardError; end
+
     def data_layer(transient_registration)
       output = []
 
@@ -21,7 +23,9 @@ module WasteCarriersEngine
     end
 
     def data_layer_value_for_journey(transient_registration)
-      case transient_registration.class.name
+      subtype_name = transient_registration.class.name
+
+      case subtype_name
       when "WasteCarriersEngine::CeasedOrRevokedRegistration"
         :cease_or_revoke
       when "WasteCarriersEngine::EditRegistration"
@@ -32,6 +36,8 @@ module WasteCarriersEngine
         :order_copy_cards
       when "WasteCarriersEngine::RenewingRegistration"
         :renew
+      else
+        raise UnexpectedSubtypeError, "No user journey found for #{subtype_name}"
       end
     end
   end

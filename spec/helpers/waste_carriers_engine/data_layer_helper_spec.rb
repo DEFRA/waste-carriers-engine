@@ -55,6 +55,13 @@ module WasteCarriersEngine
           expect(helper.data_layer(transient_registration)).to eq(expected_string)
         end
       end
+
+      context "when the transient_registration is not a recognised subtype" do
+        let(:class_double) { "Foo" }
+        it "raises an error" do
+          expect { helper.data_layer(transient_registration) }.to raise_error(DataLayerHelper::UnexpectedSubtypeError)
+        end
+      end
     end
   end
 end
