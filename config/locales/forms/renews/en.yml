@@ -8,8 +8,8 @@ en:
         paragraph3: "If you want to discuss this registration, contact the Environment Agency. You will need your registration number."
         paragraph4_html: "Environment Agency helpline: 03708 506 506 (Monday to Friday, 8am to 6pm) <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a>"
       past_renewal_window:
-        heading: "That renewal has expired"
-        paragraph1: "Your registration expired over 1 month ago, so you cannot renew."
+        heading: "This registration has expired"
+        paragraph1: "Your registration has expired so you cannot renew."
         register_again: "Register again"
       invalid_magic_link:
         title: "We cannot find that renewal"
