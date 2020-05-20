@@ -53,7 +53,7 @@ module WasteCarriersEngine
     end
 
     def already_renewed?
-      period_after_last_window = Rails.configuration.expires_after.years + Rails.configuration.grace_window.months
+      period_after_last_window = Rails.configuration.expires_after.years + Rails.configuration.grace_window.days
       registration_window = expires_on - period_after_last_window + 1.day
 
       past_registrations.where(cause: nil, :expires_on.gte => registration_window).any?
