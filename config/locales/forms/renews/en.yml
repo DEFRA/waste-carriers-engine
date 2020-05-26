@@ -2,12 +2,14 @@ en:
   waste_carriers_engine:
     renews:
       already_renewed:
+        title: "That registration has already been renewed"
         heading: "That registration has already been renewed"
         paragraph1: "Our records show that registration %{reg_identifier} has already been renewed."
         paragraph2_html: "If you still need to register as a waste carrier, broker or dealer then <a href=\"%{link_to_new_registration}\">make a new registration.</a>"
         paragraph3: "If you want to discuss this registration, contact the Environment Agency. You will need your registration number."
         paragraph4_html: "Environment Agency helpline: 03708 506 506 (Monday to Friday, 8am to 6pm) <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a>"
       past_renewal_window:
+        title: "This registration has expired"
         heading: "This registration has expired"
         paragraph1: "Your registration has expired so you cannot renew."
         register_again: "Register again"
