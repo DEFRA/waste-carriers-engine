@@ -47,7 +47,7 @@ en:
           limitedLiabilityPartnership: "you are a limited liability partnership"
           localAuthority: "you are a local authority or public body"
           partnership: "you are a partnership"
-          soleTrader: "you are a individual or sole trader"
+          soleTrader: "you are an individual or sole trader"
           charity: "you are a charity or trust"
         company_no: "Companies House number: %{company_no}"
         location:
