@@ -8,6 +8,7 @@ en:
           one: "1 registration card total cost"
           other: "%{count} registration cards total cost"
         vat_message: "VAT does not apply"
+        payment_error_heading: "A problem with your payment"
         payment_method:
           subheading: "Payment method"
           legend: "Preferred payment is by credit or debit card. Do not offer another payment option unless they are unable to pay by card."
