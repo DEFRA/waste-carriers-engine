@@ -47,6 +47,26 @@ module WasteCarriersEngine
           end
         end
 
+        context "when link_from_journeys_to_dashboards is enabled" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:link_from_journeys_to_dashboards).and_return(true) }
+
+          it "includes the finished button" do
+            get new_registration_completed_form_path(transient_registration.token)
+
+            expect(response.body).to include("Finished")
+          end
+        end
+
+        context "when link_from_journeys_to_dashboards is disabled" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:link_from_journeys_to_dashboards).and_return(false) }
+
+          it "does not include the finished button" do
+            get new_registration_completed_form_path(transient_registration.token)
+
+            expect(response.body).to_not include("Finished")
+          end
+        end
+
         context "when the workflow_state is correct" do
           before do
             transient_registration.finance_details = build(:finance_details, :has_paid_order_and_payment)

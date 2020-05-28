@@ -1,1 +1,3 @@
-<%= link_to t(".next_button"), "#", class: 'button' %>
+<% if WasteCarriersEngine.configuration.link_from_journeys_to_dashboards == true %>
+  <%= link_to t(".next_button"), "#", class: 'button' %>
+<% end %>
