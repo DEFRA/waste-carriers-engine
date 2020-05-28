@@ -19,7 +19,7 @@ en:
         waste_carriers_engine/waste_types_form:
           attributes:
             only_amf:
-              inclusion: "You must answer this question"
+              inclusion: "Select the types of waste you deal with"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

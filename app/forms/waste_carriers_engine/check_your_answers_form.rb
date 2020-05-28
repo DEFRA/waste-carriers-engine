@@ -11,19 +11,6 @@ module WasteCarriersEngine
     delegate :registered_address, :declared_convictions, to: :transient_registration
     delegate :lower_tier?, :upper_tier?, :company_no_required?, to: :transient_registration
 
-    # This has to be before the validations are called, otherwise it fails.
-    def self.custom_error_messages(attribute, *errors)
-      messages = {}
-
-      errors.each do |error|
-        messages[error] = I18n.t("activemodel.errors.models."\
-                                     "waste_carriers_engine/check_your_answers_form"\
-                                     ".attributes.#{attribute}.#{error}")
-      end
-
-      messages
-    end
-
     validates :business_type, "defra_ruby/validators/business_type": {
       allow_overseas: true,
       messages: custom_error_messages(:business_type, :inclusion)
