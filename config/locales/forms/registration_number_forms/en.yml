@@ -22,6 +22,8 @@ en:
       models:
         waste_carriers_engine/registration_number_form:
           attributes:
+            company_no:
+              inactive: "Your company must be registered as an active company"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

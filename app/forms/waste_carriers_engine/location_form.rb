@@ -4,7 +4,10 @@ module WasteCarriersEngine
   class LocationForm < BaseForm
     delegate :location, to: :transient_registration
 
-    validates :location, "defra_ruby/validators/location": { allow_overseas: true }
+    validates :location, "defra_ruby/validators/location": {
+      allow_overseas: true,
+      messages: custom_error_messages(:location, :inclusion)
+    }
 
     def submit(params)
       # Set the business type to overseas when required as we use this for microcopy

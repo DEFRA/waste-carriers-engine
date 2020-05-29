@@ -4,7 +4,9 @@ module WasteCarriersEngine
   class RegistrationNumberForm < BaseForm
     delegate :company_no, :business_type, to: :transient_registration
 
-    validates :company_no, "defra_ruby/validators/companies_house_number": true
+    validates :company_no, "defra_ruby/validators/companies_house_number": {
+      messages: custom_error_messages(:company_no, :inactive)
+    }
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating

@@ -15,7 +15,7 @@ en:
         waste_carriers_engine/other_businesses_form:
           attributes:
             other_businesses:
-              inclusion: "You must answer this question"
+              inclusion: "Select yes or no"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"

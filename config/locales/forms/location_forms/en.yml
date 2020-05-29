@@ -18,6 +18,8 @@ en:
       models:
         waste_carriers_engine/location_form:
           attributes:
+            location:
+              inclusion: "Select your principal place of business"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
