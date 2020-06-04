@@ -131,5 +131,9 @@ FactoryBot.define do
     trait :is_expired do
       metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
     end
+
+    trait :cancelled do
+      metaData { build(:metaData, :cancelled) }
+    end
   end
 end

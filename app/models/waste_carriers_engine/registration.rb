@@ -30,6 +30,7 @@ module WasteCarriersEngine
     scope :expired_at_end_of_today, -> { where(:expires_on.lte => Time.now.in_time_zone("London").end_of_day) }
     scope :upper_tier, -> { where(tier: UPPER_TIER) }
     scope :active_and_expired, -> { where("metaData.status" => { :$in => %w[ACTIVE EXPIRED] }) }
+    scope :not_cancelled, -> { where("metaData.status" => { :$nin => %w[INACTIVE] }) }
 
     field :renew_token, type: String
 

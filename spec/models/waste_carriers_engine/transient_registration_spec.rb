@@ -52,18 +52,6 @@ module WasteCarriersEngine
       it_should_behave_like "Can filter conviction status"
     end
 
-    describe ".not_cancelled" do
-      it "returns objects that are not in an INACTIVE state" do
-        cancelled_transient_registration = create(:transient_registration, :cancelled)
-        active_transient_registration = create(:transient_registration)
-
-        results = described_class.not_cancelled
-
-        expect(results).to include(active_transient_registration)
-        expect(results).to_not include(cancelled_transient_registration)
-      end
-    end
-
     describe "#rejected_conviction_checks?" do
       before do
         allow(transient_registration).to receive(:conviction_sign_offs).and_return(conviction_sign_offs)

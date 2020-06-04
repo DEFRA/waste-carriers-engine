@@ -136,6 +136,18 @@ module WasteCarriersEngine
           expect(result).to_not include(lower_tier_registration)
         end
       end
+
+      describe ".not_cancelled" do
+        it "returns objects that are not in an INACTIVE state" do
+          cancelled_registration = create(:registration, :has_required_data, :cancelled)
+          active_registration = create(:registration, :has_required_data)
+
+          results = described_class.not_cancelled
+
+          expect(results).to include(active_registration)
+          expect(results).to_not include(cancelled_registration)
+        end
+      end
     end
 
     describe "#generate_renew_token" do

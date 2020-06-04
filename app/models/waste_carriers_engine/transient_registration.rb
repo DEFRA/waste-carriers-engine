@@ -27,7 +27,6 @@ module WasteCarriersEngine
     scope :submitted, -> { where(:workflow_state.in => RenewingRegistration::SUBMITTED_STATES) }
     scope :pending_payment, -> { submitted.where(:"financeDetails.balance".gt => 0) }
     scope :pending_approval, -> { submitted.where("conviction_sign_offs.0.confirmed": "no") }
-    scope :not_cancelled, -> { where("metaData.status" => { :$nin => %w[INACTIVE] }) }
 
     def total_to_pay
       charges = registration_type_base_charges

@@ -10,10 +10,6 @@ FactoryBot.define do
       has_postcode
     end
 
-    trait :cancelled do
-      metaData { build(:metaData, :cancelled) }
-    end
-
     trait :has_addresses do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end
