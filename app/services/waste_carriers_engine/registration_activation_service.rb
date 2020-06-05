@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class UnpaidBalanceError < StandardError; end
-  class PendingConvictionsError < StandardError; end
-
   class RegistrationActivationService < BaseService
     def run(registration:)
       @registration = registration
 
+      return unless can_be_completed?
+
       registration.with_lock do
-        activate_registration if can_be_completed?
+        activate_registration
       end
 
       send_confirmation_email
@@ -23,19 +22,19 @@ module WasteCarriersEngine
     end
 
     def can_be_completed?
-      balance_is_paid? && no_pending_conviction_check?
+      balance_is_paid? && no_pending_conviction_check? && correct_status?
     end
 
     def balance_is_paid?
-      raise UnpaidBalanceError if @registration.unpaid_balance?
+      !@registration.unpaid_balance?
+    end
 
-      true
+    def correct_status?
+      @registration.pending?
     end
 
     def no_pending_conviction_check?
-      raise PendingConvictionsError if @registration.pending_manual_conviction_check?
-
-      true
+      !@registration.pending_manual_conviction_check?
     end
 
     def send_confirmation_email
