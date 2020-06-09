@@ -5,7 +5,7 @@ module WasteCarriersEngine
     delegate :contact_email, to: :transient_registration
     attr_accessor :confirmed_email
 
-    validates :contact_email, :confirmed_email, "defra_ruby/validators/email": true
+    validates :contact_email, "defra_ruby/validators/email": true
     validates :confirmed_email, "waste_carriers_engine/matching_email": { compare_to: :contact_email }
 
     after_initialize :populate_confirmed_email
