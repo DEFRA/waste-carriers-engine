@@ -6,6 +6,9 @@ module WasteCarriersEngine
     attr_accessor :confirmed_email
 
     validates :contact_email, "defra_ruby/validators/email": true
+    validates :confirmed_email, "defra_ruby/validators/email": {
+      messages: custom_error_messages(:confirmed_email, :blank, :invalid_format)
+    }
     validates :confirmed_email, "waste_carriers_engine/matching_email": { compare_to: :contact_email }
 
     after_initialize :populate_confirmed_email
