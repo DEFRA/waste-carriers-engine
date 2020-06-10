@@ -35,16 +35,16 @@ module WasteCarriersEngine
       context "when the balance is unpaid" do
         before { allow(registration).to receive(:unpaid_balance?).and_return(true) }
 
-        it "raises an error" do
-          expect { service }.to raise_error(UnpaidBalanceError)
+        it "does not activates the registration" do
+          expect { service }.to_not change { registration.active? }
         end
       end
 
       context "when the registration has a pending convictions check" do
         before { allow(registration).to receive(:pending_manual_conviction_check?).and_return(true) }
 
-        it "raises an error" do
-          expect { service }.to raise_error(PendingConvictionsError)
+        it "does not activates the registration" do
+          expect { service }.to_not change { registration.active? }
         end
       end
 
