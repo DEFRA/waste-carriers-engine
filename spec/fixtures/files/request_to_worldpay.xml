@@ -12,7 +12,7 @@
         <include code="ECMC-SSL"/>
       </paymentMethodMask>
       <shopper>
-        <shopperEmailAddress>foo@example.com</shopperEmailAddress>
+        <shopperEmailAddress>contact-foo@example.com</shopperEmailAddress>
       </shopper>
       <billingAddress>
         <address>
