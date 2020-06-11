@@ -61,7 +61,7 @@ module WasteCarriersEngine
     end
 
     def build_shopper(xml)
-      email = @transient_registration.account_email
+      email = @transient_registration.contact_email
 
       xml.shopper do
         xml.shopperEmailAddress email
