@@ -5,8 +5,6 @@ module WasteCarriersEngine
     include CannotGoBackForm
     include UnsubmittableForm
 
-    helper JourneyLinksHelper
-
     def new
       super(RenewalReceivedPendingWorldpayPaymentForm, "renewal_received_pending_worldpay_payment_form")
     end

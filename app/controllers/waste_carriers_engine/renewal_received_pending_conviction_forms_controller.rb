@@ -5,8 +5,6 @@ module WasteCarriersEngine
     include UnsubmittableForm
     include CannotGoBackForm
 
-    helper JourneyLinksHelper
-
     def new
       super(RenewalReceivedPendingConvictionForm, "renewal_received_pending_conviction_form")
     end

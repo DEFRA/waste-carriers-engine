@@ -52,7 +52,7 @@
 
       <%= render "shared/link_to_survey" %>
 
-      <%= link_to t(".next_button"), renewal_finished_link(reg_identifier: @renewal_received_pending_payment_form.reg_identifier), class: 'button' %>
+      <%= render "shared/registration_finished_button" %>
     <% end %>
 
   <% end %>
