@@ -7,6 +7,7 @@ module Test
     include ActiveModel::Validations
 
     attr_reader :temp_lookup_number
+
     validates_with WasteCarriersEngine::RenewalLookupValidator
   end
 end
