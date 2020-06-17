@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CbdTypeFormsController < FormsController
+  class CbdTypeFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(CbdTypeForm, "cbd_type_form")
     end

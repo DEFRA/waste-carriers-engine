@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class EditBankTransferForm < BaseForm
+  class EditBankTransferForm < ::WasteCarriersEngine::BaseForm
     def self.can_navigate_flexibly?
       false
     end

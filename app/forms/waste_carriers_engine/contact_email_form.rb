@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class ContactEmailForm < BaseForm
+  class ContactEmailForm < ::WasteCarriersEngine::BaseForm
     delegate :contact_email, to: :transient_registration
     attr_accessor :confirmed_email
 

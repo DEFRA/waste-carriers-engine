@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class RenewalInformationFormsController < FormsController
+  class RenewalInformationFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(RenewalInformationForm, "renewal_information_form")
     end

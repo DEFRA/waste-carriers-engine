@@ -3,8 +3,8 @@
 module WasteCarriersEngine
   module ConvictionsCheck
     class BaseMatchService < BaseService
-      def run(*args)
-        assign_search_params(*args)
+      def run(**args)
+        assign_search_params(**args)
         check_for_matches_and_return_data
       end
 

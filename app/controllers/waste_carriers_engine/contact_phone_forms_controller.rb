@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class ContactPhoneFormsController < FormsController
+  class ContactPhoneFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(ContactPhoneForm, "contact_phone_form")
     end

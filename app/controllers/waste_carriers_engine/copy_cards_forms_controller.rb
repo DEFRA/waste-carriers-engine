@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CopyCardsFormsController < FormsController
+  class CopyCardsFormsController < ::WasteCarriersEngine::FormsController
     prepend_before_action :authenticate_user!
 
     def new

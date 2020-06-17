@@ -45,7 +45,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
         end
 
         it "redirects to payment_summary_form" do
-          get path, params
+          get path, params: params
           expect(response).to redirect_to(new_payment_summary_form_path(token))
         end
       end
@@ -56,7 +56,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
         end
 
         it "redirects to payment_summary_form" do
-          get path, params
+          get path, params: params
           expect(response).to redirect_to(new_payment_summary_form_path(token))
         end
       end

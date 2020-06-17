@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class PostcodeFormsController < FormsController
+  class PostcodeFormsController < ::WasteCarriersEngine::FormsController
     def skip_to_manual_address
       find_or_initialize_transient_registration(params[:token])
 

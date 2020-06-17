@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CannotRenewCompanyNoChangeFormsController < FormsController
+  class CannotRenewCompanyNoChangeFormsController < ::WasteCarriersEngine::FormsController
     include UnsubmittableForm
 
     def new

@@ -2,7 +2,7 @@
 
 module FormRequestHelpers
   def post_form_with_params(form, token, params = {})
-    post create_path_for(form, token), params_for_form(form, params)
+    post create_path_for(form, token), params: params_for_form(form, params)
   end
 
   # Should call a method like location_forms_path

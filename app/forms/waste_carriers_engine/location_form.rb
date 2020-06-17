@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class LocationForm < BaseForm
+  class LocationForm < ::WasteCarriersEngine::BaseForm
     delegate :location, to: :transient_registration
 
     validates :location, "defra_ruby/validators/location": {

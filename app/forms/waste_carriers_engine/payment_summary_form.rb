@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class PaymentSummaryForm < BaseForm
+  class PaymentSummaryForm < ::WasteCarriersEngine::BaseForm
     delegate :temp_payment_method, to: :transient_registration
 
     attr_accessor :type_change, :registration_cards, :registration_card_charge, :total_charge

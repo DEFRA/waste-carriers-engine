@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "2.4.2"
+ruby "2.7.1"
+
+# Temporary workaround until we implement webpack assets
+# See: https://github.com/sass/sassc-rails/issues/114
+gem "sassc-rails"
 
 # Declare your gem's dependencies in waste_carriers_engine.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -16,7 +20,7 @@ gem "govuk_template", "~> 0.23"
 gem "jquery-rails"
 
 # Use MongoDB as the database
-gem "mongoid", "~> 5.2"
+gem "mongoid"
 # Implement document-level locking
 gem "mongoid-locker"
 
@@ -38,12 +42,12 @@ group :development, :test do
   # Apply our style guide to ensure consistency in how the code is written
   gem "defra_ruby_style"
   gem "dotenv-rails"
-  gem "rspec-rails", "~> 3.6"
+  gem "rspec-rails"
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem "web-console", "~> 2.0"
+  gem "web-console"
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
@@ -55,6 +59,7 @@ group :production do
 end
 
 group :test do
+  gem "rails-controller-testing"
   gem "database_cleaner"
   gem "factory_bot_rails", require: false
   gem "simplecov", "~> 0.17.1", require: false

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CopyCardsPaymentFormsController < FormsController
+  class CopyCardsPaymentFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(CopyCardsPaymentForm, "copy_cards_payment_form")
     end

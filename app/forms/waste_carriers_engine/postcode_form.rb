@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class PostcodeForm < BaseForm
+  class PostcodeForm < ::WasteCarriersEngine::BaseForm
     private
 
     def format_postcode(postcode)

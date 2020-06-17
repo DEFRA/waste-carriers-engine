@@ -24,6 +24,7 @@ module WasteCarriersEngine
 
           it "creates a new order" do
             get new_confirm_bank_transfer_form_path(transient_registration.token)
+
             expect(transient_registration.reload.finance_details.orders.count).to eq(1)
           end
 

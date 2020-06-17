@@ -33,7 +33,7 @@ module WasteCarriersEngine
             end
 
             it "updates the transient registration, returns a 302 response and redirects to the main_people form" do
-              post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+              post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
 
               expect(transient_registration.reload.registered_address.house_number).to eq("42")
               expect(response).to have_http_status(302)
@@ -54,7 +54,7 @@ module WasteCarriersEngine
                 old_contact_address = transient_registration.contact_address
                 number_of_addresses = transient_registration.addresses.count
 
-                post company_address_manual_forms_path(transient_registration.token), company_address_manual_form: valid_params
+                post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
 
                 expect(transient_registration.reload.registered_address).to_not eq(old_registered_address)
                 expect(transient_registration.reload.registered_address.address_line_1).to eq("Foo Terrace")
@@ -84,7 +84,7 @@ module WasteCarriersEngine
           end
 
           it "does not update the transient registration, returns a 302 response and redirects to the correct form for the state" do
-            post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+            post company_address_forms_path(transient_registration.token), params: { company_address_form: valid_params }
 
             expect(transient_registration.reload.addresses.count).to eq(0)
             expect(response).to have_http_status(302)

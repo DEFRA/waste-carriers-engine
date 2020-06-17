@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CheckYourAnswersFormsController < FormsController
+  class CheckYourAnswersFormsController < ::WasteCarriersEngine::FormsController
     def new
       return unless super(CheckYourAnswersForm, "check_your_answers_form")
 

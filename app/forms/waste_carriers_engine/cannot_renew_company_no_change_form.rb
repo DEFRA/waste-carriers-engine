@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CannotRenewCompanyNoChangeForm < BaseForm
+  class CannotRenewCompanyNoChangeForm < ::WasteCarriersEngine::BaseForm
     include CannotSubmit
   end
 end

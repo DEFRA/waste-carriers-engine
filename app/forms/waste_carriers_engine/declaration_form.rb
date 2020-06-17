@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class DeclarationForm < BaseForm
+  class DeclarationForm < ::WasteCarriersEngine::BaseForm
     delegate :declaration, to: :transient_registration
 
     validates :declaration, inclusion: { in: [1] }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class FormsController < ApplicationController
+  class FormsController < ::WasteCarriersEngine::ApplicationController
     include ActionView::Helpers::UrlHelper
     include CanRedirectFormToCorrectPath
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class PersonForm < BaseForm
+  class PersonForm < ::WasteCarriersEngine::BaseForm
     attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :dob
     attr_accessor :new_person
 

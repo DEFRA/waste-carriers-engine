@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CheckYourAnswersForm < BaseForm
+  class CheckYourAnswersForm < ::WasteCarriersEngine::BaseForm
     include CanLimitNumberOfMainPeople
     include CanLimitNumberOfRelevantPeople
 

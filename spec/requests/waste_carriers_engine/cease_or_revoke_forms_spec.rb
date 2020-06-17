@@ -124,7 +124,7 @@ module WasteCarriersEngine
             it "creates a transient registration with correct data, returns a 302 response and redirects to the " do
               expected_tr_count = CeasedOrRevokedRegistration.count + 1
 
-              post cease_or_revoke_forms_path(registration.reg_identifier), cease_or_revoke_form: valid_params
+              post cease_or_revoke_forms_path(registration.reg_identifier), params: { cease_or_revoke_form: valid_params }
 
               transient_registration = CeasedOrRevokedRegistration.find_by(reg_identifier: registration.reg_identifier)
 
@@ -141,7 +141,7 @@ module WasteCarriersEngine
             let(:invalid_params) { { token: registration.reg_identifier, metaData: {} } }
 
             it "returns a 200 response and render the new form" do
-              post cease_or_revoke_forms_path(registration.reg_identifier), cease_or_revoke_form: invalid_params
+              post cease_or_revoke_forms_path(registration.reg_identifier), params: { cease_or_revoke_form: invalid_params }
 
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/cease_or_revoke_forms/new")
@@ -162,7 +162,7 @@ module WasteCarriersEngine
         it "returns a 302 response, redirects to the login page and does not create a new transient registration" do
           original_tr_count = CeasedOrRevokedRegistration.count
 
-          post cease_or_revoke_forms_path(registration.reg_identifier), renewal_start_form: valid_params
+          post cease_or_revoke_forms_path(registration.reg_identifier), params: { renewal_start_form: valid_params }
 
           expect(response).to redirect_to(new_user_session_path)
           expect(response).to have_http_status(302)

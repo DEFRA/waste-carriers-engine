@@ -36,7 +36,7 @@ module WasteCarriersEngine
     end
 
     def exception
-      env["action_dispatch.exception"]
+      request.env["action_dispatch.exception"]
     end
   end
 end
