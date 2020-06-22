@@ -22,9 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", ">= 6.0.3"
   # Use MongoDB as the database
   s.add_dependency "mongoid"
-  # Implement document-level locking. Pinned to 2.0.0 because we believe 2.0.1
-  # has a dependency on using Mongoid version 7 or greater. On v5 we get errors
-  # regards the use of `delegate` when using 2.0.1
+  # Implement document-level locking
   s.add_dependency "mongoid-locker", "2.0.0"
   # Use jquery as the JavaScript library
   s.add_dependency "jquery-rails"
@@ -47,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_dependency "uk_postcode"
 
   # defra_ruby_alert is a gem we created to manage airbrake across projects
-  s.add_dependency "defra_ruby_alert", "~> 1.0.0"
+  s.add_dependency "defra_ruby_alert", "~> 2.0.0"
 
   # Used to handle requests to the address lookup web service used (currently
   # EA Address Facade v1)
