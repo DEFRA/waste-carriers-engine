@@ -22,7 +22,9 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", ">= 6.0.3"
   # Use MongoDB as the database
   s.add_dependency "mongoid"
-  # Implement document-level locking
+  # Implement document-level locking. Pinned to 2.0.0 because we believe 2.0.1
+  # has a dependency on using Mongoid version 7 or greater. On v5 we get errors
+  # regards the use of `delegate` when using 2.0.1
   s.add_dependency "mongoid-locker", "2.0.0"
   # Use jquery as the JavaScript library
   s.add_dependency "jquery-rails"
