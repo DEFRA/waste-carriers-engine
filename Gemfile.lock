@@ -5,7 +5,7 @@ PATH
       aasm (~> 4.12)
       countries
       defra_ruby_address
-      defra_ruby_alert
+      defra_ruby_alert (~> 1.0.0)
       defra_ruby_email
       defra_ruby_validators
       high_voltage (~> 3.0)
@@ -82,10 +82,9 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airbrake (10.0.5)
-      airbrake-ruby (~> 4.13)
-    airbrake-ruby (4.15.0)
-      rbtree3 (~> 0.5)
+    airbrake (5.8.1)
+      airbrake-ruby (~> 1.8)
+    airbrake-ruby (1.8.0)
     ast (2.4.1)
     bcrypt (3.1.13)
     bindex (0.8.1)
@@ -105,8 +104,8 @@ GEM
     database_cleaner (1.8.5)
     defra_ruby_address (0.1.0)
       rest-client (~> 2.0)
-    defra_ruby_alert (2.0.0)
-      airbrake
+    defra_ruby_alert (1.0.0)
+      airbrake (~> 5.8.1)
     defra_ruby_email (1.0.0)
       rails (~> 6.0.3.1)
       sprockets (~> 3.7.2)
@@ -264,7 +263,6 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbtree3 (0.6.0)
     regexp_parser (1.7.1)
     responders (3.0.1)
       actionpack (>= 5.0)
