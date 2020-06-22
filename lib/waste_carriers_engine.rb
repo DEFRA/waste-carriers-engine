@@ -74,9 +74,9 @@ module WasteCarriersEngine
       end
     end
 
-    def airbrake_blocklist=(value)
+    def airbrake_blacklist=(value)
       DefraRuby::Alert.configure do |configuration|
-        configuration.blocklist = value
+        configuration.blacklist = value
       end
     end
 
