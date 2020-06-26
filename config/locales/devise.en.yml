@@ -55,9 +55,6 @@ en:
         password_reset_link_text: reset your password
         unknown_email_summary: I do not know the email address for my account
         unknown_email_paragraph_1: If you don’t know the email address belonging to your account, contact our helpline on 03708 506506.
-        unconfirmed_email_summary: I need to confirm my email address
-        unconfirmed_email_paragraph_1: After you've registered as a waste carrier, you must confirm your email address to access your account.
-        unconfirmed_email_link_text: Resend a confirmation email
         locked_summary: My account is locked
         locked_paragraph_1: If you or someone else tries to sign in too many times using incorrect details, the account may be temporarily locked.
         locked_link_text: Unlock your account
