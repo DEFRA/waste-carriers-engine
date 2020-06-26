@@ -14,6 +14,7 @@ module WasteCarriersEngine
         context "when no edit registration exists" do
           it "redirects to the invalid page" do
             get new_confirm_edit_cancelled_form_path("wibblewobblejellyonaplate")
+
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
@@ -43,6 +44,7 @@ module WasteCarriersEngine
         context "when no edit registration exists" do
           it "redirects to the invalid page" do
             post confirm_edit_cancelled_forms_path("wibblewobblejellyonaplate")
+
             expect(response).to redirect_to(page_path("invalid"))
           end
         end
@@ -55,6 +57,7 @@ module WasteCarriersEngine
 
           it "redirects to the edit cancelled page" do
             post confirm_edit_cancelled_forms_path(transient_registration.token)
+
             expect(response).to redirect_to(new_edit_cancelled_form_path(transient_registration.token))
           end
         end
@@ -77,6 +80,7 @@ module WasteCarriersEngine
           context "when the back action is triggered" do
             it "redirects to the edit form" do
               get back_confirm_edit_cancelled_forms_path(transient_registration[:token])
+
               expect(response).to redirect_to(new_edit_form_path(transient_registration[:token]))
             end
           end
@@ -91,6 +95,7 @@ module WasteCarriersEngine
           context "when the back action is triggered" do
             it "redirects to the correct form for the state" do
               get back_confirm_edit_cancelled_forms_path(transient_registration[:token])
+
               expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
             end
           end

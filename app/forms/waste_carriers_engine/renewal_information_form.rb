@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class RenewalInformationForm < BaseForm
+  class RenewalInformationForm < ::WasteCarriersEngine::BaseForm
     attr_accessor :type_change, :total_fee
 
     def initialize(transient_registration)

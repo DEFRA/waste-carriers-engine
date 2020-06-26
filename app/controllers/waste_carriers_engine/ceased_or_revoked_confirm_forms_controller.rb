@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CeasedOrRevokedConfirmFormsController < FormsController
+  class CeasedOrRevokedConfirmFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(CeasedOrRevokedConfirmForm, "ceased_or_revoked_confirm_form")
     end

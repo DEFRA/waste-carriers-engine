@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class PersonFormsController < FormsController
+  class PersonFormsController < ::WasteCarriersEngine::FormsController
     def create(form_class, form)
       if params[:commit] == I18n.t("waste_carriers_engine.#{form}s.form.add_person_link")
         submit_and_add_another(form_class, form)

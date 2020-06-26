@@ -2,7 +2,7 @@
 
 # rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
-  class WorldpayFormsController < FormsController
+  class WorldpayFormsController < ::WasteCarriersEngine::FormsController
     include UnsubmittableForm
 
     def new

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class RenewalCompleteFormsController < FormsController
+  class RenewalCompleteFormsController < ::WasteCarriersEngine::FormsController
     include UnsubmittableForm
     include CannotGoBackForm
 

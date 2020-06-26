@@ -36,7 +36,7 @@ module WasteCarriersEngine
             it "updates the transient registration, returns a 302 response and redirects to the contact_name form" do
               total_people_count = transient_registration.key_people.count
 
-              post conviction_details_forms_path(transient_registration.token), conviction_details_form: valid_params
+              post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: valid_params }
 
               expect(transient_registration.reload.key_people.count).to eq(total_people_count + 1)
               expect(transient_registration.reload.key_people.last.position).to eq(valid_params[:position])
@@ -55,7 +55,7 @@ module WasteCarriersEngine
               it "increases the total number of people and does not replace the existing relevant conviction person" do
                 total_people_count = transient_registration.key_people.count
 
-                post conviction_details_forms_path(transient_registration.token), conviction_details_form: valid_params
+                post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: valid_params }
 
                 expect(transient_registration.reload.key_people.count).to eq(total_people_count + 1)
                 expect(transient_registration.reload.key_people.first.first_name).to eq(relevant_conviction_person.first_name)
@@ -72,7 +72,7 @@ module WasteCarriersEngine
               it "increases the total number of people and does not replace the existing main person" do
                 total_people_count = transient_registration.key_people.count
 
-                post conviction_details_forms_path(transient_registration.token), conviction_details_form: valid_params
+                post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: valid_params }
 
                 expect(transient_registration.reload.key_people.count).to eq(total_people_count + 1)
                 expect(transient_registration.reload.key_people.first.first_name).to eq(main_person.first_name)
@@ -81,7 +81,7 @@ module WasteCarriersEngine
 
             context "when the submit params say to add another" do
               it "redirects to the conviction_details form" do
-                post conviction_details_forms_path(transient_registration.token), conviction_details_form: valid_params, commit: "Add another person"
+                post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: valid_params, commit: "Add another person" }
 
                 expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:token]))
               end
@@ -102,7 +102,7 @@ module WasteCarriersEngine
             it "does not increase the total number of people" do
               total_people_count = transient_registration.key_people.count
 
-              post conviction_details_forms_path(transient_registration.token), conviction_details_form: invalid_params
+              post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: invalid_params }
 
               expect(transient_registration.reload.key_people.count).to eq(total_people_count)
             end
@@ -115,7 +115,7 @@ module WasteCarriersEngine
               end
 
               it "does not replace the existing main person" do
-                post conviction_details_forms_path(transient_registration.token), conviction_details_form: invalid_params
+                post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: invalid_params }
 
                 expect(transient_registration.reload.key_people.first.first_name).to eq(existing_main_person.first_name)
               end
@@ -137,7 +137,7 @@ module WasteCarriersEngine
             it "does not increase the total number of people" do
               total_people_count = transient_registration.key_people.count
 
-              post conviction_details_forms_path(transient_registration.token), conviction_details_form: blank_params
+              post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: blank_params }
 
               expect(transient_registration.reload.key_people.count).to eq(total_people_count)
             end
@@ -164,7 +164,7 @@ module WasteCarriersEngine
           end
 
           it "does not update the transient registration, returns a 302 response and redirects to the correct form for the state" do
-            post conviction_details_forms_path(transient_registration.token), conviction_details_form: valid_params
+            post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: valid_params }
 
             expect(transient_registration.reload.key_people).to_not exist
             expect(response).to have_http_status(302)

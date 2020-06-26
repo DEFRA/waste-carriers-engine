@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CompanyAddressManualForm < BaseForm
+  class CompanyAddressManualForm < ::WasteCarriersEngine::BaseForm
     include CanClearAddressFinderError
     include CanValidateManualAddress
 

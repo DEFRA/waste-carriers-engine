@@ -37,7 +37,7 @@ module WasteCarriersEngine
             end
 
             it "updates the transient registration, returns a 302 response and redirects to the main_people form" do
-              post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+              post company_address_forms_path(transient_registration.token), params: { company_address_form: valid_params }
 
               expect(transient_registration.reload.company_address.uprn.to_s).to eq("340116")
               expect(response).to have_http_status(302)
@@ -56,7 +56,7 @@ module WasteCarriersEngine
               it "updates the old contact address and does not change the number of addresses" do
                 number_of_addresses = transient_registration.addresses.count
 
-                post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+                post company_address_forms_path(transient_registration.token), params: { company_address_form: valid_params }
 
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)
                 expect(transient_registration.reload.company_address.uprn).to eq(340_116)
@@ -66,7 +66,8 @@ module WasteCarriersEngine
 
           context "when invalid params are submitted" do
             it "returns a 302 response" do
-              post company_address_forms_path("foo"), company_address_form: {}
+              post company_address_forms_path("foo"), params: { company_address_form: {} }
+
               expect(response).to have_http_status(302)
             end
           end
@@ -88,7 +89,7 @@ module WasteCarriersEngine
           end
 
           it "does not update the transient registration, returns a 302 response and redirects to the correct form for the state" do
-            post company_address_forms_path(transient_registration.token), company_address_form: valid_params
+            post company_address_forms_path(transient_registration.token), params: { company_address_form: valid_params }
 
             expect(transient_registration.reload.addresses.count).to eq(0)
             expect(response).to have_http_status(302)

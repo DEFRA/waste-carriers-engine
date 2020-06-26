@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class EditBankTransferFormsController < FormsController
+  class EditBankTransferFormsController < ::WasteCarriersEngine::FormsController
     def new
       return unless super(EditBankTransferForm, "edit_bank_transfer_form")
 

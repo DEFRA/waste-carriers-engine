@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class RenewalStartFormsController < FormsController
+  class RenewalStartFormsController < ::WasteCarriersEngine::FormsController
     prepend_before_action :authenticate_user!, if: :should_authenticate_user?
 
     def new

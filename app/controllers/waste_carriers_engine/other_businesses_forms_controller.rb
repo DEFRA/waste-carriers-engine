@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class OtherBusinessesFormsController < FormsController
+  class OtherBusinessesFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(OtherBusinessesForm, "other_businesses_form")
     end

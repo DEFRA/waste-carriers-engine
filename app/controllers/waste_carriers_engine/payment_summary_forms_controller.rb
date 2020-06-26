@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class PaymentSummaryFormsController < FormsController
+  class PaymentSummaryFormsController < ::WasteCarriersEngine::FormsController
     def new
       return unless super(PaymentSummaryForm, "payment_summary_form")
 

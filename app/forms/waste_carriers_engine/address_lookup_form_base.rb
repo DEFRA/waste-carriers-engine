@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class AddressLookupFormBase < BaseForm
+  class AddressLookupFormBase < ::WasteCarriersEngine::BaseForm
     attr_accessor :temp_addresses
 
     after_initialize :look_up_addresses

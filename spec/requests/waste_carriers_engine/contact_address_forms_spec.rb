@@ -38,7 +38,7 @@ module WasteCarriersEngine
             end
 
             it "updates the transient registration, returns a 302 response and redirects to the check_your_answers form" do
-              post contact_address_forms_path(transient_registration.token), contact_address_form: valid_params
+              post contact_address_forms_path(transient_registration.token), params: { contact_address_form: valid_params }
 
               expect(transient_registration.reload.contact_address.uprn.to_s).to eq("340116")
               expect(response).to have_http_status(302)
@@ -58,7 +58,7 @@ module WasteCarriersEngine
                 transient_registration.contact_address.update_attributes(uprn: "123456")
                 number_of_addresses = transient_registration.addresses.count
 
-                post contact_address_forms_path(transient_registration.token), contact_address_form: valid_params
+                post contact_address_forms_path(transient_registration.token), params: { contact_address_form: valid_params }
 
                 expect(transient_registration.reload.contact_address.uprn).to eq(340_116)
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)

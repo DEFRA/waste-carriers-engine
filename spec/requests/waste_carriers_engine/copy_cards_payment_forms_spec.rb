@@ -75,7 +75,7 @@ module WasteCarriersEngine
               let(:temp_payment_method) { "card" }
 
               it "updates the transient registration with correct data, returns a 302 response and redirects to the worldpay form" do
-                post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), copy_cards_payment_form: valid_params
+                post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), params: { copy_cards_payment_form: valid_params }
 
                 order_copy_cards_registration.reload
 
@@ -89,7 +89,7 @@ module WasteCarriersEngine
               let(:temp_payment_method) { "bank_transfer" }
 
               it "updates the transient registration with correct data, returns a 302 response and redirects to the bank transfer form" do
-                post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), copy_cards_payment_form: valid_params
+                post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), params: { copy_cards_payment_form: valid_params }
 
                 order_copy_cards_registration.reload
 
@@ -104,7 +104,7 @@ module WasteCarriersEngine
             let(:invalid_params) { { temp_payment_method: "foo" } }
 
             it "returns a 200 response and render the new copy cards form" do
-              post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), copy_cards_payment_form: invalid_params
+              post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), params: { copy_cards_payment_form: invalid_params }
 
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/copy_cards_payment_forms/new")

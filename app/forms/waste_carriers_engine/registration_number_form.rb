@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class RegistrationNumberForm < BaseForm
+  class RegistrationNumberForm < ::WasteCarriersEngine::BaseForm
     delegate :company_no, :business_type, to: :transient_registration
 
     validates :company_no, "defra_ruby/validators/companies_house_number": {

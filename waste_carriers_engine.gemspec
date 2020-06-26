@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.11"
+  s.add_dependency "rails", ">= 6.0.3"
   # Use MongoDB as the database
-  s.add_dependency "mongoid", "~> 5.2.0"
+  s.add_dependency "mongoid"
   # Implement document-level locking
-  s.add_dependency "mongoid-locker"
+  s.add_dependency "mongoid-locker", "2.0.0"
   # Use jquery as the JavaScript library
   s.add_dependency "jquery-rails"
   # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_dependency "uk_postcode"
 
   # defra_ruby_alert is a gem we created to manage airbrake across projects
-  s.add_dependency "defra_ruby_alert", "~> 1.0.0"
+  s.add_dependency "defra_ruby_alert", "~> 2.0.0"
 
   # Used to handle requests to the address lookup web service used (currently
   # EA Address Facade v1)

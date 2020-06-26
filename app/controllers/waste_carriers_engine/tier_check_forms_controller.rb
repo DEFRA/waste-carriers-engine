@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class TierCheckFormsController < FormsController
+  class TierCheckFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(TierCheckForm, "tier_check_form")
     end

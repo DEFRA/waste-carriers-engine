@@ -62,7 +62,7 @@ module WasteCarriersEngine
             let(:valid_params) { { temp_lookup_number: registration.reg_identifier } }
 
             it "returns a 302 response and redirects to the renewal_start form" do
-              post renew_registration_forms_path(transient_registration[:token]), renew_registration_form: valid_params
+              post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
 
               expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
@@ -72,7 +72,7 @@ module WasteCarriersEngine
               let(:valid_params) { { temp_lookup_number: registration.reg_identifier.downcase } }
 
               it "returns a 302 response and redirects to the renewal_start form" do
-                post renew_registration_forms_path(transient_registration[:token]), renew_registration_form: valid_params
+                post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
 
                 expect(response).to have_http_status(302)
                 expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
@@ -85,7 +85,7 @@ module WasteCarriersEngine
             let(:valid_params) { { temp_lookup_number: registration.reg_identifier } }
 
             it "returns a 200 response and renders the new template" do
-              post renew_registration_forms_path(transient_registration[:token]), renew_registration_form: valid_params
+              post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
 
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/renew_registration_forms/new")
@@ -96,7 +96,7 @@ module WasteCarriersEngine
             let(:invalid_params) { { company_no: "" } }
 
             it "returns a 200 response and renders the new template" do
-              post renew_registration_forms_path(transient_registration[:token]), renew_registration_form: invalid_params
+              post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: invalid_params }
 
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/renew_registration_forms/new")
@@ -114,7 +114,7 @@ module WasteCarriersEngine
           let(:valid_params) { { company_no: "01234567" } }
 
           it "returns a 302 response, redirects to the correct form for the state and set magic link route to false" do
-            post renew_registration_forms_path(transient_registration[:token]), renew_registration_form: valid_params
+            post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
 
             transient_registration.reload
 

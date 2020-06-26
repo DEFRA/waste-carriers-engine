@@ -6,7 +6,9 @@ module WasteCarriersEngine
 
     included do
       # Override this method as user shouldn't be able to "submit" this page
-      def create; end
+      def create
+        raise ActionController::RoutingError, "Unsubmittable"
+      end
     end
   end
 end

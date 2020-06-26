@@ -124,7 +124,7 @@ module WasteCarriersEngine
             it "creates a transient registration with correct data, returns a 302 response and redirects to the copy cards payment form" do
               expected_tr_count = OrderCopyCardsRegistration.count + 1
 
-              post copy_cards_forms_path(registration.reg_identifier), copy_cards_form: valid_params
+              post copy_cards_forms_path(registration.reg_identifier), params: { copy_cards_form: valid_params }
 
               transient_registration = OrderCopyCardsRegistration.find_by(reg_identifier: registration.reg_identifier)
 
@@ -139,7 +139,7 @@ module WasteCarriersEngine
             let(:invalid_params) { { token: registration.reg_identifier, temp_cards: 0 } }
 
             it "returns a 200 response and render the new copy cards form" do
-              post copy_cards_forms_path(registration.reg_identifier), copy_cards_form: invalid_params
+              post copy_cards_forms_path(registration.reg_identifier), params: { copy_cards_form: invalid_params }
 
               expect(response).to have_http_status(200)
               expect(response).to render_template("waste_carriers_engine/copy_cards_forms/new")
@@ -160,7 +160,7 @@ module WasteCarriersEngine
         it "returns a 302 response, redirects to the login page and does not create a new transient registration" do
           original_tr_count = OrderCopyCardsRegistration.count
 
-          post copy_cards_forms_path(registration.reg_identifier), renewal_start_form: valid_params
+          post copy_cards_forms_path(registration.reg_identifier), params: { renewal_start_form: valid_params }
 
           expect(response).to redirect_to(new_user_session_path)
           expect(response).to have_http_status(302)

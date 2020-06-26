@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class StartForm < BaseForm
+  class StartForm < ::WasteCarriersEngine::BaseForm
     START_OPTIONS = [
       RENEW = "renew",
       NEW = "new"

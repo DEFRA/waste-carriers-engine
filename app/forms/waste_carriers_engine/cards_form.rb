@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CardsForm < BaseForm
+  class CardsForm < ::WasteCarriersEngine::BaseForm
     MAX_TEMP_CARDS = 999
 
     delegate :temp_cards, to: :transient_registration
