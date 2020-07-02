@@ -91,7 +91,7 @@ module WasteCarriersEngine
     # toggles data
     def feature_toggle_model_name=(value)
       DefraRubyFeatures.configure do |configuration|
-        configuration.feature_toggle_model_name = "::WasteCarriersEngine::FeatureToggle"
+        configuration.feature_toggle_model_name = value
       end
     end
 
