@@ -4,10 +4,6 @@
   <p><%= link_to "Log in", new_session_path(resource_name) %></p>
 <% end %>
 
-<% if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <p><%= link_to "Sign up", new_registration_path(resource_name) %></p>
-<% end %>
-
 <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
   <details>
     <summary><span class="summary"><%= t(".password_reset_summary") %></span></summary>
@@ -31,10 +27,4 @@
       <p><%= t(".locked_paragraph_1") %> <%= link_to t(".locked_link_text"), new_unlock_path(resource_name) %>.</p>
     </div>
   </details>
-<% end %>
-
-<% if devise_mapping.omniauthable? %>
-  <% resource_class.omniauth_providers.each do |provider| %>
-    <p><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %></p>
-  <% end %>
 <% end %>
