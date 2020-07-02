@@ -36,6 +36,12 @@ gem "secure_headers", "~> 5.0"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
 
+# Use the Defra Ruby Features gem to allow users with the correct permissions to
+# manage feature toggle (create / update / delete) from the back-office.
+gem "defra-ruby-features",
+    git: "https://github.com/DEFRA/defra-ruby-features",
+    branch: "main"
+
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
