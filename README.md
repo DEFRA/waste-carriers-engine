@@ -1,9 +1,9 @@
 # Waste Carriers engine
 
-[![Build Status](https://travis-ci.com/DEFRA/waste-carriers-engine.svg?branch=master)](https://travis-ci.com/DEFRA/waste-carriers-engine)
+[![Build Status](https://travis-ci.com/DEFRA/waste-carriers-engine.svg?branch=main)](https://travis-ci.com/DEFRA/waste-carriers-engine)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-carriers-engine&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DEFRA_waste-carriers-engine)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-carriers-engine&metric=coverage)](https://sonarcloud.io/dashboard?id=DEFRA_waste-carriers-engine)
-[![security](https://hakiri.io/github/DEFRA/waste-carriers-engine/master.svg)](https://hakiri.io/github/DEFRA/waste-carriers-engine/master)
+[![security](https://hakiri.io/github/DEFRA/waste-carriers-engine/main.svg)](https://hakiri.io/github/DEFRA/waste-carriers-engine/main)
 [![Licence](https://img.shields.io/badge/Licence-OGLv3-blue.svg)](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3)
 
 The 'Register as a waste carrier' service allows businesses, who deal with waste and have to register according to the regulations, to register online. Once registered, businesses can sign in again to edit their registrations if needed.
@@ -19,7 +19,7 @@ The engine is mounted in [waste-carriers-front-office](https://github.com/DEFRA/
 Make sure you already have:
 
 - Git
-- Ruby 2.4.2
+- Ruby 2.7.1
 - [Bundler](http://bundler.io/) – for installing Ruby gems
 - MongoDb 3.6
 
