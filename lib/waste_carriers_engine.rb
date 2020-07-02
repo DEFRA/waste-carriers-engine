@@ -87,6 +87,14 @@ module WasteCarriersEngine
       end
     end
 
+    # Tell the engine where to find a model to use in order to persist feature
+    # toggles data
+    def feature_toggle_model_name=(value)
+      DefraRubyFeatures.configure do |configuration|
+        configuration.feature_toggle_model_name = "::WasteCarriersEngine::FeatureToggle"
+      end
+    end
+
     private
 
     # If the setting's value is "true", then set to a boolean true. Otherwise,
