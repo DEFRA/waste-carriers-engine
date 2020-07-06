@@ -8,7 +8,8 @@ en:
         subheading: "Processing your payment"
         paragraph_1: "We have sent a confirmation email to %{email}."
         paragraph_2: We are currently processing your payment and will let you know when it has been received.
-        paragraph_3: Your registration will not be renewed until we have confirmed your registration.
+        paragraph_3: "We'll email a receipt to %{email} after we process your payment."
+        paragraph_4: Your registration will not be renewed until we have confirmed your registration.
         error_heading: Something is wrong
         next_button: Finished
   activemodel:

@@ -29,8 +29,10 @@
 
       <p><%= t(".paragraph_2") %></p>
 
+      <p><%= t(".paragraph_3", email: @registration.email_to_send_receipt) %></p>
+
       <div class="panel panel-border-wide">
-        <p><%= t(".paragraph_3") %></p>
+        <p><%= t(".paragraph_4") %></p>
       </div>
 
       <%= render "shared/contact_environment_agency" %>
