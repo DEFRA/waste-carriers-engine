@@ -12,6 +12,14 @@
           <%= t(".heading") %>
         </legend>
 
+        <p>
+          <%= t(".paragraph_1") %>
+        </p>
+
+        <p>
+          <%= t(".paragraph_2", contact_email: @receipt_email_form.transient_registration.contact_email) %>
+        </p>
+
         <% if @receipt_email_form.errors[:receipt_email].any? %>
           <span class="error-message"><%= @receipt_email_form.errors[:receipt_email].join(", ") %></span>
         <% end %>

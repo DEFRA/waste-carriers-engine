@@ -2,8 +2,10 @@ en:
   waste_carriers_engine:
     receipt_email_forms:
       new:
-        title: Receipt email address
-        heading: What’s the receipt email address?
+        title: Where should we send payment receipts?
+        heading: Where should we send payment receipts?
+        paragraph_1: We will send all receipts for payment to this address once the payment has been processed.
+        paragraph_2: If you leave this blank, we will send receipts to the contact email, %{contact_email}
         error_heading: Something is wrong
         receipt_email_label: Email address
         next_button: Continue
