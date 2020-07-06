@@ -21,7 +21,7 @@ module WasteCarriersEngine
         include_examples "POST form",
                          "receipt_email_form",
                          valid_params: { receipt_email: "foo@example.com" },
-                         invalid_params: { receipt_email: "" }
+                         invalid_params: { receipt_email: "foo" }
       end
     end
 
