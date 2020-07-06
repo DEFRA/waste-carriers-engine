@@ -195,6 +195,10 @@ module WasteCarriersEngine
           tot + payment.amount
         end
       end
+
+      def email_to_send_receipt
+        receipt_email || contact_email
+      end
     end
     # rubocop:enable Metrics/BlockLength
   end
