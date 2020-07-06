@@ -531,6 +531,16 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
+    resources :receipt_email_forms,
+              only: %i[new create],
+              path: "receipt-email",
+              path_names: { new: "" } do
+                get "back",
+                    to: "receipt_email_forms#go_back",
+                    as: "back",
+                    on: :collection
+              end
+
     resources :payment_summary_forms,
               only: %i[new create],
               path: "payment-summary",
