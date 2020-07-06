@@ -13,7 +13,9 @@ module WasteCarriersEngine
     def value_is_present?(record, attribute, value)
       return true if value.present?
 
-      record.errors[attribute] << error_message(record, attribute, "blank")
+      record.errors.add(attribute,
+                        :blank,
+                        message: error_message(record, attribute, "blank"))
       false
     end
 
@@ -29,14 +31,18 @@ module WasteCarriersEngine
       return true if value.address_mode == "address-results"
       return true if value.address_mode == "manual-uk"
 
-      record.errors[attribute] << error_message(record, attribute, "should_be_uk")
+      record.errors.add(attribute,
+                        :should_be_uk,
+                        message: error_message(record, attribute, "should_be_uk"))
       false
     end
 
     def valid_overseas_address?(record, attribute, value)
       return true if value.address_mode == "manual-foreign"
 
-      record.errors[attribute] << error_message(record, attribute, "should_be_overseas")
+      record.errors.add(attribute,
+                        :should_be_overseas,
+                        message: error_message(record, attribute, "should_be_overseas"))
       false
     end
 

@@ -14,14 +14,18 @@ module WasteCarriersEngine
       # Format should be CBDU or CBDL, followed by at least one digit
       return true if value.present? && value.match?(/^CBD[U|L][0-9]+$/)
 
-      record.errors[attribute] << error_message(record, attribute, "invalid_format")
+      record.errors.add(attribute,
+                        :invalid_format,
+                        message: error_message(record, attribute, "invalid_format"))
       false
     end
 
     def matches_existing_registration?(record, attribute, value)
       return true if Registration.where(reg_identifier: value).exists?
 
-      record.errors[attribute] << error_message(record, attribute, "no_registration")
+      record.errors.add(attribute,
+                        :no_registration,
+                        message: error_message(record, attribute, "no_registration"))
       false
     end
 

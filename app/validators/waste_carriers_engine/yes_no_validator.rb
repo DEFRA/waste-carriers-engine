@@ -6,7 +6,9 @@ module WasteCarriersEngine
       valid_values = %w[yes no]
       return true if valid_values.include?(value)
 
-      record.errors[attribute] << error_message(record, attribute, "inclusion")
+      record.errors.add(attribute,
+                        :inclusion,
+                        message: error_message(record, attribute, "inclusion"))
       false
     end
 

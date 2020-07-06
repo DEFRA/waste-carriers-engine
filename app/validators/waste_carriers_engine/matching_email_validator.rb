@@ -8,7 +8,9 @@ module WasteCarriersEngine
       email_address_to_confirm = record.send(options[:compare_to])
       return true if value == email_address_to_confirm || value.blank?
 
-      record.errors[attribute] << error_message(record, attribute, "does_not_match")
+      record.errors.add(attribute,
+                        :does_not_match,
+                        message: error_message(record, attribute, "does_not_match"))
       false
     end
 

@@ -13,14 +13,18 @@ module WasteCarriersEngine
     def value_is_present?(record, attribute, value)
       return true if value.present?
 
-      record.errors[attribute] << error_message(record, attribute, "blank")
+      record.errors.add(attribute,
+                        :blank,
+                        message: error_message(record, attribute, "blank"))
       false
     end
 
     def value_is_not_too_long?(record, attribute, value)
       return true if value.length < 256
 
-      record.errors[attribute] << error_message(record, attribute, "too_long")
+      record.errors.add(attribute,
+                        :too_long,
+                        message: error_message(record, attribute, "too_long"))
       false
     end
 
