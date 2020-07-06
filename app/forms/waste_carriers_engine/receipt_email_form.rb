@@ -4,6 +4,6 @@ module WasteCarriersEngine
   class ReceiptEmailForm < ::WasteCarriersEngine::BaseForm
     delegate :receipt_email, to: :transient_registration
 
-    validates :receipt_email, "defra_ruby/validators/email": true
+    validates :receipt_email, "defra_ruby/validators/email": true, allow_blank: true
   end
 end

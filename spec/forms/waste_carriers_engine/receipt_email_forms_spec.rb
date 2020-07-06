@@ -14,6 +14,16 @@ module WasteCarriersEngine
         it "should submit" do
           expect(receipt_email_form.submit(valid_params)).to eq(true)
         end
+
+        context "when the receipt email is nil" do
+          let(:valid_params) do
+            { token: receipt_email_form.token, receipt_email: nil }
+          end
+
+          it "should submit" do
+            expect(receipt_email_form.submit(valid_params)).to eq(true)
+          end
+        end
       end
 
       context "when the form is not valid" do
