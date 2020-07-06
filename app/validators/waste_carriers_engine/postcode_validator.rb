@@ -16,14 +16,18 @@ module WasteCarriersEngine
     def value_is_present?(record, attribute, value)
       return true if value.present?
 
-      record.errors[attribute] << error_message(record, attribute, "blank")
+      record.errors.add(attribute,
+                        :blank,
+                        message: error_message(record, attribute, "blank"))
       false
     end
 
     def value_uses_correct_format?(record, attribute, value)
       return true if UKPostcode.parse(value).full_valid?
 
-      record.errors[attribute] << error_message(record, attribute, "wrong_format")
+      record.errors.add(attribute,
+                        :wrong_format,
+                        message: error_message(record, attribute, "wrong_format"))
       false
     end
 
@@ -33,7 +37,9 @@ module WasteCarriersEngine
       return true if response.successful?
 
       if response.error.is_a?(DefraRuby::Address::NoMatchError)
-        record.errors[attribute] << error_message(record, attribute, "no_results")
+        record.errors.add(attribute,
+                          :no_results,
+                          message: error_message(record, attribute, "no_results"))
         false
       else
         record.transient_registration.temp_os_places_error = true
