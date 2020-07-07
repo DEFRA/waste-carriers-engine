@@ -6,7 +6,7 @@ en:
         heading: "Application received"
         highlight_text: "Please use this registration number if you contact us:"
         paragraph_1: "We've sent a confirmation email to %{email}."
-        paragraph_2: "We'll email a receipt to %{email} after we process your payment."
+        paragraph_2: "We'll email a payment confirmation to %{email} after we process your payment."
         subheading_1: "What happens next"
         paragraph_3: "We’ll check your details and let you know whether your application has been successful. We aim to do this within 10 working days."
         paragraph_4: "You’re not legally entitled to operate as a waste carrier until we have confirmed your registration."
