@@ -1,0 +1,36 @@
+<%= render("waste_carriers_engine/shared/back", back_path: back_receipt_email_forms_path(@receipt_email_form.token)) %>
+
+<div class="text">
+  <%= form_for(@receipt_email_form) do |f| %>
+    <%= render("waste_carriers_engine/shared/errors", object: @receipt_email_form) %>
+
+    <h1 class="heading-large"><%= t(".heading") %></h1>
+
+    <div class="form-group <%= "form-group-error" if @receipt_email_form.errors[:receipt_email].any? %>">
+      <fieldset id="receipt_email">
+        <legend class="visuallyhidden">
+          <%= t(".heading") %>
+        </legend>
+
+        <p>
+          <%= t(".paragraph_1") %>
+        </p>
+
+        <p>
+          <%= t(".paragraph_2", contact_email: @receipt_email_form.transient_registration.contact_email) %>
+        </p>
+
+        <% if @receipt_email_form.errors[:receipt_email].any? %>
+          <span class="error-message"><%= @receipt_email_form.errors[:receipt_email].join(", ") %></span>
+        <% end %>
+
+        <%= f.label :receipt_email, t(".receipt_email_label"), class: "form-label" %>
+        <%= f.email_field :receipt_email, value: @receipt_email_form.receipt_email, class: "form-control" %>
+      </fieldset>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit t(".next_button"), class: "button" %>
+    </div>
+  <% end %>
+</div>

@@ -59,6 +59,7 @@ module WasteCarriersEngine
       field :originalRegistrationNumber, as: :original_registration_number, type: String
       field :otherBusinesses, as: :other_businesses,                        type: String # 'yes' or 'no' - should refactor to boolean
       field :phoneNumber, as: :phone_number,                                type: String
+      field :receipt_email,                                                 type: String
       field :regIdentifier, as: :reg_identifier,                            type: String
       field :registrationType, as: :registration_type,                      type: String
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
@@ -193,6 +194,10 @@ module WasteCarriersEngine
         (finance_details.presence&.payments || []).inject(0) do |tot, payment|
           tot + payment.amount
         end
+      end
+
+      def email_to_send_receipt
+        receipt_email || contact_email
       end
     end
     # rubocop:enable Metrics/BlockLength

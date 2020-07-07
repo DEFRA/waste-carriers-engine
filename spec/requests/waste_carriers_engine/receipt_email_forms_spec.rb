@@ -3,29 +3,29 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "PaymentSummaryForms", type: :request do
-    include_examples "GET locked-in form", "payment_summary_form"
+  RSpec.describe "ReceiptEmailForms", type: :request do
+    include_examples "GET flexible form", "receipt_email_form"
 
-    describe "POST payment_summary_form_path" do
+    describe "POST receipt_email_form_path" do
       include_examples "POST renewal form",
-                       "payment_summary_form",
-                       valid_params: { temp_payment_method: "card" },
-                       invalid_params: { temp_payment_method: "foo" },
-                       test_attribute: :temp_payment_method
+                       "receipt_email_form",
+                       valid_params: { receipt_email: "foo@example.com" },
+                       invalid_params: { receipt_email: "foo" },
+                       test_attribute: :receipt_email
 
       context "When the transient_registration is a new registration" do
         let(:transient_registration) do
-          create(:new_registration, workflow_state: "payment_summary_form")
+          create(:new_registration, workflow_state: "receipt_email_form")
         end
 
         include_examples "POST form",
-                         "payment_summary_form",
-                         valid_params: { temp_payment_method: "card" },
-                         invalid_params: { temp_payment_method: "foo" }
+                         "receipt_email_form",
+                         valid_params: { receipt_email: "foo@example.com" },
+                         invalid_params: { receipt_email: "foo" }
       end
     end
 
-    describe "GET back_payment_summary_forms_path" do
+    describe "GET back_receipt_email_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
         before(:each) do
@@ -37,15 +37,15 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
-                   workflow_state: "payment_summary_form")
+                   workflow_state: "receipt_email_form")
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the receipt email form" do
-              get back_payment_summary_forms_path(transient_registration[:token])
+            it "returns a 302 response and redirects to the cards form" do
+              get back_receipt_email_forms_path(transient_registration[:token])
 
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_receipt_email_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_cards_form_path(transient_registration[:token]))
             end
           end
         end
@@ -60,7 +60,7 @@ module WasteCarriersEngine
 
           context "when the back action is triggered" do
             it "returns a 302 response and redirects to the correct form for the state" do
-              get back_payment_summary_forms_path(transient_registration[:token])
+              get back_receipt_email_forms_path(transient_registration[:token])
 
               expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))

@@ -33,6 +33,16 @@ module WasteCarriersEngine
         xml = File.read("./spec/fixtures/files/request_to_worldpay.xml")
         expect(worldpay_xml_service.build_xml).to eq(xml)
       end
+
+      context "when a receipt email is provided" do
+        before { transient_registration.receipt_email = "receipt@example.com" }
+
+        it "includes that instead of the contact email" do
+          xml = worldpay_xml_service.build_xml
+          expect(xml).to include("receipt@example.com")
+          expect(xml).to_not include(transient_registration.contact_email)
+        end
+      end
     end
   end
 end

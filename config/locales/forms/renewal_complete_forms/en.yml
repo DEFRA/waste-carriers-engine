@@ -7,6 +7,7 @@ en:
         highlight_text: "Your registration number is still"
         paragraph_1: "Your registration has been renewed until %{date}."
         paragraph_2: "We have sent a confirmation email to %{email}."
+        paragraph_3: "We'll email a receipt to %{email} after we process your payment."
         subheading_1: Your registration certificate
         certificate_link_text: Download and print your certificate
         subheading_2: What happens next

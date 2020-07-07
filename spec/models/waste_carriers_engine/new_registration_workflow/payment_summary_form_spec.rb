@@ -19,7 +19,7 @@ module WasteCarriersEngine
         end
 
         context "on back" do
-          include_examples "has back transition", previous_state: "cards_form"
+          include_examples "has back transition", previous_state: "receipt_email_form"
         end
       end
     end

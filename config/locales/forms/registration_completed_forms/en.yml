@@ -6,6 +6,7 @@ en:
         heading: Registration complete
         highlight_text: "Your registration number is"
         paragraph_1: "We’ve sent a registration confirmation and certificate to %{email}."
+        paragraph_2: "We'll email a receipt to %{email} after we process your payment."
         subheading_1: "What happens next"
         list_1:
           UPPER:

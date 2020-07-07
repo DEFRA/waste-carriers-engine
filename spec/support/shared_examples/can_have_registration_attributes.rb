@@ -361,4 +361,45 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
     end
   end
+
+  describe "#email_to_send_receipt" do
+    let(:receipt_email) { "receipt@example.com" }
+    let(:contact_email) { "contact@example.com" }
+
+    context "when the receipt email is set" do
+      before do
+        resource.receipt_email = receipt_email
+      end
+
+      it "returns the receipt email" do
+        expect(resource.email_to_send_receipt).to eq(receipt_email)
+      end
+    end
+
+    context "when the receipt email is nil" do
+      before do
+        resource.receipt_email = nil
+      end
+
+      context "when the contact email is set" do
+        before do
+          resource.contact_email = contact_email
+        end
+
+        it "returns the contact email" do
+          expect(resource.email_to_send_receipt).to eq(contact_email)
+        end
+      end
+
+      context "when the contact email is nil" do
+        before do
+          resource.contact_email = nil
+        end
+
+        it "returns nil" do
+          expect(resource.email_to_send_receipt).to eq(nil)
+        end
+      end
+    end
+  end
 end
