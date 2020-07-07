@@ -19,6 +19,7 @@ module WasteCarriersEngine
         end
 
         context "when a valid edit registration exists" do
+          let(:different_expires_on) { 3.days.ago }
           let(:updated_email) { "updated@example.com" }
           let(:updated_registered_address) { build(:address, :registered, postcode: "UP1 2DT") }
           let(:updated_contact_address) { build(:address, :contact, postcode: "D1 1FF") }
@@ -27,6 +28,7 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:edit_registration,
                    contact_email: updated_email,
+                   expires_on: different_expires_on,
                    addresses: [updated_registered_address, updated_contact_address],
                    key_people: [updated_person],
                    workflow_state: "edit_complete_form")
@@ -36,6 +38,7 @@ module WasteCarriersEngine
           context "when the workflow_state is correct" do
             it "updates the registration with the new data and deletes the transient object" do
               old_account_email = registration.account_email
+              old_expires_on = registration.expires_on
               old_finance_details = registration.finance_details
               old_relevant_people = registration.relevant_people
 
@@ -56,6 +59,8 @@ module WasteCarriersEngine
 
               # But don't modify finance details or other non-editable attributes
               expect(registration.account_email).to eq(old_account_email)
+              expect(registration.expires_on).to eq(old_expires_on)
+              expect(registration.expires_on).to_not eq(different_expires_on)
               expect(registration.finance_details).to eq(old_finance_details)
               expect(registration.relevant_people).to eq(old_relevant_people)
 

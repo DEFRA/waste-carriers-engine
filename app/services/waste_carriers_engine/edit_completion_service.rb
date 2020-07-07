@@ -43,6 +43,7 @@ module WasteCarriersEngine
                                                                      "token",
                                                                      "account_email",
                                                                      "created_at",
+                                                                     "expires_on",
                                                                      "financeDetails",
                                                                      "temp_cards",
                                                                      "temp_company_postcode",

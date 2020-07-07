@@ -40,6 +40,7 @@ module WasteCarriersEngine
         copyable_properties = Registration.attribute_names - %w[_id
                                                                 account_email
                                                                 addresses
+                                                                expires_on
                                                                 key_people
                                                                 financeDetails
                                                                 conviction_search_result

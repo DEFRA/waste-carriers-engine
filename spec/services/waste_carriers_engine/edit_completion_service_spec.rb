@@ -18,6 +18,7 @@ module WasteCarriersEngine
         "token" => nil,
         "account_email" => nil,
         "created_at" => nil,
+        "expires_on" => nil,
         "financeDetails" => nil,
         "temp_cards" => nil,
         "temp_company_postcode" => nil,

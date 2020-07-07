@@ -13,6 +13,7 @@ module WasteCarriersEngine
       ignorable_attributes: %w[_id
                                account_email
                                addresses
+                               expires_on
                                renew_token
                                key_people
                                financeDetails
