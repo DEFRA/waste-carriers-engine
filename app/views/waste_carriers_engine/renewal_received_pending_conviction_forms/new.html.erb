@@ -23,15 +23,16 @@
       </div>
 
       <p><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.transient_registration.contact_email) %></p>
+      <p><%= t(".paragraph_2", email: @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt) %></p>
 
       <h2 class="heading-medium"><%= t(".subheading") %></h2>
 
-      <p><%= t(".paragraph_2") %></p>
-
       <p><%= t(".paragraph_3") %></p>
 
+      <p><%= t(".paragraph_4") %></p>
+
       <div class="panel panel-border-wide">
-        <p><%= t(".paragraph_4") %></p>
+        <p><%= t(".paragraph_5") %></p>
       </div>
 
       <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>

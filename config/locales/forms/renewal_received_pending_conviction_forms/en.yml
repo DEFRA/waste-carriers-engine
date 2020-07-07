@@ -6,10 +6,11 @@ en:
         heading: Application received
         highlight_text: "Your registration number is still"
         paragraph_1: "We have sent a confirmation email to %{email}."
+        paragraph_2: "We'll email a receipt to %{email} after we process your payment."
         subheading: What happens next
-        paragraph_2: We'll check your details and let you know whether your application has been successful. We aim to do this within 10 working days.
-        paragraph_3: Your registration will not be renewed until we have confirmed your registration.
-        paragraph_4: Call our helpline on 03708 506 506 if you have any questions about your renewal.
+        paragraph_3: We'll check your details and let you know whether your application has been successful. We aim to do this within 10 working days.
+        paragraph_4: Your registration will not be renewed until we have confirmed your registration.
+        paragraph_5: Call our helpline on 03708 506 506 if you have any questions about your renewal.
         survey_link_text: What do you think of this service?
         survey_link_hint: (takes 30 seconds)
         error_heading: Something is wrong
