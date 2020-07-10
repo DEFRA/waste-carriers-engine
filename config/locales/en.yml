@@ -44,13 +44,13 @@ en:
           other: "%{count} addresses found"
 
   # Custom error pages
-  invalid_reg_identifier_title: Invalid registration number
-  invalid_reg_identifier_heading: The registration number you entered is not valid
-  invalid_reg_identifier_text: Maybe you should try searching again.
+  invalid_reg_identifier_title: Cannot find page
+  invalid_reg_identifier_heading: We cannot find that page
+  invalid_reg_identifier_text: If you have recently completed a registration then check your email.
 
   no_permissions_title: Cannot access registration
   no_permissions_heading: You do not have permission to access that registration
-  no_permissions_text: Maybe you should try searching again.
+  no_permissions_text: Try searching again.
 
   unrenewable_title: Cannot renew registration
   unrenewable_heading: This registration cannot be renewed
