@@ -12,7 +12,7 @@ WasteCarriersEngine.configure do |config|
   config.airbrake_enabled = false
   config.airbrake_host = "http://localhost"
   config.airbrake_project_key = "abcde12345"
-  config.airbrake_blacklist = [/password/i, /authorization/i]
+  config.airbrake_blocklist = [/password/i, /authorization/i]
 
   # Address lookup config
   config.address_host = ENV["ADDRESSBASE_URL"] || "http://localhost:3002"
