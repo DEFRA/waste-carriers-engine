@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_dependency "uk_postcode"
 
   # defra_ruby_alert is a gem we created to manage airbrake across projects
-  s.add_dependency "defra_ruby_alert", "~> 2.0.0"
+  s.add_dependency "defra_ruby_alert", "~> 2.1"
 
   # Used to handle requests to the address lookup web service used (currently
   # EA Address Facade v1)

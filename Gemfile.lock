@@ -5,7 +5,7 @@ PATH
       aasm (~> 4.12)
       countries
       defra_ruby_address
-      defra_ruby_alert (~> 2.0.0)
+      defra_ruby_alert (~> 2.1)
       defra_ruby_email
       defra_ruby_validators
       high_voltage (~> 3.0)
@@ -105,7 +105,7 @@ GEM
     database_cleaner (1.8.5)
     defra_ruby_address (0.1.0)
       rest-client (~> 2.0)
-    defra_ruby_alert (2.0.0)
+    defra_ruby_alert (2.1.1)
       airbrake
     defra_ruby_email (1.0.0)
       rails (~> 6.0.3.1)
