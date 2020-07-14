@@ -22,10 +22,6 @@
       <p><%= t(".paragraph_2", email: @renewal_complete_form.contact_email) %></p>
       <p><%= t(".paragraph_3", email: @renewal_complete_form.transient_registration.email_to_send_receipt) %></p>
 
-      <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
-      <p><%= link_to(t(".certificate_link_text"), @renewal_complete_form.certificate_link,
-      target: "_blank") %></p>
-
       <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
       <p><%= t(".paragraph_4.#{@renewal_complete_form.registration_type}") %></p>
       <p><%= t(".paragraph_5.#{@renewal_complete_form.registration_type}") %></p>
