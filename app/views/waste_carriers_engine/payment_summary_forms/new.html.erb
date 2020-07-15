@@ -69,10 +69,15 @@
           <p>
             <%= t(".payment_confirmation.paragraph_1") %>
           </p>
-          <fieldset id="receipt_email">
-            <%= f.label :receipt_email, t(".payment_confirmation.label"), class: "form-label" %>
-            <%= f.email_field :receipt_email, value: @payment_summary_form.receipt_email, class: "form-control" %>
-          </fieldset>
+          <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:receipt_email].any? %>">
+            <fieldset id="receipt_email">
+              <% if @payment_summary_form.errors[:receipt_email].any? %>
+                <span class="error-message"><%= @payment_summary_form.errors[:receipt_email].join(", ") %></span>
+              <% end %>
+              <%= f.label :receipt_email, t(".payment_confirmation.label"), class: "form-label" %>
+              <%= f.email_field :receipt_email, value: @payment_summary_form.receipt_email, class: "form-control" %>
+            </fieldset>
+          </div>
         </div>
 
         <div class="multiple-choice">
