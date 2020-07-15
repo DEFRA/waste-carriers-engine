@@ -41,11 +41,11 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the receipt email form" do
+            it "returns a 302 response and redirects to the cards form" do
               get back_payment_summary_forms_path(transient_registration[:token])
 
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_receipt_email_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_cards_form_path(transient_registration[:token]))
             end
           end
         end

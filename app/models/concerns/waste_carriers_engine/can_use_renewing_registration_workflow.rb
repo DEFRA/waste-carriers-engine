@@ -53,7 +53,6 @@ module WasteCarriersEngine
         state :check_your_answers_form
         state :declaration_form
         state :cards_form
-        state :receipt_email_form
         state :payment_summary_form
         state :worldpay_form
         state :confirm_bank_transfer_form
@@ -253,9 +252,6 @@ module WasteCarriersEngine
                       to: :cards_form
 
           transitions from: :cards_form,
-                      to: :receipt_email_form
-
-          transitions from: :receipt_email_form,
                       to: :payment_summary_form
 
           transitions from: :payment_summary_form,
@@ -458,11 +454,8 @@ module WasteCarriersEngine
           transitions from: :cards_form,
                       to: :declaration_form
 
-          transitions from: :receipt_email_form,
-                      to: :cards_form
-
           transitions from: :payment_summary_form,
-                      to: :receipt_email_form
+                      to: :cards_form
 
           transitions from: :worldpay_form,
                       to: :payment_summary_form
