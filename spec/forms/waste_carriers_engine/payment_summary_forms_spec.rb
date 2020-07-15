@@ -113,5 +113,37 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "#receipt_email" do
+      let(:transient_registration) do
+        build(
+          :renewing_registration,
+          :has_required_data,
+          workflow_state: "payment_summary_form",
+          contact_email: contact_email,
+          receipt_email: receipt_email
+        )
+      end
+      # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
+      let(:payment_summary_form) { PaymentSummaryForm.new(transient_registration) }
+
+      context "when initialised with a transient_registration with only contact email set" do
+        let(:contact_email) { "contact@example.com" }
+        let(:receipt_email) { nil }
+
+        it "defaults to the contact email" do
+          expect(payment_summary_form.receipt_email).to eq(contact_email)
+        end
+      end
+
+      context "when initialised with a transient_registration with both contact and receipt email set" do
+        let(:contact_email) { "contact@example.com" }
+        let(:receipt_email) { "receipt@example.com" }
+
+        it "defaults to the receipt email" do
+          expect(payment_summary_form.receipt_email).to eq(receipt_email)
+        end
+      end
+    end
   end
 end
