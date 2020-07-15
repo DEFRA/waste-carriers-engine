@@ -7,7 +7,7 @@ en:
         highlight_text: "Your registration number is still"
         paragraph_1: "Your registration has been renewed until %{date}."
         paragraph_2: "We have sent a confirmation email to %{email}."
-        paragraph_3: "We'll email a payment confirmation to %{email} after we process your payment."
+        paragraph_3: "A payment confirmation will be sent to %{email}."
         subheading_2: What happens next
         paragraph_4:
           carrier_dealer: Based on what you told us about your organisation and what it does, we have renewed your registration as an upper tier waste carrier and dealer.
