@@ -10,6 +10,8 @@ module WasteCarriersEngine
     validates :temp_payment_method, inclusion: { in: %w[card bank_transfer] }
     validates :receipt_email, "defra_ruby/validators/email": true, if: :paying_by_card?
 
+    after_initialize :pre_populate_receipt_email
+
     def self.can_navigate_flexibly?
       false
     end
@@ -29,6 +31,10 @@ module WasteCarriersEngine
     # Consider refactoring to being on the transient_registration itself
     def paying_by_card?
       temp_payment_method == "card"
+    end
+
+    def pre_populate_receipt_email
+      transient_registration.receipt_email ||= transient_registration.email_to_send_receipt
     end
   end
 end
