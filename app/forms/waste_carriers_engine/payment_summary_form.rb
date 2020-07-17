@@ -4,7 +4,11 @@ module WasteCarriersEngine
   class PaymentSummaryForm < ::WasteCarriersEngine::BaseForm
     # delegate :temp_payment_method, to: :transient_registration
 
-    attr_accessor :temp_payment_method, :registration_cards, :registration_card_charge, :total_charge, :card_confirmation_email
+    attr_accessor :temp_payment_method,
+                  :registration_cards,
+                  :registration_card_charge,
+                  :total_charge,
+                  :card_confirmation_email
 
     validates :temp_payment_method, inclusion: { in: %w[card bank_transfer] }
     validates :card_confirmation_email, "defra_ruby/validators/email": true, if: :paying_by_card?
@@ -31,11 +35,11 @@ module WasteCarriersEngine
       # We always want to save the selected payment method in case the user
       # comes back to the form
       attributes = {
-        temp_payment_method: self.temp_payment_method
+        temp_payment_method: temp_payment_method
       }
 
       # We only want to save the email address if the user is paying by card
-      attributes[:receipt_email] = self.card_confirmation_email if paying_by_card?
+      attributes[:receipt_email] = card_confirmation_email if paying_by_card?
 
       super(attributes)
     end
@@ -51,7 +55,7 @@ module WasteCarriersEngine
     # app/models/concerns/waste_carriers_engine/can_use_new_registration_workflow.rb.
     # Consider refactoring to being on the transient_registration itself
     def paying_by_card?
-      self.temp_payment_method == "card"
+      temp_payment_method == "card"
     end
   end
 end
