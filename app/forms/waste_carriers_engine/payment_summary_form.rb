@@ -51,18 +51,5 @@ module WasteCarriersEngine
     def paying_by_card?
       temp_payment_method == "card"
     end
-
-    private
-
-    # TODO: This method is duplicated in
-    # app/models/concerns/waste_carriers_engine/can_use_new_registration_workflow.rb.
-    # Consider refactoring to being on the transient_registration itself
-    def paying_by_card?
-      temp_payment_method == "card"
-    end
-
-    def pre_populate_receipt_email
-      transient_registration.receipt_email ||= transient_registration.email_to_send_receipt
-    end
   end
 end
