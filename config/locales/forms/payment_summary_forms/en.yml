@@ -20,6 +20,10 @@ en:
           bank_transfer:
             label: Pay by bank transfer and then email us to confirm payment
             hint: We cannot register you until your payment clears.
+        payment_confirmation:
+          subheading: Where should the card payment confirmation be sent?
+          paragraph_1: WorldPay will send a card payment confirmation to this address, once the payment has been processed.
+          label: Email address
         next_button: Proceed to payment
   activemodel:
     errors:

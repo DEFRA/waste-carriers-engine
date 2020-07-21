@@ -17,7 +17,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.fetch(:payment_summary_form, {}).permit(:temp_payment_method)
+      params.fetch(:payment_summary_form, {}).permit(:temp_payment_method, :card_confirmation_email)
     end
   end
 end

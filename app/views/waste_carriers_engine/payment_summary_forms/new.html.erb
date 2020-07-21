@@ -64,6 +64,22 @@
           <% end %>
         </div>
 
+        <div class="panel panel-border-narrow">
+          <h2 class="heading-medium"><%= t(".payment_confirmation.subheading") %></h2>
+          <p>
+            <%= t(".payment_confirmation.paragraph_1") %>
+          </p>
+          <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:card_confirmation_email].any? %>">
+            <fieldset id="card_confirmation_email">
+              <% if @payment_summary_form.errors[:card_confirmation_email].any? %>
+                <span class="error-message"><%= @payment_summary_form.errors[:card_confirmation_email].join(", ") %></span>
+              <% end %>
+              <%= f.label :card_confirmation_email, t(".payment_confirmation.label"), class: "form-label" %>
+              <%= f.email_field :card_confirmation_email, value: @payment_summary_form.card_confirmation_email, class: "form-control" %>
+            </fieldset>
+          </div>
+        </div>
+
         <div class="multiple-choice">
           <%= f.radio_button :temp_payment_method, "bank_transfer" %>
           <%= f.label :temp_payment_method, value: "bank_transfer", class: "form-label" do %>
