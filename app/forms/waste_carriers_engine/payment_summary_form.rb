@@ -2,6 +2,7 @@
 
 module WasteCarriersEngine
   class PaymentSummaryForm < ::WasteCarriersEngine::BaseForm
+
     attr_accessor :temp_payment_method,
                   :registration_cards,
                   :registration_card_charge,

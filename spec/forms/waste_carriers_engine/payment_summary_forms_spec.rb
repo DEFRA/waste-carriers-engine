@@ -149,6 +149,5 @@ module WasteCarriersEngine
     end
 
     include_examples "validate email", :payment_summary_form, :card_confirmation_email
-
   end
 end
