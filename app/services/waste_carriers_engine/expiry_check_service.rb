@@ -44,9 +44,11 @@ module WasteCarriersEngine
     # till Oct 4 (i.e. 1 + 3) when in fact we need to include the 1st as one of
     # our grace window days.
     def in_expiry_grace_window?
-      last_day_of_grace_window = (expiry_date.to_date + Rails.configuration.grace_window.days) - 1.day
+      # We set this variable with a method to make it easier to override in
+      # host apps when we need to extend the grace window.
+      last_day_of_grace_window = last_day_of_standard_grace_window
 
-      current_day >= expiry_date.to_date && current_day <= last_day_of_grace_window
+      current_day_is_within_grace_window?(last_day_of_grace_window)
     end
 
     def registration_date
@@ -86,6 +88,14 @@ module WasteCarriersEngine
 
     def expires_on_in_daylight_savings?
       expires_on.in_time_zone("London").dst?
+    end
+
+    def current_day_is_within_grace_window?(last_day_of_grace_window)
+      current_day >= expiry_date.to_date && current_day <= last_day_of_grace_window
+    end
+
+    def last_day_of_standard_grace_window
+      (expiry_date.to_date + Rails.configuration.grace_window.days) - 1.day
     end
 
     # We store dates and times in UTC, but want to use the current date in the
