@@ -5,16 +5,18 @@
     <h1 class="heading-large"><%= t(".heading") %></h1>
 
     <p>
-      <%= t(".paragraph_1") %>
+      <%= t(".paragraphs.instructions") %>
     </p>
 
-    <p>
-      <%= t(".paragraph_2") %>
-    </p>
+    <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+      <p>
+        <%= t(".paragraphs.payment_confirmation") %>
+      </p>
 
-    <p>
-      <%= t(".paragraph_3") %>
-    </p>
+      <p>
+        <%= t(".paragraphs.instant_confirmation") %>
+      </p>
+    <% end %>
 
     <p>
       <%= link_to(t(".link_text"),
