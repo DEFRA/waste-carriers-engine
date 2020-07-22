@@ -87,6 +87,18 @@ module WasteCarriersEngine
       end
     end
 
+    # Used to determine if engine is running in the back-office rather than the
+    # front-office
+    def host_is_back_office=(value)
+      @host_is_back_office = change_string_to_boolean_for(value)
+    end
+
+    def host_is_back_office?
+      return false unless @host_is_back_office
+
+      @host_is_back_office
+    end
+
     private
 
     # If the setting's value is "true", then set to a boolean true. Otherwise,
