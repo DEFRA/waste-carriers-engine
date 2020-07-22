@@ -10,7 +10,7 @@ module WasteCarriersEngine
                   :card_confirmation_email
 
     validates :temp_payment_method, inclusion: { in: %w[card bank_transfer] }
-    validates :card_confirmation_email, "defra_ruby/validators/email": true, if: :paying_by_card?
+    validates :card_confirmation_email, "defra_ruby/validators/email": true, unless: :ignore_card_confirmation_email?
 
     def self.can_navigate_flexibly?
       false
@@ -23,7 +23,8 @@ module WasteCarriersEngine
       self.registration_cards = transient_registration.temp_cards || 0
       self.registration_card_charge = transient_registration.total_registration_card_charge
       self.total_charge = transient_registration.total_to_pay
-      self.card_confirmation_email = transient_registration.email_to_send_receipt
+
+      pre_populate_card_confirmation_email
     end
 
     def submit(params)
@@ -37,20 +38,29 @@ module WasteCarriersEngine
       }
 
       # We only want to save the email address if the user is paying by card
-      attributes[:receipt_email] = card_confirmation_email if paying_by_card?
+      # and we are in the front-office
+      attributes[:receipt_email] = card_confirmation_email unless ignore_card_confirmation_email?
 
       super(attributes)
     end
 
     private
 
+    def pre_populate_card_confirmation_email
+      return if WasteCarriersEngine.configuration.host_is_back_office?
+
+      self.card_confirmation_email = transient_registration.email_to_send_receipt
+    end
+
     def assign_params(params)
       self.temp_payment_method = params[:temp_payment_method]
       self.card_confirmation_email = params[:card_confirmation_email]
     end
 
-    def paying_by_card?
-      temp_payment_method == "card"
+    def ignore_card_confirmation_email?
+      return true if WasteCarriersEngine.configuration.host_is_back_office?
+
+      temp_payment_method != "card"
     end
   end
 end

@@ -1,5 +1,7 @@
-<% content_for :page_scripts do %>
-  <%= javascript_include_tag "receipt_email" %>
+<% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+  <% content_for :page_scripts do %>
+    <%= javascript_include_tag "receipt_email" %>
+  <% end %>
 <% end %>
 
 <%= render("waste_carriers_engine/shared/back", back_path: back_payment_summary_forms_path(@payment_summary_form.token)) %>
@@ -68,21 +70,23 @@
           <% end %>
         </div>
 
-        <div class="panel panel-border-narrow" id="receipt_email_div">
-          <h2 class="heading-medium"><%= t(".payment_confirmation.subheading") %></h2>
-          <p>
-            <%= t(".payment_confirmation.paragraph_1") %>
-          </p>
-          <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:card_confirmation_email].any? %>">
-            <fieldset id="card_confirmation_email">
-              <% if @payment_summary_form.errors[:card_confirmation_email].any? %>
-                <span class="error-message"><%= @payment_summary_form.errors[:card_confirmation_email].join(", ") %></span>
-              <% end %>
-              <%= f.label :card_confirmation_email, t(".payment_confirmation.label"), class: "form-label" %>
-              <%= f.email_field :card_confirmation_email, value: @payment_summary_form.card_confirmation_email, class: "form-control" %>
-            </fieldset>
+        <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+          <div class="panel panel-border-narrow" id="receipt_email_div">
+            <h2 class="heading-medium"><%= t(".payment_confirmation.subheading") %></h2>
+            <p>
+              <%= t(".payment_confirmation.paragraph_1") %>
+            </p>
+            <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:card_confirmation_email].any? %>">
+              <fieldset id="card_confirmation_email">
+                <% if @payment_summary_form.errors[:card_confirmation_email].any? %>
+                  <span class="error-message"><%= @payment_summary_form.errors[:card_confirmation_email].join(", ") %></span>
+                <% end %>
+                <%= f.label :card_confirmation_email, t(".payment_confirmation.label"), class: "form-label" %>
+                <%= f.email_field :card_confirmation_email, value: @payment_summary_form.card_confirmation_email, class: "form-control" %>
+              </fieldset>
+            </div>
           </div>
-        </div>
+        <% end %>
 
         <div class="multiple-choice">
           <%= f.radio_button :temp_payment_method, "bank_transfer" %>
