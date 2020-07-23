@@ -46,7 +46,8 @@ module WasteCarriersEngine
             reg = create(
               :registration,
               :has_required_data,
-              tier: "UPPER")
+              tier: "UPPER"
+            )
             reg.metaData.status = "ACTIVE"
             reg
           end
