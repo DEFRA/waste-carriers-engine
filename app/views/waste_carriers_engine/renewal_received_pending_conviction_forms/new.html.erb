@@ -23,7 +23,10 @@
       </div>
 
       <p><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.transient_registration.contact_email) %></p>
-      <p><%= t(".paragraph_2", email: @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt) %></p>
+
+      <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+        <p><%= t(".paragraph_2", email: @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt) %></p>
+      <% end %>
 
       <h2 class="heading-medium"><%= t(".subheading") %></h2>
 

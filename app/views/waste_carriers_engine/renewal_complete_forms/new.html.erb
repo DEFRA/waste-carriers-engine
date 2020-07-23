@@ -20,7 +20,10 @@
 
       <p><%= t(".paragraph_1", date: @renewal_complete_form.projected_renewal_end_date) %></p>
       <p><%= t(".paragraph_2", email: @renewal_complete_form.contact_email) %></p>
-      <p><%= t(".paragraph_3", email: @renewal_complete_form.transient_registration.email_to_send_receipt) %></p>
+
+      <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+        <p><%= t(".paragraph_3", email: @renewal_complete_form.transient_registration.email_to_send_receipt) %></p>
+      <% end %>
 
       <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
       <p><%= t(".paragraph_4.#{@renewal_complete_form.registration_type}") %></p>
