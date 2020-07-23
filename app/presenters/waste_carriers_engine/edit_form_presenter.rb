@@ -81,6 +81,10 @@ module WasteCarriersEngine
       I18n.t("#{LOCALES_KEY}.tier.#{transient_registration.tier}")
     end
 
+    def receipt_email
+      transient_registration.receipt_email
+    end
+
     private
 
     def format_main_person(person)

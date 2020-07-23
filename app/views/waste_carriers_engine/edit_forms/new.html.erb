@@ -264,6 +264,25 @@
           </tr>
         </tbody>
       </table>
+
+      <table class="edit_table">
+        <caption>
+          <h2 class="heading-medium"><%= t(".sections.receipt.heading") %></h2>
+        </caption>
+        <tbody>
+          <tr>
+            <td class="label_column">
+              <%= t(".sections.receipt.labels.email") %>
+            </td>
+            <td>
+              <%= @presenter.receipt_email %>
+            </td>
+            <td class="change_link_column">
+              <%= t(".edit_links.no_edit") %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
