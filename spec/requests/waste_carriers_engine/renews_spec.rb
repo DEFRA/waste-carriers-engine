@@ -12,7 +12,6 @@ module WasteCarriersEngine
         let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
         it "returns a 302 response, creates a new renewal registration and redirect to the renewal start form" do
-          registration.generate_renew_token!
           expected_count = WasteCarriersEngine::RenewingRegistration.count + 1
 
           get renew_path(token: registration.renew_token)
@@ -26,11 +25,15 @@ module WasteCarriersEngine
         end
 
         context "when a renewal is already in progress" do
-          let(:transient_registration) { create(:renewing_registration, :has_required_data, :expires_today, workflow_state: :business_type_form) }
+          # Because let is lazy-evaluated in our test these instances won't get
+          # created until the `get()` is called. However, we are relying on
+          # there already being a transient registration for the expected_count
+          # to be set with a value of 1. Hence in this test we need to force
+          # the instances to be initialised before the test starts.
+          let!(:transient_registration) { create(:renewing_registration, :has_required_data, :expires_today, workflow_state: :business_type_form) }
           let(:registration) { transient_registration.registration }
 
           it "does not create a new renewal and redirects to the correct form" do
-            registration.generate_renew_token!
             expected_count = WasteCarriersEngine::RenewingRegistration.count
 
             get renew_path(token: registration.renew_token)
@@ -47,8 +50,6 @@ module WasteCarriersEngine
           it "returns a 200 response code and the correct template" do
             allow(Rails.configuration).to receive(:renewal_window).and_return(3)
 
-            registration.generate_renew_token!
-
             get renew_path(token: registration.renew_token)
 
             expect(response).to have_http_status(200)
@@ -57,12 +58,12 @@ module WasteCarriersEngine
         end
 
         context "when is too late to renew" do
-          let(:registration) { create(:registration, :has_required_data, :past_renewal_window) }
+          let(:registration) do
+            create(:registration, :has_required_data, :past_renewal_window, renew_token: "footoken")
+          end
 
           it "returns a 200 response code and the correct template" do
             allow(Rails.configuration).to receive(:renewal_window).and_return(3)
-
-            registration.generate_renew_token!
 
             get renew_path(token: registration.renew_token)
 

@@ -44,19 +44,16 @@ module WasteCarriersEngine
     alias pending_payment? unpaid_balance?
 
     def renew_token
-      generate_renew_token! if self[:renew_token].nil? && can_start_renewal?
+      if self[:renew_token].nil? && can_start_renewal?
+        self[:renew_token] = SecureTokenService.run
+        save!
+      end
 
       self[:renew_token]
     end
 
     def can_start_renewal?
       renewable_tier? && renewable_status? && renewable_date?
-    end
-
-    def generate_renew_token!
-      self[:renew_token] = SecureTokenService.run
-
-      save!
     end
 
     def already_renewed?

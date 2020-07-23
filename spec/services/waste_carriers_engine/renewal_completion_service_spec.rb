@@ -30,8 +30,6 @@ module WasteCarriersEngine
           :has_outstanding_copy_card
         )
       )
-
-      registration.generate_renew_token!
     end
 
     describe "#complete_renewal" do
