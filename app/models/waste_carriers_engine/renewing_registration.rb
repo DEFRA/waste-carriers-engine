@@ -27,7 +27,7 @@ module WasteCarriersEngine
                                conviction_sign_offs
                                declaration
                                past_registrations
-                               copy_cards,
+                               copy_cards
                                receipt_email],
       remove_invalid_attributes: true
     }.freeze
