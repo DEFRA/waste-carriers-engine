@@ -642,7 +642,6 @@ WasteCarriersEngine::Engine.routes.draw do
 
   # Renew via magic link token
   get "/renew/:token",
-      constraints: ->(_request) { WasteCarriersEngine::FeatureToggle.active?(:renew_via_magic_link) },
       to: "renews#new",
       as: "renew"
 
