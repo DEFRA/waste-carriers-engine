@@ -16,8 +16,8 @@
       </shopper>
       <billingAddress>
         <address>
-          <firstName>Jane</firstName>
-          <lastName>Doe</lastName>
+          <firstName>Mary</firstName>
+          <lastName>Wollstonecraft</lastName>
           <address1>42 Foo Gardens</address1>
           <address2/>
           <postalCode>FA1 1KE</postalCode>
