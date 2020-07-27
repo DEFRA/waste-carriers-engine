@@ -28,7 +28,11 @@ module WasteCarriersEngine
                                declaration
                                past_registrations
                                copy_cards
-                               receipt_email],
+                               receipt_email
+                               firstName
+                               lastName
+                               phoneNumber
+                               contactEmail],
       remove_invalid_attributes: true
     }.freeze
 

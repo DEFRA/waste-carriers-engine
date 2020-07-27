@@ -119,6 +119,25 @@ module WasteCarriersEngine
           expect(revoked_renewing_registration.metaData.revoked_reason).to eq(nil)
         end
       end
+
+      context "when copying data from the source registration" do
+        let(:registration) do
+          create(:registration,
+                 :has_required_data,
+                 first_name: "Mary",
+                 last_name: "Wollstonecraft",
+                 phone_number: "01234 567890",
+                 contact_email: "mary@example.com")
+        end
+
+        it "does not copy over private contact information" do
+          renewing_registration = RenewingRegistration.new(reg_identifier: registration.reg_identifier)
+          expect(renewing_registration.first_name).to eq(nil)
+          expect(renewing_registration.last_name).to eq(nil)
+          expect(renewing_registration.phone_number).to eq(nil)
+          expect(renewing_registration.contact_email).to eq(nil)
+        end
+      end
     end
 
     describe "status" do
