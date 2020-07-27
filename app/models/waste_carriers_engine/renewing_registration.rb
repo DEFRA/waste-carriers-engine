@@ -33,7 +33,7 @@ module WasteCarriersEngine
                                lastName
                                phoneNumber
                                contactEmail],
-      remove_invalid_attributes: true
+      remove_revoked_reason: true
     }.freeze
 
     SUBMITTED_STATES = %w[renewal_complete_form
