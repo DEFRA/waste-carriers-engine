@@ -7,6 +7,10 @@ FactoryBot.define do
 
     trait :has_required_data do
       location { "england" }
+      first_name { "Mary" }
+      last_name { "Wollstonecraft" }
+      phone_number { "01234 567890" }
+      contact_email { "mary@example.com" }
       declared_convictions { "no" }
       temp_cards { 1 }
 
@@ -85,6 +89,10 @@ FactoryBot.define do
     trait :has_required_overseas_data do
       location { "overseas" }
       business_type { "overseas" }
+      first_name { "Sojourner" }
+      last_name { "Truth" }
+      phone_number { "01234 567890" }
+      contact_email { "sojourner@example.com" }
       declared_convictions { "no" }
       temp_cards { 1 }
 
