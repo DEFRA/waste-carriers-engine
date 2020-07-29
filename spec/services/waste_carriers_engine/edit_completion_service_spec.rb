@@ -16,7 +16,7 @@ module WasteCarriersEngine
       {
         "_id" => nil,
         "token" => nil,
-        "account_email" => nil,
+        "accountEmail" => nil,
         "created_at" => nil,
         "expires_on" => nil,
         "financeDetails" => nil,
