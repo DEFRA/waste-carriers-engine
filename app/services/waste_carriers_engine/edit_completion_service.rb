@@ -39,9 +39,12 @@ module WasteCarriersEngine
     end
 
     def copy_attributes
+      # IMPORTANT! When specifying attributes be sure to use the name as seen in
+      # the database and not the alias in the model. For example use
+      # accountEmail not account_email.
       copyable_attributes = transient_registration.attributes.except("_id",
                                                                      "token",
-                                                                     "account_email",
+                                                                     "accountEmail",
                                                                      "created_at",
                                                                      "expires_on",
                                                                      "financeDetails",
