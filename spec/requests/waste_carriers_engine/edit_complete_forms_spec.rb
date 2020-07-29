@@ -92,6 +92,14 @@ module WasteCarriersEngine
               end
             end
 
+            # A registration can be renewed or transferred after an edit is
+            # started. So when the edit completes it must not override key
+            # fields lik expiry_date and account_email
+            #
+            # See the following PR's for details of what issues this test is
+            # confirming is fixed.
+            # https://github.com/DEFRA/waste-carriers-engine/pull/879
+            # https://github.com/DEFRA/waste-carriers-engine/pull/902
             context "when key details have been changed by other actions since the edit was started" do
               let(:email) { "behindthescenes@example.com" }
               let(:expires_on) { Date.today + 42.days }
