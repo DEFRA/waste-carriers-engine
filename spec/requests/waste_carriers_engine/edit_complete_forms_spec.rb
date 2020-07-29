@@ -105,7 +105,14 @@ module WasteCarriersEngine
               let(:expires_on) { Date.today + 42.days }
 
               it "it does not overwrite those details" do
-                edit_record = transient_registration
+                # We have to be careful of lazy let() evaluation. We need to
+                # ensure the transient_registration (edit record) is created
+                # before we make our changes to the registration. So these
+                # expects not only ensure that, they also mean the transient
+                # is initialised before we then apply changes to the
+                # registration.
+                expect(transient_registration.account_email).to_not eq(email)
+                expect(transient_registration.expires_on).to_not eq(expires_on)
 
                 registration.account_email = email
                 registration.expires_on = expires_on
