@@ -8,6 +8,7 @@ en:
         list_item_2: You can be prosecuted and fined up to £5,000 if you give false or misleading information
         declaration_text: I understand and agree with the declaration above
         privacy_link_text: "Privacy: how we use your personal information (opens new tab)"
+        third_party_text: If you are registering on someone’s behalf then ensure that they have seen a copy of the privacy policy.
         error_heading: Something is wrong
         next_button: Continue
   activemodel:
