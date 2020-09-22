@@ -37,7 +37,7 @@ module WasteCarriersEngine
               end
 
               context "when the registration cannot be renewed" do
-                before(:each) { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
+                before(:each) { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
 
                 it "redirects to the unrenewable error page" do
                   get new_renewal_start_form_path(registration.reg_identifier)
@@ -203,7 +203,7 @@ module WasteCarriersEngine
                 end
 
                 context "when the registration cannot be renewed" do
-                  before(:each) { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
+                  before(:each) { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
 
                   it "redirects to the unrenewable error page" do
                     get new_renewal_start_form_path(valid_registration)

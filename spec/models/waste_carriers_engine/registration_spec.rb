@@ -96,7 +96,7 @@ module WasteCarriersEngine
       let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
 
       context "when the registration has expired too long ago" do
-        let(:expires_on) { Time.now.to_date - Rails.configuration.grace_window.days - 1 }
+        let(:expires_on) { Time.now.to_date - Rails.configuration.covid_grace_window.days - 1 }
 
         it "returns true" do
           expect(registration).to be_past_renewal_window

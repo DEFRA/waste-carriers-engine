@@ -209,71 +209,53 @@ module WasteCarriersEngine
     end
 
     describe "#in_expiry_grace_window?" do
-      # You have to use let! to ensure it is not lazy-evaluated. If it is
-      # it will be called inside the Timecop.freeze methods listed below
-      # which means Date.today will evaluate to the date Timecop is freezing.
-      # This leads to false positives for some tests, and a fail for the outside
-      # renewal window.
-      let!(:registration) { build(:registration, :has_required_data, expires_on: Date.today) }
+      let(:last_day) { Date.current }
+      let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
+      subject { ExpiryCheckService.new(registration) }
 
-      context "when the grace window is 3 days" do
-        before { allow(Rails.configuration).to receive(:grace_window).and_return(3) }
+      before do
+        expect(LastDayOfGraceWindowService).to receive(:run).with(registration: registration).and_return(last_day)
+      end
 
-        subject { ExpiryCheckService.new(registration) }
+      context "when the current day is before the expiry date" do
+        let(:expires_on) { 2.days.from_now }
 
-        context "and the current date is within the window" do
-          it "returns true" do
-            Timecop.freeze((Date.today + 3.days) - 1.day) do
-              expect(subject.in_expiry_grace_window?).to eq(true)
-            end
-          end
-        end
-
-        context "and the current date is outside the window" do
-          it "returns false" do
-            Timecop.freeze(Date.today + 3.days) do
-              expect(subject.in_expiry_grace_window?).to eq(false)
-            end
-          end
-        end
-
-        context "when the registration was created in BST and expires in GMT" do
-          subject { ExpiryCheckService.new(bst_registration) }
-
-          it "should not be within the grace window for an extra day due to the time difference" do
-            # Skip ahead to the start of the day a reg should expire, plus the
-            # grace window
-            Timecop.freeze(Time.find_zone("London").local(2020, 3, 31, 0, 1)) do
-              # GMT is now in effect (not BST)
-              # UK local time & UTC are both 00:01 on 28 March 2020
-              expect(subject.in_expiry_grace_window?).to eq(false)
-            end
-          end
-        end
-
-        context "when the registration was created in GMT and expires in BST" do
-          subject { ExpiryCheckService.new(gmt_registration) }
-
-          it "should not be within the grace window for an extra day due to the time difference" do
-            # Skip ahead to the start of the day a reg should expire, plus the
-            # grace window
-            Timecop.freeze(Time.find_zone("London").local(2018, 10, 30, 0, 1)) do
-              # BST is now in effect (not GMT)
-              # UK local time is 00:01 on 27 October 2018
-              # UTC time is 23:01 on 26 October 2018
-              expect(subject.in_expiry_grace_window?).to eq(false)
-            end
-          end
+        it "returns false" do
+          expect(subject.in_expiry_grace_window?).to eq(false)
         end
       end
 
-      context "when there is no grace window" do
-        before { allow(Rails.configuration).to receive(:grace_window).and_return(0) }
+      context "when the current day is on the expiry date" do
+        let(:expires_on) { Time.now }
 
-        subject { ExpiryCheckService.new(registration) }
+        it "returns true" do
+          expect(subject.in_expiry_grace_window?).to eq(true)
+        end
+      end
 
-        it "returns false" do
-          Timecop.freeze(Date.today + 3.days) do
+      context "when the current day is after the expiry date" do
+        let(:expires_on) { 2.days.ago }
+
+        context "when the current day is before the last grace window day" do
+          let(:last_day) { 1.day.from_now }
+
+          it "returns true" do
+            expect(subject.in_expiry_grace_window?).to eq(true)
+          end
+        end
+
+        context "when the current day is on the last grace window day" do
+          let(:last_day) { Date.current }
+
+          it "returns true" do
+            expect(subject.in_expiry_grace_window?).to eq(true)
+          end
+        end
+
+        context "when the current day is after the last grace window day" do
+          let(:last_day) { 1.day.ago }
+
+          it "returns false" do
             expect(subject.in_expiry_grace_window?).to eq(false)
           end
         end

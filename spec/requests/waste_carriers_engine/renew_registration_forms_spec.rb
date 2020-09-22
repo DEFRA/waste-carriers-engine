@@ -81,7 +81,7 @@ module WasteCarriersEngine
           end
 
           context "when valid params are submitted and the registration cannot be renewed" do
-            let(:registration) { create(:registration, :has_required_data, :expired_one_month_ago) }
+            let(:registration) { create(:registration, :has_required_data, :expires_later) }
             let(:valid_params) { { temp_lookup_number: registration.reg_identifier } }
 
             it "returns a 200 response and renders the new template" do
