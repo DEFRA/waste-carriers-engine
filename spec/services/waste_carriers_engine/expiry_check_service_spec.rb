@@ -37,10 +37,6 @@ module WasteCarriersEngine
         it ":expiry_date is within 1 hour of the registration's" do
           expect(subject.expiry_date).to be_within(1.hour).of(registration.expires_on)
         end
-
-        it ":registration_date matches the registration's" do
-          expect(subject.registration_date).to eq(registration.metaData.date_registered)
-        end
       end
 
       context "when the registration was created in BST and expires in GMT" do
@@ -73,15 +69,11 @@ module WasteCarriersEngine
       end
 
       context "when initialized with lower tier registration" do
-        let(:registration) { build(:registration, :has_required_data) }
+        let(:registration) { build(:registration, :has_required_data, :lower_tier) }
         subject { ExpiryCheckService.new(registration) }
 
-        it ":expiry_date is set to the UTC epoch" do
-          expect(subject.expiry_date).to eq(Date.new(1970, 1, 1))
-        end
-
-        it ":registration_date matches the registration's" do
-          expect(subject.registration_date).to eq(registration.metaData.date_registered)
+        it ":expiry_date is nil" do
+          expect(subject.expiry_date).to eq(nil)
         end
       end
     end

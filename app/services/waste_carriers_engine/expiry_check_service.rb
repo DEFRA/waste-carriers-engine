@@ -51,44 +51,11 @@ module WasteCarriersEngine
       current_day_is_within_grace_window?(last_day_of_grace_window)
     end
 
-    def registration_date
-      @_registration_date ||= registration.metaData.date_registered
-    end
-
     def expiry_date
-      @_expiry_date ||= corrected_expires_on
+      @_expiry_date ||= ExpiryDateService.run(registration: registration)
     end
 
     private
-
-    # expires_on is stored as a Time in UTC and then converted to a Date.
-    # If a user first registered near midnight around the transition between GMT
-    # and BST (or the other way round), there is a risk that the UTC date will
-    # not be the same as the UK date. So compensate to avoid flagging something
-    # as expired on the wrong date.
-    def corrected_expires_on
-      return Date.new(1970, 1, 1) if expires_on.nil?
-      return expires_on + 1.hour if registered_in_bst_and_expires_in_gmt?
-      return expires_on - 1.hour if registered_in_gmt_and_expires_in_bst?
-
-      expires_on
-    end
-
-    def registered_in_bst_and_expires_in_gmt?
-      registered_in_daylight_savings? && !expires_on_in_daylight_savings?
-    end
-
-    def registered_in_gmt_and_expires_in_bst?
-      !registered_in_daylight_savings? && expires_on_in_daylight_savings?
-    end
-
-    def registered_in_daylight_savings?
-      registration_date.in_time_zone("London").dst?
-    end
-
-    def expires_on_in_daylight_savings?
-      expires_on.in_time_zone("London").dst?
-    end
 
     def current_day_is_within_grace_window?(last_day_of_grace_window)
       current_day >= expiry_date.to_date && current_day <= last_day_of_grace_window
