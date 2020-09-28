@@ -214,7 +214,7 @@ module WasteCarriersEngine
       subject { ExpiryCheckService.new(registration) }
 
       before do
-        expect(LastDayOfGraceWindowService).to receive(:run).with(registration: registration).and_return(last_day)
+        expect(LastDayOfGraceWindowService).to receive(:run).with(registration: registration, ignore_extended_grace_window: false).and_return(last_day)
       end
 
       context "when the current day is before the expiry date" do

@@ -7,10 +7,11 @@ module WasteCarriersEngine
 
     delegate :expires_on, to: :registration
 
-    def run(registration:)
+    def run(registration:, ignore_extended_grace_window: false)
       raise "ExpiryCheckService expects a registration" if registration.nil?
 
       @registration = registration
+      @ignore_extended_grace_window = ignore_extended_grace_window
 
       run_grace_window_rules
     end
@@ -28,6 +29,8 @@ module WasteCarriersEngine
     end
 
     def extended_grace_window_available?
+      return false if ignore_extended_grace_window?
+
       FeatureToggle.active?(:use_extended_grace_window) && WasteCarriersEngine.configuration.host_is_back_office?
     end
 
@@ -56,6 +59,10 @@ module WasteCarriersEngine
 
     def expiry_date
       @_expiry_date ||= ExpiryDateService.run(registration: registration).to_date
+    end
+
+    def ignore_extended_grace_window?
+      @ignore_extended_grace_window == true
     end
   end
 end
