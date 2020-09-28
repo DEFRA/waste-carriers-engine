@@ -3,15 +3,14 @@
 module WasteCarriersEngine
   # Works out which rules to apply to the grace period
   class LastDayOfGraceWindowService < BaseService
-    attr_reader :registration, :current_user
+    attr_reader :registration
 
     delegate :expires_on, to: :registration
 
-    def run(registration:, current_user: nil)
+    def run(registration:)
       raise "ExpiryCheckService expects a registration" if registration.nil?
 
       @registration = registration
-      @current_user = current_user
 
       run_grace_window_rules
     end
@@ -29,9 +28,7 @@ module WasteCarriersEngine
     end
 
     def extended_grace_window_available?
-      return false unless current_user.present?
-
-      FeatureToggle.active?(:use_extended_grace_window) && current_user.can?(:use_extended_grace_window, @registration)
+      FeatureToggle.active?(:use_extended_grace_window) && WasteCarriersEngine.configuration.host_is_back_office?
     end
 
     def registration_had_covid_extension?

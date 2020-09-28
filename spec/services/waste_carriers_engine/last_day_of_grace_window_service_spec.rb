@@ -29,49 +29,24 @@ module WasteCarriersEngine
         expect(ExpiryDateService).to receive(:run).with(registration: registration).and_return(expiry_date)
       end
 
-      context "when a user is provided" do
-        let(:service) { described_class.run(registration: registration, current_user: user) }
-        let(:user) { double(:user) }
+      context "when the feature flag for the extended grace window is on" do
+        before do
+          expect(FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(true)
+        end
 
-        context "when the feature flag for the extended grace window is on" do
+        context "when the host app is the back office" do
           before do
-            expect(FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(true)
+            expect(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
           end
 
-          context "when the user has permission to use the extended grace window" do
-            before do
-              expect(user).to receive(:can?).with(:use_extended_grace_window, registration).and_return(true)
-            end
-
-            it "returns the extended grace window date" do
-              expect(service).to eq(expected_date_for_extended_grace_window)
-            end
-          end
-    
-          context "when the user does not have permission to use the extended grace window" do
-            before do
-              expect(user).to receive(:can?).with(:use_extended_grace_window, registration).and_return(false)
-            end
-
-            context "when the registration had a COVID extension" do
-              let(:expiry_date) { Date.new(2020, 6, 1) }
-
-              it "returns the COVID grace window date" do
-                expect(service).to eq(expected_date_for_covid_grace_window)
-              end
-            end
-    
-            context "when the registration did not have a COVID extension" do
-              it "returns the standard grace window date" do
-                expect(service).to eq(expected_date_for_standard_grace_window)
-              end
-            end
+          it "returns the extended grace window date" do
+            expect(service).to eq(expected_date_for_extended_grace_window)
           end
         end
   
-        context "when the feature flag for the extended grace window is off" do
+        context "when the host app is not the back office" do
           before do
-            expect(FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(false)
+            expect(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false)
           end
 
           context "when the registration had a COVID extension" do
@@ -90,7 +65,11 @@ module WasteCarriersEngine
         end
       end
 
-      context "when no user is provided" do
+      context "when the feature flag for the extended grace window is off" do
+        before do
+          expect(FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(false)
+        end
+
         context "when the registration had a COVID extension" do
           let(:expiry_date) { Date.new(2020, 6, 1) }
 
