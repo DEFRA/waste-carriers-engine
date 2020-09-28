@@ -43,7 +43,7 @@ module WasteCarriersEngine
             expect(service).to eq(expected_date_for_extended_grace_window)
           end
         end
-  
+
         context "when the host app is not the back office" do
           before do
             expect(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false)
@@ -56,7 +56,7 @@ module WasteCarriersEngine
               expect(service).to eq(expected_date_for_covid_grace_window)
             end
           end
-  
+
           context "when the registration did not have a COVID extension" do
             it "returns the standard grace window date" do
               expect(service).to eq(expected_date_for_standard_grace_window)
