@@ -100,6 +100,7 @@ module WasteCarriersEngine
     end
 
     def renewable_date?
+      return false if expires_on.blank?
       return true if check_service.in_expiry_grace_window?
       return false if check_service.expired?
 

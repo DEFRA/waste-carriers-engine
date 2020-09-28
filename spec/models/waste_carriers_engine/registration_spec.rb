@@ -46,6 +46,7 @@ module WasteCarriersEngine
             reg = create(
               :registration,
               :has_required_data,
+              :expires_soon,
               tier: "UPPER"
             )
             reg.metaData.status = "ACTIVE"
@@ -703,7 +704,10 @@ module WasteCarriersEngine
         end
 
         context "when the registration has not been revoked or refused" do
-          before { registration.metaData.status = "ACTIVE" }
+          before do
+            registration.metaData.status = "ACTIVE"
+            registration.expires_on = Time.current + 1.day
+          end
 
           context "when the registration is in the grace window" do
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true) }
