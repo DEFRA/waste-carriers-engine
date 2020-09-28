@@ -139,23 +139,26 @@ module WasteCarriersEngine
         end
       end
 
-      describe ".lower_tier_or_in_grace_window" do
-        it "returns registrations whose expired date is in the grace window" do
-          allow(Rails.configuration).to receive(:grace_window).and_return(3)
+      describe ".lower_tier_or_unexpired_or_in_covid_grace_window" do
+        it "returns registrations who are lower tier, unexpired or in the COVID grace window" do
+          allow(Rails.configuration).to receive(:end_of_covid_extension).and_return(10.days.ago.to_date)
+          allow(Rails.configuration).to receive(:covid_grace_window).and_return(30)
 
           future_expire_date = create(:registration, :has_required_data, expires_on: 2.days.from_now)
-          past_in_grace_window = create(:registration, :has_required_data, expires_on: 1.day.ago)
-          edge_grace_window = create(:registration, :has_required_data, expires_on: 3.day.ago)
-          past_not_in_grace_window = create(:registration, :has_required_data, expires_on: 4.day.ago)
+          past_covid_extension_in_grace_window = create(:registration, :has_required_data, expires_on: 20.days.ago)
+          past_covid_extension_edge_grace_window = create(:registration, :has_required_data, expires_on: 30.days.ago)
+          past_covid_extension_not_in_grace_window = create(:registration, :has_required_data, expires_on: 40.days.ago)
+          past_not_covid = create(:registration, :has_required_data, expires_on: 2.days.ago)
           lower_tier = create(:registration, :has_required_data, :lower_tier, expires_on: nil)
 
-          result = described_class.lower_tier_or_in_grace_window
+          result = described_class.lower_tier_or_unexpired_or_in_covid_grace_window
 
           expect(result).to include(future_expire_date)
-          expect(result).to include(past_in_grace_window)
+          expect(result).to include(past_covid_extension_in_grace_window)
           expect(result).to include(lower_tier)
-          expect(result).to_not include(edge_grace_window)
-          expect(result).to_not include(past_not_in_grace_window)
+          expect(result).to_not include(past_covid_extension_not_in_grace_window)
+          expect(result).to_not include(past_covid_extension_edge_grace_window)
+          expect(result).to_not include(past_not_covid)
         end
       end
 

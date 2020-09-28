@@ -34,10 +34,22 @@ module WasteCarriersEngine
 
     field :renew_token, type: String
 
-    def self.lower_tier_or_in_grace_window
-      date = Time.now.in_time_zone("London").beginning_of_day - Rails.configuration.grace_window.days + 1.day
+    def self.lower_tier_or_unexpired_or_in_covid_grace_window
+      beginning_of_today = Time.now.in_time_zone("London").beginning_of_day
+      normal_expiry_date = beginning_of_today + 1.day
+      earliest_day_of_covid_grace_window = beginning_of_today - Rails.configuration.covid_grace_window.days + 1.day
 
-      any_of({ :expires_on.gte => date }, { tier: LOWER_TIER })
+      any_of(
+        # Registration is lower tier
+        { tier: LOWER_TIER },
+        # Registration expires on or after the current date
+        { :expires_on.gte => normal_expiry_date },
+        # Registration had a COVID extension and is within the COVID grace window
+        { expires_on: {
+          "$lte" => Rails.configuration.end_of_covid_extension,
+          "$gte" => earliest_day_of_covid_grace_window
+        } }
+      )
     end
 
     alias pending_manual_conviction_check? conviction_check_required?
