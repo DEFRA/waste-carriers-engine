@@ -4,5 +4,5 @@
   <h1 class="heading-large"><%= t(".heading", reg_identifier: @cannot_renew_lower_tier_form.reg_identifier) %></h1>
   <p><%= t(".paragraph_1") %></p>
   <p><%= t(".paragraph_2") %></p>
-  <a href="<%= Rails.configuration.wcrs_frontend_url %>/registrations/start" class="button"><%= t(".next_button") %></a>
+  <%= link_to t(".next_button"), start_forms_path, class: "button" %>
 </div>
