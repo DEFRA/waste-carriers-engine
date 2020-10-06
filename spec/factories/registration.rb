@@ -30,10 +30,11 @@ FactoryBot.define do
     end
 
     trait :already_renewed do
-      expires_soon
+      expires_in_3_years
 
       after :create do |registration|
-        WasteCarriersEngine::PastRegistration.build_past_registration(registration)
+        past_registration = WasteCarriersEngine::PastRegistration.build_past_registration(registration)
+        past_registration.update(expires_on: registration.expires_on - 3.years)
       end
     end
 
@@ -110,6 +111,11 @@ FactoryBot.define do
     trait :expires_later do
       metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
       expires_on { 2.years.from_now }
+    end
+
+    trait :expires_in_3_years do
+      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
+      expires_on { 3.years.from_now }
     end
 
     trait :is_pending do

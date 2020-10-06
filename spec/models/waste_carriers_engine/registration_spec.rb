@@ -76,19 +76,50 @@ module WasteCarriersEngine
     describe "#already_renewed?" do
       let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
-      context "when the registraiton has already renewed" do
-        before do
-          PastRegistration.build_past_registration(registration)
-        end
-
-        it "returns true" do
-          expect(registration).to be_already_renewed
+      context "when the registration has no past_registrations" do
+        it "returns false" do
+          expect(registration.past_registrations).to be_empty
+          expect(registration).to_not be_already_renewed
         end
       end
 
-      context "when the registraiton has not already renewed" do
-        it "returns false" do
-          expect(registration).to_not be_already_renewed
+      context "when the registration has past_registrations" do
+        let(:past_registration) { PastRegistration.build_past_registration(registration) }
+
+        context "when the past_registration has an expiry date more than 6 months ago" do
+          before do
+            past_registration.update(expires_on: 1.year.ago)
+          end
+
+          it "returns false" do
+            expect(registration).to_not be_already_renewed
+          end
+        end
+
+        context "when the past_registration has an expiry date less than 6 months old" do
+          before do
+            past_registration.update(expires_on: 1.month.ago)
+          end
+
+          context "when it is an edit" do
+            before do
+              past_registration.update(cause: "edit")
+            end
+
+            it "returns false" do
+              expect(registration).to_not be_already_renewed
+            end
+          end
+
+          context "when it is a renewal" do
+            before do
+              past_registration.update(cause: nil)
+            end
+
+            it "returns true" do
+              expect(registration).to be_already_renewed
+            end
+          end
         end
       end
     end

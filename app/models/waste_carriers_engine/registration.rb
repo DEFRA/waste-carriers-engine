@@ -69,10 +69,18 @@ module WasteCarriersEngine
     end
 
     def already_renewed?
-      period_after_last_window = Rails.configuration.expires_after.years + Rails.configuration.grace_window.days
-      registration_window = expires_on - period_after_last_window + 1.day
+      # Does a past registration exist which was created by a renewal and has
+      # an expiry date less than 6 months old? If so, we can determine that
+      # a renewal has recently been created for a registration that would
+      # otherwise be expiring around now.
+      expires_on_gte = Date.current - Rails.configuration.renewal_window.months
 
-      past_registrations.where(cause: nil, :expires_on.gte => registration_window).any?
+      past_registrations.where(
+        cause: nil,
+        expires_on: {
+          "$gte" => expires_on_gte
+        }
+      ).any?
     end
 
     def past_renewal_window?
