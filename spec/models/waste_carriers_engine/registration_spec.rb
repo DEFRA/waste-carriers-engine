@@ -178,7 +178,7 @@ module WasteCarriersEngine
 
           future_expire_date = create(:registration, :has_required_data, expires_on: 2.days.from_now)
           past_covid_extension_in_grace_window = create(:registration, :has_required_data, expires_on: 20.days.ago)
-          past_covid_extension_edge_grace_window = create(:registration, :has_required_data, expires_on: 30.days.ago)
+          past_covid_extension_edge_grace_window = create(:registration, :has_required_data, expires_on: 30.days.ago.beginning_of_day)
           past_covid_extension_not_in_grace_window = create(:registration, :has_required_data, expires_on: 40.days.ago)
           past_not_covid = create(:registration, :has_required_data, expires_on: 2.days.ago)
           lower_tier = create(:registration, :has_required_data, :lower_tier, expires_on: nil)

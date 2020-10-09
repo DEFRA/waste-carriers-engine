@@ -46,7 +46,7 @@ module WasteCarriersEngine
         { :expires_on.gte => normal_expiry_date },
         # Registration had a COVID extension and is within the COVID grace window
         { expires_on: {
-          "$lte" => Rails.configuration.end_of_covid_extension,
+          "$lt" => Rails.configuration.end_of_covid_extension,
           "$gte" => earliest_day_of_covid_grace_window
         } }
       )
