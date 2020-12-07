@@ -1,6 +1,6 @@
 # Waste Carriers engine
 
-[![Build Status](https://travis-ci.com/DEFRA/waste-carriers-engine.svg?branch=main)](https://travis-ci.com/DEFRA/waste-carriers-engine)
+![Build Status](https://github.com/DEFRA/waste-carriers-engine/workflows/CI/badge.svg?branch=main)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-carriers-engine&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DEFRA_waste-carriers-engine)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-carriers-engine&metric=coverage)](https://sonarcloud.io/dashboard?id=DEFRA_waste-carriers-engine)
 [![security](https://hakiri.io/github/DEFRA/waste-carriers-engine/main.svg)](https://hakiri.io/github/DEFRA/waste-carriers-engine/main)
