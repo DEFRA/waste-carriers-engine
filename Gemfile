@@ -20,7 +20,7 @@ gem "govuk_template", "~> 0.23"
 gem "jquery-rails"
 
 # Use MongoDB as the database
-gem "mongoid"
+gem "mongoid", "~> 7.1.5"
 # Implement document-level locking
 gem "mongoid-locker"
 

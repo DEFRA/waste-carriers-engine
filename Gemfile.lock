@@ -191,9 +191,9 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.2)
-    mongo (2.13.1)
+    mongo (2.14.0)
       bson (>= 4.8.2, < 5.0.0)
-    mongoid (7.1.5)
+    mongoid (7.1.6)
       activemodel (>= 5.1, < 6.1)
       mongo (>= 2.7.0, < 3.0.0)
     mongoid-locker (2.0.0)
@@ -370,7 +370,7 @@ GEM
     websocket-extensions (0.1.5)
     wicked_pdf (2.1.0)
       activesupport
-    zeitwerk (2.4.1)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
@@ -387,7 +387,7 @@ DEPENDENCIES
   govuk_template (~> 0.23)
   jquery-rails
   loofah (>= 2.2.1)
-  mongoid
+  mongoid (~> 7.1.5)
   mongoid-locker
   pry-byebug
   rails-controller-testing
