@@ -54,7 +54,6 @@ module WasteCarriersEngine
           it "returns a 200 response code and the correct template" do
             allow(Rails.configuration).to receive(:renewal_window).and_return(3)
 
-            puts registration.past_registrations.last.expires_on
             get renew_path(token: registration.renew_token)
 
             expect(response).to have_http_status(200)

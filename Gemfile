@@ -59,7 +59,7 @@ group :production do
 end
 
 group :test do
-  gem "database_cleaner"
+  gem "database_cleaner-mongoid"
   gem "factory_bot_rails", require: false
   gem "rails-controller-testing"
   gem "simplecov", "~> 0.17.1", require: false
