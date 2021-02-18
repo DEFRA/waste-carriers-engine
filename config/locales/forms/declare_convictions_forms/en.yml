@@ -3,12 +3,25 @@ en:
     declare_convictions_forms:
       new:
         title: Convictions
-        heading: Has anyone in the organisation's management been convicted of an environmental offence in the last 12 months?
-        paragraph_1: If you don’t tell us about any unspent environmental offences, you may not be able to register.
+        heading: Do any of the following have an unspent conviction for a relevant offence?
+        partnership_relevant_list:
+          - "The individual partners in the partnership"
+          - "Employees convicted in the course of their employment to the partnership"
+          - "Business partners, where the offence was committed in the course of their business"
+        sole_trader_relevant_list:
+          - "The business owner"
+          - "Employees convicted in the course of their employment to the business owner"
+          - "Companies for whom the business owner is an officer (manager, director, secretary or similar) if they were convicted whilst they were that officer"
+        other_business_types_relevant_list:
+          - "The company"
+          - "Employees convicted in the course of their employment to the company"
+          - "The officers of the company (director, manager, secretary or similar officer)"
+          - "Other companies, when the officers of the company were officers of that other company at the time of their conviction"
+        paragraph_1: If you don’t tell us about any unspent relevant convictions, we may refuse or revoke your registration.
         options:
           "yes": "Yes"
           "no": "No"
-        conviction_types_subheading: Offences you must tell us about
+        conviction_types_subheading: Relevant offences you must tell us about
         conviction_types_paragraph_1: If anyone involved in managing the business has been convicted of an environmental offence, it might affect this registration.
         conviction_types_paragraph_2: "You only need to tell us about unspent convictions for offences under these areas of law:"
         conviction_types:

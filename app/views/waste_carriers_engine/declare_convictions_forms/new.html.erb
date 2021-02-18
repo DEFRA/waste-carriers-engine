@@ -16,6 +16,22 @@
           <span class="error-message"><%= @declare_convictions_form.errors[:declared_convictions].join(", ") %></span>
         <% end %>
 
+        <ul class="list list-bullet">
+          <% if @declare_convictions_form.transient_registration.business_type == "partnership" %>
+            <% t(".partnership_relevant_list").each do |item| %>
+              <li><%= item %></li>
+            <% end %>
+          <% elsif @declare_convictions_form.transient_registration.business_type == "soleTrader" %>
+            <% t(".sole_trader_relevant_list").each do |item| %>
+              <li><%= item %></li>
+            <% end %>
+          <% else %>
+            <% t(".other_business_types_relevant_list").each do |item| %>
+              <li><%= item %></li>
+            <% end %>
+          <% end %>
+        </ul>
+
         <p class="strong"><%= t(".paragraph_1") %></p>
 
         <div class="multiple-choice">
