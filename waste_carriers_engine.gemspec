@@ -55,6 +55,9 @@ Gem::Specification.new do |s|
   # details of the last email sent by the app can be accessed
   s.add_dependency "defra_ruby_email"
 
+  # Use Notify to send emails and letters
+  s.add_dependency "notifications-ruby-client"
+
   # Used to build and parse XML requests
   s.add_dependency "nokogiri"
 

@@ -14,6 +14,7 @@ PATH
       mongoid
       mongoid-locker (= 2.0.0)
       nokogiri
+      notifications-ruby-client
       rails (>= 6.0.3)
       rest-client (~> 2.0)
       turbolinks
