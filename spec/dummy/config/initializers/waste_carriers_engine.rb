@@ -16,5 +16,8 @@ WasteCarriersEngine.configure do |config|
 
   # Address lookup config
   config.address_host = ENV["ADDRESSBASE_URL"] || "http://localhost:3002"
+
+  # Notify config
+  config.notify_api_key = ENV["NOTIFY_API_KEY"]
 end
 WasteCarriersEngine.start_airbrake

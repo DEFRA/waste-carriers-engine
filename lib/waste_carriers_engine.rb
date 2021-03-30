@@ -31,6 +31,8 @@ module WasteCarriersEngine
     attr_reader :companies_house_host, :companies_house_api_key
     # Address lookup config
     attr_reader :address_host
+    # Notify config
+    attr_accessor :notify_api_key
 
     def initialize
       configure_airbrake_rails_properties
