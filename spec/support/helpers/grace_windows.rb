@@ -7,7 +7,7 @@ module Helpers
     # date, this helper should ensure that tests pass before and after.
     def self.current_grace_window
       if 6.months.ago > Rails.configuration.end_of_covid_extension
-        Rails.configuration.current_grace_window
+        Rails.configuration.grace_window
       else
         Rails.configuration.covid_grace_window
       end
