@@ -398,6 +398,7 @@ GEM
     useragent (0.16.10)
     validates_email_format_of (1.6.3)
       i18n
+    vcr (6.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.1.0)
@@ -444,6 +445,7 @@ DEPENDENCIES
   spring
   timecop
   turbolinks
+  vcr
   waste_carriers_engine!
   web-console
   webmock (~> 3.4)

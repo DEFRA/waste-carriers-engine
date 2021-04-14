@@ -64,6 +64,7 @@ group :test do
   gem "rails-controller-testing"
   gem "simplecov", "~> 0.17.1", require: false
   gem "timecop"
+  gem "vcr"
   gem "webmock", "~> 3.4"
 end
 gem "loofah", ">= 2.2.1"
