@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"foo@example.com","template_id":"889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","personalisation":{"reg_identifier":"CBDU1","registration_type":"carrier_broker_dealer","first_name":"Jane","last_name":"Doe","phone_number":"03708
+        506506","registered_address":"123 Example Avenue","date_registered":"2021-04-15T10:38:57.455+00:00","link_to_file":"http://example.com"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 15 Apr 2021 10:38:58 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-B3-Spanid:
+      - f97a9c045dbae0b3
+      X-B3-Traceid:
+      - f97a9c045dbae0b3
+      X-Vcap-Request-Id:
+      - b90ee2db-d692-4990-607b-c0a74bb471d1
+      Content-Length:
+      - '1718'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"#You are now registered as a lower tier waste carrier,
+        broker and dealer\r\n\r\nYour registration number is\r\n\r\nCBDU1\r\n\r\nYour
+        registration does not expire, however the link to your certificate will only
+        be available for 18 months. You must download the file and keep it for reference.\r\nDownload
+        your certificate at: http://example.com\r\n\r\n\r\nJane\r\n\r\nBased on what
+        you told us about your organisation and what it does, we have registered you
+        as a lower tier waste carrier.\r\n\r\nBeing a lower tier waste carrier means
+        that:\r\n\r\n*you don\u2019t need to pay a registration charge\r\n*you don\u2019t
+        need to renew your registration (it just continues automatically)\r\n\r\n#Updating
+        your details\r\n\r\nIf any of the details you''ve given us change, you must
+        update them within 28 days by contacting the Environment Agency.\r\n\r\nJane
+        Doe\r\n\r\n123 Example Avenue\r\n\r\nTelephone number: 03708 506506\r\n\r\nRegistered
+        on: 2021-04-15T10:38:57.455+00:00\r\n\r\nIf you have enquiries please email
+        nccc-carrierbroker@environment-agency.gov.uk or contact the Environment Agency
+        helpline: 03708 506506\r\n\r\nThis is an automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Waste
+        Carrier Registration Complete"},"id":"f993ddf6-7420-4aaf-bcd5-1008c8ffa8e2","reference":null,"scheduled_for":null,"template":{"id":"889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","version":6},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f993ddf6-7420-4aaf-bcd5-1008c8ffa8e2"}
+
+'
+  recorded_at: Thu, 15 Apr 2021 10:38:57 GMT
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"foo@example.com","template_id":"889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","personalisation":{"reg_identifier":"CBDU1","registration_type":"carrier_broker_dealer","first_name":"Jane","last_name":"Doe","phone_number":"03708
+        506506","registered_address":"123 Example Avenue","date_registered":"2021-04-15T10:38:57.455+00:00","link_to_file":"http://example.com"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 15 Apr 2021 10:38:59 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-B3-Spanid:
+      - 39be81ea7b038404
+      X-B3-Traceid:
+      - 39be81ea7b038404
+      X-Vcap-Request-Id:
+      - 308789cc-3e32-4c82-6c9e-32597d939362
+      Content-Length:
+      - '1718'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"#You are now registered as a lower tier waste carrier,
+        broker and dealer\r\n\r\nYour registration number is\r\n\r\nCBDU1\r\n\r\nYour
+        registration does not expire, however the link to your certificate will only
+        be available for 18 months. You must download the file and keep it for reference.\r\nDownload
+        your certificate at: http://example.com\r\n\r\n\r\nJane\r\n\r\nBased on what
+        you told us about your organisation and what it does, we have registered you
+        as a lower tier waste carrier.\r\n\r\nBeing a lower tier waste carrier means
+        that:\r\n\r\n*you don\u2019t need to pay a registration charge\r\n*you don\u2019t
+        need to renew your registration (it just continues automatically)\r\n\r\n#Updating
+        your details\r\n\r\nIf any of the details you''ve given us change, you must
+        update them within 28 days by contacting the Environment Agency.\r\n\r\nJane
+        Doe\r\n\r\n123 Example Avenue\r\n\r\nTelephone number: 03708 506506\r\n\r\nRegistered
+        on: 2021-04-15T10:38:57.455+00:00\r\n\r\nIf you have enquiries please email
+        nccc-carrierbroker@environment-agency.gov.uk or contact the Environment Agency
+        helpline: 03708 506506\r\n\r\nThis is an automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Waste
+        Carrier Registration Complete"},"id":"3353b72d-635d-41b6-acf9-15d855e1e281","reference":null,"scheduled_for":null,"template":{"id":"889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","version":6},"uri":"https://api.notifications.service.gov.uk/v2/notifications/3353b72d-635d-41b6-acf9-15d855e1e281"}
+
+'
+  recorded_at: Thu, 15 Apr 2021 10:38:58 GMT
+recorded_with: VCR 6.0.0
