@@ -7,6 +7,7 @@ jobs:
     # You must use a Linux environment when using service containers or container jobs
     runs-on: ubuntu-16.04
     env:
+      NOTIFY_API_KEY: ${{ secrets.NOTIFY_API_KEY }}
       WCRS_REGISTRATION_EXPIRES_AFTER: 3
       WCRS_REGISTRATION_RENEWAL_WINDOW: 3
       WCRS_REGISTRATION_GRACE_WINDOW: 5
