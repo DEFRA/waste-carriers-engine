@@ -3,6 +3,8 @@
 module WasteCarriersEngine
   module Notify
     class RegistrationActivatedService < BaseService
+      include ::WasteCarriersEngine::ApplicationHelper
+
       def run(registration:)
         @registration = registration
 
@@ -27,11 +29,15 @@ module WasteCarriersEngine
             first_name: @registration.first_name,
             last_name: @registration.last_name,
             phone_number: @registration.phone_number,
-            registered_address: "123 Example Avenue",
+            registered_address: registered_address,
             date_registered: @registration.metaData.date_registered,
             link_to_file: "http://example.com"
           }
         }
+      end
+
+      def registered_address
+        displayable_address(@registration.registered_address).join(", ")
       end
     end
   end

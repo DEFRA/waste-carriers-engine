@@ -4,9 +4,9 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe Address, type: :model do
-    let(:address) { build(:address) }
-
     describe "assign_house_number_and_address_lines" do
+      let(:address) { build(:address) }
+
       context "when it is given address data" do
         let(:data) do
           {
