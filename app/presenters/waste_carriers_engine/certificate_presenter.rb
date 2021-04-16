@@ -2,6 +2,7 @@
 
 module WasteCarriersEngine
   class CertificatePresenter < BasePresenter
+    include WasteCarriersEngine::ApplicationHelper
 
     LOCALES_KEY = ".waste_carriers_engine.pdfs.certificate"
 
@@ -68,6 +69,10 @@ module WasteCarriersEngine
 
     def assisted_digital?
       metaData.route == "ASSISTED_DIGITAL"
+    end
+
+    def registered_address_fields
+      displayable_address(registered_address)
     end
 
     private
