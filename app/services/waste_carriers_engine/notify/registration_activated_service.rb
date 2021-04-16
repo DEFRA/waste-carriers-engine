@@ -2,17 +2,7 @@
 
 module WasteCarriersEngine
   module Notify
-    class RegistrationActivatedService < BaseService
-      include ::WasteCarriersEngine::ApplicationHelper
-
-      def run(registration:)
-        @registration = registration
-
-        client = Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key)
-
-        client.send_email(notify_options)
-      end
-
+    class RegistrationActivatedService < BaseRegistrationService
       private
 
       def template
@@ -34,10 +24,6 @@ module WasteCarriersEngine
             link_to_file: "http://example.com"
           }
         }
-      end
-
-      def registered_address
-        displayable_address(@registration.registered_address).join(", ")
       end
     end
   end
