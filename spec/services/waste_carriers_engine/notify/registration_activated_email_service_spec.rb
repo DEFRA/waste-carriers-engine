@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module Notify
-    RSpec.describe RegistrationActivatedService do
+    RSpec.describe RegistrationActivatedEmailService do
       let(:template_id) { "889fa2f2-f70c-4b5a-bbc8-d94a8abd3990" }
 
       let(:expected_notify_options) do

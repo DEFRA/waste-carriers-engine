@@ -2,7 +2,7 @@
 
 module WasteCarriersEngine
   module Notify
-    class RegistrationActivatedService < BaseSendEmailService
+    class RegistrationActivatedEmailService < BaseSendEmailService
       private
 
       def notify_options
