@@ -15,15 +15,19 @@ module WasteCarriersEngine
             first_name: @registration.first_name,
             last_name: @registration.last_name,
             phone_number: @registration.phone_number,
-            registered_address: presenter.registered_address_fields.join(", "),
+            registered_address: registered_address,
             date_registered: @registration.metaData.date_registered,
             link_to_file: Notifications.prepare_upload(pdf)
           }
         }
       end
 
-      def presenter
-        @_presenter ||= CertificatePresenter.new(@registration)
+      def registered_address
+        certificate_presenter.registered_address_fields.join(", ")
+      end
+
+      def certificate_presenter
+        @_certificate_presenter ||= CertificatePresenter.new(@registration)
       end
 
       def pdf
@@ -36,7 +40,7 @@ module WasteCarriersEngine
           template: "waste_carriers_engine/pdfs/certificate",
           encoding: "UTF-8",
           layout: false,
-          locals: { presenter: presenter }
+          locals: { presenter: certificate_presenter }
         )
       end
     end
