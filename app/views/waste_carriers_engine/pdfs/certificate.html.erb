@@ -1,5 +1,7 @@
 <%
-  # support local variable: presenter
+  # When this template is used by a controller, the @presenter variable is exposed.
+  # But when it is rendered from (eg) the RegistrationActivatedEmailService,
+  # the instance variable is not available, only the local one.
   @presenter ||= presenter
 %>
 <!DOCTYPE html>
