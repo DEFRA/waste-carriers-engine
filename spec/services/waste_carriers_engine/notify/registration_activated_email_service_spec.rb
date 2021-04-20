@@ -12,6 +12,7 @@ module WasteCarriersEngine
             template_id: template_id,
             personalisation: {
               reg_identifier: registration.reg_identifier,
+              registration_type: registration_type,
               first_name: "Jane",
               last_name: "Doe",
               phone_number: "03708 506506",
@@ -36,6 +37,7 @@ module WasteCarriersEngine
         context "a lower tier registration" do
           let(:template_id) { "889fa2f2-f70c-4b5a-bbc8-d94a8abd3990" }
           let(:registration) { create(:registration, :has_required_data, :lower_tier) }
+          let(:registration_type) { nil }
 
           subject do
             VCR.use_cassette("notify_lower_tier_registration_activated_sends_an_email") do
@@ -53,6 +55,7 @@ module WasteCarriersEngine
         context "an upper tier registration" do
           let(:template_id) { "fe1e4746-c940-4ace-b111-8be64ee53b35" }
           let(:registration) { create(:registration, :has_required_data, :already_renewed) }
+          let(:registration_type) { "carrier, broker and dealer" }
 
           subject do
             VCR.use_cassette("notify_upper_tier_registration_activated_sends_an_email") do

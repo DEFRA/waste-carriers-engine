@@ -11,6 +11,7 @@ module WasteCarriersEngine
           template_id: template_id,
           personalisation: {
             reg_identifier: @registration.reg_identifier,
+            registration_type: registration_type,
             first_name: @registration.first_name,
             last_name: @registration.last_name,
             phone_number: @registration.phone_number,
@@ -27,6 +28,14 @@ module WasteCarriersEngine
         else
           "889fa2f2-f70c-4b5a-bbc8-d94a8abd3990"
         end
+      end
+
+      def registration_type
+        return unless @registration.upper_tier?
+
+        I18n.t(
+          "waste_carriers_engine.registration_type.upper.#{@registration.registration_type}"
+        )
       end
 
       def registered_address
