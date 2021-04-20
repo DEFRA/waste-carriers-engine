@@ -16,7 +16,7 @@ module WasteCarriersEngine
             last_name: @registration.last_name,
             phone_number: @registration.phone_number,
             registered_address: registered_address,
-            date_registered: @registration.metaData.date_registered,
+            date_registered: date_registered,
             link_to_file: Notifications.prepare_upload(pdf)
           }
         }
@@ -40,6 +40,10 @@ module WasteCarriersEngine
 
       def registered_address
         certificate_presenter.registered_address_fields.join(", ")
+      end
+
+      def date_registered
+        @registration.metaData.date_registered.in_time_zone("London").to_date.to_s
       end
 
       def certificate_presenter
