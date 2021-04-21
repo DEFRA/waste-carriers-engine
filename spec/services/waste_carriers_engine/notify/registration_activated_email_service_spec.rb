@@ -16,7 +16,7 @@ module WasteCarriersEngine
               first_name: "Jane",
               last_name: "Doe",
               phone_number: "03708 506506",
-              registered_address: "42, Foo Gardens, Baz City, FA1 1KE",
+              registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nFA1 1KE",
               date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
               link_to_file: "Hello World"
             }
