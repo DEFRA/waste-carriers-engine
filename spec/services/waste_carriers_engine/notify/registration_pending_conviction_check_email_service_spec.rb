@@ -38,8 +38,9 @@ module WasteCarriersEngine
         it "sends an email" do
           expect(subject).to be_a(Notifications::Client::ResponseNotification)
           expect(subject.template["id"]).to eq(template_id)
-          expect(subject.content["subject"]).to eq(
-            "Application received for waste carrier registration #{reg_identifier}")
+          expect(subject.content["subject"]).to match(
+            /Application received for waste carrier registration CBDU/
+          )
         end
       end
     end

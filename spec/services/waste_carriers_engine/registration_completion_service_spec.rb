@@ -139,19 +139,34 @@ module WasteCarriersEngine
             transient_registration.save
           end
 
-          it "sends a confirmation email" do
-            expect(NewRegistrationMailer).to receive(:registration_pending_conviction_check).and_call_original
-            expect { described_class.run(transient_registration) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          it "sends a confirmation email with notify" do
+            allow(Notify::RegistrationPendingConvictionCheckEmailService)
+              .to receive(:run)
+              .and_call_original
+
+            registration = described_class.run(transient_registration)
+
+            expect(Notify::RegistrationPendingConvictionCheckEmailService)
+              .to have_received(:run)
+              .with(registration: registration)
+              .once
           end
 
-          context "when the mailer fails" do
+          context "when the notify service fails" do
             before do
-              allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
-              allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_raise(StandardError)
+              the_error = StandardError.new("Oops!")
+
+              allow(Notify::RegistrationPendingConvictionCheckEmailService)
+                .to receive(:run)
+                .and_raise(the_error)
+
+              expect(Airbrake)
+                .to receive(:notify)
+                .with(the_error, { registration_no: transient_registration.reg_identifier })
             end
 
-            it "does not raise an error" do
-              expect { described_class.run(transient_registration) }.to_not raise_error
+            it "notifies Airbrake" do
+              described_class.run(transient_registration)
             end
           end
         end
@@ -165,7 +180,8 @@ module WasteCarriersEngine
           end
 
           it "does not send the pending conviction check email" do
-            expect(NewRegistrationMailer).to_not receive(:registration_pending_conviction_check)
+            expect(Notify::RegistrationPendingConvictionCheckEmailService).to_not receive(:run)
+
             described_class.run(transient_registration)
           end
         end

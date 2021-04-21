@@ -97,7 +97,7 @@ module WasteCarriersEngine
     end
 
     def send_pending_conviction_check_email
-      NewRegistrationMailer.registration_pending_conviction_check(registration).deliver_now
+      Notify::RegistrationPendingConvictionCheckEmailService.run(registration: registration)
     end
 
     def set_reg_identifier
