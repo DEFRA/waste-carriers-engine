@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"foo@example.com","template_id":"e7dbb0d2-feca-4f59-a5e6-576e5051f4e0","personalisation":{"reg_identifier":"CBDU1","first_name":"Jane","last_name":"Doe"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 21 Apr 2021 09:30:04 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-B3-Spanid:
+      - c7f9b1d07a28861f
+      X-B3-Traceid:
+      - c7f9b1d07a28861f
+      X-Vcap-Request-Id:
+      - 3d132900-23bb-4f71-5099-711e23f50495
+      Content-Length:
+      - '1121'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"#Application received\r\n\r\nPlease use this reference
+        number if you contact us:\r\n\r\nCBDU1\r\n\r\nDear Jane Doe\r\n\r\nWe''ll
+        check your details and let you know whether your application has been successful.\r\n\r\n*We
+        aim to do this within 10 working days.\r\n*You\u2019re not legally entitled
+        to operate as a waste carrier until we have confirmed your registration.\r\n*Contact
+        the Environment Agency on nccc-carrierbroker@environment-agency.gov.uk or
+        03708 506506 if you have any questions.\r\n\r\nThis is an automated email,
+        please do not reply.","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Application
+        received for waste carrier registration CBDU1"},"id":"74a509be-1950-4460-ae72-b9773b44905a","reference":null,"scheduled_for":null,"template":{"id":"e7dbb0d2-feca-4f59-a5e6-576e5051f4e0","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/e7dbb0d2-feca-4f59-a5e6-576e5051f4e0","version":2},"uri":"https://api.notifications.service.gov.uk/v2/notifications/74a509be-1950-4460-ae72-b9773b44905a"}
+
+'
+  recorded_at: Wed, 21 Apr 2021 09:30:04 GMT
+recorded_with: VCR 6.0.0
