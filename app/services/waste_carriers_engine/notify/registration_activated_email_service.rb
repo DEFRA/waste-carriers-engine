@@ -39,7 +39,7 @@ module WasteCarriersEngine
       end
 
       def registered_address
-        certificate_presenter.registered_address_fields.join(", ")
+        certificate_presenter.registered_address_fields.join("\r\n")
       end
 
       def date_registered
