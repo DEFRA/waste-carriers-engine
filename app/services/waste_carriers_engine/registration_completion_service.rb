@@ -93,7 +93,7 @@ module WasteCarriersEngine
     end
 
     def send_worldpay_pending_payment_email
-      NewRegistrationMailer.registration_pending_worldpay_payment(registration).deliver_now
+      Notify::RegistrationPendingWorldpayPaymentEmailService.run(registration: registration)
     end
 
     def send_pending_conviction_check_email
