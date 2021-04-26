@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"foo@example.com","template_id":"c4296e7b-dac6-4b59-906e-2c509271626f","personalisation":{"reg_identifier":"CBDU4","first_name":"Jane","last_name":"Doe"}}'
+      string: '{"email_address":"foo@example.com","template_id":"c4296e7b-dac6-4b59-906e-2c509271626f","personalisation":{"reg_identifier":"CBDU5","first_name":"Jane","last_name":"Doe"}}'
     headers:
       User-Agent:
       - NOTIFY-API-RUBY-CLIENT/5.3.0
@@ -31,17 +31,17 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 23 Apr 2021 08:51:44 GMT
+      - Mon, 26 Apr 2021 09:57:43 GMT
       Server:
       - nginx
       Strict-Transport-Security:
       - max-age=31536000; includeSubdomains
       X-B3-Spanid:
-      - 7c6f90d78027e27f
+      - 26a4d6a912a2d791
       X-B3-Traceid:
-      - 7c6f90d78027e27f
+      - 26a4d6a912a2d791
       X-Vcap-Request-Id:
-      - 938cccce-c84d-4a98-74d0-88884bdb8551
+      - 88914440-7436-427c-6b3d-04ae6fcb3558
       Content-Length:
       - '1146'
       Connection:
@@ -49,15 +49,15 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"content":{"body":"#We\u2019re processing your payment\r\n\r\nPlease
-        use this reference number if you contact us:\r\n\r\nCBDU4\r\n\r\n \r\nDear
+        use this reference number if you contact us:\r\n\r\nCBDU5\r\n\r\n \r\nDear
         Jane Doe\r\n\r\n#We have received your application\r\n\r\nWe\u2019re currently
-        processing your payment and will let you know when it has been received.\r\n\r\nYou\u2019re
+        processing your payment and will let you know when it has been verified.\r\n\r\nYou\u2019re
         not legally entitled to operate as a waste carrier until we have confirmed
         your registration.\r\n\r\nContact the Environment Agency on nccc-carrierbroker@environment-agency.gov.uk
         or 03708 506506 if you have any questions.\r\n\r\nThis is an automated email,
         please do not reply.","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"We\u2019re
-        processing your waste carrier registration CBDU4"},"id":"f36858a0-659c-4ae6-be1f-c8e9d5c29032","reference":null,"scheduled_for":null,"template":{"id":"c4296e7b-dac6-4b59-906e-2c509271626f","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/c4296e7b-dac6-4b59-906e-2c509271626f","version":3},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f36858a0-659c-4ae6-be1f-c8e9d5c29032"}
+        processing your waste carrier registration CBDU5"},"id":"09d00d5e-43f9-4a7d-a824-c4be72fb53b3","reference":null,"scheduled_for":null,"template":{"id":"c4296e7b-dac6-4b59-906e-2c509271626f","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/c4296e7b-dac6-4b59-906e-2c509271626f","version":4},"uri":"https://api.notifications.service.gov.uk/v2/notifications/09d00d5e-43f9-4a7d-a824-c4be72fb53b3"}
 
 '
-  recorded_at: Fri, 23 Apr 2021 08:51:43 GMT
+  recorded_at: Mon, 26 Apr 2021 09:57:42 GMT
 recorded_with: VCR 6.0.0
