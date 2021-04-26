@@ -25,8 +25,7 @@ gem "mongoid", "~> 7.1.5"
 gem "mongoid-locker"
 
 # Use CanCanCan for user roles and permissions
-# Version 2.0 doesn't support Mongoid, so we're locked to an earlier one
-gem "cancancan", "~> 1.10"
+gem "cancancan", "~> 3.2.1"
 
 # Use Devise for user authentication
 gem "devise", ">= 4.4.3"
