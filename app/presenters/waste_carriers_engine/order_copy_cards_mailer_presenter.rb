@@ -27,6 +27,7 @@ module WasteCarriersEngine
     def total_paid
       @_total_paid ||= copy_cards_order.total_amount
     end
+    alias payment_due total_paid
 
     private
 

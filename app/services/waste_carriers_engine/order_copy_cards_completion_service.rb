@@ -36,9 +36,11 @@ module WasteCarriersEngine
 
     def send_confirmation_email
       if @transient_registration.unpaid_balance?
-        OrderCopyCardsMailer.send_awaiting_payment_email(registration, copy_cards_order).deliver_now
+        Notify::CopyCardsAwaitingPaymentEmailService
+          .run(registration: registration, order: copy_cards_order)
       else
-        OrderCopyCardsMailer.send_order_completed_email(registration, copy_cards_order).deliver_now
+        Notify::CopyCardsOrderCompletedEmailService
+          .run(registration: registration, order: copy_cards_order)
       end
     rescue StandardError => e
       Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)

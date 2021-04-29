@@ -24,7 +24,6 @@ module WasteCarriersEngine
           payments = double(:payments)
           transient_order = double(:transient_order)
           transient_payment = double(:transient_payment)
-          mailer = double(:mailer)
 
           # Merge finance details
           allow(registration).to receive(:finance_details).and_return(finance_details)
@@ -49,8 +48,9 @@ module WasteCarriersEngine
 
           # Send email
           expect(transient_registration).to receive(:unpaid_balance?).and_return(true)
-          expect(OrderCopyCardsMailer).to receive(:send_awaiting_payment_email).and_return(mailer)
-          expect(mailer).to receive(:deliver_now)
+          expect(Notify::CopyCardsAwaitingPaymentEmailService)
+            .to receive(:run)
+            .with(registration: registration, order: transient_order)
 
           described_class.run(transient_registration)
         end
@@ -61,7 +61,6 @@ module WasteCarriersEngine
         payments = double(:payments)
         transient_order = double(:transient_order)
         transient_payment = double(:transient_payment)
-        mailer = double(:mailer)
 
         # Merge finance details
         allow(registration).to receive(:finance_details).and_return(finance_details)
@@ -86,8 +85,9 @@ module WasteCarriersEngine
 
         # Send email
         expect(transient_registration).to receive(:unpaid_balance?).and_return(false)
-        expect(OrderCopyCardsMailer).to receive(:send_order_completed_email).and_return(mailer)
-        expect(mailer).to receive(:deliver_now)
+        expect(Notify::CopyCardsOrderCompletedEmailService)
+          .to receive(:run)
+          .with(registration: registration, order: transient_order)
 
         described_class.run(transient_registration)
       end
@@ -123,7 +123,7 @@ module WasteCarriersEngine
           expect(registration).to receive(:save!)
 
           # Don't send email
-          expect(OrderCopyCardsMailer).to_not receive(:send_order_completed_email)
+          expect(Notify::CopyCardsOrderCompletedEmailService).not_to receive(:run)
 
           described_class.run(transient_registration)
         end
