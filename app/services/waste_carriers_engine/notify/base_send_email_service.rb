@@ -15,6 +15,8 @@ module WasteCarriersEngine
         client.send_email(notify_options)
       end
 
+      private
+
       def registration_type
         return unless @registration.upper_tier?
 
