@@ -104,7 +104,8 @@ module WasteCarriersEngine
         expect(mail.body.encoded).to include(transient_registration.reg_identifier)
       end
 
-      context "when there is a pending worldpay payment" do
+      # this can be removed when the other renewal emails have migrated
+      xcontext "when there is a pending worldpay payment" do
         before do
           allow(transient_registration).to receive(:pending_worldpay_payment?).and_return(true)
         end

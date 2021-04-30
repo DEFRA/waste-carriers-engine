@@ -32,9 +32,8 @@ module WasteCarriersEngine
     private
 
     def renewal_received_template
-      if @transient_registration.pending_worldpay_payment?
-        "send_renewal_received_processing_payment_email"
-      elsif @transient_registration.pending_payment?
+      # pending worldpay payments have migrated to: RegistrationPendingWorldpayPaymentEmailService
+      if @transient_registration.pending_payment?
         "send_renewal_received_pending_payment_email"
       else
         "send_renewal_received_pending_conviction_check_email"
