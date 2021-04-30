@@ -170,9 +170,12 @@ module WasteCarriersEngine
         end
 
         it "sends a confirmation email" do
-          old_emails_sent_count = ActionMailer::Base.deliveries.count
+          expect(Notify::RenewalConfirmationEmailService)
+            .to receive(:run)
+            .with(registration: registration)
+            .once
+
           renewal_completion_service.complete_renewal
-          expect(ActionMailer::Base.deliveries.count).to eq(old_emails_sent_count + 1)
         end
       end
 
@@ -231,12 +234,19 @@ module WasteCarriersEngine
 
       context "when the mailer fails" do
         before do
-          allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
-          allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_raise(StandardError)
+          the_error = StandardError.new("Oops!")
+
+          allow(Notify::RenewalConfirmationEmailService)
+            .to receive(:run)
+            .and_raise(the_error)
+
+          expect(Airbrake)
+            .to receive(:notify)
+            .with(the_error, { registration_no: transient_registration.reg_identifier })
         end
 
-        it "does not raise an error" do
-          expect { renewal_completion_service.complete_renewal }.to_not raise_error
+        it "notifies Airbrake" do
+          renewal_completion_service.complete_renewal
         end
       end
     end
