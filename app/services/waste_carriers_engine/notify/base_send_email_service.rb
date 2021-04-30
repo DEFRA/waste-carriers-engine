@@ -6,8 +6,9 @@ module WasteCarriersEngine
       include WasteCarriersEngine::ApplicationHelper
       include ActionView::Helpers::NumberHelper
 
-      def run(registration:)
+      def run(registration:, order: nil)
         @registration = registration
+        @order = order
 
         client = Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key)
 
