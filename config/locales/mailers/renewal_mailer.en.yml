@@ -95,15 +95,3 @@ en:
           paragraph_5: "If any of your details change you must update your registration within 28 days."
           paragraph_6: "If you have enquiries please contact the Environment Agency helpline 03708 506506."
           paragraph_7: "This is an automated email, please do not reply."
-      send_renewal_received_processing_payment_email:
-        subject: "Your application to renew waste carriers registration %{reg_identifier} has been received"
-        heading:
-          header:
-            carrier_dealer: "Your application to renew your waste carrier and dealer registration has been received"
-            broker_dealer: "Your application to renew your waste broker and dealer registration has been received"
-            carrier_broker_dealer: "Your application to renew your waste carrier, broker and dealer registration has been received"
-          number: "Your registration number is still"
-        paragraph_1: "We are currently processing your payment. We'll email you to let you know when your renewal application has been successful."
-        footer_list:
-          item_1: "If you have enquiries please contact the Environment Agency helpline: 03708 506506"
-          item_2: "This is an automated email, please do not reply"
