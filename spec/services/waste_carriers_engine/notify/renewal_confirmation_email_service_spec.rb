@@ -17,12 +17,17 @@ module WasteCarriersEngine
               last_name: "Doe",
               phone_number: "03708 506506",
               registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nFA1 1KE",
-              date_activated: registration.metaData.date_activated.strftime("%e %B %Y")
+              date_activated: registration.metaData.date_activated.strftime("%e %B %Y"),
+              link_to_file: "My certificate"
             }
           }
         end
 
         before do
+          allow(Notifications)
+            .to receive(:prepare_upload)
+            .and_return("My certificate")
+
           expect_any_instance_of(Notifications::Client)
             .to receive(:send_email)
             .with(expected_notify_options)

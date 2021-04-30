@@ -5,6 +5,8 @@ module WasteCarriersEngine
     class RegistrationActivatedEmailService < BaseSendEmailService
       private
 
+      include CanAttachCertificate
+
       def notify_options
         {
           email_address: @registration.contact_email,
@@ -17,7 +19,7 @@ module WasteCarriersEngine
             phone_number: @registration.phone_number,
             registered_address: registered_address,
             date_registered: date_registered,
-            link_to_file: Notifications.prepare_upload(pdf)
+            link_to_file: link_to_certificate
           }
         }
       end
@@ -40,20 +42,6 @@ module WasteCarriersEngine
 
       def certificate_presenter
         @_certificate_presenter ||= CertificatePresenter.new(@registration)
-      end
-
-      def pdf
-        StringIO.new(pdf_content)
-      end
-
-      def pdf_content
-        ActionController::Base.new.render_to_string(
-          pdf: "certificate",
-          template: "waste_carriers_engine/pdfs/certificate",
-          encoding: "UTF-8",
-          layout: false,
-          locals: { presenter: certificate_presenter }
-        )
       end
     end
   end

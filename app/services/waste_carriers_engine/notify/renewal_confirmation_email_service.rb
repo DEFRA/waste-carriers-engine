@@ -3,6 +3,8 @@
 module WasteCarriersEngine
   module Notify
     class RenewalConfirmationEmailService < BaseSendEmailService
+      include CanAttachCertificate
+
       private
 
       def notify_options
@@ -16,7 +18,8 @@ module WasteCarriersEngine
             last_name: @registration.last_name,
             phone_number: @registration.phone_number,
             registered_address: registered_address,
-            date_activated: date_activated
+            date_activated: date_activated,
+            link_to_file: link_to_certificate
           }
         }
       end
