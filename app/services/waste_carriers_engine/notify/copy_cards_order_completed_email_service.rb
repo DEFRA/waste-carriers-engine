@@ -3,6 +3,11 @@
 module WasteCarriersEngine
   module Notify
     class CopyCardsOrderCompletedEmailService < BaseSendEmailService
+      def run(registration:, order:)
+        @order = order
+        super
+      end
+
       private
 
       def notify_options
