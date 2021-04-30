@@ -41,7 +41,12 @@ module WasteCarriersEngine
               include_examples "has next transition", next_state: "renewal_received_pending_worldpay_payment_form"
 
               it "sends a confirmation email after the 'next' event" do
-                expect { subject.next! }.to change { ActionMailer::Base.deliveries.count }.by(1)
+                expect(Notify::RenewalPendingWorldpayPaymentEmailService)
+                  .to receive(:run)
+                  .with(registration: subject)
+                  .once
+
+                subject.next!
               end
             end
           end
