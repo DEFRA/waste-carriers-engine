@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"foo@example.com","template_id":"d2442022-4f4c-4edd-afc5-aaa0607dabdf","personalisation":{"reg_identifier":"CBDU7","registration_type":"carrier,
+        broker and dealer"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 May 2021 09:34:08 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-B3-Spanid:
+      - dfb6372da3b2bcb7
+      X-B3-Traceid:
+      - dfb6372da3b2bcb7
+      X-Vcap-Request-Id:
+      - dabda515-4c19-4cc3-5420-bb88397cdddf
+      Content-Length:
+      - '1050'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"#Your application to renew your waste carrier,
+        broker and dealer registration has been received\r\n\r\nYour registration
+        number is still\r\nCBDU7 \r\n\r\n#What happens next\r\n\r\nWe''ll check your
+        details and let you know whether your renewal application has been successful.
+        We aim to do this within 10 working days.\r\n\r\n*If you have enquiries please
+        contact the Environment Agency helpline: 03708 506506\r\n*This is an automated
+        email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Your
+        application to renew waste carriers registration CBDU7 has been received"},"id":"5f725abc-4083-4916-b831-ea73e61e1cc0","reference":null,"scheduled_for":null,"template":{"id":"d2442022-4f4c-4edd-afc5-aaa0607dabdf","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/d2442022-4f4c-4edd-afc5-aaa0607dabdf","version":2},"uri":"https://api.notifications.service.gov.uk/v2/notifications/5f725abc-4083-4916-b831-ea73e61e1cc0"}
+
+'
+  recorded_at: Wed, 05 May 2021 09:34:06 GMT
+recorded_with: VCR 6.0.0
