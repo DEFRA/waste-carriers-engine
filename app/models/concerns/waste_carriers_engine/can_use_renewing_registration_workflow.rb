@@ -581,7 +581,7 @@ module WasteCarriersEngine
     end
 
     def send_renewal_received_pending_payment_email
-      RenewalMailer.send_renewal_received_email(self).deliver_now
+      WasteCarriersEngine::Notify::RenewalPendingPaymentEmailService.run(registration: self)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end

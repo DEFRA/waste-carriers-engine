@@ -29,7 +29,13 @@ module WasteCarriersEngine
               include_examples "has next transition", next_state: "renewal_complete_form"
 
               it "does not send a confirmation email after the 'next' event" do
-                expect { subject.next! }.to_not change { ActionMailer::Base.deliveries.count }
+                # An older incarnation of this spec checked that ActionMailer
+                # did not send *any* emails.
+                # Here we check to see if the notification service has been invoked,
+                # which should tell us if *any* emails have been sent.
+                expect(Notifications::Client).not_to receive(:new)
+
+                subject.next!
               end
             end
 
