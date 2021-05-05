@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"foo@example.com","template_id":"25a54b31-cdb0-4139-9ffe-50add03d572e","personalisation":{"reg_identifier":"CBDU2","first_name":"Jane","last_name":"Doe","sort_code":"60-70-80","account_number":"1001
+        4411","payment_due":"100","iban":"GB23 NWBK 607080 10014411","swiftbic":"NWBK
+        GB2L","currency":"Sterling"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 May 2021 13:58:02 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-B3-Spanid:
+      - bc426f9873e322c4
+      X-B3-Traceid:
+      - bc426f9873e322c4
+      X-Vcap-Request-Id:
+      - 4f61afdb-4471-448f-7e5a-8830b9c38b87
+      Content-Length:
+      - '1637'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"Dear Jane Doe\r\n\r\n#You need to pay for your
+        waste carriers registration and then email us to confirm payment\r\nWe cannot
+        register you until your payment clears.\r\n\r\n#Pay by bank transfer (Bacs)
+        with these details\r\n\r\nSort code 60-70-80\r\nAccount number 1001 4411\r\nPayment
+        reference CBDU2\r\nPayment due \u00a3100\r\n\r\n#Overseas payments\r\n\r\nIBAN:
+        GB23 NWBK 607080 10014411\r\nSWIFTBIC: NWBK GB2L\r\nCurrency: Sterling\r\n\r\n#Email
+        us your registration CBDU2 to confirm you\u2019ve paid\r\n\r\nEmail us at
+        ea_fsc_ar@gov.sscl.com\r\n\r\nWhen you email us, include the date you paid,
+        the amount and the payment reference CBDU2.\r\n\r\nAllow 5 working days for
+        your payment to reach us.\r\n\r\nYou\u2019re not legally entitled to operate
+        as a waste carrier until we have received your payment and confirmed your
+        registration.\r\n\r\nIf any of your details change you must update your registration
+        within 28 days.\r\n\r\nIf you have enquiries please contact the Environment
+        Agency helpline 03708 506506.\r\n\r\nThis is an automated email, please do
+        not reply.","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Payment
+        needed for waste carrier registration CBDU2"},"id":"bbc3cfd0-6924-48f6-935f-acf0db731529","reference":null,"scheduled_for":null,"template":{"id":"25a54b31-cdb0-4139-9ffe-50add03d572e","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/25a54b31-cdb0-4139-9ffe-50add03d572e","version":2},"uri":"https://api.notifications.service.gov.uk/v2/notifications/bbc3cfd0-6924-48f6-935f-acf0db731529"}
+
+'
+  recorded_at: Wed, 05 May 2021 13:58:01 GMT
+recorded_with: VCR 6.0.0
