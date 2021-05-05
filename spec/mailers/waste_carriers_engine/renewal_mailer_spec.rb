@@ -8,6 +8,7 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:email_service_email).and_return("test@example.com")
     end
 
+    # this will test the last remaining template: renewal_received_pending_payment
     describe "send_renewal_received_email" do
       let(:transient_registration) do
         create(:renewing_registration,
@@ -65,7 +66,8 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the balance is paid" do
+      # this can be removed when the other renewal emails have migrated
+      xcontext "when the balance is paid" do
         it "uses the correct subject" do
           subject = "Your application to renew waste carriers registration #{transient_registration.reg_identifier} has been received"
           expect(mail.subject).to eq(subject)

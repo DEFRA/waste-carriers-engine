@@ -264,7 +264,7 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :renewal_received_pending_worldpay_payment_form,
                       if: :pending_worldpay_payment?,
-                      success: :send_renewal_received_email,
+                      success: :send_renewal_pending_worldpay_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -272,7 +272,7 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :renewal_received_pending_conviction_form,
                       if: :conviction_check_required?,
-                      success: :send_renewal_received_email,
+                      success: :send_renewal_pending_checks_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -285,7 +285,7 @@ module WasteCarriersEngine
 
           transitions from: :confirm_bank_transfer_form,
                       to: :renewal_received_pending_payment_form,
-                      success: :send_renewal_received_email,
+                      success: :send_renewal_received_pending_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -568,13 +568,20 @@ module WasteCarriersEngine
       temp_payment_method == "card"
     end
 
-    def send_renewal_received_email
-      if pending_worldpay_payment?
-        WasteCarriersEngine::Notify::RenewalPendingWorldpayPaymentEmailService
-          .run(registration: self)
-      else
-        RenewalMailer.send_renewal_received_email(self).deliver_now
-      end
+    def send_renewal_pending_worldpay_payment_email
+      WasteCarriersEngine::Notify::RenewalPendingWorldpayPaymentEmailService.run(registration: self)
+    rescue StandardError => e
+      Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
+    end
+
+    def send_renewal_pending_checks_email
+      WasteCarriersEngine::Notify::RenewalPendingChecksEmailService.run(registration: self)
+    rescue StandardError => e
+      Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
+    end
+
+    def send_renewal_received_pending_payment_email
+      RenewalMailer.send_renewal_received_email(self).deliver_now
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
