@@ -604,7 +604,8 @@ module WasteCarriersEngine
             registration.metaData.activate!
 
             # Use .to_i to ignore milliseconds when comparing time
-            expect(registration.reload.expires_on.to_i).to eq(3.years.from_now.to_i)
+            expect(registration.reload.expires_on.to_i)
+              .to be_within(1).of(3.years.from_now.to_i)
           end
         end
 
