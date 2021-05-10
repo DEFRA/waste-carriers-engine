@@ -33,23 +33,6 @@ module WasteCarriersEngine
         it "activates the registration" do
           expect { service }.to change { registration.active? }.from(false).to(true)
         end
-
-        context "and the Notify request errors" do
-          it "notifies Airbrake" do
-            the_error = StandardError.new("Oops!")
-
-            allow(RegistrationConfirmationService)
-              .to receive(:run)
-              .with(registration: registration)
-              .and_raise(the_error)
-
-            expect(Airbrake)
-              .to receive(:notify)
-              .with(the_error, { registration_no: registration.reg_identifier })
-
-            service
-          end
-        end
       end
 
       context "when the balance is unpaid" do
