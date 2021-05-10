@@ -11,7 +11,7 @@ module WasteCarriersEngine
         activate_registration
       end
 
-      send_confirmation_email
+      send_registration_confirmation
     end
 
     private
@@ -37,8 +37,8 @@ module WasteCarriersEngine
       !@registration.pending_manual_conviction_check?
     end
 
-    def send_confirmation_email
-      Notify::RegistrationActivatedEmailService.run(registration: @registration)
+    def send_registration_confirmation
+      RegistrationConfirmationService.run(registration: @registration)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: @registration.reg_identifier) if defined?(Airbrake)
       Rails.logger.error e

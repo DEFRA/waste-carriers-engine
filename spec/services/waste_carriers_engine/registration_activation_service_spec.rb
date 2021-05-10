@@ -18,7 +18,7 @@ module WasteCarriersEngine
           allow(registration).to receive(:unpaid_balance?).and_return(false)
           allow(registration).to receive(:pending_manual_conviction_check?).and_return(false)
 
-          expect(Notify::RegistrationActivatedEmailService)
+          expect(RegistrationConfirmationService)
             .to receive(:run)
             .with(registration: registration)
             .once
@@ -38,7 +38,7 @@ module WasteCarriersEngine
           it "notifies Airbrake" do
             the_error = StandardError.new("Oops!")
 
-            allow(Notify::RegistrationActivatedEmailService)
+            allow(RegistrationConfirmationService)
               .to receive(:run)
               .with(registration: registration)
               .and_raise(the_error)

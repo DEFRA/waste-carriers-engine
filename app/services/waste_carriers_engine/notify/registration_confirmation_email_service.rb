@@ -2,7 +2,7 @@
 
 module WasteCarriersEngine
   module Notify
-    class RegistrationActivatedEmailService < BaseSendEmailService
+    class RegistrationConfirmationEmailService < BaseSendEmailService
       private
 
       include CanAttachCertificate

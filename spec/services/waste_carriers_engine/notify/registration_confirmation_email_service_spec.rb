@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module Notify
-    RSpec.describe RegistrationActivatedEmailService do
+    RSpec.describe RegistrationConfirmationEmailService do
       describe ".run" do
         let(:expected_notify_options) do
           {
@@ -40,7 +40,7 @@ module WasteCarriersEngine
           let(:registration_type) { nil }
 
           subject do
-            VCR.use_cassette("notify_lower_tier_registration_activated_sends_an_email") do
+            VCR.use_cassette("notify_lower_tier_registration_confirmation_sends_an_email") do
               described_class.run(registration: registration)
             end
           end
@@ -58,7 +58,7 @@ module WasteCarriersEngine
           let(:registration_type) { "carrier, broker and dealer" }
 
           subject do
-            VCR.use_cassette("notify_upper_tier_registration_activated_sends_an_email") do
+            VCR.use_cassette("notify_upper_tier_registration_confirmation_sends_an_email") do
               described_class.run(registration: registration)
             end
           end
