@@ -18,16 +18,21 @@ module WasteCarriersEngine
       private
 
       def template
-        "92817aa7-6289-4837-a033-96d287644cb3"
+        return "0ad5d154-9e44-4da7-8c1b-b4b14d1057cd" if @registration.lower_tier?
+
+        "92817aa7-6289-4837-a033-96d287644cb3" # upper_tier
       end
 
       def personalisation
-        if @registration.upper_tier?
-          base_personalisation.merge(upper_tier_personalisation)
-        else
-          # this will be implemented in #1409 (lower tier confirmation letters)
-          base_personalisation
-        end
+        return base_personalisation if @registration.lower_tier?
+
+        base_personalisation # upper_tier
+          .merge(
+            {
+              expiry_date: expiry_date,
+              registration_type: registration_type
+            }
+          )
       end
 
       def base_personalisation
@@ -39,15 +44,6 @@ module WasteCarriersEngine
           phone_number: @registration.phone_number,
           date_registered: date_registered
         }.merge(address_lines)
-      end
-
-      def upper_tier_personalisation
-        return {} unless @registration.upper_tier?
-
-        {
-          expiry_date: expiry_date,
-          registration_type: registration_type
-        }
       end
 
       def contact_name
