@@ -116,10 +116,9 @@ GEM
     concurrent-ruby (1.1.9)
     console (1.12.0)
       fiber-local
-    countries (3.1.0)
-      i18n_data (~> 0.11.0)
+    countries (4.0.0)
+      i18n_data (~> 0.13.0)
       sixarm_ruby_unaccent (~> 1.1)
-      unicode_utils (~> 1.4)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -207,7 +206,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    i18n_data (0.11.0)
+    i18n_data (0.13.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
     jquery-rails (4.4.0)
@@ -400,7 +399,6 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
-    unicode_utils (1.4.0)
     useragent (0.16.10)
     validates_email_format_of (1.6.3)
       i18n
