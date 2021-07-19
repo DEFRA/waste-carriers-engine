@@ -1,52 +1,42 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_business_type_forms_path(@business_type_form.token)) %>
 
-<div class="text">
-  <%= form_for(@business_type_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @business_type_form) %>
+<%= form_for @business_type_form do |f| %>
+  <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+  <%=
+    f.govuk_collection_radio_buttons :business_type,
+    [
+      OpenStruct.new(
+        id: "soleTrader",
+        name: t(".options.individual")
+      ),
+      OpenStruct.new(
+        id: "limitedCompany",
+        name: t(".options.limited_company")
+      ),
+      OpenStruct.new(
+        id: "partnership",
+        name: t(".options.partnership")
+      ),
+      OpenStruct.new(
+        id: "limitedLiabilityPartnership",
+        name: t(".options.limited_liability_partnership")
+      ),
+      OpenStruct.new(
+        id: "localAuthority",
+        name: t(".options.local_authority")
+      ),
+      OpenStruct.new(
+        id: "charity",
+        name: t(".options.charity")
+      )
+    ],
+    :id,
+    :name,
+    legend: { text: t(".heading"), size: "l" }
+  %>
 
-    <div class="form-group <%= "form-group-error" if @business_type_form.errors[:business_type].any? %>">
-      <fieldset id="business_type">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
+  <p class="govuk-body"><%= t(".help") %></p>
 
-        <% if @business_type_form.errors[:business_type].any? %>
-        <span class="error-message"><%= @business_type_form.errors[:business_type].join(", ") %></span>
-        <% end %>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'soleTrader' %>
-          <%= f.label :business_type, t(".options.individual"), value: 'soleTrader' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'limitedCompany' %>
-          <%= f.label :business_type, t(".options.limited_company"), value: 'limitedCompany' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'partnership' %>
-          <%= f.label :business_type, t(".options.partnership"), value: 'partnership' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'limitedLiabilityPartnership' %>
-          <%= f.label :business_type, t(".options.limited_liability_partnership"), value: 'limitedLiabilityPartnership' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'localAuthority' %>
-          <%= f.label :business_type, t(".options.local_authority"), value: 'localAuthority' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :business_type, 'charity' %>
-          <%= f.label :business_type, t(".options.charity"), value: 'charity' %>
-        </div>
-      </fieldset>
-    </div>
-
-    <p><%= t(".help") %></p>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
-</div>
+  <%= f.govuk_submit t(".next_button") %>
+<% end %>
