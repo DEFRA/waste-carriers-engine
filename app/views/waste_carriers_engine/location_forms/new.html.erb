@@ -1,57 +1,50 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_location_forms_path(@location_form.token)) %>
 
-<div class="text">
-  <%= form_for(@location_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @location_form) %>
-
-    <h1 class="heading-large"><%= t(".heading") %></h1>
-
-    <div class="form-group">
-      <details>
-        <summary>
-          <span class="summary"><%= t(".location_detail_subheading") %></span>
-        </summary>
-        <div class="panel panel-border-narrow">
-          <p><%= t(".location_detail_paragraph") %></p>
-        </div>
-      </details>
-    </div>
-
-    <div class="form-group <%= "form-group-error" if @location_form.errors[:location].any? %>">
-      <fieldset id="location">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
-
-        <% if @location_form.errors[:location].any? %>
-          <span class="error-message"><%= @location_form.errors[:location].join(", ") %></span>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @location_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
+      <%=
+        f.govuk_collection_radio_buttons :location,
+        [
+          OpenStruct.new(
+            id: 'england',
+            name: t(".options.england")
+          ),
+          OpenStruct.new(
+            id: 'wales',
+            name: t(".options.wales")
+          ),
+          OpenStruct.new(
+            id: 'scotland',
+            name: t(".options.scotland")
+          ),
+          OpenStruct.new(
+            id: 'northern_ireland',
+            name: t(".options.northern_ireland")
+          ),
+          OpenStruct.new(
+            id: 'overseas',
+            name: t(".options.overseas")
+          )
+        ],
+        :id,
+        :name,
+        legend: { text: t(".location_detail_subheading"), size: "l" },
+        hint: -> do %>
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                <%= t(".location_detail_subheading") %>
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <%= t(".location_detail_paragraph") %>
+            </div>
+          </details>
         <% end %>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :location, 'england' %>
-          <%= f.label :location, t(".options.england"), value: 'england' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :location, 'wales' %>
-          <%= f.label :location, t(".options.wales"), value: 'wales' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :location, 'scotland' %>
-          <%= f.label :location, t(".options.scotland"), value: 'scotland' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :location, 'northern_ireland' %>
-          <%= f.label :location, t(".options.northern_ireland"), value: 'northern_ireland' %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :location, 'overseas' %>
-          <%= f.label :location, t(".options.overseas"), value: 'overseas' %>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>
+
