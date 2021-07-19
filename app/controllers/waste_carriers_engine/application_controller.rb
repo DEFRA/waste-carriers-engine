@@ -8,5 +8,7 @@ module WasteCarriersEngine
 
     # Use the host application's default layout
     layout "application"
+
+    default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
   end
 end

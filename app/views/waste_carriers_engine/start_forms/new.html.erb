@@ -1,34 +1,24 @@
-<div class="text">
-  <%= form_for(@start_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @start_form) %>
+<%= form_for @start_form do |f| %>
+  <%= f.hidden_field :token %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+  <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <div class="form-group <%= "form-group-error" if @start_form.errors[:temp_start_option].any? %>">
-      <fieldset id="temp_start_option">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
+  <%=
+    f.govuk_collection_radio_buttons :temp_start_option,
+    [
+      OpenStruct.new(
+        id: WasteCarriersEngine::StartForm::NEW,
+        name: t(".options.new")
+      ),
+      OpenStruct.new(
+        id: WasteCarriersEngine::StartForm::RENEW,
+        name: t(".options.renew")
+      )
+    ],
+    :id,
+    :name,
+    legend: { text: t(".heading"), size: "l" }
+  %>
 
-        <% if @start_form.errors[:temp_start_option].any? %>
-          <span class="error-message"><%= @start_form.errors[:temp_start_option].join(", ") %></span>
-        <% end %>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :temp_start_option, WasteCarriersEngine::StartForm::NEW %>
-          <%= f.label :temp_start_option, t(".options.new"), value: WasteCarriersEngine::StartForm::NEW %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :temp_start_option, WasteCarriersEngine::StartForm::RENEW %>
-          <%= f.label :temp_start_option, t(".options.renew"), value: WasteCarriersEngine::StartForm::RENEW %>
-        </div>
-      </fieldset>
-    </div>
-
-    <%= hidden_field_tag :token, @start_form.token %>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
-</div>
+  <%= f.govuk_submit t(".next_button") %>
+<% end %>

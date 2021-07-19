@@ -60,6 +60,7 @@ end
 group :test do
   gem "database_cleaner-mongoid"
   gem "factory_bot_rails", require: false
+  gem "govuk_design_system_formbuilder"
   gem "rails-controller-testing"
   gem "simplecov", "~> 0.17.1", require: false
   gem "timecop"
