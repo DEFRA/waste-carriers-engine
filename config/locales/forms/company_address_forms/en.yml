@@ -4,14 +4,14 @@ en:
       new:
         title: Business address selection
         heading:
-          localAuthority: What's the address of the local authority or public body?
-          limitedCompany: What's the company address?
-          limitedLiabilityPartnership: What's the address of the limited liability partnership?
-          partnership: What's the address of the partnership?
-          soleTrader: What's the address of the business?
-          charity: What's the address of the charity or trust?
-          authority: What's the address of the local authority?
-          publicBody: What's the address of the public body?
+          localAuthority: Select the address of the local authority or public body
+          limitedCompany: Select company address
+          limitedLiabilityPartnership: Select the address of the limited liability partnership
+          partnership: Select the address of the partnership
+          soleTrader: Select the address of the business
+          charity: Select the address of the charity or trust
+          authority: Select the address of the local authority
+          publicBody: Select the address of the public body
         postcode_label: Postcode
         postcode_change_link: "Change postcode"
         manual_address_link: "I cannot find the address in the list"

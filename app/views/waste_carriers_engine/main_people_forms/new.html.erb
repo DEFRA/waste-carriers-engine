@@ -1,31 +1,25 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_main_people_forms_path(@main_people_form.token)) %>
 
-<% if @main_people_form.can_only_have_one_main_person? %>
-  <div class="text">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <%= render "waste_carriers_engine/main_people_forms/form" %>
   </div>
-<% else %>
-  <div class="grid-row">
-    <div class="column-two-thirds">
-      <%= render "waste_carriers_engine/main_people_forms/form" %>
+  <% if @main_people_form.number_of_existing_main_people > 0 %>
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-s"><%= t(".list_of_people") %></h2>
+
+      <ul class="govuk-list">
+        <% @transient_registration.main_people.each do |person| %>
+          <li>
+            <%= person.first_name %> <%= person.last_name %>
+            <%= button_to(t(".delete_person_link"),
+                delete_person_main_people_forms_path(token: @main_people_form.token, id: person.id),
+                class: "button-link",
+                method: :delete) %>
+          </li>
+        <% end %>
+      </ul>
     </div>
+  <% end %>
+</div>
 
-    <% if @main_people_form.number_of_existing_main_people > 0 %>
-      <div class="column-one-third">
-        <h2 class="heading-small"><%= t(".list_of_people") %></h2>
-
-        <ul class="main-person-list">
-          <% @transient_registration.main_people.each do |person| %>
-            <li>
-              <%= person.first_name %> <%= person.last_name %>
-              <%= button_to(t(".delete_person_link"),
-                  delete_person_main_people_forms_path(token: @main_people_form.token, id: person.id),
-                  class: "button-link",
-                  method: :delete) %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-  </div>
-<% end %>

@@ -1,40 +1,25 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_company_postcode_forms_path(@company_postcode_form.token)) %>
 
-<div class="text">
-  <%= form_for(@company_postcode_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @company_postcode_form) %>
-
-    <h1 class="heading-large"><%= t(".heading.#{@company_postcode_form.business_type}") %></h1>
-
-    <div class="form-group <%= "form-group-error" if @company_postcode_form.errors[:temp_company_postcode].any? %>">
-      <fieldset id="temp_company_postcode">
-        <legend class="visuallyhidden">
-          <%= t(".heading.#{@company_postcode_form.business_type}") %>
-        </legend>
-
-        <% if @company_postcode_form.errors[:temp_company_postcode].any? %>
-          <span class="error-message"><%= @company_postcode_form.errors[:temp_company_postcode].join(", ") %></span>
-        <% end %>
-
-        <%= f.label :temp_company_postcode, class: "form-label" do %>
-          <%= t(".temp_company_postcode_label") %>
-          <span class='form-hint'><%= t(".temp_company_postcode_hint") %></span>
-        <% end %>
-
-        <%= f.text_field :temp_company_postcode, value: @company_postcode_form.temp_company_postcode, class: "form-control" %>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-
-    <% if @company_postcode_form.errors.added?(:temp_company_postcode, :no_results) %>
-      <div class="form-group">
-        <%= link_to(t(".manual_address_link"), skip_to_manual_address_company_postcode_forms_path(@company_postcode_form.token)) %>
-      </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @company_postcode_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
+      <h1 class="govuk-heading-l">
+        <%= t(".heading.#{@company_postcode_form.business_type}") %>
+      </h1>
+      <legend class="govuk-visually-hidden">
+        <%= t(".heading.#{@company_postcode_form.business_type}") %>
+      </legend>
+      <%= f.govuk_text_field :temp_company_postcode,
+          width: "one-half",
+          label: {
+            text: t(".temp_company_postcode_label")
+          },
+          hint: {
+            text: t(".temp_company_postcode_hint")
+          } %>
+      <%= f.govuk_submit t(".next_button") %>
     <% end %>
-  <% end %>
-
-  <%= render("waste_carriers_engine/shared/os_terms_footer") %>
+    <%= render("waste_carriers_engine/shared/os_terms_footer") %>
+  </div>
 </div>

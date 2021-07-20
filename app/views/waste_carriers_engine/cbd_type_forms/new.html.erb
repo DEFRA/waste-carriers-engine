@@ -1,45 +1,30 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_cbd_type_forms_path(@cbd_type_form.token)) %>
 
-<div class="text">
-  <%= form_for(@cbd_type_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @cbd_type_form) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @cbd_type_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+      <%= f.govuk_radio_buttons_fieldset :registration_type,
+          legend: { text: t(".heading"), size: "l" } do %>
+        <%= f.govuk_radio_button :registration_type,
+            "carrier_dealer", label: { text: t(".options.carrier_dealer") }, link_errors: true %>
+        <%= f.govuk_radio_button :registration_type,
+            "broker_dealer", label: { text: t(".options.broker_dealer") } %>
+        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_button :registration_type,
+            "carrier_broker_dealer", label: { text: t(".options.carrier_broker_dealer") } %>
+      <% end %>
 
-    <div class="form-group <%= "form-group-error" if @cbd_type_form.errors[:registration_type].any? %>">
-      <fieldset id="registration_type">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
-
-        <% if @cbd_type_form.errors[:registration_type].any? %>
-        <span class="error-message"><%= @cbd_type_form.errors[:registration_type].join(", ") %></span>
-        <% end %>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :registration_type, "carrier_dealer" %>
-          <%= f.label :registration_type, t(".options.carrier_dealer"), value: "carrier_dealer" %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :registration_type, "broker_dealer" %>
-          <%= f.label :registration_type, t(".options.broker_dealer"), value: "broker_dealer" %>
-        </div>
-        <p class="form-block">or</p>
-        <div class="multiple-choice">
-          <%= f.radio_button :registration_type, "carrier_broker_dealer" %>
-          <%= f.label :registration_type, t(".options.carrier_broker_dealer"), value: "carrier_broker_dealer" %>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <details>
-        <summary>
-          <span class="summary"><%= t(".cbd_detail_subheading") %></span>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <%= t(".cbd_detail_subheading") %>
+          </span>
         </summary>
-        <div class="panel panel-border-narrow">
+        <div class="govuk-details__text">
           <p><%= t(".cbd_detail_paragraph_1") %></p>
-          <ul class="list list-bullet">
+          <ul class="govuk-list govuk-list--bullet">
             <li><%= t(".cbd_detail_list_item_1") %></li>
             <li><%= t(".cbd_detail_list_item_2") %></li>
             <li><%= t(".cbd_detail_list_item_3") %></li>
@@ -47,10 +32,8 @@
           <p><%= t(".cbd_detail_paragraph_2") %></p>
         </div>
       </details>
-    </div>
 
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

@@ -1,28 +1,19 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_company_name_forms_path(@company_name_form.token)) %>
 
-<div class="text">
-  <%= form_for(@company_name_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @company_name_form) %>
-
-    <h1 class="heading-large"><%= t(".heading.#{@company_name_form.business_type}") %></h1>
-
-    <div class="form-group <%= "form-group-error" if @company_name_form.errors[:company_name].any? %>">
-      <fieldset id="company_name">
-        <legend class="visuallyhidden">
-          <%= t(".heading.#{@company_name_form.business_type}") %>
-        </legend>
-
-        <% if @company_name_form.errors[:company_name].any? %>
-          <span class="error-message"><%= @company_name_form.errors[:company_name].join(", ") %></span>
-        <% end %>
-
-        <%= f.label :company_name, t(".company_name_label.#{@company_name_form.business_type}"), class: "form-label" %>
-        <%= f.text_field :company_name, value: @company_name_form.company_name, class: "form-control" %>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @company_name_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
+      <%= f.govuk_text_field :company_name,
+          width: "one-half",
+          label: {
+            text: t(".heading.#{@company_name_form.business_type}"),
+            tag: "h1", size: "l"
+          },
+          hint: {
+            text: t(".company_name_label.#{@company_name_form.business_type}")
+          } %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

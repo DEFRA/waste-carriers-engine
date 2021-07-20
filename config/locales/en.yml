@@ -11,7 +11,7 @@ en:
       back:
         back_link: Back
       dob:
-        dob: Date of birth
+        dob: Enter a date of birth
         dob_hint: For example, 26 5 1976
         dob_year: Year
         dob_month: Month
@@ -34,8 +34,8 @@ en:
         text: © Crown copyright and database rights 2018 Ordnance Survey 100024198. Use of this addressing data is subject to the
         link_text: address data terms and conditions (opens new tab)
       person_name:
-        first_name: First name
-        last_name: Last name
+        first_name: Enter a first name
+        last_name: Enter a last name
       select_address:
         address_label: Address
         address_blank_option:

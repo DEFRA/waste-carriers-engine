@@ -4,15 +4,15 @@ en:
       new:
         title: Business address postcode
         heading:
-          localAuthority: What's the address of the local authority or public body?
-          limitedCompany: What's the company address?
-          limitedLiabilityPartnership: What's the address of the limited liability partnership?
-          partnership: What's the address of the partnership?
-          soleTrader: What's the address of the business?
-          charity: What's the address of the charity or trust?
-          authority: What's the address of the local authority?
-          publicBody: What's the address of the public body?
-        temp_company_postcode_label: Please enter a UK postcode
+          localAuthority: Find the address of the local authority or public body
+          limitedCompany: Find the company address
+          limitedLiabilityPartnership: Find the address of the limited liability partnership
+          partnership: Find the address of the partnership
+          soleTrader: Find the address of the business
+          charity: Find the address of the charity or trust
+          authority: Find the address of the local authority
+          publicBody: Find the address of the public body
+        temp_company_postcode_label: Enter a UK postcode
         temp_company_postcode_hint: For example, BS1 5AH
         error_heading: A problem to fix
         next_button: Find address

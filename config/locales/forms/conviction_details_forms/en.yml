@@ -25,8 +25,8 @@ en:
               blank: "Enter a last name"
               too_long: "The last name must be no longer than 35 characters"
             position:
-              blank: "Enter a position"
-              too_long: "The position must be no longer than 35 characters"
+              blank: "Enter a job title"
+              too_long: "The job title must be no longer than 35 characters"
             dob:
               age_limit: "You must be 16 or older to use this service"
               not_a_date: "Enter a valid date"

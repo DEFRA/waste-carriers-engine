@@ -1,27 +1,32 @@
-<div class="form-group <%= "form-group-error" if form.errors[:dob].any? %>">
-  <fieldset id="dob">
-    <% if form.errors[:dob].any? %>
-      <span class="error-message"><%= form.errors[:dob].join(". ") %></span>
-    <% end %>
+<div class="govuk-form-group <%= "govuk-form-group--error" if form.errors[:dob].any? %>">
 
-    <legend>
-      <%= t(".dob") %>
-      <span class="form-hint"><%= t(".dob_hint") %></span>
-    </legend>
+  <% if form.errors[:dob].any? %>
+    <span class="govuk-error-message"><%= form.errors[:dob].join(". ") %></span>
+  <% end %>
 
-    <fieldset id="dob_day" class="inline-date">
-      <%= f.label :dob_day, t(".dob_day"), class: "form-label" %>
-      <%= f.text_field :dob_day, value: form.dob_day, class: "form-control" %>
-    </fieldset>
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+    <%= t(".dob") %>
+  </legend>
+  <span class="govuk-hint" id="person-date-of-birth-hint">
+    <%= t(".dob_hint") %>
+  </span>
 
-    <fieldset id="dob_month" class="inline-date">
-      <%= f.label :dob_month, t(".dob_month"), class: "form-label" %>
-      <%= f.text_field :dob_month, value: form.dob_month, class: "form-control" %>
-    </fieldset>
-
-    <fieldset id="dob_year" class="inline-date">
-      <%= f.label :dob_year, t(".dob_year"), class: "form-label" %>
-      <%= f.text_field :dob_year, value: form.dob_year, class: "form-control" %>
-    </fieldset>
-  </fieldset>
+  <div class="govuk-date-input__item">
+    <%= f.govuk_number_field :dob_day,
+        width: 2,
+        label: { text: t(".dob_day") }
+    %>
+  </div>
+  <div class="govuk-date-input__item">
+       <%= f.govuk_number_field :dob_month,
+        width: 2,
+        label: { text: t(".dob_month") }
+    %>
+  </div>
+  <div class="govuk-date-input__item">
+     <%= f.govuk_number_field :dob_year,
+        width: 4,
+        label: { text: t(".dob_year") }
+    %>
+  </div>
 </div>

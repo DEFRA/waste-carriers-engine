@@ -1,71 +1,68 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_declare_convictions_forms_path(@declare_convictions_form.token)) %>
+  <%= form_for @declare_convictions_form do |f| %>
+    <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-<div class="text">
-  <%= form_for(@declare_convictions_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @declare_convictions_form) %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
 
-    <div class="form-group <%= "form-group-error" if @declare_convictions_form.errors[:declared_convictions].any? %>">
-      <fieldset class="inline" id="declared_convictions">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%=
+          f.govuk_collection_radio_buttons :declared_convictions,
+          [
+            OpenStruct.new(
+              id: "yes",
+              name: t(".options.yes")
+            ),
+            OpenStruct.new(
+              id: "no",
+              name: t(".options.no")
+            )
+          ],
+          :id,
+          :name,
+          inline: true,
+          legend: { text: t(".heading"), size: "l" },
+          hint: -> do
+        %>
 
-        <% if @declare_convictions_form.errors[:declared_convictions].any? %>
-          <span class="error-message"><%= @declare_convictions_form.errors[:declared_convictions].join(", ") %></span>
-        <% end %>
-
-        <ul class="list list-bullet">
-          <% if @declare_convictions_form.transient_registration.business_type == "partnership" %>
-            <% t(".partnership_relevant_list").each do |item| %>
-              <li><%= item %></li>
-            <% end %>
-          <% elsif @declare_convictions_form.transient_registration.business_type == "soleTrader" %>
-            <% t(".sole_trader_relevant_list").each do |item| %>
-              <li><%= item %></li>
-            <% end %>
-          <% else %>
-            <% t(".other_business_types_relevant_list").each do |item| %>
-              <li><%= item %></li>
-            <% end %>
-          <% end %>
-        </ul>
-
-        <p class="strong"><%= t(".paragraph_1") %></p>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :declared_convictions, "yes" %>
-          <%= f.label :declared_convictions, t(".options.yes"), value: "yes" %>
-        </div>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :declared_convictions, "no" %>
-          <%= f.label :declared_convictions, t(".options.no"), value: "no" %>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <details>
-        <summary>
-          <span class="summary"><%= t(".conviction_types_subheading") %></span>
-        </summary>
-
-        <div class="panel panel-border-narrow font-xsmall">
-          <p><%= t(".conviction_types_paragraph_1") %></p>
-          <p class="strong"><%= t(".conviction_types_paragraph_2") %></p>
-          <ul class="list list-bullet">
-            <% t(".conviction_types").each do |conviction| %>
-              <li><%= conviction[:name] %></li>
+          <ul class="govuk-list govuk-list--bullet">
+            <% if @declare_convictions_form.transient_registration.business_type == "partnership" %>
+              <% t(".partnership_relevant_list").each do |item| %>
+                <li><%= item %></li>
+              <% end %>
+            <% elsif @declare_convictions_form.transient_registration.business_type == "soleTrader" %>
+              <% t(".sole_trader_relevant_list").each do |item| %>
+                <li><%= item %></li>
+              <% end %>
+            <% else %>
+              <% t(".other_business_types_relevant_list").each do |item| %>
+                <li><%= item %></li>
+              <% end %>
             <% end %>
           </ul>
-        </div>
-      </details>
-    </div>
 
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
+          <p class="govuk-!-font-weight-bold"><%= t(".paragraph_1") %></p>
+        <% end %>
+
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              <%= t(".conviction_types_subheading") %>
+            </span>
+          </summary>
+
+          <div class="govuk-details__text">
+            <p><%= t(".conviction_types_paragraph_1") %></p>
+            <p class="strong"><%= t(".conviction_types_paragraph_2") %></p>
+            <ul class="govuk_list govuk_list--bullet">
+              <% t(".conviction_types").each do |conviction| %>
+                <li><%= conviction[:name] %></li>
+              <% end %>
+            </ul>
+          </div>
+        </details>
+
+        <%= f.govuk_submit t(".next_button") %>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
