@@ -14,4 +14,4 @@ en:
         waste_carriers_engine/start_form:
           attributes:
             temp_start_option:
-              inclusion: "You must answer this question"
+              inclusion: "Answer this question"

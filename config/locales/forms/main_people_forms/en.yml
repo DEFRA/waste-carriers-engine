@@ -31,14 +31,14 @@ en:
       models:
         waste_carriers_engine/main_people_form:
           not_enough_main_people:
-            one: "You must add the details of at least one person"
-            other: "You must add the details of at least %{count} people"
+            one: "Add the details of at least one person"
+            other: "Add the details of at least %{count} people"
           attributes:
             first_name:
-              blank: "You must enter a first name"
+              blank: "Enter a first name"
               too_long: "The first name must be no longer than 35 characters"
             last_name:
-              blank: "You must enter a last name"
+              blank: "Enter a last name"
               too_long: "The last name must be no longer than 35 characters"
             dob:
               age_limit_localAuthority: "Chief executives must be 17 or older"
@@ -49,14 +49,14 @@ en:
               age_limit_soleTrader: "Business owners must be 17 or older"
               age_limit_authority: "Chief executives must be 17 or older"
               age_limit_publicBody: "Chief executives must be 17 or older"
-              not_a_date: "You must enter a valid date"
-              day_blank: "You must enter a day"
+              not_a_date: "Enter a valid date"
+              day_blank: "Enter a day"
               day_integer: "The day must be a number"
               day_range: "The day must be between 1 and 31"
-              month_blank: "You must enter a month"
+              month_blank: "Enter a month"
               month_integer: "The month must be a number"
               month_range: "The month must be between 1 and 12"
-              year_blank: "You must enter a year"
+              year_blank: "Enter a year"
               year_integer: "The year must be a number"
               year_range: "The year must be between 1900 and now"
             reg_identifier:

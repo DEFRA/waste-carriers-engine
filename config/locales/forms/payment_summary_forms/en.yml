@@ -31,4 +31,4 @@ en:
         waste_carriers_engine/payment_summary_form:
           attributes:
             temp_payment_method:
-              inclusion: "You must select a payment method"
+              inclusion: "Select a payment method"

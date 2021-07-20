@@ -23,4 +23,4 @@ en:
         waste_carriers_engine/company_address_form:
           attributes:
             company_address:
-              blank: "You must select an address"
+              blank: "Select an address"

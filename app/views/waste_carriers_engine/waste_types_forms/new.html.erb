@@ -1,40 +1,32 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_waste_types_forms_path(@waste_types_form.token)) %>
 
-<div class="text">
-  <%= form_for(@waste_types_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @waste_types_form) %>
-
-    <h1 class="heading-large"><%= t(".heading") %></h1>
-
-    <ul class="list list-bullet">
-      <% t(".waste_types").each do |list_item| %>
-      <li><%= list_item %></li>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @waste_types_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
+      <%=
+        f.govuk_collection_radio_buttons :only_amf,
+        [
+          OpenStruct.new(
+            id: "yes",
+            name: t(".options.yes")
+          ),
+          OpenStruct.new(
+            id: "no",
+            name: t(".options.no")
+          )
+        ],
+        :id,
+        :name,
+        legend: { text: t(".heading"), size: "l" },
+        hint: -> do %>
+          <ul class="">
+            <% t(".waste_types").each do |list_item| %>
+              <li><%= list_item %></li>
+            <% end %>
+          </ul>
       <% end %>
-    </ul>
-
-    <div class="form-group <%= "form-group-error" if @waste_types_form.errors[:only_amf].any? %>">
-      <fieldset id="only_amf">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
-
-        <% if @waste_types_form.errors[:only_amf].any? %>
-          <span class="error-message"><%= @waste_types_form.errors[:only_amf].join(", ") %></span>
-        <% end %>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :only_amf, "yes" %>
-          <%= f.label :only_amf, t(".options.yes"), value: "yes" %>
-        </div>
-        <div class="multiple-choice">
-          <%= f.radio_button :only_amf, "no" %>
-          <%= f.label :only_amf, t(".options.no"), value: "no" %>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

@@ -1,35 +1,26 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_other_businesses_forms_path(@other_businesses_form.token)) %>
-
-<div class="text">
-  <%= form_for(@other_businesses_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @other_businesses_form) %>
-
-    <h1 class="heading-large"><%= t(".heading") %></h1>
-
-    <div class="form-group <%= "form-group-error" if @other_businesses_form.errors[:other_businesses].any? %>">
-      <fieldset class="inline" id="other_businesses">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
-
-        <% if @other_businesses_form.errors[:other_businesses].any? %>
-          <span class="error-message"><%= @other_businesses_form.errors[:other_businesses].join(", ") %></span>
-        <% end %>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :other_businesses, "yes" %>
-          <%= f.label :other_businesses, t(".options.yes"), value: "yes" %>
-        </div>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :other_businesses, "no" %>
-          <%= f.label :other_businesses, t(".options.no"), value: "no" %>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @other_businesses_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
+      <%=
+        f.govuk_collection_radio_buttons :other_businesses,
+        [
+          OpenStruct.new(
+            id: "yes",
+            name: t(".options.yes")
+          ),
+          OpenStruct.new(
+            id: "no",
+            name: t(".options.no")
+          )
+        ],
+        :id,
+        :name,
+        inline: true,
+        legend: { text: t(".heading"), size: "l" }
+      %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

@@ -16,6 +16,6 @@ en:
         waste_carriers_engine/copy_cards_form:
           attributes:
             temp_cards:
-              not_a_number: "You must enter a number between 1 and 999"
-              greater_than_or_equal_to: "You must enter a number between 1 and 999"
-              not_an_integer: "You must enter a number between 1 and 999"
+              not_a_number: "Enter a number between 1 and 999"
+              greater_than_or_equal_to: "Enter a number between 1 and 999"
+              not_an_integer: "Enter a number between 1 and 999"

@@ -1,47 +1,38 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_construction_demolition_forms_path(@construction_demolition_form.token)) %>
 
-<div class="text">
-  <%= form_for(@construction_demolition_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @construction_demolition_form) %>
-
-    <h1 class="heading-large"><%= t(".heading") %></h1>
-
-    <div class="form-group <%= "form-group-error" if @construction_demolition_form.errors[:construction_waste].any? %>">
-      <fieldset class="inline" id="construction_waste">
-        <legend class="visuallyhidden">
-          <%= t(".heading") %>
-        </legend>
-
-        <% if @construction_demolition_form.errors[:construction_waste].any? %>
-          <span class="error-message"><%= @construction_demolition_form.errors[:construction_waste].join(", ") %></span>
-        <% end %>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :construction_waste, "yes" %>
-          <%= f.label :construction_waste, t(".options.yes"), value: "yes" %>
-        </div>
-
-        <div class="multiple-choice">
-          <%= f.radio_button :construction_waste, "no" %>
-          <%= f.label :construction_waste, t(".options.no"), value: "no" %>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <details>
-        <summary>
-          <span class="summary"><%= t(".waste_detail_subheading") %></span>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @construction_demolition_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
+      <%=
+        f.govuk_collection_radio_buttons :construction_waste,
+        [
+          OpenStruct.new(
+            id: "yes",
+            name: t(".options.yes")
+          ),
+          OpenStruct.new(
+            id: "no",
+            name: t(".options.no")
+          )
+        ],
+        :id,
+        :name,
+        inline: true,
+        legend: { text: t(".heading"), size: "l" }
+      %>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <%= t(".waste_detail_subheading") %>
+          </span>
         </summary>
-        <div class="panel panel-border-narrow">
+        <div class="govuk-details__text">
           <p><%= t(".waste_detail_paragraph_1") %></p>
           <p><%= t(".waste_detail_paragraph_2") %></p>
         </div>
       </details>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

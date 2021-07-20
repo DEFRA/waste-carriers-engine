@@ -1,17 +1,19 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_your_tier_forms_path(@your_tier_form.token)) %>
 
-<div class="text">
-  <%= form_for(@your_tier_form) do |f| %>
-    <h1 class="heading-large"><%= t(".heading.#{@transient_registration.tier}") %></h1>
-
-    <div class="form-group">
-      <p><%= t(".paragraph_1.#{@transient_registration.tier}") %></p>
-
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @your_tier_form do |f| %>
+      <h1 class="govuk-heading-l">
+        <%= t(".heading.#{@transient_registration.tier}") %>
+      </h1>
+      <legend class="govuk-visually-hidden">
+        <%= t(".heading.#{@transient_registration.tier}") %></h1>
+      </legend>
+      <p class="govuk-body">
+        <%= t(".paragraph_1.#{@transient_registration.tier}") %>
+      </p>
       <%= render "shared/what_are_lower_and_upper_tier" %>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

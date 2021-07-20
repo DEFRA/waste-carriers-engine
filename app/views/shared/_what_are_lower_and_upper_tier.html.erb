@@ -1,21 +1,23 @@
-<details>
-  <summary><span class="summary"><%= t(".summary") %></span></summary>
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= t(".summary") %>
+    </span>
+  </summary>
 
-  <div class="panel panel-border-narrow">
+  <div class="govuk-details__text">
     <p><%= t(".paragraph_1") %></p>
-
-    <ul class="list list-bullet">
+    <ul class="govuk-list govuk-list--bullet">
       <% t(".list_1").each do |list_item| %>
         <li><%= list_item %></li>
       <% end %>
     </ul>
-
     <p><%= t(".paragraph_2") %></p>
-
-    <ul class="list list-bullet">
+    <ul class="govuk-list govuk-list--bullet">
       <% t(".list_2").each do |list_item| %>
         <li><%= list_item %></li>
       <% end %>
     </ul>
   </div>
 </details>
+

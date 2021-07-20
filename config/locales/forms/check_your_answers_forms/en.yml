@@ -88,11 +88,11 @@ en:
           invalid_main_person: "Enter a valid main person"
           invalid_relevant_person: "Enter a valid person with a relevant conviction"
           not_enough_main_people:
-            one: "You must add the details of at least one main person"
-            other: "You must add the details of at least %{count} main people"
+            one: "Add the details of at least one main person"
+            other: "Add the details of at least %{count} main people"
           not_enough_relevant_people:
-            one: "You must add the details of at least one person with a relevant conviction"
-            other: "You must add the details of at least %{count} people with a relevant conviction"
+            one: "Add the details of at least one person with a relevant conviction"
+            other: "Add the details of at least %{count} people with a relevant conviction"
           too_many_main_people: "You have added too many main people for this business type"
           attributes:
             business_type:

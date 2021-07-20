@@ -15,4 +15,4 @@ en:
         waste_carriers_engine/contact_address_form:
           attributes:
             contact_address:
-              blank: "You must select an address"
+              blank: "Select an address"
