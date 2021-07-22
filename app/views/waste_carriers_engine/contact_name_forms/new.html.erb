@@ -1,37 +1,30 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_contact_name_forms_path(@contact_name_form.token)) %>
 
-<div class="text">
-  <%= form_for(@contact_name_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @contact_name_form) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(@contact_name_form) do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+      <h1 class="govuk-heading-l">
+        <%= t(".heading") %>
+      </h1>
+      <legend class="govuk-visually-hidden">
+        <%= t(".heading") %>
+      </legend>
 
-    <p><%= t(".description") %></p>
+      <p class="govuk-body"><%= t(".description") %></p>
 
-    <div class="form-group <%= "form-group-error" if @contact_name_form.errors[:first_name].any? %>">
-      <fieldset id="first_name">
-        <% if @contact_name_form.errors[:first_name].any? %>
-          <span class="error-message"><%= @contact_name_form.errors[:first_name].join(", ") %></span>
-        <% end %>
+      <%= f.govuk_text_field :first_name,
+          label: { text: t(".first_name_label") },
+          width: "one-half"
+      %>
 
-        <%= f.label :first_name, t(".first_name_label"), class: "form-label" %>
-        <%= f.text_field :first_name, value: @contact_name_form.first_name, class: "form-control" %>
-      </fieldset>
-    </div>
+      <%= f.govuk_text_field :last_name,
+          label: { text: t(".last_name_label") },
+          width: "one-half"
+      %>
 
-    <div class="form-group <%= "form-group-error" if @contact_name_form.errors[:last_name].any? %>">
-      <fieldset id="last_name">
-        <% if @contact_name_form.errors[:last_name].any? %>
-          <span class="error-message"><%= @contact_name_form.errors[:last_name].join(", ") %></span>
-        <% end %>
-
-        <%= f.label :last_name, t(".last_name_label"), class: "form-label" %>
-        <%= f.text_field :last_name, value: @contact_name_form.last_name, class: "form-control" %>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

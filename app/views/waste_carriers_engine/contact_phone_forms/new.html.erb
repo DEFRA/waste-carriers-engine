@@ -1,28 +1,24 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_contact_phone_forms_path(@contact_phone_form.token)) %>
 
-<div class="text">
-  <%= form_for(@contact_phone_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @contact_phone_form) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(@contact_phone_form) do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+      <h1 class="govuk-heading-l">
+        <%= t(".heading") %>
+      </h1>
+      <legend class="govuk-visually-hidden">
+        <%= t(".heading") %>
+      </legend>
 
-    <div class="form-group <%= "form-group-error" if @contact_phone_form.errors[:phone_number].any? %>">
-      <fieldset id="phone_number">
-        <% if @contact_phone_form.errors[:phone_number].any? %>
-          <span class="error-message"><%= @contact_phone_form.errors[:phone_number].join(", ") %></span>
-        <% end %>
+      <%= f.govuk_text_field :phone_number,
+          label: { text: t(".phone_number_label") },
+          hint: { text: t(".phone_number_hint") },
+          width: "one-half"
+      %>
 
-        <%= f.label :phone_number, class: "form-label" do %>
-          <%= t(".phone_number_label") %>
-          <span class='form-hint'><%= t(".phone_number_hint") %></span>
-        <% end %>
-
-        <%= f.telephone_field :phone_number, value: @contact_phone_form.phone_number, class: "form-control" %>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

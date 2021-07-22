@@ -1,32 +1,41 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_contact_address_manual_forms_path(@contact_address_manual_form.token)) %>
 
-<div class="text">
-  <%= form_for(@contact_address_manual_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @contact_address_manual_form) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @contact_address_manual_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <% if @contact_address_manual_form.os_places_error %>
-      <div class="error-summary" role="alert">
-        <h2 class="heading-medium error-summary-heading"><%= t(".os_places_error_heading") %></h2>
-        <p><%= t(".os_places_error_text") %></p>
-      </div>
-    <% end %>
+      <% if @contact_address_manual_form.os_places_error %>
+        <div class="govuk-error-summary">
+          <h2 class="govuk-heading-m"><%= t(".os_places_error_heading") %></h2>
+          <p class="govuk-body"><%= t(".os_places_error_text") %></p>
+        </div>
+      <% end %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+      <h1 class="govuk-heading-l">
+        <%= t(".heading") %>
+      </h1>
+      <legend class="govuk-visually-hidden">
+        <%= t(".heading") %>
+      </legend>
 
-    <% unless @contact_address_manual_form.overseas? %>
-      <div class="form-group">
-        <label class="form-label"><%= t(".preset_postcode_label") %></label>
-        <span class="postcode"><%= @contact_address_manual_form.postcode %></span>
+
+      <% unless @contact_address_manual_form.overseas? %>
+        <p class="govuk-body">
+          <%= t(".preset_postcode_label") %>
+        <br/>
+        <span class="postcode govuk-!-font-weight-bold">
+          <%= @contact_address_manual_form.postcode %>
+        </span>
         <%= link_to(t(".postcode_change_link"), back_contact_address_manual_forms_path(@contact_address_manual_form.token)) %>
-      </div>
-    <% end %>
+        </p>
+      <% end %>
 
-    <%= f.fields_for :contact_address do |f| %>
-      <%= render("waste_carriers_engine/shared/manual_address", form: @contact_address_manual_form, f: f, overseas: @contact_address_manual_form.overseas?) %>
-    <% end %>
+      <%= f.fields_for :contact_address do |f| %>
+        <%= render("waste_carriers_engine/shared/manual_address", form: @contact_address_manual_form, f: f, overseas: @contact_address_manual_form.overseas?) %>
+      <% end %>
 
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

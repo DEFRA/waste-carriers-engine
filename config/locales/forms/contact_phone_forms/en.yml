@@ -4,7 +4,7 @@ en:
       new:
         title: Contact telephone number
         heading: What’s the contact telephone number?
-        phone_number_label: Telephone number
+        phone_number_label: Enter a telephone number
         phone_number_hint: This can be a landline or mobile
         error_heading: Something is wrong
         next_button: Continue
