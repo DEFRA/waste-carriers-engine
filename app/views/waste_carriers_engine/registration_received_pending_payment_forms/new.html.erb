@@ -1,35 +1,41 @@
-<div class="column-two-thirds">
-  <div class="govuk-box-highlight govuk-box-highlight_blue">
-    <h1 class="heading-xlarge"><%= t(".heading") %></h1>
-    <h2 class="heading-large"><%= t(".highlight_text") %><br>
-    <span class="strong" id="reg_identifier"><%= @registration.reg_identifier %></span></p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        <%= t(".heading") %>
+      </h1>
+      <div class="govuk-panel__body">
+        <%= t(".highlight_text") %><br>
+        <strong><%= @registration.reg_identifier %></strong>
+      </div>
+    </div>
+
+    <div class="govuk-inset-text">
+      <%= t(".panel_text") %>
+    </div>
+
+    <%= render("waste_carriers_engine/shared/bank_transfer_details",
+        reg_identifier: @registration.reg_identifier,
+        payment_due: @registration.finance_details.balance) %>
+
+    <%= render("waste_carriers_engine/shared/bank_transfer_email_details",
+        reg_identifier: @registration.reg_identifier,
+        amount: @registration.finance_details.balance) %>
+
+    <p class="govuk-body"><%= t(".paragraph_1", email: @registration.contact_email) %></p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <% t(".list_1").each do |list_item| %>
+        <li><%= list_item %></li>
+      <% end %>
+    </ul>
+
+    <%= render "shared/contact_environment_agency" %>
+
+    <%= render "shared/registration_checks" %>
+
+    <%= render "shared/registration_finished_button" %>
+
+    <%= render "shared/link_to_survey" %>
   </div>
-
-  <div class="panel panel-border-wide">
-    <%= t(".panel_text") %>
-  </div>
-
-  <%= render("waste_carriers_engine/shared/bank_transfer_details",
-      reg_identifier: @registration.reg_identifier,
-      payment_due: @registration.finance_details.balance) %>
-
-  <%= render("waste_carriers_engine/shared/bank_transfer_email_details",
-      reg_identifier: @registration.reg_identifier,
-      amount: @registration.finance_details.balance) %>
-
-  <p><%= t(".paragraph_1", email: @registration.contact_email) %></p>
-
-  <ul class="list list-bullet">
-    <% t(".list_1").each do |list_item| %>
-      <li><%= list_item %></li>
-    <% end %>
-  </ul>
-
-  <%= render "shared/contact_environment_agency" %>
-
-  <%= render "shared/registration_checks" %>
-
-  <%= render "shared/registration_finished_button" %>
-
-  <%= render "shared/link_to_survey" %>
 </div>

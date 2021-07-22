@@ -6,100 +6,97 @@
 
 <%= render("waste_carriers_engine/shared/back", back_path: back_payment_summary_forms_path(@payment_summary_form.token)) %>
 
-<div class="text">
-  <%= form_for(@payment_summary_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/payment_errors") %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-    <%= render("waste_carriers_engine/shared/errors", object: @payment_summary_form) %>
+    <%= form_for(@payment_summary_form) do |f| %>
+      <%= render("waste_carriers_engine/shared/payment_errors") %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <div class="form-group">
-      <table>
-        <tbody>
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+      <table class="govuk-table">
+        <tbody class="govuk-table__body">
           <% if @presenter.renewal? %>
-            <tr>
+            <tr class="govuk-table__row">
               <td><%= t(".renewal_fee") %></td>
               <td>£<%= display_pence_as_pounds(Rails.configuration.renewal_charge) %></td>
             </tr>
 
             <% if @transient_registration.registration_type_changed? %>
-              <tr>
+              <tr class="govuk-table__row">
                 <td><%= t(".cbd_fee") %></td>
                 <td>£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
               </tr>
             <% end %>
           <% else %>
-            <tr>
-              <td><%= t(".registration_fee") %></td>
-              <td>£<%= display_pence_as_pounds(Rails.configuration.new_registration_charge) %></td>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= t(".registration_fee") %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">£<%= display_pence_as_pounds(Rails.configuration.new_registration_charge) %></td>
             </tr>
           <% end %>
           <% if @payment_summary_form.registration_cards > 0 %>
-            <tr>
-              <td><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></td>
-              <td>£<%= display_pence_as_pounds(@payment_summary_form.registration_card_charge) %></td>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></th>
+              <td class="govuk-table__cell govuk-table__cell--numeric">£<%= display_pence_as_pounds(@payment_summary_form.registration_card_charge) %></td>
             </tr>
           <% end %>
 
-          <tr>
-            <td><span class="strong"><%= t(".total_fee") %></span></td>
-            <td><span class="strong">£<%= display_pence_as_pounds(@payment_summary_form.total_charge) %></span></td>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><strong><%= t(".total_fee") %></strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>£<%= display_pence_as_pounds(@payment_summary_form.total_charge) %></strong></td>
           </tr>
         </tbody>
       </table>
-    </div>
 
-    <p class="font-xsmall"><%= t(".vat_statement") %></p>
 
-    <h2 class="heading-medium"><%= t(".make_payment_subheading") %></h2>
+      <p class="govuk-body-s"><%= t(".vat_statement") %></p>
 
-    <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:temp_payment_method].any? %>">
-      <fieldset id="temp_payment_method">
-        <legend class="visuallyhidden"><%= t(".make_payment_subheading") %></legend>
+
+      <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:temp_payment_method].any? %>">
 
         <% if @payment_summary_form.errors[:temp_payment_method].any? %>
-          <span class="error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
+          <span class="govuk-error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
         <% end %>
 
-        <div class="multiple-choice">
-          <%= f.radio_button :temp_payment_method, "card" %>
-          <%= f.label :temp_payment_method, value: "card", class: "form-label" do %>
-            <%= t(".options.card.label") %>
-            <span class='form-hint'><%= t(".options.card.hint") %></span>
-          <% end %>
-        </div>
+        <%= f.govuk_radio_buttons_fieldset :temp_payment_method,
+            legend: {
+              text: t(".make_payment_subheading"),
+              size: "m",
+              tag: "h2"
+            } do %>
+            <%= f.govuk_radio_button :temp_payment_method,
+                :card,
+                label: {
+                  text: t(".options.card.label")
+                },
+                hint: {
+                  text: t(".options.card.hint")
+                } do %>
 
-        <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
-          <div class="panel panel-border-narrow" id="receipt_email_div">
-            <h2 class="heading-medium"><%= t(".payment_confirmation.subheading") %></h2>
-            <p>
-              <%= t(".payment_confirmation.paragraph_1") %>
-            </p>
-            <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:card_confirmation_email].any? %>">
-              <fieldset id="card_confirmation_email">
-                <% if @payment_summary_form.errors[:card_confirmation_email].any? %>
-                  <span class="error-message"><%= @payment_summary_form.errors[:card_confirmation_email].join(", ") %></span>
-                <% end %>
-                <%= f.label :card_confirmation_email, t(".payment_confirmation.label"), class: "form-label" %>
-                <%= f.email_field :card_confirmation_email, value: @payment_summary_form.card_confirmation_email, class: "form-control" %>
-              </fieldset>
-            </div>
-          </div>
+              <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+                <%= f.govuk_text_field :card_confirmation_email,
+                    label:  {
+                      text: t(".payment_confirmation.label")
+                    },
+                    value: @payment_summary_form.card_confirmation_email,
+                    width: "one-half" %>
+              <% end %>
+            <% end %>
+
+          <%= f.govuk_radio_button :temp_payment_method,
+              :bank_transfer,
+              label: {
+                text: t(".options.bank_transfer.label")
+              },
+              hint: {
+                text: t(".options.bank_transfer.hint")
+              } %>
         <% end %>
+      </div>
 
-        <div class="multiple-choice">
-          <%= f.radio_button :temp_payment_method, "bank_transfer" %>
-          <%= f.label :temp_payment_method, value: "bank_transfer", class: "form-label" do %>
-            <%= t(".options.bank_transfer.label") %>
-            <span class='form-hint'><%= t(".options.bank_transfer.hint") %></span>
-          <% end %>
-        </div>
-      </fieldset>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

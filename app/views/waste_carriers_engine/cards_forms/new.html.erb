@@ -1,37 +1,29 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_cards_forms_path(@cards_form.token)) %>
 
-<div class="text">
-  <%= form_for(@cards_form, html: { novalidate: true }) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @cards_form) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(@cards_form, html: { novalidate: true }) do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+      <p class="govuk-body"><%= t(".paragraph_1") %></p>
+      <p class="govuk-body"><%= t(".paragraph_2", card_charge: display_pence_as_pounds(Rails.configuration.card_charge)) %></p>
 
-    <div class="form-group">
-      <p><%= t(".paragraph_1") %></p>
-      <p><%= t(".paragraph_2", card_charge: display_pence_as_pounds(Rails.configuration.card_charge)) %></p>
-      <%= image_tag "example_card.jpg", alt: t(".card_alt_text") %>
-    </div>
+      <p><%= image_tag "example_card.jpg", alt: t(".card_alt_text"), class: "card-image" %></p>
 
-    <div class="form-group <%= "form-group-error" if @cards_form.errors[:temp_cards].any? %>" id="temp_cards">
-      <% if @cards_form.errors[:temp_cards].any? %>
-        <span class="error-message"><%= @cards_form.errors[:temp_cards].join(", ") %></span>
-      <% end %>
-
-      <%= f.label :temp_cards, t(".temp_cards_label", card_charge: display_pence_as_pounds(Rails.configuration.card_charge)), class: "form-label" %>
-      <%= f.number_field(
-            :temp_cards,
-            value: (@cards_form.temp_cards || 0),
-            class: "form-control",
-            min: 0,
-            max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS
-          )
+      <%= f.govuk_number_field :temp_cards,
+          min: 0,
+          max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS,
+          value: (@cards_form.temp_cards || 0),
+          width: "one-quarter",
+          label: {
+            text: t(".temp_cards_label", card_charge: display_pence_as_pounds(Rails.configuration.card_charge))
+          }
       %>
-    </div>
 
-    <p><%= t(".paragraph_3") %></p>
+      <p class="govuk-body"><%= t(".paragraph_3") %></p>
 
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button"), class: "button" %>
+    <% end %>
+  </div>
 </div>

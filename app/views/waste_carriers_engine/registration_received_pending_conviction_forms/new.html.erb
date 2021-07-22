@@ -1,28 +1,35 @@
-<div class="column-two-thirds">
-  <div class="govuk-box-highlight govuk-box-highlight_blue">
-    <h1 class="heading-xlarge"><%= t(".heading") %></h1>
-    <p class="font-large bold"><%= t(".highlight_text") %><br>
-    <span class="strong" id="reg_identifier"><%= @registration.reg_identifier %></span></p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        <%= t(".heading") %>
+      </h1>
+      <div class="govuk-panel__body">
+        <%= t(".highlight_text") %><br>
+        <strong><%= @registration.reg_identifier %></strong>
+      </div>
+    </div>
+
+    <p class="govuk-body"><%= t(".paragraph_1", email: @registration.contact_email) %></p>
+
+    <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+      <p class="govuk-body"><%= t(".paragraph_2", email: @registration.email_to_send_receipt) %></p>
+    <% end %>
+
+    <h2 class="govuk-heading-m"><%= t(".subheading_1") %></h2>
+    <p class="govuk-body"><%= t(".paragraph_3") %></p>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body"><%= t(".paragraph_4") %></p>
+    </div>
+
+    <%= render "shared/contact_environment_agency" %>
+
+    <%= render "shared/registration_checks" %>
+
+    <%= render "shared/registration_finished_button" %>
+
+    <%= render "shared/link_to_survey" %>
   </div>
-
-  <p><%= t(".paragraph_1", email: @registration.contact_email) %></p>
-
-  <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
-    <p><%= t(".paragraph_2", email: @registration.email_to_send_receipt) %></p>
-  <% end %>
-
-  <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
-  <p><%= t(".paragraph_3") %></p>
-
-  <div class="panel">
-    <p><%= t(".paragraph_4") %></p>
-  </div>
-
-  <%= render "shared/contact_environment_agency" %>
-
-  <%= render "shared/registration_checks" %>
-
-  <%= render "shared/registration_finished_button" %>
-
-  <%= render "shared/link_to_survey" %>
 </div>
+
