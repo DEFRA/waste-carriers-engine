@@ -1,33 +1,37 @@
-<div class="column-two-thirds">
-  <div class="govuk-box-highlight">
-    <h1 class="heading-xlarge"><%= t(".heading") %></h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
 
-    <p class="font-large"><%= t(".highlight_text") %><br>
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title"><%= t(".heading") %></h1>
+      <div class="govuk-panel__body">
+        <%= t(".highlight_text") %>
+        <br>
+        <span id="reg_identifier"><strong><%= @registration.reg_identifier %></strong></span>
+      </div>
+    </div>
 
-    <span class="strong" id="reg_identifier"><%= @registration.reg_identifier %></span></p>
+    <p class="govuk-body"><%= t(".paragraph_1", email: @registration.contact_email) %></p>
+
+    <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+      <% if @registration.upper_tier? %>
+        <p class="govuk-body"><%= t(".paragraph_2", email: @registration.email_to_send_receipt) %></p>
+      <% end %>
+    <% end %>
+
+    <h2 class="govuk-heading-m"><%= t(".subheading_1") %></h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <% t(".list_1.#{@registration.tier}", expires_on: @registration.expires_on&.to_formatted_s(:month_year)).each do |list_item| %>
+        <li><%= list_item %></li>
+      <% end %>
+    </ul>
+
+    <%= render "shared/contact_environment_agency" %>
+
+    <%= render "shared/registration_checks" %>
+
+    <%= render "shared/registration_finished_button" %>
+
+    <%= render "shared/link_to_survey" %>
   </div>
-
-  <p><%= t(".paragraph_1", email: @registration.contact_email) %></p>
-
-  <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
-    <% if @registration.upper_tier? %>
-      <p><%= t(".paragraph_2", email: @registration.email_to_send_receipt) %></p>
-    <% end %>
-  <% end %>
-
-  <h2 class="heading-medium"><%= t(".subheading_1") %></h2>
-
-  <ul class="list list-bullet">
-    <% t(".list_1.#{@registration.tier}", expires_on: @registration.expires_on&.to_formatted_s(:month_year)).each do |list_item| %>
-      <li><%= list_item %></li>
-    <% end %>
-  </ul>
-
-  <%= render "shared/contact_environment_agency" %>
-
-  <%= render "shared/registration_checks" %>
-
-  <%= render "shared/registration_finished_button" %>
-
-  <%= render "shared/link_to_survey" %>
 </div>

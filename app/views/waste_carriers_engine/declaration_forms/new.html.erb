@@ -1,33 +1,25 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_declaration_forms_path(@declaration_form.token)) %>
 
-<div class="text">
-  <%= form_for(@declaration_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @declaration_form) %>
+<%= form_for(@declaration_form) do |f| %>
+  <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
-    <ul class="list list-bullet">
+  <%= f.govuk_check_boxes_fieldset :declaration,
+      multiple: false,
+      legend: { text:  t(".heading"), size: "l" } do %>
+
+    <ul class="govuk-list govuk-list--bullet">
       <li><%= t(".list_item_1") %></li>
       <li><%= t(".list_item_2") %></li>
     </ul>
 
-    <div class="form-group  <%= "form-group-error" if @declaration_form.errors[:declaration].any? %>">
-      <fieldset id="declaration">
-        <% if @declaration_form.errors[:declaration].any? %>
-          <span class="error-message"><%= @declaration_form.errors[:declaration].join(", ") %></span>
-        <% end %>
+    <%= f.govuk_check_box :declaration,
+        1,
+        0,
+        multiple: false,
+        link_errors: true,
+        label: { text: t(".declaration_text") } %>
 
-        <div class="multiple-choice">
-          <%= f.check_box :declaration %>
-          <%= f.label :declaration, t(".declaration_text") %>
-        </div>
-      </fieldset>
-    </div>
-
-    <p><%= link_to t(".privacy_link_text"), page_path("privacy"),  target: "_blank" %></p>
-    <p><%= t(".third_party_text") %></p>
-
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
   <% end %>
-</div>
+
+  <%= f.govuk_submit t(".next_button") %>
+<% end %>

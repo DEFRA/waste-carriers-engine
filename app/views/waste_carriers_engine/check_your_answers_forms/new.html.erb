@@ -1,160 +1,161 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_check_your_answers_forms_path(@check_your_answers_form.token)) %>
 
-<div class="text">
-  <% if @check_your_answers_form.errors.any? %>
-    <div class="error-summary" role="alert">
-      <h2 class="heading-medium error-summary-heading"><%= t(".error_heading") %></h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @check_your_answers_form.errors.any? %>
+      <div class="govuk-error-summary" role="alert">
+        <h2 class="govuk-error-summary__title"><%= t(".error_heading") %></h2>
 
-      <p><%= t(".error_description_1") %></p>
+        <p class="govuk-body"><%= t(".error_description_1") %></p>
 
-      <ul class="list list-bullet">
-        <% @check_your_answers_form.errors.each do |_field, message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+        <ul class="govuk-list govuk-error-summary__list">
+          <% @check_your_answers_form.errors.each do |_field, message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
 
-      <p><%= t(".error_description_2") %></p>
-    </div>
-  <% else %>
-    <%= form_for(@check_your_answers_form) do |f| %>
-      <h1 class="heading-large"><%= t(".heading") %></h1>
+        <p class="govuk-body"><%= t(".error_description_2") %></p>
+      </div>
+    <% else %>
+      <%= form_for(@check_your_answers_form) do |f| %>
+        <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+        <legend class="govuk-visually-hidden"><%= t(".heading") %></legend>
 
-      <% if @presenter.new_registration? %>
-        <p><%= t(".new_registration.#{@presenter.tier}") %></p>
+        <% if @presenter.new_registration? %>
+          <p class="govuk-body"><%= t(".new_registration.#{@presenter.tier}") %></p>
 
-        <% if @presenter.upper_tier? %>
-          <p><%= t(".new_registration.charge", charge: display_pence_as_pounds(Rails.configuration.new_registration_charge)) %></p>
-        <% end %>
+          <% if @presenter.upper_tier? %>
+            <p class="govuk-body"><%= t(".new_registration.charge", charge: display_pence_as_pounds(Rails.configuration.new_registration_charge)) %></p>
+          <% end %>
 
-      <% end %>
-
-      <% if @presenter.renewal? %>
-        <p><%= t(".renewing_registration.expiry_date", expiry_date: @presenter.projected_renewal_end_date) %></p>
-
-        <% if @check_your_answers_form.registration_type_changed? %>
-          <p><%= t(".renewing_registration.charge", charge: display_pence_as_pounds(Rails.configuration.type_change_charge + Rails.configuration.renewal_charge)) %></p>
-        <% else %>
-          <p><%= t(".renewing_registration.charge", charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
-        <% end %>
-      <% end %>
-
-      <hr>
-
-      <h2 class="heading-medium"><%= t(".subheadings.you_told_us") %></h2>
-
-      <ul class="list list-bullet">
-        <% unless @presenter.overseas? %>
-          <li><%= t(".business_type.#{@check_your_answers_form.business_type}") %></li>
         <% end %>
 
         <% if @presenter.renewal? %>
-          <li><%= t(".renewing_registration.registration_number", reg_identifier: @presenter.reg_identifier) %></li>
-        <% end %>
+          <p class="govuk-body"><%= t(".renewing_registration.expiry_date", expiry_date: @presenter.projected_renewal_end_date) %></p>
 
-        <li><%= t(".location.#{@check_your_answers_form.location}") %></li>
-
-        <% if @presenter.show_smart_answers_results? %>
-          <% if @presenter.other_businesses.present? %>
-            <li><%= t(".other_businesses.#{@presenter.other_businesses}") %></li>
+          <% if @check_your_answers_form.registration_type_changed? %>
+            <p class="govuk-body"><%= t(".renewing_registration.charge", charge: display_pence_as_pounds(Rails.configuration.type_change_charge + Rails.configuration.renewal_charge)) %></p>
+          <% else %>
+            <p class="govuk-body"><%= t(".renewing_registration.charge", charge: display_pence_as_pounds(Rails.configuration.renewal_charge)) %></p>
           <% end %>
-
-          <% if @presenter.is_main_service.present? %>
-            <li><%= t(".main_service.#{@presenter.is_main_service}") %></li>
-          <% end %>
-
-          <% if @presenter.only_amf.present? %>
-            <li><%= t(".only_amf.#{@presenter.only_amf}") %></li>
-          <% end %>
-
-          <% if @presenter.construction_waste.present? %>
-            <li><%= t(".construction_waste.#{@presenter.construction_waste}") %></li>
-          <% end %>
-        <% end %>
-      </ul>
-
-      <hr>
-
-      <h2 class="heading-medium"><%= t(".subheadings.registration") %></h2>
-
-      <p><%= t(".registering_as.title") %></p>
-
-      <ul class="list list-bullet">
-        <li><%= t(".registering_as.#{@presenter.tier}") %></li>
-
-        <% if @presenter.upper_tier? %>
-          <li><%= t(".registering_as.registration_type.#{@presenter.registration_type}") %></li>
-        <% end %>
-      </ul>
-
-      <hr>
-
-      <h2 class="heading-medium"><%= t(".subheadings.business") %></h2>
-
-      <ul class="list">
-        <li><%= @presenter.company_name %></li>
-        <% displayable_address(@presenter.registered_address).each do |line| %>
-          <li><%= line %></li>
-        <% end %>
-      </ul>
-
-      <% if @presenter.company_no.present? %>
-        <p><%= t(".company_no", company_no: @check_your_answers_form.company_no) %></p>
-      <% end %>
-
-      <hr>
-
-      <h2 class="heading-medium"><%= t(".subheadings.contact_details") %></h2>
-
-      <ul class="list">
-        <li><%= @check_your_answers_form.contact_name %></li>
-        <li><%= @check_your_answers_form.phone_number %></li>
-        <li><%= @check_your_answers_form.contact_email %></li>
-      </ul>
-
-      <hr>
-
-      <h2 class="heading-medium"><%= t(".subheadings.contact_address") %></h2>
-
-      <ul class="list">
-        <% displayable_address(@presenter.contact_address).each do |line| %>
-          <li><%= line %></li>
-        <% end %>
-      </ul>
-
-      <hr>
-
-      <% if @presenter.upper_tier? %>
-        <h2 class="heading-medium"><%= t(".subheadings.business_owners.#{@presenter.business_type}", count: @presenter.main_people.count) %></h2>
-
-        <% @presenter.main_people.each do |person| %>
-          <ul class="list">
-            <li><%= person.first_name %> <%= person.last_name %></li>
-            <li><%= t(".date_of_birth", dob: person.dob.to_date) %></li>
-          </ul>
         <% end %>
 
         <hr>
 
-        <h2 class="heading-medium"><%= t(".subheadings.relevant_convictions") %></h2>
+        <h2 class="govuk-heading-m"><%= t(".subheadings.you_told_us") %></h2>
 
-        <p><%= t(".declared_convictions.#{@check_your_answers_form.declared_convictions}") %></p>
+        <ul class="govuk-list govuk-list--bullet">
+          <% unless @presenter.overseas? %>
+            <li><%= t(".business_type.#{@check_your_answers_form.business_type}") %></li>
+          <% end %>
 
-        <% if @presenter.declared_convictions? %>
-          <% @presenter.relevant_people.each do |person| %>
-            <ul class="list">
+          <% if @presenter.renewal? %>
+            <li><%= t(".renewing_registration.registration_number", reg_identifier: @presenter.reg_identifier) %></li>
+          <% end %>
+
+          <li><%= t(".location.#{@check_your_answers_form.location}") %></li>
+
+          <% if @presenter.show_smart_answers_results? %>
+            <% if @presenter.other_businesses.present? %>
+              <li><%= t(".other_businesses.#{@presenter.other_businesses}") %></li>
+            <% end %>
+
+            <% if @presenter.is_main_service.present? %>
+              <li><%= t(".main_service.#{@presenter.is_main_service}") %></li>
+            <% end %>
+
+            <% if @presenter.only_amf.present? %>
+              <li><%= t(".only_amf.#{@presenter.only_amf}") %></li>
+            <% end %>
+
+            <% if @presenter.construction_waste.present? %>
+              <li><%= t(".construction_waste.#{@presenter.construction_waste}") %></li>
+            <% end %>
+          <% end %>
+        </ul>
+
+        <hr>
+
+        <h2 class="govuk-heading-m"><%= t(".subheadings.registration") %></h2>
+
+        <p class="govuk-body"><%= t(".registering_as.title") %></p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li><%= t(".registering_as.#{@presenter.tier}") %></li>
+
+          <% if @presenter.upper_tier? %>
+            <li><%= t(".registering_as.registration_type.#{@presenter.registration_type}") %></li>
+          <% end %>
+        </ul>
+
+        <hr>
+
+        <h2 class="govuk-heading-m"><%= t(".subheadings.business") %></h2>
+
+        <ul class="govuk-list">
+          <li><%= @presenter.company_name %></li>
+          <% displayable_address(@presenter.registered_address).each do |line| %>
+            <li><%= line %></li>
+          <% end %>
+        </ul>
+
+        <% if @presenter.company_no.present? %>
+          <p class="govuk-body"><%= t(".company_no", company_no: @check_your_answers_form.company_no) %></p>
+        <% end %>
+
+        <hr>
+
+        <h2 class="govuk-heading-m"><%= t(".subheadings.contact_details") %></h2>
+
+        <ul class="govuk-list">
+          <li><%= @check_your_answers_form.contact_name %></li>
+          <li><%= @check_your_answers_form.phone_number %></li>
+          <li><%= @check_your_answers_form.contact_email %></li>
+        </ul>
+
+        <hr>
+
+        <h2 class="govuk-heading-m"><%= t(".subheadings.contact_address") %></h2>
+
+        <ul class="govuk-list">
+          <% displayable_address(@presenter.contact_address).each do |line| %>
+            <li><%= line %></li>
+          <% end %>
+        </ul>
+
+        <hr>
+
+        <% if @presenter.upper_tier? %>
+          <h2 class="govuk-heading-m"><%= t(".subheadings.business_owners.#{@presenter.business_type}", count: @presenter.main_people.count) %></h2>
+
+          <% @presenter.main_people.each do |person| %>
+            <ul class="govuk-list">
               <li><%= person.first_name %> <%= person.last_name %></li>
-              <li><%= person.position %></li>
               <li><%= t(".date_of_birth", dob: person.dob.to_date) %></li>
             </ul>
           <% end %>
+
+          <hr>
+
+          <h2 class="govuk-heading-m"><%= t(".subheadings.relevant_convictions") %></h2>
+
+          <p class="govuk-body"><%= t(".declared_convictions.#{@check_your_answers_form.declared_convictions}") %></p>
+
+          <% if @presenter.declared_convictions? %>
+            <% @presenter.relevant_people.each do |person| %>
+              <ul class="govuk-list">
+                <li><%= person.first_name %> <%= person.last_name %></li>
+                <li><%= person.position %></li>
+                <li><%= t(".date_of_birth", dob: person.dob.to_date) %></li>
+              </ul>
+            <% end %>
+          <% end %>
+
+          <hr>
         <% end %>
 
-        <hr>
+        <%= f.govuk_submit t(".next_button") %>
       <% end %>
-
-      <div class="form-group">
-        <%= f.submit t(".next_button"), class: "button" %>
-      </div>
     <% end %>
-  <% end %>
+  </div>
 </div>
