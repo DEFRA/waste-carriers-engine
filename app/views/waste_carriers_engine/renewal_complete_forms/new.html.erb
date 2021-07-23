@@ -1,59 +1,62 @@
-<div class="column-two-thirds">
-  <% if @renewal_complete_form.errors.any? %>
-    <h1 class="heading-large"><%= t(".error_heading") %></h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @renewal_complete_form.errors.any? %>
+      <h1 class="govuj-heading-l"><%= t(".error_heading") %></h1>
 
-    <% @renewal_complete_form.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  <% else %>
-    <%= form_for(@renewal_complete_form) do |f| %>
-      <%= render("waste_carriers_engine/shared/errors", object: @renewal_complete_form) %>
-
-      <div class="govuk-box-highlight">
-        <h1 class="heading-xlarge"><%= t(".heading") %></h1>
-        <p class="font-large">
-          <%= t(".highlight_text") %>
-          <br>
-          <span class="strong" id="reg_identifier"><%= @renewal_complete_form.reg_identifier %></span>
-        </p>
-      </div>
-
-      <p><%= t(".paragraph_1", date: @renewal_complete_form.projected_renewal_end_date) %></p>
-      <p><%= t(".paragraph_2", email: @renewal_complete_form.contact_email) %></p>
-
-      <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
-        <p><%= t(".paragraph_3", email: @renewal_complete_form.transient_registration.email_to_send_receipt) %></p>
+      <% @renewal_complete_form.errors.full_messages.each do |message| %>
+        <p class="govuk-body"><%= message %></p>
       <% end %>
+    <% else %>
+      <%= form_for(@renewal_complete_form) do |f| %>
+        <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-      <h2 class="heading-medium"><%= t(".subheading_2") %></h2>
-      <p><%= t(".paragraph_4.#{@renewal_complete_form.registration_type}") %></p>
-      <p><%= t(".paragraph_5.#{@renewal_complete_form.registration_type}") %></p>
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            <%= t(".heading") %>
+          </h1>
+          <div class="govuk-panel__body">
+            <%= t(".highlight_text") %><br>
+            <strong><%= @renewal_complete_form.reg_identifier %></strong>
+          </div>
+        </div>
 
-      <ul class="list list-bullet">
-        <% t(".list_1").each do |list_item| %>
-          <li><%= list_item %></li>
+        <p class="govuk-body"><%= t(".paragraph_1", date: @renewal_complete_form.projected_renewal_end_date) %></p>
+        <p class="govuk-body"><%= t(".paragraph_2", email: @renewal_complete_form.contact_email) %></p>
+
+        <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
+          <p class="govuk-body"><%= t(".paragraph_3", email: @renewal_complete_form.transient_registration.email_to_send_receipt) %></p>
         <% end %>
-      </ul>
 
-      <p><%= t(".paragraph_6") %></p>
+        <h2 class="govuk-heading-m"><%= t(".subheading_2") %></h2>
+        <p class="govuk-body"<%= t(".paragraph_4.#{@renewal_complete_form.registration_type}") %></p>
+        <p class="govuk-body"><%= t(".paragraph_5.#{@renewal_complete_form.registration_type}") %></p>
 
-      <ul class="list list-bullet">
-        <% t(".list_2").each do |list_item| %>
-          <li><%= list_item %></li>
-        <% end %>
-      </ul>
+        <ul class="govuk-list govuk-list--bullet">
+          <% t(".list_1").each do |list_item| %>
+            <li><%= list_item %></li>
+          <% end %>
+        </ul>
 
-      <h2 class="heading-medium"><%= t(".subheading_3") %></h2>
-      <p><%= t(".paragraph_7") %></p>
-      <p><%= t(".paragraph_8") %></p>
+        <p class="govuk-body"><%= t(".paragraph_6") %></p>
 
-      <div class="panel panel-border-wide">
-        <p><%= t(".paragraph_9") %></p>
-      </div>
+        <ul class="govuk-list govuk-list--bullet">
+          <% t(".list_2").each do |list_item| %>
+            <li><%= list_item %></li>
+          <% end %>
+        </ul>
 
-      <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+        <h2 class="govuk-heading-m"><%= t(".subheading_3") %></h2>
+        <p class="govuk-body"><%= t(".paragraph_7") %></p>
+        <p class="govuk-body"><%= t(".paragraph_8") %></p>
 
-      <%= render "shared/registration_finished_button" %>
+        <div class="govuk-inset-text">
+          <p class="govuk-body"><%= t(".paragraph_9") %></p>
+        </div>
+
+        <p class="govuk-body"><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+
+        <%= render "shared/registration_finished_button" %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>

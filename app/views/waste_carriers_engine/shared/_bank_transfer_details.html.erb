@@ -4,36 +4,36 @@
   </caption>
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell">
+      <th scope="row" class="govuk-table__header">
         <%= t(".uk_payment_table.sort_code.label") %>
-     </td>
+     </th>
       <td class="govuk-table__cell">
         <strong><%= t(".uk_payment_table.sort_code.value") %></strong>
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell">
+      <th scope="row" class="govuk-table__header">
         <%= t(".uk_payment_table.account_number.label") %>
-     </td>
+     </th>
       <td class="govuk-table__cell">
         <strong><%= t(".uk_payment_table.account_number.value") %></strong>
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell">
+      <th scope="row" class="govuk-table__header">
         <%= t(".uk_payment_table.reference_number.label") %>
         <div class="govuk-hint">
           <%= t(".uk_payment_table.reference_number.hint") %>
         </div>
-      </td>
+      </th>
       <td class="govuk-table__cell">
         <strong><%= reg_identifier %></strong>
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell">
+      <th scope="row" class="govuk-table__header">
         <%= t(".uk_payment_table.payment_due.label") %>
-     </td>
+     </th>
       <td class="govuk-table__cell">
         <strong>£<%= display_pence_as_pounds(payment_due) %></strong>
       </td>
@@ -60,17 +60,17 @@
   </caption>
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell">
+      <th scope="row" class="govuk-table__header">
         <%= t(".send_confirmation.email_us.label") %>
-     </td>
+     </th>
       <td class="govuk-table__cell">
         <strong><%= t(".send_confirmation.email_us.value") %></strong>
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell">
+      <th scope="row" class="govuk-table__header">
         <%= t(".send_confirmation.payment_reference.label") %>
-     </td>
+     </th>
       <td class="govuk-table__cell">
         <strong><%= reg_identifier %></strong>
       </td>

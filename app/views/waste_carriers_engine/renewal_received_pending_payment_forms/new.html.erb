@@ -1,59 +1,62 @@
-<div class="column-two-thirds">
-  <% if @renewal_received_pending_payment_form.errors.any? %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @renewal_received_pending_payment_form.errors.any? %>
 
-    <h1 class="heading-large"><%= t(".error_heading") %></h1>
+      <h1 class="govuk-heading-l"><%= t(".error_heading") %></h1>
 
-    <ul>
-      <% @renewal_received_pending_payment_form.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-
-  <% else %>
-    <%= form_for(@renewal_received_pending_payment_form) do |f| %>
-      <%= render("waste_carriers_engine/shared/errors", object: @renewal_received_pending_payment_form) %>
-
-      <div class="govuk-box-highlight">
-        <h1 class="heading-xlarge"><%= t(".heading") %></h1>
-        <p class="font-large">
-          <%= t(".highlight_text") %>
-          <br>
-          <span class="strong" id="reg_identifier"><%= @renewal_received_pending_payment_form.reg_identifier %></span>
-        </p>
-      </div>
-
-      <div class="panel panel-border-wide">
-        <%= t(".panel_text") %>
-      </div>
-
-      <h2 class="heading-medium"><%= t(".subheading") %></h2>
-
-      <%= render("waste_carriers_engine/shared/bank_transfer_details",
-          reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
-          payment_due: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
-
-      <%= render("waste_carriers_engine/shared/bank_transfer_email_details",
-          reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
-          amount: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
-
-      <p><%= t(".paragraph_1",
-               email: @renewal_received_pending_payment_form.transient_registration.contact_email) %></p>
-      <p><%= t(".paragraph_2") %></p>
-
-      <ul class="list list-bullet">
-        <% t(".list_1").each do |list_item| %>
-          <li><%= list_item %></li>
+      <ul class="govuk-list">
+        <% @renewal_received_pending_payment_form.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
 
-      <%= render "shared/contact_environment_agency" %>
+    <% else %>
+      <%= form_for(@renewal_received_pending_payment_form) do |f| %>
+        <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-      <%= render "shared/registration_checks" %>
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            <%= t(".heading") %>
+          </h1>
+          <div class="govuk-panel__body">
+            <%= t(".highlight_text") %><br>
+            <strong><%= @renewal_received_pending_payment_form.reg_identifier %></strong>
+          </div>
+        </div>
 
-      <%= render "shared/link_to_survey" %>
+        <div class="govuk-inset-text">
+          <%= t(".panel_text") %>
+        </div>
 
-      <%= render "shared/registration_finished_button" %>
+        <h2 class="govuk-heading-m"><%= t(".subheading") %></h2>
+
+        <%= render("waste_carriers_engine/shared/bank_transfer_details",
+            reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
+            payment_due: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
+
+        <%= render("waste_carriers_engine/shared/bank_transfer_email_details",
+            reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
+            amount: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
+
+        <p class="govuk-body"><%= t(".paragraph_1",
+                 email: @renewal_received_pending_payment_form.transient_registration.contact_email) %></p>
+        <p class="govuk-body"><%= t(".paragraph_2") %></p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <% t(".list_1").each do |list_item| %>
+            <li><%= list_item %></li>
+          <% end %>
+        </ul>
+
+        <%= render "shared/contact_environment_agency" %>
+
+        <%= render "shared/registration_checks" %>
+
+        <%= render "shared/link_to_survey" %>
+
+        <%= render "shared/registration_finished_button" %>
+      <% end %>
+
     <% end %>
-
-  <% end %>
+  </div>
 </div>

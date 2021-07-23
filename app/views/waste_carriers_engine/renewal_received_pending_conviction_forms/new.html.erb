@@ -1,9 +1,9 @@
 <div class="column-two-thirds">
   <% if @renewal_received_pending_conviction_form.errors.any? %>
 
-    <h1 class="heading-large"><%= t(".error_heading") %></h1>
+    <h1 class="govuk-heading-l"><%= t(".error_heading") %></h1>
 
-    <ul>
+    <ul class="govuk-list">
       <% @renewal_received_pending_conviction_form.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -11,34 +11,35 @@
 
   <% else %>
     <%= form_for(@renewal_received_pending_conviction_form) do |f| %>
-      <%= render("waste_carriers_engine/shared/errors", object: @renewal_received_pending_conviction_form) %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-      <div class="govuk-box-highlight">
-        <h1 class="heading-xlarge"><%= t(".heading") %></h1>
-        <p class="font-large">
-          <%= t(".highlight_text") %>
-          <br>
-          <span class="strong" id="reg_identifier"><%= @renewal_received_pending_conviction_form.reg_identifier %></span>
-        </p>
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">
+          <%= t(".heading") %>
+        </h1>
+        <div class="govuk-panel__body">
+          <%= t(".highlight_text") %><br>
+          <strong><%= @renewal_received_pending_conviction_form.reg_identifier %></strong>
+        </div>
       </div>
 
-      <p><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.transient_registration.contact_email) %></p>
+      <p class="govuk-body"><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.transient_registration.contact_email) %></p>
 
       <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
-        <p><%= t(".paragraph_2", email: @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt) %></p>
+        <p class="govuk-body"><%= t(".paragraph_2", email: @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt) %></p>
       <% end %>
 
-      <h2 class="heading-medium"><%= t(".subheading") %></h2>
+      <h2 class="govuk-heading-m"><%= t(".subheading") %></h2>
 
-      <p><%= t(".paragraph_3") %></p>
+      <p class="govuk-body"><%= t(".paragraph_3") %></p>
 
-      <p><%= t(".paragraph_4") %></p>
+      <p class="govuk-body"><%= t(".paragraph_4") %></p>
 
-      <div class="panel panel-border-wide">
-        <p><%= t(".paragraph_5") %></p>
+      <div class="govuk-inset-text">
+        <p class="govuk-body"><%= t(".paragraph_5") %></p>
       </div>
 
-      <p><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
+      <p class="govuk-body"><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
 
       <%= render "shared/registration_finished_button" %>
     <% end %>

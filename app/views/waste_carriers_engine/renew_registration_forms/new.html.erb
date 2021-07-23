@@ -1,31 +1,33 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_renew_registration_forms_path(token: @renew_registration_form.token)) %>
 
-<div class="text">
-  <%= form_for(@renew_registration_form) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: @renew_registration_form) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(@renew_registration_form) do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-    <h1 class="heading-large"><%= t(".heading") %></h1>
+      <div class="govuk-heading-l">
+        <%= t(".heading") %>
+      </div>
+      <legend class="govuk-visually-hidden">
+        <%= t(".heading") %>
+      </legend>
 
-    <div class="form-group <%= "form-group-error" if @renew_registration_form.errors[:temp_lookup_number].any? %>" id="temp_lookup_number">
-      <% if @renew_registration_form.errors[:temp_lookup_number].any? %>
-        <span class="error-message"><%= @renew_registration_form.errors[:temp_lookup_number].join(", ") %></span>
-      <% end %>
+      <%= f.govuk_text_field :temp_lookup_number,
+          width: "one-half",
+          label: {
+            text: t(".temp_lookup_number_label")
+          },
+          hint: {
+            text: t(".temp_lookup_number_hint")
+          } %>
 
-      <%= f.label :temp_lookup_number, class: "form-label" do %>
-        <%= t(".temp_lookup_number_label") %>
-        <span class="form-hint"><%= t(".temp_lookup_number_hint") %></span>
-      <% end %>
-
-      <%= f.text_field :temp_lookup_number, value: @renew_registration_form.temp_lookup_number, class: "form-control" %>
-    </div>
-
-    <div class="form-group">
-      <details>
-        <summary>
-          <span class="summary"><%= t(".unknown_number.subheading") %></span>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <%= t(".unknown_number.subheading") %>
+          </span>
         </summary>
-
-        <div class="panel panel-border-narrow">
+        <div class="govuk-details__text">
           <p>
             <%= t(".unknown_number.paragraph_1") %>
             <%= link_to t(".unknown_number.paragraph_1_link_text"), t(".unknown_number.paragraph_1_link_url") %>.
@@ -36,10 +38,8 @@
           </p>
         </div>
       </details>
-    </div>
 
-    <div class="form-group">
-      <%= f.submit t(".next_button"), class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+  </div>
 </div>

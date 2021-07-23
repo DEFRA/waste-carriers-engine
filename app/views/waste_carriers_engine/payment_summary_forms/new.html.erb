@@ -14,48 +14,47 @@
 
       <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
-
       <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--l">
+          <%= t(".heading") %>
+        </caption>
+
         <tbody class="govuk-table__body">
           <% if @presenter.renewal? %>
             <tr class="govuk-table__row">
-              <td><%= t(".renewal_fee") %></td>
-              <td>£<%= display_pence_as_pounds(Rails.configuration.renewal_charge) %></td>
+              <th scope="row" class="govuk-table__header"><%= t(".renewal_fee") %></th>
+              <td class="govuk-table__cell govuk-table__cell--numeric">£<%= display_pence_as_pounds(Rails.configuration.renewal_charge) %></td>
             </tr>
 
             <% if @transient_registration.registration_type_changed? %>
               <tr class="govuk-table__row">
-                <td><%= t(".cbd_fee") %></td>
-                <td>£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
+                <th scope="row" class="govuk-table__header"><%= t(".cbd_fee") %></th>
+                <td class="govuk-table__cell govuk-table__cell--numeric">£<%= display_pence_as_pounds(Rails.configuration.type_change_charge) %></td>
               </tr>
             <% end %>
           <% else %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= t(".registration_fee") %></td>
+              <th scope="row" class="govuk-table__header"><%= t(".registration_fee") %></th>
               <td class="govuk-table__cell govuk-table__cell--numeric">£<%= display_pence_as_pounds(Rails.configuration.new_registration_charge) %></td>
             </tr>
           <% end %>
           <% if @payment_summary_form.registration_cards > 0 %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></th>
+              <th scope="row" class="govuk-table__header"><%= t(".cards_fee", count: @payment_summary_form.registration_cards) %></th>
               <td class="govuk-table__cell govuk-table__cell--numeric">£<%= display_pence_as_pounds(@payment_summary_form.registration_card_charge) %></td>
             </tr>
           <% end %>
 
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><strong><%= t(".total_fee") %></strong></td>
+            <th scope="row" class="govuk-table__header"><strong><%= t(".total_fee") %></strong></th>
             <td class="govuk-table__cell govuk-table__cell--numeric"><strong>£<%= display_pence_as_pounds(@payment_summary_form.total_charge) %></strong></td>
           </tr>
         </tbody>
       </table>
 
-
       <p class="govuk-body-s"><%= t(".vat_statement") %></p>
 
-
       <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:temp_payment_method].any? %>">
-
         <% if @payment_summary_form.errors[:temp_payment_method].any? %>
           <span class="govuk-error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
         <% end %>
