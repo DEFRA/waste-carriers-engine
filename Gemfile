@@ -13,8 +13,7 @@ gem "sassc-rails"
 gemspec
 
 # GOV.UK styling
-gem "govuk_elements_rails", "~> 3.1"
-gem "govuk_template", "~> 0.23"
+gem "defra_ruby_template"
 
 # Use jquery as the JavaScript library
 gem "jquery-rails"

@@ -1,48 +1,49 @@
-<% content_for(:head) do %>
-  <%= stylesheet_link_tag "application", media: "all" %>
-  <%= yield :page_scripts %>
-  <%= javascript_include_tag "receipt_email" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <% if @transient_registration.present? %>
+    <script>
+      dataLayer = [{
+        <%= data_layer(@transient_registration) %>
+      }];
+    </script>
+  <% end %>
+
 <% end %>
 
 <% content_for :page_title, title %>
 
-<% content_for :header_class, "with-proposition" %>
-<% content_for :proposition_header do %>
-  <div class="header-proposition">
-    <div class="content">
-      <nav id="proposition-menu">
-        <%= link_to t(:global_proposition_header), "/", id: "proposition-name" %>
-      </nav>
-    </div>
+<% content_for :header_content do %>
+  <%= link_to  :global_proposition_header, main_app.root_path, id: "proposition-name", class: "govuk-header__link govuk-header__link--service-name" %>
+<% end %>
+
+<% content_for :phase_banner do %>
+  <div class="govuk-phase-banner">
+    <p class="govuk-phase-banner__content">
+      <strong class="govuk-tag govuk-phase-banner__content__tag">
+        <%= ".beta"  %>
+      </strong>
+      <span class="govuk-phase-banner__text">
+      </span>
+    </p>
   </div>
 <% end %>
 
-<% content_for(:content) do %>
-  <main id="content" role="main">
-    <div class="phase-banner-beta">
-      <p>
-        <strong class="phase-tag"><%= t(".beta")  %></strong>
-        <span>
-          <%= t(
-                ".feedback",
-                link: link_to(
-                  t(".feedback_link"),
-                  t(".feedback_url"),
-                  target: "_blank"
-                )
-              ).html_safe
-          %>
-        </span>
-      </p>
-    </div>
-
-    <%= yield %>
-  </main>
+<% content_for :footer do %>
+  <span class="govuk-visually-hidden"><%= ".support_text" %></span>
+  <p class="govuk-!-font-weight-bold"><%= ".support_text" %></p>
+  <ul class="govuk-footer__inline-list">
+    <li class="govuk-footer__inline-list-item">
+      <%= link_to "Privacy", "/fo/pages/privacy", class: "govuk-footer__link", target: "_blank" %>
+    </li>
+    <li class="govuk-footer__inline-list-item">
+      <%= link_to "Cookies", "/fo/pages/cookies", class: "govuk-footer__link", target: "_blank" %>
+    </li>
+    <li class="govuk-footer__inline-list-item">
+      <%= link_to "Accessibility", "/fo/pages/accessibility", class: "govuk-footer__link", target: "_blank" %>
+    </li>
+  </ul>
 <% end %>
 
-<% content_for :footer_top do %>
-  <%= render("shared/footer") %>
-<% end %>
-
-<%= render template: "layouts/govuk_template" %>
+<%= render template: "layouts/defra_ruby_template" %>

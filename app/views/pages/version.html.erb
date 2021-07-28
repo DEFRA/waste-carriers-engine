@@ -1,8 +1,8 @@
 <% content_for :title, "Version" %>
 
-<div class="text">
-  <h1 class="heading-large"><%= Rails.configuration.application_name %></h1>
-  <p>
+<div class="govuk-grid-row">
+  <h1 class="govuk-heading-l"><%= Rails.configuration.application_name %></h1>
+  <p class="govuk-body">
     <label><%= t(".commit") %></label>
     <strong>
       <%= link_to(current_git_commit,
@@ -11,7 +11,7 @@
                   class: "btn-link") %>
     </strong>
   </p>
-  <p>
+  <p class="govuk-body">
     <label><%= t(".render_time") %></label>
     <strong><%= l Time.zone.now %></strong>
   </p>
