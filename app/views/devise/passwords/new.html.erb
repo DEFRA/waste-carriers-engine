@@ -1,20 +1,22 @@
 <%= render("waste_carriers_engine/shared/back", back_path: new_user_session_path) %>
 
-<h1 class="heading-large">Reset your password</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Reset your password</h1>
 
-<p class="text">Enter the email address associated with your account.</p>
+    <p class="govuk-body">Enter the email address associated with your account.</p>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render("waste_carriers_engine/shared/errors", object: resource) %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <div class="govuk-grid-row">
+        <div class="govuk-form-group govuk-grid-column-one-half">
+          <%= f.label :email, class: "govuk-label"%>
+          <%= f.email_field :email, class: "govuk-input" %>
+        </div>
+      </div>
 
-  <div class="form-group">
-    <%= f.label :email, class: "form-label"%>
-    <%= f.email_field :email, class: "form-control" %>
+      <p class="govuk-hint">If you don’t know the email address belonging to your account, contact our helpline on 03708 506506.</p>
+
+      <%= f.submit "Reset password", class: "govuk-button" %>
+    <% end %>
   </div>
-
-<p class="form-hint">If you don’t know the email address belonging to your account, contact our helpline on 03708 506506.</p>
-
-  <div class="actions">
-    <%= f.submit "Reset password", class: "button" %>
-  </div>
-<% end %>
+</div>

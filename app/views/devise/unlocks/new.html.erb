@@ -1,20 +1,20 @@
 <%= render("waste_carriers_engine/shared/back", back_path: new_user_session_path) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Locked account</h1>
 
-<h1 class="heading-large">Locked account</h1>
+    <p class="govuk-body">This account may be temporarily locked for your security.</p>
 
-<p class="text">This account may be temporarily locked for your security.</p>
+    <p class="govuk-body">Tell us which email address was used to register and we’ll send unlock instructions.</p>
 
-<p class="text">Tell us which email address was used to register and we’ll send unlock instructions.</p>
-
-<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-    <%= render("waste_carriers_engine/shared/errors", object: resource) %>
-
-  <div class="form-group">
-    <%= f.label :email, class: "form-label" %>
-    <%= f.email_field :email, class: "form-control" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send unlock instructions", class: "button" %>
-  </div>
-<% end %>
+    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+      <div class="govuk-grid-row">
+        <div class="govuk-form-group govuk-grid-column-one-half">
+          <%= f.label :email, class: "govuk-label"%>
+          <%= f.email_field :email, class: "govuk-input" %>
+        </div>
+      </div>
+      <div class="actions">
+        <%= f.submit "Send unlock instructions", class: "govuk-button" %>
+      </div>
+    <% end %>
