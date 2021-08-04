@@ -1,14 +1,11 @@
-<div class="panel wcr-panel wcr-panel-border-all">
-  <h2 class="heading-medium"><%= registration.company_name %></h2>
-
-  <p class="lede">
-    <%= t(".tier.#{registration.tier.downcase}") %>
-    <% if registration.upper_tier? %>
-      -
-      <%= t(".registration_type.#{registration.registration_type}") %>
-    <% end %>
-  </p>
-  <p>
-    <%= displayable_address(registration.contact_address).join(", ") %>
-  </p>
-</div>
+<h2 class="govuk-heading-m"><%= registration.company_name %></h2>
+<p class="govuk-body">
+  <%= t(".tier.#{registration.tier.downcase}") %>
+  <% if registration.upper_tier? %>
+    -
+    <%= t(".registration_type.#{registration.registration_type}") %>
+  <% end %>
+</p>
+<p class="govuk-body">
+  <%= displayable_address(registration.contact_address).join(", ") %>
+</p>
