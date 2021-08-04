@@ -1,10 +1,10 @@
-<div class="error-summary" role="alert" aria-labelledby="error-summary-heading-1">
-  <h2 class="heading-medium error-summary-heading" id="error-summary-heading-1">
+<div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+  <h2 class="govuk-error-summary__title" id="error-summary-title">
     <%= message %>
   </h2>
-  <% if details.present? %>
-    <p>
+  <div class="govuk-error-summary__body">
+    <p class="govuk-body">
       <%= details %>
     </p>
-  <% end %>
+  </div>
 </div>
