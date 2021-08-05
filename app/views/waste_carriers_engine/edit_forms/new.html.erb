@@ -1,131 +1,129 @@
 <%= render("waste_carriers_engine/shared/back", back_path: Rails.application.routes.url_helpers.registration_path(@edit_form.reg_identifier)) %>
 
 <%= form_for(@edit_form) do |f| %>
-  <%= render("waste_carriers_engine/shared/errors", object: @edit_form) %>
+  <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-      <h1 class="heading-large"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".heading", reg_identifier: @edit_form.reg_identifier) %></h1>
 
-      <p>
+      <p class="govuk-body">
         <%= @presenter.created_at %>
       </p>
       <% if @presenter.display_updated_at? %>
-        <p>
+        <p class="govuk-body">
           <%= @presenter.updated_at %>
         </p>
       <% end %>
-      <p>
-        <span class="strong">
-          <%= t(".edit_meta.warning") %>
-        </span>
+      <p class="govuk-body govuk-!-font-weight-bold">
+        <%= t(".edit_meta.warning") %>
       </p>
 
       <%= render("waste_carriers_engine/shared/edit_actions", f: f) %>
     </div>
   </div>
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-      <table class="edit_table">
-        <caption>
-          <h2 class="heading-medium"><%= t(".sections.registration_and_account.heading") %></h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          <%= t(".sections.registration_and_account.heading") %>
         </caption>
-        <tbody>
-          <tr>
-            <td class="label_column">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.registration_and_account.labels.tier") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.tier %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= t(".edit_links.no_edit") %>
             </td>
           </tr>
           <% if @presenter.registration_type.present? %>
-            <tr>
-              <td class="label_column">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
                 <%= t(".sections.registration_and_account.labels.registration_type") %>
-              </td>
-              <td>
+              </th>
+              <td class="govuk-table__cell">
                 <%= @presenter.registration_type %>
               </td>
-              <td class="change_link_column">
+              <td class="govuk-table__cell govuk-table__cell--numeric">
                 <%= link_to cbd_type_edit_forms_path(@presenter.token) do %>
                   <%= t(".edit_links.fee") %>
-                  <span class="visually-hidden">
+                  <span class="govuk-visually-hidden">
                     <%= t(".edit_links.visually_hidden.registration_type") %>
                   </span>
                 <% end %>
               </td>
             </tr>
           <% end %>
-          <tr>
-            <td class="label_column">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.registration_and_account.labels.account_email") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.account_email %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= t(".edit_links.no_edit") %>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table class="edit_table">
-        <caption>
-          <h2 class="heading-medium"><%= t(".sections.business.heading") %></h2>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          <%= t(".sections.business.heading") %>
         </caption>
-        <tbody>
-          <tr>
-            <td class="label_column">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.business.labels.business_type") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.business_type %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= t(".edit_links.no_edit") %>
             </td>
           </tr>
-          <tr>
-            <td class="label_column">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.business.labels.company_name") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.company_name %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= link_to company_name_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
-                <span class="visually-hidden">
+                <span class="govuk-visually-hidden">
                   <%= t(".edit_links.visually_hidden.company_name") %>
                 </span>
               <% end %>
             </td>
           </tr>
           <% if @presenter.company_no.present? %>
-            <tr>
-              <td class="label_column">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
                 <%= t(".sections.business.labels.company_no") %>
-              </td>
-              <td>
+              </th>
+              <td class="govuk-table__cell">
                 <%= @presenter.company_no %>
               </td>
-              <td class="change_link_column">
+              <td class="govuk-table__cell govuk-table__cell--numeric">
                 <%= t(".edit_links.no_edit") %>
               </td>
             </tr>
           <% end %>
           <% if @presenter.main_people_with_roles.any? %>
-            <tr>
-              <td class="label_column">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
                 <%= t(".sections.business.labels.main_people") %>
-              </td>
-              <td>
+              </th>
+             <td class="govuk-table__cell">
                 <% if @presenter.main_people_with_roles.count == 1 %>
                   <%= @presenter.main_people_with_roles.first %>
                 <% else %>
@@ -138,31 +136,31 @@
                   </ul>
                 <% end %>
               </td>
-              <td class="change_link_column">
+              <td class="govuk-table__cell govuk-table__cell--numeric">
                 <%= link_to main_people_edit_forms_path(@presenter.token) do %>
                   <%= t(".edit_links.default") %>
-                  <span class="visually-hidden">
+                  <span class="govuk-visually-hidden">
                     <%= t(".edit_links.visually_hidden.main_people") %>
                   </span>
                 <% end %>
               </td>
             </tr>
           <% end %>
-          <tr>
-            <td class="label_column">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.business.labels.registered_address") %>
-            </td>
-            <td>
-              <ul>
+            </th>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
                 <% displayable_address(@presenter.registered_address).each do |line| %>
                   <li><%= line %></li>
                 <% end %>
               </ul>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= link_to company_address_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
-                <span class="visually-hidden">
+                <span class="govuk-visually-hidden">
                   <%= t(".edit_links.visually_hidden.registered_address") %>
                 </span>
               <% end %>
@@ -170,19 +168,19 @@
           </tr>
         </table>
 
-      <table class="edit_table">
-        <caption>
-          <h2 class="heading-medium"><%= t(".sections.contact.heading") %></h2>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          <%= t(".sections.contact.heading") %>
         </caption>
-        <tbody>
-          <tr>
-            <td class="label_column">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.contact.labels.contact_name") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.contact_name %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= link_to contact_name_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
@@ -191,14 +189,14 @@
               <% end %>
             </td>
           </tr>
-          <tr>
-            <td class="label_column">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.contact.labels.phone_number") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.phone_number %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= link_to contact_phone_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
@@ -207,14 +205,14 @@
               <% end %>
             </td>
           </tr>
-          <tr>
-            <td class="label_column">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.contact.labels.contact_email") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.contact_email %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= link_to contact_email_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
@@ -223,18 +221,18 @@
               <% end %>
             </td>
           </tr>
-          <tr>
-            <td class="label_column">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.contact.labels.contact_address") %>
-            </td>
-            <td>
-              <ul>
+            </th>
+            <td class="govuk-table__cell">
+              <ul class="govuk-list">
                 <% displayable_address(@presenter.contact_address).each do |line| %>
                   <li><%= line %></li>
                 <% end %>
               </ul>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= link_to contact_address_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="visually-hidden">
@@ -246,38 +244,38 @@
         </tbody>
       </table>
 
-      <table class="edit_table">
-        <caption>
-          <h2 class="heading-medium"><%= t(".sections.location.heading") %></h2>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          <%= t(".sections.location.heading") %>
         </caption>
-        <tbody>
-          <tr>
-            <td class="label_column">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.location.labels.location") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.location %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= t(".edit_links.no_edit") %>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table class="edit_table">
-        <caption>
-          <h2 class="heading-medium"><%= t(".sections.receipt.heading") %></h2>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          <%= t(".sections.receipt.heading") %>
         </caption>
-        <tbody>
-          <tr>
-            <td class="label_column">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
               <%= t(".sections.receipt.labels.email") %>
-            </td>
-            <td>
+            </th>
+            <td class="govuk-table__cell">
               <%= @presenter.receipt_email %>
             </td>
-            <td class="change_link_column">
+            <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= t(".edit_links.no_edit") %>
             </td>
           </tr>
@@ -286,7 +284,7 @@
     </div>
   </div>
 
-  <div class="grid-row">
+  <div class="govuk-grid-row">
     <div class="column-two-thirds">
       <br>
       <%= render("waste_carriers_engine/shared/edit_actions", f: f) %>
