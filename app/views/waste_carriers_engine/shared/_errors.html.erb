@@ -1,11 +1,14 @@
 <% if object.errors.any? %>
-  <div class="error-summary" role="alert">
-    <h2 class="heading-medium error-summary-heading"><%= t(".heading") %></h2>
-
-    <ul class="error-summary-list">
-      <% object.errors.each do |field, message| %>
-        <li><a href="#<%= field %>"><%= message %></a></li>
-      <% end %>
-    </ul>
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      <%= t(".heading") %>
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <% object.errors.each do |field, message| %>
+          <li><a href="#<%= field %>"><%= message %></a></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 <% end %>
