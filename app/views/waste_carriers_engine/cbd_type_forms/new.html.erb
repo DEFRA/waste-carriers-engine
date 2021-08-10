@@ -6,7 +6,7 @@
       <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
       <%= f.govuk_radio_buttons_fieldset :registration_type,
-          legend: { text: t(".heading"), size: "l" } do %>
+          legend: { text: t(".heading"), size: "l", tag: "h1" } do %>
         <%= f.govuk_radio_button :registration_type,
             "carrier_dealer", label: { text: t(".options.carrier_dealer") }, link_errors: true %>
         <%= f.govuk_radio_button :registration_type,
