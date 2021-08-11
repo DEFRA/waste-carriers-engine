@@ -31,6 +31,11 @@ en:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
     passwords:
+      new:
+        heading: "Reset your password"
+        paragraph_1: "Enter the email address associated with your account."
+        hint_1: "If you don’t know the email address belonging to your account, contact our helpline on 03708 506506."
+        submit: "Reset password"
       edit:
         heading: Change your password
         password:
