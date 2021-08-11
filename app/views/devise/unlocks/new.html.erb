@@ -1,11 +1,11 @@
 <%= render("waste_carriers_engine/shared/back", back_path: new_user_session_path) %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Locked account</h1>
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-    <p class="govuk-body">This account may be temporarily locked for your security.</p>
+    <p class="govuk-body"><%= t(".paragraph_1") %></p>
 
-    <p class="govuk-body">Tell us which email address was used to register and we’ll send unlock instructions.</p>
+    <p class="govuk-body"><%= t(".paragraph_2") %></p>
 
     <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
       <div class="govuk-grid-row">
@@ -15,6 +15,6 @@
         </div>
       </div>
       <div class="actions">
-        <%= f.submit "Send unlock instructions", class: "govuk-button" %>
+        <%= f.submit t(".submit"), class: "govuk-button" %>
       </div>
     <% end %>

@@ -75,6 +75,11 @@ en:
         locked_paragraph_1: If you or someone else tries to sign in too many times using incorrect details, the account may be temporarily locked.
         locked_link_text: Unlock your account
     unlocks:
+      new:
+        heading: "Locked account"
+        paragraph_1: "This account may be temporarily locked for your security."
+        paragraph_2: "Tell us which email address was used to register and we’ll send unlock instructions."
+        submit: "Send unlock instructions"
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."
       unlocked: "Your account has been unlocked successfully. Please sign in to continue."
