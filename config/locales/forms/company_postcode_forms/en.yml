@@ -5,7 +5,7 @@ en:
         title: Business address postcode
         heading:
           localAuthority: Find the address of the local authority or public body
-          limitedCompany: Find the company address
+          limitedCompany: Find the address of the company
           limitedLiabilityPartnership: Find the address of the limited liability partnership
           partnership: Find the address of the partnership
           soleTrader: Find the address of the business
