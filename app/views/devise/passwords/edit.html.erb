@@ -1,6 +1,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Change your password</h1>
+    <h1 class="govuk-heading-l">
+      <%= t(".heading") %>
+    </h1>
 
     <%= form_for resource,
         as: resource_name,
@@ -14,14 +16,14 @@
 
       <%= f.govuk_password_field :password,
           width: "one-half",
-          label: { text: "New password" },
-          hint: { text: "8 characters minimum"} %>
+          label: { text: t(".password.label") },
+          hint: { text: t(".password.hint") } %>
 
       <%= f.govuk_password_field :password_confirmation,
           width: "one-half",
-          label: { text: "New password confirmation"} %>
+          label: { text: t(".password_confirmation.label") } %>
 
-      <%= f.govuk_submit "Change my password" %>
+      <%= f.govuk_submit t(".submit") %>
 
     <% end %>
 
