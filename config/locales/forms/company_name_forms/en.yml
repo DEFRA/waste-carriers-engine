@@ -14,15 +14,15 @@ en:
           authority: What's the name of the local authority?
           publicBody: What's the name of the public body?
         company_name_label:
-          localAuthority: Local authority or public body name
-          limitedCompany: Company trading name
-          limitedLiabilityPartnership: Partnership trading name
-          overseas: Trading name
-          partnership: Partnership trading name
-          soleTrader: Business trading name
-          charity: Charity or trust registered name
-          authority: Local authority name
-          publicBody: Public body name
+          localAuthority: Enter your local authority or public body name
+          limitedCompany: Enter your company trading name
+          limitedLiabilityPartnership: Enter your partnership trading name
+          overseas: Enter your trading name
+          partnership: Enter your partnership trading name
+          soleTrader: Enter your business trading name
+          charity: Enter your charity or trust registered name
+          authority: Enter your local authority name
+          publicBody: Enter your public body name
         error_heading: Something is wrong
         next_button: Continue
   activemodel:
