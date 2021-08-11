@@ -5,7 +5,7 @@ en:
         title: Business address selection
         heading:
           localAuthority: Select the address of the local authority or public body
-          limitedCompany: Select company address
+          limitedCompany: Select the address of the company
           limitedLiabilityPartnership: Select the address of the limited liability partnership
           partnership: Select the address of the partnership
           soleTrader: Select the address of the business
