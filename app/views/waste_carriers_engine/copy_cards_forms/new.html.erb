@@ -19,21 +19,19 @@
       </div>
 
       <div class="govuk-form-group <%= "govuk-form-group--error" if @copy_cards_form.errors[:temp_cards].any? %>">
-        <fieldset id="temp_cards" class="govuk-fieldset">
-          <% if @copy_cards_form.errors[:temp_cards].any? %>
-            <span class="govuk-error-message"><%= @copy_cards_form.errors[:temp_cards].join(", ") %></span>
-          <% end %>
+        <% if @copy_cards_form.errors[:temp_cards].any? %>
+          <span class="govuk-error-message"><%= @copy_cards_form.errors[:temp_cards].join(", ") %></span>
+        <% end %>
 
-          <%= f.label :temp_cards, t(".temp_cards_label"), class: "govuk-label" %>
-          <%= f.number_field(
-                :temp_cards,
-                value: (@copy_cards_form.temp_cards || 0),
-                class: "govuk-input govuk-input--width-3",
-                min: 0,
-                max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS
-              )
-          %>
-        </fieldset>
+        <%= f.label :temp_cards, t(".temp_cards_label"), class: "govuk-label" %>
+        <%= f.number_field(
+              :temp_cards,
+              value: (@copy_cards_form.temp_cards || 0),
+              class: "govuk-input govuk-input--width-3",
+              min: 0,
+              max: WasteCarriersEngine::CardsForm::MAX_TEMP_CARDS
+            )
+        %>
       </div>
 
       <p class="govuk-body"> <%= t(".total_cost_info") %> </p>
