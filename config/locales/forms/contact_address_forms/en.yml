@@ -3,7 +3,7 @@ en:
     contact_address_forms:
       new:
         title: Contact address selection
-        heading: Select the contact address?
+        heading: Select the contact address
         postcode_label: Postcode
         postcode_change_link: "Change postcode"
         manual_address_link: "I cannot find the address in the list"
