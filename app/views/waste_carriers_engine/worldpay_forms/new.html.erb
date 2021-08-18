@@ -1,25 +1,27 @@
 <%= render("waste_carriers_engine/shared/back", back_path: back_worldpay_forms_path(@worldpay_form.token)) %>
 
-<div class="text">
+<div class="govuk-body">
   <% if @worldpay_form.errors.any? %>
-    <h1 class="heading-large"><%= t(".error_heading") %></h1>
+    <h1 class="govuk-heading-l"><%= t(".error_heading") %></h1>
 
-    <% @worldpay_form.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
+    <ul class="govuk-list">
+      <% @worldpay_form.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
   <% else %>
     <%= form_for(@worldpay_form) do |f| %>
       <%= render("waste_carriers_engine/shared/errors", object: @worldpay_form) %>
 
-      <h1 class="heading-large"><%= t(".heading") %></h1>
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
       <p><%= t(".paragraph_1") %></p>
       <p><%= t(".paragraph_2") %></p>
       <p><%= t(".paragraph_3") %></p>
       <p><%= t(".paragraph_4") %></p>
 
-      <div class="form-group">
-        <%= f.submit t(".next_button"), class: "button" %>
+      <div class="govuk-form-group">
+        <%= f.submit t(".next_button"), class: "govuk-button" %>
       </div>
     <% end %>
   <% end %>

@@ -1,5 +1,5 @@
-<div class="form-group <%= "form-group-error" if form.errors[:temp_payment_method].any? %>">
-  <fieldset class="govuk-fieldset" id="temp_payment_method">
+<div class="govuk-form-group <%= "govuk-form-group--error" if form.errors[:temp_payment_method].any? %>">
+  <fieldset class="govuk-fieldset" id="temp_payment_method" class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
       <h2 class="govuk-fieldset__heading">
         <%= t(".payment_method.subheading") %>
