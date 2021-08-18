@@ -127,7 +127,7 @@
                 <% if @presenter.main_people_with_roles.count == 1 %>
                   <%= @presenter.main_people_with_roles.first %>
                 <% else %>
-                  <ul class="list list-bullet people_list">
+                  <ul class="govuk-list govuk-list--bullet people_list">
                     <% @presenter.main_people_with_roles.each do |person| %>
                       <li>
                         <%= person %>
