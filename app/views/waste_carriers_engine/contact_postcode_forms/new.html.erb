@@ -26,6 +26,12 @@
       <%= f.govuk_submit t(".next_button") %>
     <% end %>
 
+    <% if @contact_postcode_form.errors.added?(:temp_contact_postcode, :no_results) %>
+      <div class="govuk-body">
+        <%= link_to(t(".manual_address_link"), skip_to_manual_address_contact_postcode_forms_path(@contact_postcode_form.token)) %>
+      </div>
+    <% end %>
+
     <%= render("waste_carriers_engine/shared/os_terms_footer") %>
   </div>
 </div>

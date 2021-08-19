@@ -1,7 +1,7 @@
 <% content_for :title, t(".title") %>
 
-<div class="text">
-  <h1 class="heading-large">
+<div class="govuk-body">
+  <h1 class="govuk-heading-l">
     <%= t(".heading") %>
   </h1>
 
@@ -9,7 +9,7 @@
     <%= t(".paragraph1") %>
   </p>
 
-  <div class="form-group">
-    <%= link_to t(".register_again"), new_start_form_path, class: "button" %>
+  <div class="govuk-form-group">
+    <%= link_to t(".register_again"), new_start_form_path, class: "govuk-button" %>
   </div>
 </div>

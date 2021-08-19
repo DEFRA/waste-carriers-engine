@@ -54,7 +54,7 @@
 
       <p class="govuk-body-s"><%= t(".vat_statement") %></p>
 
-      <div class="form-group <%= "form-group-error" if @payment_summary_form.errors[:temp_payment_method].any? %>">
+      <div class="govuk-form-group <%= "govuk-form-group--error" if @payment_summary_form.errors[:temp_payment_method].any? %>">
         <% if @payment_summary_form.errors[:temp_payment_method].any? %>
           <span class="govuk-error-message"><%= @payment_summary_form.errors[:temp_payment_method].join(", ") %></span>
         <% end %>

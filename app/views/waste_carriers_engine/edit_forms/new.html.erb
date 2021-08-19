@@ -127,7 +127,7 @@
                 <% if @presenter.main_people_with_roles.count == 1 %>
                   <%= @presenter.main_people_with_roles.first %>
                 <% else %>
-                  <ul class="list list-bullet people_list">
+                  <ul class="govuk-list govuk-list--bullet people_list">
                     <% @presenter.main_people_with_roles.each do |person| %>
                       <li>
                         <%= person %>
@@ -285,7 +285,7 @@
   </div>
 
   <div class="govuk-grid-row">
-    <div class="column-two-thirds">
+    <div class="govuk-grid-column-two-thirds">
       <br>
       <%= render("waste_carriers_engine/shared/edit_actions", f: f) %>
     </div>
