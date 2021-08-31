@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", ">= 6.0.3"
+  s.add_dependency "rails", ">= 6.1.4"
   # Use MongoDB as the database
   s.add_dependency "mongoid"
   # Implement document-level locking
