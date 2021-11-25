@@ -22,6 +22,7 @@ module WasteCarriersEngine
     field :temp_os_places_error, type: String # 'yes' or 'no' - should refactor to boolean
     field :temp_payment_method, type: String
     field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
+    field :temp_reuse_registered_address, type: String
 
     scope :in_progress, -> { where(:workflow_state.nin => RenewingRegistration::SUBMITTED_STATES) }
     scope :submitted, -> { where(:workflow_state.in => RenewingRegistration::SUBMITTED_STATES) }
