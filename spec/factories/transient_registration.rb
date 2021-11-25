@@ -14,6 +14,10 @@ FactoryBot.define do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end
 
+    trait :has_registered_address do
+      addresses { [build(:address, :has_required_data, :registered, :from_os_places)] }
+    end
+
     trait :has_postcode do
       temp_company_postcode { "BS1 5AH" }
       temp_contact_postcode { "BS1 5AH" }

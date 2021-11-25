@@ -123,6 +123,7 @@ module WasteCarriersEngine
         "temp_lookup_number",
         "temp_tier_check",
         "temp_check_your_tier",
+        "temp_reuse_registered_address",
         "_type",
         "workflow_state",
         "locking_name",
