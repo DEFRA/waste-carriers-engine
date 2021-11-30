@@ -56,6 +56,7 @@ module WasteCarriersEngine
         state :contact_postcode_form
         state :contact_address_form
         state :contact_address_manual_form
+        state :contact_address_reuse_form
 
         state :check_your_answers_form
         state :declaration_form
@@ -247,9 +248,22 @@ module WasteCarriersEngine
                       if: :overseas?
 
           transitions from: :contact_email_form,
+                      to: :contact_address_reuse_form,
+                      if: :business_type_can_reuse_registered_address?
+
+          transitions from: :contact_email_form,
                       to: :contact_postcode_form
 
           # Contact address
+
+          transitions from: :contact_address_reuse_form,
+                      to: :check_your_answers_form,
+                      if: :reuse_registered_address?,
+                      after: :set_contact_address_as_registered_address
+
+          transitions from: :contact_address_reuse_form,
+                      to: :contact_postcode_form,
+                      unless: :reuse_registered_address?
 
           transitions from: :contact_postcode_form,
                       to: :contact_address_manual_form,
@@ -491,6 +505,13 @@ module WasteCarriersEngine
 
           # Contact address
 
+          transitions from: :contact_address_reuse_form,
+                      to: :contact_email_form
+
+          transitions from: :contact_postcode_form,
+                      to: :contact_address_reuse_form,
+                      if: :business_type_can_reuse_registered_address?
+
           transitions from: :contact_postcode_form,
                       to: :contact_email_form
 
@@ -507,6 +528,10 @@ module WasteCarriersEngine
           transitions from: :check_your_answers_form,
                       to: :contact_address_manual_form,
                       if: :contact_address_was_manually_entered?
+
+          transitions from: :check_your_answers_form,
+                      to: :contact_address_reuse_form,
+                      if: :reuse_registered_address?
 
           transitions from: :check_your_answers_form,
                       to: :contact_address_form
@@ -633,6 +658,18 @@ module WasteCarriersEngine
         return switch_to_upper_tier if temp_check_your_tier == "upper"
 
         switch_to_lower_tier
+      end
+
+      def business_type_can_reuse_registered_address?
+        !%w[limitedCompany limitedLiabilityPartnership].include?(businessType)
+      end
+
+      def reuse_registered_address?
+        temp_reuse_registered_address == "yes"
+      end
+
+      def set_contact_address_as_registered_address
+        WasteCarriersEngine::ContactAddressAsRegisteredAddressService.run(self)
       end
     end
     # rubocop:enable Metrics/BlockLength

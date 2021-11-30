@@ -81,5 +81,9 @@ FactoryBot.define do
     trait :has_addresses do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end
+
+    trait :has_registered_address do
+      addresses { [build(:address, :has_required_data, :registered, :from_os_places)] }
+    end
   end
 end

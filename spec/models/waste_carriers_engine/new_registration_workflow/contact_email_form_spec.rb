@@ -15,7 +15,7 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "contact_address_manual_form"
           end
 
-          include_examples "has next transition", next_state: "contact_postcode_form"
+          include_examples "has next transition", next_state: "contact_address_reuse_form"
         end
 
         context "on back" do

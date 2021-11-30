@@ -159,6 +159,11 @@ WasteCarriersEngine::Engine.routes.draw do
                     as: "contact_address",
                     on: :collection
 
+                get "contact-address-reuse",
+                    to: "edit_forms#edit_contact_address_reuse",
+                    as: "contact_address_reuse",
+                    on: :collection
+
                 get "cancel",
                     to: "edit_forms#cancel",
                     as: "cancel",
@@ -497,6 +502,16 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" } do
                 get "back",
                     to: "contact_address_manual_forms#go_back",
+                    as: "back",
+                    on: :collection
+              end
+
+    resources :contact_address_reuse_forms,
+              only: %i[new create],
+              path: "contact-address-reuse",
+              path_names: { new: "" } do
+                get "back",
+                    to: "contact_address_reuse_forms#go_back",
                     as: "back",
                     on: :collection
               end

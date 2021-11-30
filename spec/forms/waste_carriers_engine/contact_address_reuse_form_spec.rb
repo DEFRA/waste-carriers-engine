@@ -1,0 +1,25 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+module WasteCarriersEngine
+  RSpec.describe ContactAddressReuseForm, type: :model do
+    describe "#submit" do
+      let(:contact_address_reuse_form) { build(:contact_address_reuse_form) }
+
+      context "when the form is valid" do
+        let(:valid_params) { { temp_reuse_registered_address: "no" } }
+
+        it "should submit" do
+          expect(contact_address_reuse_form.submit(valid_params)).to eq(true)
+        end
+      end
+
+      context "when the form is not valid" do
+        it "should not submit" do
+          expect(contact_address_reuse_form.submit({})).to eq(false)
+        end
+      end
+    end
+  end
+end
