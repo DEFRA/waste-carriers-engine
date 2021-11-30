@@ -19,7 +19,6 @@
         :id,
         :name,
         inline: true,
-        small: true,
         legend: { text: t(".heading"), size: "l", tag: "h1" } do %>
       <ul class="govuk-list">
         <% displayable_address(@transient_registration.registered_address).each do |line| %>
