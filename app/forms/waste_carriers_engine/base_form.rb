@@ -71,7 +71,7 @@ module WasteCarriersEngine
       return if transient_registration.valid?
 
       transient_registration.errors.each do |_attribute, message|
-        errors[:base] << message
+        errors.add(:base, message)
       end
     end
 
