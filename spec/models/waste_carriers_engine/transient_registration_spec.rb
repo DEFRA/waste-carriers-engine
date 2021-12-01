@@ -8,6 +8,8 @@ module WasteCarriersEngine
 
     describe "#set_metadata_route" do
       it "updates the transient registration's metadata route" do
+        allow_message_expectations_on_nil
+
         metadata_route = double(:metadata_route)
 
         expect(Rails.configuration).to receive(:metadata_route).and_return(metadata_route)
