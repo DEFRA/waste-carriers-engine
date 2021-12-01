@@ -9,12 +9,6 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":contact_email_form state transitions" do
         context "on next" do
-          context "when the business is based overseas" do
-            subject { build(:new_registration, workflow_state: "contact_email_form", location: "overseas") }
-
-            include_examples "has next transition", next_state: "contact_address_manual_form"
-          end
-
           include_examples "has next transition", next_state: "contact_address_reuse_form"
         end
 

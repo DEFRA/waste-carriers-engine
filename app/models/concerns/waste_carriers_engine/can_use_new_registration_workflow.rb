@@ -244,12 +244,7 @@ module WasteCarriersEngine
                       to: :contact_email_form
 
           transitions from: :contact_email_form,
-                      to: :contact_address_manual_form,
-                      if: :overseas?
-
-          transitions from: :contact_email_form,
-                      to: :contact_address_reuse_form,
-                      if: :business_type_can_reuse_registered_address?
+                      to: :contact_address_reuse_form
 
           transitions from: :contact_email_form,
                       to: :contact_postcode_form
@@ -260,6 +255,11 @@ module WasteCarriersEngine
                       to: :check_your_answers_form,
                       if: :reuse_registered_address?,
                       after: :set_contact_address_as_registered_address
+
+          transitions from: :contact_address_reuse_form,
+                      to: :contact_address_manual_form,
+                      unless: :reuse_registered_address?,
+                      if: :overseas?
 
           transitions from: :contact_address_reuse_form,
                       to: :contact_postcode_form,
@@ -509,8 +509,7 @@ module WasteCarriersEngine
                       to: :contact_email_form
 
           transitions from: :contact_postcode_form,
-                      to: :contact_address_reuse_form,
-                      if: :business_type_can_reuse_registered_address?
+                      to: :contact_address_reuse_form
 
           transitions from: :contact_postcode_form,
                       to: :contact_email_form
@@ -519,7 +518,7 @@ module WasteCarriersEngine
                       to: :contact_postcode_form
 
           transitions from: :contact_address_manual_form,
-                      to: :contact_email_form,
+                      to: :contact_address_reuse_form,
                       if: :overseas?
 
           transitions from: :contact_address_manual_form,
@@ -658,10 +657,6 @@ module WasteCarriersEngine
         return switch_to_upper_tier if temp_check_your_tier == "upper"
 
         switch_to_lower_tier
-      end
-
-      def business_type_can_reuse_registered_address?
-        !%w[limitedCompany limitedLiabilityPartnership].include?(businessType)
       end
 
       def reuse_registered_address?
