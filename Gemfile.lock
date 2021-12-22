@@ -438,12 +438,12 @@ DEPENDENCIES
   github_changelog_generator
   govuk_design_system_formbuilder
   jquery-rails
-  loofah (>= 2.2.1)
+  loofah
   mongoid (~> 7.3)
   mongoid-locker
   pry-byebug
   rails-controller-testing
-  rails-html-sanitizer (>= 1.0.4)
+  rails-html-sanitizer
   rails_12factor
   rspec-rails
   sassc-rails

@@ -66,5 +66,5 @@ group :test do
   gem "vcr"
   gem "webmock", "~> 3.4"
 end
-gem "loofah", ">= 2.2.1"
-gem "rails-html-sanitizer", ">= 1.0.4"
+gem "loofah"
+gem "rails-html-sanitizer"
