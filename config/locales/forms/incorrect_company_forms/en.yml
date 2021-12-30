@@ -1,0 +1,8 @@
+en:
+  waste_carriers_engine:
+    incorrect_company_forms:
+      new:
+        heading: "My companies house information is incorrect"
+        body: "If your Companies House information is incorrect you must update it before you can register as a waste carrier."
+        continue_button: "Continue"
+        enter_a_different_number: "Enter a different number"
