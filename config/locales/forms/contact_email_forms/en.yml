@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     contact_email_forms:
       new:
-        title: Contact email address
+        title: What’s the contact email address?
         heading: What’s the contact email address?
         paragraph_1: We will contact you on this email address when your registration is due to be renewed.
         paragraph_2: If we cannot reach you, you’ll have to pay more for a new registration.

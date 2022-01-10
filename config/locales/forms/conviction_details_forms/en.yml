@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     conviction_details_forms:
       new:
-        title: Conviction details
+        title: Details of the person with a conviction
         list_of_people: You have added the following people
         delete_person_link: Delete
       form:

@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     contact_name_forms:
       new:
-        title: Person to contact
+        title: Who should we contact about this registration?
         heading: Who should we contact about this registration?
         description: Tell us who to contact if we need to confirm any details.
         first_name_label: First name
