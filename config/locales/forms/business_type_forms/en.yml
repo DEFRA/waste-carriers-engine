@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     business_type_forms:
       new:
-        title: Business type
+        title: What type of business or organisation are you?
         heading: What type of business or organisation are you?
         options:
           individual: Individual or sole trader
