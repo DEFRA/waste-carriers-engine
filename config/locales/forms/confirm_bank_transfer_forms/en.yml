@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     confirm_bank_transfer_forms:
       new:
-        title: Pay by bank transfer
+        title: Registration takes longer if you pay by bank transfer
         heading: Registration takes longer if you pay by bank transfer
         paragraphs:
           instructions: "In order to pay by bank transfer, you will need to follow the instructions on the next screen and email us to confirm payment. This will take approximately 5 working days."

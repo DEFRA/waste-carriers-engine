@@ -3,7 +3,7 @@ en:
     check_your_tier_forms:
       new:
         paragraph: "If you are not sure, you can check by answering a few questions about your business activities."
-        title: Check your tier
+        title: What kind of registration do you need?
         heading: What kind of registration do you need?
         options:
           unknown: "Help me decide"
