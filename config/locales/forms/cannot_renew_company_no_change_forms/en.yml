@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     cannot_renew_company_no_change_forms:
       new:
-        title: Your Companies House number has changed
+        title: You cannot renew %{reg_identifier}
         heading: You cannot renew %{reg_identifier}
         paragraph_1: Your Companies House registration number has changed, which means the organisation responsible for this registration has changed.
         paragraph_2: Because of this change, you cannot renew %{reg_identifier} and instead must make a new registration.

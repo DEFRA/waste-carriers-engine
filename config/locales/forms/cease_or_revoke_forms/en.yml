@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     cease_or_revoke_forms:
       new:
-        title: "Revoke or cease"
+        title: "Revoke or cease registration %{reg_identifier}"
         heading: "Revoke or cease registration %{reg_identifier}"
         reason:
           label: "Reason"

@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     cbd_type_forms:
       new:
-        title: Registration type
+        title: Do you carry the waste?
         heading: Do you carry the waste?
         options:
           carrier_dealer: We carry the waste (carrier and dealer)

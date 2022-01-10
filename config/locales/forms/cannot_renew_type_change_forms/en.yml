@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     cannot_renew_type_change_forms:
       new:
-        title: Your business type has changed
+        title: You need a new registration
         heading: You need a new registration
         paragraph: You’ve told us your business type has changed, so you will need to create a new registration rather than renew.
         next_button: Start a new registration
