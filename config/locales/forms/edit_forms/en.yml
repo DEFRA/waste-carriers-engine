@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     edit_forms:
       new:
-        title: Edit a registration
+        title: Edit %{reg_identifier} registration
         heading: Edit %{reg_identifier} registration
         edit_meta:
           created_at: "This edit was started at %{created_at}."

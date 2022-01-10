@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     renewal_start_forms:
       new:
-        title: You are about to renew your registration
+        title: You are about to renew registration %{reg_identifier}
         heading: You are about to renew registration %{reg_identifier}
         paragraph_1_html: "Renewing will extend this <span class=\"strong\">upper tier registration</span> to %{date}. Renewal costs £%{renewal_charge}."
         paragraph_2_html: "If your <span class=\"strong\">carrier type</span> changes, for example from carrier-dealer to broker-dealer, you can continue to renew but must pay an additional £%{type_change_charge} charge."

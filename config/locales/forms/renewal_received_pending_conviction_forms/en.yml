@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     renewal_received_pending_conviction_forms:
       new:
-        title: Renewal application received
+        title: Application received
         heading: Application received
         highlight_text: "Your registration number is still"
         paragraph_1: "We have sent a confirmation email to %{email}."

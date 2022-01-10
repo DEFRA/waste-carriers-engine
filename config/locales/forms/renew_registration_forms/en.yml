@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     renew_registration_forms:
       new:
-        title: Renew your registration
+        title: What's your waste carrier registration number?
         heading: What's your waste carrier registration number?
         temp_lookup_number_label: Waste carrier registration number
         temp_lookup_number_hint: "Example: CBDU59475"

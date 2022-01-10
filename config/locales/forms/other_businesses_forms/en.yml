@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     other_businesses_forms:
       new:
-        title: Waste from other people
+        title: Do you ever deal with waste from other businesses or households?
         heading: Do you ever deal with waste from other businesses or households?
         options:
           "yes": "Yes"

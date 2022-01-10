@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     edit_payment_summary_forms:
       new:
-        title: "Edit payment summary"
+        title: "Payment summary"
         heading: "Payment summary"
         payment_method:
           subheading: "Payment method"

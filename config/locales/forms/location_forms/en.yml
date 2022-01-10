@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     location_forms:
       new:
-        title: Business location
+        title: Where is your principal place of business?
         heading: Where is your principal place of business?
         location_detail_subheading: What is the principal place of business?
         location_detail_paragraph: "For companies and LLPs this is where your business is registered. For others, this is where the day-to-day business is run."

@@ -2,7 +2,7 @@ en:
   waste_carriers_engine:
     declare_convictions_forms:
       new:
-        title: Convictions
+        title: Do any of the following have an unspent conviction for a relevant offence?
         heading: Do any of the following have an unspent conviction for a relevant offence?
         partnership_relevant_list:
           - "The individual partners in the partnership"
