@@ -22,8 +22,25 @@
             inline: true,
             legend: -> do %>
 
-          <h2>Here we will print the company details</h2>
 
+          <h2 class="govuk-heading-m">
+            <%= @check_company_form.ch_company_name %>
+          </h3>
+
+          <p class="govuk-body">
+            <%= @check_company_form.ch_registered_office_address_lines.join("<br/>").html_safe %>
+          </p>
+
+          <h3 class="govuk-heading-s">
+            Directors
+          </h3>
+
+          <% @check_company_form.ch_officer_names.each do |ch_officer_name| %>
+            <p class="govuk-body">
+              <span class="govuk-!-font-weight-bold">Name</span>
+              <%= ch_officer_name %>
+            </p>
+          <% end %>
         <% end %>
 
       <%= f.govuk_submit t(".next_button") %>
