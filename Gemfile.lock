@@ -7,7 +7,7 @@ PATH
       defra_ruby_address
       defra_ruby_alert (~> 2.1)
       defra_ruby_email
-      defra_ruby_validators
+      defra_ruby_validators (>= 2.4.1)
       high_voltage (~> 3.0)
       jbuilder (~> 2.0)
       jquery-rails
