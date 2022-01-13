@@ -19,8 +19,8 @@ module WasteCarriersEngine
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "cannot_renew_company_no_change_form")
-        end
-         
+          end
+
           context "When the form is loaded" do
             it "Has correct title" do
               get cannot_renew_company_no_change_forms_path(transient_registration.token)
