@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe "CannotRenewCompanyNoChangeForms", type: :request do
     include_examples "GET flexible form", "cannot_renew_company_no_change_form"
 
-    describe "GET cannot_renew_company_no_change_forms_path" do 
+    describe "GET cannot_renew_company_no_change_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
         before(:each) do
@@ -22,17 +22,16 @@ module WasteCarriersEngine
           end
          
 
-          context "When the form is loaded" do 
-            it "Has correct title" do 
+          context "When the form is loaded" do
+            it "Has correct title" do
               get cannot_renew_company_no_change_forms_path(transient_registration.token)
               expect(response).to have_http_status(200)
-              #byebug
               expect(response.body).to have_tag("title", text: /You cannot renew CBDU\d+/)
-            end 
+            end
           end
-        end 
+        end
       end
-    end 
+    end
 
     describe "GET back_cannot_renew_company_no_change_forms_path" do
       context "when a valid user is signed in" do
