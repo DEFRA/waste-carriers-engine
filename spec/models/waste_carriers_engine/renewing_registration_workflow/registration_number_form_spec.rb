@@ -4,13 +4,13 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
-    describe "#workflow_state" do
-      subject do
-        build(:renewing_registration,
-              :has_required_data,
-              workflow_state: "registration_number_form")
-      end
+    subject do
+      build(:renewing_registration,
+            :has_required_data,
+            workflow_state: "registration_number_form")
+    end
 
+    describe "#workflow_state" do
       context ":registration_number_form state transitions" do
         context "on next" do
           include_examples "has next transition", next_state: "company_name_form"
@@ -41,58 +41,6 @@ module WasteCarriersEngine
 
         context "on back" do
           include_examples "has back transition", previous_state: "renewal_information_form"
-        end
-      end
-    end
-
-    describe "validating the company_no" do
-      let(:validator) { double(:validator, :validate_each) }
-      let!(:registration_number_form) { build(:registration_number_form, :has_required_data) }
-
-      before do
-        allow(registration_number_form)
-          .to receive(:business_type)
-          .and_return(business_type)
-      end
-
-      context "when the registration is for a limitedLiabilityPartnership" do
-        let(:business_type) { "limitedLiabilityPartnership" }
-
-        before do
-          expect_any_instance_of(DefraRuby::Validators::CompaniesHouseNumberValidator)
-            .to receive(:validate_each)
-            .with(registration_number_form, :company_no, registration_number_form.company_no)
-        end
-
-        it "invokes the validator" do
-          registration_number_form.valid?
-        end
-      end
-
-      context "when the registration is for a limitedCompany" do
-        let(:business_type) { "limitedCompany" }
-
-        before do
-          expect_any_instance_of(DefraRuby::Validators::CompaniesHouseNumberValidator)
-            .to receive(:validate_each)
-            .with(registration_number_form, :company_no, registration_number_form.company_no)
-        end
-
-        it "invokes the validator" do
-          registration_number_form.valid?
-        end
-      end
-
-      context "when the registration is for somethingElse" do
-        let(:business_type) { "somethingElse" }
-
-        before do
-          expect_any_instance_of(DefraRuby::Validators::CompaniesHouseNumberValidator)
-            .not_to receive(:validate_each)
-        end
-
-        it "does not invoke the validator" do
-          registration_number_form.valid?
         end
       end
     end

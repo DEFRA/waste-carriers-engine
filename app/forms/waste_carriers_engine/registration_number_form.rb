@@ -5,15 +5,7 @@ module WasteCarriersEngine
     delegate :company_no, :business_type, to: :transient_registration
 
     validates :company_no, "defra_ruby/validators/companies_house_number": {
-      messages: custom_error_messages(:company_no, :inactive),
-      company_type: "llp",
-      if: -> { business_type == "limitedLiabilityPartnership" }
-    }
-
-    validates :company_no, "defra_ruby/validators/companies_house_number": {
-      messages: custom_error_messages(:company_no, :inactive),
-      company_type: "ltd",
-      if: -> { business_type == "limitedCompany" }
+      messages: custom_error_messages(:company_no, :inactive)
     }
 
     def submit(params)
