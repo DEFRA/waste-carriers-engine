@@ -1,3 +1,4 @@
+<% content_for :title, t(".title", reg_identifier: @renewal_start_form.reg_identifier) %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <% if @renewal_start_form.errors.any? %>

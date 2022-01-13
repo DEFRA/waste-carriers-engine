@@ -26,7 +26,8 @@ module WasteCarriersEngine
             it "Has correct title" do 
               get cannot_renew_company_no_change_forms_path(transient_registration.token)
               expect(response).to have_http_status(200)
-              expect(response.body).to have_tag("title", text: /You cannot renew CBDU1/)
+              #byebug
+              expect(response.body).to have_tag("title", text: /You cannot renew CBDU\d+/)
             end 
           end
         end 
