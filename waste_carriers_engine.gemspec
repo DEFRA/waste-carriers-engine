@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.add_dependency "high_voltage", "~> 3.0"
 
   # Validations
-  s.add_dependency "defra_ruby_validators"
+  s.add_dependency "defra_ruby_validators", ">= 2.5.0"
   s.add_dependency "uk_postcode"
 
   # defra_ruby_alert is a gem we created to manage airbrake across projects

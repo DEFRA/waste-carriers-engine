@@ -7,7 +7,7 @@ PATH
       defra_ruby_address
       defra_ruby_alert (~> 2.1)
       defra_ruby_email
-      defra_ruby_validators
+      defra_ruby_validators (>= 2.5.0)
       high_voltage (~> 3.0)
       jbuilder (~> 2.0)
       jquery-rails
@@ -87,9 +87,9 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airbrake (10.0.5)
-      airbrake-ruby (~> 4.13)
-    airbrake-ruby (4.15.0)
+    airbrake (12.0.0)
+      airbrake-ruby (~> 6.0)
+    airbrake-ruby (6.0.2)
       rbtree3 (~> 0.5)
     ast (2.4.1)
     async (1.30.1)
@@ -120,7 +120,7 @@ GEM
     concurrent-ruby (1.1.9)
     console (1.13.1)
       fiber-local
-    countries (4.1.3)
+    countries (4.2.1)
       i18n_data (~> 0.15.0)
       sixarm_ruby_unaccent (~> 1.1)
     crack (0.4.5)
@@ -142,7 +142,7 @@ GEM
     defra_ruby_style (0.2.2)
       rubocop (~> 0.82)
     defra_ruby_template (3.13.0)
-    defra_ruby_validators (2.4.1)
+    defra_ruby_validators (2.5.0)
       activemodel
       os_map_ref
       phonelib
@@ -210,7 +210,7 @@ GEM
     hashdiff (1.0.1)
     high_voltage (3.1.2)
     http-accept (1.7.0)
-    http-cookie (1.0.3)
+    http-cookie (1.0.4)
       domain_name (~> 0.5)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
@@ -224,7 +224,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.3.0)
-    jwt (2.2.3)
+    jwt (2.3.0)
     loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -232,9 +232,9 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
     method_source (1.0.0)
-    mime-types (3.3.1)
+    mime-types (3.4.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2020.0512)
+    mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     mini_portile2 (2.7.1)
     minitest (5.15.0)
@@ -263,7 +263,7 @@ GEM
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
-    phonelib (0.6.44)
+    phonelib (0.6.55)
     protocol-hpack (1.4.2)
     protocol-http (0.22.5)
     protocol-http1 (0.14.1)
@@ -319,7 +319,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.6)
-    rbtree3 (0.6.0)
+    rbtree3 (0.7.0)
     regexp_parser (1.7.1)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -407,7 +407,7 @@ GEM
     uk_postcode (2.1.7)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.7)
+    unf_ext (0.0.8)
     unicode-display_width (1.7.0)
     useragent (0.16.10)
     validates_email_format_of (1.6.3)
