@@ -24,11 +24,9 @@ module WasteCarriersEngine
     class << self
       private
 
-      # rubocop:disable Style/ClassVars
       def feature_toggles
-        @@feature_toggles ||= load_feature_toggles
+        @feature_toggles ||= load_feature_toggles
       end
-      # rubocop:enable Style/ClassVars
 
       def from_file(feature_name)
         feature_toggles[feature_name] && (
@@ -48,7 +46,7 @@ module WasteCarriersEngine
       # Allow reloading of toggle settings
       # This is to support unit testing of environment-variable-based settings
       def reload_feature_toggles
-        @@feature_toggles = nil
+        @feature_toggles = nil
       end
     end
   end
