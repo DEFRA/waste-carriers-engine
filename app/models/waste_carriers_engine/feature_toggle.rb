@@ -44,6 +44,12 @@ module WasteCarriersEngine
       def file_path
         Rails.root.join("config/feature_toggles.yml")
       end
+
+      # Allow reloading of toggle settings
+      # This is to support unit testing of environment-variable-based settings
+      def reload_feature_toggles
+        @@feature_toggles = nil
+      end
     end
   end
 end
