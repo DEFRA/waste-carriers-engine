@@ -1,3 +1,4 @@
+<% content_for :title, t(".heading.#{@main_people_form.business_type}").html_safe %>
 <%= form_for @main_people_form do |f| %>
   <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 

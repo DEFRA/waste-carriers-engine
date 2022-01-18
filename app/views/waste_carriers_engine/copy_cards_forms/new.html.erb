@@ -1,4 +1,4 @@
-<% content_for :title, t(".title", reg_identifier: @transient_registration.reg_identifier) %>
+<% content_for :title, t(".title", reg_identifier: @transient_registration.reg_identifier).html_safe %>
 <%= render("waste_carriers_engine/shared/back", back_path: Rails.application.routes.url_helpers.registration_path(@transient_registration.reg_identifier)) %>
 
 <div class="govuk-grid-row">
