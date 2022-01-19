@@ -15,7 +15,7 @@ module WasteCarriersEngine
 
       context "When the transient_registration is a new registration" do
         let(:transient_registration) do
-          create(:new_registration, workflow_state: "company_name_form")
+          create(:new_registration, :has_required_data, workflow_state: "company_name_form")
         end
 
         include_examples "POST form",

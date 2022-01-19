@@ -8,6 +8,7 @@ FactoryBot.define do
       location { "england" }
       declared_convictions { "no" }
       temp_cards { 1 }
+      business_type { "limitedCompany" }
       contact_email { "foo@example.com" }
       first_name { "Jane" }
       last_name { "Doe" }
