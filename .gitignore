@@ -31,4 +31,4 @@
 /spec/examples.txt
 
 #Ignore VScode settings
-/vscode/settings.json
+.vscode
