@@ -9,7 +9,7 @@ module WasteCarriersEngine
     end
 
     def title
-      title_elements = [title_text, "Register as a waste carrier", "GOV.UK"]
+      title_elements = [error_title, title_text, "Register as a waste carrier", "GOV.UK"]
       # Remove empty elements, for example if no specific title is set
       title_elements.delete_if(&:empty?)
       title_elements.join(" - ")
@@ -73,6 +73,12 @@ module WasteCarriersEngine
 
       # Default to title for "new" action if the current action doesn't return anything
       t("#{controller_path.tr('/', '.')}.new.title", default: "")
+    end
+
+    def error_title
+      return content_for :error_title if content_for?(:error_title)
+    
+      ""
     end
   end
 end
