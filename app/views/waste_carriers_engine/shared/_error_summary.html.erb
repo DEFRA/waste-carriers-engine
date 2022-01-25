@@ -1,5 +1,9 @@
+<% content_for :error_title, "" %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= f.govuk_error_summary %>
+    <% if f.govuk_error_summary != nil %>
+      <% content_for :error_title, "Error" %>
+    <% end %>
   </div>
 </div>
