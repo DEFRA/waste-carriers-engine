@@ -17,22 +17,22 @@ module WasteCarriersEngine
           allow(helper).to receive(:content_for).with(:title).and_return("Foo")
           allow(helper).to receive(:content_for).with(:error_title).and_return("")
         end
-      
+
         it "returns the correct full title" do
           expect(helper.title).to eq("Foo - Register as a waste carrier - GOV.UK")
         end
-      
+
         context "when the page is displaying an error message" do
           before do
             allow(helper).to receive(:content_for).with(:error_title).and_return("Error")
           end
-      
+
           it "returns the correct full title" do
             expect(helper.title).to eq("Error - Foo - Register as a waste carrier - GOV.UK")
           end
         end
       end
-      
+
       context "when no specific title is provided" do
         it "returns the correct full title" do
           expect(helper.title).to eq("Register as a waste carrier - GOV.UK")
