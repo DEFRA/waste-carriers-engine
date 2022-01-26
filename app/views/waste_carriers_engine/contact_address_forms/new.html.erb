@@ -4,6 +4,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @contact_address_form do |form| %>
       <%= form.govuk_error_summary link_base_errors_to: 'uprn' %>
+      <% content_for :error_title, "Error" if form.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">
         <%= t(".heading") %>
