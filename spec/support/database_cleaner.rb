@@ -6,7 +6,7 @@ require "database_cleaner-mongoid"
 RSpec.configure do |config|
   # Clean the registrations and users databases before running tests
   config.before(:suite) do
-    DatabaseCleaner[:mongoid].strategy = :deletion
+    DatabaseCleaner[:mongoid].strategy = [:deletion]
     DatabaseCleaner[:mongoid, { db: :users }].strategy = :deletion
 
     DatabaseCleaner.clean
