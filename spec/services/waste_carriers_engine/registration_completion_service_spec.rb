@@ -74,7 +74,7 @@ module WasteCarriersEngine
         it "creates the correct number of order item logs" do
           expect { registration }.to change { OrderItemLog.count }
             .from(0)
-            .to(transient_registration.finance_details.orders.sum { |o| o.order_items.sum(&:quantity) })
+            .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
         end
 
         context "with multiple orders and multiple order items" do
@@ -99,7 +99,7 @@ module WasteCarriersEngine
           it "creates the correct number of order item logs" do
             expect { registration }.to change { OrderItemLog.count }
               .from(0)
-              .to(transient_registration.finance_details.orders.sum { |o| o.order_items.sum(&:quantity) })
+              .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
           end
 
           it "captures the order item types correctly" do
@@ -107,7 +107,7 @@ module WasteCarriersEngine
             registration.finance_details.orders.map do |o|
               o.order_items.each do |oi|
                 order_items_by_type[oi["type"]] ||= 0
-                order_items_by_type[oi["type"]] += oi.quantity
+                order_items_by_type[oi["type"]] += 1
               end
             end
             order_items_by_type.each do |k, _v|

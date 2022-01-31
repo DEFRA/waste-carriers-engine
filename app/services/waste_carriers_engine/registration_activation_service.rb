@@ -19,7 +19,7 @@ module WasteCarriersEngine
     def activate_registration
       @registration.metaData.date_activated = Time.current
       @registration.metaData.activate!
-      create_order_item_logs
+      OrderItemLog.create_from_registration(@registration)
     end
 
     def can_be_completed?
@@ -40,14 +40,6 @@ module WasteCarriersEngine
 
     def send_registration_confirmation
       RegistrationConfirmationService.run(registration: @registration)
-    end
-
-    def create_order_item_logs
-      @registration.finance_details.orders.each do |order|
-        order.order_items.each do |order_item|
-          OrderItemLog.create_from(order_item)
-        end
-      end
     end
 
   end

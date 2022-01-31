@@ -38,6 +38,7 @@ module WasteCarriersEngine
           copy_names_to_contact_address
           create_past_registration
           update_registration
+          create_order_item_logs
           delete_transient_registration
           send_confirmation_email
         end
@@ -93,6 +94,10 @@ module WasteCarriersEngine
     def extend_expiry_date
       expiry_check_service = ExpiryCheckService.new(registration)
       registration.expires_on = expiry_check_service.expiry_date_after_renewal
+    end
+
+    def create_order_item_logs
+      OrderItemLog.create_from_registration(transient_registration)
     end
 
     def delete_transient_registration

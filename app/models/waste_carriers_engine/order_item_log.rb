@@ -12,26 +12,26 @@ module WasteCarriersEngine
     field :order_item_id,   type: BSON::ObjectId
     field :activated_at,    type: DateTime
     field :type,            type: String
+    field :quantity,        type: Integer
 
-    # A single OrderItem can generate multiple OrderItemLogs.
-    def self.create_from(order_item)
-      order_item.quantity.times do
-        create!(order_item)
+    def self.create_from_registration(registration)
+      registration.finance_details.orders.each do |order|
+        order.order_items.each do |order_item|
+          create_from_order_item(order_item)
+        end
       end
     end
 
-    private
-
-    def initialize(order_item)
-      super()
+    def self.create_from_order_item(order_item)
       order = order_item.order
       registration = order.finance_details.registration
-
-      self.order_item_id   = order_item.id
-      self.type            = order_item.type
-      self.order_id        = order.id
-      self.registration_id = registration.id
-      self.activated_at    = registration.metaData.dateActivated
+      OrderItemLog.find_or_create_by(order_item_id: order_item.id) do |order_item_log|
+        order_item_log.type            = order_item.type
+        order_item_log.quantity        = order_item.quantity
+        order_item_log.order_id        = order.id
+        order_item_log.registration_id = registration.id
+        order_item_log.activated_at    = registration.metaData.dateActivated
+      end
     end
 
   end
