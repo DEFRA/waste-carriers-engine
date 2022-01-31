@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "faker"
 
 module WasteCarriersEngine
   RSpec.describe RegistrationCompletionService do
@@ -57,8 +58,9 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the balance have been cleared and there are no pending convictions checks" do
+      context "when the balance has been cleared and there are no pending convictions checks" do
         let(:finance_details) { build(:finance_details, :has_paid_order_and_payment) }
+        let(:registration) { described_class.run(transient_registration) }
 
         before do
           transient_registration.finance_details = finance_details
@@ -66,9 +68,56 @@ module WasteCarriersEngine
         end
 
         it "activates the registration" do
-          registration = described_class.run(transient_registration)
-
           expect(registration).to be_active
+        end
+
+        it "creates the correct number of order item logs" do
+          expect { registration }.to change { OrderItemLog.count }
+            .from(0)
+            .to(transient_registration.finance_details.orders.sum { |o| o.order_items.sum(&:quantity) })
+        end
+
+        context "with multiple orders and multiple order items" do
+          # Allow for multiple orders per registration, multiple order items per order and a variable quantity per order item
+          before do
+            orders = []
+            order_count = Faker::Number.between(from: 1, to: 3)
+            order_count.times do
+              order = build(:order)
+              order_item_count = Faker::Number.between(from: 1, to: 5)
+              order.order_items = build_list(
+                :order_item,
+                order_item_count,
+                quantity: Faker::Number.between(from: 1, to: 7),
+                type: OrderItem::TYPES.values[rand(OrderItem::TYPES.size)]
+              )
+              orders << order
+            end
+            transient_registration.finance_details.orders = orders
+          end
+
+          it "creates the correct number of order item logs" do
+            expect { registration }.to change { OrderItemLog.count }
+              .from(0)
+              .to(transient_registration.finance_details.orders.sum { |o| o.order_items.sum(&:quantity) })
+          end
+
+          it "captures the order item types correctly" do
+            order_items_by_type = {}
+            registration.finance_details.orders.map do |o|
+              o.order_items.each do |oi|
+                order_items_by_type[oi["type"]] ||= 0
+                order_items_by_type[oi["type"]] += oi.quantity
+              end
+            end
+            order_items_by_type.each do |k, _v|
+              expect(OrderItemLog.where(type: k).count).to eq order_items_by_type[k]
+            end
+          end
+
+          it "stores the registration activation date for all order items" do
+            expect(OrderItemLog.where(activated_at: registration.metaData.dateActivated).count).to eq OrderItemLog.count
+          end
         end
       end
 
@@ -104,6 +153,10 @@ module WasteCarriersEngine
             expect(Airbrake)
               .to receive(:notify)
               .with(the_error, { registration_no: transient_registration.reg_identifier })
+          end
+
+          it "does not create an order item log" do
+            expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
           end
 
           it "notifies Airbrake" do
@@ -144,6 +197,10 @@ module WasteCarriersEngine
             expect(Airbrake)
               .to receive(:notify)
               .with(the_error, { registration_no: transient_registration.reg_identifier })
+          end
+
+          it "does not create an order item log" do
+            expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
           end
 
           it "notifies Airbrake" do
@@ -195,6 +252,10 @@ module WasteCarriersEngine
                 .with(the_error, { registration_no: transient_registration.reg_identifier })
             end
 
+            it "does not create an order item log" do
+              expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
+            end
+
             it "notifies Airbrake" do
               described_class.run(transient_registration)
             end
@@ -213,6 +274,11 @@ module WasteCarriersEngine
             expect(Notify::RegistrationPendingConvictionCheckEmailService).to_not receive(:run)
 
             described_class.run(transient_registration)
+          end
+
+          it "does not create an order item log" do
+            described_class.run(transient_registration)
+            expect(OrderItemLog.count).to be_zero
           end
         end
       end
