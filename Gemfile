@@ -60,6 +60,7 @@ end
 group :test do
   gem "database_cleaner-mongoid"
   gem "factory_bot_rails", require: false
+  gem "faker"
   gem "govuk_design_system_formbuilder"
   gem "rails-controller-testing"
   gem "rspec-html-matchers"
