@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "2.7.1"
+ruby "2.7.5"
 
 # Temporary workaround until we implement webpack assets
 # See: https://github.com/sass/sassc-rails/issues/114
