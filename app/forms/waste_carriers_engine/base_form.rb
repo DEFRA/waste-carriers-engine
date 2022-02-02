@@ -70,8 +70,8 @@ module WasteCarriersEngine
     def transient_registration_valid?
       return if transient_registration.valid?
 
-      transient_registration.errors.each do |_attribute, message|
-        errors.add(:base, message)
+      transient_registration.errors.each do |error|
+        errors.add(:base, error.message)
       end
     end
 

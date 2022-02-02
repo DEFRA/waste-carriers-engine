@@ -5,8 +5,8 @@
     </h2>
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
-        <% object.errors.each do |field, message| %>
-          <li><a href="#<%= field %>"><%= message %></a></li>
+        <% object.errors.each do |error| %>
+          <li><a href="#<%= error.attribute %>"><%= error.message %></a></li>
         <% end %>
       </ul>
     </div>
