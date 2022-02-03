@@ -13,6 +13,7 @@ module WasteCarriersEngine
     field :activated_at,    type: DateTime
     field :type,            type: String
     field :quantity,        type: Integer
+    field :exported,        type: Boolean, default: false
 
     def self.create_from_registration(registration)
       registration.finance_details.orders.each do |order|

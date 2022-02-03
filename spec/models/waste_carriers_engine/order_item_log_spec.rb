@@ -29,6 +29,10 @@ module WasteCarriersEngine
           expect(subject.order_id).to eq order.id
         end
 
+        it "is not exported by default" do
+          expect(subject.exported).to be false
+        end
+
         it "copies the OrderItem attributes" do
           expect(subject.order_item_id).to eq registration_order_item.id
           expect(subject.type).to eq registration_order_item.type
