@@ -18,7 +18,7 @@ The engine is mounted in [waste-carriers-front-office](https://github.com/DEFRA/
 Make sure you already have:
 
 - Git
-- Ruby 2.7.1
+- Ruby 2.7.5
 - [Bundler](http://bundler.io/) – for installing Ruby gems
 - MongoDb 3.6
 
