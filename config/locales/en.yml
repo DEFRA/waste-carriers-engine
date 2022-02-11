@@ -49,7 +49,7 @@ en:
   invalid_reg_identifier_text: If you have recently completed a registration then check your email.
 
   no_permissions_title: Cannot access registration
-  no_permissions_heading: You do not have permission to access that registration
+  no_permissions_heading: You do not have permission to access that page
   no_permissions_text: Try searching again.
 
   unrenewable_title: Cannot renew registration
