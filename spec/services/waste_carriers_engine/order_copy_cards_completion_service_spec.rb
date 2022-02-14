@@ -64,6 +64,9 @@ module WasteCarriersEngine
           expect(registration.finance_details.payments).not_to include(transient_finance_details.payments[0])
         end
 
+        it "does not create an order item log" do
+          expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
+        end
       end
 
       context "when the registration has been paid in full" do
@@ -79,6 +82,9 @@ module WasteCarriersEngine
           expect(registration.finance_details.payments).to include(transient_finance_details.payments[0])
         end
 
+        it "creates one or more order item logs" do
+          expect { described_class.run(transient_registration) }.to change { OrderItemLog.count }.from(0)
+        end
       end
 
     end

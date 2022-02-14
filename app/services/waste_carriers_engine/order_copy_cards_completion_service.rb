@@ -28,6 +28,16 @@ module WasteCarriersEngine
       merge_finance_details
 
       registration.save!
+
+      # Log the order items only if payment is complete.
+      if !@transient_registration.unpaid_balance?
+        OrderItemLog.create_from_registration(registration)
+      else
+        # Orders paid using alternate payment methods are not currently
+        # included in the card order export. Just log these.
+        Rails.logger.warn("Copy card order payment incomplete "\
+        "for registration #{@transient_registration.reg_identifier}")
+      end
     end
 
     def delete_transient_registration
