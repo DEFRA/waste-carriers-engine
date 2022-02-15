@@ -170,5 +170,11 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "#registration" do
+      it "raises a not implemented error" do
+        expect { transient_registration.registration }.to raise_error(NotImplementedError)
+      end
+    end
   end
 end
