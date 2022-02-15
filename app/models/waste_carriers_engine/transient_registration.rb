@@ -56,6 +56,10 @@ module WasteCarriersEngine
       save
     end
 
+    def registration
+      raise NotImplementedError
+    end
+
     private
 
     def registration_type_base_charges

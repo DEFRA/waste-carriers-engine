@@ -5,129 +5,88 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe OrderCopyCardsCompletionService do
     describe ".run" do
-      let(:ad_contact_email) { false }
-      let(:finance_details) { double(:finance_details) }
-      let(:transient_finance_details) { double(:transient_finance_details) }
-      let(:registration) { double(:registration, finance_details: finance_details) }
-      let(:transient_registration) do
-        double(
-          :transient_registration,
-          registration: registration,
-          finance_details: transient_finance_details,
-          ad_contact_email?: ad_contact_email
-        )
-      end
 
-      context "when the registration have not been paid in full" do
-        it "completes an order and sends an awaiting payment email" do
-          orders = double(:orders)
-          payments = double(:payments)
-          transient_order = double(:transient_order)
-          transient_payment = double(:transient_payment)
+      let(:contact_email) { Faker::Internet.email }
+      let(:transient_registration) { create(:order_copy_cards_registration, :has_finance_details, contact_email: contact_email) }
+      let(:registration) { transient_registration.registration }
+      let(:transient_finance_details) { transient_registration.finance_details }
 
-          # Merge finance details
-          allow(registration).to receive(:finance_details).and_return(finance_details)
-          allow(transient_registration).to receive(:finance_details).and_return(transient_finance_details)
-          expect(finance_details).to receive(:update_balance)
-
-          ## Merge orders
-          allow(finance_details).to receive(:orders).and_return(orders)
-          allow(transient_finance_details).to receive(:orders).and_return([transient_order])
-          expect(orders).to receive(:<<).with(transient_order)
-
-          ## Merge payments
-          expect(finance_details).to receive(:payments).and_return(payments).twice
-          expect(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
-          expect(payments).to receive(:<<).with(transient_payment)
-
-          # Deletes transient registration
-          expect(transient_registration).to receive(:delete)
-
-          # Save registration
-          expect(registration).to receive(:save!)
-
-          # Send email
-          expect(transient_registration).to receive(:unpaid_balance?).and_return(true)
-          expect(Notify::CopyCardsAwaitingPaymentEmailService)
-            .to receive(:run)
-            .with(registration: registration, order: transient_order)
-
+      RSpec.shared_examples "completes the order" do |notify_email_service|
+        it "merges finance details" do
+          expect(registration.finance_details).to receive(:update_balance)
           described_class.run(transient_registration)
+        end
+
+        it "merges the order" do
+          described_class.run(transient_registration)
+          expect(registration.finance_details.orders).to include(transient_finance_details.orders[0])
+        end
+
+        it "deletes the transient registration" do
+          expect(transient_registration).to receive(:delete)
+          described_class.run(transient_registration)
+        end
+
+        it "saves the registration" do
+          expect(registration).to receive(:save!)
+          described_class.run(transient_registration)
+        end
+
+        context "with a non-assisted-digital email address" do
+          let(:contact_email) { Faker::Internet.email }
+
+          it "sends an email using the appropriate service" do
+            expect(notify_email_service)
+              .to receive(:run)
+              .with(registration: registration, order: transient_finance_details.orders[0])
+            described_class.run(transient_registration)
+          end
+        end
+
+        context "when the registration has an AD contact email" do
+          let(:contact_email) { WasteCarriersEngine.configuration.assisted_digital_email }
+
+          it "does not send an email" do
+            expect(notify_email_service).not_to receive(:run)
+          end
         end
       end
 
-      it "completes an order and sends a confirmation email" do
-        orders = double(:orders)
-        payments = double(:payments)
-        transient_order = double(:transient_order)
-        transient_payment = double(:transient_payment)
+      context "when the registration has not been paid in full" do
+        before do
+          allow(transient_registration).to receive(:unpaid_balance?).and_return(true)
+        end
 
-        # Merge finance details
-        allow(registration).to receive(:finance_details).and_return(finance_details)
-        allow(transient_registration).to receive(:finance_details).and_return(transient_finance_details)
-        expect(finance_details).to receive(:update_balance)
+        it_behaves_like "completes the order", Notify::CopyCardsAwaitingPaymentEmailService
 
-        ## Merge orders
-        allow(finance_details).to receive(:orders).and_return(orders)
-        allow(transient_finance_details).to receive(:orders).and_return([transient_order])
-        expect(orders).to receive(:<<).with(transient_order)
-
-        ## Merge payments
-        expect(finance_details).to receive(:payments).and_return(payments).twice
-        expect(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
-        expect(payments).to receive(:<<).with(transient_payment)
-
-        # Deletes transient registration
-        expect(transient_registration).to receive(:delete)
-
-        # Save registration
-        expect(registration).to receive(:save!)
-
-        # Send email
-        expect(transient_registration).to receive(:unpaid_balance?).and_return(false)
-        expect(Notify::CopyCardsOrderCompletedEmailService)
-          .to receive(:run)
-          .with(registration: registration, order: transient_order)
-
-        described_class.run(transient_registration)
-      end
-
-      context "when the registration has an AD contact email" do
-        let(:ad_contact_email) { true }
-
-        it "does not send an email" do
-          orders = double(:orders)
-          payments = double(:payments)
-          transient_order = double(:transient_order)
-          transient_payment = double(:transient_payment)
-
-          # Merge finance details
-          allow(registration).to receive(:finance_details).and_return(finance_details)
-          allow(transient_registration).to receive(:finance_details).and_return(transient_finance_details)
-          expect(finance_details).to receive(:update_balance)
-
-          ## Merge orders
-          allow(finance_details).to receive(:orders).and_return(orders)
-          allow(transient_finance_details).to receive(:orders).and_return([transient_order])
-          expect(orders).to receive(:<<).with(transient_order)
-
-          ## Merge payments
-          expect(finance_details).to receive(:payments).and_return(payments).twice
-          expect(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
-          expect(payments).to receive(:<<).with(transient_payment)
-
-          # Deletes transient registration
-          expect(transient_registration).to receive(:delete)
-
-          # Save registration
-          expect(registration).to receive(:save!)
-
-          # Don't send email
-          expect(Notify::CopyCardsOrderCompletedEmailService).not_to receive(:run)
-
+        it "does not merge the payment" do
           described_class.run(transient_registration)
+          expect(registration.finance_details.payments).not_to include(transient_finance_details.payments[0])
+        end
+
+        it "does not create an order item log" do
+          expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
         end
       end
+
+      context "when the registration has been paid in full" do
+        before do
+          transient_finance_details.payments << build(:payment, :bank_transfer, amount: 500)
+          transient_finance_details.update_balance
+        end
+
+        it_behaves_like "completes the order", Notify::CopyCardsOrderCompletedEmailService
+
+        it "merges the payment" do
+          described_class.run(transient_registration)
+          expect(registration.finance_details.payments).to include(transient_finance_details.payments[0])
+        end
+
+        it "creates one or more order item logs" do
+          expect { described_class.run(transient_registration) }.to change { OrderItemLog.count }.from(0)
+        end
+      end
+
     end
   end
 end
