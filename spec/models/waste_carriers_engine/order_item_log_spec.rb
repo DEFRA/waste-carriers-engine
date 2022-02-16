@@ -74,6 +74,13 @@ module WasteCarriersEngine
         end
 
       end
+
+      context "with an order activation time value" do
+        it "sets the activation time to the provided time" do
+          described_class.create_from_registration(registration, DateTime.now)
+          expect(described_class.first.activated_at.to_time).to be_within(1.second).of(Time.now)
+        end
+      end
     end
 
     def order_item_count(registration)
