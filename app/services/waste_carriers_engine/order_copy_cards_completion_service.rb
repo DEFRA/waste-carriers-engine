@@ -31,7 +31,7 @@ module WasteCarriersEngine
 
       # Log the order items only if payment is complete.
       if !@transient_registration.unpaid_balance?
-        OrderItemLog.create_from_registration(registration)
+        OrderItemLog.create_from_registration(registration, Time.now)
       else
         # Orders paid using alternate payment methods are not currently
         # included in the card order export. Just log these.

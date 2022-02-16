@@ -11,6 +11,11 @@ module WasteCarriersEngine
       let(:registration) { transient_registration.registration }
       let(:transient_finance_details) { transient_registration.finance_details }
 
+      # Ensure registration activation date is prior to the card order date
+      before do
+        registration.metaData.dateActivated = 1.month.ago
+      end
+
       RSpec.shared_examples "completes the order" do |notify_email_service|
         it "merges finance details" do
           expect(registration.finance_details).to receive(:update_balance)
@@ -84,6 +89,12 @@ module WasteCarriersEngine
 
         it "creates one or more order item logs" do
           expect { described_class.run(transient_registration) }.to change { OrderItemLog.count }.from(0)
+        end
+
+        it "creates order item logs with activated_at set to the current time" do
+          described_class.run(transient_registration)
+          first_card_order_item = OrderItemLog.where(type: "COPY_CARDS").first
+          expect(first_card_order_item.activated_at.to_time).to be_within(1.second).of(Time.now)
         end
       end
 
