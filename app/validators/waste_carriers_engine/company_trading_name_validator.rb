@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class CompanyNameValidator < ActiveModel::EachValidator
+  class CompanyTradingNameValidator < ActiveModel::EachValidator
     include CanAddValidationErrors
 
     def validate_each(record, attribute, value)

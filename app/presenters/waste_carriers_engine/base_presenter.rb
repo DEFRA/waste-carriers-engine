@@ -7,8 +7,8 @@ module WasteCarriersEngine
   # presenter which are not recognised, pass down to the model passed in. For
   # example if `CertificatePresenter` inherits `BasePresenter`, and we pass in
   # an instance of `Registration`, when it is instantiated you can call
-  # `@presenter.company_name` without having to explicitly expose a method or
-  # attribute on the `CertificatePresenter`.
+  # `@presenter.company_trading_name` without having to explicitly expose a method
+  # or attribute on the `CertificatePresenter`.
   class BasePresenter < SimpleDelegator
 
     def initialize(model, view = nil)

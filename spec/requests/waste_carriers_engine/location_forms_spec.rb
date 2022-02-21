@@ -55,7 +55,7 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
-                   workflow_state: "company_name_form")
+                   workflow_state: "company_trading_name_form")
           end
 
           context "when the back action is triggered" do
@@ -63,7 +63,7 @@ module WasteCarriersEngine
               get back_location_forms_path(transient_registration[:token])
 
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_company_trading_name_form_path(transient_registration[:token]))
             end
           end
         end

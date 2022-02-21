@@ -11,7 +11,7 @@ module WasteCarriersEngine
         current_state = :edit_form
         non_address_editable_form_states = %i[
           cbd_type_form
-          company_name_form
+          company_trading_name_form
           main_people_form
           contact_name_form
           contact_phone_form

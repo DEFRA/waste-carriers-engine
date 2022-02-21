@@ -113,11 +113,11 @@ module WasteCarriersEngine
             context "when the location is 'overseas'" do
               before(:each) { transient_registration.update_attributes(location: "overseas") }
 
-              it "returns a 302 response and redirects to the company_name form" do
+              it "returns a 302 response and redirects to the company_trading_name form" do
                 get back_company_address_manual_forms_path(transient_registration.token)
 
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_company_name_form_path(transient_registration.token))
+                expect(response).to redirect_to(new_company_trading_name_form_path(transient_registration.token))
               end
             end
 

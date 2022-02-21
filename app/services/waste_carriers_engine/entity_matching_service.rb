@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def check_business_for_matches
-      data = ConvictionsCheck::OrganisationMatchService.run(name: @transient_registration.company_name,
+      data = ConvictionsCheck::OrganisationMatchService.run(name: @transient_registration.company_trading_name,
                                                             company_no: @transient_registration.company_no)
       store_match_result(@transient_registration, data)
     end

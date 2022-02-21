@@ -98,7 +98,7 @@ en:
             business_type:
               inclusion: "Select a valid business or organisation type"
               invalid_change: "Because your business type has changed, you cannot renew and must make a new registration instead"
-            company_name:
+            company_trading_name:
               blank: "Enter a trading name"
               too_long: "Enter a shorter trading name with no more than 255 characters"
             contact_address:

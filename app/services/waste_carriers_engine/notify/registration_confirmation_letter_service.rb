@@ -39,7 +39,7 @@ module WasteCarriersEngine
         {
           contact_name: contact_name,
           reg_identifier: @registration.reg_identifier,
-          company_name: @registration.company_name,
+          company_trading_name: @registration.company_trading_name,
           registered_address: registered_address,
           phone_number: @registration.phone_number,
           date_registered: date_registered

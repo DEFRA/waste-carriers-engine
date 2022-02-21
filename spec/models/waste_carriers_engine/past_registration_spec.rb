@@ -20,7 +20,7 @@ module WasteCarriersEngine
       end
 
       it "copies attributes from the registration" do
-        expect(past_registration.company_name).to eq(registration.company_name)
+        expect(past_registration.company_trading_name).to eq(registration.company_trading_name)
       end
 
       it "copies nested objects from the registration" do

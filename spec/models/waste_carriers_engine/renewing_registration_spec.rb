@@ -78,12 +78,12 @@ module WasteCarriersEngine
         let(:registration) do
           create(:registration,
                  :has_required_data,
-                 company_name: " test ")
+                 company_trading_name: " test ")
         end
 
         it "strips the whitespace from the attributes" do
           renewing_registration = RenewingRegistration.new(reg_identifier: registration.reg_identifier)
-          expect(renewing_registration.company_name).to eq("test")
+          expect(renewing_registration.company_trading_name).to eq("test")
         end
       end
 

@@ -7,7 +7,7 @@ module WasteCarriersEngine
     subject { described_class.new(registration, view) }
 
     let(:business_type) { "limitedCompany" }
-    let(:company_name) { "Acme Waste" }
+    let(:company_trading_name) { "Acme Waste" }
     let(:registration_type) { "carrier_broker_dealer" }
 
     let(:person_a) { double(:key_person, first_name: "Kate", last_name: "Franklin", person_type: "KEY") }
@@ -26,7 +26,7 @@ module WasteCarriersEngine
     let(:registration) do
       double(:registration,
              business_type: business_type,
-             company_name: company_name,
+             company_trading_name: company_trading_name,
              registration_type: registration_type,
              main_people: main_people,
              metaData: metaData,
@@ -36,7 +36,7 @@ module WasteCarriersEngine
 
     describe "calling root model attributes" do
       it "returns the value of the attribute" do
-        expect(subject.company_name).to eq(company_name)
+        expect(subject.company_trading_name).to eq(company_trading_name)
       end
     end
 
@@ -46,7 +46,7 @@ module WasteCarriersEngine
         let(:upper_tier) { false }
 
         it "returns the company name" do
-          expect(subject.carrier_name).to eq(company_name)
+          expect(subject.carrier_name).to eq(company_trading_name)
         end
       end
 
@@ -62,7 +62,7 @@ module WasteCarriersEngine
 
         context "when the registration business type is NOT 'sole trader'" do
           it "returns the company name" do
-            expect(subject.carrier_name).to eq(company_name)
+            expect(subject.carrier_name).to eq(company_trading_name)
           end
         end
       end
@@ -135,7 +135,7 @@ module WasteCarriersEngine
 
       context "when the registration business type is NOT 'partnership'" do
         it "returns the company name" do
-          expect(subject.complex_organisation_name).to eq(company_name)
+          expect(subject.complex_organisation_name).to eq(company_trading_name)
         end
       end
     end

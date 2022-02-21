@@ -1,6 +1,6 @@
 en:
   waste_carriers_engine:
-    company_name_forms:
+    company_trading_name_forms:
       new:
         title: Business or organisation name
         heading:
@@ -13,7 +13,7 @@ en:
           charity: What's the name of the charity or trust?
           authority: What's the name of the local authority?
           publicBody: What's the name of the public body?
-        company_name_label:
+        company_trading_name_label:
           localAuthority: Enter your local authority or public body name
           limitedCompany: Enter your company trading name
           limitedLiabilityPartnership: Enter your partnership trading name
@@ -28,9 +28,9 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine/company_name_form:
+        waste_carriers_engine/company_trading_name_form:
           attributes:
-            company_name:
+            company_trading_name:
               blank: "Enter a trading name"
               too_long: "Enter a shorter trading name with no more than 255 characters"
             reg_identifier:

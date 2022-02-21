@@ -19,7 +19,7 @@ en:
             heading: Waste carrier business details
             labels:
               business_type: Type
-              company_name: Name
+              company_trading_name: Name
               company_no: Company number
               main_people: Main people
               registered_address: Address
@@ -44,7 +44,7 @@ en:
           fee: Change (£40 fee)
           visually_hidden:
             registration_type: registration type
-            company_name: business name
+            company_trading_name: business name
             main_people: main people
             registered_address: business address
             contact_name: contact name

@@ -16,8 +16,8 @@ module WasteCarriersEngine
       transition_to_edit("edit_cbd_type")
     end
 
-    def edit_company_name
-      transition_to_edit("edit_company_name")
+    def edit_company_trading_name
+      transition_to_edit("edit_company_trading_name")
     end
 
     def edit_main_people

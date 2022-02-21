@@ -108,7 +108,7 @@ FactoryBot.define do
     end
 
     trait :has_matching_convictions do
-      company_name { "Test Waste Services" }
+      company_trading_name { "Test Waste Services" }
       company_no { "12345678" }
 
       key_people do

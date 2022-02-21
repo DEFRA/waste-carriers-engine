@@ -31,7 +31,7 @@ module WasteCarriersEngine
 
     include_examples "validate yes no", :check_your_answers_form, :declared_convictions
     include_examples "validate business_type", :check_your_answers_form
-    include_examples "validate company_name", :check_your_answers_form
+    include_examples "validate company_trading_name", :check_your_answers_form
     include_examples "validate company_no", :check_your_answers_form
     include_examples "validate email", :check_your_answers_form, :contact_email
     include_examples "validate location", :check_your_answers_form

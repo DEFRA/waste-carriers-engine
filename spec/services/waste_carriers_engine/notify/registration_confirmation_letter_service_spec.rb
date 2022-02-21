@@ -22,7 +22,7 @@ module WasteCarriersEngine
                 contact_name: "Jane Doe",
                 registration_type: "carrier, broker and dealer",
                 reg_identifier: registration.reg_identifier,
-                company_name: "Acme Waste",
+                company_trading_name: "Acme Waste",
                 registered_address: "42, Foo Gardens, Baz City, BS1 1AA",
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
@@ -70,7 +70,7 @@ module WasteCarriersEngine
               personalisation: {
                 contact_name: "Jane Doe",
                 reg_identifier: registration.reg_identifier,
-                company_name: "Acme Waste",
+                company_trading_name: "Acme Waste",
                 registered_address: "42, Foo Gardens, Baz City, BS1 1AA",
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),

@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     delegate :metaData, to: :transient_registration
     delegate :status, :revoked_reason, to: :metaData, allow_nil: true
-    delegate :contact_address, :company_name, :registration_type, :tier, to: :transient_registration
+    delegate :contact_address, :company_trading_name, :registration_type, :tier, to: :transient_registration
 
     validate :validate_status
     validate :validate_revoked_reason

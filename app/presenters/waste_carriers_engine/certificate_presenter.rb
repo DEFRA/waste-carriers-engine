@@ -13,7 +13,7 @@ module WasteCarriersEngine
       if upper_tier_sole_trader?
         list_main_people
       else
-        company_name
+        company_trading_name
       end
     end
 
@@ -39,7 +39,7 @@ module WasteCarriersEngine
       if upper_tier_partnership?
         list_main_people
       else
-        company_name
+        company_trading_name
       end
     end
 

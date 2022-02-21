@@ -2,6 +2,6 @@
 
 module WasteCarriersEngine
   class CeasedOrRevokedConfirmForm < ::WasteCarriersEngine::BaseForm
-    delegate :contact_address, :company_name, :registration_type, :tier, to: :transient_registration
+    delegate :contact_address, :company_trading_name, :registration_type, :tier, to: :transient_registration
   end
 end

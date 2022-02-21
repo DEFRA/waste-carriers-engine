@@ -5,7 +5,8 @@ module WasteCarriersEngine
     include CanLimitNumberOfMainPeople
     include CanLimitNumberOfRelevantPeople
 
-    delegate :business_type, :company_name, :company_no, :contact_address, :contact_email, to: :transient_registration
+    delegate :business_type, :company_trading_name, :company_no, :contact_address, :contact_email,
+             to: :transient_registration
     delegate :first_name, :last_name, :location, :main_people, :phone_number, to: :transient_registration
     delegate :registration_type, :relevant_people, :tier, to: :transient_registration
     delegate :registered_address, :declared_convictions, to: :transient_registration
@@ -15,7 +16,7 @@ module WasteCarriersEngine
       allow_overseas: true,
       messages: custom_error_messages(:business_type, :inclusion)
     }
-    validates :company_name, "waste_carriers_engine/company_name": true
+    validates :company_trading_name, "waste_carriers_engine/company_trading_name": true
     validates :company_no, "defra_ruby/validators/companies_house_number": true, if: :company_no_required?
     validates :contact_address, "waste_carriers_engine/address": true
     validates :contact_email, "defra_ruby/validators/email": {

@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"template_id":"92817aa7-6289-4837-a033-96d287644cb3","personalisation":{"contact_name":"Jane
-        Doe","reg_identifier":"CBDU1","company_name":"Acme Waste","registered_address":"42,
+        Doe","reg_identifier":"CBDU1","company_trading_name":"Acme Waste","registered_address":"42,
         Foo Gardens, Baz City, BS1 1AA","phone_number":"03708 506506","date_registered":"10
         May 2021","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
         Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA","expiry_date":"10

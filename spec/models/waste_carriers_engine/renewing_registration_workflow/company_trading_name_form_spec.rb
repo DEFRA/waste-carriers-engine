@@ -9,13 +9,13 @@ module WasteCarriersEngine
             :has_required_data,
             business_type: business_type,
             location: location,
-            workflow_state: "company_name_form")
+            workflow_state: "company_trading_name_form")
     end
     let(:location) { "england" }
     let(:business_type) { "soleTrader" }
 
     describe "#workflow_state" do
-      context ":company_name_form state transitions" do
+      context ":company_trading_name_form state transitions" do
         context "on next" do
           include_examples "has next transition", next_state: "company_postcode_form"
 

@@ -20,7 +20,7 @@ module WasteCarriersEngine
         state :cbd_type_form
 
         # Business details
-        state :company_name_form
+        state :company_trading_name_form
         state :main_people_form
         state :company_postcode_form
         state :company_address_form
@@ -52,9 +52,9 @@ module WasteCarriersEngine
                       to: :cbd_type_form
         end
 
-        event :edit_company_name do
+        event :edit_company_trading_name do
           transitions from: :edit_form,
-                      to: :company_name_form
+                      to: :company_trading_name_form
         end
 
         event :edit_main_people do
@@ -107,7 +107,7 @@ module WasteCarriersEngine
                       to: :edit_form
 
           # Business details
-          transitions from: :company_name_form,
+          transitions from: :company_trading_name_form,
                       to: :edit_form
 
           transitions from: :main_people_form,
@@ -195,7 +195,7 @@ module WasteCarriersEngine
                       to: :edit_form
 
           # Business details
-          transitions from: :company_name_form,
+          transitions from: :company_trading_name_form,
                       to: :edit_form
 
           transitions from: :main_people_form,

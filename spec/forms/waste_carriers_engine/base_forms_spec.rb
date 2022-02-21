@@ -8,10 +8,10 @@ module WasteCarriersEngine
       let(:base_form) { build(:base_form, :has_required_data) }
 
       it "should strip excess whitespace from attributes" do
-        attributes = { company_name: " test " }
+        attributes = { company_trading_name: " test " }
 
         base_form.submit(attributes)
-        expect(base_form.transient_registration.company_name).to eq("test")
+        expect(base_form.transient_registration.company_trading_name).to eq("test")
       end
 
       it "should strip excess whitespace from attributes within an array" do
