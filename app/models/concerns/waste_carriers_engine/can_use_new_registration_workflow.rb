@@ -39,6 +39,7 @@ module WasteCarriersEngine
 
         state :cbd_type_form
         state :registration_number_form
+        state :check_companys_form
 
         state :company_trading_name_form
         state :company_postcode_form
@@ -186,7 +187,10 @@ module WasteCarriersEngine
                       to: :registration_number_form
 
           transitions from: :registration_number_form,
-                      to: :company_trading_name_form
+                      to: :check_companys_form
+
+          transitions from: :check_companys_form,
+                      to: :declare_convictions_form
 
           transitions from: :company_trading_name_form,
                       to: :company_address_manual_form,
@@ -414,7 +418,7 @@ module WasteCarriersEngine
                       to: :cbd_type_form,
                       if: :skip_registration_number?
 
-          transitions from: :company_trading_name_form,
+          transitions from: :check_companys_form,
                       to: :registration_number_form
 
           transitions from: :other_businesses_form,
