@@ -346,6 +346,16 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
+    resources :check_companys_forms,
+              only: %i[new create],
+              path: "check-companys-form",
+              path_names: {new: ""} do
+                get "back",
+                    to:"check_companys_forms#go_back",
+                    as: "back",
+                    on: :collection
+              end 
+
     resources :company_name_forms,
               only: %i[new create],
               path: "company-name",

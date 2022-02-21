@@ -4,17 +4,17 @@ module WasteCarriersEngine
   class CheckCompanysFormsController < ::WasteCarriersEngine::FormsController
 
     def new
-      super(CheckCompanyForm, "check_companys_form")
+      super(CheckCompanysForm, "check_companys_form")
     end
 
     def create
-      super(CheckCompanyForm, "check_company_form")
+      super(CheckCompanysForm, "check_companys_form")
     end
 
     private
 
     def transient_registration_attributes
-      params.fetch(:check_company_form, {}).permit(:temp_use_companies_house_details)
+      params.fetch(:check_companys_form, {}).permit(:temp_use_companies_house_details)
     end
   end
 end
