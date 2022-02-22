@@ -2,6 +2,6 @@
 
 module WasteCarriersEngine
   class CheckCompanysForm < ::WasteCarriersEngine::BaseForm
-    
+
   end
 end
