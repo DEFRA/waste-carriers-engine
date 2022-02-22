@@ -44,6 +44,7 @@ module WasteCarriersEngine
       field :accountEmail, as: :account_email,                              type: String
       field :businessType, as: :business_type,                              type: String
       field :companyName, as: :company_trading_name,                        type: String
+      field :companyRegisteredName, as: :company_registered_name,           type: String
       field :company_no,                                                    type: String # May include letters, despite name
       field :constructionWaste, as: :construction_waste,                    type: String # 'yes' or 'no' - should refactor to boolean
       field :contactEmail, as: :contact_email,                              type: String
@@ -198,6 +199,18 @@ module WasteCarriersEngine
 
       def email_to_send_receipt
         receipt_email || contact_email
+      end
+
+      def company_name
+        if company_trading_name.present?
+          if company_registered_name.present?
+            "#{company_registered_name} t/a #{company_trading_name}"
+          else
+            company_trading_name
+          end
+        else
+          company_registered_name
+        end
       end
     end
     # rubocop:enable Metrics/BlockLength
