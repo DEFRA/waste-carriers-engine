@@ -190,7 +190,7 @@ module WasteCarriersEngine
                       to: :check_companys_form
 
           transitions from: :check_companys_form,
-                      to: :declare_convictions_form
+                      to: :company_trading_name_form
 
           transitions from: :company_trading_name_form,
                       to: :company_address_manual_form,
@@ -393,6 +393,10 @@ module WasteCarriersEngine
           transitions from: :company_trading_name_form,
                       to: :your_tier_form,
                       if: :lower_tier?
+
+          transitions from: :company_trading_name_form,
+                      to: :check_companys_form,
+                      unless: :skip_registration_number?
 
           transitions from: :your_tier_form,
                       to: :business_type_form,

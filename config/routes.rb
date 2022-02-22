@@ -124,7 +124,7 @@ WasteCarriersEngine::Engine.routes.draw do
                     as: "cbd_type",
                     on: :collection
 
-                get "company-name",
+                get "company-trading-name",
                     to: "edit_forms#edit_company_trading_name",
                     as: "company_trading_name",
                     on: :collection
@@ -349,16 +349,16 @@ WasteCarriersEngine::Engine.routes.draw do
     resources :check_companys_forms,
               only: %i[new create],
               path: "check-companys-form",
-              path_names: {new: ""} do
+              path_names: { new: "" } do
                 get "back",
-                    to:"check_companys_forms#go_back",
+                    to: "check_companys_forms#go_back",
                     as: "back",
                     on: :collection
-              end 
+              end
 
     resources :company_trading_name_forms,
               only: %i[new create],
-              path: "company-name",
+              path: "company-trading-name",
               path_names: { new: "" } do
                 get "back",
                     to: "company_trading_name_forms#go_back",
