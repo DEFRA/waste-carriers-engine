@@ -440,7 +440,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns the registered name" do
-        expect(registration.company_name).to eq "#{registered_name} t/a #{trading_name}"
+        expect(registration.company_name).to eq "#{registered_name} trading as #{trading_name}"
       end
     end
   end

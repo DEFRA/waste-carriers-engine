@@ -204,7 +204,7 @@ module WasteCarriersEngine
       def company_name
         if company_trading_name.present?
           if company_registered_name.present?
-            "#{company_registered_name} t/a #{company_trading_name}"
+            "#{company_registered_name} trading as #{company_trading_name}"
           else
             company_trading_name
           end
