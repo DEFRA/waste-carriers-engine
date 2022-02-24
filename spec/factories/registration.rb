@@ -9,7 +9,7 @@ FactoryBot.define do
     trait :has_required_data do
       account_email { "foo@example.com" }
       business_type { "limitedCompany" }
-      company_trading_name { "Acme Waste" }
+      business_name { "Acme Waste" }
       company_no { "09360070" } # We need to use a valid company number
       contact_email { "foo@example.com" }
       first_name { "Jane" }
@@ -61,7 +61,7 @@ FactoryBot.define do
     trait :has_required_overseas_data do
       account_email { "foo@example.com" }
       business_type { "overseas" }
-      company_trading_name { "Acme Waste" }
+      business_name { "Acme Waste" }
       contact_email { "foo@example.com" }
       first_name { "Jane" }
       last_name { "Doe" }

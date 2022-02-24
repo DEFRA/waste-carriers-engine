@@ -30,7 +30,7 @@ module WasteCarriersEngine
     def build_order(xml)
       order_code = @order.order_code
       reg_identifier = @transient_registration.reg_identifier
-      company_trading_name = @transient_registration.company_trading_name
+      business_name = @transient_registration.business_name
       value = @order.total_amount
 
       xml.order(orderCode: order_code) do
@@ -39,11 +39,11 @@ module WasteCarriersEngine
         xml.amount(currencyCode: "GBP", value: value, exponent: "2")
 
         if @transient_registration.is_a?(WasteCarriersEngine::RenewingRegistration)
-          xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_trading_name}"
+          xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{business_name}"
         elsif @transient_registration.is_a?(WasteCarriersEngine::EditRegistration)
-          xml.orderContent "Waste Carrier Registration edit: #{reg_identifier} for #{company_trading_name}"
+          xml.orderContent "Waste Carrier Registration edit: #{reg_identifier} for #{business_name}"
         else
-          xml.orderContent "Waste Carrier Registration: #{reg_identifier} for #{company_trading_name}"
+          xml.orderContent "Waste Carrier Registration: #{reg_identifier} for #{business_name}"
         end
 
         build_payment_methods(xml)

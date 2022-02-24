@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe RenewingRegistration do
     describe "#workflow_state" do
       it_behaves_like "a postcode transition",
-                      previous_state: :company_trading_name_form,
+                      previous_state: :business_name_form,
                       address_type: "company",
                       factory: :renewing_registration
     end

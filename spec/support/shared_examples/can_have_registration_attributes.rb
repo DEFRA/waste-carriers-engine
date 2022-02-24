@@ -405,42 +405,42 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
 
   describe "#company_name" do
     let(:registration) { build(:registration, :has_required_data) }
-    let(:registered_name) { Faker::Company.name }
-    let(:trading_name) { Faker::Lorem.sentence(word_count: 3) }
+    let(:registered_company_name) { Faker::Company.name }
+    let(:business_name) { Faker::Lorem.sentence(word_count: 3) }
 
     context "with a registered name and without a trading name" do
 
       before do
-        registration.company_registered_name = registered_name
-        registration.company_trading_name = nil
+        registration.registered_company_name = registered_company_name
+        registration.business_name = nil
       end
 
       it "returns the registered name" do
-        expect(registration.company_name).to eq registered_name
+        expect(registration.company_name).to eq registered_company_name
       end
     end
 
     context "without a registered name and with a trading name" do
 
       before do
-        registration.company_registered_name = nil
-        registration.company_trading_name = trading_name
+        registration.registered_company_name = nil
+        registration.business_name = business_name
       end
 
       it "returns the trading name" do
-        expect(registration.company_name).to eq trading_name
+        expect(registration.company_name).to eq business_name
       end
     end
 
     context "with both a registered name and a trading name" do
 
       before do
-        registration.company_registered_name = registered_name
-        registration.company_trading_name = trading_name
+        registration.registered_company_name = registered_company_name
+        registration.business_name = business_name
       end
 
       it "returns the registered name" do
-        expect(registration.company_name).to eq "#{registered_name} trading as #{trading_name}"
+        expect(registration.company_name).to eq "#{registered_company_name} trading as #{business_name}"
       end
     end
   end

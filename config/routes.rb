@@ -125,8 +125,8 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
 
                 get "company-trading-name",
-                    to: "edit_forms#edit_company_trading_name",
-                    as: "company_trading_name",
+                    to: "edit_forms#edit_business_name",
+                    as: "business_name",
                     on: :collection
 
                 get "main-people",
@@ -356,12 +356,12 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
-    resources :company_trading_name_forms,
+    resources :business_name_forms,
               only: %i[new create],
               path: "company-trading-name",
               path_names: { new: "" } do
                 get "back",
-                    to: "company_trading_name_forms#go_back",
+                    to: "business_name_forms#go_back",
                     as: "back",
                     on: :collection
               end

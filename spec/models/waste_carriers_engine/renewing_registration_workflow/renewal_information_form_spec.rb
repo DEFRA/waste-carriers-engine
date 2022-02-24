@@ -20,7 +20,7 @@ module WasteCarriersEngine
           context "when the business type is localAuthority" do
             let(:business_type) { "localAuthority" }
 
-            include_examples "has next transition", next_state: "company_trading_name_form"
+            include_examples "has next transition", next_state: "business_name_form"
           end
 
           context "when the business type is limitedCompany" do
@@ -38,19 +38,19 @@ module WasteCarriersEngine
           context "when the location is overseas" do
             let(:location) { "overseas" }
 
-            include_examples "has next transition", next_state: "company_trading_name_form"
+            include_examples "has next transition", next_state: "business_name_form"
           end
 
           context "when the business type is partnership" do
             let(:business_type) { "partnership" }
 
-            include_examples "has next transition", next_state: "company_trading_name_form"
+            include_examples "has next transition", next_state: "business_name_form"
           end
 
           context "when the business type is soleTrader" do
             let(:business_type) { "soleTrader" }
 
-            include_examples "has next transition", next_state: "company_trading_name_form"
+            include_examples "has next transition", next_state: "business_name_form"
           end
         end
 

@@ -177,10 +177,10 @@ module WasteCarriersEngine
           end
         end
 
-        describe "GET edit_company_trading_name" do
-          it "redirects to the company_trading_name form" do
-            get company_trading_name_edit_forms_path(token)
-            expect(response).to redirect_to(new_company_trading_name_form_path(token))
+        describe "GET edit_business_name" do
+          it "redirects to the business_name form" do
+            get business_name_edit_forms_path(token)
+            expect(response).to redirect_to(new_business_name_form_path(token))
           end
         end
 

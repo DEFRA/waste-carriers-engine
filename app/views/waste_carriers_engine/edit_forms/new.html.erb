@@ -92,16 +92,16 @@
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">
-              <%= t(".sections.business.labels.company_trading_name") %>
+              <%= t(".sections.business.labels.business_name") %>
             </th>
             <td class="govuk-table__cell">
-              <%= @presenter.company_trading_name %>
+              <%= @presenter.business_name %>
             </td>
             <td class="govuk-table__cell govuk-table__cell--numeric">
-              <%= link_to company_trading_name_edit_forms_path(@presenter.token) do %>
+              <%= link_to business_name_edit_forms_path(@presenter.token) do %>
                 <%= t(".edit_links.default") %>
                 <span class="govuk-visually-hidden">
-                  <%= t(".edit_links.visually_hidden.company_trading_name") %>
+                  <%= t(".edit_links.visually_hidden.business_name") %>
                 </span>
               <% end %>
             </td>

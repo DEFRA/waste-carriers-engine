@@ -181,7 +181,7 @@ module WasteCarriersEngine
                        :has_required_data,
                        :expires_soon,
                        account_email: user.email,
-                       company_trading_name: "Correct Name")
+                       business_name: "Correct Name")
               end
 
               context "when valid params are submitted" do
@@ -196,7 +196,7 @@ module WasteCarriersEngine
 
                   transient_registration = RenewingRegistration.where(reg_identifier: valid_registration).first
                   expect(transient_registration.reg_identifier).to eq(registration.reg_identifier)
-                  expect(transient_registration.company_trading_name).to eq(registration.company_trading_name)
+                  expect(transient_registration.business_name).to eq(registration.business_name)
 
                   expect(response).to have_http_status(302)
                   expect(response).to redirect_to(new_location_form_path(transient_registration.token))

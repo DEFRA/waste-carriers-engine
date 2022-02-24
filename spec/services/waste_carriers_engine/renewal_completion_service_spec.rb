@@ -11,7 +11,7 @@ module WasteCarriersEngine
         :has_addresses,
         :has_key_people,
         :has_paid_order,
-        company_trading_name: "FooBiz",
+        business_name: "FooBiz",
         workflow_state: "renewal_complete_form"
       )
     end
@@ -42,7 +42,7 @@ module WasteCarriersEngine
 
         it "copies attributes from the transient_registration to the registration" do
           renewal_completion_service.complete_renewal
-          expect(registration.reload.company_trading_name).to eq(transient_registration.company_trading_name)
+          expect(registration.reload.business_name).to eq(transient_registration.business_name)
         end
 
         it "does not update the renew_token" do
@@ -227,7 +227,7 @@ module WasteCarriersEngine
               :has_key_people,
               :has_paid_order,
               :requires_conviction_check,
-              company_trading_name: "FooBiz",
+              business_name: "FooBiz",
               workflow_state: "renewal_complete_form"
             )
           end

@@ -33,7 +33,7 @@ module WasteCarriersEngine
         state :renewal_information_form
         state :registration_number_form
 
-        state :company_trading_name_form
+        state :business_name_form
         state :company_postcode_form
         state :company_address_form
         state :company_address_manual_form
@@ -157,7 +157,7 @@ module WasteCarriersEngine
                       to: :renewal_information_form
 
           transitions from: :renewal_information_form,
-                      to: :company_trading_name_form,
+                      to: :business_name_form,
                       if: :skip_registration_number?
 
           transitions from: :renewal_information_form,
@@ -168,13 +168,13 @@ module WasteCarriersEngine
                       if: :require_new_registration_based_on_company_no?
 
           transitions from: :registration_number_form,
-                      to: :company_trading_name_form
+                      to: :business_name_form
 
-          transitions from: :company_trading_name_form,
+          transitions from: :business_name_form,
                       to: :company_address_manual_form,
                       if: :based_overseas?
 
-          transitions from: :company_trading_name_form,
+          transitions from: :business_name_form,
                       to: :company_postcode_form
 
           # Registered address
@@ -374,23 +374,23 @@ module WasteCarriersEngine
           transitions from: :cannot_renew_company_no_change_form,
                       to: :registration_number_form
 
-          transitions from: :company_trading_name_form,
+          transitions from: :business_name_form,
                       to: :renewal_information_form,
                       if: :skip_registration_number?
 
-          transitions from: :company_trading_name_form,
+          transitions from: :business_name_form,
                       to: :registration_number_form
 
           # Registered address
 
           transitions from: :company_postcode_form,
-                      to: :company_trading_name_form
+                      to: :business_name_form
 
           transitions from: :company_address_form,
                       to: :company_postcode_form
 
           transitions from: :company_address_manual_form,
-                      to: :company_trading_name_form,
+                      to: :business_name_form,
                       if: :based_overseas?
 
           transitions from: :company_address_manual_form,

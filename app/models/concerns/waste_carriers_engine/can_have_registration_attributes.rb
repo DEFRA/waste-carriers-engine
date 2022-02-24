@@ -43,8 +43,7 @@ module WasteCarriersEngine
       field :accessCode, as: :address_code,                                 type: String
       field :accountEmail, as: :account_email,                              type: String
       field :businessType, as: :business_type,                              type: String
-      field :companyName, as: :company_trading_name,                        type: String
-      field :companyRegisteredName, as: :company_registered_name,           type: String
+      field :companyName, as: :business_name,                               type: String
       field :company_no,                                                    type: String # May include letters, despite name
       field :constructionWaste, as: :construction_waste,                    type: String # 'yes' or 'no' - should refactor to boolean
       field :contactEmail, as: :contact_email,                              type: String
@@ -62,6 +61,7 @@ module WasteCarriersEngine
       field :phoneNumber, as: :phone_number,                                type: String
       field :receipt_email,                                                 type: String
       field :regIdentifier, as: :reg_identifier,                            type: String
+      field :registeredCompanyName, as: :registered_company_name,           type: String
       field :registrationType, as: :registration_type,                      type: String
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :uuid,                                                          type: String
@@ -88,7 +88,7 @@ module WasteCarriersEngine
         escaped_term = Regexp.escape(term) if term.present?
 
         any_of({ reg_identifier: /\A#{escaped_term}\z/i },
-               { company_trading_name: /#{escaped_term}/i },
+               { business_name: /#{escaped_term}/i },
                { last_name: /#{escaped_term}/i },
                "addresses.postcode": /#{escaped_term}/i)
       }
@@ -202,14 +202,14 @@ module WasteCarriersEngine
       end
 
       def company_name
-        if company_trading_name.present?
-          if company_registered_name.present?
-            "#{company_registered_name} trading as #{company_trading_name}"
+        if business_name.present?
+          if registered_company_name.present?
+            "#{registered_company_name} trading as #{business_name}"
           else
-            company_trading_name
+            business_name
           end
         else
-          company_registered_name
+          registered_company_name
         end
       end
     end

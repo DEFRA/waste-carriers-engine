@@ -93,7 +93,7 @@
         <h2 class="govuk-heading-m"><%= t(".subheadings.business") %></h2>
 
         <ul class="govuk-list">
-          <li><%= @presenter.company_trading_name %></li>
+          <li><%= @presenter.business_name %></li>
           <% displayable_address(@presenter.registered_address).each do |line| %>
             <li><%= line %></li>
           <% end %>

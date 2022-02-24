@@ -28,8 +28,8 @@ module WasteCarriersEngine
       I18n.t("#{LOCALES_KEY}.business_type.#{transient_registration.business_type}")
     end
 
-    def company_trading_name
-      transient_registration.company_trading_name
+    def business_name
+      transient_registration.business_name
     end
 
     def company_no

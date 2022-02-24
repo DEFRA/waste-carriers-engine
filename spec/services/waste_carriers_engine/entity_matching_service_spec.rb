@@ -15,7 +15,7 @@ module WasteCarriersEngine
 
     describe "run" do
       it "creates valid conviction_search_results" do
-        expect(ConvictionsCheck::OrganisationMatchService).to receive(:run).with(name: transient_registration.company_trading_name,
+        expect(ConvictionsCheck::OrganisationMatchService).to receive(:run).with(name: transient_registration.business_name,
                                                                                  company_no: transient_registration.company_no)
                                                                            .and_return(match_result: "YES")
         expect(ConvictionsCheck::PersonMatchService).to receive(:run).with(first_name: key_person.first_name,

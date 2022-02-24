@@ -33,16 +33,16 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
     context "when the search term is a name" do
       let(:term) { "Lee" }
 
-      let(:matching_company_trading_name_record) do
-        create(factory, :has_required_data, company_trading_name: "Stan Lee Waste Company")
+      let(:matching_business_name_record) do
+        create(factory, :has_required_data, business_name: "Stan Lee Waste Company")
       end
 
       let(:matching_person_name_record) do
         create(factory, :has_required_data, last_name: "Lee")
       end
 
-      it "returns records with a matching company_trading_name" do
-        expect(scope).to include(matching_company_trading_name_record)
+      it "returns records with a matching business_name" do
+        expect(scope).to include(matching_business_name_record)
       end
 
       it "returns records with a matching last_name" do
