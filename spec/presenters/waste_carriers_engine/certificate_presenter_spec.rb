@@ -10,28 +10,23 @@ module WasteCarriersEngine
     let(:company_name) { "Acme Waste" }
     let(:registration_type) { "carrier_broker_dealer" }
 
-    let(:person_a) { double(:key_person, first_name: "Kate", last_name: "Franklin", person_type: "KEY") }
-    let(:person_b) { double(:key_person, first_name: "Ryan", last_name: "Gosling", person_type: "KEY") }
+    let(:person_a) { build(:key_person, first_name: "Kate", last_name: "Franklin", person_type: "KEY") }
+    let(:person_b) { build(:key_person, first_name: "Ryan", last_name: "Gosling", person_type: "KEY") }
     let(:main_people) { [person_a, person_b] }
 
     let(:route) { "DIGITAL" }
-    let(:metaData) do
-      double(:metaData,
-             route: route)
-    end
 
     let(:lower_tier) { false }
     let(:upper_tier) { true }
 
     let(:registration) do
-      double(:registration,
-             business_type: business_type,
-             company_name: company_name,
-             registration_type: registration_type,
-             main_people: main_people,
-             metaData: metaData,
-             lower_tier?: lower_tier,
-             upper_tier?: upper_tier)
+      build(:registration,
+            business_type: business_type,
+            company_name: company_name,
+            registration_type: registration_type,
+            key_people: main_people,
+            metaData: { route: route },
+            tier: lower_tier ? "LOWER" : "UPPER")
     end
 
     describe "calling root model attributes" do
@@ -41,31 +36,7 @@ module WasteCarriersEngine
     end
 
     describe "#carrier_name" do
-      context "when the registration is lower tier" do
-        let(:lower_tier) { true }
-        let(:upper_tier) { false }
-
-        it "returns the company name" do
-          expect(subject.carrier_name).to eq(company_name)
-        end
-      end
-
-      context "when the registration is upper tier" do
-        context "when the registration business type is 'soleTrader'" do
-          let(:business_type) { "soleTrader" }
-          let(:main_people) { [person_a] }
-
-          it "returns the carrier's name" do
-            expect(subject.carrier_name).to eq("#{person_a.first_name} #{person_a.last_name}")
-          end
-        end
-
-        context "when the registration business type is NOT 'sole trader'" do
-          it "returns the company name" do
-            expect(subject.carrier_name).to eq(company_name)
-          end
-        end
-      end
+      it_should_behave_like "Can present carrier name", factory: :registration
     end
 
     describe "#complex_organisation_details?" do
