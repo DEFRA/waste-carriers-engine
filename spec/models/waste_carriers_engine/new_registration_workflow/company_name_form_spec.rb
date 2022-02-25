@@ -40,7 +40,7 @@ module WasteCarriersEngine
           context "When the registration requires a company number" do
             subject { build(:new_registration, workflow_state: "company_name_form", business_type: "limitedCompany") }
 
-            include_examples "has back transition", previous_state: "registration_number_form"
+            include_examples "has back transition", previous_state: "check_registered_company_name_form"
           end
         end
       end

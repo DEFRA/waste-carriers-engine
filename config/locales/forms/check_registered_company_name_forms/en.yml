@@ -1,0 +1,18 @@
+en:
+  waste_carriers_engine:
+    check_registered_company_name_forms:
+      new:
+        title: Is this your registered name and address?
+        heading: Is this your registered name and address?
+        options:
+          "yes": "Yes"
+          "no": "No"
+        next_button: Continue
+        enter_a_different_number: "Enter a different number"
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/check_registered_company_name_form:
+          attributes:
+            temp_use_registered_company_details:
+              inclusion: "You must select yes or no"
