@@ -1,0 +1,5 @@
+en:
+  waste_carriers_engine:
+    check_registered_company_name_forms:
+      new:
+        next_button: Continue
