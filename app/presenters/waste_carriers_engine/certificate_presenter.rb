@@ -3,19 +3,9 @@
 module WasteCarriersEngine
   class CertificatePresenter < BasePresenter
     include WasteCarriersEngine::ApplicationHelper
+    include WasteCarriersEngine::CanPresentCarrierName
 
     LOCALES_KEY = ".waste_carriers_engine.pdfs.certificate"
-
-    # For sole traders, we want to display the name of the trader. There
-    # will only be one person, but the list_main_people method still works for
-    # finding and formatting that single person.
-    def carrier_name
-      if upper_tier_sole_trader?
-        list_main_people
-      else
-        company_name
-      end
-    end
 
     # If it's an upper tier sole trader or partnership, we need to display an
     # extra section. For partners, it's a list of their names, and for sole
