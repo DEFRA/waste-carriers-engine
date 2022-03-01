@@ -17,7 +17,18 @@ module WasteCarriersEngine
       end
     end
 
+    def list_main_people
+      list = main_people.map do |person|
+        format("%<first>s %<last>s", first: person.first_name, last: person.last_name)
+      end
+      list.join("<br>").html_safe
+    end
+
     private
+
+    def upper_tier_sole_trader?
+      upper_tier? && business_type == "soleTrader"
+    end
 
     def company_registered_and_or_trading_name
       if company_name.present?
