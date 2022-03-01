@@ -99,9 +99,14 @@
           <% end %>
         </ul>
 
-        <% if @presenter.company_no.present? %>
+        <% if !@presenter.company_no.present? %>
           <p class="govuk-body"><%= t(".company_no", company_no: @check_your_answers_form.company_no) %></p>
         <% end %>
+
+        <hr>
+
+        <h2 class="govuk-heading-m"><%= t(".subheadings.public_register") %></h2>
+        <p class="govuk-body"><%= @presenter.carrier_name %></p>
 
         <hr>
 
