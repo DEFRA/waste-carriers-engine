@@ -6,7 +6,6 @@
 module WasteCarriersEngine
   class OrderItemLog
     include Mongoid::Document
-    include CanCheckRegistrationStatus
 
     field :registration_id, type: BSON::ObjectId
     field :order_id,        type: BSON::ObjectId
