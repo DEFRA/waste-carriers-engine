@@ -419,6 +419,9 @@ module WasteCarriersEngine
                       if: :skip_registration_number?
 
           transitions from: :company_name_form,
+                      to: :check_registered_company_name_form
+
+          transitions from: :check_registered_company_name_form,
                       to: :registration_number_form
 
           transitions from: :other_businesses_form,
