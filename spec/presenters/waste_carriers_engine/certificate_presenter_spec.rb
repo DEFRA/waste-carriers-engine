@@ -17,8 +17,8 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#carrier_name" do
-      it_should_behave_like "Can present carrier name"
+    describe "#entity_display_name" do
+      it_should_behave_like "Can present entity display name"
     end
 
     describe "#complex_organisation_details?" do

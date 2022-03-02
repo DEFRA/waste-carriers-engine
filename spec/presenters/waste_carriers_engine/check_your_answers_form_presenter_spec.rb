@@ -54,12 +54,12 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#carrier_name" do
+    describe "#entity_display_name" do
       include_context "Sample registration with defaults" do
         let(:factory) { :transient_registration }
       end
 
-      it_should_behave_like "Can present carrier name"
+      it_should_behave_like "Can present entity display name"
     end
   end
 end

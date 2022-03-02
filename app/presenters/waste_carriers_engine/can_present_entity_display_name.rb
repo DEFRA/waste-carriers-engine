@@ -4,12 +4,12 @@ module WasteCarriersEngine
 
   # This module contains shared presentation logic for carrier names.
   # This is similar to a model concern, but for presenters.
-  module CanPresentCarrierName
+  module CanPresentEntityDisplayName
 
     # For sole traders, we want to display the name of the trader. There
     # will only be one person, but the list_main_people method still works for
     # finding and formatting that single person.
-    def carrier_name
+    def entity_display_name
       if upper_tier_sole_trader?
         list_main_people
       else

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "Can present carrier name" do
+RSpec.shared_examples "Can present entity display name" do
 
   include_context("Sample registration with defaults")
 
@@ -10,7 +10,7 @@ RSpec.shared_examples "Can present carrier name" do
     let(:tier) { "LOWER" }
 
     it "returns the company name" do
-      expect(subject.carrier_name).to eq(company_name)
+      expect(subject.entity_display_name).to eq(company_name)
     end
   end
 
@@ -20,13 +20,13 @@ RSpec.shared_examples "Can present carrier name" do
       let(:key_people) { [person_a] }
 
       it "returns the carrier's name" do
-        expect(subject.carrier_name).to eq("#{person_a.first_name} #{person_a.last_name}")
+        expect(subject.entity_display_name).to eq("#{person_a.first_name} #{person_a.last_name}")
       end
     end
 
     context "when the registration business type is NOT 'sole trader'" do
       it "returns the company name" do
-        expect(subject.carrier_name).to eq(company_name)
+        expect(subject.entity_display_name).to eq(company_name)
       end
     end
   end
@@ -36,7 +36,7 @@ RSpec.shared_examples "Can present carrier name" do
     let(:company_name) { nil }
 
     it "returns the registered name" do
-      expect(subject.carrier_name).to eq registered_name
+      expect(subject.entity_display_name).to eq registered_name
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.shared_examples "Can present carrier name" do
     let(:company_name) { Faker::Lorem.sentence(word_count: 3) }
 
     it "returns the trading name" do
-      expect(subject.carrier_name).to eq company_name
+      expect(subject.entity_display_name).to eq company_name
     end
   end
 
@@ -53,8 +53,8 @@ RSpec.shared_examples "Can present carrier name" do
     let(:registered_name) { Faker::Company.name }
     let(:company_name) { Faker::Lorem.sentence(word_count: 3) }
 
-    it "returns the registered name" do
-      expect(subject.carrier_name).to eq "#{registered_name} trading as #{company_name}"
+    it "returns the entity display name" do
+      expect(subject.entity_display_name).to eq "#{registered_name} trading as #{company_name}"
     end
   end
 end

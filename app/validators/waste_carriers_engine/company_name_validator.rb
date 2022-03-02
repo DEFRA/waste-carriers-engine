@@ -15,7 +15,7 @@ module WasteCarriersEngine
     def value_is_present?(record, attribute, value)
       return true if value.present?
 
-      return true if attribute == :company_name && record.try(:registered_company_name).present?
+      return true if attribute == :company_name && record.registered_company_name.present?
 
       add_validation_error(record, attribute, :blank)
       false
