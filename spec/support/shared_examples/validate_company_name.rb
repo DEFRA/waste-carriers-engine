@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+RSpec.shared_examples "valid only if registered_company_name is present" do
+  context "when the registered company name is not blank" do
+    before { form.transient_registration.registered_company_name = Faker::Company.name }
+
+    it "is valid" do
+      expect(form).to be_valid
+    end
+  end
+
+  context "when the registered company name is blank" do
+    before { form.transient_registration.registered_company_name = "" }
+
+    it "is not valid" do
+      expect(form).to_not be_valid
+    end
+  end
+end
+
 # Tests for fields using the CompanyNameValidator
 RSpec.shared_examples "validate company_name" do |form_factory|
   context "when a valid transient registration exists" do
@@ -12,13 +30,15 @@ RSpec.shared_examples "validate company_name" do |form_factory|
     end
 
     context "when a company_name is blank" do
-      before do
-        form.transient_registration.company_name = ""
-      end
+      before { form.transient_registration.company_name = "" }
 
-      it "is not valid" do
-        expect(form).to_not be_valid
-      end
+      it_behaves_like "valid only if registered_company_name is present"
+    end
+
+    context "when a company_name is nil" do
+      before { form.transient_registration.company_name = nil }
+
+      it_behaves_like "valid only if registered_company_name is present"
     end
 
     context "when a company name is too long" do

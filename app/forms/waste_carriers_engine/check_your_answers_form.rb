@@ -7,7 +7,7 @@ module WasteCarriersEngine
 
     delegate :business_type, :company_name, :company_no, :contact_address, :contact_email, to: :transient_registration
     delegate :first_name, :last_name, :location, :main_people, :phone_number, to: :transient_registration
-    delegate :registration_type, :relevant_people, :tier, to: :transient_registration
+    delegate :registered_company_name, :registration_type, :relevant_people, :tier, to: :transient_registration
     delegate :registered_address, :declared_convictions, to: :transient_registration
     delegate :lower_tier?, :upper_tier?, :company_no_required?, to: :transient_registration
 

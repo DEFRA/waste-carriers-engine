@@ -10,7 +10,8 @@ en:
         subheadings:
           you_told_us: "You told us:"
           registration: "Registration"
-          business: "Business"
+          business: "Business details"
+          public_register: "Name displayed on public register"
           contact_details: "Contact details"
           contact_address: "Contact address"
           business_owners:

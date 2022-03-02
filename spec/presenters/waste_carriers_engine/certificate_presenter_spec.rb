@@ -6,27 +6,9 @@ module WasteCarriersEngine
   RSpec.describe CertificatePresenter do
     subject { described_class.new(registration, view) }
 
-    let(:business_type) { "limitedCompany" }
-    let(:company_name) { "Acme Waste" }
-    let(:registration_type) { "carrier_broker_dealer" }
-
-    let(:person_a) { build(:key_person, first_name: "Kate", last_name: "Franklin", person_type: "KEY") }
-    let(:person_b) { build(:key_person, first_name: "Ryan", last_name: "Gosling", person_type: "KEY") }
-    let(:main_people) { [person_a, person_b] }
-
-    let(:route) { "DIGITAL" }
-
-    let(:lower_tier) { false }
-    let(:upper_tier) { true }
-
-    let(:registration) do
-      build(:registration,
-            business_type: business_type,
-            company_name: company_name,
-            registration_type: registration_type,
-            key_people: main_people,
-            metaData: { route: route },
-            tier: lower_tier ? "LOWER" : "UPPER")
+    include_context("Sample registration with defaults") do
+      let(:registration_type) { "carrier_broker_dealer" }
+      let(:route) { "DIGITAL" }
     end
 
     describe "calling root model attributes" do
@@ -35,14 +17,13 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#carrier_name" do
-      it_should_behave_like "Can present carrier name", factory: :registration
+    describe "#entity_display_name" do
+      it_should_behave_like "Can present entity display name"
     end
 
     describe "#complex_organisation_details?" do
       context "when the registration is lower tier" do
-        let(:lower_tier) { true }
-        let(:upper_tier) { false }
+        let(:tier) { "LOWER" }
 
         it "returns 'false'" do
           expect(subject.complex_organisation_details?).to eq(false)
@@ -69,8 +50,7 @@ module WasteCarriersEngine
 
     describe "#complex_organisation_heading" do
       context "when the registration is lower tier" do
-        let(:lower_tier) { true }
-        let(:upper_tier) { false }
+        let(:tier) { "LOWER" }
 
         it "returns a generic title" do
           expect(subject.complex_organisation_heading).to eq("Business name (if applicable)")
@@ -130,8 +110,7 @@ module WasteCarriersEngine
       end
 
       context "when the registration is lower tier" do
-        let(:lower_tier) { true }
-        let(:upper_tier) { false }
+        let(:tier) { "LOWER" }
 
         expected = "A lower tier waste carrier, broker and dealer"
 
@@ -143,7 +122,9 @@ module WasteCarriersEngine
 
     describe "#list_main_people" do
       it "returns a list of names separated by a <br>" do
-        expect(subject.list_main_people).to eq("Kate Franklin<br>Ryan Gosling")
+        expect(subject.list_main_people).to eq(
+          "#{person_a.first_name} #{person_a.last_name}<br>#{person_b.first_name} #{person_b.last_name}"
+        )
       end
     end
 
@@ -165,8 +146,7 @@ module WasteCarriersEngine
 
     describe "#renewal_message" do
       context "when the registration is lower tier" do
-        let(:lower_tier) { true }
-        let(:upper_tier) { false }
+        let(:tier) { "LOWER" }
 
         it "returns the correct message" do
           expect(subject.renewal_message).to eq("Your registration will last indefinitely so does not need to be renewed but you must update your registration details if they change, within 28 days of the change.")
