@@ -7,7 +7,7 @@ module WasteCarriersEngine
     describe "#initialize" do
 
       context "for a new registration" do
-        let(:registration) { build(:registration, :has_required_data, :has_copy_cards_order) }
+        let(:registration) { create(:registration, :has_required_data, :has_copy_cards_order) }
         let(:order) { registration.finance_details.orders[0] }
         let(:registration_order_item) { order.order_items[0] }
 
@@ -42,7 +42,7 @@ module WasteCarriersEngine
     end
 
     describe ".create_from_registration" do
-      let(:registration) { build(:registration, :has_required_data, :has_copy_cards_order) }
+      let(:registration) { create(:registration, :has_required_data, :has_copy_cards_order) }
       subject { described_class.create_from_registration(registration) }
       before do
         3.times { registration.finance_details.orders << build(:order, :has_copy_cards_item) }
@@ -80,6 +80,24 @@ module WasteCarriersEngine
           described_class.create_from_registration(registration, DateTime.now)
           expect(described_class.first.activated_at.to_time).to be_within(1.second).of(Time.now)
         end
+      end
+    end
+
+    context "#active?" do
+      let(:order_item_log) { build(:order_item_log, registration: registration) }
+
+      subject { order_item_log.active? }
+
+      context "with an active registration" do
+        let(:registration) { build(:registration, :is_active) }
+
+        it { expect(subject).to be_truthy }
+      end
+
+      context "with an expired registration" do
+        let(:registration) { build(:registration, :is_expired) }
+
+        it { expect(subject).to be_falsey }
       end
     end
 

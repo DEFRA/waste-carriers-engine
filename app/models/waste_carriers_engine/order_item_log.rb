@@ -6,6 +6,7 @@
 module WasteCarriersEngine
   class OrderItemLog
     include Mongoid::Document
+    include CanCheckRegistrationStatus
 
     field :registration_id, type: BSON::ObjectId
     field :order_id,        type: BSON::ObjectId
@@ -14,6 +15,10 @@ module WasteCarriersEngine
     field :type,            type: String
     field :quantity,        type: Integer
     field :exported,        type: Boolean, default: false
+
+    # enable the CanCheckRegistrationStatus concern
+    belongs_to :registration
+    delegate :metaData, to: :registration
 
     def self.create_from_registration(registration, activation_time = nil)
       registration.finance_details.orders.each do |order|
