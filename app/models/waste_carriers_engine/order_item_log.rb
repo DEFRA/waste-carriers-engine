@@ -16,9 +16,11 @@ module WasteCarriersEngine
     field :quantity,        type: Integer
     field :exported,        type: Boolean, default: false
 
-    # enable the CanCheckRegistrationStatus concern
     belongs_to :registration
-    delegate :metaData, to: :registration
+
+    def active_registration?
+      registration.active?
+    end
 
     def self.create_from_registration(registration, activation_time = nil)
       registration.finance_details.orders.each do |order|

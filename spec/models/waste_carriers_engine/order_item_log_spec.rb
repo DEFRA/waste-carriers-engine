@@ -83,10 +83,10 @@ module WasteCarriersEngine
       end
     end
 
-    context "#active?" do
+    context "#active_registration?" do
       let(:order_item_log) { build(:order_item_log, registration: registration) }
 
-      subject { order_item_log.active? }
+      subject { order_item_log.active_registration? }
 
       context "with an active registration" do
         let(:registration) { build(:registration, :is_active) }
