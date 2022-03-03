@@ -39,7 +39,6 @@ class DefraRubyCompaniesHouse
           password: ""
         )
       ).deep_symbolize_keys
-
   rescue RestClient::ResourceNotFound
     :not_found
   end
