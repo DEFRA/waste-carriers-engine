@@ -4,7 +4,7 @@ require "rails_helper"
 require "defra_ruby_companies_house"
 
 RSpec.describe WasteCarriersEngine::RefreshCompaniesHouseNameService do
-  
+
   let(:new_registered_name) { Faker::Company.name }
   let(:registration) { create(:registration, :has_required_data, registered_company_name: old_registered_name) }
   let(:reg_identifier) { registration.reg_identifier }
