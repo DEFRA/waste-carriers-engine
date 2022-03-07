@@ -118,7 +118,26 @@
                 <%= t(".edit_links.no_edit") %>
               </td>
             </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                <%= t(".sections.business.labels.registered_company_name") %>
+              </th>
+              <td class="govuk-table__cell">
+                <%= @presenter.registered_company_name %>
+                <% if @presenter.companies_house_updated_at %>
+                  <br>
+                  <span class="govuk-body-s">
+                    <%= t(".sections.business.labels.registered_company_name_last_updated",
+                          last_updated: @presenter.companies_house_updated_at) %>
+                  </span>
+                <% end %>
+              </td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+               <%= t(".edit_links.no_edit") %>
+              </td>
+            </tr>
           <% end %>
+
           <% if @presenter.main_people_with_roles.any? %>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header">

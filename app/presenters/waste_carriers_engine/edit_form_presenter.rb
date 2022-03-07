@@ -32,6 +32,14 @@ module WasteCarriersEngine
       transient_registration.company_name
     end
 
+    def registered_company_name
+      transient_registration.registered_company_name
+    end
+
+    def companies_house_updated_at
+      transient_registration.companies_house_updated_at.try(:to_formatted_s, :day_month_year)
+    end
+
     def company_no
       transient_registration.company_no
     end
