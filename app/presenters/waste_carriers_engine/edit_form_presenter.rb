@@ -37,7 +37,7 @@ module WasteCarriersEngine
     end
 
     def companies_house_updated_at
-      transient_registration.companies_house_updated_at.to_formatted_s(:day_month_year)
+      transient_registration.companies_house_updated_at.try(:to_formatted_s, :day_month_year)
     end
 
     def company_no
