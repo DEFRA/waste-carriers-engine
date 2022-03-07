@@ -2,6 +2,6 @@
 
 module WasteCarriersEngine
   class CheckRegisteredCompanyNameForm < ::WasteCarriersEngine::BaseForm
-
+    delegate :temp_use_registered_company_details, to: :transient_registration
   end
 end
