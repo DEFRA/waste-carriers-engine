@@ -1,0 +1,63 @@
+{
+   "jurisdiction":"england-wales",
+   "accounts":{
+      "next_accounts":{
+         "period_end_on":"2021-12-31",
+         "period_start_on":"2021-01-01",
+         "overdue":false,
+         "due_on":"2022-09-30"
+      },
+      "last_accounts":{
+         "type":"micro-entity",
+         "period_start_on":"2020-01-01",
+         "period_end_on":"2020-12-31",
+         "made_up_to":"2020-12-31"
+      },
+      "accounting_reference_date":{
+         "month":"12",
+         "day":"31"
+      },
+      "overdue":false,
+      "next_due":"2022-09-30",
+      "next_made_up_to":"2021-12-31"
+   },
+   "registered_office_address":{
+      "address_line_1":"R House",
+      "address_line_2":"Middle Street",
+      "region":"West Yorkshire",
+      "postal_code":"HD1 2BN",
+      "locality":"Thereabouts",
+      "care_of":"C/O A B Cdef"
+   },
+   "date_of_creation":"2000-07-28",
+   "company_name":"BOGUS LIMITED",
+   "type":"ltd",
+   "undeliverable_registered_office_address":false,
+   "last_full_members_list_date":"2015-07-28",
+   "has_been_liquidated":false,
+   "sic_codes":[
+      "43210"
+   ],
+   "status":"active",
+   "company_number":"04041234",
+   "etag":"1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a",
+   "company_status":"active",
+   "has_insolvency_history":false,
+   "has_charges":true,
+   "confirmation_statement":{
+      "last_made_up_to":"2021-07-28",
+      "overdue":false,
+      "next_due":"2022-08-11",
+      "next_made_up_to":"2022-07-28"
+   },
+   "links":{
+      "self":"/company/04041234",
+      "filing_history":"/company/04041234/filing-history",
+      "officers":"/company/04041234/officers",
+      "charges":"/company/04041234/charges",
+      "persons_with_significant_control":"/company/04041234/persons-with-significant-control"
+   },
+   "registered_office_is_in_dispute":false,
+   "has_super_secure_pscs":false,
+   "can_file":true
+}

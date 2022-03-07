@@ -61,6 +61,7 @@ module WasteCarriersEngine
       field :phoneNumber, as: :phone_number,                                type: String
       field :receipt_email,                                                 type: String
       field :regIdentifier, as: :reg_identifier,                            type: String
+      field :registeredCompanyName, as: :registered_company_name,           type: String
       field :registrationType, as: :registration_type,                      type: String
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :uuid,                                                          type: String

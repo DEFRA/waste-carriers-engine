@@ -5,8 +5,8 @@ en:
         title: Business or organisation name
         heading:
           localAuthority: What's the name of the local authority or public body?
-          limitedCompany: What's the name of the company?
-          limitedLiabilityPartnership: What's the name of the limited liability partnership?
+          limitedCompany: Do you trade under a different name? (optional)
+          limitedLiabilityPartnership: Do you trade under a different name? (optional)
           overseas: What's the name of the business or organisation?
           partnership: What's the name of the partnership?
           soleTrader: What's the name of the business?
@@ -15,8 +15,8 @@ en:
           publicBody: What's the name of the public body?
         company_name_label:
           localAuthority: Enter your local authority or public body name
-          limitedCompany: Enter your company trading name
-          limitedLiabilityPartnership: Enter your partnership trading name
+          limitedCompany: Enter a business or trading name. This will be displayed on the public register.
+          limitedLiabilityPartnership: Enter a business or trading name. This will be displayed on the public register.
           overseas: Enter your trading name
           partnership: Enter your partnership trading name
           soleTrader: Enter your business trading name
@@ -31,7 +31,7 @@ en:
         waste_carriers_engine/company_name_form:
           attributes:
             company_name:
-              blank: "Enter a trading name"
+              blank: "Enter a business or trading name. This will be displayed on the public register."
               too_long: "Enter a shorter trading name with no more than 255 characters"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"

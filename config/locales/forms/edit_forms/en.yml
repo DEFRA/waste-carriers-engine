@@ -19,7 +19,7 @@ en:
             heading: Waste carrier business details
             labels:
               business_type: Type
-              company_name: Name
+              company_name: Trading name
               company_no: Company number
               main_people: Main people
               registered_address: Address
