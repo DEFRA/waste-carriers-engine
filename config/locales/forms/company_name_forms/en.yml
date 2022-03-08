@@ -4,15 +4,33 @@ en:
       new:
         title: Business or organisation name
         heading:
-          localAuthority: What's the name of the local authority or public body?
-          limitedCompany: Do you trade under a different name? (optional)
-          limitedLiabilityPartnership: Do you trade under a different name? (optional)
-          overseas: What's the name of the business or organisation?
-          partnership: What's the name of the partnership?
-          soleTrader: What's the name of the business?
-          charity: What's the name of the charity or trust?
-          authority: What's the name of the local authority?
-          publicBody: What's the name of the public body?
+          localAuthority:
+            UPPER: &value "What's the name of the local authority or public body?"
+            LOWER: *value
+          limitedCompany:
+            UPPER: Do you trade under a different name? (optional)
+            LOWER: What's the name of the company?
+          limitedLiabilityPartnership:
+            UPPER: Do you trade under a different name? (optional)
+            LOWER: What's the name of the limited liability partnership?
+          overseas:
+            UPPER: &value What's the name of the business or organisation?
+            LOWER: *value
+          partnership:
+            UPPER: &value What's the name of the partnership?
+            LOWER: *value
+          soleTrader:
+            UPPER: &value What's the name of the business?
+            LOWER: *value
+          charity:
+            UPPER: &value What's the name of the charity or trust?
+            LOWER: *value
+          authority:
+            UPPER: &value What's the name of the local authority?
+            LOWER: *value
+          publicBody:
+            UPPER: &value What's the name of the public body?
+            LOWER: *value
         company_name_label:
           localAuthority: Enter your local authority or public body name
           limitedCompany: Enter a business or trading name. This will be displayed on the public register.
