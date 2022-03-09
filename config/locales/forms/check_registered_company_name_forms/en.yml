@@ -12,7 +12,7 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine/check_company_form:
+        waste_carriers_engine/check_registered_company_name_form:
           attributes:
-            temp_use_companies_house_address:
+            temp_use_registered_company_details:
               inclusion: "You must select yes or no"
