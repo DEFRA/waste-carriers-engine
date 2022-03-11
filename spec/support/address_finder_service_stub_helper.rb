@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module AddressFinderServiceStubHelper
-  # rubocop:disable Metrics/MethodLength
   def stub_address_finder_service(options = {})
     os_places_result = JSON.parse(file_fixture("os_places_response.json").read)
     address_json = [os_places_result.merge(options.stringify_keys)]
@@ -10,7 +9,6 @@ module AddressFinderServiceStubHelper
 
     allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
   end
-  # rubocop:enable Metrics/MethodLength
 end
 
 RSpec.configure do |config|
