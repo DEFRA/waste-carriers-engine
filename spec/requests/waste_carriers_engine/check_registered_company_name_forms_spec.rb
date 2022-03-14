@@ -6,10 +6,10 @@ require "defra_ruby_companies_house"
 module WasteCarriersEngine
   RSpec.describe "CheckRegisteredCompanyNameForms", type: :request do
 
-    let(:company_name) {Faker::Company.name}
-    let(:company_address) {["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"]}
+    let(:company_name) { Faker::Company.name }
+    let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
 
-    before do 
+    before do
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company)
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(company_name)
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(company_address)
@@ -23,8 +23,8 @@ module WasteCarriersEngine
         before(:each) do
           sign_in(user)
         end
-        
-        context "when check_registered_companys_name_form is given a valid companys house number" do 
+
+        context "when check_registered_companys_name_form is given a valid companys house number" do
           let(:transient_registration) do
             create(:new_registration,
                    :has_required_data,
@@ -45,7 +45,7 @@ module WasteCarriersEngine
             end
           end
         end
-      end 
+      end
     end
 
     describe "GET back_check_registered_company_name_form_path" do
