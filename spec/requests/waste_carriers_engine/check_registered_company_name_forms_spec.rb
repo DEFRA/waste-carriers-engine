@@ -1,39 +1,30 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
   RSpec.describe "CheckRegisteredCompanyNameForms", type: :request do
-    include_examples "GET flexible form", "check_registered_company_name_form"
 
-    describe "POST check_registered_company_name_form_path" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
-        before(:each) do
-          sign_in(user)
-        end
-      end
+    let(:company_name) { Faker::Company.name }
+    let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
 
-      context "When the transient_registration is a new registration" do
-        let(:transient_registration) do
-          create(:new_registration, workflow_state: "check_registered_company_name_form")
-        end
-
-        include_examples "POST form",
-                         "check_registered_company_name_form",
-                         valid_params: { temp_use_registered_company_details: "yes" },
-                         invalid_params: { temp_use_registered_company_details: "foo" }
-      end
+    before do
+      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company)
+      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(company_name)
+      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(company_address)
     end
 
-    describe "GET back_check_registered_company_name_form_path" do
+    include_examples "GET flexible form", "check_registered_company_name_form"
+
+    describe "GET check_registered_company_name_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
         before(:each) do
           sign_in(user)
         end
 
-        context "when a valid transient registration exists" do
+        context "when check_registered_companys_name_form is given a valid companys house number" do
           let(:transient_registration) do
             create(:new_registration,
                    :has_required_data,
@@ -41,12 +32,16 @@ module WasteCarriersEngine
                    workflow_state: "check_registered_company_name_form")
           end
 
-          context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the registration_number_form" do
-              get back_check_registered_company_name_forms_path(transient_registration[:token])
+          it "displays the registered company name" do
+            get check_registered_company_name_forms_path(transient_registration[:token])
+            expect(response.body).to include(company_name)
+          end
 
-              expect(response).to have_http_status(302)
-              expect(response).to redirect_to(registration_number_forms_path(transient_registration[:token]))
+          it "displays the registered company address" do
+            get check_registered_company_name_forms_path(transient_registration[:token])
+
+            company_address.each do |line|
+              expect(response.body).to include(line)
             end
           end
         end
