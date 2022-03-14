@@ -14,7 +14,7 @@ en:
         nccc_number: "03708 506506"
         certify_message: "The Environment Agency certify that the following information is entered in the register which they maintain under regulation 28 of the Waste (England and Wales) Regulations 2011."
         carrier_table_heading: "Carriers details"
-        carrier_name: "Name of registered carrier"
+        entity_display_name: "Name of registered carrier"
         business_name_if_applicable: "Business name (if applicable)"
         partners: "Partners"
         registered: "Registered as"

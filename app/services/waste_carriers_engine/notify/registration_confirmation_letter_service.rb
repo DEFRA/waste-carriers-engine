@@ -39,7 +39,7 @@ module WasteCarriersEngine
         {
           contact_name: contact_name,
           reg_identifier: @registration.reg_identifier,
-          company_name: @registration.company_name,
+          company_name: company_name,
           registered_address: registered_address,
           phone_number: @registration.phone_number,
           date_registered: date_registered
@@ -48,6 +48,10 @@ module WasteCarriersEngine
 
       def contact_name
         "#{@registration.first_name} #{@registration.last_name}"
+      end
+
+      def company_name
+        CarrierNamePresenter.new(@registration).entity_display_name
       end
 
       def address_lines

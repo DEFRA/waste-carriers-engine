@@ -15,6 +15,11 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data, expires_on: 1.year.from_now) }
           let(:template_id) { "92817aa7-6289-4837-a033-96d287644cb3" }
 
+          let(:company_name) { "Acme Waste" }
+          let(:registered_company_name) { "Zenith Limited" }
+          let(:presentation_name) { "#{registered_company_name} trading as #{company_name}" }
+          let(:expected_company_name) { company_name }
+          let(:company_name_regex) { /Name of registered carrier[^\w]*#{expected_company_name}\W/ }
           let(:expected_notify_options) do
             {
               template_id: template_id,
@@ -22,7 +27,7 @@ module WasteCarriersEngine
                 contact_name: "Jane Doe",
                 registration_type: "carrier, broker and dealer",
                 reg_identifier: registration.reg_identifier,
-                company_name: "Acme Waste",
+                company_name: expected_company_name,
                 registered_address: "42, Foo Gardens, Baz City, BS1 1AA",
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
@@ -36,8 +41,9 @@ module WasteCarriersEngine
             }
           end
 
+          let(:cassette_name) { "notify_upper_tier_ad_confirmation_letter_business_name" }
           subject do
-            VCR.use_cassette("notify_upper_tier_ad_confirmation_letter") do
+            VCR.use_cassette(cassette_name) do
               described_class.run(registration: registration)
             end
           end
@@ -55,6 +61,43 @@ module WasteCarriersEngine
             expect(subject.content["subject"]).to eq(
               "You are now registered as an upper tier waste carrier, broker and dealer"
             )
+          end
+
+          context "without a registered company name" do
+            let(:expected_company_name) { company_name }
+            let(:cassette_name) { "notify_upper_tier_ad_confirmation_letter_business_name" }
+
+            it "includes only the business name" do
+              expect(subject.content["body"]).to match(company_name_regex)
+            end
+          end
+
+          context "with a registered company name" do
+            before do
+              registration.registered_company_name = registered_company_name
+            end
+
+            context "without a business name" do
+              let(:expected_company_name) { registered_company_name }
+              let(:cassette_name) { "notify_upper_tier_ad_confirmation_letter_registered_name" }
+
+              before do
+                registration.company_name = nil
+              end
+
+              it "includes only the business name" do
+                expect(subject.content["body"]).to match(company_name_regex)
+              end
+            end
+
+            context "with a business name" do
+              let(:expected_company_name) { "#{registered_company_name} trading as #{company_name}" }
+              let(:cassette_name) { "notify_upper_tier_ad_confirmation_letter_registered_and_business_name" }
+
+              it "includes the presentation name" do
+                expect(subject.content["body"]).to match(company_name_regex)
+              end
+            end
           end
         end
       end
