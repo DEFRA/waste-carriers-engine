@@ -74,16 +74,31 @@ module WasteCarriersEngine
     end
 
     def assign_house_number_and_address_lines(data)
-      lines = data["lines"]
+      lines = data["lines"].clone
+
+      # buildingNumber and dependentThoroughfare are part of the "lines" logic
+      # but OS places does not include them in the "lines" array.
+      # If either or both are present, insert them before the thoroughFareName value.
+      if data["thoroughfareName"].present? && (insert_position = lines.index(data["thoroughfareName"]))
+        add_line_at?(lines, insert_position, data["dependentThoroughfare"])
+        add_line_at?(lines, insert_position, data["buildingName"])
+      end
+
+      lines.reject!(&:blank?)
+
       address_attributes = %i[house_number
                               address_line_1
                               address_line_2
                               address_line_3
-                              address_line_4]
-      lines.reject!(&:blank?)
+                              address_line_4
+                              address_line_5]
 
       # Assign lines one at a time until we run out of lines to assign
       write_attribute(address_attributes.shift, lines.shift) until lines.empty?
+    end
+
+    def add_line_at?(lines, insert_position, insert_value)
+      lines.insert(insert_position, insert_value) if insert_value.present?
     end
 
     def manually_entered?
