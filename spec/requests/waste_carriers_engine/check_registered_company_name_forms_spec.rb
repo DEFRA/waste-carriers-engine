@@ -24,7 +24,7 @@ module WasteCarriersEngine
           sign_in(user)
         end
 
-        context "when check_registered_companys_name_form is given a valid companys house number" do
+        context "when check_registered_company_name_form is given a valid companies house number" do
           let(:transient_registration) do
             create(:new_registration,
                    :has_required_data,

@@ -6,7 +6,6 @@ module WasteCarriersEngine
   class CheckRegisteredCompanyNameFormsController < ::WasteCarriersEngine::FormsController
     def new
       super(CheckRegisteredCompanyNameForm, "check_registered_company_name_form")
-      @companies_house_check = DefraRubyCompaniesHouse.new(@transient_registration.company_no)
     end
 
     def create
