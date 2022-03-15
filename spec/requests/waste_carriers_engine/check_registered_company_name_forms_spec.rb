@@ -48,6 +48,19 @@ module WasteCarriersEngine
       end
     end
 
+    describe "POST check_registered_company_name_form_path" do
+      let(:transient_registration) do
+        create(:new_registration, workflow_state: "check_registered_company_name_form")
+      end
+
+      it "redirects to company_name_form" do
+        post_form_with_params(:check_registered_company_name_form, transient_registration.token)
+
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_company_name_form_path(transient_registration.token))
+      end
+    end
+
     describe "GET back_check_registered_company_name_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
