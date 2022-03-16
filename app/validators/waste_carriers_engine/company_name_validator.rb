@@ -31,9 +31,11 @@ module WasteCarriersEngine
     end
 
     def valid_company_name?(record, attribute, value)
-      if %w[limitedCompany limitedLiabilityPartnership].include? record.business_type
-        return value_is_present?(record, attribute, value) unless record.registered_company_name.present?
+      if (%w[limitedCompany limitedLiabilityPartnership].include? record.business_type) &&
+         !record.registered_company_name.present?
+        return value_is_present?(record, attribute, value)
       end
+
       true
     end
   end
