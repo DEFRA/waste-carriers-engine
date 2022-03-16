@@ -16,6 +16,7 @@ module Test
 end
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/BlockLength
   RSpec.describe CompanyNameValidator do
     subject { Test::CompanyNameValidatable.new }
 
@@ -30,7 +31,7 @@ module WasteCarriersEngine
         expect(subject).not_to be_valid
       end
     end
-  
+
     RSpec.shared_examples "business name is required" do
       context "with a business name" do
         before { allow(subject).to receive(:company_name).and_return(Faker::Company.name) }
@@ -107,4 +108,5 @@ module WasteCarriersEngine
       end
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end
