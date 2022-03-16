@@ -34,10 +34,6 @@ module WasteCarriersEngine
       case record.business_type
       when "limitedCompany", "limitedLiabilityPartnership"
         return value_is_present?(record, attribute, value) unless record.registered_company_name.present?
-      when "soleTrader"
-        unless record.tier == WasteCarriersEngine::Registration::UPPER_TIER
-          return value_is_present?(record, attribute, value)
-        end
       end
       true
     end
