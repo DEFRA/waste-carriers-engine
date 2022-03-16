@@ -34,6 +34,9 @@ module WasteCarriersEngine
       case record.business_type
       when "limitedCompany", "limitedLiabilityPartnership"
         return value_is_present?(record, attribute, value) unless record.registered_company_name.present?
+
+      else
+        return true
       end
       true
     end
