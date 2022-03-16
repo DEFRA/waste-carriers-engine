@@ -40,6 +40,7 @@ module WasteCarriersEngine
         state :cbd_type_form
         state :registration_number_form
         state :check_registered_company_name_form
+        state :incorrect_company_form
 
         state :company_name_form
         state :company_postcode_form
@@ -190,7 +191,14 @@ module WasteCarriersEngine
                       to: :check_registered_company_name_form
 
           transitions from: :check_registered_company_name_form,
+                      to: :incorrect_company_form,
+                      if: :incorrect_company_data?
+
+          transitions from: :check_registered_company_name_form,
                       to: :company_name_form
+
+          transitions from: :incorrect_company_form,
+                      to: :registration_number_form
 
           transitions from: :company_name_form,
                       to: :company_address_manual_form,
@@ -422,6 +430,9 @@ module WasteCarriersEngine
                       to: :check_registered_company_name_form
 
           transitions from: :check_registered_company_name_form,
+                      to: :registration_number_form
+
+          transitions from: :incorrect_company_form,
                       to: :registration_number_form
 
           transitions from: :other_businesses_form,
@@ -672,6 +683,10 @@ module WasteCarriersEngine
 
       def set_contact_address_as_registered_address
         WasteCarriersEngine::ContactAddressAsRegisteredAddressService.run(self)
+      end
+
+      def incorrect_company_data?
+        temp_use_registered_company_details == "no"
       end
     end
     # rubocop:enable Metrics/BlockLength

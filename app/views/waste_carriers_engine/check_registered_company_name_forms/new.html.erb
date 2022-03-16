@@ -12,16 +12,29 @@
     <%= form_for @check_registered_company_name_form do |f| %>
       <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-      <h2 class="govuk-heading-m">
-        <%= @check_registered_company_name_form.company_name %>
-      </h2>
+        <%= 
+          f.govuk_collection_radio_buttons :temp_use_registered_company_details,
+          [
+            OpenStruct.new(
+                     id: "no",
+                     name: t(".options.no")
+                   )
+          ],
+          :id,
+          :name,
+          inline: true,
+          legend: -> do %>
 
-      <p class="govuk-body">
-        <% @check_registered_company_name_form.registered_office_address_lines.each do |line| %>
-          <%= line %> <br>
+            <h2 class="govuk-heading-m">
+              <%= @check_registered_company_name_form.company_name %>
+            </h2> 
+            <p class="govuk-body">
+              <% @check_registered_company_name_form.registered_office_address_lines.each do |line| %>
+                <%= line %> <br>
+              <% end %>
+            </p>
+
         <% end %>
-      </p>
-
       <%= f.govuk_submit t(".next_button") %>
     <% end %>
 
@@ -30,4 +43,3 @@
     </p>
   </div>
 </div>
-
