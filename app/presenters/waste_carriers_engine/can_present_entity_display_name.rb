@@ -11,9 +11,9 @@ module WasteCarriersEngine
     # finding and formatting that single person.
     def entity_display_name
       if upper_tier_sole_trader?
-        list_main_people
+        legal_name_and_or_trading_name(list_main_people)
       else
-        company_registered_and_or_trading_name
+        legal_name_and_or_trading_name(registered_company_name)
       end
     end
 
@@ -30,15 +30,15 @@ module WasteCarriersEngine
       upper_tier? && business_type == "soleTrader"
     end
 
-    def company_registered_and_or_trading_name
+    def legal_name_and_or_trading_name(legal_name)
       if company_name.present?
-        if registered_company_name.present?
-          "#{registered_company_name} trading as #{company_name}"
+        if legal_name.present?
+          "#{legal_name} trading as #{company_name}"
         else
           company_name
         end
       else
-        registered_company_name
+        legal_name
       end
     end
   end

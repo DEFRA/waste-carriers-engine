@@ -18,9 +18,22 @@ RSpec.shared_examples "Can present entity display name" do
     context "when the registration business type is 'soleTrader'" do
       let(:business_type) { "soleTrader" }
       let(:key_people) { [person_a] }
+      let(:trader_name) { "#{key_people[0].first_name} #{key_people[0].last_name}" }
 
-      it "returns the carrier's name" do
-        expect(subject.entity_display_name).to eq("#{person_a.first_name} #{person_a.last_name}")
+      context "without a business name" do
+        let(:company_name) { nil }
+
+        it "returns the trader's name" do
+          expect(subject.entity_display_name).to eq trader_name
+        end
+      end
+
+      context "with a business name" do
+        let(:company_name) { Faker::Company.name }
+
+        it "returns the sole trader name and the business name" do
+          expect(subject.entity_display_name).to eq "#{trader_name} trading as #{company_name}"
+        end
       end
     end
 
