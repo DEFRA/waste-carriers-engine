@@ -91,6 +91,7 @@ module WasteCarriersEngine
         any_of({ reg_identifier: /\A#{escaped_term}\z/i },
                { company_name: /#{escaped_term}/i },
                { last_name: /#{escaped_term}/i },
+               { registered_company_name: /#{escaped_term}/i },
                "addresses.postcode": /#{escaped_term}/i)
       }
 
