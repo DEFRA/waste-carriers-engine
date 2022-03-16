@@ -5,7 +5,11 @@ module WasteCarriersEngine
     include CanAddValidationErrors
 
     def validate_each(record, attribute, value)
-      return false unless value_is_present?(record, attribute, value)
+      if attribute == :company_name
+        return false unless valid_company_name?(record, attribute, value)
+      else
+        return false unless value_is_present?(record, attribute, value)
+      end
 
       value_is_not_too_long?(record, attribute, value)
     end
@@ -14,8 +18,6 @@ module WasteCarriersEngine
 
     def value_is_present?(record, attribute, value)
       return true if value.present?
-
-      return true if attribute == :company_name && record.registered_company_name.present?
 
       add_validation_error(record, attribute, :blank)
       false
@@ -26,6 +28,15 @@ module WasteCarriersEngine
 
       add_validation_error(record, attribute, :too_long)
       false
+    end
+
+    def valid_company_name?(record, attribute, value)
+      if (%w[limitedCompany limitedLiabilityPartnership].include? record.business_type) &&
+         !record.registered_company_name.present?
+        return value_is_present?(record, attribute, value)
+      end
+
+      true
     end
   end
 end
