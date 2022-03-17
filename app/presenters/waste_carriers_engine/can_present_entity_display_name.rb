@@ -32,14 +32,25 @@ module WasteCarriersEngine
 
     def legal_name_and_or_trading_name(legal_name)
       if company_name.present?
+        trading_name = truncate_trading_as_name(company_name)
         if legal_name.present?
-          "#{legal_name} trading as #{company_name}"
+          "#{legal_name} trading as #{trading_name}"
         else
-          company_name
+          trading_name
         end
       else
         legal_name
       end
+    end
+
+    # If the name includes " trading as " or " t/a ", drop all text up to and including that.
+    def truncate_trading_as_name(name)
+      ["trading as", "t/a"].each do |term|
+        includes_trading_as = name.match(/^.*\s#{term}\s+(.*)/i)
+        return includes_trading_as[1] if includes_trading_as && includes_trading_as.length > 1
+      end
+
+      name
     end
   end
 end

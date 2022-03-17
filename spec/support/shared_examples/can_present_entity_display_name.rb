@@ -6,68 +6,97 @@ RSpec.shared_examples "Can present entity display name" do
 
   subject { described_class.new(registration, view) }
 
-  context "when the registration is lower tier" do
-    let(:tier) { "LOWER" }
-
-    it "returns the company name" do
-      expect(subject.entity_display_name).to eq(company_name)
+  RSpec.shared_examples "trading as" do
+    it "returns entity name trading as business name" do
+      expect(subject.entity_display_name).to eq "#{entity_name} trading as #{trading_as_name}"
     end
   end
 
-  context "when the registration is upper tier" do
-    context "when the registration business type is 'soleTrader'" do
-      let(:business_type) { "soleTrader" }
-      let(:key_people) { [person_a] }
-      let(:trader_name) { "#{key_people[0].first_name} #{key_people[0].last_name}" }
+  RSpec.shared_examples "with and without a business name" do
+    context "without a business name" do
+      let(:company_name) { nil }
+
+      it "returns the entity name" do
+        expect(subject.entity_display_name).to eq entity_name
+      end
+    end
+
+    context "with a business name" do
+      let(:trading_as_name) { Faker::Company.name }
+
+      context "without 'trading as' detail" do
+        let(:company_name) { trading_as_name }
+        it_behaves_like "trading as"
+      end
+
+      context "with 'trading as' detail" do
+        let(:company_name) { "#{Faker::Company.name} trading as #{trading_as_name}" }
+        it_behaves_like "trading as"
+      end
+
+      context "with 't/a' detail" do
+        let(:company_name) { "#{Faker::Company.name} t/a #{trading_as_name}" }
+        it_behaves_like "trading as"
+      end
+    end
+  end
+
+  RSpec.shared_examples "limited company or limited liability partnership" do
+    let(:entity_name) { registered_name }
+
+    context "with a registered name" do
+      let(:registered_name) { Faker::Company.name }
 
       context "without a business name" do
         let(:company_name) { nil }
 
-        it "returns the trader's name" do
-          expect(subject.entity_display_name).to eq trader_name
-        end
+        it_behaves_like "with and without a business name"
       end
 
       context "with a business name" do
-        let(:company_name) { Faker::Company.name }
+        it_behaves_like "with and without a business name"
+      end
 
-        it "returns the sole trader name and the business name" do
-          expect(subject.entity_display_name).to eq "#{trader_name} trading as #{company_name}"
+      context "without a registered name and with a business name" do
+        let(:registered_name) { nil }
+
+        it "returns the business name" do
+          expect(subject.entity_display_name).to eq company_name
         end
       end
     end
+  end
 
-    context "when the registration business type is NOT 'sole trader'" do
-      it "returns the company name" do
-        expect(subject.entity_display_name).to eq(company_name)
+  describe "#entity_display_name" do
+    let(:company_name) { Faker::Lorem.sentence(word_count: 3) }
+
+    context "when the registration is lower tier" do
+      let(:tier) { "LOWER" }
+
+      it "returns the business name" do
+        expect(subject.entity_display_name).to eq company_name
       end
     end
-  end
 
-  context "with a registered name and without a trading name" do
-    let(:registered_name) { Faker::Company.name }
-    let(:company_name) { nil }
+    context "when the registration is upper tier" do
 
-    it "returns the registered name" do
-      expect(subject.entity_display_name).to eq registered_name
-    end
-  end
+      context "when the registration business type is 'soleTrader'" do
+        let(:business_type) { "soleTrader" }
+        let(:key_people) { [person_a] }
+        let(:entity_name) { "#{key_people[0].first_name} #{key_people[0].last_name}" }
 
-  context "without a registered name and with a trading name" do
-    let(:registered_name) { nil }
-    let(:company_name) { Faker::Lorem.sentence(word_count: 3) }
+        it_behaves_like "with and without a business name"
+      end
 
-    it "returns the trading name" do
-      expect(subject.entity_display_name).to eq company_name
-    end
-  end
+      context "when the registration business type is 'limitedCompany'" do
+        let(:business_type) { "limitedCompany" }
+        it_behaves_like "limited company or limited liability partnership"
+      end
 
-  context "with both a registered name and a trading name" do
-    let(:registered_name) { Faker::Company.name }
-    let(:company_name) { Faker::Lorem.sentence(word_count: 3) }
-
-    it "returns the entity display name" do
-      expect(subject.entity_display_name).to eq "#{registered_name} trading as #{company_name}"
+      context "when the registration business type is 'limitedLiabilityPartnership'" do
+        let(:business_type) { "limitedLiabilityPartnership" }
+        it_behaves_like "limited company or limited liability partnership"
+      end
     end
   end
 end
