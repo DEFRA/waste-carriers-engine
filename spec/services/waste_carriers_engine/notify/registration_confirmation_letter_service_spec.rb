@@ -23,6 +23,7 @@ module WasteCarriersEngine
           let(:expected_notify_options) do
             {
               template_id: template_id,
+              reference: registration.reg_identifier,
               personalisation: {
                 contact_name: "Jane Doe",
                 registration_type: "carrier, broker and dealer",
@@ -58,6 +59,7 @@ module WasteCarriersEngine
           it "sends a letter" do
             expect(subject).to be_a(Notifications::Client::ResponseNotification)
             expect(subject.template["id"]).to eq(template_id)
+            expect(subject.reference).to match(/CBDU*/)
             expect(subject.content["subject"]).to eq(
               "You are now registered as an upper tier waste carrier, broker and dealer"
             )
@@ -110,6 +112,7 @@ module WasteCarriersEngine
           let(:expected_notify_options) do
             {
               template_id: template_id,
+              reference: registration.reg_identifier,
               personalisation: {
                 contact_name: "Jane Doe",
                 reg_identifier: registration.reg_identifier,
@@ -142,6 +145,7 @@ module WasteCarriersEngine
           it "sends a letter" do
             expect(subject).to be_a(Notifications::Client::ResponseNotification)
             expect(subject.template["id"]).to eq(template_id)
+            expect(subject.reference).to match(/CBDL*/)
             expect(subject.content["subject"]).to eq(
               "You are now registered as a lower tier waste carrier, broker and dealer"
             )

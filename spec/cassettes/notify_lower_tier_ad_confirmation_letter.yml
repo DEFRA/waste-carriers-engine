@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/letter
     body:
       encoding: UTF-8
-      string: '{"template_id":"0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","personalisation":{"contact_name":"Jane
-        Doe","reg_identifier":"CBDU1","company_name":"Acme Waste","registered_address":"42,
-        Foo Gardens, Baz City, BS1 1AA","phone_number":"03708 506506","date_registered":"11
-        May 2021","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
+      string: '{"template_id":"0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","reference":"CBDU12","personalisation":{"contact_name":"Jane
+        Doe","reg_identifier":"CBDU12","company_name":"Acme Waste","registered_address":"42,
+        Foo Gardens, Baz City, BS1 1AA","phone_number":"03708 506506","date_registered":"17
+        March 2022","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
         Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA"}}'
     headers:
       User-Agent:
@@ -35,40 +35,44 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 11 May 2021 09:37:32 GMT
+      - Thu, 17 Mar 2022 13:56:02 GMT
       Server:
       - nginx
       Strict-Transport-Security:
       - max-age=31536000; includeSubdomains
       X-B3-Spanid:
-      - e718876eeb00a63c
+      - 032f12cc5df887630129c60d8f397b47
       X-B3-Traceid:
-      - e718876eeb00a63c
+      - 032f12cc5df887630129c60d8f397b47
       X-Vcap-Request-Id:
-      - 4feeb3dc-ae7b-4bc1-5c4b-ad7691ea7b21
+      - 85de7486-5488-4d60-785d-19ffad83c907
       Content-Length:
-      - '1631'
+      - '2017'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
       string: '{"content":{"body":"Dear Jane Doe\r\nYou are now registered as a lower
-        tier waste carrier, broker and dealer.\r\nYour registration number is CBDU1.\r\n\r\n#As
-        a lower tier waste carrier, broker and dealer:\r\n*you don\u2019t need to
-        pay a registration charge\r\n*you don\u2019t need to renew your registration
-        (it just continues automatically)\r\n\r\nThe Environment Agency certify that
-        the following information is entered in the register which they maintain under
-        regulation 28 of the Waste (England and Wales) Regulations 2011.\r\n\r\n#Carrier
+        tier waste carrier, broker and dealer.\r\n\r\nYour registration number is
+        CBDU12.\r\n\r\n#As a lower tier waste carrier, broker and dealer:\r\n*you
+        don\u2019t need to pay a registration charge\r\n*you don\u2019t need to renew
+        your registration (it just continues automatically)\r\n\r\nYours sincerely\r\nWaste
+        carrier renewal team\r\n\r\n------------\r\n\r\n\r\n#Certificate of Registration
+        under the Waste (England and Wales) Regulations 2011\r\n#Regulation authority\r\n#Name\r\nEnvironment
+        Agency\r\n#Address \r\nNational Customer Contact Centre\r\n99 Parkway Avenue\r\nSheffield\r\nS9
+        4WF\r\nTelephone number - 03708 506506\r\n\r\nThe Environment Agency certify
+        that the following information is entered in the register which they maintain
+        under regulation 28 of the Waste (England and Wales) Regulations 2011.\r\n\r\n#Carrier
         details\r\nName of registered carrier - Acme Waste\r\nRegistered as -  A lower
         tier waste carrier, broker and dealer.\r\nRegistered address - 42, Foo Gardens,
         Baz City, BS1 1AA\r\nTelephone number - 03708 506506\r\nDate of registration
-        - 11 May 2021\r\n\r\n#Updating your details\r\nIf any of the details you\u2019ve
+        - 17 March 2022\r\n\r\n#Updating your details\r\nYour registration will last
+        indefinitely so does not need to be renewed. If any of the details you\u2019ve
         given us change, you must update them within 28 days by contacting the Environment
-        Agency.\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
-        or contact the Environment Agency helpline: 03708 506506\r\n\r\nYours sincerely\r\nWaste
-        carrier renewal team","subject":"You are now registered as a lower tier waste
-        carrier, broker and dealer"},"id":"d16c9fb5-2457-49ce-a1e6-ac9d861a4318","reference":null,"scheduled_for":null,"template":{"id":"0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","version":2},"uri":"https://api.notifications.service.gov.uk/v2/notifications/d16c9fb5-2457-49ce-a1e6-ac9d861a4318"}
+        Agency.\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
+        or contact the Environment Agency helpline: 03708 506506","subject":"You are
+        now registered as a lower tier waste carrier, broker and dealer"},"id":"1b79c93d-6140-49c4-a718-1605c3450d2c","reference":"CBDU12","scheduled_for":null,"template":{"id":"0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","version":15},"uri":"https://api.notifications.service.gov.uk/v2/notifications/1b79c93d-6140-49c4-a718-1605c3450d2c"}
 
 '
-  recorded_at: Tue, 11 May 2021 09:37:32 GMT
-recorded_with: VCR 6.0.0
+  recorded_at: Thu, 17 Mar 2022 13:55:37 GMT
+recorded_with: VCR 6.1.0

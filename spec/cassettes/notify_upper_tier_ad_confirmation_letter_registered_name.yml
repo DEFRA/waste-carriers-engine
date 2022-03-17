@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/letter
     body:
       encoding: UTF-8
-      string: '{"template_id":"92817aa7-6289-4837-a033-96d287644cb3","personalisation":{"contact_name":"Jane
-        Doe","reg_identifier":"CBDU1","company_name":"Acme Waste","registered_address":"42,
-        Foo Gardens, Baz City, BS1 1AA","phone_number":"03708 506506","date_registered":"10
-        May 2021","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
-        Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA","expiry_date":"10
-        May 2022","registration_type":"carrier, broker and dealer"}}'
+      string: '{"template_id":"92817aa7-6289-4837-a033-96d287644cb3","reference":"CBDU13","personalisation":{"contact_name":"Jane
+        Doe","reg_identifier":"CBDU13","company_name":"Zenith Limited","registered_address":"42,
+        Foo Gardens, Baz City, BS1 1AA","phone_number":"03708 506506","date_registered":"17
+        March 2022","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
+        Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA","expiry_date":"17
+        March 2023","registration_type":"carrier, broker and dealer"}}'
     headers:
       User-Agent:
       - NOTIFY-API-RUBY-CLIENT/5.3.0
@@ -36,48 +36,52 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 10 May 2021 13:09:07 GMT
+      - Thu, 17 Mar 2022 13:54:21 GMT
       Server:
       - nginx
       Strict-Transport-Security:
       - max-age=31536000; includeSubdomains
       X-B3-Spanid:
-      - b5d16a574e129664
+      - 695f1af7caf91e426e9fd3163cbefaab
       X-B3-Traceid:
-      - b5d16a574e129664
+      - 695f1af7caf91e426e9fd3163cbefaab
       X-Vcap-Request-Id:
-      - 9a806845-abe5-4646-5c84-0e29e2b11d78
+      - 1fe691ce-797d-4528-4bc5-6da3c65de3b1
       Content-Length:
-      - '2272'
+      - '2588'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
       string: '{"content":{"body":"Dear Jane Doe\r\nYou are now registered as an upper
-        tier waste carrier, broker and dealer. \r\nYour registration number is CBDU1.\r\n\r\n#As
-        an upper tier waste carrier, broker and dealer:\r\n*you need to renew your
-        registration every 3 years\r\n*you\u2019ll need to pay a registration charge
-        each time you renew\r\n*if we cannot reach you, you\u2019ll have to pay more
-        for a new registration\r\n\r\n#There are some simple rules you must follow:\r\n*if
-        you give your waste to another person or business you must check they are
-        properly authorised to accept it, for example as a permitted site or a registered
-        waste carrier\r\n*make sure the correct documentation is completed for each
-        transfer of waste and that it correctly describes the waste\r\n*make sure
-        any waste is safely handled and stored\r\n*minimise the environmental impact
-        of waste by prioritising waste prevention, reuse, recycling and recovery over
-        disposal\r\n\r\nThe Environment Agency certify that the following information
-        is entered in the register which they maintain under regulation 28 of the
-        Waste (England and Wales) Regulations 2011.\r\n#Carrier details\r\nName of
-        registered carrier - Zenith Limited\r\nRegistered as -  An upper tier waste carrier,
-        broker and dealer\r\nRegistered address - 42, Foo Gardens, Baz City, BS1 1AA\r\nTelephone
-        number - 03708 506506\r\nDate of registration - 10 May 2021\r\nExpiry date
-        of registration - 10 May 2022\r\n\r\n#Updating your details\r\nIf any of the
-        details you\u2019ve given us change, you must update them within 28 days by
-        contacting the Environment Agency.\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
+        tier waste carrier, broker and dealer. \r\n\r\nYour registration number is
+        CBDU13.\r\n\r\n#As an upper tier waste carrier, broker and dealer:\r\n*you
+        need to renew your registration every 3 years\r\n*you\u2019ll need to pay
+        a registration charge each time you renew\r\n*if we cannot reach you, you\u2019ll
+        have to pay more for a new registration\r\n\r\n#There are some simple rules
+        you must follow:\r\n*if you give your waste to another person or business
+        you must check they are properly authorised to accept it, for example as a
+        permitted site or a registered waste carrier\r\n*make sure the correct documentation
+        is completed for each transfer of waste and that it correctly describes the
+        waste\r\n*make sure any waste is safely handled and stored\r\n*minimise the
+        environmental impact of waste by prioritising waste prevention, reuse, recycling
+        and recovery over disposal\r\n\r\n-------------\r\n\r\n#Certificate of Registration
+        under the Waste (England and Wales) Regulations 2011\r\n#Regulation authority\r\n#Name\r\nEnvironment
+        Agency\r\n#Address \r\nNational Customer Contact Centre\r\n99 Parkway Avenue\r\nSheffield\r\nS9
+        4WF\r\nTelephone number - 03708 506506\r\n\r\nThe Environment Agency certify
+        that the following information is entered in the register which they maintain
+        under regulation 28 of the Waste (England and Wales) Regulations 2011.\r\n#Carrier
+        details\r\nName of registered carrier - Zenith Limited\r\nRegistered as -  An
+        upper tier waste carrier, broker and dealer\r\nRegistered address - 42, Foo
+        Gardens, Baz City, BS1 1AA\r\nTelephone number - 03708 506506\r\nDate of registration
+        - 17 March 2022\r\nExpiry date of registration - 17 March 2023\r\n\r\n#Updating
+        your details\r\nIf any of the details you\u2019ve given us change, you must
+        update them within 28 days by contacting the Environment Agency.\r\n\r\nIf
+        you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
         or contact the Environment Agency helpline: 03708 506506\r\n\r\nYours sincerely\r\nWaste
         carrier renewal team","subject":"You are now registered as an upper tier waste
-        carrier, broker and dealer"},"id":"ac0f3175-651e-4855-8e41-0d4c0b4090cf","reference":null,"scheduled_for":null,"template":{"id":"92817aa7-6289-4837-a033-96d287644cb3","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/92817aa7-6289-4837-a033-96d287644cb3","version":6},"uri":"https://api.notifications.service.gov.uk/v2/notifications/ac0f3175-651e-4855-8e41-0d4c0b4090cf"}
+        carrier, broker and dealer"},"id":"9636fd7c-7542-40f2-b6d5-d54d71390116","reference":"CBDU13","scheduled_for":null,"template":{"id":"92817aa7-6289-4837-a033-96d287644cb3","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/92817aa7-6289-4837-a033-96d287644cb3","version":14},"uri":"https://api.notifications.service.gov.uk/v2/notifications/9636fd7c-7542-40f2-b6d5-d54d71390116"}
 
 '
-  recorded_at: Mon, 10 May 2021 13:09:07 GMT
-recorded_with: VCR 6.0.0
+  recorded_at: Thu, 17 Mar 2022 13:53:57 GMT
+recorded_with: VCR 6.1.0
