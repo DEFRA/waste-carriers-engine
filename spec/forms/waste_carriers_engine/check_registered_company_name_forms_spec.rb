@@ -18,7 +18,7 @@ module WasteCarriersEngine
       let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :has_required_data) }
 
       context "when the form is valid" do
-        let(:valid_params) { { token: check_registered_company_name_form.token } }
+        let(:valid_params) { { token: check_registered_company_name_form.token, temp_use_registered_company_details: "no" } }
 
         it "should submit" do
           expect(check_registered_company_name_form.submit(valid_params)).to be_truthy

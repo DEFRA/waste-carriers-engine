@@ -16,9 +16,13 @@
           f.govuk_collection_radio_buttons :temp_use_registered_company_details,
           [
             OpenStruct.new(
-                     id: "no",
-                     name: t(".options.no")
-                   )
+                     id: "yes",
+                     name: t(".options.yes")
+                   ),
+            OpenStruct.new(
+                      id: "no",
+                      name: t(".options.no")
+            )
           ],
           :id,
           :name,

@@ -433,7 +433,7 @@ module WasteCarriersEngine
                       to: :registration_number_form
 
           transitions from: :incorrect_company_form,
-                      to: :registration_number_form
+                      to: :check_registered_company_name_form
 
           transitions from: :other_businesses_form,
                       to: :check_your_tier_form
