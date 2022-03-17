@@ -8,10 +8,10 @@ en:
             UPPER: &value "What's the name of the local authority or public body?"
             LOWER: *value
           limitedCompany:
-            UPPER: &trade_name Do you trade under a different name? (optional)
+            UPPER: &optional_trade_name Do you trade under a different name? (optional)
             LOWER: What's the name of the company?
           limitedLiabilityPartnership:
-            UPPER: *trade_name
+            UPPER: *optional_trade_name
             LOWER: What's the name of the limited liability partnership?
           overseas:
             UPPER: &value What's the name of the business or organisation?
@@ -20,8 +20,8 @@ en:
             UPPER: &value What's the name of the partnership?
             LOWER: *value
           soleTrader:
-            UPPER: *trade_name
-            LOWER: *trade_name
+            UPPER: *optional_trade_name
+            LOWER: Enter your business trading name
           charity:
             UPPER: &value What's the name of the charity or trust?
             LOWER: *value
