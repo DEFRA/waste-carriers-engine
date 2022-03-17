@@ -6,13 +6,13 @@ RSpec.shared_examples "Can present entity display name" do
 
   subject { described_class.new(registration, view) }
 
-  RSpec.shared_examples "trading as" do
+  shared_examples "trading as" do
     it "returns entity name trading as business name" do
       expect(subject.entity_display_name).to eq "#{entity_name} trading as #{trading_as_name}"
     end
   end
 
-  RSpec.shared_examples "with and without a business name" do
+  shared_examples "with and without a business name" do
     context "without a business name" do
       let(:company_name) { nil }
 
@@ -41,7 +41,7 @@ RSpec.shared_examples "Can present entity display name" do
     end
   end
 
-  RSpec.shared_examples "limited company or limited liability partnership" do
+  shared_examples "limited company or limited liability partnership" do
     let(:entity_name) { registered_name }
 
     context "with a registered name" do
