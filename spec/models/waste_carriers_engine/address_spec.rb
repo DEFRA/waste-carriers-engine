@@ -83,7 +83,8 @@ module WasteCarriersEngine
 
       context "with no dependent thoroughfare or building name" do
         before do
-          os_places_data["dependentThoroughfare"] = ""
+          # Note: The OS Places API response payload spells dependentThoroughfare as dependentThroughfare.
+          os_places_data["dependentThroughfare"] = ""
           os_places_data["buildingName"] = ""
         end
 
@@ -106,7 +107,7 @@ module WasteCarriersEngine
       context "with a dependent thoroughfare and no building name" do
         let(:dependent_thoroughfare) { Faker::Address.street_name }
         before do
-          os_places_data["dependentThoroughfare"] = dependent_thoroughfare
+          os_places_data["dependentThroughfare"] = dependent_thoroughfare
           os_places_data["buildingName"] = ""
         end
 
@@ -144,7 +145,7 @@ module WasteCarriersEngine
       context "with a building name and no dependent thoroughfare" do
         let(:building_name) { Faker::Address.secondary_address }
         before do
-          os_places_data["dependentThoroughfare"] = ""
+          os_places_data["dependentThroughfare"] = ""
           os_places_data["buildingName"] = building_name
         end
 
@@ -183,7 +184,7 @@ module WasteCarriersEngine
         let(:dependent_thoroughfare) { Faker::Address.street_name }
         let(:building_name) { Faker::Address.secondary_address }
         before do
-          os_places_data["dependentThoroughfare"] = dependent_thoroughfare
+          os_places_data["dependentThroughfare"] = dependent_thoroughfare
           os_places_data["buildingName"] = building_name
         end
 

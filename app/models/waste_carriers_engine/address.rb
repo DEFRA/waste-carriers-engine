@@ -80,7 +80,8 @@ module WasteCarriersEngine
       # but OS places does not include them in the "lines" array.
       # If either or both are present, insert them before the thoroughFareName value.
       if data["thoroughfareName"].present? && (insert_position = lines.index(data["thoroughfareName"]))
-        add_line_at?(lines, insert_position, data["dependentThoroughfare"])
+        # Note: The OS Places API spells dependentThoroughfare as dependentThroughfare.
+        add_line_at?(lines, insert_position, data["dependentThroughfare"])
         add_line_at?(lines, insert_position, data["buildingName"])
       end
 
