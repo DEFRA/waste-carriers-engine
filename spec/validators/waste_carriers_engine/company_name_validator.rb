@@ -9,6 +9,7 @@ module Test
     attr_reader :company_name
     attr_reader :registered_company_name
     attr_reader :business_type
+    attr_reader :tier
 
     validates_with WasteCarriersEngine::CompanyNameValidator, attributes: [:company_name]
   end
@@ -75,7 +76,15 @@ module WasteCarriersEngine
     describe "#valid?" do
       context "sole trader" do
         before { allow(subject).to receive(:business_type).and_return("soleTrader") }
-        it_behaves_like "business name is optional"
+        context "upper tier" do
+          before { allow(subject).to receive(:tier).and_return("UPPER") }
+          it_behaves_like "business name is optional"
+        end
+        context "lower tier" do
+          before { allow(subject).to receive(:tier).and_return("LOWER") }
+          # WCR does not capture sole trader name for lower tier registrations, so business name is required
+          it_behaves_like "business name is required"
+        end
       end
       context "limited company" do
         before { allow(subject).to receive(:business_type).and_return("limitedCompany") }
