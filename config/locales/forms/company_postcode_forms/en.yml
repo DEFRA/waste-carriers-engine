@@ -12,6 +12,7 @@ en:
           charity: Find the address of the charity or trust
           authority: Find the address of the local authority
           publicBody: Find the address of the public body
+        page_hint: This is your trading address or principal place of business. This will be displayed on the public register.
         temp_company_postcode_label: Enter a UK postcode
         temp_company_postcode_hint: For example, BS1 5AH
         error_heading: A problem to fix
