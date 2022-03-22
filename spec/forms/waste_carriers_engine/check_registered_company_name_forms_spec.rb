@@ -35,5 +35,7 @@ module WasteCarriersEngine
         end
       end
     end
+
+    include_examples "validate yes no", :check_registered_company_name_form, :temp_use_registered_company_details
   end
 end
