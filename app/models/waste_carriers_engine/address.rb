@@ -62,8 +62,6 @@ module WasteCarriersEngine
       address[:town_city] = data["town"]
       address[:postcode] = data["postcode"]
       address[:country] = data["country"]
-      address[:dependent_locality] = data["dependentLocality"]
-      address[:administrative_area] = data["administrativeArea"]
       address[:local_authority_update_date] = data["localAuthorityUpdateDate"]
       address[:easting] = data["easting"]
       address[:northing] = data["northing"]
@@ -73,33 +71,36 @@ module WasteCarriersEngine
       address
     end
 
-    def assign_house_number_and_address_lines(data)
-      lines = data["lines"].clone
+    def assign_house_number_and_address_lines(os_data)
+      data = os_data.clone.slice("departmentName", "organisationName", "postOfficeBoxNumber",
+                                 "subBuildingName", "buildingName", "buildingNumber",
+                                 "dependentThroughfare", "thoroughfareName", "dependentLocality")
+                    .delete_if { |_k, v| v.nil? || v.empty? }
 
-      # buildingNumber and dependentThoroughfare are part of the "lines" logic
-      # but OS places does not include them in the "lines" array.
-      # If either or both are present, insert them before the thoroughFareName value.
-      if data["thoroughfareName"].present? && (insert_position = lines.index(data["thoroughfareName"]))
-        # Note: The OS Places API spells dependentThoroughfare as dependentThroughfare.
-        add_line_at?(lines, insert_position, data["dependentThroughfare"])
-        add_line_at?(lines, insert_position, data["buildingName"])
-      end
+      # Avoid exceeding the number of available lines by merging some values if necessary.
+      combined_if_length_exceeds(5, data, "departmentName", "organisationName")
+      combined_if_length_exceeds(5, data, "subBuildingName", "buildingName")
+      combined_if_length_exceeds(5, data, "buildingNumber", "dependentThroughfare")
 
-      lines.reject!(&:blank?)
+      lines = data.values.reject(&:blank?)
 
       address_attributes = %i[house_number
                               address_line_1
                               address_line_2
                               address_line_3
-                              address_line_4
-                              address_line_5]
+                              address_line_4]
 
       # Assign lines one at a time until we run out of lines to assign
       write_attribute(address_attributes.shift, lines.shift) until lines.empty?
     end
 
-    def add_line_at?(lines, insert_position, insert_value)
-      lines.insert(insert_position, insert_value) if insert_value.present?
+    def combined_if_length_exceeds(max_lines, data, field1, field2)
+      return if data.keys.length <= max_lines
+
+      return if !data[field1].present? || !data[field2].present?
+
+      data[field2] = data.values_at(field1, field2).reject(&:blank?).join(", ")
+      data.delete(field1)
     end
 
     def manually_entered?

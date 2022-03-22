@@ -10,13 +10,12 @@ module WasteCarriersEngine
       context "when it is given address data" do
         let(:data) do
           {
-            "lines" => [
-              "FOO HOUSE",
-              "BAR BUILDINGS",
-              "BAZ STREET",
-              "QUX CORNER",
-              "QUUX VILLAGE"
-            ]
+            "subBuildingName" => "FOO HOUSE",
+            "buildingName" => "BAR BUILDINGS",
+            "buildingNumber" => "42",
+            "dependentThroughfare" => "BAZ STREET",
+            "thoroughfareName" => "QUX CORNER",
+            "dependentLocality" => "QUUX VILLAGE"
           }
         end
 
@@ -26,11 +25,11 @@ module WasteCarriersEngine
           end
 
           it "should assign the correct house_number" do
-            expect(address[:house_number]).to eq("FOO HOUSE")
+            expect(address[:house_number]).to eq("FOO HOUSE, BAR BUILDINGS")
           end
 
           it "should assign the correct address_lines" do
-            expect(address[:address_line_1]).to eq("BAR BUILDINGS")
+            expect(address[:address_line_1]).to eq("42")
             expect(address[:address_line_2]).to eq("BAZ STREET")
             expect(address[:address_line_3]).to eq("QUX CORNER")
             expect(address[:address_line_4]).to eq("QUUX VILLAGE")
@@ -39,17 +38,17 @@ module WasteCarriersEngine
 
         context "when the lines are not all used" do
           before do
-            data["lines"] = ["FOO BUILDINGS", "BAR STREET"]
+            data.merge!("subBuildingName" => nil, "buildingNumber" => nil, "dependentThroughfare" => nil)
             address.assign_house_number_and_address_lines(data)
           end
 
           it "should assign the correct house_number" do
-            expect(address[:house_number]).to eq("FOO BUILDINGS")
+            expect(address[:house_number]).to eq("BAR BUILDINGS")
           end
 
           it "should skip blank fields when assigning lines" do
-            expect(address[:address_line_1]).to eq("BAR STREET")
-            expect(address[:address_line_2].present?).to eq(false)
+            expect(address[:address_line_1]).to eq("QUX CORNER")
+            expect(address[:address_line_2]).to eq("QUUX VILLAGE")
             expect(address[:address_line_3].present?).to eq(false)
             expect(address[:address_line_4].present?).to eq(false)
           end
@@ -57,167 +56,107 @@ module WasteCarriersEngine
       end
     end
 
+    # Note: The OS Places API response payload spells dependentThoroughfare as dependentThroughfare.
     describe ".create_from_os_places_data" do
       let(:os_places_data) { JSON.parse(file_fixture("os_places_response.json").read) }
-      let(:os_lines) { os_places_data["lines"] }
+
       subject { described_class.create_from_os_places_data(os_places_data) }
 
-      RSpec.shared_examples "address fields" do
-        it "includes the expected fields" do
-          %i[uprn address_mode administrative_area administrative_area easting northing
-             house_number address_line_1 town_city postcode].each do |field|
-            expect(subject[field]).to be_present
-          end
-        end
-
-        it "populates house number and address fields correctly" do
-          # use 'expect(x==y).to be_truthy' instead of 'expect(x).to eq(y)' to allow for nil values.
-          expect(subject[:house_number]   == expected_house_address_lines[0]).to be_truthy
-          expect(subject[:address_line_1] == expected_house_address_lines[1]).to be_truthy
-          expect(subject[:address_line_2] == expected_house_address_lines[2]).to be_truthy
-          expect(subject[:address_line_3] == expected_house_address_lines[3]).to be_truthy
-          expect(subject[:address_line_4] == expected_house_address_lines[4]).to be_truthy
-          expect(subject[:address_line_5] == expected_house_address_lines[5]).to be_truthy
+      shared_examples "skips blank field" do |blank_field, address_line, next_field|
+        before { os_places_data[blank_field] = nil }
+        it "skips to the next field" do
+          expect(subject[address_line]).to eq os_places_data[next_field]
         end
       end
 
-      context "with no dependent thoroughfare or building name" do
-        before do
-          # Note: The OS Places API response payload spells dependentThoroughfare as dependentThroughfare.
-          os_places_data["dependentThroughfare"] = ""
-          os_places_data["buildingName"] = ""
+      context "with all relevant fields except PO box number populated in the OS places response" do
+        it "includes the correct values" do
+          expect(subject.attributes).to include(
+            "uprn" => os_places_data["uprn"].to_i,
+            "houseNumber" => "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}",
+            "addressLine1" => "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}",
+            "addressLine2" => "#{os_places_data['buildingNumber']}, #{os_places_data['dependentThroughfare']}",
+            "addressLine3" => os_places_data["thoroughfareName"],
+            "addressLine4" => os_places_data["dependentLocality"],
+            "townCity" => os_places_data["town"],
+            "postcode" => os_places_data["postcode"],
+            "country" => os_places_data["country"],
+            "dependentLocality" => os_places_data["dependentLocality"],
+            "administrativeArea" => os_places_data["administrativeArea"],
+            "localAuthorityUpdateDate" => os_places_data["localAuthorityUpdateDate"],
+            "easting" => os_places_data["easting"].to_i,
+            "northing" => os_places_data["northing"].to_i,
+            "addressMode" => "address-results"
+          )
         end
 
-        context "with few address lines returned by OS places" do
-          let(:expected_house_address_lines) { [os_lines[0..1], [nil] * 4].flatten }
-
-          it_behaves_like "address fields"
+        # Overflow check: Confirm that an address created from a maximal OS payload has valid keys.
+        it "does not have nil keys" do
+          expect(subject.attributes.keys).not_to include(nil)
         end
 
-        context "with all address lines returned by OS places" do
-          before do
-            os_places_data["lines"] << Faker::Address.street_name while os_places_data["lines"].length < 6
+        context "organisation details" do
+          context "with an organisation name only" do
+            before { os_places_data["departmentName"] = nil }
+            it "uses the organisation name" do
+              expect(subject[:house_number]).to eq os_places_data["organisationName"]
+            end
           end
-          let(:expected_house_address_lines) { os_lines[0..5] }
+          context "with a department name only" do
+            before { os_places_data["organisationName"] = nil }
+            it "uses the department name" do
+              expect(subject[:house_number]).to eq os_places_data["departmentName"]
+            end
+          end
+          context "with both department name and organisation name" do
+            it "comnbines department and organisation names" do
+              expect(subject[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
+            end
+          end
+        end
 
-          it_behaves_like "address fields"
+        context "building details" do
+          context "with a building name only" do
+            before { os_places_data["subBuildingName"] = nil }
+            it "uses the building name" do
+              expect(subject[:address_line_1]).to eq os_places_data["buildingName"]
+            end
+          end
+          context "with a sub-building name only" do
+            before { os_places_data["buildingName"] = nil }
+            it "uses the sub-building name" do
+              expect(subject[:address_line_1]).to eq os_places_data["subBuildingName"]
+            end
+          end
+          context "with both sub-building name and building name" do
+            it "comnbines sub-building and building names" do
+              expect(subject[:address_line_1]).to eq "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}"
+            end
+          end
+        end
+
+        context "with other optional fields not populated" do
+          it_behaves_like "skips blank field", "buildingNumber",       :address_line_2, "dependentThroughfare"
+          it_behaves_like "skips blank field", "dependentThroughfare", :address_line_3, "thoroughfareName"
+          it_behaves_like "skips blank field", "thoroughfareName",     :address_line_4, "dependentLocality"
         end
       end
 
-      context "with a dependent thoroughfare and no building name" do
-        let(:dependent_thoroughfare) { Faker::Address.street_name }
+      context "with a PO box number" do
+        let(:po_box_number) { "PO Box #{Faker::Number.number(digits: 4)}" }
         before do
-          os_places_data["dependentThroughfare"] = dependent_thoroughfare
-          os_places_data["buildingName"] = ""
+          os_places_data["postOfficeBoxNumber"] = po_box_number
+          os_places_data["subBuildingName"] = nil
+          os_places_data["buildingName"] = nil
+          os_places_data["buildingNumber"] = nil
         end
-
-        context "with few address lines returned by OS places" do
-          let(:expected_house_address_lines) do
-            [
-              os_lines[0],
-              dependent_thoroughfare,
-              os_places_data["thoroughfareName"],
-              [nil] * 3
-            ].flatten
-          end
-
-          it_behaves_like "address fields"
+        it "includes the PO box number after the organisation details" do
+          expect(subject[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
+          expect(subject[:address_line_1]).to eq po_box_number
         end
-
-        context "with all address lines returned by OS places" do
-          before do
-            os_places_data["lines"] << Faker::Address.street_name while os_places_data["lines"].length < 6
-          end
-
-          let(:expected_house_address_lines) do
-            [
-              os_lines[0],
-              dependent_thoroughfare,
-              os_places_data["thoroughfareName"],
-              [os_lines[2..4]]
-            ].flatten
-          end
-
-          it_behaves_like "address fields"
-        end
-      end
-
-      context "with a building name and no dependent thoroughfare" do
-        let(:building_name) { Faker::Address.secondary_address }
-        before do
-          os_places_data["dependentThroughfare"] = ""
-          os_places_data["buildingName"] = building_name
-        end
-
-        context "with few address lines returned by OS places" do
-          let(:expected_house_address_lines) do
-            [
-              os_lines[0],
-              building_name,
-              os_places_data["thoroughfareName"],
-              [nil] * 3
-            ].flatten
-          end
-
-          it_behaves_like "address fields"
-        end
-
-        context "with all address lines returned by OS places" do
-          before do
-            os_places_data["lines"] << Faker::Address.street_name while os_places_data["lines"].length < 6
-          end
-
-          let(:expected_house_address_lines) do
-            [
-              os_lines[0],
-              building_name,
-              os_places_data["thoroughfareName"],
-              [os_lines[2..4]]
-            ].flatten
-          end
-
-          it_behaves_like "address fields"
-        end
-      end
-
-      context "with a dependent thoroughfare and a building name" do
-        let(:dependent_thoroughfare) { Faker::Address.street_name }
-        let(:building_name) { Faker::Address.secondary_address }
-        before do
-          os_places_data["dependentThroughfare"] = dependent_thoroughfare
-          os_places_data["buildingName"] = building_name
-        end
-
-        context "with few address lines returned by OS places" do
-          let(:expected_house_address_lines) do
-            [
-              os_lines[0],
-              building_name,
-              dependent_thoroughfare,
-              os_places_data["thoroughfareName"],
-              [nil] * 2
-            ].flatten
-          end
-
-          it_behaves_like "address fields"
-        end
-
-        context "with all address lines returned by OS places" do
-          before do
-            os_places_data["lines"] << Faker::Address.street_name while os_places_data["lines"].length < 6
-          end
-
-          let(:expected_house_address_lines) do
-            [
-              os_lines[0],
-              building_name,
-              dependent_thoroughfare,
-              os_places_data["thoroughfareName"],
-              [os_lines[2..3]]
-            ].flatten
-          end
-
-          it_behaves_like "address fields"
+        it "includes the PO box number before the street details" do
+          expect(subject[:address_line_1]).to eq po_box_number
+          expect(subject[:address_line_2]).to eq os_places_data["dependentThroughfare"]
         end
       end
     end
