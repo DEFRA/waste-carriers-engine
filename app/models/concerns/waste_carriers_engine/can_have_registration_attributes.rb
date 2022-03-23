@@ -204,12 +204,17 @@ module WasteCarriersEngine
       end
 
       def legal_entity_name
+        # Robocop and SonarCloud disagree over whether this case statement should have a default clause.
+        # rubocop:disable Style/EmptyElse
         case business_type
         when "limitedCompany", "limitedLiabilityPartnership"
           registered_company_name
         when "soleTrader"
           upper_tier? ? first_person_name : nil
+        else
+          nil
         end
+        # rubocop:enable Style/EmptyElse
       end
 
       def first_person_name
