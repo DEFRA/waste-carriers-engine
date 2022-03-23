@@ -2,9 +2,9 @@
 
 module WasteCarriersEngine
 
-  # This module contains shared presentation logic for carrier names.
-  # This is similar to a model concern, but for presenters.
+  # This module contains shared presentation logic for entity names.
   module CanPresentEntityDisplayName
+    extend ActiveSupport::Concern
 
     # If both legal entity name and trading name are present, clean up the company name
     # if necessary and present legal entity name trading as company name.
