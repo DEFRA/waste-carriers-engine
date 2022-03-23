@@ -122,7 +122,7 @@ module WasteCarriersEngine
 
     describe "#list_main_people" do
       it "returns a list of names separated by a <br>" do
-        expect(subject.list_main_people).to eq(
+        expect(subject.send(:list_main_people)).to eq(
           "#{person_a.first_name} #{person_a.last_name}<br>#{person_b.first_name} #{person_b.last_name}"
         )
       end
