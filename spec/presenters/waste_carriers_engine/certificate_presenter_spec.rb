@@ -6,10 +6,11 @@ module WasteCarriersEngine
   RSpec.describe CertificatePresenter do
     subject { described_class.new(registration, view) }
 
-    include_context("Sample registration with defaults") do
+    include_context "Sample registration with defaults", :registration do
       let(:registration_type) { "carrier_broker_dealer" }
       let(:route) { "DIGITAL" }
     end
+    let(:registration) { resource }
 
     describe "calling root model attributes" do
       it "returns the value of the attribute" do
@@ -18,7 +19,10 @@ module WasteCarriersEngine
     end
 
     describe "#entity_display_name" do
-      it_should_behave_like "Can present entity display name"
+      let(:registered_company_name) { Faker::Company.name }
+      it "returns legal_entity_name trading as company_name" do
+        expect(subject.entity_display_name).to eq("#{registered_company_name} trading as #{company_name}")
+      end
     end
 
     describe "#complex_organisation_details?" do

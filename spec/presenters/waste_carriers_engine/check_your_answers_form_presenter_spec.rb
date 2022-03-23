@@ -55,11 +55,15 @@ module WasteCarriersEngine
     end
 
     describe "#entity_display_name" do
-      include_context "Sample registration with defaults" do
-        let(:factory) { :transient_registration }
-      end
+      include_context "Sample registration with defaults", :transient_registration
 
-      it_should_behave_like "Can present entity display name"
+      describe "#entity_display_name" do
+        let(:transient_registration) { resource }
+        let(:registered_company_name) { Faker::Company.name }
+        it "returns legal_entity_name trading as company_name" do
+          expect(subject.entity_display_name).to eq("#{registered_company_name} trading as #{company_name}")
+        end
+      end
     end
   end
 end

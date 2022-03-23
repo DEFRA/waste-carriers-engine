@@ -50,6 +50,11 @@ module WasteCarriersEngine
                             factory: :transient_registration
     end
 
+    describe "entity_display names" do
+      it_should_behave_like "Can present entity display name",
+                            factory: :transient_registration
+    end
+
     describe "conviction scopes" do
       it_should_behave_like "Can filter conviction status"
     end
