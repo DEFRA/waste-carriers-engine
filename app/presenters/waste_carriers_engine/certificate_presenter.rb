@@ -3,7 +3,6 @@
 module WasteCarriersEngine
   class CertificatePresenter < BasePresenter
     include WasteCarriersEngine::ApplicationHelper
-    include WasteCarriersEngine::CanPresentEntityDisplayName
 
     LOCALES_KEY = ".waste_carriers_engine.pdfs.certificate"
 

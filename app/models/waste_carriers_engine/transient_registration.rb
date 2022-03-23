@@ -7,6 +7,7 @@ module WasteCarriersEngine
     include CanCheckRegistrationStatus
     include CanFilterConvictionStatus
     include CanHaveRegistrationAttributes
+    include CanPresentEntityDisplayName
     include CanHaveSecureToken
     include CanSetCreatedAt
     include CanStripWhitespace
