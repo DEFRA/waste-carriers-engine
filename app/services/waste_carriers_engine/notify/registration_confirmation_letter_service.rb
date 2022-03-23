@@ -52,7 +52,7 @@ module WasteCarriersEngine
       end
 
       def company_name
-        CarrierNamePresenter.new(@registration).entity_display_name
+        @registration.entity_display_name
       end
 
       def address_lines
