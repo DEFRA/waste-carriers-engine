@@ -1,35 +1,36 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "Can present entity display name" do
+RSpec.shared_examples "Can present entity display name" do |factory:|
 
-  include_context("Sample registration with defaults")
+  include_context "Sample registration with defaults", factory
+  let(:registration) { resource }
 
   let(:upper_tier) { WasteCarriersEngine::Registration::UPPER_TIER }
   let(:lower_tier) { WasteCarriersEngine::Registration::LOWER_TIER }
 
-  subject { described_class.new(registration, view) }
+  subject { registration.entity_display_name }
 
   shared_examples "legal_entity_name trading as trading_as_name" do
     it "returns entity name trading as business name with truncation" do
-      expect(subject.entity_display_name).to eq "#{registration.legal_entity_name} trading as #{trading_as_name}"
+      expect(subject).to eq "#{registration.legal_entity_name} trading as #{trading_as_name}"
     end
   end
 
   shared_examples "legal_entity_name trading as company_name" do
     it "returns entity name trading as business name" do
-      expect(subject.entity_display_name).to eq "#{registration.legal_entity_name} trading as #{company_name}"
+      expect(subject).to eq "#{registration.legal_entity_name} trading as #{company_name}"
     end
   end
 
   shared_examples "simply company_name" do
     it "returns business name" do
-      expect(subject.entity_display_name).to eq company_name
+      expect(subject).to eq company_name
     end
   end
 
   shared_examples "simply legal_entity_name" do
     it "returns the legal entity name" do
-      expect(subject.entity_display_name).to eq registration.legal_entity_name
+      expect(subject).to eq registration.legal_entity_name
     end
   end
 
@@ -53,8 +54,8 @@ RSpec.shared_examples "Can present entity display name" do
   end
 
   shared_examples "limited company or limited liability partnership" do
-    context "with a registered name" do
-      let(:registered_name) { Faker::Company.name }
+    context "with a registered company name" do
+      let(:registered_company_name) { Faker::Company.name }
 
       context "when upper tier" do
         let(:tier) { upper_tier }
@@ -62,7 +63,7 @@ RSpec.shared_examples "Can present entity display name" do
         it_behaves_like "with a business name with truncation"
 
         context "without a registered name and with a business name" do
-          let(:registered_name) { nil }
+          let(:registered_company_name) { nil }
 
           it_behaves_like "simply company_name"
         end
