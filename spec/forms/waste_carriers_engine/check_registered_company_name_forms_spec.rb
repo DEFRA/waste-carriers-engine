@@ -18,10 +18,27 @@ module WasteCarriersEngine
       let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :has_required_data) }
 
       context "when the form is valid" do
-        let(:valid_params) { { token: check_registered_company_name_form.token, temp_use_registered_company_details: "no" } }
+        subject { check_registered_company_name_form.submit(valid_params) }
 
-        it "should submit" do
-          expect(check_registered_company_name_form.submit(valid_params)).to be_truthy
+        context "when the user selects yes to the company house details being correct" do
+          let(:valid_params) { { token: check_registered_company_name_form.token, temp_use_registered_company_details: "yes" } }
+          let(:transient_registration) { check_registered_company_name_form.transient_registration }
+
+          it "should submit" do
+            expect(subject).to be_truthy
+          end
+
+          it "should update the transient registration" do
+            expect { subject }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(company_name)
+          end
+        end
+
+        context "when the user selects no to the company house details being correct" do
+          let(:valid_params) { { token: check_registered_company_name_form.token, temp_use_registered_company_details: "no" } }
+
+          it "should submit" do
+            expect(subject).to be_truthy
+          end
         end
       end
 
@@ -35,5 +52,7 @@ module WasteCarriersEngine
         end
       end
     end
+
+    include_examples "validate yes no", :check_registered_company_name_form, :temp_use_registered_company_details
   end
 end
