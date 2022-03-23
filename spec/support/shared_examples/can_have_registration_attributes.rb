@@ -402,4 +402,88 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
     end
   end
+
+  describe "#legal_entity_name" do
+    let(:person_a) { build(:key_person, :main, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
+    let(:key_people) { [person_a] }
+    let(:registered_company_name) { nil }
+    let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
+    let(:company_name) { nil }
+    let(:resource) do
+      build(factory,
+            business_type: business_type,
+            tier: tier,
+            registered_company_name: registered_company_name,
+            key_people: key_people)
+    end
+
+    subject { resource.legal_entity_name }
+
+    shared_examples "returns registered name" do
+      it "returns the registered name" do
+        expect(subject).to eq registered_company_name
+      end
+    end
+
+    shared_examples "returns nil" do
+      it "returns nil" do
+        expect(subject).to be_nil
+      end
+    end
+
+    shared_examples "LTD or LLP" do
+      context "with a registered name" do
+        let(:registered_company_name) { Faker::Company.name }
+
+        context "without a business name" do
+          it_behaves_like "returns registered name"
+        end
+
+        context "with a business name" do
+          let(:company_name) { Faker::Company.name }
+          it_behaves_like "returns registered name"
+        end
+      end
+
+      context "without a registered name" do
+        let(:registered_company_name) { nil }
+
+        context "without a business name" do
+          it_behaves_like "returns nil"
+        end
+
+        context "with a business name" do
+          let(:company_name) { Faker::Company.name }
+          it_behaves_like "returns nil"
+        end
+      end
+    end
+
+    context "for a sole trader" do
+      let(:business_type) { "soleTrader" }
+
+      context "upper tier" do
+        it "returns the sole trader's name" do
+          expect(subject).to eq "#{resource.key_people[0].first_name} #{resource.key_people[0].last_name}"
+        end
+      end
+
+      context "lower tier" do
+        let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
+    end
+
+    context "for a limited company" do
+      let(:business_type) { "limitedCompany" }
+      it_behaves_like "LTD or LLP"
+    end
+
+    context "for a limited liability partnership" do
+      let(:business_type) { "limitedLiabilityPartnership" }
+      it_behaves_like "LTD or LLP"
+    end
+  end
 end
