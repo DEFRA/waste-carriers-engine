@@ -419,8 +419,8 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
 
     subject { resource.legal_entity_name }
 
-    shared_examples "returns registered name" do
-      it "returns the registered name" do
+    shared_examples "returns registered_company_name" do
+      it "returns the registered company name" do
         expect(subject).to eq registered_company_name
       end
     end
@@ -432,20 +432,20 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
 
     shared_examples "LTD or LLP" do
-      context "with a registered name" do
+      context "with a registered company name" do
         let(:registered_company_name) { Faker::Company.name }
 
         context "without a business name" do
-          it_behaves_like "returns registered name"
+          it_behaves_like "returns registered_company_name"
         end
 
         context "with a business name" do
           let(:company_name) { Faker::Company.name }
-          it_behaves_like "returns registered name"
+          it_behaves_like "returns registered_company_name"
         end
       end
 
-      context "without a registered name" do
+      context "without a registered company name" do
         let(:registered_company_name) { nil }
 
         context "without a business name" do
