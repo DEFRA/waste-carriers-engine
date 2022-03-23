@@ -317,10 +317,11 @@ module WasteCarriersEngine
         end
 
         context "when the name is blank" do
-          let(:term) { nil }
+          let(:results) { described_class.matching_organisations(name: nil, company_no: term) }
 
-          it "raises an error" do
-            expect { results }.to raise_error(ArgumentError)
+          it "returns the company_no match" do
+            company_no_match = described_class.create(company_number: term)
+            expect(results).to eq([company_no_match])
           end
         end
       end
