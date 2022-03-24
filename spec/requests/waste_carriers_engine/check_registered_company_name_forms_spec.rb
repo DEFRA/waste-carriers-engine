@@ -34,7 +34,7 @@ module WasteCarriersEngine
 
           it "displays the registered company name" do
             get check_registered_company_name_forms_path(transient_registration[:token])
-            expect(response.body).to include(company_name)
+            expect(CGI.unescapeHTML(response.body)).to include(company_name)
           end
 
           it "displays the registered company address" do
