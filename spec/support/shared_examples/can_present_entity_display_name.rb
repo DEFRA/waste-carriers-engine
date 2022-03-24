@@ -11,19 +11,19 @@ RSpec.shared_examples "Can present entity display name" do |factory:|
   subject { registration.entity_display_name }
 
   shared_examples "legal_entity_name trading as trading_as_name" do
-    it "returns entity name trading as business name with truncation" do
+    it "returns entity name trading as company_name with truncation" do
       expect(subject).to eq "#{registration.legal_entity_name} trading as #{trading_as_name}"
     end
   end
 
   shared_examples "legal_entity_name trading as company_name" do
-    it "returns entity name trading as business name" do
+    it "returns entity name trading as company_name" do
       expect(subject).to eq "#{registration.legal_entity_name} trading as #{company_name}"
     end
   end
 
   shared_examples "simply company_name" do
-    it "returns business name" do
+    it "returns company_name" do
       expect(subject).to eq company_name
     end
   end
@@ -34,7 +34,7 @@ RSpec.shared_examples "Can present entity display name" do |factory:|
     end
   end
 
-  shared_examples "with a business name with truncation" do
+  shared_examples "with a company_name with truncation" do
     let(:trading_as_name) { Faker::Company.name }
 
     context "without 'trading as' detail" do
@@ -54,15 +54,15 @@ RSpec.shared_examples "Can present entity display name" do |factory:|
   end
 
   shared_examples "limited company or limited liability partnership" do
-    context "with a registered company name" do
+    context "with a registered_company_name" do
       let(:registered_company_name) { Faker::Company.name }
 
       context "when upper tier" do
         let(:tier) { upper_tier }
 
-        it_behaves_like "with a business name with truncation"
+        it_behaves_like "with a company_name with truncation"
 
-        context "without a registered name and with a business name" do
+        context "without a registered_company_name and with a company_name" do
           let(:registered_company_name) { nil }
 
           it_behaves_like "simply company_name"
@@ -102,7 +102,7 @@ RSpec.shared_examples "Can present entity display name" do |factory:|
 
       context "when upper tier" do
         let(:tier) { upper_tier }
-        it_behaves_like "with a business name with truncation"
+        it_behaves_like "with a company_name with truncation"
       end
 
       context "when lower tier" do
