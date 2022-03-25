@@ -129,6 +129,20 @@ module WasteCarriersEngine
         %w[limitedCompany limitedLiabilityPartnership].include?(business_type)
       end
 
+      def company_name_required?
+        case business_type
+        when "limitedCompany", "limitedLiabilityPartnership"
+          # mandatory unless registered_company_name is present
+          !registered_company_name.present?
+        when "soleTrader"
+          # mandatory for lower tier, optional for upper tier
+          !upper_tier?
+        else
+          # otherwise mandatory
+          true
+        end
+      end
+
       def rejected_conviction_checks?
         return false unless conviction_sign_offs&.any?
 

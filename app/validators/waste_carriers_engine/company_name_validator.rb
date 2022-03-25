@@ -31,16 +31,7 @@ module WasteCarriersEngine
     end
 
     def valid_company_name?(record, attribute, value)
-      case record.business_type
-      when "limitedCompany", "limitedLiabilityPartnership"
-        # mandatory unless registered_company_name is present
-        record.registered_company_name.present? || value_is_present?(record, attribute, value)
-      when "soleTrader"
-        # mandatory for lower tier, optional for upper tier
-        (record.tier == WasteCarriersEngine::Registration::UPPER_TIER) || value_is_present?(record, attribute, value)
-      else
-        true
-      end
+      !record.company_name_required? || value_is_present?(record, attribute, value)
     end
   end
 end
