@@ -7,8 +7,11 @@ en:
         options:
           "yes": "Yes"
           "no": "No"
+        company_number: "Companies House Number - %{company_no}"
         next_button: Continue
         enter_a_different_number: "Enter a different number"
+        must_create_new_registration: If you have a new companies house number you need to create a new registration
+
   activemodel:
     errors:
       models:

@@ -8,6 +8,7 @@ en:
         next_button: Continue
         description: If your Companies House information is incorrect you must update it with Companies House before you can register as a waste carrier.
         enter_a_different_number: Enter a different number
+        must_create_new_registration: If you have a new companies house number you need to create a new registration
         company_house_link: Change and update your Companies House information
   activemodel:
     errors:
