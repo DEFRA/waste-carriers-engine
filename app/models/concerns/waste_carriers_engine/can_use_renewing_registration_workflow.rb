@@ -32,6 +32,8 @@ module WasteCarriersEngine
         state :cbd_type_form
         state :renewal_information_form
         state :registration_number_form
+        state :check_registered_company_name_form
+        state :incorrect_company_form
 
         state :company_name_form
         state :company_postcode_form
@@ -168,7 +170,18 @@ module WasteCarriersEngine
                       if: :require_new_registration_based_on_company_no?
 
           transitions from: :registration_number_form,
-                      to: :company_name_form
+                      to: :check_registered_company_name_form
+
+          transitions from: :check_registered_company_name_form,
+                      to: :incorrect_company_form,
+                      if: :incorrect_company_data?
+
+          transitions from: :check_registered_company_name_form,
+                      to: :company_name_form,
+                      after: :save_registered_company_name
+
+          transitions from: :incorrect_company_form,
+                      to: :registration_number_form
 
           transitions from: :company_name_form,
                       to: :company_address_manual_form,
@@ -379,7 +392,13 @@ module WasteCarriersEngine
                       if: :skip_registration_number?
 
           transitions from: :company_name_form,
+                      to: :check_registered_company_name_form
+
+          transitions from: :check_registered_company_name_form,
                       to: :registration_number_form
+
+          transitions from: :incorrect_company_form,
+                      to: :check_registered_company_name_form
 
           # Registered address
 
@@ -566,6 +585,14 @@ module WasteCarriersEngine
 
     def paying_by_card?
       temp_payment_method == "card"
+    end
+
+    def incorrect_company_data?
+      temp_use_registered_company_details == "no"
+    end
+
+    def save_registered_company_name
+      update_attributes(registered_company_name: registered_company_name)
     end
 
     def send_renewal_pending_worldpay_payment_email

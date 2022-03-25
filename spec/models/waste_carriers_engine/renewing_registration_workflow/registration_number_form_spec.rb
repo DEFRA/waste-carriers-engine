@@ -13,7 +13,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":registration_number_form state transitions" do
         context "on next" do
-          include_examples "has next transition", next_state: "company_name_form"
+          include_examples "has next transition", next_state: "check_registered_company_name_form"
 
           context "when the company_no has changed" do
             before { subject.company_no = "01234567" }
@@ -26,7 +26,7 @@ module WasteCarriersEngine
                 subject.registration.update_attributes(business_type: "partnership")
               end
 
-              include_examples "has next transition", next_state: "company_name_form"
+              include_examples "has next transition", next_state: "check_registered_company_name_form"
             end
           end
 
@@ -35,7 +35,7 @@ module WasteCarriersEngine
               subject.registration.update_attributes(company_no: "#{subject.company_no} ")
             end
 
-            include_examples "has next transition", next_state: "company_name_form"
+            include_examples "has next transition", next_state: "check_registered_company_name_form"
           end
         end
 

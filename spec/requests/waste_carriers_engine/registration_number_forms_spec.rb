@@ -28,11 +28,11 @@ module WasteCarriersEngine
           context "when valid params are submitted and the company_no is the same as the original registration" do
             let(:valid_params) { { company_no: transient_registration[:company_no] } }
 
-            it "returns a 302 response and redirects to the company_name form" do
+            it "returns a 302 response and redirects to the check_registered_company_name form" do
               post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
 
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
             end
 
             context "when the original registration had a shorter variant of the company_no" do
@@ -41,11 +41,11 @@ module WasteCarriersEngine
                 registration.update_attributes(company_no: "9360070")
               end
 
-              it "returns a 302 response and redirects to the company_name form" do
+              it "returns a 302 response and redirects to the check_registered_company_name form" do
                 post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
 
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
+                expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
               end
             end
           end
