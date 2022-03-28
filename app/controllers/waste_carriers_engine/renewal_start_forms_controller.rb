@@ -14,13 +14,16 @@ module WasteCarriersEngine
 
     private
 
-    # rubocop:disable Naming/MemoizedInstanceVariableName
     def find_or_initialize_transient_registration(token)
       @transient_registration ||= RenewingRegistration.where(token: token).first ||
                                   RenewingRegistration.where(reg_identifier: token).first ||
                                   RenewingRegistration.new(reg_identifier: token)
+
+      # Any existing company name should not be used for a registration renewal where company_name is optional.
+      @transient_registration.company_name = nil unless @transient_registration.company_name_required?
+
+      @transient_registration
     end
-    # rubocop:enable Naming/MemoizedInstanceVariableName
 
     def should_authenticate_user?
       find_or_initialize_transient_registration(params[:token])
