@@ -19,46 +19,20 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "registration_number_form")
           end
 
-          context "when valid params are submitted and the company_no is the same as the original registration" do
-            let(:valid_params) { { company_no: transient_registration[:company_no] } }
+          context "when valid params are submitted" do
+            let(:valid_params) { { company_no: "12345678" } }
 
             it "returns a 302 response and redirects to the check_registered_company_name form" do
               post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
 
               expect(response).to have_http_status(302)
               expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
-            end
-
-            context "when the original registration had a shorter variant of the company_no" do
-              before(:each) do
-                registration = Registration.where(reg_identifier: transient_registration.reg_identifier).first
-                registration.update_attributes(company_no: "9360070")
-              end
-
-              it "returns a 302 response and redirects to the check_registered_company_name form" do
-                post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
-
-                expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
-              end
-            end
-          end
-
-          context "when valid params are submitted and the company_no is different to the original registration" do
-            let(:valid_params) { { company_no: "01234567" } }
-
-            it "updates the transient registration, returns a 302 response and redirects to the cannot_renew_company_no_change form" do
-              post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
-
-              expect(transient_registration.reload[:company_no].to_s).to eq(valid_params[:company_no])
-              expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_cannot_renew_company_no_change_form_path(transient_registration[:token]))
             end
           end
 
@@ -74,7 +48,7 @@ module WasteCarriersEngine
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "renewal_start_form")
@@ -102,7 +76,7 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "registration_number_form")
@@ -113,14 +87,14 @@ module WasteCarriersEngine
               get back_registration_number_forms_path(transient_registration[:token])
 
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_cbd_type_form_path(transient_registration[:token]))
             end
           end
         end
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "renewal_start_form")

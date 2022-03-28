@@ -66,7 +66,6 @@ module WasteCarriersEngine
 
         state :cannot_renew_lower_tier_form
         state :cannot_renew_type_change_form
-        state :cannot_renew_company_no_change_form
 
         # Transitions
         event :next do
@@ -163,13 +162,6 @@ module WasteCarriersEngine
                       if: :skip_registration_number?
 
           transitions from: :renewal_information_form,
-                      to: :registration_number_form
-
-          transitions from: :registration_number_form,
-                      to: :cannot_renew_company_no_change_form,
-                      if: :require_new_registration_based_on_company_no?
-
-          transitions from: :registration_number_form,
                       to: :check_registered_company_name_form
 
           transitions from: :check_registered_company_name_form,
@@ -384,9 +376,6 @@ module WasteCarriersEngine
           transitions from: :registration_number_form,
                       to: :renewal_information_form
 
-          transitions from: :cannot_renew_company_no_change_form,
-                      to: :registration_number_form
-
           transitions from: :company_name_form,
                       to: :renewal_information_form,
                       if: :skip_registration_number?
@@ -395,7 +384,7 @@ module WasteCarriersEngine
                       to: :check_registered_company_name_form
 
           transitions from: :check_registered_company_name_form,
-                      to: :registration_number_form
+                      to: :renewal_information_form
 
           transitions from: :incorrect_company_form,
                       to: :check_registered_company_name_form
@@ -533,10 +522,6 @@ module WasteCarriersEngine
 
     def switch_to_lower_tier_based_on_smart_answers?
       SmartAnswersCheckerService.new(self).lower_tier?
-    end
-
-    def require_new_registration_based_on_company_no?
-      company_no_changed?
     end
 
     def skip_tier_check?

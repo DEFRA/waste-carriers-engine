@@ -655,16 +655,6 @@ WasteCarriersEngine::Engine.routes.draw do
                     as: "back",
                     on: :collection
               end
-
-    resources :cannot_renew_company_no_change_forms,
-              only: %i[new create],
-              path: "cannot-renew-company-no-change",
-              path_names: { new: "" } do
-                get "back",
-                    to: "cannot_renew_company_no_change_forms#go_back",
-                    as: "back",
-                    on: :collection
-              end
   end
 
   mount DefraRubyEmail::Engine => "/email"

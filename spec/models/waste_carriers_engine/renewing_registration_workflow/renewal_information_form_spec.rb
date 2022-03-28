@@ -26,13 +26,13 @@ module WasteCarriersEngine
           context "when the business type is limitedCompany" do
             let(:business_type) { "limitedCompany" }
 
-            include_examples "has next transition", next_state: "registration_number_form"
+            include_examples "has next transition", next_state: "check_registered_company_name_form"
           end
 
           context "when the business type is limitedLiabilityPartnership" do
             let(:business_type) { "limitedLiabilityPartnership" }
 
-            include_examples "has next transition", next_state: "registration_number_form"
+            include_examples "has next transition", next_state: "check_registered_company_name_form"
           end
 
           context "when the location is overseas" do
