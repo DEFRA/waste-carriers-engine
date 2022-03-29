@@ -14,7 +14,7 @@ module WasteCarriersEngine
         response = nil
         begin
           response = RestClient::Request.execute(
-            method: :get,
+            method: :post,
             url: url,
             payload: xml,
             headers: {
