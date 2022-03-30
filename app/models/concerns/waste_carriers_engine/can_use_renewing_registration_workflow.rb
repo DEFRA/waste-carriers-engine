@@ -169,8 +169,7 @@ module WasteCarriersEngine
                       if: :incorrect_company_data?
 
           transitions from: :check_registered_company_name_form,
-                      to: :company_name_form,
-                      after: :save_registered_company_name
+                      to: :company_name_form
 
           transitions from: :incorrect_company_form,
                       to: :registration_number_form
@@ -574,10 +573,6 @@ module WasteCarriersEngine
 
     def incorrect_company_data?
       temp_use_registered_company_details == "no"
-    end
-
-    def save_registered_company_name
-      update_attributes(registered_company_name: registered_company_name)
     end
 
     def send_renewal_pending_worldpay_payment_email
