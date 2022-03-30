@@ -30,8 +30,11 @@
           legend: -> do %>
 
             <h2 class="govuk-heading-m">
-              <%= @check_registered_company_name_form.registered_company_name %>
+              <%= t(".company_number", company_no: @check_registered_company_name_form.company_no) %>
             </h2> 
+            <h2 class="govuk-heading-m">
+              <%= @check_registered_company_name_form.registered_company_name %>
+            </h2>
             <p class="govuk-body">
               <% @check_registered_company_name_form.registered_office_address_lines.each do |line| %>
                 <%= line %> <br>
@@ -43,7 +46,11 @@
     <% end %>
 
     <p class="govuk-body">
-      <%= link_to t(".enter_a_different_number"), new_registration_number_form_path %>
+      <% if @transient_registration.is_a?(WasteCarriersEngine::NewRegistration) %>
+        <%= link_to t(".enter_a_different_number"), new_registration_number_form_path %>
+      <% else %>
+        <%= t(".must_create_new_registration") %>
+      <% end %>
     </p>
   </div>
 </div>

@@ -55,22 +55,22 @@ module WasteCarriersEngine
             context "when the business type is limitedCompany" do
               before(:each) { transient_registration.update_attributes(business_type: "limitedCompany") }
 
-              it "returns a 302 response and redirects to the registration_number form" do
+              it "returns a 302 response and redirects to the check_registered_company_name form" do
                 get back_company_name_forms_path(transient_registration[:token])
 
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_registration_number_form_path(transient_registration[:token]))
+                expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
               end
             end
 
             context "when the business type is limitedLiabilityPartnership" do
               before(:each) { transient_registration.update_attributes(business_type: "limitedLiabilityPartnership") }
 
-              it "returns a 302 response and redirects to the registration_number form" do
+              it "returns a 302 response and redirects to the check_registered_company_name form" do
                 get back_company_name_forms_path(transient_registration[:token])
 
                 expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_registration_number_form_path(transient_registration[:token]))
+                expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
               end
             end
 

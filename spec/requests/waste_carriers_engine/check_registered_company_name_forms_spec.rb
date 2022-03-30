@@ -68,7 +68,7 @@ module WasteCarriersEngine
           sign_in(user)
         end
 
-        context "when a valid transient registration exists" do
+        context "for a new registration" do
           let(:transient_registration) do
             create(:new_registration,
                    :has_required_data,
@@ -76,13 +76,27 @@ module WasteCarriersEngine
                    workflow_state: "check_registered_company_name_form")
           end
 
-          context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the registration_number_form" do
-              get back_check_registered_company_name_forms_path(transient_registration[:token])
+          it "returns a 302 response and redirects to the registration_number_form" do
+            get back_check_registered_company_name_forms_path(transient_registration[:token])
 
-              expect(response).to have_http_status(302)
-              expect(response).to redirect_to(registration_number_forms_path(transient_registration[:token]))
-            end
+            expect(response).to have_http_status(302)
+            expect(response).to redirect_to(registration_number_forms_path(transient_registration[:token]))
+          end
+        end
+
+        context "for a registration renewal" do
+          let(:transient_registration) do
+            create(:renewing_registration,
+                   :has_required_data,
+                   account_email: user.email,
+                   workflow_state: "check_registered_company_name_form")
+          end
+
+          it "returns a 302 response and redirects to the renewal_information_form" do
+            get back_check_registered_company_name_forms_path(transient_registration[:token])
+
+            expect(response).to have_http_status(302)
+            expect(response).to redirect_to(renewal_information_forms_path(transient_registration[:token]))
           end
         end
       end
