@@ -20,6 +20,8 @@ module WasteCarriersEngine
         let(:company_name_form) { build(:company_name_form, :has_required_data) }
         let(:invalid_params) { { company_name: "" } }
 
+        before { company_name_form.transient_registration.tier = WasteCarriersEngine::Registration::LOWER_TIER }
+
         it "should not submit" do
           expect(company_name_form.submit(invalid_params)).to eq(false)
         end
