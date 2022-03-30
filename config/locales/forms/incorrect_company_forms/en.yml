@@ -4,11 +4,10 @@ en:
       new:
         title: My Companies House information is incorrect
         heading: My Companies House information is incorrect
-        service_link: Change and update your Companies House information
+        service_link: Update your Companies House information
         next_button: Continue
         description: If your Companies House information is incorrect you must update it with Companies House before you can register as a waste carrier.
         enter_a_different_number: Enter a different number
-        company_house_link: Change and update your Companies House information
         new_window: (Opens in new window)
   activemodel:
     errors:
