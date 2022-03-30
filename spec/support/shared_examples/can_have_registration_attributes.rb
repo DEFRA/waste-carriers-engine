@@ -495,55 +495,35 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
 
     subject { resource.company_name_required? }
 
-    shared_examples "when the registration is lower tier" do
-      let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
-      it "returns true" do
-        expect(subject).to be true
-      end
-    end
-
-    shared_examples "LTD or LLP" do
-
-      context "when the registration is upper tier" do
-        let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
-        context "without a registered_company_name" do
-          it "returns true" do
-            expect(subject).to be true
-          end
-        end
-
-        context "with a registered_company_name" do
-          let(:registered_company_name) { Faker::Company.name }
-          it "returns false" do
-            expect(subject).to be false
-          end
-        end
-      end
-
-      it_behaves_like "when the registration is lower tier"
-    end
-
-    context "for a limited company" do
-      let(:business_type) { "limitedCompany" }
-      it_behaves_like "LTD or LLP"
-    end
-
-    context "for a limited liability partnership" do
-      let(:business_type) { "limitedLiabilityPartnership" }
-      it_behaves_like "LTD or LLP"
-    end
-
-    context "for a sole trader" do
-      let(:business_type) { "soleTrader" }
-
-      context "when the registration is upper tier" do
+    shared_examples "it is required for lower tier only" do
+      context "upper tier" do
         let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
         it "returns false" do
           expect(subject).to be false
         end
       end
 
-      it_behaves_like "when the registration is lower tier"
+      context "lower tier" do
+        let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
+        it "returns true" do
+          expect(subject).to be true
+        end
+      end
+    end
+
+    context "for a limited company" do
+      let(:business_type) { "limitedCompany" }
+      it_behaves_like "it is required for lower tier only"
+    end
+
+    context "for a limited liability partnership" do
+      let(:business_type) { "limitedLiabilityPartnership" }
+      it_behaves_like "it is required for lower tier only"
+    end
+
+    context "for a sole trader" do
+      let(:business_type) { "soleTrader" }
+      it_behaves_like "it is required for lower tier only"
     end
   end
 end
