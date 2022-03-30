@@ -5,17 +5,17 @@ require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
   RSpec.describe CheckRegisteredCompanyNameForm, type: :model do
-    let(:company_name) { Faker::Company.name }
+    let(:registered_company_name) { Faker::Company.name }
     let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
 
     before do
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company)
-      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(company_name)
+      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(registered_company_name)
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(company_address)
     end
 
     describe "#submit" do
-      let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :has_required_data) }
+      let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :new_registration, :has_required_data) }
 
       context "when the form is valid" do
         subject { check_registered_company_name_form.submit(valid_params) }
@@ -28,8 +28,32 @@ module WasteCarriersEngine
             expect(subject).to be_truthy
           end
 
-          it "should update the transient registration" do
-            expect { subject }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(company_name)
+          context "for a new registration" do
+            it "should update the transient registration" do
+              expect { subject }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(registered_company_name)
+            end
+          end
+
+          context "for a registration renewal" do
+            let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :renewing_registration, :has_required_data) }
+
+            it "should update the transient registration" do
+              expect { subject }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(registered_company_name)
+            end
+
+            context "when the existing registration does not have a registered company name" do
+              before { transient_registration.registered_company_name = nil }
+              it "clears the company_name value" do
+                expect { subject }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
+              end
+            end
+
+            context "when the existing registration has a registered company name" do
+              before { transient_registration.registered_company_name = Faker::Company.name }
+              it "clears the company_name value" do
+                expect { subject }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
+              end
+            end
           end
         end
 
