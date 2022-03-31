@@ -133,7 +133,7 @@ module WasteCarriersEngine
         case business_type
         when "limitedCompany", "limitedLiabilityPartnership", "soleTrader"
           # mandatory for lower tier, optional for upper tier
-          !upper_tier?
+          lower_tier?
         else
           # otherwise mandatory
           true
