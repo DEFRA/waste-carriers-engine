@@ -3,11 +3,11 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RegistrationReceivedPendingWorldpayPaymentForm", type: :request do
-    describe "GET new_registration_received_pending_worldpay_payment_form_path" do
+  RSpec.describe "RegistrationReceivedPendingCardPaymentForm", type: :request do
+    describe "GET new_registration_received_pending_card_payment_form_path" do
       context "when no new registration exists" do
         it "redirects to the invalid page" do
-          get new_registration_received_pending_worldpay_payment_form_path("wibblewobblejellyonaplate")
+          get new_registration_received_pending_card_payment_form_path("wibblewobblejellyonaplate")
 
           expect(response).to redirect_to(page_path("invalid"))
         end
@@ -18,7 +18,7 @@ module WasteCarriersEngine
           create(
             :new_registration,
             :has_required_data,
-            workflow_state: "registration_received_pending_worldpay_payment_form"
+            workflow_state: "registration_received_pending_card_payment_form"
           )
         end
 
@@ -27,7 +27,7 @@ module WasteCarriersEngine
             reg_identifier = transient_registration.reg_identifier
             new_registrations_count = WasteCarriersEngine::NewRegistration.count
 
-            get new_registration_received_pending_worldpay_payment_form_path(transient_registration.token)
+            get new_registration_received_pending_card_payment_form_path(transient_registration.token)
 
             registration = WasteCarriersEngine::Registration.find_by(reg_identifier: reg_identifier)
 
@@ -46,7 +46,7 @@ module WasteCarriersEngine
           it "redirects to the correct page and does not creates a new registration nor delete the transient object" do
             new_registrations_count = WasteCarriersEngine::NewRegistration.count
 
-            get new_registration_received_pending_worldpay_payment_form_path(transient_registration.token)
+            get new_registration_received_pending_card_payment_form_path(transient_registration.token)
 
             registration_scope = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier)
 

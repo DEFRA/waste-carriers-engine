@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class RegistrationReceivedPendingWorldpayPaymentFormsController < ::WasteCarriersEngine::FormsController
+  class RegistrationReceivedPendingCardPaymentFormsController < ::WasteCarriersEngine::FormsController
     include UnsubmittableForm
     include CannotGoBackForm
 
     def new
       return unless super(
-        RegistrationReceivedPendingWorldpayPaymentForm,
-        "registration_received_pending_worldpay_payment_form"
+        RegistrationReceivedPendingCardPaymentForm,
+        "registration_received_pending_card_payment_form"
       )
 
       begin

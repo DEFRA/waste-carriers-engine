@@ -1,6 +1,6 @@
 en:
   waste_carriers_engine:
-    registration_received_pending_worldpay_payment_forms:
+    registration_received_pending_card_payment_forms:
       new:
         title: "We’re processing your payment"
         heading: "We’re processing your payment"

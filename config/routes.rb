@@ -49,7 +49,7 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "registration-received-pending-payment",
               path_names: { new: "" }
 
-    resources :registration_received_pending_worldpay_payment_forms,
+    resources :registration_received_pending_card_payment_forms,
               only: :new,
               path: "registration-received-pending-worldpay-payment",
               path_names: { new: "" }
@@ -631,7 +631,7 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "renewal-received-pending-payment",
               path_names: { new: "" }
 
-    resources :renewal_received_pending_worldpay_payment_forms,
+    resources :renewal_received_pending_card_payment_forms,
               only: %i[new create],
               path: "renewal-received-pending-worldpay-payment",
               path_names: { new: "" }
