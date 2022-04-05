@@ -59,6 +59,8 @@ RSpec.shared_examples "POST renewal form" do |form, options|
         end
 
         context "when the params are invalid" do
+          before { transient_registration.update_attributes(tier: WasteCarriersEngine::Registration::LOWER_TIER) }
+
           it "does not update the transient registration, including workflow_state, and shows the form again" do
             transient_reg_before_submitting = transient_registration
 

@@ -131,12 +131,9 @@ module WasteCarriersEngine
 
       def company_name_required?
         case business_type
-        when "limitedCompany", "limitedLiabilityPartnership"
-          # mandatory unless registered_company_name is present
-          !registered_company_name.present?
-        when "soleTrader"
+        when "limitedCompany", "limitedLiabilityPartnership", "soleTrader"
           # mandatory for lower tier, optional for upper tier
-          !upper_tier?
+          lower_tier?
         else
           # otherwise mandatory
           true

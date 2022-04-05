@@ -18,6 +18,9 @@ module WasteCarriersEngine
     def submit(params)
       params[:registered_company_name] = registered_company_name
 
+      # Any existing company name should not be used for a registration renewal where company_name is optional.
+      params[:company_name] = nil unless transient_registration.company_name_required?
+
       super
     end
 
