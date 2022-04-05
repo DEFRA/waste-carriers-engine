@@ -23,7 +23,7 @@ module WasteCarriersEngine
 
             context "when there is no pending WorldPay payment" do
               before do
-                allow(subject).to receive(:pending_worldpay_payment?).and_return(false)
+                allow(subject).to receive(:pending_card_payment?).and_return(false)
               end
 
               include_examples "has next transition", next_state: "renewal_complete_form"
@@ -41,7 +41,7 @@ module WasteCarriersEngine
 
             context "when there is a pending WorldPay payment" do
               before do
-                allow(subject).to receive(:pending_worldpay_payment?).and_return(true)
+                allow(subject).to receive(:pending_card_payment?).and_return(true)
               end
 
               include_examples "has next transition", next_state: "renewal_received_pending_card_payment_form"

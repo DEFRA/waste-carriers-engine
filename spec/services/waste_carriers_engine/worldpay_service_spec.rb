@@ -19,7 +19,7 @@ module WasteCarriersEngine
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
-      transient_registration.prepare_for_payment(:worldpay, current_user)
+      transient_registration.prepare_for_payment(:card_payment, current_user)
     end
 
     let(:order) { transient_registration.finance_details.orders.first }

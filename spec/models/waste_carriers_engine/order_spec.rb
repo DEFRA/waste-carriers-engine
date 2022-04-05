@@ -15,7 +15,7 @@ module WasteCarriersEngine
     let(:current_user) { build(:user) }
 
     describe "new_order" do
-      let(:order) { Order.new_order(transient_registration, :worldpay, current_user.email) }
+      let(:order) { Order.new_order(transient_registration, :card_payment, current_user.email) }
 
       it "should have a valid order_id" do
         Timecop.freeze(Time.new(2018, 1, 1)) do
@@ -154,12 +154,12 @@ module WasteCarriersEngine
       end
     end
 
-    describe "update_after_worldpay" do
-      let(:finance_details) { transient_registration.prepare_for_payment(:worldpay, current_user) }
+    describe "update_after_card_payment" do
+      let(:finance_details) { transient_registration.prepare_for_payment(:card_payment, current_user) }
       let(:order) { finance_details.orders.first }
 
       it "copies the worldpay status to the order" do
-        order.update_after_worldpay("AUTHORISED")
+        order.update_after_card_payment("AUTHORISED")
         expect(order.world_pay_status).to eq("AUTHORISED")
       end
 
@@ -168,7 +168,7 @@ module WasteCarriersEngine
           # Wipe the date first so we know the value has been added
           order.update_attributes(date_last_updated: nil)
 
-          order.update_after_worldpay("AUTHORISED")
+          order.update_after_card_payment("AUTHORISED")
           expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
         end
       end

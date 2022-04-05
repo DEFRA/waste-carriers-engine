@@ -46,11 +46,11 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the payment method is worldpay" do
-        let(:payment_method) { :worldpay }
+      context "when the payment method is card_payment" do
+        let(:payment_method) { :card_payment }
 
         it "updates the transient_registration's finance details with a new order for the given copy cards" do
-          expect(order).to receive(:add_worldpay_attributes)
+          expect(order).to receive(:add_card_payment_attributes)
 
           described_class.run(transient_registration: transient_registration, payment_method: payment_method)
         end

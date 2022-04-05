@@ -21,7 +21,7 @@ module WasteCarriersEngine
       current_user = build(:user)
       # We need to set a specific time so we know what order code to expect
       Timecop.freeze(Time.new(2018, 1, 1)) do
-        transient_registration.prepare_for_payment(:worldpay, current_user)
+        transient_registration.prepare_for_payment(:card_payment, current_user)
       end
     end
 

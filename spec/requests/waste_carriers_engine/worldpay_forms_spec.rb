@@ -69,7 +69,7 @@ module WasteCarriersEngine
 
         describe "#success" do
           before do
-            transient_registration.prepare_for_payment(:worldpay, user)
+            transient_registration.prepare_for_payment(:card_payment, user)
           end
 
           let(:order) do
@@ -194,7 +194,7 @@ module WasteCarriersEngine
 
         describe "#pending" do
           before do
-            transient_registration.prepare_for_payment(:worldpay, user)
+            transient_registration.prepare_for_payment(:card_payment, user)
           end
 
           let(:order) do
@@ -211,7 +211,7 @@ module WasteCarriersEngine
           context "when the params are valid" do
             before do
               allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(true)
-              allow_any_instance_of(RenewingRegistration).to receive(:pending_worldpay_payment?).and_return(true)
+              allow_any_instance_of(RenewingRegistration).to receive(:pending_card_payment?).and_return(true)
             end
 
             it "redirects to renewal_received_pending_payment_form" do

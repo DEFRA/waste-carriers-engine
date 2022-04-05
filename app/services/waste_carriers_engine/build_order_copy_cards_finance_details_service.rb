@@ -27,7 +27,7 @@ module WasteCarriersEngine
       order[:total_amount] = new_item[:amount]
 
       order.add_bank_transfer_attributes if payment_method == :bank_transfer
-      order.add_worldpay_attributes if payment_method == :worldpay
+      order.add_card_payment_attributes if payment_method == :card_payment
 
       order
     end

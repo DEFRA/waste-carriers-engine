@@ -328,7 +328,7 @@ module WasteCarriersEngine
 
           transitions from: :worldpay_form,
                       to: :registration_received_pending_card_payment_form,
-                      if: :pending_worldpay_payment?,
+                      if: :pending_card_payment?,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route

@@ -61,7 +61,7 @@ module WasteCarriersEngine
     private
 
     def prepare_for_payment
-      @transient_registration.prepare_for_payment(:worldpay, current_user)
+      @transient_registration.prepare_for_payment(:card_payment, current_user)
       order = @transient_registration.finance_details.orders.first
       worldpay_service = WorldpayService.new(@transient_registration, order, current_user)
       worldpay_service.prepare_for_payment
