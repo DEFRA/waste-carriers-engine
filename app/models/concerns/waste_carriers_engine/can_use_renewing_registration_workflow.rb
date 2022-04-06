@@ -268,7 +268,7 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :renewal_received_pending_online_payment_form,
                       if: :pending_online_payment?,
-                      success: :send_renewal_pending_worldpay_payment_email,
+                      success: :send_renewal_pending_online_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -575,8 +575,8 @@ module WasteCarriersEngine
       temp_use_registered_company_details == "no"
     end
 
-    def send_renewal_pending_worldpay_payment_email
-      WasteCarriersEngine::Notify::RenewalPendingWorldpayPaymentEmailService.run(registration: self)
+    def send_renewal_pending_online_payment_email
+      WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration: self)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
