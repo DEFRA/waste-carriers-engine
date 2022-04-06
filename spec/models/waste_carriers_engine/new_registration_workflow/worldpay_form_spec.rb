@@ -20,7 +20,7 @@ module WasteCarriersEngine
           context "when there is a pending worldpay payment" do
             subject { build(:new_registration, :has_pending_worldpay_status, workflow_state: "worldpay_form") }
 
-            include_examples "has next transition", next_state: "registration_received_pending_card_payment_form"
+            include_examples "has next transition", next_state: "registration_received_pending_online_payment_form"
           end
         end
 

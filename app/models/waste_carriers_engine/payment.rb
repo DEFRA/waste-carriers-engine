@@ -39,7 +39,7 @@ module WasteCarriersEngine
       payment
     end
 
-    def self.new_from_non_card_payment(params, order)
+    def self.new_from_non_online_payment(params, order)
       payment = Payment.new
 
       payment[:amount] = params[:amount]
@@ -60,7 +60,7 @@ module WasteCarriersEngine
       payment
     end
 
-    def update_after_card_payment(params)
+    def update_after_online_payment(params)
       self.world_pay_payment_status = params[:paymentStatus]
       self.mac_code = params[:mac]
 

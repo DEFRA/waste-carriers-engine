@@ -20,7 +20,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
       let(:token) { transient_registration.token }
 
       before do
-        transient_registration.prepare_for_payment(:card_payment, user)
+        transient_registration.prepare_for_payment(:online_payment, user)
       end
 
       let(:order) do

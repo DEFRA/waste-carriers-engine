@@ -40,11 +40,11 @@ module WasteCarriersEngine
         end
       end
 
-      context "when the payment method is card_payment" do
-        let(:payment_method) { :card_payment }
+      context "when the payment method is online_payment" do
+        let(:payment_method) { :online_payment }
 
         it "updates the transient_registration's finance details with a new order for the change fee" do
-          expect(order).to receive(:add_card_payment_attributes)
+          expect(order).to receive(:add_online_payment_attributes)
 
           described_class.run(user: user, transient_registration: transient_registration, payment_method: payment_method)
         end

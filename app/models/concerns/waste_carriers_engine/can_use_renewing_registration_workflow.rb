@@ -62,7 +62,7 @@ module WasteCarriersEngine
         state :renewal_complete_form
         state :renewal_received_pending_conviction_form
         state :renewal_received_pending_payment_form
-        state :renewal_received_pending_card_payment_form
+        state :renewal_received_pending_online_payment_form
 
         state :cannot_renew_lower_tier_form
         state :cannot_renew_type_change_form
@@ -266,8 +266,8 @@ module WasteCarriersEngine
                       to: :confirm_bank_transfer_form
 
           transitions from: :worldpay_form,
-                      to: :renewal_received_pending_card_payment_form,
-                      if: :pending_card_payment?,
+                      to: :renewal_received_pending_online_payment_form,
+                      if: :pending_online_payment?,
                       success: :send_renewal_pending_worldpay_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`

@@ -34,7 +34,7 @@ module WasteCarriersEngine
       order.total_amount = order.order_items.sum(&:amount)
 
       order.add_bank_transfer_attributes if payment_method == :bank_transfer
-      order.add_card_payment_attributes if payment_method == :card_payment
+      order.add_online_payment_attributes if payment_method == :online_payment
 
       order
     end

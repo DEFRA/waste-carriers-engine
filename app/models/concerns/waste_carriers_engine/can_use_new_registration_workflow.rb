@@ -70,7 +70,7 @@ module WasteCarriersEngine
         state :registration_completed_form
         state :registration_received_pending_payment_form
         state :registration_received_pending_conviction_form
-        state :registration_received_pending_card_payment_form
+        state :registration_received_pending_online_payment_form
 
         # Transitions
         event :next do
@@ -327,8 +327,8 @@ module WasteCarriersEngine
                       after: :set_metadata_route
 
           transitions from: :worldpay_form,
-                      to: :registration_received_pending_card_payment_form,
-                      if: :pending_card_payment?,
+                      to: :registration_received_pending_online_payment_form,
+                      if: :pending_online_payment?,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route

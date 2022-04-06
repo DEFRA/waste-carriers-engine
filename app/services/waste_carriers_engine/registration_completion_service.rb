@@ -56,7 +56,7 @@ module WasteCarriersEngine
     def prepare_finance_details_for_lower_tier
       return if transient_registration.upper_tier?
 
-      transient_registration.prepare_for_payment(:card_payment)
+      transient_registration.prepare_for_payment(:online_payment)
       transient_registration.reload
     end
 
@@ -77,7 +77,7 @@ module WasteCarriersEngine
     # In the case when the registration can be completed, the registration activation email is sent from
     # the RegistrationActivationService.
     def send_confirmation_email
-      if registration.pending_card_payment?
+      if registration.pending_online_payment?
         send_worldpay_pending_payment_email
       elsif registration.unpaid_balance?
         send_pending_payment_email

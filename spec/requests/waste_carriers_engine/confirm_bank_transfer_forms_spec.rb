@@ -45,7 +45,7 @@ module WasteCarriersEngine
 
           context "when a worldpay order already exists" do
             before do
-              transient_registration.prepare_for_payment(:card_payment, user)
+              transient_registration.prepare_for_payment(:online_payment, user)
               transient_registration.finance_details.orders.first.world_pay_status = "CANCELLED"
             end
 

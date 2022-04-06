@@ -62,7 +62,7 @@ module WasteCarriersEngine
     describe "new_from_worldpay" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
-          transient_registration.prepare_for_payment(:card_payment, current_user)
+          transient_registration.prepare_for_payment(:online_payment, current_user)
         end
       end
 
@@ -98,10 +98,10 @@ module WasteCarriersEngine
       end
     end
 
-    describe "new_from_non_card_payment" do
+    describe "new_from_non_online_payment" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
-          transient_registration.prepare_for_payment(:card_payment, current_user)
+          transient_registration.prepare_for_payment(:online_payment, current_user)
         end
       end
 
@@ -120,7 +120,7 @@ module WasteCarriersEngine
       end
 
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_non_card_payment(params, order) }
+      let(:payment) { Payment.new_from_non_online_payment(params, order) }
 
       it "should set the correct amount" do
         expect(payment.amount).to eq(params[:amount])
@@ -175,14 +175,14 @@ module WasteCarriersEngine
       end
     end
 
-    describe "update_after_card_payment" do
+    describe "update_after_online_payment" do
       let(:order) { transient_registration.finance_details.orders.first }
       let(:payment) { Payment.new_from_worldpay(order, current_user.email) }
 
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
-          transient_registration.prepare_for_payment(:card_payment, current_user)
-          payment.update_after_card_payment(paymentStatus: "AUTHORISED", mac: "foo")
+          transient_registration.prepare_for_payment(:online_payment, current_user)
+          payment.update_after_online_payment(paymentStatus: "AUTHORISED", mac: "foo")
         end
       end
 

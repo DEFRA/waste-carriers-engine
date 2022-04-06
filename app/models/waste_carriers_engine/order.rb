@@ -41,7 +41,7 @@ module WasteCarriersEngine
       order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
 
       order.add_bank_transfer_attributes if method == :bank_transfer
-      order.add_card_payment_attributes if method == :card_payment
+      order.add_online_payment_attributes if method == :online_payment
 
       order
     end
@@ -77,7 +77,7 @@ module WasteCarriersEngine
       self.payment_method = "OFFLINE"
     end
 
-    def add_card_payment_attributes
+    def add_online_payment_attributes
       self.payment_method = "ONLINE"
       self.world_pay_status = "IN_PROGRESS"
       self.merchant_id = Rails.configuration.worldpay_merchantcode
@@ -91,7 +91,7 @@ module WasteCarriersEngine
       self.description = generate_description
     end
 
-    def update_after_card_payment(status)
+    def update_after_online_payment(status)
       self.world_pay_status = status
       self.date_last_updated = Time.current
       save!

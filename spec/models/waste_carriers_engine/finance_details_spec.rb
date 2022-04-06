@@ -14,7 +14,7 @@ module WasteCarriersEngine
     let(:current_user) { build(:user) }
 
     describe "new_finance_details" do
-      let(:finance_details) { transient_registration.prepare_for_payment(:card_payment, current_user) }
+      let(:finance_details) { transient_registration.prepare_for_payment(:online_payment, current_user) }
 
       it "should include 1 order" do
         order_count = finance_details.orders.length
@@ -142,7 +142,7 @@ module WasteCarriersEngine
 
       context "when there is an order" do
         before do
-          finance_details.orders = [Order.new_order(transient_registration, :card_payment, current_user)]
+          finance_details.orders = [Order.new_order(transient_registration, :online_payment, current_user)]
         end
 
         it "should have the correct balance" do

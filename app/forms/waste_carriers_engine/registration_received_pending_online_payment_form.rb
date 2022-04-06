@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class RenewalReceivedPendingCardPaymentForm < ::WasteCarriersEngine::BaseForm
+  class RegistrationReceivedPendingOnlinePaymentForm < ::WasteCarriersEngine::BaseForm
     include CannotSubmit
 
     def self.can_navigate_flexibly?
