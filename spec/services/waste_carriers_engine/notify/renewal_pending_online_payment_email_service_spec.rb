@@ -44,7 +44,7 @@ module WasteCarriersEngine
           expect(subject).to be_a(Notifications::Client::ResponseNotification)
           expect(subject.template["id"]).to eq(template_id)
           expect(subject.content["subject"]).to match(
-            /Your application to renew waste carriers registration CBDU\d has been received/
+            /Your application to renew waste carriers registration CBDU\d+ has been received/
           )
         end
       end
