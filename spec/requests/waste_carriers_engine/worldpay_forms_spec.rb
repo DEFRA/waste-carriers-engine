@@ -6,6 +6,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "WorldpayForms", type: :request do
     let(:host) { "https://secure-test.worldpay.com" }
+    before { allow(Rails.configuration).to receive(:worldpay_url).and_return(host) }
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }

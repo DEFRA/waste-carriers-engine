@@ -6,6 +6,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe WorldpayService do
     let(:host) { "https://secure-test.worldpay.com" }
+    before { allow(Rails.configuration).to receive(:worldpay_url).and_return(host) }
 
     let(:transient_registration) do
       create(:renewing_registration,
