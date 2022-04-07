@@ -45,7 +45,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
     end
   end
 
-  describe "#worldpay?" do
+  describe "#online?" do
     before do
       resource.payment_type = payment_type
     end
@@ -54,7 +54,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::WORLDPAY }
 
       it "returns true" do
-        expect(resource.worldpay?).to eq(true)
+        expect(resource.online?).to eq(true)
       end
     end
 
@@ -62,12 +62,12 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.worldpay?).to eq(false)
+        expect(resource.online?).to eq(false)
       end
     end
   end
 
-  describe "#worldpay_missed?" do
+  describe "#online_missed?" do
     before do
       resource.payment_type = payment_type
     end
@@ -76,7 +76,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::WORLDPAY_MISSED }
 
       it "returns true" do
-        expect(resource.worldpay_missed?).to eq(true)
+        expect(resource.online_missed?).to eq(true)
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.worldpay_missed?).to eq(false)
+        expect(resource.online_missed?).to eq(false)
       end
     end
   end

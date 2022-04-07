@@ -42,11 +42,11 @@ module WasteCarriersEngine
         payment_type == BANKTRANSFER
       end
 
-      def worldpay?
+      def online?
         payment_type == WORLDPAY
       end
 
-      def worldpay_missed?
+      def online_missed?
         payment_type == WORLDPAY_MISSED
       end
 
