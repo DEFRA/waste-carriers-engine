@@ -633,7 +633,7 @@ WasteCarriersEngine::Engine.routes.draw do
 
     resources :renewal_received_pending_online_payment_forms,
               only: %i[new create],
-              path: "renewal-received-pending-worldpay-payment",
+              path: "renewal-received-pending-online-payment",
               path_names: { new: "" }
 
     resources :cannot_renew_lower_tier_forms,
