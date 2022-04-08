@@ -266,16 +266,6 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
-    resources :tier_check_forms,
-              only: %i[new create],
-              path: "tier-check",
-              path_names: { new: "" } do
-                get "back",
-                    to: "tier_check_forms#go_back",
-                    as: "back",
-                    on: :collection
-              end
-
     resources :other_businesses_forms,
               only: %i[new create],
               path: "other-businesses",
@@ -635,16 +625,6 @@ WasteCarriersEngine::Engine.routes.draw do
               only: %i[new create],
               path: "renewal-received-pending-worldpay-payment",
               path_names: { new: "" }
-
-    resources :cannot_renew_lower_tier_forms,
-              only: %i[new create],
-              path: "cannot-renew-lower-tier",
-              path_names: { new: "" } do
-                get "back",
-                    to: "cannot_renew_lower_tier_forms#go_back",
-                    as: "back",
-                    on: :collection
-              end
 
     resources :cannot_renew_type_change_forms,
               only: %i[new create],
