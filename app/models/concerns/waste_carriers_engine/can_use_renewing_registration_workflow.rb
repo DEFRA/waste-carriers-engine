@@ -23,12 +23,6 @@ module WasteCarriersEngine
 
         state :business_type_form
 
-        state :tier_check_form
-        state :other_businesses_form
-        state :service_provided_form
-        state :construction_demolition_form
-        state :waste_types_form
-
         state :cbd_type_form
         state :renewal_information_form
         state :registration_number_form
@@ -64,7 +58,6 @@ module WasteCarriersEngine
         state :renewal_received_pending_payment_form
         state :renewal_received_pending_worldpay_payment_form
 
-        state :cannot_renew_lower_tier_form
         state :cannot_renew_type_change_form
 
         # Transitions
@@ -87,10 +80,6 @@ module WasteCarriersEngine
                       if: :should_register_in_wales?
 
           transitions from: :location_form,
-                      to: :tier_check_form,
-                      if: :based_overseas?
-
-          transitions from: :location_form,
                       to: :business_type_form
 
           transitions from: :register_in_northern_ireland_form,
@@ -105,54 +94,11 @@ module WasteCarriersEngine
           # End location
 
           transitions from: :business_type_form,
-                      to: :cannot_renew_lower_tier_form,
-                      if: :switch_to_lower_tier_based_on_business_type?
-
-          transitions from: :business_type_form,
-                      to: :tier_check_form,
+                      to: :cbd_type_form,
                       if: :business_type_change_valid?
 
           transitions from: :business_type_form,
                       to: :cannot_renew_type_change_form
-
-          # Smart answers
-
-          transitions from: :tier_check_form,
-                      to: :cbd_type_form,
-                      if: :skip_tier_check?
-
-          transitions from: :tier_check_form,
-                      to: :other_businesses_form
-
-          transitions from: :other_businesses_form,
-                      to: :construction_demolition_form,
-                      if: :only_carries_own_waste?
-
-          transitions from: :other_businesses_form,
-                      to: :service_provided_form
-
-          transitions from: :service_provided_form,
-                      to: :waste_types_form,
-                      if: :waste_is_main_service?
-
-          transitions from: :service_provided_form,
-                      to: :construction_demolition_form
-
-          transitions from: :waste_types_form,
-                      to: :cannot_renew_lower_tier_form,
-                      if: :switch_to_lower_tier_based_on_smart_answers?
-
-          transitions from: :waste_types_form,
-                      to: :cbd_type_form
-
-          transitions from: :construction_demolition_form,
-                      to: :cannot_renew_lower_tier_form,
-                      if: :switch_to_lower_tier_based_on_smart_answers?
-
-          transitions from: :construction_demolition_form,
-                      to: :cbd_type_form
-
-          # End smart answers
 
           transitions from: :cbd_type_form,
                       to: :renewal_information_form
@@ -329,43 +275,12 @@ module WasteCarriersEngine
 
           # Smart answers
 
-          transitions from: :tier_check_form,
+          transitions from: :cbd_type_form,
                       to: :location_form,
                       if: :based_overseas?
 
-          transitions from: :tier_check_form,
+          transitions from: :cbd_type_form,
                       to: :business_type_form
-
-          transitions from: :other_businesses_form,
-                      to: :tier_check_form
-
-          transitions from: :service_provided_form,
-                      to: :other_businesses_form
-
-          transitions from: :waste_types_form,
-                      to: :service_provided_form
-
-          transitions from: :construction_demolition_form,
-                      to: :other_businesses_form,
-                      if: :only_carries_own_waste?
-
-          transitions from: :construction_demolition_form,
-                      to: :service_provided_form
-
-          transitions from: :cbd_type_form,
-                      to: :tier_check_form,
-                      if: :skip_tier_check?
-
-          transitions from: :cbd_type_form,
-                      to: :construction_demolition_form,
-                      if: :only_carries_own_waste?
-
-          transitions from: :cbd_type_form,
-                      to: :waste_types_form,
-                      if: :waste_is_main_service?
-
-          transitions from: :cbd_type_form,
-                      to: :construction_demolition_form
 
           # End smart answers
 
@@ -474,21 +389,6 @@ module WasteCarriersEngine
 
           transitions from: :cannot_renew_type_change_form,
                       to: :business_type_form
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :business_type_form,
-                      if: :switch_to_lower_tier_based_on_business_type?
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :construction_demolition_form,
-                      if: :only_carries_own_waste?
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :waste_types_form,
-                      if: :waste_is_main_service?
-
-          transitions from: :cannot_renew_lower_tier_form,
-                      to: :construction_demolition_form
         end
 
         event :skip_to_manual_address do
@@ -512,27 +412,6 @@ module WasteCarriersEngine
 
     def skip_registration_number?
       !company_no_required?
-    end
-
-    # Charity registrations should be lower tier
-    def switch_to_lower_tier_based_on_business_type?
-      charity?
-    end
-
-    def switch_to_lower_tier_based_on_smart_answers?
-      SmartAnswersCheckerService.new(self).lower_tier?
-    end
-
-    def skip_tier_check?
-      temp_tier_check == "no"
-    end
-
-    def only_carries_own_waste?
-      other_businesses == "no"
-    end
-
-    def waste_is_main_service?
-      is_main_service == "yes"
     end
 
     def based_overseas?
