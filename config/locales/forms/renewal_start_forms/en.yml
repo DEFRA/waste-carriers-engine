@@ -4,7 +4,7 @@ en:
       new:
         title: You are about to renew registration %{reg_identifier}
         heading: You are about to renew registration %{reg_identifier}
-        paragraph_1_html: "Renewing will extend this <span class=\"strong\">upper tier registration</span> to %{date}. Renewal costs £%{renewal_charge}."
+        paragraph_1_html: "You are about to renew your upper tier registration to %{date}. This renewal costs £%{renewal_charge}."
         paragraph_2_html: "If your <span class=\"strong\">carrier type</span> changes, for example from carrier-dealer to broker-dealer, you can continue to renew but must pay an additional £%{type_change_charge} charge."
         paragraph_3: During the renewal process, we will ask you to confirm your details and update some of your information.
         paragraph_4: "If certain details about your business have changed since you registered, you will have to create a new registration rather than renew. These include:"
