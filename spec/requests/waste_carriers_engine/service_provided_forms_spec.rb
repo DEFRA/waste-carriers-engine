@@ -7,12 +7,6 @@ module WasteCarriersEngine
     include_examples "GET flexible form", "service_provided_form"
 
     describe "POST service_provided_form_path" do
-      include_examples "POST renewal form",
-                       "service_provided_form",
-                       valid_params: { is_main_service: "yes" },
-                       invalid_params: { is_main_service: "foo" },
-                       test_attribute: :is_main_service
-
       context "When the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "service_provided_form")
@@ -34,7 +28,7 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "service_provided_form")
@@ -52,7 +46,7 @@ module WasteCarriersEngine
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "renewal_start_form")

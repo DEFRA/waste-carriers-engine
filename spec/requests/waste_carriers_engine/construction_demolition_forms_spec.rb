@@ -7,12 +7,6 @@ module WasteCarriersEngine
     include_examples "GET flexible form", "construction_demolition_form"
 
     describe "POST construction_demolition_form_path" do
-      include_examples "POST renewal form",
-                       "construction_demolition_form",
-                       valid_params: { construction_waste: "yes" },
-                       invalid_params: { construction_waste: "foo" },
-                       test_attribute: :construction_waste
-
       context "When the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "construction_demolition_form")
@@ -34,7 +28,7 @@ module WasteCarriersEngine
 
         context "when a valid transient registration exists" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "construction_demolition_form")
@@ -67,7 +61,7 @@ module WasteCarriersEngine
 
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
-            create(:renewing_registration,
+            create(:new_registration,
                    :has_required_data,
                    account_email: user.email,
                    workflow_state: "renewal_start_form")
