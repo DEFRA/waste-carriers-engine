@@ -25,7 +25,6 @@ module WasteCarriersEngine
         "temp_contact_postcode" => nil,
         "temp_os_places_error" => nil,
         "temp_payment_method" => nil,
-        "temp_tier_check" => nil,
         "_type" => nil,
         "workflow_state" => nil
       }

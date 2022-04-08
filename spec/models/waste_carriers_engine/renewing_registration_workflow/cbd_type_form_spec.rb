@@ -17,35 +17,16 @@ module WasteCarriersEngine
         end
 
         context "on back" do
-          context "when temp_tier_check is no" do
-            before { subject.temp_tier_check = "no" }
+          context "when the registration is not overseas" do
+            before { subject.location = "england" }
 
-            include_examples "has back transition", previous_state: "tier_check_form"
+            include_examples "has back transition", previous_state: "business_type_form"
           end
 
-          context "when temp_tier_check is yes" do
-            before { subject.temp_tier_check = "yes" }
+          context "when the registration is overseas" do
+            before { subject.location = "overseas" }
 
-            context "when the business doesn't carry waste for other businesses or households" do
-              before { subject.other_businesses = "no" }
-
-              include_examples "has back transition", previous_state: "construction_demolition_form"
-            end
-
-            context "when the business carries waste produced by its customers" do
-              before { subject.is_main_service = "yes" }
-
-              include_examples "has back transition", previous_state: "waste_types_form"
-            end
-
-            context "when the business carries carries waste for other businesses but produces that waste" do
-              before do
-                subject.other_businesses = "yes"
-                subject.is_main_service = "no"
-              end
-
-              include_examples "has back transition", previous_state: "construction_demolition_form"
-            end
+            include_examples "has back transition", previous_state: "location_form"
           end
         end
       end

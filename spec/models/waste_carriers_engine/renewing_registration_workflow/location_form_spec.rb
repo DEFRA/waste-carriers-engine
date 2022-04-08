@@ -21,7 +21,7 @@ module WasteCarriersEngine
             "northern_ireland" => :register_in_northern_ireland_form,
             "scotland" => :register_in_scotland_form,
             "wales" => :register_in_wales_form,
-            "overseas" => :tier_check_form
+            "overseas" => :business_type_form
           }.each do |location, expected_next_state|
             context "when the location is #{location}" do
               let(:location) { location }
