@@ -22,7 +22,6 @@ module WasteCarriersEngine
     field :temp_contact_postcode, type: String
     field :temp_os_places_error, type: String # 'yes' or 'no' - should refactor to boolean
     field :temp_payment_method, type: String
-    field :temp_tier_check, type: String # 'yes' or 'no' - should refactor to boolean
     field :temp_reuse_registered_address, type: String
     field :temp_use_registered_company_details, type: String
 

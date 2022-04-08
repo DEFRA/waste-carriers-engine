@@ -53,7 +53,6 @@ module WasteCarriersEngine
                                                                      "temp_contact_postcode",
                                                                      "temp_os_places_error",
                                                                      "temp_payment_method",
-                                                                     "temp_tier_check",
                                                                      "_type",
                                                                      "workflow_state")
 

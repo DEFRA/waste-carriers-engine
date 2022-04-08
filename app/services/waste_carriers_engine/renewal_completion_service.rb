@@ -128,7 +128,6 @@ module WasteCarriersEngine
         "temp_contact_postcode",
         "temp_os_places_error",
         "temp_payment_method",
-        "temp_tier_check",
         "temp_use_registered_company_details",
         "from_magic_link",
         "_type",
