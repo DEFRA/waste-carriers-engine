@@ -33,11 +33,11 @@ RSpec.shared_examples "GET flexible form" do |form|
       context "when the workflow_state is a flexible form" do
         let(:saved_state) do
           # We need to pick a different but also valid state for the transient_registration
-          # 'waste_types_form' is the default, unless this would actually match!
-          if form == "waste_types_form"
-            "other_businesses_form"
+          # 'cbd_type_form' is the default, unless this would actually match!
+          if form == "cbd_type_form"
+            "business_type_form"
           else
-            "waste_types_form"
+            "cbd_type_form"
           end
         end
 
