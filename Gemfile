@@ -51,7 +51,7 @@ group :development do
   gem "spring"
   gem "spring-commands-rspec"
 
-  gem 'stateoscope', '~> 0.1.3', group: :development
+  gem "stateoscope", "~> 0.1.3", group: :development
 end
 
 group :production do

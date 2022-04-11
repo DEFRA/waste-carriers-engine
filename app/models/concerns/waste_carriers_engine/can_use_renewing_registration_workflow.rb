@@ -80,6 +80,10 @@ module WasteCarriersEngine
                       if: :should_register_in_wales?
 
           transitions from: :location_form,
+                      to: :cbd_type_form,
+                      if: :based_overseas?
+
+          transitions from: :location_form,
                       to: :business_type_form
 
           transitions from: :register_in_northern_ireland_form,
