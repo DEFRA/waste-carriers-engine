@@ -77,10 +77,12 @@ module WasteCarriersEngine
                   end
                 end
 
-                it "redirects to the form for the current state" do
-                  get new_renewal_start_form_path(transient_registration[:token])
+                context "when the token is a secure token" do
+                  it "redirects to the form for the current state" do
+                    get new_renewal_start_form_path(transient_registration[:token])
 
-                  expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                  end
                 end
               end
 
@@ -100,10 +102,12 @@ module WasteCarriersEngine
                   end
                 end
 
-                it "redirects to the location form" do
-                  get new_renewal_start_form_path(transient_registration[:token])
+                context "when the token is a secure token" do
+                  it "redirects to the location form" do
+                    get new_renewal_start_form_path(transient_registration[:token])
 
-                  expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                  end
                 end
               end
             end
