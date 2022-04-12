@@ -83,6 +83,29 @@ module WasteCarriersEngine
                   expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
                 end
               end
+
+              context "when the transient registration is in an invalid state" do
+                let(:transient_registration) do
+                  create(:renewing_registration,
+                         :has_required_data,
+                         account_email: user.email,
+                         workflow_state: "tier_check_form")
+                end
+
+                context "when the token is a reg_identifier" do
+                  it "redirects to the location form" do
+                    get new_renewal_start_form_path(transient_registration.registration.reg_identifier)
+
+                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                  end
+                end
+
+                it "redirects to the location form" do
+                  get new_renewal_start_form_path(transient_registration[:token])
+
+                  expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
+                end
+              end
             end
           end
 

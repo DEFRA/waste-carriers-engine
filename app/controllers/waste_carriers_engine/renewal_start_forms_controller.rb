@@ -5,6 +5,11 @@ module WasteCarriersEngine
     prepend_before_action :authenticate_user!, if: :should_authenticate_user?
 
     def new
+      # If the renewing_registration has an invalid workflow_state, reset it to the first form after renewal_start_form
+      unless @transient_registration.may_next?
+        @transient_registration.update_attributes(workflow_state: "location_form")
+      end
+
       super(RenewalStartForm, "renewal_start_form")
     end
 
