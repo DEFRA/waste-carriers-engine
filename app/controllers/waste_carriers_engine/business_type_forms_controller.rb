@@ -17,7 +17,7 @@ module WasteCarriersEngine
       params.fetch(:business_type_form, {}).permit(:business_type, :token)
     end
 
-    # Clear any previous business-type specific attributes to handle cases where the user 
+    # Clear any previous business-type specific attributes to handle cases where the user
     # starts with one business type and then navigates back and changes the business type.
     def reset_business_type_attributes
       @transient_registration.company_no = nil
