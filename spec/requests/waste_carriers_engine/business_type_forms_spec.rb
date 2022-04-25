@@ -22,6 +22,26 @@ module WasteCarriersEngine
                          "business_type_form",
                          valid_params: { business_type: "limitedCompany" },
                          invalid_params: { business_type: "foo" }
+
+        # When the user starts with one business type then navigates back and changes the type
+        context "when the transient_registration already has limitedCompany attributes" do
+          before do
+            transient_registration.company_no = Faker::Number.number(digits: 8)
+            transient_registration.registered_company_name = Faker::Company.name
+            transient_registration.temp_use_registered_company_details = "yes"
+            transient_registration.save!
+          end
+
+          subject { post_form_with_params("business_type_form", transient_registration.token, { business_type: "soleTrader" }) }
+
+          it "removes the limitedCompany attributes" do
+            subject
+            transient_registration.reload
+            expect(transient_registration.company_no).to be_nil
+            expect(transient_registration.registered_company_name).to be_nil
+            expect(transient_registration.temp_use_registered_company_details).to be_nil
+          end
+        end
       end
     end
 
