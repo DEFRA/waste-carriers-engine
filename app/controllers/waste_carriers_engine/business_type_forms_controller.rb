@@ -7,6 +7,7 @@ module WasteCarriersEngine
     end
 
     def create
+      reset_business_type_attributes
       super(BusinessTypeForm, "business_type_form")
       reset_company_attributes unless @transient_registration.company_no_required?
     end
