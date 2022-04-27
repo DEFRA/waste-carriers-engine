@@ -32,7 +32,7 @@ module WasteCarriersEngine
               }
             end
 
-            it "correctly updates the key people, returns a 302 response and redirects to the declare_convictions form" do
+            it "correctly updates the key people, returns a 302 response and redirects to the company_postcode form" do
               key_people_count = transient_registration.key_people.count
 
               post main_people_forms_path(transient_registration.token), params: { main_people_form: valid_params }
@@ -40,7 +40,7 @@ module WasteCarriersEngine
               expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
               expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_declare_convictions_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_company_postcode_form_path(transient_registration[:token]))
             end
 
             context "when there is already a main person" do
@@ -217,22 +217,9 @@ module WasteCarriersEngine
               expect(response).to have_http_status(302)
             end
 
-            context "when the address was selected from OS places" do
-              before(:each) { transient_registration.update_attributes(addresses: [build(:address, :registered, :from_os_places)]) }
-
-              it "redirects to the company_address form" do
-                get back_main_people_forms_path(transient_registration[:token])
-                expect(response).to redirect_to(new_company_address_form_path(transient_registration[:token]))
-              end
-            end
-
-            context "when the address was manually entered" do
-              before(:each) { transient_registration.update_attributes(addresses: [build(:address, :registered, :manual_uk)]) }
-
-              it "redirects to the company_address_manual form" do
-                get back_main_people_forms_path(transient_registration[:token])
-                expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:token]))
-              end
+            it "redirects to the company_name form" do
+              get back_main_people_forms_path(transient_registration[:token])
+              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
             end
           end
         end

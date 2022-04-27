@@ -14,10 +14,12 @@ module WasteCarriersEngine
         end
 
         context "when a valid transient registration exists" do
+          let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
           let(:transient_registration) do
             create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
+                   tier: tier,
                    workflow_state: "company_address_manual_form")
           end
 
@@ -32,12 +34,31 @@ module WasteCarriersEngine
               }
             end
 
-            it "updates the transient registration, returns a 302 response and redirects to the main_people form" do
+            it "updates the transient registration and returns a 302 response" do
               post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
 
               expect(transient_registration.reload.registered_address.house_number).to eq("42")
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
+            end
+
+            context "when the registration is upper tier" do
+              let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
+
+              it "redirects to the declare_convictions form" do
+                post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
+
+                expect(response).to redirect_to(new_declare_convictions_form_path(transient_registration[:token]))
+              end
+            end
+
+            context "when the registration is lower tier" do
+              let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
+
+              it "redirects to the contact_name form" do
+                post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
+
+                expect(response).to redirect_to(new_contact_name_form_path(transient_registration[:token]))
+              end
             end
 
             context "when the transient registration already has addresses" do

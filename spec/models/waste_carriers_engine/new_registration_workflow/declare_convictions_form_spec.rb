@@ -19,7 +19,14 @@ module WasteCarriersEngine
         end
 
         context "on back" do
-          include_examples "has back transition", previous_state: "main_people_form"
+          context "when the registered address was manually entered" do
+            let(:registered_address) { build(:address, :registered, :manual_foreign) }
+            subject { build(:new_registration, workflow_state: "declare_convictions_form", registered_address: registered_address) }
+
+            include_examples "has back transition", previous_state: "company_address_manual_form"
+          end
+
+          include_examples "has back transition", previous_state: "company_address_form"
         end
       end
     end

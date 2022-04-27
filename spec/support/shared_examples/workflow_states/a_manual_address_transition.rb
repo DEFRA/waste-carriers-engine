@@ -3,7 +3,10 @@
 RSpec.shared_examples "a manual address transition" do |previous_state_if_overseas:, next_state:, address_type:, factory:|
   describe "#workflow_state" do
     current_state = "#{address_type}_address_manual_form".to_sym
-    subject { build(factory, workflow_state: current_state, location: location) }
+    subject do
+      build(factory, workflow_state: current_state, location: location,
+                     tier: defined?(tier) ? tier : WasteCarriersEngine::Registration::UPPER_TIER)
+    end
 
     context "when subject.overseas? is false" do
       previous_state_if_uk = "#{address_type}_postcode_form".to_sym

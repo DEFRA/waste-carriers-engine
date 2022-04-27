@@ -41,11 +41,11 @@ module WasteCarriersEngine
           end
 
           context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the main_people form" do
+            it "returns a 302 response and redirects to the company_address form" do
               get back_declare_convictions_forms_path(transient_registration[:token])
 
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_company_address_form_path(transient_registration[:token]))
             end
           end
         end
