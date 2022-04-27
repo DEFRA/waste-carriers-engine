@@ -129,6 +129,10 @@ module WasteCarriersEngine
                       if: :based_overseas?
 
           transitions from: :company_name_form,
+                      to: :main_people_form,
+                      if: :upper_tier?
+
+          transitions from: :company_name_form,
                       to: :company_postcode_form
 
           # Registered address
@@ -145,15 +149,23 @@ module WasteCarriersEngine
                       if: :skip_to_manual_address?
 
           transitions from: :company_address_form,
-                      to: :main_people_form
+                      to: :contact_name_form,
+                      if: :lower_tier?
+
+          transitions from: :company_address_form,
+                      to: :declare_convictions_form
 
           transitions from: :company_address_manual_form,
-                      to: :main_people_form
+                      to: :contact_name_form,
+                      if: :lower_tier?
+
+          transitions from: :company_address_manual_form,
+                      to: :declare_convictions_form
 
           # End registered address
 
           transitions from: :main_people_form,
-                      to: :declare_convictions_form
+                      to: :company_postcode_form
 
           transitions from: :declare_convictions_form,
                       to: :conviction_details_form,
@@ -310,6 +322,10 @@ module WasteCarriersEngine
           # Registered address
 
           transitions from: :company_postcode_form,
+                      to: :main_people_form,
+                      if: :upper_tier?
+
+          transitions from: :company_postcode_form,
                       to: :company_name_form
 
           transitions from: :company_address_form,
@@ -323,16 +339,16 @@ module WasteCarriersEngine
                       to: :company_postcode_form
 
           transitions from: :main_people_form,
-                      to: :company_address_manual_form,
-                      if: :registered_address_was_manually_entered?
-
-          transitions from: :main_people_form,
-                      to: :company_address_form
+                      to: :company_name_form
 
           # End registered address
 
           transitions from: :declare_convictions_form,
-                      to: :main_people_form
+                      to: :company_address_manual_form,
+                      if: :registered_address_was_manually_entered?
+
+          transitions from: :declare_convictions_form,
+                      to: :company_address_form
 
           transitions from: :conviction_details_form,
                       to: :declare_convictions_form
