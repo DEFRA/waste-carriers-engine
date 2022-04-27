@@ -24,22 +24,40 @@ module WasteCarriersEngine
                          invalid_params: { business_type: "foo" }
 
         # When the user starts with one business type then navigates back and changes the type
-        context "when the transient_registration already has limitedCompany attributes" do
+        context "when the transient_registration already has company attributes" do
+          let(:company_no) { Faker::Number.number(digits: 8).to_s }
+          let(:registered_company_name) { Faker::Company.name }
+          let(:temp_use_registered_company_details) { "yes" }
+
           before do
-            transient_registration.company_no = Faker::Number.number(digits: 8)
-            transient_registration.registered_company_name = Faker::Company.name
-            transient_registration.temp_use_registered_company_details = "yes"
+            transient_registration.company_no = company_no
+            transient_registration.registered_company_name = registered_company_name
+            transient_registration.temp_use_registered_company_details = temp_use_registered_company_details
             transient_registration.save!
           end
 
-          subject { post_form_with_params("business_type_form", transient_registration.token, { business_type: "soleTrader" }) }
+          context "and the business type is no longer limitedCompany" do
+            subject { post_form_with_params("business_type_form", transient_registration.token, { business_type: "soleTrader" }) }
 
-          it "removes the limitedCompany attributes" do
-            subject
-            transient_registration.reload
-            expect(transient_registration.company_no).to be_nil
-            expect(transient_registration.registered_company_name).to be_nil
-            expect(transient_registration.temp_use_registered_company_details).to be_nil
+            it "removes the company attributes" do
+              subject
+              transient_registration.reload
+              expect(transient_registration.company_no).to be_nil
+              expect(transient_registration.registered_company_name).to be_nil
+              expect(transient_registration.temp_use_registered_company_details).to be_nil
+            end
+          end
+
+          context "and the business type is still limitedCompany" do
+            subject { post_form_with_params("business_type_form", transient_registration.token, { business_type: "limitedCompany" }) }
+
+            it "does not remove the company attributes" do
+              subject
+              transient_registration.reload
+              expect(transient_registration.company_no).to eq(company_no)
+              expect(transient_registration.registered_company_name).to eq(registered_company_name)
+              expect(transient_registration.temp_use_registered_company_details).to eq(temp_use_registered_company_details)
+            end
           end
         end
       end
