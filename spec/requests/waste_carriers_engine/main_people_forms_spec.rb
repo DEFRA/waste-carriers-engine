@@ -32,7 +32,7 @@ module WasteCarriersEngine
               }
             end
 
-            it "correctly updates the key people, returns a 302 response and redirects to the company_postcode form" do
+            it "correctly updates the key people, returns a 302 response and redirects to the company_name form" do
               key_people_count = transient_registration.key_people.count
 
               post main_people_forms_path(transient_registration.token), params: { main_people_form: valid_params }
@@ -40,7 +40,7 @@ module WasteCarriersEngine
               expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
               expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_company_postcode_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
             end
 
             context "when there is already a main person" do
@@ -217,9 +217,9 @@ module WasteCarriersEngine
               expect(response).to have_http_status(302)
             end
 
-            it "redirects to the company_name form" do
+            it "redirects to the cbd_type form" do
               get back_main_people_forms_path(transient_registration[:token])
-              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_cbd_type_form_path(transient_registration[:token]))
             end
           end
         end
