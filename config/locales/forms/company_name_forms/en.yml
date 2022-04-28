@@ -37,7 +37,7 @@ en:
           limitedLiabilityPartnership: *trade_name_hint
           overseas: Enter your trading name
           partnership: Enter your partnership trading name
-          soleTrader: *trade_name_hint
+          soleTrader: Enter a business or trading name. The business owner name and trading namme (if provided) will be displayed on the public register.
           charity: Enter your charity or trust registered name
           authority: Enter your local authority name
           publicBody: Enter your public body name
