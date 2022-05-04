@@ -33,23 +33,61 @@ module WasteCarriersEngine
         end
 
         context "when a valid transient registration exists" do
+          let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
           let(:transient_registration) do
             create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
+                   tier: tier,
                    workflow_state: "company_name_form")
           end
 
           context "when the back action is triggered" do
+
+            shared_examples "redirects to renewal_information or main_people form based on tier" do
+              context "when upper tier" do
+                let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
+                it "returns a 302 response and redirects to the main_people form" do
+                  get back_company_name_forms_path(transient_registration[:token])
+
+                  expect(response).to have_http_status(302)
+                  expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
+                end
+              end
+
+              context "when lower tier" do
+                let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
+                it "returns a 302 response and redirects to the renewal_information form" do
+                  get back_company_name_forms_path(transient_registration[:token])
+
+                  expect(response).to have_http_status(302)
+                  expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:token]))
+                end
+              end
+            end
+
             context "when the business type is localAuthority" do
               before(:each) { transient_registration.update_attributes(business_type: "localAuthority") }
 
-              it "returns a 302 response and redirects to the renewal_information form" do
-                get back_company_name_forms_path(transient_registration[:token])
+              it_behaves_like "redirects to renewal_information or main_people form based on tier"
+            end
 
-                expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:token]))
-              end
+            context "when the business type is partnership" do
+              before(:each) { transient_registration.update_attributes(business_type: "partnership") }
+
+              it_behaves_like "redirects to renewal_information or main_people form based on tier"
+            end
+
+            context "when the business type is soleTrader" do
+              before(:each) { transient_registration.update_attributes(business_type: "soleTrader") }
+
+              it_behaves_like "redirects to renewal_information or main_people form based on tier"
+            end
+
+            context "when the location is overseas" do
+              before(:each) { transient_registration.update_attributes(location: "overseas") }
+
+              it_behaves_like "redirects to renewal_information or main_people form based on tier"
             end
 
             context "when the business type is limitedCompany" do
@@ -71,39 +109,6 @@ module WasteCarriersEngine
 
                 expect(response).to have_http_status(302)
                 expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
-              end
-            end
-
-            context "when the location is overseas" do
-              before(:each) { transient_registration.update_attributes(location: "overseas") }
-
-              it "returns a 302 response and redirects to the renewal_information form" do
-                get back_company_name_forms_path(transient_registration[:token])
-
-                expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:token]))
-              end
-            end
-
-            context "when the business type is partnership" do
-              before(:each) { transient_registration.update_attributes(business_type: "partnership") }
-
-              it "returns a 302 response and redirects to the renewal_information form" do
-                get back_company_name_forms_path(transient_registration[:token])
-
-                expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:token]))
-              end
-            end
-
-            context "when the business type is soleTrader" do
-              before(:each) { transient_registration.update_attributes(business_type: "soleTrader") }
-
-              it "returns a 302 response and redirects to the renewal_information form" do
-                get back_company_name_forms_path(transient_registration[:token])
-
-                expect(response).to have_http_status(302)
-                expect(response).to redirect_to(new_renewal_information_form_path(transient_registration[:token]))
               end
             end
           end

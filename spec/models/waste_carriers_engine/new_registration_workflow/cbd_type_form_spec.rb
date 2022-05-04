@@ -15,7 +15,7 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "registration_number_form"
           end
 
-          include_examples "has next transition", next_state: "company_name_form"
+          include_examples "has next transition", next_state: "main_people_form"
         end
 
         context "on back" do

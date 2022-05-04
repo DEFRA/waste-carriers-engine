@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe NewRegistration do
-    subject { build(:new_registration, workflow_state: "company_name_form", tier: tier) }
+    subject { build(:new_registration, workflow_state: "company_name_form") }
 
     describe "#workflow_state" do
       context ":company_name_form state transitions" do
@@ -15,22 +15,14 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "company_address_manual_form"
           end
 
-          context "when the registration is upper tier" do
-            let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
-            include_examples "has next transition", next_state: "main_people_form"
-          end
-
-          context "when the registration is lower tier" do
-            let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
-            include_examples "has next transition", next_state: "company_postcode_form"
-          end
+          include_examples "has next transition", next_state: "company_postcode_form"
         end
 
         context "on back" do
           context "when the business does not require a registration number and the registration is upper tier" do
             subject { build(:new_registration, :upper, workflow_state: "company_name_form", location: "overseas") }
 
-            include_examples "has back transition", previous_state: "cbd_type_form"
+            include_examples "has back transition", previous_state: "main_people_form"
           end
 
           context "when the registration is lower tier" do

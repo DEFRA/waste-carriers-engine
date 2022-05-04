@@ -12,7 +12,7 @@ module WasteCarriersEngine
           context "when the user confirms their company house details are correct" do
             subject { build(:new_registration, workflow_state: "check_registered_company_name_form", temp_use_registered_company_details: "yes") }
 
-            include_examples "has next transition", next_state: "company_name_form"
+            include_examples "has next transition", next_state: "main_people_form"
           end
 
           context "when the user confirms their company house details are wrong" do

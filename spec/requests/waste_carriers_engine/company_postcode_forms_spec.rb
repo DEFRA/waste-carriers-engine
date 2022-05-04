@@ -91,12 +91,10 @@ module WasteCarriersEngine
         end
 
         context "when a valid transient registration exists" do
-          let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
           let(:transient_registration) do
             create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
-                   tier: tier,
                    workflow_state: "company_postcode_form")
           end
 
@@ -108,22 +106,10 @@ module WasteCarriersEngine
             end
           end
 
-          context "when the registration is upper tier" do
-            let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
-            it "redirects to the main_people form" do
-              get back_company_postcode_forms_path(transient_registration[:token])
+          it "redirects to the company_name form" do
+            get back_company_postcode_forms_path(transient_registration[:token])
 
-              expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
-            end
-          end
-
-          context "when the registration is lower tier" do
-            let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
-            it "redirects to the company_name form" do
-              get back_company_postcode_forms_path(transient_registration[:token])
-
-              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
-            end
+            expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
           end
         end
 

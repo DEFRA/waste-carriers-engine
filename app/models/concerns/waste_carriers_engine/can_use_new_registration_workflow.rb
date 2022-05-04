@@ -156,7 +156,7 @@ module WasteCarriersEngine
 
           # End smart answers
 
-          transitions from: :cbd_type_form, to: :company_name_form,
+          transitions from: :cbd_type_form, to: :main_people_form,
                       if: :skip_registration_number?
 
           transitions from: :cbd_type_form, to: :registration_number_form
@@ -166,15 +166,12 @@ module WasteCarriersEngine
           transitions from: :check_registered_company_name_form, to: :incorrect_company_form,
                       if: :incorrect_company_data?
 
-          transitions from: :check_registered_company_name_form, to: :company_name_form
+          transitions from: :check_registered_company_name_form, to: :main_people_form
 
           transitions from: :incorrect_company_form, to: :registration_number_form
 
           transitions from: :company_name_form, to: :company_address_manual_form,
                       if: :overseas?
-
-          transitions from: :company_name_form, to: :main_people_form,
-                      if: :upper_tier?
 
           transitions from: :company_name_form, to: :company_postcode_form
 
@@ -200,7 +197,7 @@ module WasteCarriersEngine
 
           # End registered address
 
-          transitions from: :main_people_form, to: :company_postcode_form
+          transitions from: :main_people_form, to: :company_name_form
 
           transitions from: :declare_convictions_form, to: :conviction_details_form,
                       if: :declared_convictions?
@@ -326,6 +323,11 @@ module WasteCarriersEngine
           transitions from: :company_name_form, to: :your_tier_form,
                       if: :lower_tier?
 
+          transitions from: :company_name_form, to: :main_people_form,
+                      if: :skip_registration_number?
+
+          transitions from: :company_name_form, to: :check_registered_company_name_form
+
           transitions from: :your_tier_form, to: :business_type_form,
                       if: :switch_to_lower_tier_based_on_business_type?
 
@@ -340,11 +342,6 @@ module WasteCarriersEngine
 
           transitions from: :your_tier_form, to: :construction_demolition_form,
                       if: %i[lower_tier?]
-
-          transitions from: :company_name_form, to: :cbd_type_form,
-                      if: :skip_registration_number?
-
-          transitions from: :company_name_form, to: :check_registered_company_name_form
 
           transitions from: :check_registered_company_name_form, to: :registration_number_form
 
@@ -377,9 +374,6 @@ module WasteCarriersEngine
 
           # Registered address
 
-          transitions from: :company_postcode_form, to: :main_people_form,
-                      if: :upper_tier?
-
           transitions from: :company_postcode_form, to: :company_name_form
 
           transitions from: :company_address_form, to: :company_postcode_form
@@ -389,7 +383,7 @@ module WasteCarriersEngine
 
           transitions from: :company_address_manual_form, to: :company_postcode_form
 
-          transitions from: :main_people_form, to: :company_name_form
+          transitions from: :main_people_form, to: :cbd_type_form
 
           # End registered address
 
