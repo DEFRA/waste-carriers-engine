@@ -14,8 +14,7 @@ module WasteCarriersEngine
       end
 
       def pdf_content
-        # TODO: Revert to render_to_string when this issue has been resolved: https://github.com/mileszs/wicked_pdf/issues/1003
-        ActionController::Base.new.render_to_string_with_wicked_pdf(
+        ActionController::Base.new.render_to_string(
           pdf: "certificate",
           template: "waste_carriers_engine/pdfs/certificate",
           encoding: "UTF-8",
