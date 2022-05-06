@@ -8,8 +8,10 @@ module WasteCarriersEngine
       build(:renewing_registration,
             :has_required_data,
             addresses: addresses,
+            business_type: business_type,
             workflow_state: "main_people_form")
     end
+    let(:business_type) { "soleTrader" }
     let(:addresses) { [] }
 
     describe "#workflow_state" do
@@ -19,7 +21,17 @@ module WasteCarriersEngine
         end
 
         context "on back" do
-          include_examples "has back transition", previous_state: "cbd_type_form"
+          context "when the business type is limited company" do
+            let(:business_type) { "limitedCompany" }
+
+            include_examples "has back transition", previous_state: "check_registered_company_name_form"
+          end
+
+          context "when the business type is sole trader" do
+            let(:business_type) { "soleTrader" }
+
+            include_examples "has back transition", previous_state: "cbd_type_form"
+          end
         end
       end
     end

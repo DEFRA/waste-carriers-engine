@@ -383,7 +383,10 @@ module WasteCarriersEngine
 
           transitions from: :company_address_manual_form, to: :company_postcode_form
 
-          transitions from: :main_people_form, to: :cbd_type_form
+          transitions from: :main_people_form, to: :cbd_type_form,
+                      if: :skip_registration_number?
+
+          transitions from: :main_people_form, to: :check_registered_company_name_form
 
           # End registered address
 

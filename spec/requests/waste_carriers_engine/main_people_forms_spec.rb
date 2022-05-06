@@ -208,6 +208,7 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    account_email: user.email,
+                   business_type: defined?(business_type) ? business_type : "limitedCompany",
                    workflow_state: "main_people_form")
           end
 
@@ -217,9 +218,20 @@ module WasteCarriersEngine
               expect(response).to have_http_status(302)
             end
 
-            it "redirects to the cbd_type form" do
-              get back_main_people_forms_path(transient_registration[:token])
-              expect(response).to redirect_to(new_cbd_type_form_path(transient_registration[:token]))
+            context "when the business type is limitedCompany" do
+              let(:business_type) { "limitedCompany" }
+              it "redirects to the check_registered_company_name form" do
+                get back_main_people_forms_path(transient_registration[:token])
+                expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
+              end
+            end
+
+            context "when the business type is soleTrader" do
+              let(:business_type) { "soleTrader" }
+              it "redirects to the cbd_type form" do
+                get back_main_people_forms_path(transient_registration[:token])
+                expect(response).to redirect_to(new_cbd_type_form_path(transient_registration[:token]))
+              end
             end
           end
         end
