@@ -31,7 +31,7 @@ module WasteCarriersEngine
           before do
             stub_request(:any, /.*#{host}.*/).to_return(
               status: 200,
-              body: File.read("./spec/fixtures/worldpay_redirect.xml")
+              body: File.read("./spec/fixtures/files/worldpay/worldpay_redirect.xml")
             )
           end
 
