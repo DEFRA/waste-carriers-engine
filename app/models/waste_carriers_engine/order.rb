@@ -60,19 +60,6 @@ module WasteCarriersEngine
       order
     end
 
-    def self.valid_world_pay_status?(response_type, status)
-      allowed_statuses = {
-        success: %w[AUTHORISED],
-        failure: %w[EXPIRED
-                    REFUSED],
-        pending: %w[SENT_FOR_AUTHORISATION
-                    SHOPPER_REDIRECTED],
-        cancel: %w[CANCELLED],
-        error: %w[ERROR]
-      }
-      allowed_statuses[response_type].include?(status)
-    end
-
     def add_bank_transfer_attributes
       self.payment_method = "OFFLINE"
     end
