@@ -77,7 +77,7 @@ module WasteCarriersEngine
     # In the case when the registration can be completed, the registration activation email is sent from
     # the RegistrationActivationService.
     def send_confirmation_email
-      if registration.pending_worldpay_payment?
+      if registration.pending_online_payment?
         send_worldpay_pending_payment_email
       elsif registration.unpaid_balance?
         send_pending_payment_email

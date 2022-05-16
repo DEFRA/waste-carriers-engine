@@ -78,7 +78,7 @@ module WasteCarriersEngine
       self.description = generate_description
     end
 
-    def update_after_worldpay(status)
+    def update_after_online_payment(status)
       self.world_pay_status = status
       self.date_last_updated = Time.current
       save!

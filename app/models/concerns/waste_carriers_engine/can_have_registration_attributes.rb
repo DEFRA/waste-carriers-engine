@@ -113,7 +113,7 @@ module WasteCarriersEngine
         contact_email.blank? || contact_email == WasteCarriersEngine.configuration.assisted_digital_email
       end
 
-      def pending_worldpay_payment?
+      def pending_online_payment?
         return false unless finance_details.present? &&
                             finance_details.orders.present? &&
                             finance_details.orders.first.present?

@@ -212,7 +212,7 @@ module WasteCarriersEngine
           context "when the params are valid" do
             before do
               allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(true)
-              allow_any_instance_of(RenewingRegistration).to receive(:pending_worldpay_payment?).and_return(true)
+              allow_any_instance_of(RenewingRegistration).to receive(:pending_online_payment?).and_return(true)
             end
 
             it "redirects to renewal_received_pending_payment_form" do
