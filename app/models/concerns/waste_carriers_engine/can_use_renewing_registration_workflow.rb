@@ -199,7 +199,7 @@ module WasteCarriersEngine
           transitions from: :payment_summary_form, to: :confirm_bank_transfer_form
 
           transitions from: :worldpay_form, to: :renewal_received_pending_worldpay_payment_form,
-                      if: :pending_worldpay_payment?,
+                      if: :pending_online_payment?,
                       success: :send_renewal_pending_worldpay_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`

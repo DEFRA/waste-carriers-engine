@@ -59,7 +59,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "new_from_worldpay" do
+    describe "new_from_online_payment" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
           transient_registration.prepare_for_payment(:worldpay, current_user)
@@ -67,7 +67,7 @@ module WasteCarriersEngine
       end
 
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_worldpay(order, current_user.email) }
+      let(:payment) { Payment.new_from_online_payment(order, current_user.email) }
 
       it "should set the correct order_key" do
         expect(payment.order_key).to eq("1514764800")
@@ -98,7 +98,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "new_from_non_worldpay" do
+    describe "new_from_non_online_payment" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
           transient_registration.prepare_for_payment(:worldpay, current_user)
@@ -120,7 +120,7 @@ module WasteCarriersEngine
       end
 
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_non_worldpay(params, order) }
+      let(:payment) { Payment.new_from_non_online_payment(params, order) }
 
       it "should set the correct amount" do
         expect(payment.amount).to eq(params[:amount])
@@ -175,14 +175,14 @@ module WasteCarriersEngine
       end
     end
 
-    describe "update_after_worldpay" do
+    describe "update_after_online_payment" do
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_worldpay(order, current_user.email) }
+      let(:payment) { Payment.new_from_online_payment(order, current_user.email) }
 
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
           transient_registration.prepare_for_payment(:worldpay, current_user)
-          payment.update_after_worldpay(paymentStatus: "AUTHORISED", mac: "foo")
+          payment.update_after_online_payment(paymentStatus: "AUTHORISED", mac: "foo")
         end
       end
 
