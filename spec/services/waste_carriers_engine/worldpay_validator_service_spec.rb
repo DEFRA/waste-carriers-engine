@@ -71,7 +71,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -125,7 +125,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -147,7 +147,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -176,7 +176,7 @@ module WasteCarriersEngine
 
         context "when the paymentStatus is invalid" do
           before do
-            allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+            allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
           end
 
           it "returns false" do
@@ -199,12 +199,22 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
           expect(worldpay_validator_service.valid_error?).to eq(false)
         end
+      end
+    end
+
+    describe "valid_world_pay_status?" do
+      it "returns true when the status matches the values for the response type" do
+        expect(described_class.valid_world_pay_status?(:success, "AUTHORISED")).to eq(true)
+      end
+
+      it "returns false when the status does not match the values for the response type" do
+        expect(described_class.valid_world_pay_status?(:success, "FOO")).to eq(false)
       end
     end
   end
