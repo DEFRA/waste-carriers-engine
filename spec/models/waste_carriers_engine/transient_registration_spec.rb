@@ -124,7 +124,7 @@ module WasteCarriersEngine
 
         context "when the order's world_pay_status is pending" do
           before do
-            allow(Order).to receive(:valid_world_pay_status?).and_return(true)
+            allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(true)
           end
 
           it "returns true" do
@@ -134,7 +134,7 @@ module WasteCarriersEngine
 
         context "when the order's world_pay_status is not pending" do
           before do
-            allow(Order).to receive(:valid_world_pay_status?).and_return(false)
+            allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
           end
 
           it "returns false" do

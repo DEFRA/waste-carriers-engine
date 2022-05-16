@@ -118,7 +118,7 @@ module WasteCarriersEngine
                             finance_details.orders.present? &&
                             finance_details.orders.first.present?
 
-        Order.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
+        WorldpayValidatorService.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
       end
 
       # Some business types should not have a company_no
