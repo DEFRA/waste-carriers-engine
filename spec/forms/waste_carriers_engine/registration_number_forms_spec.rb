@@ -41,6 +41,11 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate company_no", :registration_number_form
+    it "validates the company_no using the CompaniesHouseNumberValidator class" do
+      validators = build(:registration_number_form, :has_required_data)._validators
+      expect(validators.keys).to include(:company_no)
+      expect(validators[:company_no].first.class)
+        .to eq(DefraRuby::Validators::CompaniesHouseNumberValidator)
+    end
   end
 end
