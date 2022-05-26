@@ -16,7 +16,7 @@ module WasteCarriersEngine
       messages: custom_error_messages(:business_type, :inclusion)
     }
     validates :company_name, "waste_carriers_engine/company_name": true
-    validates :company_no, "defra_ruby/validators/companies_house_number": true, if: :company_no_required?
+    validates :company_no, presence: true, if: :company_no_required?
     validates :contact_address, "waste_carriers_engine/address": true
     validates :contact_email, "defra_ruby/validators/email": {
       messages: custom_error_messages(:contact_email, :blank, :invalid_format)
@@ -30,7 +30,7 @@ module WasteCarriersEngine
     validates :phone_number, "defra_ruby/validators/phone_number": true
     validates :registered_address, "waste_carriers_engine/address": true
     validates :registration_type, "waste_carriers_engine/registration_type": true, if: :upper_tier?
-    validate :should_be_renewed, if: :renewing_registration?
+    validate :business_type_change_valid?, if: :renewing_registration?
 
     validates_with KeyPeopleValidator
 
@@ -60,21 +60,10 @@ module WasteCarriersEngine
       valid?
     end
 
-    def should_be_renewed
-      business_type_change_valid? && same_company_no?
-    end
-
     def business_type_change_valid?
       return true if transient_registration.business_type_change_valid?
 
       errors.add(:business_type, :invalid_change)
-      false
-    end
-
-    def same_company_no?
-      return true unless transient_registration.company_no_changed?
-
-      errors.add(:company_no, :changed)
       false
     end
   end
