@@ -67,31 +67,6 @@ module WasteCarriersEngine
       FinanceDetails.new_renewal_finance_details(self, mode, user)
     end
 
-    def company_no_changed?
-      return false unless company_no_required?
-
-      # LLP is a new business type, so users who previously were forced to select 'partnership' would not have had the
-      # opportunity to enter a company_no. Therefore we have nothing to compare against and should allow users to
-      # continue the renewal journey.
-      return false if registration.business_type == "partnership"
-
-      # It was previously possible to save a company_no with excess whitespace. This is no longer possible, but we
-      # should ignore this whitespace when comparing, otherwise a trailing space will block the user from renewing their
-      # registration.
-      old_company_no = registration.company_no.to_s.strip
-
-      # It was previously possible to save a company_no with lowercase letters e.g. ni123456. This is no longer
-      # possible because the check against Comapnies House fails when we search with lowercase registration numbers. The
-      # value has to be made uppercase. So to avoid the renewal being blocked because it thinks the numbers don't match
-      # we upcase the old_company_no
-      old_company_no.upcase!
-
-      # It was previously valid to have company_nos with less than 8 digits
-      # The form prepends 0s to make up the length, so we should do this for the old number to match
-      old_company_no = "0#{old_company_no}" while old_company_no.length < 8
-      old_company_no != company_no
-    end
-
     def renewal_application_submitted?
       SUBMITTED_STATES.include?(workflow_state)
     end
