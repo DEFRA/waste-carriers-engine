@@ -45,22 +45,6 @@ module WasteCarriersEngine
             end
           end
         end
-
-        context "on back" do
-          {
-            # Permutation table of location and the state that should result
-            "england" => :location_form,
-            "northern_ireland" => :register_in_northern_ireland_form,
-            "scotland" => :register_in_scotland_form,
-            "wales" => :register_in_wales_form
-          }.each do |location, expected_previous_state|
-            context "when the location is #{location}" do
-              before { subject.location = location }
-
-              include_examples "has back transition", previous_state: expected_previous_state
-            end
-          end
-        end
       end
     end
   end

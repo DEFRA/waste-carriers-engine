@@ -11,10 +11,6 @@ module WasteCarriersEngine
         context "on next" do
           include_examples "has next transition", next_state: "ceased_or_revoked_completed_form"
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "cease_or_revoke_form"
-        end
       end
     end
   end

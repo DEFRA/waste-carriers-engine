@@ -19,10 +19,6 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "service_provided_form"
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "check_your_tier_form"
-        end
       end
     end
   end

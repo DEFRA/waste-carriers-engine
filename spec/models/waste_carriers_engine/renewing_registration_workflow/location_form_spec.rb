@@ -30,10 +30,6 @@ module WasteCarriersEngine
             end
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "renewal_start_form"
-        end
       end
     end
   end

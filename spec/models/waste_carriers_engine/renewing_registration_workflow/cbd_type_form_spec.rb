@@ -15,20 +15,6 @@ module WasteCarriersEngine
         context "on next" do
           include_examples "has next transition", next_state: "renewal_information_form"
         end
-
-        context "on back" do
-          context "when the registration is not overseas" do
-            before { subject.location = "england" }
-
-            include_examples "has back transition", previous_state: "business_type_form"
-          end
-
-          context "when the registration is overseas" do
-            before { subject.location = "overseas" }
-
-            include_examples "has back transition", previous_state: "location_form"
-          end
-        end
       end
     end
   end

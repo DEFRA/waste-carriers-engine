@@ -19,10 +19,6 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "construction_demolition_form"
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "other_businesses_form"
-        end
       end
     end
   end
