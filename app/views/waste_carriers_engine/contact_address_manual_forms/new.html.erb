@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_contact_address_manual_forms_path(@contact_address_manual_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @contact_address_manual_form.token) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -27,7 +27,7 @@
         <span class="postcode govuk-!-font-weight-bold">
           <%= @contact_address_manual_form.postcode %>
         </span>
-        <%= link_to(t(".postcode_change_link"), back_contact_address_manual_forms_path(@contact_address_manual_form.token)) %>
+        <%= link_to(t(".postcode_change_link"), go_back_forms_path(@contact_address_manual_form.token)) %>
         </p>
       <% end %>
 

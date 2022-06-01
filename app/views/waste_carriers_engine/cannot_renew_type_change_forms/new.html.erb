@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_cannot_renew_type_change_forms_path(@cannot_renew_type_change_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @cannot_renew_type_change_form.token) %>
 
 <div class="govuk-body">
   <h1 class="govuk-heading-l"><%= t(".heading", reg_identifier: @cannot_renew_type_change_form.reg_identifier) %></h1>
