@@ -31,7 +31,7 @@ module WasteCarriersEngine
     def go_back
       find_or_initialize_transient_registration(params[:token])
 
-      @transient_registration.back! if form_matches_state?
+      @transient_registration.previous_valid_state!
       redirect_to_correct_form
     end
 
@@ -71,7 +71,7 @@ module WasteCarriersEngine
     def submit_form(form, params)
       respond_to do |format|
         if form.submit(params)
-          @transient_registration.next!
+          @transient_registration.next_state!
           format.html { redirect_to_correct_form }
           true
         else
