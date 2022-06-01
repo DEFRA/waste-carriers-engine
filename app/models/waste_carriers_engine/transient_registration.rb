@@ -24,6 +24,7 @@ module WasteCarriersEngine
     field :temp_payment_method, type: String
     field :temp_reuse_registered_address, type: String
     field :temp_use_registered_company_details, type: String
+    field :workflow_history, type: Array, default: []
 
     scope :in_progress, -> { where(:workflow_state.nin => RenewingRegistration::SUBMITTED_STATES) }
     scope :submitted, -> { where(:workflow_state.in => RenewingRegistration::SUBMITTED_STATES) }
@@ -61,7 +62,42 @@ module WasteCarriersEngine
       raise NotImplementedError
     end
 
+    def next_state!
+      previous_state = workflow_state
+      next!
+      workflow_history << previous_state unless previous_state.nil?
+      save!
+    rescue AASM::UndefinedState, AASM::InvalidTransition => e
+      Airbrake.notify(e, reg_identifier) if defined?(Airbrake)
+      Rails.logger.warn "Failed to transition to next workflow state, registration #{reg_identifier}: #{e}"
+    end
+
+    def previous_valid_state!
+      return unless workflow_history&.length
+
+      last_popped = nil
+      until workflow_history.empty?
+        last_popped = workflow_history.pop
+        break if valid_state?(last_popped)
+
+        last_popped = nil
+      end
+
+      self.workflow_state = last_popped || "start_form"
+      save!
+    end
+
     private
+
+    def valid_state?(state)
+      return false unless state.present?
+
+      valid_state_names.include? state.to_sym
+    end
+
+    def valid_state_names
+      @valid_state_names ||= aasm.states.map(&:name)
+    end
 
     def registration_type_base_charges
       [] # default. Override on STI objects where necessary.
