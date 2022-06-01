@@ -133,6 +133,7 @@ module WasteCarriersEngine
         "from_magic_link",
         "_type",
         "workflow_state",
+        "workflow_history",
         "locking_name",
         "locked_at"
       )
