@@ -261,6 +261,11 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "incorrect-company",
               path_names: { new: "" }
 
+    resources :use_trading_name_forms,
+              only: %i[new create],
+              path: "use-trading-name",
+              path_names: { new: "" }
+
     resources :company_name_forms,
               only: %i[new create],
               path: "company-name",
