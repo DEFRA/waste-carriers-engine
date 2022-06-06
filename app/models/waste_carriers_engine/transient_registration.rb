@@ -78,7 +78,7 @@ module WasteCarriersEngine
       last_popped = nil
       until workflow_history.empty?
         last_popped = workflow_history.pop
-        break if valid_state?(last_popped)
+        break if valid_state?(last_popped) && last_popped != workflow_state
 
         last_popped = nil
       end

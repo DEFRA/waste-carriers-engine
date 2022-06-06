@@ -287,6 +287,21 @@ module WasteCarriersEngine
           expect { subject }.to change { new_registration.workflow_history.length }.by(-1)
         end
       end
+
+      context "when the current state is also in the workflow history" do
+        before do
+          new_registration.workflow_history = %w[start_form location_form location_form]
+          new_registration.workflow_state = "location_form"
+        end
+
+        it "skips the duplicated state" do
+          expect { subject }.to change { new_registration.workflow_state }.to("start_form")
+        end
+
+        it "deletes from workflow history" do
+          expect { subject }.to change { new_registration.workflow_history.length }.to(0)
+        end
+      end
     end
   end
 end
