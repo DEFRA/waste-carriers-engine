@@ -24,6 +24,7 @@ module WasteCarriersEngine
     field :temp_payment_method, type: String
     field :temp_reuse_registered_address, type: String
     field :temp_use_registered_company_details, type: String
+    field :temp_use_trading_name, type: String
     field :workflow_history, type: Array, default: []
 
     scope :in_progress, -> { where(:workflow_state.nin => RenewingRegistration::SUBMITTED_STATES) }

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ClassLength
   class RegistrationCompletionService < BaseService
     attr_reader :transient_registration
 
@@ -125,6 +126,7 @@ module WasteCarriersEngine
         "temp_check_your_tier",
         "temp_reuse_registered_address",
         "temp_use_registered_company_details",
+        "temp_use_trading_name",
         "_type",
         "workflow_state",
         "workflow_history",
@@ -137,4 +139,5 @@ module WasteCarriersEngine
     end
     # rubocop:enable Metrics/MethodLength
   end
+  # rubocop:enable Metrics/ClassLength
 end
