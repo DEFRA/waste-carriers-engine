@@ -7,6 +7,14 @@ RSpec.shared_examples "valid only if company_name is not required" do
     it "is valid" do
       expect(form).to be_valid
     end
+
+    context "and the user has opted to provide a trading name" do
+      before { form.transient_registration.temp_use_trading_name = "yes" }
+
+      it "is not valid" do
+        expect(form).to_not be_valid
+      end
+    end
   end
 
   context "when the company name is required" do
