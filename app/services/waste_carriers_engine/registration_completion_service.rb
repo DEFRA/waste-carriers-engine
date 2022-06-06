@@ -127,6 +127,7 @@ module WasteCarriersEngine
         "temp_use_registered_company_details",
         "_type",
         "workflow_state",
+        "workflow_history",
         "locking_name",
         "locked_at",
         "key_people"

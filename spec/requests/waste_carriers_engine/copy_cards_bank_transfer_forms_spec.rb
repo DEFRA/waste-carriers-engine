@@ -66,44 +66,5 @@ module WasteCarriersEngine
         end
       end
     end
-
-    describe "GET back_copy_cards_bank_transfer_forms_path" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
-        before(:each) do
-          sign_in(user)
-        end
-
-        context "when a valid transient registration exists" do
-          let(:transient_registration) do
-            create(:order_copy_cards_registration, workflow_state: :copy_cards_bank_transfer_form)
-          end
-
-          context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the payment_summary form" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
-
-              expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
-            end
-          end
-        end
-
-        context "when the transient registration is in the wrong state" do
-          let(:transient_registration) do
-            create(:order_copy_cards_registration, workflow_state: :copy_cards_bank_transfer_form)
-          end
-
-          context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the correct form for the state" do
-              get back_copy_cards_bank_transfer_forms_path(transient_registration.token)
-
-              expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
-            end
-          end
-        end
-      end
-    end
   end
 end

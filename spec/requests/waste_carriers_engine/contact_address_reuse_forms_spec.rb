@@ -56,27 +56,5 @@ module WasteCarriersEngine
         end
       end
     end
-
-    describe "GET back_contact_address_reuse_form_path" do
-      context "when a valid user is signed in" do
-        context "when a valid transient registration exists" do
-          let(:transient_registration) do
-            create(:new_registration,
-                   :has_required_data,
-                   account_email: user.email,
-                   workflow_state: "contact_address_reuse_form")
-          end
-
-          context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the contact_email form" do
-              get back_contact_address_reuse_forms_path(transient_registration.token)
-
-              expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_contact_email_form_path(transient_registration.token))
-            end
-          end
-        end
-      end
-    end
   end
 end

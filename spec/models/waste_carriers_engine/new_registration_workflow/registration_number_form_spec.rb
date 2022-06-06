@@ -11,10 +11,6 @@ module WasteCarriersEngine
         context "on next" do
           include_examples "has next transition", next_state: "check_registered_company_name_form"
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "cbd_type_form"
-        end
       end
     end
   end

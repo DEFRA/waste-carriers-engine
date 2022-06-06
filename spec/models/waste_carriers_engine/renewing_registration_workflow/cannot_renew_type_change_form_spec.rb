@@ -17,10 +17,6 @@ module WasteCarriersEngine
             expect(subject).to_not allow_event :next
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "business_type_form"
-        end
       end
     end
   end

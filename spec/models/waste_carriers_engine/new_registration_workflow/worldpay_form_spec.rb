@@ -23,10 +23,6 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "registration_received_pending_worldpay_payment_form"
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "payment_summary_form"
-        end
       end
     end
   end

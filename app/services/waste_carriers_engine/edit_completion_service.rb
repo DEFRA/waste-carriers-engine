@@ -54,7 +54,8 @@ module WasteCarriersEngine
                                                                      "temp_os_places_error",
                                                                      "temp_payment_method",
                                                                      "_type",
-                                                                     "workflow_state")
+                                                                     "workflow_state",
+                                                                     "workflow_history")
 
       registration.write_attributes(copyable_attributes)
     end

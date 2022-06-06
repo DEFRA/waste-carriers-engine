@@ -1,5 +1,5 @@
 <% content_for :title, t(".heading.#{@transient_registration.tier}").html_safe %>
-<%= render("waste_carriers_engine/shared/back", back_path: back_your_tier_forms_path(@your_tier_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @your_tier_form.token) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

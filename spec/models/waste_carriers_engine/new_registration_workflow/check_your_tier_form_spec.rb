@@ -35,18 +35,6 @@ module WasteCarriersEngine
             end
           end
         end
-
-        context "on back" do
-          context "if the company is based overseas" do
-            subject { build(:new_registration, workflow_state: "check_your_tier_form", location: "overseas") }
-
-            include_examples "has back transition", previous_state: "location_form"
-          end
-
-          subject { build(:new_registration, workflow_state: "check_your_tier_form") }
-
-          include_examples "has back transition", previous_state: "business_type_form"
-        end
       end
     end
   end

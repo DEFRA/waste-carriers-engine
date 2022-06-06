@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_declaration_forms_path(@declaration_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @declaration_form.token) %>
 
 <%= form_for(@declaration_form) do |f| %>
   <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>

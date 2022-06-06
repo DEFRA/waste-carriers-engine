@@ -35,16 +35,6 @@ module WasteCarriersEngine
             end
           end
         end
-
-        context "on back" do
-          context "when the company only carries its own waste" do
-            subject { build(:new_registration, workflow_state: "construction_demolition_form", other_businesses: "no") }
-
-            include_examples "has back transition", previous_state: "other_businesses_form"
-          end
-
-          include_examples "has back transition", previous_state: "service_provided_form"
-        end
       end
     end
   end

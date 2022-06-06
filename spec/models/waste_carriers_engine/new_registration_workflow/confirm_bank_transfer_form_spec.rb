@@ -17,10 +17,6 @@ module WasteCarriersEngine
             expect { subject.next! }.to change { subject.metaData.route }.to("test_route")
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "payment_summary_form"
-        end
       end
     end
   end

@@ -7,7 +7,6 @@ module WasteCarriersEngine
     describe "#workflow_state" do
 
       it_behaves_like "a postcode transition",
-                      previous_state: :company_name_form,
                       address_type: "company",
                       factory: :new_registration
 

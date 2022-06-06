@@ -2,7 +2,7 @@
   content_for :back_link do
     link_to(
         t(".back_link"),
-        back_path,
+        defined?(back_path) ? back_path : go_back_forms_path(token),
         class: "govuk-back-link"
       )
   end

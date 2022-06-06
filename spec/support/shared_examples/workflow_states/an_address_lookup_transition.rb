@@ -2,7 +2,6 @@
 
 RSpec.shared_examples "an address lookup transition" do |next_state_if_not_skipping_to_manual:, address_type:, factory:|
   describe "#workflow_state" do
-    previous_state = "#{address_type}_postcode_form".to_sym
     current_state = "#{address_type}_address_form".to_sym
     subject(:subject) do
       create(factory, workflow_state: current_state,
@@ -26,10 +25,6 @@ RSpec.shared_examples "an address lookup transition" do |next_state_if_not_skipp
           .to(alt_state)
           .on_event(:skip_to_manual_address)
       end
-
-      it "changes to #{previous_state} after the 'back' event" do
-        expect(subject).to transition_from(current_state).to(previous_state).on_event(:back)
-      end
     end
 
     context "when subject.skip_to_manual_address? is true" do
@@ -46,10 +41,6 @@ RSpec.shared_examples "an address lookup transition" do |next_state_if_not_skipp
           .to transition_from(current_state)
           .to(next_state)
           .on_event(:skip_to_manual_address)
-      end
-
-      it "changes to #{previous_state} after the 'back' event" do
-        expect(subject).to transition_from(current_state).to(previous_state).on_event(:back)
       end
     end
   end

@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_confirm_bank_transfer_forms_path(@confirm_bank_transfer_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @confirm_bank_transfer_form.token) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -20,7 +20,7 @@
 
       <p class="govuk-body">
         <%= link_to(t(".link_text"),
-                    back_confirm_bank_transfer_forms_path(@confirm_bank_transfer_form.token)) %>
+                    go_back_forms_path(@confirm_bank_transfer_form.token)) %>
       </p>
 
       <%= f.govuk_submit t(".next_button") %>

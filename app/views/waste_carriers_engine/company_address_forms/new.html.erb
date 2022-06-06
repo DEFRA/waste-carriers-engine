@@ -1,5 +1,5 @@
 <% content_for :title, t(".heading.#{@company_address_form.business_type}").html_safe %>
-<%= render("waste_carriers_engine/shared/back", back_path: back_company_address_forms_path(@company_address_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @company_address_form.token) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -22,7 +22,7 @@
           <%= @company_address_form.temp_company_postcode %>
         </span>
         <%= link_to(t(".postcode_change_link"),
-            back_company_address_forms_path(@company_address_form.token))  %>
+            go_back_forms_path(@company_address_form.token))  %>
       </p>
 
       <%= form.fields_for :company_address do |f| %>

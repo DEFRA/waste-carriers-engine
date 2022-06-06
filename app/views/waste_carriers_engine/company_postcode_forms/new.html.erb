@@ -1,5 +1,5 @@
 <% content_for :title, t(".heading.#{@company_postcode_form.business_type}").html_safe %>
-<%= render("waste_carriers_engine/shared/back", back_path: back_company_postcode_forms_path(@company_postcode_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @company_postcode_form.token) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
