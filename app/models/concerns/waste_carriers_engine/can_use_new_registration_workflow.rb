@@ -42,6 +42,7 @@ module WasteCarriersEngine
         state :check_registered_company_name_form
         state :incorrect_company_form
 
+        state :use_trading_name_form
         state :company_name_form
         state :company_postcode_form
         state :company_address_form
@@ -114,7 +115,7 @@ module WasteCarriersEngine
           transitions from: :check_your_tier_form, to: :other_businesses_form,
                       if: :check_your_tier_unknown?
 
-          transitions from: :check_your_tier_form, to: :company_name_form,
+          transitions from: :check_your_tier_form, to: :use_trading_name_form,
                       if: :check_your_tier_lower?,
                       after: :set_tier_from_check_your_tier_form
 
@@ -122,8 +123,16 @@ module WasteCarriersEngine
                       if: :check_your_tier_upper?,
                       after: :set_tier_from_check_your_tier_form
 
-          transitions from: :your_tier_form, to: :company_name_form,
+          transitions from: :your_tier_form, to: :use_trading_name_form,
                       if: :lower_tier?
+
+          transitions from: :use_trading_name_form, to: :company_name_form,
+                      if: :use_trading_name?
+
+          transitions from: :use_trading_name_form, to: :company_address_manual_form,
+                      if: :overseas?
+
+          transitions from: :use_trading_name_form, to: :company_postcode_form
 
           # Smart answers
 
@@ -197,7 +206,7 @@ module WasteCarriersEngine
 
           # End registered address
 
-          transitions from: :main_people_form, to: :company_name_form
+          transitions from: :main_people_form, to: :use_trading_name_form
 
           transitions from: :declare_convictions_form, to: :conviction_details_form,
                       if: :declared_convictions?
@@ -396,6 +405,10 @@ module WasteCarriersEngine
 
       def incorrect_company_data?
         temp_use_registered_company_details == "no"
+      end
+
+      def use_trading_name?
+        temp_use_trading_name == "yes"
       end
     end
     # rubocop:enable Metrics/BlockLength

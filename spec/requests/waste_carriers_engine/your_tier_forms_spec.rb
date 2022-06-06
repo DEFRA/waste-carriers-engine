@@ -21,14 +21,14 @@ module WasteCarriersEngine
       context "when the new registration is a lower tier registration" do
         let(:new_registration) { create(:new_registration, :lower, workflow_state: "your_tier_form") }
 
-        it "updates the transient registration workflow and redirects to the company_name_form with a 302 status code" do
+        it "updates the transient registration workflow and redirects to the use_trading_name_form with a 302 status code" do
           post new_your_tier_form_path(params)
 
           new_registration.reload
 
-          expect(response).to redirect_to(new_company_name_form_path(new_registration.token))
+          expect(response).to redirect_to(new_use_trading_name_form_path(new_registration.token))
           expect(response).to have_http_status(302)
-          expect(new_registration.workflow_state).to eq("company_name_form")
+          expect(new_registration.workflow_state).to eq("use_trading_name_form")
         end
       end
 
