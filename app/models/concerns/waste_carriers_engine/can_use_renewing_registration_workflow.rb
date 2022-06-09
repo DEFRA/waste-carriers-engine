@@ -66,7 +66,6 @@ module WasteCarriersEngine
           transitions from: :renewal_start_form, to: :location_form
 
           # Location
-
           transitions from: :location_form, to: :register_in_northern_ireland_form,
                       if: :should_register_in_northern_ireland?
 
@@ -87,8 +86,7 @@ module WasteCarriersEngine
 
           transitions from: :register_in_wales_form, to: :business_type_form
 
-          # End location
-
+          # Business type & CBD type
           transitions from: :business_type_form, to: :cbd_type_form,
                       if: :business_type_change_valid?
 
@@ -96,6 +94,7 @@ module WasteCarriersEngine
 
           transitions from: :cbd_type_form, to: :renewal_information_form
 
+          # Renewal information
           transitions from: :renewal_information_form, to: :check_registered_company_name_form,
                       unless: :skip_registration_number?
 
@@ -107,6 +106,15 @@ module WasteCarriersEngine
 
           transitions from: :renewal_information_form, to: :use_trading_name_form
 
+          # Registered company details
+          transitions from: :check_registered_company_name_form, to: :incorrect_company_form,
+                      if: :incorrect_company_data?
+
+          transitions from: :check_registered_company_name_form, to: :main_people_form
+
+          transitions from: :incorrect_company_form, to: :registration_number_form
+
+          # Trading name
           transitions from: :use_trading_name_form, to: :company_name_form,
                       if: :use_trading_name?
 
@@ -115,20 +123,12 @@ module WasteCarriersEngine
 
           transitions from: :use_trading_name_form, to: :company_postcode_form
 
-          transitions from: :check_registered_company_name_form, to: :incorrect_company_form,
-                      if: :incorrect_company_data?
-
-          transitions from: :check_registered_company_name_form, to: :main_people_form
-
-          transitions from: :incorrect_company_form, to: :registration_number_form
-
           transitions from: :company_name_form, to: :company_address_manual_form,
                       if: :based_overseas?
 
           transitions from: :company_name_form, to: :company_postcode_form
 
           # Registered address
-
           transitions from: :company_postcode_form, to: :company_address_manual_form,
                       if: :skip_to_manual_address?
 
@@ -147,8 +147,7 @@ module WasteCarriersEngine
 
           transitions from: :company_address_manual_form, to: :declare_convictions_form
 
-          # End registered address
-
+          # Main people & convictions
           transitions from: :main_people_form, to: :company_name_form,
                       if: :company_name_required?
 
@@ -171,7 +170,6 @@ module WasteCarriersEngine
           transitions from: :contact_email_form, to: :contact_postcode_form
 
           # Contact address
-
           transitions from: :contact_postcode_form, to: :contact_address_manual_form,
                       if: :skip_to_manual_address?
 
@@ -184,12 +182,13 @@ module WasteCarriersEngine
 
           transitions from: :contact_address_manual_form, to: :check_your_answers_form
 
-          # End contact address
+          # Check answers & declaration
 
           transitions from: :check_your_answers_form, to: :declaration_form
 
           transitions from: :declaration_form, to: :cards_form
 
+          # Payment & completion
           transitions from: :cards_form, to: :payment_summary_form
 
           transitions from: :payment_summary_form, to: :worldpay_form,
