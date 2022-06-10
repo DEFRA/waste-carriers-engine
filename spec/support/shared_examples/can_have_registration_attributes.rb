@@ -525,5 +525,15 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:business_type) { "soleTrader" }
       it_behaves_like "it is required for lower tier only"
     end
+
+    context "for an overseas business" do
+      let(:business_type) { "soleTrader" }
+      let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
+      before { resource.location = "overseas" }
+
+      it "returns true" do
+        expect(subject).to be true
+      end
+    end
   end
 end

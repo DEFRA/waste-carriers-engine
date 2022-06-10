@@ -130,6 +130,8 @@ module WasteCarriersEngine
       end
 
       def company_name_required?
+        return true if overseas?
+
         case business_type
         when "limitedCompany", "limitedLiabilityPartnership", "soleTrader"
           # mandatory for lower tier, optional for upper tier
