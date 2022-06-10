@@ -103,22 +103,27 @@ module WasteCarriersEngine
 
           transitions from: :register_in_wales_form, to: :business_type_form
 
-          # Business type & tier
+          # Business type
           transitions from: :business_type_form, to: :your_tier_form,
                       if: :switch_to_lower_tier_based_on_business_type?,
                       after: :switch_to_lower_tier
 
           transitions from: :business_type_form, to: :check_your_tier_form
 
+          # Tier
           transitions from: :check_your_tier_form, to: :other_businesses_form,
                       if: :check_your_tier_unknown?
 
-          transitions from: :check_your_tier_form, to: :use_trading_name_form,
-                      if: :check_your_tier_lower?,
-                      after: :set_tier_from_check_your_tier_form
-
           transitions from: :check_your_tier_form, to: :cbd_type_form,
                       if: :check_your_tier_upper?,
+                      after: :set_tier_from_check_your_tier_form
+
+          transitions from: :check_your_tier_form, to: :company_name_form,
+                      if: :set_tier_and_company_name_required?,
+                      after: :set_tier_from_check_your_tier_form
+
+          transitions from: :check_your_tier_form, to: :use_trading_name_form,
+                      if: :upper_tier?,
                       after: :set_tier_from_check_your_tier_form
 
           # Smart answers
@@ -139,8 +144,11 @@ module WasteCarriersEngine
           transitions from: :waste_types_form, to: :your_tier_form,
                       after: :switch_to_upper_tier
 
+          transitions from: :your_tier_form, to: :company_name_form,
+                      if: :company_name_required?
+
           transitions from: :your_tier_form, to: :use_trading_name_form,
-                      if: :lower_tier?
+                      if: :upper_tier?
 
           transitions from: :your_tier_form, to: :cbd_type_form
 
@@ -200,9 +208,14 @@ module WasteCarriersEngine
 
           transitions from: :company_address_manual_form, to: :declare_convictions_form
 
-          # Main people & convictions
+          # Main people
+
+          transitions from: :main_people_form, to: :company_name_form,
+                      if: :company_name_required?
+
           transitions from: :main_people_form, to: :use_trading_name_form
 
+          # Convictions
           transitions from: :declare_convictions_form, to: :conviction_details_form,
                       if: :declared_convictions?
 
@@ -210,6 +223,7 @@ module WasteCarriersEngine
 
           transitions from: :conviction_details_form, to: :contact_name_form
 
+          # Contact details
           transitions from: :contact_name_form, to: :contact_phone_form
 
           transitions from: :contact_phone_form, to: :contact_email_form
@@ -386,6 +400,11 @@ module WasteCarriersEngine
         return switch_to_upper_tier if temp_check_your_tier == "upper"
 
         switch_to_lower_tier
+      end
+
+      def set_tier_and_company_name_required?
+        set_tier_from_check_your_tier_form
+        company_name_required?
       end
 
       def reuse_registered_address?

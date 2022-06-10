@@ -18,31 +18,70 @@ module WasteCarriersEngine
     describe "POST your_tier_form_path" do
       let(:params) { { token: new_registration.token } }
 
-      context "when the new registration is a lower tier registration" do
-        let(:new_registration) { create(:new_registration, :lower, workflow_state: "your_tier_form") }
+      RSpec.shared_examples "updates workflow state and redirects" do |next_form|
+        let(:new_registration) { create(:new_registration, tier, business_type: business_type, workflow_state: "your_tier_form") }
 
-        it "updates the transient registration workflow and redirects to the use_trading_name_form with a 302 status code" do
+        it "updates the transient registration workflow" do
           post new_your_tier_form_path(params)
 
           new_registration.reload
 
-          expect(response).to redirect_to(new_use_trading_name_form_path(new_registration.token))
-          expect(response).to have_http_status(302)
-          expect(new_registration.workflow_state).to eq("use_trading_name_form")
+          expect(new_registration.workflow_state).to eq(next_form)
+        end
+
+        it "redirects to the company_name_form with a 302 status code" do
+          post new_your_tier_form_path(params)
+
+          new_registration.reload
+
+          expect(response).to redirect_to(send("new_#{next_form}_path", new_registration.token))
         end
       end
 
+      context "when the new registration is a lower tier registration" do
+        let(:tier) { :lower }
+        let(:business_type) { "soleTrader" }
+
+        it_behaves_like "updates workflow state and redirects", "company_name_form"
+      end
+
       context "when the new registration is an upper tier registration" do
-        let(:new_registration) { create(:new_registration, :upper, workflow_state: "your_tier_form") }
+        let(:tier) { :upper }
 
-        it "updates the transient registration workflow and redirects to the cbd_type_form with a 302 status code" do
-          post new_your_tier_form_path(params)
+        context "and the business type does not require a company name" do
 
-          new_registration.reload
+          context "with business type limitedCompany" do
+            let(:business_type) { "limitedCompany" }
+            it_behaves_like "updates workflow state and redirects", "use_trading_name_form"
+          end
 
-          expect(response).to redirect_to(new_cbd_type_form_path(new_registration.token))
-          expect(response).to have_http_status(302)
-          expect(new_registration.workflow_state).to eq("cbd_type_form")
+          context "with business type limitedLiabilityPartnership" do
+            let(:business_type) { "limitedLiabilityPartnership" }
+            it_behaves_like "updates workflow state and redirects", "use_trading_name_form"
+          end
+
+          context "with business type soleTrader" do
+            let(:business_type) { "soleTrader" }
+            it_behaves_like "updates workflow state and redirects", "use_trading_name_form"
+          end
+        end
+
+        context "and the business type requires a company name" do
+
+          context "with business type partnership" do
+            let(:business_type) { "partnership" }
+            it_behaves_like "updates workflow state and redirects", "company_name_form"
+          end
+
+          context "with business type localAuthority" do
+            let(:business_type) { "localAuthority" }
+            it_behaves_like "updates workflow state and redirects", "company_name_form"
+          end
+
+          context "with business type charity" do
+            let(:business_type) { "charity" }
+            it_behaves_like "updates workflow state and redirects", "company_name_form"
+          end
         end
       end
     end

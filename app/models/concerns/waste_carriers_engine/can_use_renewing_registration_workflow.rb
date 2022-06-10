@@ -86,12 +86,13 @@ module WasteCarriersEngine
 
           transitions from: :register_in_wales_form, to: :business_type_form
 
-          # Business type & CBD type
+          # Business type
           transitions from: :business_type_form, to: :cbd_type_form,
                       if: :business_type_change_valid?
 
           transitions from: :business_type_form, to: :cannot_renew_type_change_form
 
+          # CBD type
           transitions from: :cbd_type_form, to: :renewal_information_form
 
           # Renewal information
@@ -147,12 +148,13 @@ module WasteCarriersEngine
 
           transitions from: :company_address_manual_form, to: :declare_convictions_form
 
-          # Main people & convictions
+          # Main people
           transitions from: :main_people_form, to: :company_name_form,
                       if: :company_name_required?
 
           transitions from: :main_people_form, to: :use_trading_name_form
 
+          # Convictions
           transitions from: :declare_convictions_form, to: :conviction_details_form,
                       if: :declared_convictions?
 
