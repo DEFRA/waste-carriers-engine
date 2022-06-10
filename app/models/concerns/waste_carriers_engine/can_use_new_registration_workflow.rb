@@ -143,10 +143,7 @@ module WasteCarriersEngine
                       after: :switch_to_upper_tier
 
           transitions from: :your_tier_form, to: :company_name_form,
-                      if: :company_name_required?
-
-          transitions from: :your_tier_form, to: :use_trading_name_form,
-                      if: :upper_tier?
+                      if: :lower_tier?
 
           transitions from: :your_tier_form, to: :cbd_type_form
 
