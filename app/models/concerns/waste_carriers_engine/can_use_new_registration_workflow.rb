@@ -119,12 +119,10 @@ module WasteCarriersEngine
                       after: :set_tier_from_check_your_tier_form
 
           transitions from: :check_your_tier_form, to: :company_name_form,
-                      if: :set_tier_and_company_name_required?,
-                      after: :set_tier_from_check_your_tier_form
+                      if: :set_tier_and_company_name_required?, after: :set_tier_from_check_your_tier_form
 
           transitions from: :check_your_tier_form, to: :use_trading_name_form,
-                      if: :upper_tier?,
-                      after: :set_tier_from_check_your_tier_form
+                      if: :upper_tier?, after: :set_tier_from_check_your_tier_form
 
           # Smart answers
           transitions from: :other_businesses_form, to: :construction_demolition_form,
@@ -210,8 +208,7 @@ module WasteCarriersEngine
 
           # Main people
 
-          transitions from: :main_people_form, to: :company_name_form,
-                      if: :company_name_required?
+          transitions from: :main_people_form, to: :company_name_form, if: :company_name_required?
 
           transitions from: :main_people_form, to: :use_trading_name_form
 
