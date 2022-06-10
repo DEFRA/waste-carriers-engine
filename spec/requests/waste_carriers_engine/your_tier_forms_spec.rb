@@ -18,7 +18,7 @@ module WasteCarriersEngine
     describe "POST your_tier_form_path" do
       let(:params) { { token: new_registration.token } }
 
-      RSpec.shared_examples "updates workflow state and redirects" do |next_form|
+      RSpec.shared_examples "updates workflow state and redirects" do |business_type, next_form|
         let(:new_registration) { create(:new_registration, tier, business_type: business_type, workflow_state: "your_tier_form") }
 
         it "updates the transient registration workflow" do
@@ -40,48 +40,17 @@ module WasteCarriersEngine
 
       context "when the new registration is a lower tier registration" do
         let(:tier) { :lower }
-        let(:business_type) { "soleTrader" }
 
-        it_behaves_like "updates workflow state and redirects", "company_name_form"
+        %i[charity limitedCompany limitedLiabilityPartnership localAuthority partnership soleTrader].each do |business_type|
+          it_behaves_like "updates workflow state and redirects", business_type, "company_name_form"
+        end
       end
 
       context "when the new registration is an upper tier registration" do
         let(:tier) { :upper }
 
-        context "and the business type does not require a company name" do
-
-          context "with business type limitedCompany" do
-            let(:business_type) { "limitedCompany" }
-            it_behaves_like "updates workflow state and redirects", "use_trading_name_form"
-          end
-
-          context "with business type limitedLiabilityPartnership" do
-            let(:business_type) { "limitedLiabilityPartnership" }
-            it_behaves_like "updates workflow state and redirects", "use_trading_name_form"
-          end
-
-          context "with business type soleTrader" do
-            let(:business_type) { "soleTrader" }
-            it_behaves_like "updates workflow state and redirects", "use_trading_name_form"
-          end
-        end
-
-        context "and the business type requires a company name" do
-
-          context "with business type partnership" do
-            let(:business_type) { "partnership" }
-            it_behaves_like "updates workflow state and redirects", "company_name_form"
-          end
-
-          context "with business type localAuthority" do
-            let(:business_type) { "localAuthority" }
-            it_behaves_like "updates workflow state and redirects", "company_name_form"
-          end
-
-          context "with business type charity" do
-            let(:business_type) { "charity" }
-            it_behaves_like "updates workflow state and redirects", "company_name_form"
-          end
+        %i[charity limitedCompany limitedLiabilityPartnership localAuthority partnership soleTrader].each do |business_type|
+          it_behaves_like "updates workflow state and redirects", business_type, "cbd_type_form"
         end
       end
     end

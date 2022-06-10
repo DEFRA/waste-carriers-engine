@@ -7,12 +7,8 @@ module WasteCarriersEngine
     subject do
       build(:renewing_registration,
             :has_required_data,
-            addresses: addresses,
-            business_type: business_type,
             workflow_state: "main_people_form")
     end
-    let(:business_type) { "soleTrader" }
-    let(:addresses) { [] }
 
     describe "#workflow_state" do
       context ":main_people_form state transitions" do
