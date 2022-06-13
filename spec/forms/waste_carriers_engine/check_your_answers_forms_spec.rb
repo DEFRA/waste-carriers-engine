@@ -331,6 +331,43 @@ module WasteCarriersEngine
         end
       end
 
+      describe "#company_name" do
+        context "without a company name" do
+          before do
+            check_your_answers_form.transient_registration.company_name = nil
+            check_your_answers_form.transient_registration.temp_use_trading_name = "no"
+          end
+
+          context "for an upper tier registration" do
+            before { check_your_answers_form.transient_registration.tier = "UPPER" }
+
+            context "based in England" do
+              before { check_your_answers_form.transient_registration.location = "england" }
+
+              it "is valid" do
+                expect(check_your_answers_form).to be_valid
+              end
+            end
+
+            context "based overseas" do
+              before { check_your_answers_form.transient_registration.location = "overseas" }
+
+              it "is not valid" do
+                expect(check_your_answers_form).to_not be_valid
+              end
+            end
+          end
+
+          context "for a lower tier registration" do
+            before { check_your_answers_form.transient_registration.tier = "LOWER" }
+
+            it "is not valid" do
+              expect(check_your_answers_form).to_not be_valid
+            end
+          end
+        end
+      end
+
       context "when the business type has an invalid change" do
         before(:each) do
           check_your_answers_form.transient_registration.business_type = "limitedCompany"
