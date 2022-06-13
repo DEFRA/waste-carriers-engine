@@ -31,7 +31,7 @@ module WasteCarriersEngine
     end
 
     def valid_company_name?(record, attribute, value)
-      return true unless record.company_name_required? || record.temp_use_trading_name
+      return true unless record.company_name_required? || record.temp_use_trading_name == "yes"
 
       value_is_present?(record, attribute, value)
     end
