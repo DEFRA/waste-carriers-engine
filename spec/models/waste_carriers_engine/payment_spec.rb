@@ -57,6 +57,30 @@ module WasteCarriersEngine
           expect(result).to_not include(refund_payment)
         end
       end
+
+      describe ".except_online_not_authorised" do
+        let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
+        let(:cash_payment) { WasteCarriersEngine::Payment.new(payment_type: "CASH") }
+        let(:worldpay_payment_authorised) { WasteCarriersEngine::Payment.new(payment_type: "WORLDPAY", world_pay_payment_status: "AUTHORISED") }
+        let(:worldpay_payment_refused) { WasteCarriersEngine::Payment.new(payment_type: "WORLDPAY", world_pay_payment_status: "REFUSED") }
+        let(:govpay_payment_authorised) { WasteCarriersEngine::Payment.new(payment_type: "GOVPAY", govpay_payment_status: "success") }
+        let(:govpay_payment_refused) { WasteCarriersEngine::Payment.new(payment_type: "GOVPAY", govpay_payment_status: "failed") }
+
+        before do
+          transient_registration.finance_details.payments << cash_payment << worldpay_payment_authorised << govpay_payment_authorised << govpay_payment_refused
+          transient_registration.save
+          transient_registration.reload
+        end
+
+        it "returns the expected payments only" do
+          result = transient_registration.finance_details.payments.except_online_not_authorised
+          expect(result).to include(cash_payment)
+          expect(result).to include(worldpay_payment_authorised)
+          expect(result).not_to include(worldpay_payment_refused)
+          expect(result).to include(govpay_payment_authorised)
+          expect(result).not_to include(govpay_payment_refused)
+        end
+      end
     end
 
     describe "new_from_online_payment" do
@@ -182,7 +206,7 @@ module WasteCarriersEngine
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
           transient_registration.prepare_for_payment(:worldpay, current_user)
-          payment.update_after_online_payment(paymentStatus: "AUTHORISED", mac: "foo")
+          payment.update_after_online_payment({ paymentStatus: "AUTHORISED", mac: "foo" })
         end
       end
 
