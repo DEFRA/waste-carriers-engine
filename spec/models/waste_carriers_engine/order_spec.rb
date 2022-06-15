@@ -173,5 +173,25 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "#payment_uuid" do
+      let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
+      let(:order) { described_class.new(finance_details: transient_registration.finance_details) }
+
+      context "with no pre-existing uuid" do
+        it "generates and saves a uuid" do
+          expect(order[:payment_uuid]).to be_nil
+          expect(order.payment_uuid).to be_present
+          expect(order[:payment_uuid]).to be_present
+        end
+      end
+
+      context "with a pre-existing uuid" do
+        it "returns the existing uuid" do
+          uuid = order.payment_uuid
+          expect(order.payment_uuid).to eq uuid
+        end
+      end
+    end
   end
 end
