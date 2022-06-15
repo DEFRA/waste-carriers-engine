@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"foo@example.com","template_id":"3da098e3-3db2-4c99-8e96-ed9d1a8ef227","personalisation":{"reg_identifier":"CBDU1","registration_type":"carrier,
+        broker and dealer"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1011'
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 17 May 2022 16:12:38 GMT
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - gunicorn
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-B3-Spanid:
+      - 30d987ef7f19714d
+      X-B3-Traceid:
+      - 390284b76f3e756830d987ef7f19714d
+      X-Vcap-Request-Id:
+      - f048d391-2715-432b-5b5f-f5c9668459f3
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 57f9250ef620b33bc5b87625f8d36f5e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR62-C3
+      X-Amz-Cf-Id:
+      - QLyOQdLghQ3wFGgev4XfSWwjfye2BHTAufKPiFfZtRRUmWrXKVJKaw==
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"#Your application to renew your waste carrier,
+        broker and dealer registration has been received\r\n\r\nYour registration
+        number is still\r\nCBDU1 \r\n\r\nWe are currently processing your payment.
+        We''ll email you to let you know when your renewal application has been successful.\r\n\r\n*If
+        you have enquiries please contact the Environment Agency helpline: 03708 506506\r\n*This
+        is an automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Your
+        application to renew waste carriers registration CBDU1 has been received"},"id":"5511c9ae-0ae6-4c0b-bc36-e72c8d48430d","reference":null,"scheduled_for":null,"template":{"id":"3da098e3-3db2-4c99-8e96-ed9d1a8ef227","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/3da098e3-3db2-4c99-8e96-ed9d1a8ef227","version":7},"uri":"https://api.notifications.service.gov.uk/v2/notifications/5511c9ae-0ae6-4c0b-bc36-e72c8d48430d"}
+
+'
+  recorded_at: Tue, 17 May 2022 16:12:37 GMT
+recorded_with: VCR 6.1.0
