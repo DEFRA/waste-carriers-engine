@@ -20,24 +20,18 @@ module WasteCarriersEngine
     def payment_callback
       find_or_initialize_transient_registration(params[:token])
 
-      if @transient_registration.finance_details.orders.first.govpay_status == "success"
-        Rails.logger.warn "Attempt to pay for an order with govpay_status already set to success"
-        respond_to_acceptable_payment(:success)
+      govpay_payment_status = GovpayPaymentDetailsService.new(params[:uuid]).govpay_payment_status
 
-      else
-        @transient_registration.with_lock do
-          payment_status = GovpayCallbackService.new(params[:uuid]).run
-
-          case payment_status
-          when :success, :pending
-            respond_to_acceptable_payment(payment_status)
-          else
-            respond_to_unsuccessful_payment(payment_status)
-          end
+      @transient_registration.with_lock do
+        case GovpayPaymentDetailsService.payment_status(govpay_payment_status)
+        when :success, :pending
+          respond_to_acceptable_payment(govpay_payment_status)
+        else
+          respond_to_unsuccessful_payment(govpay_payment_status)
         end
       end
     rescue ArgumentError
-      Rails.logger.warn "Govpay payment callback error: invalid payment uuid \"#{params[:uuid]}\""
+      Rails.logger.debug "Govpay payment callback error: invalid payment uuid \"#{params[:uuid]}\""
       Airbrake.notify("Govpay callback error", "Invalid payment uuid \"#{params[:uuid]}\"")
       flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.internal_error")
       go_back
@@ -55,7 +49,7 @@ module WasteCarriersEngine
     def respond_to_acceptable_payment(action)
       return unless valid_transient_registration?
 
-      if action != :error
+      if response_is_valid?(action, params)
         log_and_send_govpay_response(true, action)
         @transient_registration.next!
         redirect_to_correct_form
@@ -69,7 +63,7 @@ module WasteCarriersEngine
     def respond_to_unsuccessful_payment(action)
       return unless valid_transient_registration?
 
-      if action != :error
+      if response_is_valid?(action, params)
         log_and_send_govpay_response(true, action)
         flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.message")
       else
@@ -84,12 +78,20 @@ module WasteCarriersEngine
       setup_checks_pass?
     end
 
+    def response_is_valid?(action, params)
+      valid_method = "valid_#{GovpayPaymentDetailsService.payment_status(action)}?".to_sym
+      payment_uuid = params[:uuid]
+      govpay_service = GovpayCallbackService.new(payment_uuid)
+
+      govpay_service.public_send(valid_method)
+    end
+
     def log_and_send_govpay_response(is_valid, action)
       valid_text = is_valid ? "Valid" : "Invalid"
       title = "#{valid_text} Govpay response: #{action}"
 
       Rails.logger.debug [title, "Params:", params.to_json].join("\n")
-      Airbrake.notify(title, error_message: params) unless is_valid
+      Airbrake.notify(title, error_message: params) unless is_valid && action == :success
     end
   end
 end

@@ -86,6 +86,11 @@ module Dummy
     config.worldpay_password = ENV["WCRS_WORLDPAY_ECOM_PASSWORD"]
     config.worldpay_macsecret =  ENV["WCRS_WORLDPAY_ECOM_MACSECRET"]
 
+    # Govpay
+    config.govpay_url = ENV["WCRS_GOVPAY_URL"] || "https://publicapi.payments.service.gov.uk"
+    config.govpay_merchant_code = ENV["WCRS_GOVPAY_MERCHANT_CODE"]
+    config.govpay_api_token = ENV["WCRS_GOVPAY_API_TOKEN"]
+
     # Emails
     config.email_service_name = "Waste Carriers Registration Service"
     config.email_service_email = ENV["WCRS_EMAIL_SERVICE_EMAIL"]
