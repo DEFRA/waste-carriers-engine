@@ -17,11 +17,8 @@ module WasteCarriersEngine
       response_json = JSON.parse(response.body)
 
       govpay_payment_id = response_json["payment_id"]
-      # govpay_payment_status = response_json.dig("state", "status")
       if govpay_payment_id.present?
-        # @payment = Payment.new_from_online_payment(@order, user_email)
         @order.govpay_id = govpay_payment_id
-        # @order.govpay_payment_status = govpay_payment_status
         @order.save!
         {
           payment: nil, # @payment,
@@ -54,10 +51,6 @@ module WasteCarriersEngine
         reference: @order.order_code,
         description: "Your Waste Carrier Registration #{@transient_registration.reg_identifier}"
       }
-    end
-
-    def user_email
-      @current_user&.email || @transient_registration.contact_email
     end
   end
 end

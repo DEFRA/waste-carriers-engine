@@ -71,6 +71,14 @@ module WasteCarriersEngine
         end
       end
 
+      context "when the payment_uuid is not present" do
+        let(:govpay_validator_service) { GovpayValidatorService.new(order, nil, govpay_status) }
+
+        it "returns false" do
+          expect(govpay_validator_service.valid_success?).to eq(false)
+        end
+      end
+
       context "when the payment_uuid is invalid" do
         let(:govpay_validator_service) { GovpayValidatorService.new(order, "bad_payment_uuid", govpay_status) }
 
