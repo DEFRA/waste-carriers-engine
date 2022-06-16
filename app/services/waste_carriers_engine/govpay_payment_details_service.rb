@@ -24,9 +24,7 @@ module WasteCarriersEngine
       status = response_json&.dig("state", "status") || "error"
 
       # Special case: If failed, check whether this was because of a cancellation
-      if status == "failed"
-        status = "cancelled" if response_json.dig("state", "code") == "P0030"
-      end
+      status = "cancelled" if status == "failed" && response_json.dig("state", "code") == "P0030"
 
       status
     rescue StandardError => e
