@@ -55,6 +55,32 @@ module WasteCarriersEngine
             expect(registration_scope).to be_empty
           end
         end
+
+        context "when the registration completion service fails" do
+          let(:the_error) { StandardError.new("Oops!") }
+
+          before do
+            allow(RegistrationCompletionService)
+              .to receive(:run)
+              .with(transient_registration)
+              .and_raise(the_error)
+
+            # Airbrake may receive notifications other than the specific one used in the spec below
+            allow(Airbrake).to receive(:notify)
+          end
+
+          it "logs the exception" do
+            expect(Airbrake)
+              .to receive(:notify)
+              .with(the_error, { reg_identifier: transient_registration.reg_identifier })
+
+            begin
+              get new_registration_received_pending_govpay_payment_form_path(transient_registration.token)
+            rescue ActionView::Template::Error
+              # Capture the exception raised in the view
+            end
+          end
+        end
       end
     end
   end

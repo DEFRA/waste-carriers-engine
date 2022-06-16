@@ -255,6 +255,13 @@ module WasteCarriersEngine
               it_behaves_like "payment is unsuccessful"
             end
           end
+
+          context "for an invalid status" do
+            before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
+
+            let(:govpay_status) { "success" }
+            it_behaves_like "payment is unsuccessful"
+          end
         end
       end
     end
