@@ -18,9 +18,11 @@ module WasteCarriersEngine
     end
 
     def payment_callback
+      Rails.logger.warn "Govpay payment_callback invoked with params #{params}"
       find_or_initialize_transient_registration(params[:token])
 
       govpay_payment_status = GovpayPaymentDetailsService.new(params[:uuid]).govpay_payment_status
+      Rails.logger.warn "Govpay payment status: #{govpay_payment_status}"
 
       @transient_registration.with_lock do
         case GovpayPaymentDetailsService.payment_status(govpay_payment_status)
@@ -31,7 +33,7 @@ module WasteCarriersEngine
         end
       end
     rescue ArgumentError
-      Rails.logger.debug "Govpay payment callback error: invalid payment uuid \"#{params[:uuid]}\""
+      Rails.logger.warn "Govpay payment callback error: invalid payment uuid \"#{params[:uuid]}\""
       Airbrake.notify("Govpay callback error", "Invalid payment uuid \"#{params[:uuid]}\"")
       flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.internal_error")
       go_back
