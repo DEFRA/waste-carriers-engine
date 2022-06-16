@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_worldpay_forms_path(@worldpay_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @worldpay_form.token) %>
 
 <div class="govuk-body">
   <% if @worldpay_form.errors.any? %>

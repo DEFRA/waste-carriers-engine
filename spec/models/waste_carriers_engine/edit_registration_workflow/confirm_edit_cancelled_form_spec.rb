@@ -11,10 +11,6 @@ module WasteCarriersEngine
         context "on next" do
           include_examples "has next transition", next_state: "edit_cancelled_form"
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "edit_form"
-        end
       end
     end
   end

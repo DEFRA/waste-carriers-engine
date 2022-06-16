@@ -22,7 +22,8 @@ module WasteCarriersEngine
                  :has_conviction_search_result,
                  :has_key_people,
                  account_email: user.email,
-                 workflow_state: "worldpay_form")
+                 workflow_state: "worldpay_form",
+                 workflow_history: ["payment_summary_form"])
         end
         let(:token) { transient_registration[:token] }
 
@@ -30,7 +31,7 @@ module WasteCarriersEngine
           before do
             stub_request(:any, /.*#{host}.*/).to_return(
               status: 200,
-              body: File.read("./spec/fixtures/worldpay_redirect.xml")
+              body: File.read("./spec/fixtures/files/worldpay/worldpay_redirect.xml")
             )
           end
 
@@ -212,7 +213,7 @@ module WasteCarriersEngine
           context "when the params are valid" do
             before do
               allow_any_instance_of(WorldpayService).to receive(:valid_pending?).and_return(true)
-              allow_any_instance_of(RenewingRegistration).to receive(:pending_worldpay_payment?).and_return(true)
+              allow_any_instance_of(RenewingRegistration).to receive(:pending_online_payment?).and_return(true)
             end
 
             it "redirects to renewal_received_pending_payment_form" do

@@ -21,10 +21,6 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "incorrect_company_form"
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "renewal_information_form"
-        end
       end
     end
   end

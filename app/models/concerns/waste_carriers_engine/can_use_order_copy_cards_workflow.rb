@@ -5,7 +5,6 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include Mongoid::Document
 
-    # rubocop:disable Metrics/BlockLength
     included do
       include AASM
 
@@ -39,20 +38,8 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :copy_cards_order_completed_form
         end
-
-        event :back do
-          transitions from: :copy_cards_payment_form,
-                      to: :copy_cards_form
-
-          transitions from: :worldpay_form,
-                      to: :copy_cards_payment_form
-
-          transitions from: :copy_cards_bank_transfer_form,
-                      to: :copy_cards_payment_form
-        end
       end
     end
-    # rubocop:enable Metrics/BlockLength
 
     private
 

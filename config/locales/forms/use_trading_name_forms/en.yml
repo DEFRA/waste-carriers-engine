@@ -1,0 +1,19 @@
+en:
+  waste_carriers_engine:
+    use_trading_name_forms:
+      new:
+        title: Do you trade under a different name?
+        heading: Do you trade under a different name?
+        options:
+          "yes": "Yes"
+          "no": "No"
+        error_heading: Something is wrong
+        next_button: Continue
+
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/use_trading_name_form:
+          attributes:
+            temp_use_trading_name:
+              inclusion: "You must select yes or no"

@@ -32,7 +32,7 @@ module WasteCarriersEngine
               }
             end
 
-            it "correctly updates the key people, returns a 302 response and redirects to the company_name form" do
+            it "correctly updates the key people, returns a 302 response and redirects to the use_trading_name form" do
               key_people_count = transient_registration.key_people.count
 
               post main_people_forms_path(transient_registration.token), params: { main_people_form: valid_params }
@@ -40,7 +40,7 @@ module WasteCarriersEngine
               expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
               expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
               expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_company_name_form_path(transient_registration[:token]))
+              expect(response).to redirect_to(new_use_trading_name_form_path(transient_registration[:token]))
             end
 
             context "when there is already a main person" do
@@ -191,66 +191,6 @@ module WasteCarriersEngine
             expect(transient_registration.reload.key_people).to_not exist
             expect(response).to have_http_status(302)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
-          end
-        end
-      end
-    end
-
-    describe "GET back_main_people_forms_path" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
-        before(:each) do
-          sign_in(user)
-        end
-
-        context "when a valid transient registration exists" do
-          let(:transient_registration) do
-            create(:renewing_registration,
-                   :has_required_data,
-                   account_email: user.email,
-                   business_type: defined?(business_type) ? business_type : "limitedCompany",
-                   workflow_state: "main_people_form")
-          end
-
-          context "when the back action is triggered" do
-            it "returns a 302 response" do
-              get back_main_people_forms_path(transient_registration[:token])
-              expect(response).to have_http_status(302)
-            end
-
-            context "when the business type is limitedCompany" do
-              let(:business_type) { "limitedCompany" }
-              it "redirects to the check_registered_company_name form" do
-                get back_main_people_forms_path(transient_registration[:token])
-                expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
-              end
-            end
-
-            context "when the business type is soleTrader" do
-              let(:business_type) { "soleTrader" }
-              it "redirects to the cbd_type form" do
-                get back_main_people_forms_path(transient_registration[:token])
-                expect(response).to redirect_to(new_cbd_type_form_path(transient_registration[:token]))
-              end
-            end
-          end
-        end
-
-        context "when the transient registration is in the wrong state" do
-          let(:transient_registration) do
-            create(:renewing_registration,
-                   :has_required_data,
-                   account_email: user.email,
-                   workflow_state: "renewal_start_form")
-          end
-
-          context "when the back action is triggered" do
-            it "returns a 302 response and redirects to the correct form for the state" do
-              get back_main_people_forms_path(transient_registration[:token])
-
-              expect(response).to have_http_status(302)
-              expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
-            end
           end
         end
       end

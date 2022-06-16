@@ -32,7 +32,6 @@ module WasteCarriersEngine
     include_examples "validate yes no", :check_your_answers_form, :declared_convictions
     include_examples "validate business_type", :check_your_answers_form
     include_examples "validate company_name", :check_your_answers_form
-    include_examples "validate company_no", :check_your_answers_form
     include_examples "validate email", :check_your_answers_form, :contact_email
     include_examples "validate location", :check_your_answers_form
     include_examples "validate person name", :check_your_answers_form, :first_name
@@ -332,6 +331,43 @@ module WasteCarriersEngine
         end
       end
 
+      describe "#company_name" do
+        context "without a company name" do
+          before do
+            check_your_answers_form.transient_registration.company_name = nil
+            check_your_answers_form.transient_registration.temp_use_trading_name = "no"
+          end
+
+          context "for an upper tier registration" do
+            before { check_your_answers_form.transient_registration.tier = "UPPER" }
+
+            context "based in England" do
+              before { check_your_answers_form.transient_registration.location = "england" }
+
+              it "is valid" do
+                expect(check_your_answers_form).to be_valid
+              end
+            end
+
+            context "based overseas" do
+              before { check_your_answers_form.transient_registration.location = "overseas" }
+
+              it "is not valid" do
+                expect(check_your_answers_form).to_not be_valid
+              end
+            end
+          end
+
+          context "for a lower tier registration" do
+            before { check_your_answers_form.transient_registration.tier = "LOWER" }
+
+            it "is not valid" do
+              expect(check_your_answers_form).to_not be_valid
+            end
+          end
+        end
+      end
+
       context "when the business type has an invalid change" do
         before(:each) do
           check_your_answers_form.transient_registration.business_type = "limitedCompany"
@@ -346,17 +382,6 @@ module WasteCarriersEngine
       context "when the business type has changed to charity" do
         before(:each) do
           check_your_answers_form.transient_registration.business_type = "charity"
-        end
-
-        it "is not valid" do
-          expect(check_your_answers_form).to_not be_valid
-        end
-      end
-
-      context "when the company_no has changed" do
-        before(:each) do
-          check_your_answers_form.transient_registration.company_no = "01234567"
-          check_your_answers_form.transient_registration.registration.update_attributes(company_no: "12345678")
         end
 
         it "is not valid" do

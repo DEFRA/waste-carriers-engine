@@ -15,7 +15,8 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
                :has_conviction_search_result,
                :has_key_people,
                account_email: user.email,
-               workflow_state: "worldpay_form")
+               workflow_state: "worldpay_form",
+               workflow_history: ["payment_summary_form"])
       end
       let(:token) { transient_registration.token }
 

@@ -72,7 +72,7 @@ module WasteCarriersEngine
 
       if response_is_valid?(action, params)
         log_and_send_worldpay_response(true, action)
-        @transient_registration.next!
+        @transient_registration.next_state!
         redirect_to_correct_form
       else
         log_and_send_worldpay_response(false, action)

@@ -8,7 +8,7 @@ en:
             UPPER: &value "What's the name of the local authority or public body?"
             LOWER: *value
           limitedCompany:
-            UPPER: &optional_trade_name Do you trade under a different name? (optional)
+            UPPER: &optional_trade_name Enter your trading name
             LOWER: What's the name of the company?
           limitedLiabilityPartnership:
             UPPER: *optional_trade_name

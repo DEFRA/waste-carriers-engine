@@ -42,6 +42,7 @@ module WasteCarriersEngine
         state :check_registered_company_name_form
         state :incorrect_company_form
 
+        state :use_trading_name_form
         state :company_name_form
         state :company_postcode_form
         state :company_address_form
@@ -65,12 +66,14 @@ module WasteCarriersEngine
         state :cards_form
         state :payment_summary_form
         state :worldpay_form
+        state :govpay_form
         state :confirm_bank_transfer_form
 
         state :registration_completed_form
         state :registration_received_pending_payment_form
         state :registration_received_pending_conviction_form
         state :registration_received_pending_worldpay_payment_form
+        state :registration_received_pending_govpay_payment_form
 
         # Transitions
         event :next do
@@ -82,7 +85,6 @@ module WasteCarriersEngine
                       if: :should_renew?
 
           # Location
-
           transitions from: :location_form, to: :register_in_northern_ireland_form,
                       if: :should_register_in_northern_ireland?
 
@@ -103,30 +105,28 @@ module WasteCarriersEngine
 
           transitions from: :register_in_wales_form, to: :business_type_form
 
-          # End location
-
+          # Business type
           transitions from: :business_type_form, to: :your_tier_form,
                       if: :switch_to_lower_tier_based_on_business_type?,
                       after: :switch_to_lower_tier
 
           transitions from: :business_type_form, to: :check_your_tier_form
 
+          # Tier
           transitions from: :check_your_tier_form, to: :other_businesses_form,
                       if: :check_your_tier_unknown?
-
-          transitions from: :check_your_tier_form, to: :company_name_form,
-                      if: :check_your_tier_lower?,
-                      after: :set_tier_from_check_your_tier_form
 
           transitions from: :check_your_tier_form, to: :cbd_type_form,
                       if: :check_your_tier_upper?,
                       after: :set_tier_from_check_your_tier_form
 
-          transitions from: :your_tier_form, to: :company_name_form,
-                      if: :lower_tier?
+          transitions from: :check_your_tier_form, to: :company_name_form,
+                      if: :set_tier_and_company_name_required?, after: :set_tier_from_check_your_tier_form
+
+          transitions from: :check_your_tier_form, to: :use_trading_name_form,
+                      if: :upper_tier?, after: :set_tier_from_check_your_tier_form
 
           # Smart answers
-
           transitions from: :other_businesses_form, to: :construction_demolition_form,
                       if: :only_carries_own_waste?
 
@@ -144,8 +144,10 @@ module WasteCarriersEngine
           transitions from: :waste_types_form, to: :your_tier_form,
                       after: :switch_to_upper_tier
 
-          transitions from: :your_tier_form, to: :cbd_type_form,
-                      if: :upper_tier?
+          transitions from: :your_tier_form, to: :company_name_form,
+                      if: :lower_tier?
+
+          transitions from: :your_tier_form, to: :cbd_type_form
 
           transitions from: :construction_demolition_form, to: :your_tier_form,
                       if: :switch_to_lower_tier_based_on_smart_answers?,
@@ -154,13 +156,13 @@ module WasteCarriersEngine
           transitions from: :construction_demolition_form, to: :your_tier_form,
                       after: :switch_to_upper_tier
 
-          # End smart answers
-
+          # CBD Type
           transitions from: :cbd_type_form, to: :main_people_form,
                       if: :skip_registration_number?
 
           transitions from: :cbd_type_form, to: :registration_number_form
 
+          # Registered company details
           transitions from: :registration_number_form, to: :check_registered_company_name_form
 
           transitions from: :check_registered_company_name_form, to: :incorrect_company_form,
@@ -170,13 +172,21 @@ module WasteCarriersEngine
 
           transitions from: :incorrect_company_form, to: :registration_number_form
 
+          # Trading name
+          transitions from: :use_trading_name_form, to: :company_name_form,
+                      if: :use_trading_name?
+
+          transitions from: :use_trading_name_form, to: :company_address_manual_form,
+                      if: :overseas?
+
+          transitions from: :use_trading_name_form, to: :company_postcode_form
+
           transitions from: :company_name_form, to: :company_address_manual_form,
                       if: :overseas?
 
           transitions from: :company_name_form, to: :company_postcode_form
 
           # Registered address
-
           transitions from: :company_postcode_form, to: :company_address_manual_form,
                       if: :skip_to_manual_address?
 
@@ -195,10 +205,13 @@ module WasteCarriersEngine
 
           transitions from: :company_address_manual_form, to: :declare_convictions_form
 
-          # End registered address
+          # Main people
 
-          transitions from: :main_people_form, to: :company_name_form
+          transitions from: :main_people_form, to: :company_name_form, if: :company_name_required?
 
+          transitions from: :main_people_form, to: :use_trading_name_form
+
+          # Convictions
           transitions from: :declare_convictions_form, to: :conviction_details_form,
                       if: :declared_convictions?
 
@@ -206,6 +219,7 @@ module WasteCarriersEngine
 
           transitions from: :conviction_details_form, to: :contact_name_form
 
+          # Contact details
           transitions from: :contact_name_form, to: :contact_phone_form
 
           transitions from: :contact_phone_form, to: :contact_email_form
@@ -215,7 +229,6 @@ module WasteCarriersEngine
           transitions from: :contact_email_form, to: :contact_postcode_form
 
           # Contact address
-
           transitions from: :contact_address_reuse_form, to: :check_your_answers_form,
                       if: :reuse_registered_address?,
                       after: :set_contact_address_as_registered_address
@@ -239,8 +252,7 @@ module WasteCarriersEngine
 
           transitions from: :contact_address_manual_form, to: :check_your_answers_form
 
-          # End contact address
-
+          # Check answers & declaration
           transitions from: :check_your_answers_form, to: :declaration_form
 
           transitions from: :declaration_form, to: :registration_completed_form,
@@ -251,27 +263,32 @@ module WasteCarriersEngine
 
           transitions from: :declaration_form, to: :cards_form
 
+          # Payment & Completion
           transitions from: :cards_form, to: :payment_summary_form
+
+          transitions from: :payment_summary_form, to: :govpay_form,
+                      if: :paying_by_card_govpay?
 
           transitions from: :payment_summary_form, to: :worldpay_form,
                       if: :paying_by_card?
 
           transitions from: :payment_summary_form, to: :confirm_bank_transfer_form
 
-          # Registration completion forms
           transitions from: :confirm_bank_transfer_form, to: :registration_received_pending_payment_form,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
 
           transitions from: :worldpay_form,
-                      to: :registration_received_pending_worldpay_payment_form, if: :pending_worldpay_payment?,
+                      to: :registration_received_pending_worldpay_payment_form,
+                      if: :pending_online_payment?,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
 
           transitions from: :worldpay_form,
-                      to: :registration_received_pending_conviction_form, if: :conviction_check_required?,
+                      to: :registration_received_pending_conviction_form,
+                      if: :conviction_check_required?,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -280,173 +297,22 @@ module WasteCarriersEngine
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
+
+          transitions from: :govpay_form,
+                      to: :registration_received_pending_govpay_payment_form,
+                      if: :pending_online_payment?,
+                      after: :set_metadata_route
+
+          transitions from: :govpay_form,
+                      to: :registration_received_pending_conviction_form,
+                      if: :conviction_check_required?,
+                      after: :set_metadata_route
+
+          transitions from: :govpay_form, to: :registration_completed_form,
+                      after: :set_metadata_route
         end
 
         # Transitions
-        event :back do
-          transitions from: :location_form, to: :start_form
-
-          transitions from: :renew_registration_form, to: :start_form
-
-          # Location
-
-          transitions from: :location_form, to: :renewal_start_form
-
-          transitions from: :register_in_northern_ireland_form, to: :location_form
-
-          transitions from: :register_in_scotland_form, to: :location_form
-
-          transitions from: :register_in_wales_form, to: :location_form
-
-          # End location
-
-          transitions from: :business_type_form, to: :register_in_northern_ireland_form,
-                      if: :should_register_in_northern_ireland?
-
-          transitions from: :business_type_form, to: :register_in_scotland_form,
-                      if: :should_register_in_scotland?
-
-          transitions from: :business_type_form, to: :register_in_wales_form,
-                      if: :should_register_in_wales?
-
-          transitions from: :business_type_form, to: :location_form
-
-          transitions from: :check_your_tier_form, to: :location_form,
-                      if: :overseas?
-
-          transitions from: :check_your_tier_form, to: :business_type_form
-
-          # Smart answers
-          transitions from: :company_name_form, to: :check_your_tier_form,
-                      if: :check_your_tier_lower?
-
-          transitions from: :company_name_form, to: :your_tier_form,
-                      if: :lower_tier?
-
-          transitions from: :company_name_form, to: :main_people_form,
-                      if: :skip_registration_number?
-
-          transitions from: :company_name_form, to: :check_registered_company_name_form
-
-          transitions from: :your_tier_form, to: :business_type_form,
-                      if: :switch_to_lower_tier_based_on_business_type?
-
-          transitions from: :your_tier_form, to: :check_your_tier_form,
-                      unless: :check_your_tier_unknown?
-
-          transitions from: :your_tier_form, to: :construction_demolition_form,
-                      if: %i[lower_tier? only_carries_own_waste?]
-
-          transitions from: :your_tier_form, to: :waste_types_form,
-                      if: %i[lower_tier? waste_is_main_service?]
-
-          transitions from: :your_tier_form, to: :construction_demolition_form,
-                      if: %i[lower_tier?]
-
-          transitions from: :check_registered_company_name_form, to: :registration_number_form
-
-          transitions from: :incorrect_company_form, to: :check_registered_company_name_form
-
-          transitions from: :other_businesses_form, to: :check_your_tier_form
-
-          transitions from: :service_provided_form, to: :other_businesses_form
-
-          transitions from: :waste_types_form, to: :service_provided_form
-
-          transitions from: :construction_demolition_form, to: :other_businesses_form,
-                      if: :only_carries_own_waste?
-
-          transitions from: :construction_demolition_form, to: :service_provided_form
-
-          transitions from: :cbd_type_form, to: :check_your_tier_form,
-                      if: :check_your_tier_upper?
-
-          transitions from: :cbd_type_form, to: :your_tier_form
-
-          transitions from: :your_tier_form, to: :waste_types_form,
-                      if: :not_only_amf?
-
-          transitions from: :your_tier_form, to: :construction_demolition_form
-
-          # End smart answers
-
-          transitions from: :registration_number_form, to: :cbd_type_form
-
-          # Registered address
-
-          transitions from: :company_postcode_form, to: :company_name_form
-
-          transitions from: :company_address_form, to: :company_postcode_form
-
-          transitions from: :company_address_manual_form, to: :company_name_form,
-                      if: :overseas?
-
-          transitions from: :company_address_manual_form, to: :company_postcode_form
-
-          transitions from: :main_people_form, to: :cbd_type_form,
-                      if: :skip_registration_number?
-
-          transitions from: :main_people_form, to: :check_registered_company_name_form
-
-          # End registered address
-
-          transitions from: :declare_convictions_form, to: :company_address_manual_form,
-                      if: :registered_address_was_manually_entered?
-
-          transitions from: :declare_convictions_form, to: :company_address_form
-
-          transitions from: :conviction_details_form, to: :declare_convictions_form
-
-          transitions from: :contact_name_form, to: :company_address_manual_form,
-                      if: %i[lower_tier? registered_address_was_manually_entered?]
-
-          transitions from: :contact_name_form, to: :company_address_form,
-                      if: :lower_tier?
-
-          transitions from: :contact_name_form, to: :conviction_details_form,
-                      if: :declared_convictions?
-
-          transitions from: :contact_name_form, to: :declare_convictions_form
-
-          transitions from: :contact_phone_form, to: :contact_name_form
-
-          transitions from: :contact_email_form, to: :contact_phone_form
-
-          # Contact address
-
-          transitions from: :contact_address_reuse_form, to: :contact_email_form
-
-          transitions from: :contact_postcode_form, to: :contact_address_reuse_form
-
-          transitions from: :contact_postcode_form, to: :contact_email_form
-
-          transitions from: :contact_address_form, to: :contact_postcode_form
-
-          transitions from: :contact_address_manual_form, to: :contact_address_reuse_form,
-                      if: :overseas?
-
-          transitions from: :contact_address_manual_form, to: :contact_postcode_form
-
-          transitions from: :check_your_answers_form, to: :contact_address_manual_form,
-                      if: :contact_address_was_manually_entered?
-
-          transitions from: :check_your_answers_form, to: :contact_address_reuse_form,
-                      if: :reuse_registered_address?
-
-          transitions from: :check_your_answers_form, to: :contact_address_form
-
-          # End contact address
-
-          transitions from: :declaration_form, to: :check_your_answers_form
-
-          transitions from: :cards_form, to: :declaration_form
-
-          transitions from: :payment_summary_form, to: :cards_form
-
-          transitions from: :worldpay_form, to: :payment_summary_form
-
-          transitions from: :confirm_bank_transfer_form, to: :payment_summary_form
-        end
 
         event :skip_to_manual_address do
           transitions from: :company_postcode_form, to: :company_address_manual_form
@@ -520,6 +386,10 @@ module WasteCarriersEngine
         temp_payment_method == "card"
       end
 
+      def paying_by_card_govpay?
+        WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && temp_payment_method == "card"
+      end
+
       def switch_to_lower_tier
         update_attributes(tier: WasteCarriersEngine::NewRegistration::LOWER_TIER)
       end
@@ -550,6 +420,11 @@ module WasteCarriersEngine
         switch_to_lower_tier
       end
 
+      def set_tier_and_company_name_required?
+        set_tier_from_check_your_tier_form
+        company_name_required?
+      end
+
       def reuse_registered_address?
         temp_reuse_registered_address == "yes"
       end
@@ -560,6 +435,10 @@ module WasteCarriersEngine
 
       def incorrect_company_data?
         temp_use_registered_company_details == "no"
+      end
+
+      def use_trading_name?
+        temp_use_trading_name == "yes"
       end
     end
     # rubocop:enable Metrics/BlockLength

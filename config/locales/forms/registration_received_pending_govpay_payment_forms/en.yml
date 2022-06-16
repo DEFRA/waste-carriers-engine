@@ -1,0 +1,12 @@
+en:
+  waste_carriers_engine:
+    registration_received_pending_govpay_payment_forms:
+      new:
+        title: "We're processing your payment"
+        heading: "We're processing your payment"
+        highlight_text: "Please use this registration number if you contact us:"
+        paragraph_1: "We've sent a confirmation email to %{email}."
+        paragraph_2: "A payment confirmation will be sent to %{email}."
+        subheading_1: "We have received your application"
+        paragraph_3: "We're currently processing your payment and will let you know when it has been received."
+        paragraph_4: "You're not legally entitled to operate as a waste carrier until we have confirmed your registration."

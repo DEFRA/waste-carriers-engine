@@ -60,46 +60,5 @@ module WasteCarriersEngine
                          invalid_params: { temp_use_registered_company_details: "foo", company_no: "09360070" }
       end
     end
-
-    describe "GET back_check_registered_company_name_form_path" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
-        before(:each) do
-          sign_in(user)
-        end
-
-        context "for a new registration" do
-          let(:transient_registration) do
-            create(:new_registration,
-                   :has_required_data,
-                   account_email: user.email,
-                   workflow_state: "check_registered_company_name_form")
-          end
-
-          it "returns a 302 response and redirects to the registration_number_form" do
-            get back_check_registered_company_name_forms_path(transient_registration[:token])
-
-            expect(response).to have_http_status(302)
-            expect(response).to redirect_to(registration_number_forms_path(transient_registration[:token]))
-          end
-        end
-
-        context "for a registration renewal" do
-          let(:transient_registration) do
-            create(:renewing_registration,
-                   :has_required_data,
-                   account_email: user.email,
-                   workflow_state: "check_registered_company_name_form")
-          end
-
-          it "returns a 302 response and redirects to the renewal_information_form" do
-            get back_check_registered_company_name_forms_path(transient_registration[:token])
-
-            expect(response).to have_http_status(302)
-            expect(response).to redirect_to(renewal_information_forms_path(transient_registration[:token]))
-          end
-        end
-      end
-    end
   end
 end

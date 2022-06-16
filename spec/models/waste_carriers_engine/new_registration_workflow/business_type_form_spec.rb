@@ -21,34 +21,6 @@ module WasteCarriersEngine
 
           include_examples "has next transition", next_state: "check_your_tier_form"
         end
-
-        context "on back" do
-          subject { build(:new_registration, workflow_state: "business_type_form", location: location) }
-
-          context "when the location is northern_ireland" do
-            let(:location) { "northern_ireland" }
-
-            include_examples "has back transition", previous_state: "register_in_northern_ireland_form"
-          end
-
-          context "when the location is scotland" do
-            let(:location) { "scotland" }
-
-            include_examples "has back transition", previous_state: "register_in_scotland_form"
-          end
-
-          context "when the location is wales" do
-            let(:location) { "wales" }
-
-            include_examples "has back transition", previous_state: "register_in_wales_form"
-          end
-
-          context "when the location is in england" do
-            let(:location) { "england" }
-
-            include_examples "has back transition", previous_state: "location_form"
-          end
-        end
       end
     end
   end

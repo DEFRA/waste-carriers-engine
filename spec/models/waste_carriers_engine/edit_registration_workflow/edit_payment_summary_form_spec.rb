@@ -17,10 +17,6 @@ module WasteCarriersEngine
 
           include_examples "has next transition", next_state: "edit_bank_transfer_form"
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "declaration_form"
-        end
       end
     end
   end

@@ -1,4 +1,4 @@
-<%= render("waste_carriers_engine/shared/back", back_path: back_contact_address_forms_path(@contact_address_form.token)) %>
+<%= render("waste_carriers_engine/shared/back", token: @contact_address_form.token) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -20,7 +20,7 @@
           <%= @contact_address_form.temp_contact_postcode %>
         </span>
         <%= link_to(t(".postcode_change_link"),
-            back_contact_address_forms_path(@contact_address_form.token))  %>
+            go_back_forms_path(@contact_address_form.token))  %>
       </p>
 
       <%= form.fields_for :contact_address do |f| %>

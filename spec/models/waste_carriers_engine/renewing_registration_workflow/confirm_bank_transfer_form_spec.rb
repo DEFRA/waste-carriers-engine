@@ -25,10 +25,6 @@ module WasteCarriersEngine
             subject.next!
           end
         end
-
-        context "on back" do
-          include_examples "has back transition", previous_state: "payment_summary_form"
-        end
       end
     end
   end

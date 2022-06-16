@@ -14,8 +14,7 @@ module WasteCarriersEngine
 
     field :balance, type: Integer
 
-    validates :balance,
-              presence: true
+    validates :balance, presence: true
 
     def self.new_renewal_finance_details(transient_registration, method, current_user)
       user_email = current_user&.email || transient_registration.contact_email
@@ -43,9 +42,7 @@ module WasteCarriersEngine
 
     def update_balance
       order_balance = orders.sum { |item| item[:total_amount] }
-      # Select payments where the type is not WORLDPAY, or if it is, the status is AUTHORISED
-      payment_balance = payments.any_of({ :payment_type.ne => "WORLDPAY" },
-                                        world_pay_payment_status: "AUTHORISED").sum { |item| item[:amount] }
+      payment_balance = payments.except_online_not_authorised.sum { |item| item[:amount] }
       self.balance = order_balance - payment_balance
     end
   end

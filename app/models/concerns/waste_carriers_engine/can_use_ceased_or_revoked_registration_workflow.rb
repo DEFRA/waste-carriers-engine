@@ -26,11 +26,6 @@ module WasteCarriersEngine
                       to: :ceased_or_revoked_completed_form
 
         end
-
-        event :back do
-          transitions from: :ceased_or_revoked_confirm_form,
-                      to: :cease_or_revoke_form
-        end
       end
     end
   end

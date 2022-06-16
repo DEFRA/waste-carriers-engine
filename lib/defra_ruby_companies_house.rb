@@ -4,7 +4,7 @@ require "rest-client"
 
 class DefraRubyCompaniesHouse
   def initialize(company_no)
-    @company_url = "#{Rails.configuration.companies_house_host}#{company_no}"
+    @company_url = "#{Rails.configuration.companies_house_host}#{company_no.to_s.rjust(8, '0')}"
     @api_key = Rails.configuration.companies_house_api_key
 
     load_company
