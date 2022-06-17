@@ -81,6 +81,7 @@ module WasteCarriersEngine
 
     def update_after_online_payment(params)
       if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
+        Rails.logger.debug "Updating payment after online payment, params: #{params}"
         self.govpay_payment_status = params[:govpay_status]
         self.govpay_id = params[:govpay_id]
       else

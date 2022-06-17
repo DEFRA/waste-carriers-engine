@@ -30,6 +30,7 @@ module WasteCarriersEngine
 
         begin
           RegistrationActivationService.run(registration: registration)
+          Rails.logger.info "Completed registration #{@transient_registration.reg_identifier}"
         rescue StandardError => e
           log_transient_registration_details("Exception running RegistrationCompletionService", @transient_registration)
           Airbrake.notify(e, reg_identifier: @transient_registration.reg_identifier)
