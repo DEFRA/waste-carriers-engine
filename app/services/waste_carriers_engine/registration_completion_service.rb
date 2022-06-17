@@ -5,6 +5,7 @@ module WasteCarriersEngine
   class RegistrationCompletionService < BaseService
     attr_reader :transient_registration
 
+    # rubocop:disable Metrics/MethodLength
     def run(transient_registration)
       @transient_registration = transient_registration
 
@@ -36,6 +37,7 @@ module WasteCarriersEngine
 
       registration
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
