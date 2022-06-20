@@ -66,9 +66,9 @@ module WasteCarriersEngine
 
     describe "payment_status" do
 
-      shared_examples "maps to the expected status" do |govpay_status, expected_status|
+      shared_examples "maps to the expected status" do |govpay_status, response_type|
         it "returns the correct status" do
-          expect(GovpayPaymentDetailsService.payment_status(govpay_status)).to eq expected_status
+          expect(GovpayPaymentDetailsService.response_type(govpay_status)).to eq response_type
         end
       end
 

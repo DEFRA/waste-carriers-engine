@@ -7,56 +7,50 @@ module WasteCarriersEngine
 
     def initialize(payment_uuid)
       @payment_uuid = payment_uuid
-      @payment_status = GovpayPaymentDetailsService.new(@payment_uuid).govpay_payment_status
       @transient_registration = transient_registration_by_payment_uuid
       @order = order_by_payment_uuid
     end
 
-    def valid_success?
-      return false unless govpay_response_validator("success").valid_success?
+    def run
+      @govpay_payment_status = GovpayPaymentDetailsService.new(@payment_uuid).govpay_payment_status
 
-      update_payment_data
+      @response_type = GovpayPaymentDetailsService.response_type(@govpay_payment_status)
+      return :error unless govpay_response_validator(@govpay_payment_status).send("valid_#{@response_type}?".to_sym)
 
-      true
-    end
+      case @response_type
+      when :success, :pending
+        update_payment_data
+      else
+        unsuccessful_payment
+      end
 
-    def valid_failure?
-      valid_unsuccessful_payment?(:valid_failure?)
-    end
-
-    def valid_pending?
-      valid_unsuccessful_payment?(:valid_pending?)
-    end
-
-    def valid_cancel?
-      valid_unsuccessful_payment?(:valid_cancel?)
-    end
-
-    def valid_error?
-      valid_unsuccessful_payment?(:valid_error?)
+      @response_type
     end
 
     private
 
     def transient_registration_by_payment_uuid
-      TransientRegistration.find_by("financeDetails.orders.payment_uuid": @payment_uuid)
+      reg = TransientRegistration.find_by("financeDetails.orders.payment_uuid": @payment_uuid)
+      raise ArgumentError, "Transient registration not found for payment uuid #{@payment_uuid}" unless reg
+
+      reg
     end
 
     def order_by_payment_uuid
-      @transient_registration.finance_details.orders.find_by(payment_uuid: @payment_uuid)
+      order = @transient_registration.finance_details.orders.find_by(payment_uuid: @payment_uuid)
+      raise ArgumentError, "Order not found for payment uuid #{@payment_uuid}" unless order
+
+      order
     end
 
-    def valid_unsuccessful_payment?(validation_method)
-      return false unless govpay_response_validator(@payment_status).public_send(validation_method)
-
-      @order.update_after_online_payment(@payment_status)
-      true
+    def unsuccessful_payment
+      @order.update_after_online_payment(@response_type)
     end
 
     def update_payment_data
-      @order.update_after_online_payment("success")
+      @order.update_after_online_payment(@response_type)
       payment = Payment.new_from_online_payment(@order, user_email)
-      payment.update_after_online_payment(govpay_status: "success", govpay_id: @order.govpay_id)
+      payment.update_after_online_payment(govpay_status: @response_type)
 
       @transient_registration.finance_details.update_balance
       @transient_registration.finance_details.save!

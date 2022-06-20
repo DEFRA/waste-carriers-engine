@@ -20,12 +20,6 @@ module WasteCarriersEngine
       allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
-
-      # current_user = build(:user)
-      # # We need to set a specific time so we know what order code to expect
-      # Timecop.freeze(Time.new(2018, 1, 1)) do
-      #   transient_registration.prepare_for_payment(:govpay, current_user)
-      # end
     end
 
     shared_examples "valid and invalid Govpay status" do |method, valid_status, invalid_status|
@@ -46,7 +40,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "valid_success?" do
+    describe "#valid_success?" do
       let(:govpay_status) { "success" }
       context "when the govpay status is valid" do
 
@@ -88,23 +82,23 @@ module WasteCarriersEngine
       end
     end
 
-    describe "valid_failure?" do
+    describe "#valid_failure?" do
       it_behaves_like "valid and invalid Govpay status", "valid_failure?", "failed"
     end
 
-    describe "valid_pending?" do
+    describe "#valid_pending?" do
       it_behaves_like "valid and invalid Govpay status", "valid_pending?", "created"
     end
 
-    describe "valid_cancel?" do
+    describe "#valid_cancel?" do
       it_behaves_like "valid and invalid Govpay status", "valid_cancel?", "cancelled"
     end
 
-    describe "valid_error?" do
+    describe "#valid_error?" do
       it_behaves_like "valid and invalid Govpay status", "valid_error?", "error"
     end
 
-    describe "valid_govpay_status?" do
+    describe "#valid_govpay_status?" do
       it "returns true when the status matches the values for the response type" do
         expect(described_class.valid_govpay_status?(:success, "success")).to eq(true)
       end

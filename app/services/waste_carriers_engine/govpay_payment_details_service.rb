@@ -33,7 +33,7 @@ module WasteCarriersEngine
     end
 
     # Payment status in application terms
-    def self.payment_status(status)
+    def self.response_type(status)
       {
         "created" => :pending,
         "started" => :pending,
