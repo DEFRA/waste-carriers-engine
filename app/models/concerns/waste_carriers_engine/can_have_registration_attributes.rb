@@ -113,16 +113,12 @@ module WasteCarriersEngine
         contact_email.blank? || contact_email == WasteCarriersEngine.configuration.assisted_digital_email
       end
 
-      def pending_online_payment?
+      def pending_worldpay_payment?
         return false unless finance_details.present? &&
                             finance_details.orders.present? &&
                             finance_details.orders.first.present?
 
-        if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
-          GovpayValidatorService.valid_govpay_status?(:pending, finance_details.orders.first.govpay_status)
-        else
-          WorldpayValidatorService.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
-        end
+        WorldpayValidatorService.valid_world_pay_status?(:pending, finance_details.orders.first.world_pay_status)
       end
 
       # Some business types should not have a company_no

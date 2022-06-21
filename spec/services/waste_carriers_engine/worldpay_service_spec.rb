@@ -103,7 +103,7 @@ module WasteCarriersEngine
 
           stub_request(:any, /.*#{host}.*/).to_return(
             status: 200,
-            body: File.read("./spec/fixtures/files/worldpay/worldpay_initial_request.xml")
+            body: File.read("./spec/fixtures/worldpay_initial_request.xml")
           )
         end
 
@@ -125,7 +125,7 @@ module WasteCarriersEngine
 
           stub_request(:any, /.*#{host}.*/).to_return(
             status: 200,
-            body: File.read("./spec/fixtures/files/worldpay/worldpay_initial_request_invalid.xml")
+            body: File.read("./spec/fixtures/worldpay_initial_request_invalid.xml")
           )
         end
 

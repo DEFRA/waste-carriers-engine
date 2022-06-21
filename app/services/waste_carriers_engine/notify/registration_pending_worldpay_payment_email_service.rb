@@ -2,7 +2,7 @@
 
 module WasteCarriersEngine
   module Notify
-    class RegistrationPendingOnlinePaymentEmailService < BaseSendEmailService
+    class RegistrationPendingWorldpayPaymentEmailService < BaseSendEmailService
       private
 
       def notify_options

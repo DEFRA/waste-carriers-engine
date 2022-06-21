@@ -13,13 +13,10 @@ module WasteCarriersEngine
     field :orderCode, as: :order_code,               type: String
     field :paymentMethod, as: :payment_method,       type: String
     field :merchantId, as: :merchant_id,             type: String
-    field :payment_uuid,                             type: String
     field :totalAmount, as: :total_amount,           type: Integer
     field :currency,                                 type: String
     field :dateCreated, as: :date_created,           type: DateTime
     field :worldPayStatus, as: :world_pay_status,    type: String
-    field :govpayId, as: :govpay_id,                 type: String
-    field :govpayStatus, as: :govpay_status,         type: String
     field :dateLastUpdated, as: :date_last_updated,  type: DateTime
     field :updatedByUser, as: :updated_by_user,      type: String
     field :description,                              type: String
@@ -81,22 +78,10 @@ module WasteCarriersEngine
       self.description = generate_description
     end
 
-    def update_after_online_payment(status)
-      if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
-        Rails.logger.debug "Updating order after online payment, status: #{status}"
-        self.govpay_status = status
-      else
-        self.world_pay_status = status
-      end
+    def update_after_worldpay(status)
+      self.world_pay_status = status
       self.date_last_updated = Time.current
       save!
-    end
-
-    # Generate a uuid for the payment associated with this order, on demand
-    def payment_uuid
-      update_attributes!(payment_uuid: SecureRandom.uuid) unless self[:payment_uuid]
-
-      self[:payment_uuid]
     end
 
     private

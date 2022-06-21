@@ -44,11 +44,6 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "registration-received-pending-worldpay-payment",
               path_names: { new: "" }
 
-    resources :registration_received_pending_govpay_payment_forms,
-              only: :new,
-              path: "registration-received-pending-govpay-payment",
-              path_names: { new: "" }
-
     resources :registration_completed_forms,
               only: :new,
               path: "registration-completed",
@@ -421,16 +416,6 @@ WasteCarriersEngine::Engine.routes.draw do
                     on: :collection
               end
 
-    resources :govpay_forms,
-              only: %i[new create],
-              path: "govpay",
-              path_names: { new: "" } do
-                get "payment_callback/:uuid",
-                    to: "govpay_forms#payment_callback",
-                    as: "payment_callback",
-                    on: :collection
-              end
-
     resources :confirm_bank_transfer_forms,
               only: %i[new create],
               path: "confirm-bank-transfer",
@@ -454,11 +439,6 @@ WasteCarriersEngine::Engine.routes.draw do
     resources :renewal_received_pending_worldpay_payment_forms,
               only: %i[new create],
               path: "renewal-received-pending-worldpay-payment",
-              path_names: { new: "" }
-
-    resources :renewal_received_pending_govpay_payment_forms,
-              only: %i[new create],
-              path: "renewal-received-pending-govpay-payment",
               path_names: { new: "" }
 
     resources :cannot_renew_type_change_forms,
