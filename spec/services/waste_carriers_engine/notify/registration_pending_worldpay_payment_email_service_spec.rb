@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module Notify
-    RSpec.describe RegistrationPendingOnlinePaymentEmailService do
+    RSpec.describe RegistrationPendingWorldpayPaymentEmailService do
       let(:template_id) { "c4296e7b-dac6-4b59-906e-2c509271626f" }
       let(:registration) { create(:registration, :has_required_data) }
 
