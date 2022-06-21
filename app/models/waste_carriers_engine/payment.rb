@@ -44,12 +44,12 @@ module WasteCarriersEngine
       payment[:currency] = "GBP"
       payment[:updated_by_user] = user_email
       payment.finance_details = order.finance_details
-
       if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
         payment[:payment_type] = "GOVPAY"
         payment[:registration_reference] = "Govpay"
         payment[:comment] = "Paid via Govpay"
         payment[:uuid] = order.payment_uuid
+        payment[:govpay_id] = order.govpay_id
       else
         payment[:payment_type] = "WORLDPAY"
         payment[:registration_reference] = "Worldpay"
@@ -83,7 +83,6 @@ module WasteCarriersEngine
       if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
         Rails.logger.debug "Updating payment after online payment, params: #{params}"
         self.govpay_payment_status = params[:govpay_status]
-        self.govpay_id = params[:govpay_id]
       else
         self.world_pay_payment_status = params[:paymentStatus]
         self.mac_code = params[:mac]

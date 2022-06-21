@@ -14,7 +14,6 @@ module WasteCarriersEngine
              temp_cards: 0)
     end
     let(:current_user) { build(:user) }
-    # let(:payment) { Payment.new_from_online_payment(transient_registration.finance_details.orders.first, nil) }
     let(:order) { transient_registration.finance_details.orders.first }
 
     before do
@@ -26,70 +25,133 @@ module WasteCarriersEngine
       order.save!
     end
 
-    let(:govpay_service) { GovpayCallbackService.new(order.payment_uuid) }
+    let(:govpay_callback_service) { GovpayCallbackService.new(order.payment_uuid) }
 
-    describe "#payment_callback" do
-      context "valid_success?" do
-        before { allow(GovpayPaymentDetailsService).to receive(:payment_status).with(order.govpay_id).and_return(:success) }
+    describe "#run" do
 
+      RSpec.shared_examples "acceptable payment" do |response_type|
         context "when the status is valid" do
-          before { allow_any_instance_of(GovpayValidatorService).to receive(:valid_success?).and_return(true) }
+          before { allow_any_instance_of(GovpayValidatorService).to receive("valid_#{response_type}?".to_sym).and_return(true) }
 
-          it "returns true" do
-            expect(govpay_service.valid_success?).to eq(true)
+          it "returns #{response_type}" do
+            expect(govpay_callback_service.run).to eq(response_type)
           end
 
           it "updates the payment status" do
-            govpay_service.valid_success?
-            expect(transient_registration.reload.finance_details.payments.first.govpay_payment_status).to eq("success")
+            govpay_callback_service.run
+            expect(transient_registration.reload.finance_details.payments.first.govpay_payment_status).to eq(response_type.to_s)
           end
 
-          it "updates the order status" do
-            govpay_service.valid_success?
-            expect(transient_registration.reload.finance_details.orders.first.govpay_status).to eq("success")
+          it "updates the payment govpay_id" do
+            govpay_callback_service.run
+            expect(transient_registration.reload.finance_details.payments.first.govpay_id).not_to be_nil
           end
 
-          it "updates the balance" do
-            govpay_service.valid_success?
-            expect(transient_registration.reload.finance_details.balance).to eq(0)
+          it "updates the order govpay_status" do
+            govpay_callback_service.run
+            expect(transient_registration.reload.finance_details.orders.first.govpay_status).to eq(response_type.to_s)
+          end
+
+          it "updates the order govpay_id" do
+            govpay_callback_service.run
+            expect(transient_registration.reload.finance_details.orders.first.govpay_id).not_to be_nil
           end
         end
 
         context "when the status is invalid" do
-          before { allow_any_instance_of(GovpayValidatorService).to receive(:valid_success?).and_return(false) }
+          before { allow_any_instance_of(GovpayValidatorService).to receive("valid_#{response_type}?".to_sym).and_return(false) }
 
-          it "returns false" do
-            expect(govpay_service.valid_success?).to eq(false)
+          it "returns an error" do
+            expect(govpay_callback_service.run).to eq(:error)
           end
 
           it "does not update the order" do
             unmodified_order = transient_registration.finance_details.orders.first
-            govpay_service.valid_success?
+            govpay_callback_service.run
             expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
           end
 
           it "does not create a payment" do
-            govpay_service.valid_success?
+            govpay_callback_service.run
             expect(transient_registration.reload.finance_details.payments.count).to eq(0)
           end
         end
       end
 
-      # context "#valid_failure?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_failure?, "failed"
-      # end
+      context "success" do
+        before { allow_any_instance_of(GovpayPaymentDetailsService).to receive(:govpay_payment_status).and_return("success") }
 
-      # context "#valid_pending?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_pending?, "created"
-      # end
+        it_behaves_like "acceptable payment", :success
 
-      # context "#valid_cancel?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_cancel?, "cancelled"
-      # end
+        it "updates the balance" do
+          govpay_callback_service.run
+          expect(transient_registration.reload.finance_details.balance).to eq(0)
+        end
+      end
 
-      # context "#valid_error?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_error?, "error"
-      # end
+      context "created" do
+        before { allow_any_instance_of(GovpayPaymentDetailsService).to receive(:govpay_payment_status).and_return("created") }
+        it_behaves_like "acceptable payment", :pending
+      end
+
+      context "submitted" do
+        before { allow_any_instance_of(GovpayPaymentDetailsService).to receive(:govpay_payment_status).and_return("submitted") }
+        it_behaves_like "acceptable payment", :pending
+      end
+
+      RSpec.shared_examples "unsuccessful payment" do |response_type|
+
+        context "when the status is valid" do
+          before do
+            allow_any_instance_of(GovpayValidatorService).to receive("valid_#{response_type}?".to_sym).and_return(true)
+          end
+
+          it "returns #{response_type}" do
+            expect(govpay_callback_service.run).to eq(response_type)
+          end
+
+          it "updates the order status" do
+            govpay_callback_service.run
+            expect(transient_registration.reload.finance_details.orders.first.govpay_status).to eq(response_type.to_s)
+          end
+        end
+
+        context "when the status is invalid" do
+          before do
+            allow_any_instance_of(GovpayValidatorService).to receive("valid_#{response_type}?".to_sym).and_return(false)
+          end
+
+          it "returns an error" do
+            expect(govpay_callback_service.run).to eq(:error)
+          end
+
+          it "does not update the order" do
+            unmodified_order = transient_registration.finance_details.orders.first
+            govpay_callback_service.run
+            expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
+          end
+
+          it "does not create a payment" do
+            govpay_callback_service.run
+            expect(transient_registration.reload.finance_details.payments.count).to eq(0)
+          end
+        end
+      end
+
+      context "failed" do
+        before { allow_any_instance_of(GovpayPaymentDetailsService).to receive(:govpay_payment_status).and_return("failed") }
+        it_behaves_like "unsuccessful payment", :failure
+      end
+
+      context "cancelled" do
+        before { allow_any_instance_of(GovpayPaymentDetailsService).to receive(:govpay_payment_status).and_return("cancelled") }
+        it_behaves_like "unsuccessful payment", :cancel
+      end
+
+      context "error" do
+        before { allow_any_instance_of(GovpayPaymentDetailsService).to receive(:govpay_payment_status).and_return("error") }
+        it_behaves_like "unsuccessful payment", :error
+      end
     end
   end
 end
