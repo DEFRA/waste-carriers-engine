@@ -298,8 +298,6 @@ module WasteCarriersEngine
     end
 
     def paying_by_card_govpay?
-      Rails.logger.warn ">>>>>>>>>>>> toggle: #{WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)}"
-      Rails.logger.warn ">>>>>>>>>>>> temp_payment_method card: #{temp_payment_method == "card"}"
       WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && temp_payment_method == "card"
     end
 
