@@ -24,7 +24,7 @@ module WasteCarriersEngine
             %w[charity limitedCompany] => :cannot_renew_type_change_form,
             %w[limitedCompany limitedLiabilityPartnership] => :cbd_type_form,
             %w[limitedCompany soleTrader] => :cannot_renew_type_change_form,
-            %w[partnership limitedLiabilityPartnership] => :cbd_type_form,
+            %w[partnership limitedLiabilityPartnership] => :cannot_renew_type_change_form,
             %w[partnership soleTrader] => :cannot_renew_type_change_form,
             %w[publicBody localAuthority] => :cbd_type_form,
             %w[publicBody soleTrader] => :cannot_renew_type_change_form,

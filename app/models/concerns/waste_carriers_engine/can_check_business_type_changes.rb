@@ -25,8 +25,6 @@ module WasteCarriersEngine
           changing_to?("localAuthority")
         when "limitedCompany"
           changing_to?("limitedLiabilityPartnership")
-        when "partnership"
-          changing_to?("limitedLiabilityPartnership")
         when "publicBody"
           changing_to?("localAuthority")
         # There are no valid changes for charity or soleTrader
