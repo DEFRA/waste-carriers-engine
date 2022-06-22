@@ -49,7 +49,7 @@ en:
             LOWER: *value
           soleTrader:
             UPPER: Enter a business or trading name. The business owner name and trading name will be displayed on the public register.
-            LOWER: Enter a business or trading name. this will be displayed on the public register.
+            LOWER: Enter a business or trading name, this will be displayed on the public register.
           charity:
             UPPER: &value Enter your charity or trust registered name
             LOWER: *value
