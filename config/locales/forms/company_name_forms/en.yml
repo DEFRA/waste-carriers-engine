@@ -5,7 +5,7 @@ en:
         title: Business or organisation name
         heading:
           localAuthority:
-            UPPER: &value "What's the name of the local authority or public body?"
+            UPPER: &value What's the name of the local authority or public body?
             LOWER: *value
           limitedCompany:
             UPPER: &optional_trade_name Enter your trading name
@@ -32,15 +32,33 @@ en:
             UPPER: &value What's the name of the public body?
             LOWER: *value
         company_name_label:
-          localAuthority: Enter your local authority or public body name
-          limitedCompany: &trade_name_hint Enter a business or trading name. This will be displayed on the public register.
-          limitedLiabilityPartnership: *trade_name_hint
-          overseas: Enter your trading name
-          partnership: Enter your partnership trading name
-          soleTrader: Enter a business or trading name. The business owner name and trading name (if provided) will be displayed on the public register.
-          charity: Enter your charity or trust registered name
-          authority: Enter your local authority name
-          publicBody: Enter your public body name
+          localAuthority:
+            UPPER: &value Enter your local authority or public body name
+            LOWER: *value
+          limitedCompany:
+            UPPER: &trade_name_hint Enter a business or trading name. This will be displayed on the public register.
+            LOWER: *trade_name_hint
+          limitedLiabilityPartnership:
+            UPPER: *trade_name_hint
+            LOWER: *trade_name_hint
+          overseas:
+            UPPER: &value Enter your trading name
+            LOWER: *value
+          partnership:
+            UPPER: &value Enter your partnership trading name
+            LOWER: *value
+          soleTrader:
+            UPPER: Enter a business or trading name. The business owner name and trading name will be displayed on the public register.
+            LOWER: Enter a business or trading name. this will be displayed on the public register.
+          charity:
+            UPPER: &value Enter your charity or trust registered name
+            LOWER: *value
+          authority:
+            UPPER: &value Enter your local authority name
+            LOWER: *value
+          publicBody:
+            UPPER: &value Enter your public body name
+            LOWER: *value
         error_heading: Something is wrong
         next_button: Continue
   activemodel:
@@ -49,9 +67,9 @@ en:
         waste_carriers_engine/company_name_form:
           attributes:
             company_name:
-              blank: "Enter a business or trading name. This will be displayed on the public register."
-              too_long: "Enter a shorter trading name with no more than 255 characters"
+              blank: Enter a business or trading name. This will be displayed on the public register.
+              too_long: Enter a shorter trading name with no more than 255 characters
             reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+              invalid_format: The registration ID is not in a valid format
+              no_registration: There is no registration matching this ID
+              renewal_in_progress: This renewal is already in progress
