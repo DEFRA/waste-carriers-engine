@@ -176,6 +176,55 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#business_type_change_valid?" do
+      let(:renewing_registration) { build(:renewing_registration) }
+      let(:business_types) { %w[authority charity limitedCompany limitedLiabilityPartnership localAuthority overseas partnership publicBody soleTrader] }
+      let(:valid_changes) do
+        {
+          "authority" => %w[overseas localAuthority],
+          "charity" => %w[overseas],
+          "limitedCompany" => %w[overseas limitedLiabilityPartnership],
+          "limitedLiabilityPartnership" => %w[overseas],
+          "localAuthority" => %w[overseas],
+          "partnership" => %w[overseas],
+          "publicBody" => %w[overseas localAuthority],
+          "soleTrader" => %w[overseas]
+        }
+      end
+
+      context "valid change" do
+
+        it "allows all valid changes" do
+          valid_changes.each do |old_type, new_types|
+            allow_any_instance_of(Registration).to receive(:business_type).and_return(old_type)
+
+            new_types.each do |new_type|
+              allow(renewing_registration).to receive(:business_type).and_return(new_type)
+
+              expect(renewing_registration.business_type_change_valid?).to be_truthy
+            end
+          end
+        end
+      end
+
+      context "invalid change" do
+        it "does not allow invalid changes" do
+          business_types.each do |old_type|
+            allow_any_instance_of(Registration).to receive(:business_type).and_return(old_type)
+
+            business_types.each do |new_type|
+              next if old_type == new_type
+              next if valid_changes[old_type]&.include?(new_type)
+
+              allow(renewing_registration).to receive(:business_type).and_return(new_type)
+
+              expect(renewing_registration.business_type_change_valid?).not_to be_truthy
+            end
+          end
+        end
+      end
+    end
+
     describe "#registration" do
       it "raises a not implemented error" do
         expect { transient_registration.registration }.to raise_error(NotImplementedError)
