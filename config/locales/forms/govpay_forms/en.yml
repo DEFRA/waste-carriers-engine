@@ -1,0 +1,28 @@
+en:
+  waste_carriers_engine:
+    govpay_forms:
+      cancel:
+        invalid_response: "Invalid Govpay cancel response"
+        message: "Your attempt to pay has been cancelled. Please try again or select a different payment method."
+      error:
+        invalid_response: "Invalid Govpay error response"
+        message: "An error has occurred and your payment has not been processed. Please try again or select a different payment method."
+      failure:
+        invalid_response: "Invalid Govay failure response"
+        message: "Your payment has been refused. Please try again or select a different payment method."
+      new:
+        setup_error: "An error has occurred when preparing for your payment. Please try again or select a different payment method."
+      pending:
+        invalid_response: "Invalid Govpay pending response"
+        message: "Your payment is still pending."
+      success:
+        invalid_response: "Invalid Govay success response"
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/govpay_form:
+          attributes:
+            reg_identifier:
+              invalid_format: "The registration ID is not in a valid format"
+              no_registration: "There is no registration matching this ID"
+              renewal_in_progress: "This renewal is already in progress"
