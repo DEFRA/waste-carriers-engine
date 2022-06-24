@@ -9,9 +9,8 @@ module WasteCarriersEngine
       private
 
       def send_request(method, path, params = nil)
-        Rails.logger.debug "Sending request to Govpay, #{method}, path: #{url(path)}, params: #{params}"
-
         response = nil
+
         begin
           response = RestClient::Request.execute(
             method: method,
@@ -22,10 +21,8 @@ module WasteCarriersEngine
               "Content-Type" => "application/json"
             }
           )
-
-          Rails.logger.debug "Received response from Govpay: #{response}"
-        rescue RestClient::ExceptionWithResponse => err
-          Rails.logger.debug "RestClient received response: #{err}"
+        rescue RestClient::ExceptionWithResponse => e
+          Rails.logger.debug "RestClient received response: #{e}"
           response = err.response
         rescue StandardError => e
           Rails.logger.error("Error sending request to govpay: #{e}")
