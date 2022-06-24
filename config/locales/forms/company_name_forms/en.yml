@@ -33,25 +33,25 @@ en:
             LOWER: *value
         company_name_label:
           localAuthority:
-            UPPER: &value Enter your local authority or public body name
+            UPPER: &value Enter your local authority or public body name, this will be displayed on the public register.
             LOWER: *value
           limitedCompany:
-            UPPER: &trade_name_hint Enter a business or trading name. This will be displayed on the public register.
+            UPPER: &trade_name_hint Enter your business or trading name, this will be displayed on the public register.
             LOWER: *trade_name_hint
           limitedLiabilityPartnership:
             UPPER: *trade_name_hint
             LOWER: *trade_name_hint
           overseas:
-            UPPER: &value Enter your trading name
+            UPPER: &value Enter your business or trading name, this will be displayed on the public register.
             LOWER: *value
           partnership:
-            UPPER: &value Enter your partnership trading name
+            UPPER: &value Enter your partnership trading name, this will be displayed on the public register.
             LOWER: *value
           soleTrader:
-            UPPER: Enter a business or trading name. The business owner name and trading name will be displayed on the public register.
+            UPPER: Enter a trading name. The business owner's name and trading name will be displayed on the public register.
             LOWER: Enter a business or trading name, this will be displayed on the public register.
           charity:
-            UPPER: &value Enter your charity or trust registered name
+            UPPER: &value Enter your charity or trust registered name, this will be displayed on the public register.
             LOWER: *value
           authority:
             UPPER: &value Enter your local authority name
