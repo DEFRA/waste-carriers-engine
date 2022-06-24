@@ -15,10 +15,11 @@ module WasteCarriersEngine
       else
         redirect_to payment_info[:url]
       end
-    end
+   end
 
     def payment_callback
       find_or_initialize_transient_registration(params[:token])
+      Rails.logger.debug "Govpay payment_callback for #{@transient_registration.reg_identifier}"
 
       if @transient_registration.finance_details.orders.first.govpay_status == "success"
         Rails.logger.warn "Attempt to pay for an order with govpay_status already set to success"
@@ -89,7 +90,7 @@ module WasteCarriersEngine
       title = "#{valid_text} Govpay response: #{action}"
 
       Rails.logger.debug [title, "Params:", params.to_json].join("\n")
-      Airbrake.notify(title, error_message: params) unless is_valid && action == :success
+      Airbrake.notify(title, error_message: params) unless is_valid
     end
   end
 end
