@@ -89,7 +89,7 @@ module WasteCarriersEngine
       title = "#{valid_text} Govpay response: #{action}"
 
       Rails.logger.debug [title, "Params:", params.to_json].join("\n")
-      Airbrake.notify(title, error_message: params) unless is_valid && action == :success
+      Airbrake.notify(title, error_message: params) unless is_valid
     end
   end
 end

@@ -14,6 +14,7 @@ module WasteCarriersEngine
 
     def prepare_for_payment
       response = send_request(:post, "/payments", payment_params)
+      Rails.logger.debug "Service received govpay response: #{response}"
       response_json = JSON.parse(response.body)
 
       govpay_payment_id = response_json["payment_id"]
