@@ -58,6 +58,8 @@ module WasteCarriersEngine
     end
 
     def ignore_card_confirmation_email?
+      return true if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
+
       return true if WasteCarriersEngine.configuration.host_is_back_office?
 
       temp_payment_method != "card"

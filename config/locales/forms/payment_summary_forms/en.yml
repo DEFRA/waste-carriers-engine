@@ -16,7 +16,7 @@ en:
         options:
           card:
             label: Pay by credit or debit card
-            hint: You will be transferred to the secure WorldPay site. We accept MasterCard, Maestro and Visa.
+            hint: We accept MasterCard, Maestro and Visa.
           bank_transfer:
             label: Pay by bank transfer and then email us to confirm payment
             hint: We cannot register you until your payment clears.
