@@ -224,8 +224,6 @@ module WasteCarriersEngine
 
           transitions from: :contact_email_form, to: :contact_address_reuse_form
 
-          transitions from: :contact_email_form, to: :contact_postcode_form
-
           # Contact address
           transitions from: :contact_address_reuse_form, to: :check_your_answers_form,
                       if: :reuse_registered_address?,
