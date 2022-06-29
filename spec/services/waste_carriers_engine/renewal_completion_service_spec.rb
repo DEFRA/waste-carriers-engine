@@ -33,7 +33,7 @@ module WasteCarriersEngine
     end
 
     describe "#complete_renewal" do
-      context "when the renewal can be complete" do
+      context "when the renewal can be completed" do
         it "creates a new past_registration" do
           number_of_past_registrations = registration.past_registrations.count
           renewal_completion_service.complete_renewal
@@ -43,6 +43,21 @@ module WasteCarriersEngine
         it "copies attributes from the transient_registration to the registration" do
           renewal_completion_service.complete_renewal
           expect(registration.reload.company_name).to eq(transient_registration.company_name)
+        end
+
+        context "when all temporary attributes are populated" do
+          before do
+            TransientRegistration.fields.keys.select { |t| t.start_with?("temp_") }.each do |temp_field|
+              unless transient_registration.send(temp_field).present?
+                transient_registration.send("#{temp_field}=", "yes")
+              end
+            end
+            transient_registration.save!
+          end
+
+          it "does not raise an exception" do
+            expect { renewal_completion_service.complete_renewal }.not_to raise_error
+          end
         end
 
         it "does not update the renew_token" do

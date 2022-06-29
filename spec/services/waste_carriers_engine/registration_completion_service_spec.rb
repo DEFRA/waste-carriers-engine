@@ -13,7 +13,7 @@ module WasteCarriersEngine
         )
       end
 
-      it "generates a new registration and copy data to it" do
+      it "generates a new registration and copies data to it" do
         registration_scope = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier)
 
         expect(registration_scope.any?).to be_falsey
@@ -27,6 +27,19 @@ module WasteCarriersEngine
         expect(registration.metaData.route).to be_present
         expect(registration.metaData.date_registered).to be_present
         expect(registration).to be_pending
+      end
+
+      context "when all temporary attributes are populated" do
+        before do
+          TransientRegistration.fields.keys.select { |t| t.start_with?("temp_") }.each do |temp_field|
+            transient_registration.send("#{temp_field}=", "yes") unless transient_registration.send(temp_field).present?
+          end
+          transient_registration.save!
+        end
+
+        it "does not raise an exception" do
+          expect { described_class.run(transient_registration) }.not_to raise_error
+        end
       end
 
       it "deletes the transient registration" do
