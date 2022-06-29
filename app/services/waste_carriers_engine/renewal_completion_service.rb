@@ -129,6 +129,7 @@ module WasteCarriersEngine
         "temp_os_places_error",
         "temp_payment_method",
         "temp_tier_check",
+        "temp_reuse_registered_address",
         "temp_use_registered_company_details",
         "temp_use_trading_name",
         "from_magic_link",
