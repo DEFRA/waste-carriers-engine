@@ -13,7 +13,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context ":contact_email_form state transitions" do
         context "on next" do
-          include_examples "has next transition", next_state: "contact_postcode_form"
+          include_examples "has next transition", next_state: "contact_address_reuse_form"
         end
       end
     end

@@ -45,6 +45,7 @@ module WasteCarriersEngine
         state :contact_email_form
         state :contact_postcode_form
         state :contact_address_form
+        state :contact_address_reuse_form
         state :contact_address_manual_form
 
         state :check_your_answers_form
@@ -169,9 +170,20 @@ module WasteCarriersEngine
           transitions from: :contact_email_form, to: :contact_address_manual_form,
                       if: :based_overseas?
 
-          transitions from: :contact_email_form, to: :contact_postcode_form
+          transitions from: :contact_email_form, to: :contact_address_reuse_form
 
           # Contact address
+          transitions from: :contact_address_reuse_form, to: :check_your_answers_form,
+                      if: :reuse_registered_address?,
+                      after: :set_contact_address_as_registered_address
+
+          transitions from: :contact_address_reuse_form, to: :contact_address_manual_form,
+                      unless: :reuse_registered_address?,
+                      if: :overseas?
+
+          transitions from: :contact_address_reuse_form, to: :contact_postcode_form,
+                      unless: :reuse_registered_address?
+
           transitions from: :contact_postcode_form, to: :contact_address_manual_form,
                       if: :skip_to_manual_address?
 
@@ -285,6 +297,14 @@ module WasteCarriersEngine
 
     def incorrect_company_data?
       temp_use_registered_company_details == "no"
+    end
+
+    def reuse_registered_address?
+      temp_reuse_registered_address == "yes"
+    end
+
+    def set_contact_address_as_registered_address
+      WasteCarriersEngine::ContactAddressAsRegisteredAddressService.run(self)
     end
 
     def send_renewal_pending_worldpay_payment_email

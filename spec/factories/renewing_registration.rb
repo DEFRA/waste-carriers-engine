@@ -21,6 +21,10 @@ FactoryBot.define do
       addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
     end
 
+    trait :has_registered_address do
+      addresses { [build(:address, :has_required_data, :registered, :from_os_places)] }
+    end
+
     trait :expires_today do
       initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_today).reg_identifier) }
     end
