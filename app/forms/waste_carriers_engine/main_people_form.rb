@@ -9,6 +9,7 @@ module WasteCarriersEngine
     delegate :lower_tier?, to: :transient_registration
 
     validates_with MainPersonValidator
+    validates :first_name, :last_name, "waste_carriers_engine/person_name": true
 
     def initialize(transient_registration)
       super

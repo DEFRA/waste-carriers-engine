@@ -51,8 +51,8 @@ module WasteCarriersEngine
             main_people_form.business_type = "overseas"
           end
 
-          it "should submit" do
-            expect(main_people_form.submit(blank_params)).to eq(true)
+          it "should not submit" do
+            expect(main_people_form.submit(blank_params)).to eq(false)
           end
         end
 
@@ -117,9 +117,7 @@ module WasteCarriersEngine
         end
 
         context "when a first_name is blank" do
-          before(:each) do
-            main_people_form.first_name = ""
-          end
+          before { main_people_form.first_name = "" }
 
           it "is not valid" do
             expect(main_people_form).to_not be_valid
@@ -127,12 +125,19 @@ module WasteCarriersEngine
         end
 
         context "when a first_name is too long" do
-          before(:each) do
-            main_people_form.first_name = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
-          end
+          before { main_people_form.first_name = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq" }
 
           it "is not valid" do
             expect(main_people_form).to_not be_valid
+          end
+        end
+
+        context "when a first name contains a special character" do
+          it "is not valid" do
+            "!@€\#£$%^&*()[]{}?\":;~<>/\\+=".each_char do |c|
+              main_people_form.first_name = "ab#{c}123"
+              expect(main_people_form).to_not be_valid
+            end
           end
         end
       end
@@ -145,9 +150,7 @@ module WasteCarriersEngine
         end
 
         context "when a last_name is blank" do
-          before(:each) do
-            main_people_form.last_name = ""
-          end
+          before { main_people_form.last_name = "" }
 
           it "is not valid" do
             expect(main_people_form).to_not be_valid
@@ -155,12 +158,19 @@ module WasteCarriersEngine
         end
 
         context "when a last_name is too long" do
-          before(:each) do
-            main_people_form.last_name = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
-          end
+          before { main_people_form.last_name = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq" }
 
           it "is not valid" do
             expect(main_people_form).to_not be_valid
+          end
+        end
+
+        context "when a last name contains a special character" do
+          it "is not valid" do
+            "!@€\#£$%^&*()[]{}?\":;~<>/\\+=".each_char do |c|
+              main_people_form.last_name = "ab#{c}123"
+              expect(main_people_form).to_not be_valid
+            end
           end
         end
       end

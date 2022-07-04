@@ -114,6 +114,14 @@ module WasteCarriersEngine
                 post main_people_forms_path(transient_registration.token), params: { main_people_form: valid_params, commit: "Add another person" }
                 expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
               end
+
+              it "reloads the form listing the people already added" do
+                post main_people_forms_path(transient_registration.token), params: { main_people_form: valid_params, commit: "Add another person" }
+                follow_redirect!
+
+                expect(response.body).to include "You have added the following people"
+                expect(response.body).to include "Foo Bar"
+              end
             end
           end
 
@@ -132,6 +140,12 @@ module WasteCarriersEngine
               key_people_count = transient_registration.key_people.count
               post main_people_forms_path(transient_registration.token), params: { main_people_form: invalid_params }
               expect(transient_registration.reload.key_people.count).to eq(key_people_count)
+            end
+
+            it "does not display the 'You have added' content" do
+              post main_people_forms_path(transient_registration.token), params: { main_people_form: invalid_params }
+
+              expect(response.body).not_to include "You have added the following people"
             end
 
             context "when there is already a main person" do

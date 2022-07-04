@@ -85,6 +85,14 @@ module WasteCarriersEngine
 
                 expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:token]))
               end
+
+              it "reloads the form listing the people already added" do
+                post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: valid_params, commit: "Add another person" }
+                follow_redirect!
+
+                expect(response.body).to include "You have added the following people"
+                expect(response.body).to include "Foo Bar"
+              end
             end
           end
 
@@ -105,6 +113,12 @@ module WasteCarriersEngine
               post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: invalid_params }
 
               expect(transient_registration.reload.key_people.count).to eq(total_people_count)
+            end
+
+            it "does not display the 'You have added' content" do
+              post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: invalid_params }
+
+              expect(response.body).not_to include "You have added the following people"
             end
 
             context "when there is already a main person" do
