@@ -21,9 +21,11 @@ en:
             first_name:
               blank: "Enter a first name"
               too_long: "The first name must be no longer than 35 characters"
+              invalid: "The first name must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
             last_name:
               blank: "Enter a last name"
               too_long: "The last name must be no longer than 35 characters"
+              invalid: "The last name must contain only letters, spaces, commas, full stops, hyphens and apostrophes"
             position:
               blank: "Enter a job title"
               too_long: "The job title must be no longer than 35 characters"
