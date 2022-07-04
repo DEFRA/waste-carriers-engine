@@ -5,7 +5,7 @@
     <%= render "waste_carriers_engine/conviction_details_forms/form" %>
   </div>
 
-  <% if @conviction_details_form.number_of_existing_relevant_people > 0 %>
+  <% if @conviction_details_form.number_of_existing_relevant_people > 0 && !@conviction_details_form.errors.any? %>
     <div class="govuk-gridcolumn-one-third">
       <h2 class="govuk-heading-s"><%= t(".list_of_people") %></h2>
       <ul class="govuk-list">

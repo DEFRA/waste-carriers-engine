@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render "waste_carriers_engine/main_people_forms/form" %>
   </div>
-  <% if @main_people_form.number_of_existing_main_people > 0 %>
+  <% if @main_people_form.number_of_existing_main_people > 0 && !@main_people_form.errors.any? %>
     <div class="govuk-grid-column-one-third">
       <h2 class="govuk-heading-s"><%= t(".list_of_people") %></h2>
 
