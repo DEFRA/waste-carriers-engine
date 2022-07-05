@@ -16,7 +16,7 @@ module WasteCarriersEngine
       validate_first_name(record)
       validate_last_name(record)
       validate_position(record) if record.position?
-      DateOfBirthValidator.new.validate(record)
+      DateOfBirthValidator.new(validate_fields: false).validate(record)
     end
 
     def validate_number_of_people(_record)
