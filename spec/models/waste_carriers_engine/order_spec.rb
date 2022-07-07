@@ -15,7 +15,8 @@ module WasteCarriersEngine
     let(:current_user) { build(:user) }
 
     describe "new_order" do
-      let(:order) { Order.new_order(transient_registration, :worldpay, current_user.email) }
+      let(:order) { Order.new_order(transient_registration, payment_method, current_user.email) }
+      let(:payment_method) { :worldpay }
 
       it "should have a valid order_id" do
         Timecop.freeze(Time.new(2018, 1, 1)) do
@@ -134,6 +135,18 @@ module WasteCarriersEngine
 
         it "should have the correct world_pay_status" do
           expect(order.world_pay_status).to eq("IN_PROGRESS")
+        end
+      end
+
+      context "when it is a govpay order" do
+        let(:payment_method) { :govpay }
+
+        it "should have the correct payment_method" do
+          expect(order.payment_method).to eq("ONLINE")
+        end
+
+        it "should have the correct world_pay_status" do
+          expect(order.govpay_status).to eq("IN_PROGRESS")
         end
       end
 
