@@ -19,7 +19,7 @@ module WasteCarriersEngine
 
     private
 
-    def new_registration_order(payment_method)
+    def new_registration_order(payment_method) # rubocop:disable Metrics/CyclomaticComplexity
       order = Order.new_order_for(transient_registration.contact_email)
 
       order.order_items = []
