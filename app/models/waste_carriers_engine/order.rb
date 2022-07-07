@@ -45,6 +45,7 @@ module WasteCarriersEngine
 
       order.add_bank_transfer_attributes if method == :bank_transfer
       order.add_worldpay_attributes if method == :worldpay
+      order.add_govpay_attributes if method == :govpay
 
       order
     end
@@ -71,6 +72,11 @@ module WasteCarriersEngine
       self.payment_method = "ONLINE"
       self.world_pay_status = "IN_PROGRESS"
       self.merchant_id = Rails.configuration.worldpay_merchantcode
+    end
+
+    def add_govpay_attributes
+      self.payment_method = "ONLINE"
+      self.govpay_status = "IN_PROGRESS"
     end
 
     def generate_id
