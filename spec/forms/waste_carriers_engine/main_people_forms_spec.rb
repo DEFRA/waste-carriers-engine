@@ -51,8 +51,8 @@ module WasteCarriersEngine
             main_people_form.business_type = "overseas"
           end
 
-          it "should not submit" do
-            expect(main_people_form.submit(blank_params)).to eq(false)
+          it "should submit" do
+            expect(main_people_form.submit(blank_params)).to eq(true)
           end
         end
 
