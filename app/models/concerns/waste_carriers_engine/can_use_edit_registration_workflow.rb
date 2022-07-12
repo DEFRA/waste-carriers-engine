@@ -38,6 +38,7 @@ module WasteCarriersEngine
         state :declaration_form
         state :edit_payment_summary_form
         state :edit_bank_transfer_form
+        state :govpay_form
         state :worldpay_form
         state :edit_complete_form
 
@@ -172,6 +173,10 @@ module WasteCarriersEngine
                       if: :registration_type_changed?
 
           transitions from: :edit_payment_summary_form,
+                      to: :govpay_form,
+                      if: :paying_by_card_govpay?
+
+          transitions from: :edit_payment_summary_form,
                       to: :worldpay_form,
                       if: :paying_by_card?
 
@@ -179,6 +184,9 @@ module WasteCarriersEngine
                       to: :edit_bank_transfer_form
 
           transitions from: :edit_bank_transfer_form,
+                      to: :edit_complete_form
+
+          transitions from: :govpay_form,
                       to: :edit_complete_form
 
           transitions from: :worldpay_form,
@@ -218,6 +226,10 @@ module WasteCarriersEngine
 
     def paying_by_card?
       temp_payment_method == "card"
+    end
+
+    def paying_by_card_govpay?
+      WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && paying_by_card?
     end
   end
   # rubocop:enable Metrics/ModuleLength

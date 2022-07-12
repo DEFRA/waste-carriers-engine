@@ -49,6 +49,16 @@ module WasteCarriersEngine
           described_class.run(user: user, transient_registration: transient_registration, payment_method: payment_method)
         end
       end
+
+      context "when the payment method is govpay" do
+        let(:payment_method) { :govpay }
+
+        it "updates the transient_registration's finance details with a new order for the change fee" do
+          expect(order).to receive(:add_govpay_attributes)
+
+          described_class.run(user: user, transient_registration: transient_registration, payment_method: payment_method)
+        end
+      end
     end
   end
 end
