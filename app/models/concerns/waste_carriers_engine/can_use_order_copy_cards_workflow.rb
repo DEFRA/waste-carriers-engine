@@ -5,7 +5,7 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include Mongoid::Document
 
-    included do
+    included do # rubocop:disable Metrics/BlockLength
       include AASM
 
       field :workflow_state, type: String
