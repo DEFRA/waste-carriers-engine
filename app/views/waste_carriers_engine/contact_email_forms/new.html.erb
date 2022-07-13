@@ -29,6 +29,15 @@
           width: "one-half"
       %>
 
+      <% if WasteCarriersEngine.configuration.host_is_back_office? %>
+        <%= f.govuk_check_boxes_fieldset :no_contact_email, multiple: false, legend: -> {} do %>
+          <%= f.govuk_check_box :no_contact_email,
+              1, 0, multiple: false, link_errors: true, label: { text: t(".no_contact_email_label") }
+          %>
+          <p>
+        <% end %>
+      <% end %>
+
       <%= f.govuk_submit t(".next_button") %>
     <% end %>
   </div>
