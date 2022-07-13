@@ -14,13 +14,14 @@ module WasteCarriersEngine
         BANKTRANSFER = "BANKTRANSFER",
         WORLDPAY = "WORLDPAY",
         WORLDPAY_MISSED = "WORLDPAY_MISSED",
+        GOVPAY = "GOVPAY",
         REFUND = "REFUND",
         WRITEOFFSMALL = "WRITEOFFSMALL",
         WRITEOFFLARGE = "WRITEOFFLARGE",
         REVERSAL = "REVERSAL"
       ].freeze
 
-      RECEIVABLE_PAYMENT_TYPES = [CASH, CHEQUE, POSTALORDER, BANKTRANSFER, WORLDPAY, WORLDPAY_MISSED].freeze
+      RECEIVABLE_PAYMENT_TYPES = [CASH, CHEQUE, POSTALORDER, BANKTRANSFER, WORLDPAY, WORLDPAY_MISSED, GOVPAY].freeze
 
       field :paymentType, as: :payment_type, type: String
 
@@ -48,6 +49,10 @@ module WasteCarriersEngine
 
       def worldpay_missed?
         payment_type == WORLDPAY_MISSED
+      end
+
+      def govpay?
+        payment_type == GOVPAY
       end
 
       def refund?
