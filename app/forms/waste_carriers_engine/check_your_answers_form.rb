@@ -18,9 +18,12 @@ module WasteCarriersEngine
     validates :company_name, "waste_carriers_engine/company_name": true
     validates :company_no, presence: true, if: :company_no_required?
     validates :contact_address, "waste_carriers_engine/address": true
+
     validates :contact_email, "defra_ruby/validators/email": {
       messages: custom_error_messages(:contact_email, :blank, :invalid_format)
-    }
+    }, unless: :back_office?
+    validates_with OptionalEmailValidator, attributes: [:contact_email], if: :back_office?
+
     validates :declared_convictions, "waste_carriers_engine/yes_no": true, if: :upper_tier?
     validates :first_name, :last_name, "waste_carriers_engine/person_name": true
     validates :location, "defra_ruby/validators/location": {
@@ -65,6 +68,10 @@ module WasteCarriersEngine
 
       errors.add(:business_type, :invalid_change)
       false
+    end
+
+    def back_office?
+      WasteCarriersEngine.configuration.host_is_back_office?
     end
   end
 end
