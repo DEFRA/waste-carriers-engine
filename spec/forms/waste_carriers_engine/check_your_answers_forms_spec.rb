@@ -32,7 +32,6 @@ module WasteCarriersEngine
     include_examples "validate yes no", :check_your_answers_form, :declared_convictions
     include_examples "validate business_type", :check_your_answers_form
     include_examples "validate company_name", :check_your_answers_form
-    include_examples "validate email", :check_your_answers_form, :contact_email
     include_examples "validate location", :check_your_answers_form
     include_examples "validate person name", :check_your_answers_form, :first_name
     include_examples "validate person name", :check_your_answers_form, :last_name
@@ -200,6 +199,23 @@ module WasteCarriersEngine
             it "is not valid" do
               expect(check_your_answers_form).to_not be_valid
             end
+          end
+        end
+      end
+
+      describe "#contact_email" do
+        context "when running in the front office" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false) }
+
+          include_examples "validate email", :check_your_answers_form, :contact_email
+        end
+
+        context "when running in the back office" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true) }
+
+          it "validates the contact_email using the OptionalEmailValidator class" do
+            expect(check_your_answers_form._validators[:contact_email].map(&:class))
+              .to include(WasteCarriersEngine::OptionalEmailValidator)
           end
         end
       end
