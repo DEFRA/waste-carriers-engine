@@ -53,7 +53,7 @@ module WasteCarriersEngine
           end
 
           it "should submit" do
-            expect(conviction_details_form.submit(blank_params)).to eq(false)
+            expect(conviction_details_form.submit(blank_params)).to eq(true)
           end
         end
 
