@@ -4,8 +4,7 @@ module WasteCarriersEngine
   class ConvictionDetailsForm < PersonForm
     include CanLimitNumberOfRelevantPeople
 
-    validates_with RelevantPersonValidator
-    validates :first_name, :last_name, "waste_carriers_engine/person_name": true
+    validates_with RelevantPersonFormValidator
 
     def position?
       true

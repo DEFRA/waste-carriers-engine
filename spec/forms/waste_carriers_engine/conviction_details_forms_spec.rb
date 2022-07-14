@@ -52,7 +52,7 @@ module WasteCarriersEngine
             conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :relevant)])
           end
 
-          it "should not submit" do
+          it "should submit" do
             expect(conviction_details_form.submit(blank_params)).to eq(false)
           end
         end
@@ -64,6 +64,11 @@ module WasteCarriersEngine
 
           it "should not submit" do
             expect(conviction_details_form.submit(blank_params)).to eq(false)
+          end
+
+          it "should raise individual errors for each blank field" do
+            conviction_details_form.submit(blank_params)
+            expect(conviction_details_form.errors.attribute_names).to include(:first_name, :last_name, :position, :dob)
           end
         end
       end

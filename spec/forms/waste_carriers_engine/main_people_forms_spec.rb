@@ -65,6 +65,11 @@ module WasteCarriersEngine
           it "should not submit" do
             expect(main_people_form.submit(blank_params)).to eq(false)
           end
+
+          it "should raise individual errors for each blank field" do
+            main_people_form.submit(blank_params)
+            expect(main_people_form.errors.attribute_names).to include(:first_name, :last_name, :dob)
+          end
         end
       end
     end
