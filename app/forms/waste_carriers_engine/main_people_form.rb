@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     delegate :lower_tier?, to: :transient_registration
 
-    validates_with MainPersonValidator, validate_fields: false
+    validates_with MainPersonFormValidator
 
     def initialize(transient_registration)
       super
