@@ -206,7 +206,6 @@ module WasteCarriersEngine
           transitions from: :company_address_manual_form, to: :declare_convictions_form
 
           # Main people
-
           transitions from: :main_people_form, to: :company_name_form, if: :company_name_required?
 
           transitions from: :main_people_form, to: :use_trading_name_form
@@ -280,12 +279,14 @@ module WasteCarriersEngine
           transitions from: :worldpay_form,
                       to: :registration_received_pending_worldpay_payment_form,
                       if: :pending_online_payment?,
+
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
 
           transitions from: :worldpay_form,
                       to: :registration_received_pending_conviction_form,
+
                       if: :conviction_check_required?,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
