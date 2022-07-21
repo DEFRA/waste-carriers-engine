@@ -27,24 +27,36 @@ module WasteCarriersEngine
           }
         end
 
-        before do
-          expect_any_instance_of(Notifications::Client)
-            .to receive(:send_email)
-            .with(expected_notify_options)
-            .and_call_original
-        end
+        context "with a contact_email" do
+          before do
+            expect_any_instance_of(Notifications::Client)
+              .to receive(:send_email)
+              .with(expected_notify_options)
+              .and_call_original
+          end
 
-        subject do
-          VCR.use_cassette("notify_copy_cards_awaiting_payment_sends_an_email") do
-            described_class.run(registration: registration, order: order)
+          subject do
+            VCR.use_cassette("notify_copy_cards_awaiting_payment_sends_an_email") do
+              described_class.run(registration: registration, order: order)
+            end
+          end
+
+          it "sends an email" do
+            expect(subject).to be_a(Notifications::Client::ResponseNotification)
+            expect(subject.template["id"]).to eq(template_id)
+            expect(subject.content["subject"])
+              .to eq("You need to pay for your waste carriers registration card order")
           end
         end
 
-        it "sends an email" do
-          expect(subject).to be_a(Notifications::Client::ResponseNotification)
-          expect(subject.template["id"]).to eq(template_id)
-          expect(subject.content["subject"])
-            .to eq("You need to pay for your waste carriers registration card order")
+        context "with no contact_email" do
+          before { registration.contact_email = nil }
+
+          it "does not attempt to send an email" do
+            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
+
+            described_class.run(registration: registration, order: order)
+          end
         end
       end
     end

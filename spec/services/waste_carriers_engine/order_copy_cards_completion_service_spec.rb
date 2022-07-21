@@ -48,8 +48,8 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the registration has an AD contact email" do
-          let(:contact_email) { WasteCarriersEngine.configuration.assisted_digital_email }
+        context "when the registration has a nil contact email" do
+          let(:contact_email) { nil }
 
           it "does not send an email" do
             expect(notify_email_service).not_to receive(:run)
