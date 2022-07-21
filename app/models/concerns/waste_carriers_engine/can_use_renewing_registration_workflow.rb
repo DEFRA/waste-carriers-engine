@@ -322,8 +322,8 @@ module WasteCarriersEngine
       WasteCarriersEngine::ContactAddressAsRegisteredAddressService.run(self)
     end
 
-    def send_renewal_pending_worldpay_payment_email
-      WasteCarriersEngine::Notify::RenewalPendingWorldpayPaymentEmailService.run(registration: self)
+    def send_renewal_pending_online_payment_email
+      WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration: self)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
