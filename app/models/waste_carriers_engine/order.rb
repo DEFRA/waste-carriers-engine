@@ -59,7 +59,7 @@ module WasteCarriersEngine
 
       order[:date_created] = Time.current
       order[:date_last_updated] = order[:date_created]
-      order[:updated_by_user] = user_email
+      order[:updated_by_user] = user_email.is_a?(String) ? user_email : user_email&.email
 
       order
     end
