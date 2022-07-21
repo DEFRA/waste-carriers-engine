@@ -55,6 +55,7 @@ module WasteCarriersEngine
         redirect_to_correct_form
       else
         log_and_send_govpay_response(false, action)
+        action = GovpayPaymentDetailsService.payment_status(action)
         flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.invalid_response")
         go_back
       end
@@ -63,12 +64,13 @@ module WasteCarriersEngine
     def respond_to_unsuccessful_payment(action)
       return unless valid_transient_registration?
 
+      action_locale = GovpayPaymentDetailsService.payment_status(action)
       if response_is_valid?(action, params)
         log_and_send_govpay_response(true, action)
-        flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.message")
+        flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action_locale}.message")
       else
         log_and_send_govpay_response(false, action)
-        flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.invalid_response")
+        flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action_locale}.invalid_response")
       end
 
       go_back
