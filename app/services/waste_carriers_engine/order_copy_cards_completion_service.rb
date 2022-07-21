@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       delete_transient_registration
 
-      send_confirmation_email unless @transient_registration.ad_contact_email?
+      send_confirmation_email unless @transient_registration.assisted_digital?
     end
 
     def update_registration

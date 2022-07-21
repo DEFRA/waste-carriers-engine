@@ -193,26 +193,24 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
-  describe "#ad_contact_email?" do
+  describe "#assisted_digital?" do
     context "when the contact email is nil" do
       before do
         resource.contact_email = nil
       end
 
       it "returns true" do
-        expect(resource.ad_contact_email?).to eq(true)
+        expect(resource.assisted_digital?).to eq(true)
       end
     end
 
-    context "when the contact email is the NCCC default" do
+    context "when the contact email is the nil" do
       before do
-        email = "nccc@example.com"
-        allow(WasteCarriersEngine.configuration).to receive(:assisted_digital_email).and_return(email)
-        resource.contact_email = email
+        resource.contact_email = nil
       end
 
       it "returns true" do
-        expect(resource.ad_contact_email?).to eq(true)
+        expect(resource.assisted_digital?).to eq(true)
       end
     end
 
@@ -222,7 +220,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.ad_contact_email?).to eq(false)
+        expect(resource.assisted_digital?).to eq(false)
       end
     end
   end
