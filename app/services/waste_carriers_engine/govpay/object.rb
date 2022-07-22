@@ -1,0 +1,21 @@
+module WasteCarriersEngine
+  module Govpay
+    class Object
+      def initialize(attributes)
+        super to_ostruct(attributes)
+      end
+
+      def to_ostruct(obj)
+        if obj.is_a?(Hash)
+          OpenStruct.new(obj.map { |k, v| [k, to_ostruct(v)] }.to_h)
+        elsif obj.is_a?(Array)
+          obj.map { |o| to_ostruct(o) }
+        elsif obj.is_a?(String)
+          string_reader(obj)&.strip
+        else # Likely a primative value
+          obj
+        end
+      end
+    end
+  end
+end

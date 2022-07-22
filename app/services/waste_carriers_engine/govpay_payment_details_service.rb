@@ -18,10 +18,7 @@ module WasteCarriersEngine
 
     # Payment status in Govpay terms
     def govpay_payment_status
-      response = send_request(:get, "/payments/#{@order.govpay_id}")
-      response_json = JSON.parse(response.body)
-
-      status = response_json&.dig("state", "status") || "error"
+      status = response&.dig("state", "status") || "error"
 
       # Special case: If failed, check whether this was because of a cancellation
       status = "cancelled" if status == "failed" && response_json.dig("state", "code") == "P0030"
@@ -30,6 +27,10 @@ module WasteCarriersEngine
     rescue StandardError => e
       Rails.logger.error "Failed to retrieve payment status: #{e}"
       "error"
+    end
+
+    def payment
+      @payment ||= Govpay::Payment.new response
     end
 
     # Payment status in application terms
@@ -42,6 +43,17 @@ module WasteCarriersEngine
         "failed" => :failure,
         nil => :error
       }.freeze[status] || status.to_sym
+    end
+
+    private
+
+    def response
+      @response ||=
+        JSON.parse(
+          send_request(
+            :get, "/payments/#{@order.govpay_id}"
+          )&.body
+        )
     end
   end
 end
