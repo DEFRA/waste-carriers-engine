@@ -55,7 +55,7 @@ module WasteCarriersEngine
         redirect_to_correct_form
       else
         log_and_send_govpay_response(false, action)
-        flash[:error] = form_error_message(action, :invalid_response)
+        form_error_message(action, :invalid_response)
         go_back
       end
     end
@@ -65,10 +65,10 @@ module WasteCarriersEngine
 
       if response_is_valid?(action, params)
         log_and_send_govpay_response(true, action)
-        flash[:error] = form_error_message(action)
+        form_error_message(action)
       else
         log_and_send_govpay_response(false, action)
-        flash[:error] = form_error_message(action, :invalid_response)
+        form_error_message(action, :invalid_response)
       end
 
       go_back
@@ -96,7 +96,7 @@ module WasteCarriersEngine
 
     def form_error_message(action, type = :message)
       action = GovpayPaymentDetailsService.payment_status(action)
-      I18n.t(".waste_carriers_engine.govpay_forms.#{action}.#{type}")
+      flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.#{type}")
     end
   end
 end
