@@ -55,8 +55,7 @@ module WasteCarriersEngine
         redirect_to_correct_form
       else
         log_and_send_govpay_response(false, action)
-        action = GovpayPaymentDetailsService.payment_status(action)
-        flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.invalid_response")
+        flash[:error] = form_error_message(action, :invalid_response)
         go_back
       end
     end
@@ -64,13 +63,12 @@ module WasteCarriersEngine
     def respond_to_unsuccessful_payment(action)
       return unless valid_transient_registration?
 
-      action_locale = GovpayPaymentDetailsService.payment_status(action)
       if response_is_valid?(action, params)
         log_and_send_govpay_response(true, action)
-        flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action_locale}.message")
+        flash[:error] = form_error_message(action)
       else
         log_and_send_govpay_response(false, action)
-        flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action_locale}.invalid_response")
+        flash[:error] = form_error_message(action, :invalid_response)
       end
 
       go_back
@@ -94,6 +92,11 @@ module WasteCarriersEngine
 
       Rails.logger.debug [title, "Params:", params.to_json].join("\n")
       Airbrake.notify(title, error_message: params) unless is_valid && action == :success
+    end
+
+    def form_error_message(action, type = :message)
+      action = GovpayPaymentDetailsService.payment_status(action)
+      I18n.t(".waste_carriers_engine.govpay_forms.#{action}.#{type}")
     end
   end
 end
