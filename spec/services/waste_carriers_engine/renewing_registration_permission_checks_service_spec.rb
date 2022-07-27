@@ -89,5 +89,21 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "temporary additional debugging" do
+      let(:registration) { create(:registration, :has_required_data) }
+      let(:transient_registration) do
+        create(:renewing_registration, reg_identifier: registration.reg_identifier, from_magic_link: false)
+      end
+      let(:user) { nil }
+
+      subject { described_class.run(params) }
+
+      it "logs an error and raises a NoMethodError" do
+        expect(Airbrake).to receive(:notify)
+
+        expect { subject }.to raise_error(NoMethodError)
+      end
+    end
   end
 end
