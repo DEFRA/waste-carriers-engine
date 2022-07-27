@@ -19,6 +19,26 @@ module WasteCarriersEngine
     private
 
     def can?(action, object)
+      unless user.present?
+        e = StandardError.new(
+          "Permissions check requested for nil user, "\
+          "action: #{action}, "\
+          "reg_identifier #{@transient_registration.reg_identifier}, "\
+          "from_magic_link: #{@transient_registration.from_magic_link ? 'true' : 'false'}, "\
+          "workflow_state: #{@transient_registration.workflow_state}, "\
+          "workflow_history: #{@transient_registration.workflow_history}, "\
+          "expires_on: #{@transient_registration.expires_on}, "\
+          "renew_token: #{@transient_registration.registration.renew_token}, "\
+          "metaData.route: #{@transient_registration.metaData.route}, "\
+          "transient_registration created_at: #{@transient_registration.created_at}, "\
+        )
+
+        Airbrake.notify(e, reg_identifier: @transient_registration.reg_identifier) if defined?(Airbrake)
+        Rails.logger.warn e
+        # TODO: Continue so the original error is visible in the logs along with the debug info.
+        # TODO: Revisit this and remove the additional debugging pending further investigation.
+      end
+
       ability = Ability.new(user)
 
       ability.can?(action, object)
