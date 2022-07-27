@@ -35,6 +35,7 @@ module WasteCarriersEngine
 
         Airbrake.notify(e, reg_identifier: @transient_registration.reg_identifier) if defined?(Airbrake)
         Rails.logger.warn e
+
         # TODO: Continue so the original error is visible in the logs along with the debug info.
         # TODO: Revisit this and remove the additional debugging pending further investigation.
       end
