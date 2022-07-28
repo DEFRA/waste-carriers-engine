@@ -90,7 +90,7 @@ module WasteCarriersEngine
     def update_after_online_payment(status, govpay_id = nil)
       if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
         self.govpay_status = status
-        self.govpay_id = govpay_id
+        self.govpay_id = govpay_id if govpay_id
       else
         self.world_pay_status = status
       end

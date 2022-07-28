@@ -1,6 +1,10 @@
+require "ostruct"
+
 module WasteCarriersEngine
   module Govpay
-    class Object
+    # Generic Object. Takes the hash/Json returned from the Govpay API
+    # and gives us openstruct objects for easier reading/consuming
+    class Object < OpenStruct
       def initialize(attributes)
         super to_ostruct(attributes)
       end
@@ -15,6 +19,25 @@ module WasteCarriersEngine
         else # Likely a primative value
           obj
         end
+      end
+
+      def string_reader(value)
+        return if nil_value?(value)
+
+        value = value.to_s
+        value = yield value if block_given?
+
+        value
+      end
+
+      def nil_value?(value)
+        value.nil? ||
+          ["nil", "null"].any?(
+            value
+              .to_s
+              .strip
+              .downcase
+          )
       end
     end
   end

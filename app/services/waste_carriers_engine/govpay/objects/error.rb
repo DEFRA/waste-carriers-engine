@@ -1,6 +1,6 @@
 module WasteCarriersEngine
   module Govpay
-    class Error < Object
+    class Error < ::WasteCarriersEngine::Govpay::Object
     end
   end
 end
