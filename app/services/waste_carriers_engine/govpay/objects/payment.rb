@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   module Govpay
     class Payment < ::WasteCarriersEngine::Govpay::Object

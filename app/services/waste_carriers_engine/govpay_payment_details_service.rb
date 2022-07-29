@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rest-client"
-require_relative 'govpay'
+require_relative "govpay"
 
 module WasteCarriersEngine
   class GovpayPaymentDetailsService
