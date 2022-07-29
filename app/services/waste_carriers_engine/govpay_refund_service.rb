@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rest-client"
-require_relative 'govpay'
+require_relative './govpay'
 
 module WasteCarriersEngine
   class GovpayRefundService < ::WasteCarriersEngine::BaseService
@@ -22,14 +22,14 @@ module WasteCarriersEngine
 
     private
 
-    attr_reader :transient_registration, :payment, :current_user
+    attr_reader :transient_registration, :payment, :current_user, :amount
 
     def govpay_payment
       @govpay_payment ||= GovpayPaymentDetailsService.new(govpay_id: payment.govpay_id, entity: ::WasteCarriersEngine::Registration).payment
     end
 
     def refund
-      @refund ||= ::WasteCarriersEngine::Govpay::Refund.new response
+      @refund ||= Govpay::Refund.new response
     end
 
     def error
@@ -50,7 +50,7 @@ module WasteCarriersEngine
     def request
       @request ||=
         send_request(
-          :post, "/payments/#{payment.payment_id}/refunds", params
+          :post, "/payments/#{payment.govpay_id}/refunds", params
         )
     end
 

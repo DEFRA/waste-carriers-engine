@@ -27,7 +27,7 @@ module WasteCarriersEngine
     end
 
     def payment
-      @payment ||= ::WasteCarriersEngine::Govpay::Payment.new response
+      @payment ||= Govpay::Payment.new response
     end
 
     # Payment status in application terms
