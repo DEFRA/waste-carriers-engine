@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "ostruct"
 
 module WasteCarriersEngine
@@ -11,7 +13,7 @@ module WasteCarriersEngine
 
       def to_ostruct(obj)
         if obj.is_a?(Hash)
-          OpenStruct.new(obj.map { |k, v| [k, to_ostruct(v)] }.to_h)
+          OpenStruct.new(obj.transform_values { |v| to_ostruct(v) })
         elsif obj.is_a?(Array)
           obj.map { |o| to_ostruct(o) }
         elsif obj.is_a?(String)
@@ -32,7 +34,7 @@ module WasteCarriersEngine
 
       def nil_value?(value)
         value.nil? ||
-          ["nil", "null"].any?(
+          %w[nil null].any?(
             value
               .to_s
               .strip
