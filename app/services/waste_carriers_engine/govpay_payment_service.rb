@@ -20,7 +20,6 @@ module WasteCarriersEngine
       if govpay_payment_id.present?
         @order.govpay_id = govpay_payment_id
         @order.save!
-        byebug
         {
           payment: nil, # @payment,
           url: govpay_redirect_url(response)
