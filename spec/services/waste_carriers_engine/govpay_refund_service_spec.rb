@@ -18,7 +18,7 @@ module WasteCarriersEngine
     before do
       allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
-      payment.update!(govpay_id: "govpay123")
+      payment.update!(govpay_id: "govpay123", payment_type: "GOVPAY")
 
       # retrieve a payment's details
       stub_request(:get, "#{govpay_host}/payments/#{payment.govpay_id}").to_return(
