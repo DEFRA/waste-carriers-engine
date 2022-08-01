@@ -8,6 +8,8 @@ module WasteCarriersEngine
     include CanSendGovpayRequest
 
     def run(payment:, amount:, merchant_code: nil) # rubocop:disable Lint/UnusedMethodArgument
+      return false unless payment.govpay?
+
       @payment = payment
       @amount = amount
 
