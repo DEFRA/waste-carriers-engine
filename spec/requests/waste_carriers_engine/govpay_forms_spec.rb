@@ -99,7 +99,7 @@ module WasteCarriersEngine
             allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
             stub_request(:any, %r{.*#{govpay_host}/payments}).to_return(
               status: 200,
-              body: File.read("./spec/fixtures/files/govpay/get_payment_response_#{govpay_status}.json")
+              body: file_fixture("govpay/get_payment_response_#{govpay_status}.json")
             )
             transient_registration.prepare_for_payment(:govpay, user)
             GovpayPaymentService.new(transient_registration, order, user).prepare_for_payment
@@ -193,7 +193,7 @@ module WasteCarriersEngine
 
               context "when the payment uuid is valid" do
                 before do
-                  allow_any_instance_of(RenewingRegistration).to receive(:pending_online_payment?).and_return(true)
+                  order.update!(govpay_status: "created")
                 end
 
                 it "redirects to renewal_received_pending_govpay_payment_form" do
