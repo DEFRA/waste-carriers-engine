@@ -34,25 +34,37 @@ module WasteCarriersEngine
       end
 
       describe ".run" do
-        before do
-          expect_any_instance_of(Notifications::Client)
-            .to receive(:send_email)
-            .with(expected_notify_options)
-            .and_call_original
-        end
+        context "with a contact_email" do
+          before do
+            expect_any_instance_of(Notifications::Client)
+              .to receive(:send_email)
+              .with(expected_notify_options)
+              .and_call_original
+          end
 
-        subject do
-          VCR.use_cassette("notify_registration_pending_payment_sends_an_email") do
-            described_class.run(registration: registration)
+          subject do
+            VCR.use_cassette("notify_registration_pending_payment_sends_an_email") do
+              described_class.run(registration: registration)
+            end
+          end
+
+          it "sends an email" do
+            expect(subject).to be_a(Notifications::Client::ResponseNotification)
+            expect(subject.template["id"]).to eq(template_id)
+            expect(subject.content["subject"]).to match(
+              /Payment needed for waste carrier registration CBDU/
+            )
           end
         end
 
-        it "sends an email" do
-          expect(subject).to be_a(Notifications::Client::ResponseNotification)
-          expect(subject.template["id"]).to eq(template_id)
-          expect(subject.content["subject"]).to match(
-            /Payment needed for waste carrier registration CBDU/
-          )
+        context "with no contact_email" do
+          before { registration.contact_email = nil }
+
+          it "does not attempt to send an email" do
+            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
+
+            described_class.run(registration: registration)
+          end
         end
       end
     end

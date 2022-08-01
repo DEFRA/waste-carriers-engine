@@ -7,6 +7,9 @@ module WasteCarriersEngine
       include ActionView::Helpers::NumberHelper
 
       def run(registration:, order: nil)
+        # AD registrations will not have a contact_mail
+        return unless registration&.contact_email.present?
+
         @registration = registration
         @order = order
 

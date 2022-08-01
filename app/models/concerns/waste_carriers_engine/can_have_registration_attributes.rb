@@ -109,8 +109,8 @@ module WasteCarriersEngine
         location == "overseas" || business_type == "overseas"
       end
 
-      def ad_contact_email?
-        contact_email.blank? || contact_email == WasteCarriersEngine.configuration.assisted_digital_email
+      def assisted_digital?
+        contact_email.blank?
       end
 
       def pending_worldpay_payment?

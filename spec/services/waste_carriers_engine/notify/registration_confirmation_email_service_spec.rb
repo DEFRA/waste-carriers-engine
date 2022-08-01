@@ -23,50 +23,62 @@ module WasteCarriersEngine
           }
         end
 
-        before do
-          allow(Notifications)
-            .to receive(:prepare_upload)
-            .and_return("Hello World")
+        context "with a contact_email" do
+          before do
+            allow(Notifications)
+              .to receive(:prepare_upload)
+              .and_return("Hello World")
 
-          expect_any_instance_of(Notifications::Client)
-            .to receive(:send_email)
-            .with(expected_notify_options)
-            .and_call_original
-        end
+            expect_any_instance_of(Notifications::Client)
+              .to receive(:send_email)
+              .with(expected_notify_options)
+              .and_call_original
+          end
 
-        context "a lower tier registration" do
-          let(:template_id) { "889fa2f2-f70c-4b5a-bbc8-d94a8abd3990" }
-          let(:registration) { create(:registration, :has_required_data, :lower_tier) }
-          let(:registration_type) { nil }
+          context "a lower tier registration" do
+            let(:template_id) { "889fa2f2-f70c-4b5a-bbc8-d94a8abd3990" }
+            let(:registration) { create(:registration, :has_required_data, :lower_tier) }
+            let(:registration_type) { nil }
 
-          subject do
-            VCR.use_cassette("notify_lower_tier_registration_confirmation_sends_an_email") do
-              described_class.run(registration: registration)
+            subject do
+              VCR.use_cassette("notify_lower_tier_registration_confirmation_sends_an_email") do
+                described_class.run(registration: registration)
+              end
+            end
+
+            it "sends an email" do
+              expect(subject).to be_a(Notifications::Client::ResponseNotification)
+              expect(subject.template["id"]).to eq(template_id)
+              expect(subject.content["subject"]).to eq("Waste Carrier Registration Complete")
             end
           end
 
-          it "sends an email" do
-            expect(subject).to be_a(Notifications::Client::ResponseNotification)
-            expect(subject.template["id"]).to eq(template_id)
-            expect(subject.content["subject"]).to eq("Waste Carrier Registration Complete")
+          context "an upper tier registration" do
+            let(:template_id) { "fe1e4746-c940-4ace-b111-8be64ee53b35" }
+            let(:registration) { create(:registration, :has_required_data, :already_renewed) }
+            let(:registration_type) { "carrier, broker and dealer" }
+
+            subject do
+              VCR.use_cassette("notify_upper_tier_registration_confirmation_sends_an_email") do
+                described_class.run(registration: registration)
+              end
+            end
+
+            it "sends an email" do
+              expect(subject).to be_a(Notifications::Client::ResponseNotification)
+              expect(subject.template["id"]).to eq(template_id)
+              expect(subject.content["subject"]).to eq("Waste Carrier Registration Complete")
+            end
           end
         end
 
-        context "an upper tier registration" do
-          let(:template_id) { "fe1e4746-c940-4ace-b111-8be64ee53b35" }
-          let(:registration) { create(:registration, :has_required_data, :already_renewed) }
-          let(:registration_type) { "carrier, broker and dealer" }
+        context "with no contact_email" do
+          let(:registration) { create(:registration, :has_required_data, contact_email: nil) }
 
-          subject do
-            VCR.use_cassette("notify_upper_tier_registration_confirmation_sends_an_email") do
-              described_class.run(registration: registration)
-            end
-          end
+          it "does not attempt to send an email" do
+            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
 
-          it "sends an email" do
-            expect(subject).to be_a(Notifications::Client::ResponseNotification)
-            expect(subject.template["id"]).to eq(template_id)
-            expect(subject.content["subject"]).to eq("Waste Carrier Registration Complete")
+            described_class.run(registration: registration)
           end
         end
       end

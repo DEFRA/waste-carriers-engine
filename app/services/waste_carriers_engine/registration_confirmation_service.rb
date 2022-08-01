@@ -12,7 +12,7 @@ module WasteCarriersEngine
     private
 
     def send_email_or_letter(registration)
-      if registration.ad_contact_email?
+      if registration.assisted_digital?
         Notify::RegistrationConfirmationLetterService.run(registration: registration)
       else
         Notify::RegistrationConfirmationEmailService.run(registration: registration)
