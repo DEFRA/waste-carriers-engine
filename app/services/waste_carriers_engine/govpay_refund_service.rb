@@ -7,7 +7,7 @@ module WasteCarriersEngine
   class GovpayRefundService < ::WasteCarriersEngine::BaseService
     include CanSendGovpayRequest
 
-    def run(payment:, amount:, merchant_code:) # rubocop:disable Lint/UnusedMethodArgument
+    def run(payment:, amount:, merchant_code: nil) # rubocop:disable Lint/UnusedMethodArgument
       @payment = payment
       @amount = amount
 
@@ -37,7 +37,7 @@ module WasteCarriersEngine
     def error
       return @error if defined?(@error)
 
-      @error = (Govpay::Error.new response if status_code.is_a?(Integer) && (400..500).include?(status_code))
+      @error = (Govpay::Error.new(response) if status_code.is_a?(Integer) && (400..500).include?(status_code))
     end
 
     def params

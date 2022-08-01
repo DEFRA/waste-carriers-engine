@@ -12,4 +12,12 @@ RSpec.describe WasteCarriersEngine::Govpay::Payment do
       it { expect(payment.refundable?).to be true }
     end
   end
+
+  describe "parsing arrays" do
+    let(:params) { super().merge(array: [1, 2, 3]) }
+
+    it "creats an array openstruct" do
+      expect(payment.array).to eq [1, 2, 3]
+    end
+  end
 end

@@ -7,13 +7,13 @@ RSpec.describe WasteCarriersEngine::Govpay::Refund do
   let(:params) { JSON.parse(file_fixture("govpay/get_refund_response_success.json").read) }
 
   describe "#status" do
-    it { expect(refund.status).to eq "submitted" }
-    it { expect(refund.success?).to be false }
+    it { expect(refund.status).to eq "success" }
+    it { expect(refund.success?).to be true }
 
-    context "with successful refund" do
-      let(:params) { super().merge(status: "success") }
+    context "with non-successful refund" do
+      let(:params) { super().merge(status: "submitted") }
 
-      it { expect(refund.success?).to be true }
+      it { expect(refund.success?).to be false }
     end
   end
 end
