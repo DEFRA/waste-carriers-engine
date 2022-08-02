@@ -20,7 +20,7 @@ module WasteCarriersEngine
     def payment_callback
       find_or_initialize_transient_registration(params[:token])
 
-      govpay_payment_status = GovpayPaymentDetailsService.new(params[:uuid]).govpay_payment_status
+      govpay_payment_status = GovpayPaymentDetailsService.new(payment_uuid: params[:uuid]).govpay_payment_status
 
       @transient_registration.with_lock do
         case GovpayPaymentDetailsService.payment_status(govpay_payment_status)

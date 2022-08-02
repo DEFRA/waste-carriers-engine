@@ -26,13 +26,13 @@ module WasteCarriersEngine
       transient_registration.prepare_for_payment(:govpay, current_user)
     end
 
-    subject { GovpayPaymentDetailsService.new(transient_registration.finance_details.orders.first.payment_uuid) }
+    subject { GovpayPaymentDetailsService.new(payment_uuid: transient_registration.finance_details.orders.first.payment_uuid) }
 
     describe "govpay_payment_status" do
 
       context "with an invalid payment uuid" do
         it "raises an exception" do
-          expect { GovpayPaymentDetailsService.new("bad_uuid") }.to raise_exception(ArgumentError)
+          expect { GovpayPaymentDetailsService.new(payment_uuid: "bad_uuid") }.to raise_exception(ArgumentError)
         end
       end
 
