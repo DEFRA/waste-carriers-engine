@@ -26,8 +26,8 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with an invalid company number" do
       let(:company_no) { invalid_company_no }
-      it "returns nil" do
-        expect(subject).to be_nil
+      it "raises a standard error" do
+        expect { subject }.to raise_error(StandardError)
       end
     end
 
@@ -44,6 +44,22 @@ RSpec.describe DefraRubyCompaniesHouse do
         expect(subject).to eq "BOGUS LIMITED"
       end
     end
+
+    context "when there is a problem with the companies house API" do
+      context "and the requests time out" do
+        it "raises a standard error" do
+          expect { subject }.to raise_error(StandardError)
+        end
+      end
+
+      context "and requests return an error" do
+        before { stub_request(:get, /#{Rails.configuration.companies_house_host}*/).to_raise(SocketError) }
+
+        it "raises an exception" do
+          expect { subject.status }.to raise_error(StandardError)
+        end
+      end
+    end
   end
 
   describe "#registered_office_address_lines" do
@@ -51,8 +67,8 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with an invalid company number" do
       let(:company_no) { invalid_company_no }
-      it "returns an empty array" do
-        expect(subject).to eq []
+      it "raises a standard error" do
+        expect { subject }.to raise_error(StandardError)
       end
     end
 
