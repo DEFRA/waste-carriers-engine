@@ -11,7 +11,7 @@ RSpec.describe WasteCarriersEngine::RefreshCompaniesHouseNameService do
   let(:companies_house_name) { new_registered_name }
 
   before do
-    allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company)
+    allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
     allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(companies_house_name)
   end
 

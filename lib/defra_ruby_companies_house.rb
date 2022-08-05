@@ -7,7 +7,7 @@ class DefraRubyCompaniesHouse
     @company_url = "#{Rails.configuration.companies_house_host}#{company_no.to_s.rjust(8, '0')}"
     @api_key = Rails.configuration.companies_house_api_key
 
-    load_company
+    raise StandardError "Failed to load company" unless load_company
   end
 
   def company_name
@@ -39,7 +39,7 @@ class DefraRubyCompaniesHouse
           password: ""
         )
       ).deep_symbolize_keys
-  rescue RestClient::ResourceNotFound
-    :not_found
+  rescue RestClient::ResourceNotFound, RestClient::NotFound
+    false
   end
 end
