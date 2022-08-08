@@ -97,12 +97,15 @@ module WasteCarriersEngine
       end
       let(:user) { nil }
 
-      subject { described_class.run(params) }
+      before do
+        allow(FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return true
+        allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
+      end
 
       it "logs an error and raises a NoMethodError" do
         expect(Airbrake).to receive(:notify)
 
-        expect { subject }.to raise_error(NoMethodError)
+        expect { described_class.run(params) }.to raise_error(NoMethodError)
       end
     end
   end

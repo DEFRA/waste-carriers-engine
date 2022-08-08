@@ -3,8 +3,11 @@
 module WasteCarriersEngine
   # rubocop:disable Metrics/ClassLength
   class RegistrationCompletionService < BaseService
+    include CanAddDebugLogging
+
     attr_reader :transient_registration
 
+    # rubocop:disable Metrics/MethodLength
     def run(transient_registration)
       @transient_registration = transient_registration
 
@@ -28,6 +31,7 @@ module WasteCarriersEngine
         begin
           RegistrationActivationService.run(registration: registration)
         rescue StandardError => e
+          log_transient_registration_details("Exception running RegistrationCompletionService", @transient_registration)
           Airbrake.notify(e, reg_identifier: @transient_registration.reg_identifier)
           Rails.logger.error e
         end
@@ -35,6 +39,7 @@ module WasteCarriersEngine
 
       registration
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
