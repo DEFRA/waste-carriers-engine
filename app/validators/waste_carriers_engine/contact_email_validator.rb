@@ -6,7 +6,7 @@ module WasteCarriersEngine
 
     def validate(record)
       if WasteCarriersEngine.configuration.host_is_back_office? && record.no_contact_email == "1"
-        if record.contact_email.present?
+        unless record.contact_email.nil?
           add_validation_error(record, :no_contact_email, :not_blank)
           return false
         end
