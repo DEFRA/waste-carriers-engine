@@ -295,6 +295,27 @@ module WasteCarriersEngine
           end
         end
       end
+
+      context "temporary additional debugging" do
+
+        before { allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true }
+
+        it "logs an error" do
+          expect(Airbrake).to receive(:notify)
+
+          described_class.run(transient_registration)
+        end
+
+        context "with a nil transient_registration" do
+          before { allow(transient_registration).to receive(:nil?).and_return(true) }
+
+          it "logs an error" do
+            expect(Airbrake).to receive(:notify)
+
+            described_class.run(transient_registration)
+          end
+        end
+      end
     end
   end
 end
