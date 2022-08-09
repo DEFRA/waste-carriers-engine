@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class BaseRegistrationPermissionChecksService < BaseService
+    include CanAddDebugLogging
+
     delegate :registration, to: :transient_registration
 
     attr_reader :transient_registration, :user, :permission_check_result
@@ -19,6 +21,13 @@ module WasteCarriersEngine
     private
 
     def can?(action, object)
+      unless user.present?
+        log_transient_registration_details(
+          "Permissions check requested for nil user, action: #{action}",
+          @transient_registration
+        )
+      end
+
       ability = Ability.new(user)
 
       ability.can?(action, object)
