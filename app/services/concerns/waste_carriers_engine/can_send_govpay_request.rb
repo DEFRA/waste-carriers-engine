@@ -23,7 +23,7 @@ module WasteCarriersEngine
             }
           )
 
-        Rails.logger.debug "Received response from Govpay: #{response}" unless Rails.env.production?
+          Rails.logger.debug "Received response from Govpay: #{response}" unless Rails.env.production?
         rescue StandardError => e
           Rails.logger.error("Error sending request to govpay: #{e}")
           Airbrake.notify(e, message: "Error on govpay request")
