@@ -5,5 +5,10 @@ FactoryBot.define do
     key { "test-feature" }
 
     active { false }
+
+    trait :govpay_payments do
+      key { :govpay_payments }
+      active { true }
+    end
   end
 end
