@@ -386,7 +386,7 @@ module WasteCarriersEngine
       end
 
       def paying_by_card_govpay?
-        WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && temp_payment_method == "card"
+        WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && paying_by_card?
       end
 
       def switch_to_lower_tier

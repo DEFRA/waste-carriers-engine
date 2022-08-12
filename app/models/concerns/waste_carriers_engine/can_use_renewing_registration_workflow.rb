@@ -207,6 +207,9 @@ module WasteCarriersEngine
           # Payment & completion
           transitions from: :cards_form, to: :payment_summary_form
 
+          transitions from: :payment_summary_form, to: :govpay_form,
+                      if: :paying_by_card_govpay?
+
           transitions from: :payment_summary_form, to: :worldpay_form,
                       if: :paying_by_card?
 
@@ -304,6 +307,10 @@ module WasteCarriersEngine
 
     def paying_by_card?
       temp_payment_method == "card"
+    end
+
+    def paying_by_card_govpay?
+      WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && paying_by_card?
     end
 
     def use_trading_name?
