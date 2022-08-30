@@ -294,6 +294,37 @@ module WasteCarriersEngine
             expect(OrderItemLog.count).to be_zero
           end
         end
+
+        context "temporary additional debugging" do
+
+          before { allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true }
+
+          it "logs an error" do
+            expect(Airbrake).to receive(:notify)
+
+            described_class.new.log_transient_registration_details("foo", transient_registration)
+          end
+
+          context "with a nil transient_registration" do
+            before { allow(transient_registration).to receive(:nil?).and_return(true) }
+
+            it "logs an error" do
+              expect(Airbrake).to receive(:notify)
+
+              described_class.new.log_transient_registration_details("foo", transient_registration)
+            end
+          end
+
+          context "when activating the registration raises an exception" do
+            before { allow_any_instance_of(RegistrationActivationService).to receive(:run).and_raise(StandardError) }
+
+            it "logs an error" do
+              expect(Airbrake).to receive(:notify).at_least(:once)
+
+              described_class.run(transient_registration)
+            end
+          end
+        end
       end
     end
   end
