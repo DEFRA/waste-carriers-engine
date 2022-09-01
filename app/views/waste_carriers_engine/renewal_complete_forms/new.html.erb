@@ -21,7 +21,11 @@
         </div>
 
         <p class="govuk-body"><%= t(".paragraph_1", date: @renewal_complete_form.projected_renewal_end_date) %></p>
-        <p class="govuk-body"><%= t(".paragraph_2", email: @renewal_complete_form.contact_email) %></p>
+        <% if @renewal_complete_form.contact_email.present?%>
+          <p class="govuk-body"><%= t(".paragraph_2.email", email: @renewal_complete_form.contact_email) %></p>
+        <% else%>
+          <p class="govuk-body"><%= t(".paragraph_2.letter") %></p>
+        <% end %>
 
         <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
           <p class="govuk-body"><%= t(".paragraph_3", email: @renewal_complete_form.transient_registration.email_to_send_receipt) %></p>
