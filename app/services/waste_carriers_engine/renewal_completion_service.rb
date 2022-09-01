@@ -40,7 +40,7 @@ module WasteCarriersEngine
           update_registration
           create_order_item_logs
           delete_transient_registration
-          send_confirmation_email
+          send_confirmation_messages
         end
       end
     end
@@ -102,6 +102,19 @@ module WasteCarriersEngine
 
     def delete_transient_registration
       transient_registration.delete
+    end
+
+    def send_confirmation_messages
+      send_confirmation_letter unless registration.contact_email.present?
+
+      send_confirmation_email
+    end
+
+    def send_confirmation_letter
+      Notify::RenewalConfirmationLetterService.run(registration: registration)
+    rescue StandardError => e
+      Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)
+      Rails.logger.error "Confirmation letter error: #{e}"
     end
 
     def send_confirmation_email

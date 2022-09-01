@@ -198,6 +198,21 @@ module WasteCarriersEngine
 
           renewal_completion_service.complete_renewal
         end
+
+        context "when there is no contact email" do
+          before do
+            transient_registration.update_attributes(contact_email: nil)
+          end
+
+          it "sends a confirmation letter" do
+            expect(Notify::RenewalConfirmationLetterService)
+              .to receive(:run)
+              .with(registration: registration)
+              .once
+
+            renewal_completion_service.complete_renewal
+          end
+        end
       end
 
       context "when the renewal cannot be completed" do

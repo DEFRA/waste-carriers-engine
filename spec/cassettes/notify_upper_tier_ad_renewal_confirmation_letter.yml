@@ -1,0 +1,91 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/letter
+    body:
+      encoding: UTF-8
+      string: '{"template_id":"f703000e-1e76-4529-912d-966691578da0","reference":"CBDU1","personalisation":{"registration_type":"carrier,
+        broker and dealer","contact_name":"Jane Doe","reg_identifier":"CBDU1","company_name":"Acme
+        Waste","registered_address":"42, Foo Gardens, Baz City, BS1 1AA","phone_number":"03708
+        506506","date_registered":" 1 September 2022","expiry_date":" 1 September
+        2023","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
+        Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2242'
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 01 Sep 2022 09:19:10 GMT
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - gunicorn
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-B3-Spanid:
+      - 4fe55c3cd719a55d
+      X-B3-Traceid:
+      - 52a23dfcd12ca7584fe55c3cd719a55d
+      X-Vcap-Request-Id:
+      - dc56074a-b5e0-4d46-62b0-8cdcb284d790
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 f5db034a9eef3b097715a6b5d2c824a8.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - Xs161xFAp3-cc9HeAlhcHDxn7mnCdsOtMW3ENKFv054pM7VmhrjavQ==
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"Dear Jane Doe\r\n\r\nYour registration number is
+        still CBDU1\r\n\r\n#As an upper tier waste carrier, broker and dealer:\r\n*you
+        need to renew your registration every 3 years\r\n*you\u2019ll need to pay
+        a renewal charge each time you renew\r\n*if we cannot reach you, you\u2019ll
+        have to pay for a new registration\r\n\r\n#There are some simple rules you
+        must follow:\r\n*if you give your waste to another person or business you
+        must check they are properly authorised to accept it, for example as a permitted
+        site or a registered waste carrier\r\n*make sure the correct documentation
+        is completed for each transfer of waste and that it correctly describes the
+        waste\r\n*make sure any waste is safely handled and stored\r\n*minimise the
+        environmental impact of waste by prioritising waste prevention, reuse, recycling
+        and recovery over disposal\r\n\r\nThe Environment Agency certify that the
+        following information is entered in the register which they maintain under
+        regulation 28 of the Waste (England and Wales) Regulations 2011.\r\n#Carrier
+        details\r\nName of registered carrier - Acme Waste\r\n\r\nRegistered as -  An
+        upper tier waste carrier, broker and dealer\r\n\r\nRegistered address - 42,
+        Foo Gardens, Baz City, BS1 1AA\r\n\r\nTelephone number - 03708 506506\r\n\r\nDate
+        of registration -  1 September 2022\r\n\r\nExpiry date of registration -  1
+        September 2023\r\n\r\n#Updating your details\r\nIf any of the details you\u2019ve
+        given us change, you must update them within 28 days by contacting the Environment
+        Agency.\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
+        or contact the Environment Agency helpline: 03708 506506\r\n\r\nYours sincerely\r\n\r\nWaste
+        carrier renewal team","subject":"Your registration as an upper tier carrier,
+        broker and dealer has been renewed"},"id":"46aaa3d3-db01-4d57-8ac4-0eee9006befb","reference":"CBDU1","scheduled_for":null,"template":{"id":"f703000e-1e76-4529-912d-966691578da0","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/f703000e-1e76-4529-912d-966691578da0","version":5},"uri":"https://api.notifications.service.gov.uk/v2/notifications/46aaa3d3-db01-4d57-8ac4-0eee9006befb"}
+
+'
+  recorded_at: Thu, 01 Sep 2022 09:19:10 GMT
+recorded_with: VCR 6.1.0
