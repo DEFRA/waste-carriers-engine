@@ -92,6 +92,7 @@ module WasteCarriersEngine
                { company_name: /#{escaped_term}/i },
                { last_name: /#{escaped_term}/i },
                { registered_company_name: /#{escaped_term}/i },
+               { phone_number: /#{escaped_term}/i },
                "addresses.postcode": /#{escaped_term}/i)
       }
 
