@@ -97,9 +97,9 @@ module WasteCarriersEngine
       }
 
       def self.telephone_regex(term)
-        # Remove any non-digits excluding "+"
         return unless term.present?
 
+        # Remove any non-digits excluding "+"
         telephone_number = term.gsub(/[^+\d]/, "")
 
         # Removing the 0 or +44 at the beginning of the number as this is already included in the regex

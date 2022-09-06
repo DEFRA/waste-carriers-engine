@@ -32,28 +32,28 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
 
   context "when the number in the database has not got any spaces or dashes and doesn't start in +44" do
     context "and the search term has not got any spaces or dashes and doesn't start in +44" do
-      let(:term) { normal_number.to_s }
+      let(:term) { normal_number }
       it_behaves_like "matching and non matching registrations"
     end
 
     context "but the search term has spaces" do
-      let(:term) { number_with_spaces.to_s }
+      let(:term) { number_with_spaces }
       it_behaves_like "matching and non matching registrations"
     end
 
     context "but the search term has dashes" do
-      let(:term) { number_with_dashes.to_s }
+      let(:term) { number_with_dashes }
       it_behaves_like "matching and non matching registrations"
     end
 
     context "but the search term starts with +44" do
-      let(:term) { number_starting_with_44.to_s }
+      let(:term) { number_starting_with_44 }
       it_behaves_like "matching and non matching registrations"
     end
   end
 
   context "when the search term has not got any spaces or dashes and doesn't start in +44" do
-    let(:term) { normal_number.to_s }
+    let(:term) { normal_number }
     context "and the database has not got any spaces or dashes and doesn't start in +44" do
       let(:matching_record) do
         create(factory, :has_required_data, phone_number: normal_number)
@@ -86,7 +86,7 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
 
   context "when the search term is an international number" do
     context "it only produces exact matches" do
-      let(:term) { interntational_number.to_s }
+      let(:term) { interntational_number }
 
       let(:matching_record) do
         create(factory, :has_required_data, phone_number: interntational_number)
@@ -98,7 +98,7 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
 
   context "when the database telephone number has text with it" do
     context "it matches the phone number" do
-      let(:term) { normal_number.to_s }
+      let(:term) { normal_number }
 
       let(:matching_record) do
         create(factory, :has_required_data, phone_number: number_with_text)
