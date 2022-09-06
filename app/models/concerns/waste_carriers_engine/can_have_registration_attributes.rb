@@ -86,13 +86,27 @@ module WasteCarriersEngine
       field :total_fee,                                        type: String
 
       scope :search_term, lambda { |term|
-        escaped_term = Regexp.escape(term) if term.present?
+        if term.present?
+          escaped_term = Regexp.escape(term)
+          telephone_number = term.gsub(/[^+\d]/, "")
+          if telephone_number.start_with?("+44")
+            telephone_number.gsub!("+44", "")
+          elsif telephone_number.start_with?("0")
+            telephone_number.slice!(0)
+          end
+
+          regex = if telephone_number.length < 10
+                    escaped_term
+                  else
+                    "(\\+44|0|\\+)?[\\s-]*" + telephone_number.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join
+                  end
+        end
 
         any_of({ reg_identifier: /\A#{escaped_term}\z/i },
                { company_name: /#{escaped_term}/i },
                { last_name: /#{escaped_term}/i },
                { registered_company_name: /#{escaped_term}/i },
-               { phone_number: /#{escaped_term}/i },
+               { phone_number: /#{regex}/ },
                "addresses.postcode": /#{escaped_term}/i)
       }
 
