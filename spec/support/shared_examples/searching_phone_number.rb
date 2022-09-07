@@ -29,6 +29,8 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
   let(:number_starting_with_44) { "+441234567890" }
   let(:interntational_number) { "+78121234567" }
   let(:number_with_text) { "Landline 01234567890" }
+  # The partial number matches the non matching record as it shouldn't display this
+  let(:partial_number) { "111" }
 
   context "when the number in the database has not got any spaces or dashes and doesn't start in +44" do
     context "and the search term has not got any spaces or dashes and doesn't start in +44" do
@@ -106,5 +108,15 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
 
       it_behaves_like "matching and non matching registrations"
     end
+  end
+
+  context "when the search term is a partial number" do
+    let(:term) { partial_number }
+
+    let(:matching_record) do
+      create(factory, :has_required_data, phone_number: partial_number)
+    end
+
+    it_behaves_like "matching and non matching registrations"
   end
 end
