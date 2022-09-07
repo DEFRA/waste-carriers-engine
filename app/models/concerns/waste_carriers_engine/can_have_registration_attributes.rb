@@ -114,7 +114,6 @@ module WasteCarriersEngine
         # e.g. search "CBDU01" reduces to "01" matching all phone numbers with a "01"
         # Also, searching with an empty value would match all model instances
         exact_term = "\\b#{term}\\b"
-        # escaped_exact_term = Regexp.escape(exact_term)
         return exact_term if telephone_number.length < 10
 
         # Regex can search for a number with spaces and dashes anywhere and for UK numbers either starting in 0 or +44
