@@ -86,38 +86,45 @@ module WasteCarriersEngine
       field :total_fee,                                        type: String
 
       scope :search_term, lambda { |term|
-        escaped_term = Regexp.escape(term) if term.present?
+        if term.present?
+          escaped_term = Regexp.escape(term)
 
-        any_of({ reg_identifier: /\A#{escaped_term}\z/i },
-               { company_name: /#{escaped_term}/i },
-               { last_name: /#{escaped_term}/i },
-               { registered_company_name: /#{escaped_term}/i },
-               { phone_number: /#{telephone_regex(term)}/ },
-               "addresses.postcode": /#{escaped_term}/i)
+          any_of({ reg_identifier: /\A#{escaped_term}\z/i },
+                 { company_name: /#{escaped_term}/i },
+                 { last_name: /#{escaped_term}/i },
+                 { registered_company_name: /#{escaped_term}/i },
+                 { phone_number: /#{telephone_regex(term)}/ },
+                 "addresses.postcode": /#{escaped_term}/i)
+        else
+          # Return a valid empty scope if no search term was provided
+          none
+        end
       }
 
       def self.telephone_regex(term)
-        return unless term.present?
+        # Clone the search term so we can modify it here without impacting other searches
+        search_term = term.dup
 
-        # Remove any non-digits excluding "+"
-        telephone_number = term.gsub(/[^+\d]/, "")
+        # A valid regex guaranteed not to match any values, for skipping phone_number searches
+        no_matches_regex = "^.^"
+        return no_matches_regex unless term.present?
 
-        # Removing the 0 or +44 at the beginning of the number as this is already included in the regex
-        # For numbers not starting in either of these the regex will still work as the 0 and +44 is optional
-        if telephone_number.start_with?("+44")
-          telephone_number.gsub!("+44", "")
-        elsif telephone_number.start_with?("0")
-          telephone_number.slice!(0)
-        end
+        # Removing the 0 or +44 at the beginning of the search term as this is handled by the regex
+        search_term.gsub!(/^(\+44|0)/, "")
+
+        # Remove any non-digits
+        search_term.gsub!(/\D/, "")
+
+        # UK phone numbers excluding the leading zero are either nine or ten digits
+        min_digits = 9
 
         # Avoid trivial matches with search terms intended for other attributes
         # e.g. search "CBDU01" reduces to "01" matching all phone numbers with a "01"
         # Also, searching with an empty value would match all model instances
-        exact_term = "\\b#{term}\\b"
-        return exact_term if telephone_number.length < 10
+        return no_matches_regex if search_term.length < min_digits
 
         # Regex can search for a number with spaces and dashes anywhere and for UK numbers either starting in 0 or +44
-        "(\\+44|0|\\+)?[\\s-]*" + telephone_number.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join
+        "(\\+44|0|\\+)?[\\s-]*" + search_term.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join
       end
 
       def charity?

@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "Search scopes" do |record_class:, factory:|
-  let(:non_matching_record) do
-    create(factory,
-           :has_required_data)
-  end
+  let!(:non_matching_record) { create(factory, :has_required_data) }
 
   shared_examples "a matching and a non matching record" do
     it "returns a matching record" do
@@ -17,16 +14,15 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
   end
 
   describe "#search_term" do
-    # Use let! to ensure all test model instances are in the DB even if not exlicitly referenced in the examples
-    let!(:term) { nil }
-    let!(:scope) { record_class.search_term(term) }
+    let(:term) { nil }
+    let(:scope) { record_class.search_term(term) }
 
-    it "returns everything when no search term is given" do
-      expect(scope.length).to eq(record_class.all.length)
+    it "returns nothing when no search term is given" do
+      expect(scope).to be_empty
     end
 
     context "when the search term is a reg_identifier" do
-      let!(:term) { "CBDU0001" }
+      let(:term) { "CBDU0001" }
 
       let(:matching_record) do
         create(factory, :has_required_data, reg_identifier: term)
@@ -36,7 +32,7 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
     end
 
     context "when the search term is a registered_company_name" do
-      let!(:term) { "Absolute Skips" }
+      let(:term) { "Absolute Skips" }
 
       let(:matching_record) do
         create(factory, :has_required_data, registered_company_name: "Absolute Skips Ltd")
@@ -70,7 +66,7 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
     end
 
     context "when the search term is a postcode" do
-      let!(:term) { "SW1A 2AA" }
+      let(:term) { "SW1A 2AA" }
 
       let(:matching_postcode_record) do
         address = build(:address, postcode: term)
@@ -87,12 +83,11 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
     end
 
     context "when the seach term is a telephone number" do
-      it_behaves_like "searching phone number attribute",
-                      factory: factory
+      it_behaves_like "searching phone number attribute", factory: factory
     end
 
     context "when the search term has special characters" do
-      let!(:term) { "*" }
+      let(:term) { "*" }
 
       it "does not break the search" do
         expect { scope }.to_not raise_error
