@@ -31,6 +31,10 @@ FactoryBot.define do
       finance_details { build(:finance_details, :has_pending_worldpay_order) }
     end
 
+    trait :has_pending_govpay_status do
+      finance_details { build(:finance_details, :has_pending_govpay_order) }
+    end
+
     trait :has_required_lower_tier_data do
       location { "england" }
       declared_convictions { "no" }

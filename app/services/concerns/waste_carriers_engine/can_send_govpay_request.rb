@@ -9,8 +9,9 @@ module WasteCarriersEngine
       private
 
       def send_request(method, path, params = nil)
-        response = nil
+        Rails.logger.debug "Sending initial request to Govpay, params: #{params}"
 
+        response = nil
         begin
           response = RestClient::Request.execute(
             method: method,
@@ -21,9 +22,8 @@ module WasteCarriersEngine
               "Content-Type" => "application/json"
             }
           )
-        rescue RestClient::ExceptionWithResponse => e
-          Rails.logger.debug "RestClient received response: #{e}"
-          response = err.response
+
+          Rails.logger.debug "Received response from Govpay: #{response}"
         rescue StandardError => e
           Rails.logger.error("Error sending request to govpay: #{e}")
           Airbrake.notify(e, message: "Error on govpay request")
