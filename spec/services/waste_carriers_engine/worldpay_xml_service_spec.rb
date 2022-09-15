@@ -30,7 +30,7 @@ module WasteCarriersEngine
 
     describe "#build_xml" do
       it "returns correctly-formatted XML" do
-        xml = File.read("./spec/fixtures/files/worldpay/request_to_worldpay.xml")
+        xml = File.read("./spec/fixtures/files/request_to_worldpay.xml")
         expect(worldpay_xml_service.build_xml).to eq(xml)
       end
 

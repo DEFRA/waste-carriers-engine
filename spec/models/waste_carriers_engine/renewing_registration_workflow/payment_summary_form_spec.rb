@@ -18,14 +18,7 @@ module WasteCarriersEngine
           context "when paying by card" do
             let(:temp_payment_method) { "card" }
 
-            context "and Worldpay payments are enabled" do
-              include_examples "has next transition", next_state: "worldpay_form"
-            end
-
-            context "and Govpay payments are enabled" do
-              before { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true) }
-              include_examples "has next transition", next_state: "govpay_form"
-            end
+            include_examples "has next transition", next_state: "worldpay_form"
           end
 
           context "when paying by bank transfer" do

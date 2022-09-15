@@ -23,7 +23,7 @@ module WasteCarriersEngine
 
             context "when there is no pending WorldPay payment" do
               before do
-                allow(subject).to receive(:pending_online_payment?).and_return(false)
+                allow(subject).to receive(:pending_worldpay_payment?).and_return(false)
               end
 
               include_examples "has next transition", next_state: "renewal_complete_form"
@@ -41,13 +41,13 @@ module WasteCarriersEngine
 
             context "when there is a pending WorldPay payment" do
               before do
-                allow(subject).to receive(:pending_online_payment?).and_return(true)
+                allow(subject).to receive(:pending_worldpay_payment?).and_return(true)
               end
 
               include_examples "has next transition", next_state: "renewal_received_pending_worldpay_payment_form"
 
               it "sends a confirmation email after the 'next' event" do
-                expect(Notify::RenewalPendingOnlinePaymentEmailService)
+                expect(Notify::RenewalPendingWorldpayPaymentEmailService)
                   .to receive(:run)
                   .with(registration: subject)
                   .once

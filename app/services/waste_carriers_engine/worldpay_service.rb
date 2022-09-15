@@ -62,7 +62,7 @@ module WasteCarriersEngine
       worldpay_validator_service = WorldpayValidatorService.new(@order, @params)
       return false unless worldpay_validator_service.public_send(validation_method)
 
-      @order.update_after_online_payment(@params[:paymentStatus])
+      @order.update_after_worldpay(@params[:paymentStatus])
       true
     end
 
@@ -93,13 +93,13 @@ module WasteCarriersEngine
     end
 
     def new_payment_object(order)
-      Payment.new_from_online_payment(order, user_email)
+      Payment.new_from_worldpay(order, user_email)
     end
 
     def update_saved_data
-      payment = Payment.new_from_online_payment(@order, user_email)
-      payment.update_after_online_payment(@params)
-      @order.update_after_online_payment(@params[:paymentStatus])
+      payment = Payment.new_from_worldpay(@order, user_email)
+      payment.update_after_worldpay(@params)
+      @order.update_after_worldpay(@params[:paymentStatus])
 
       @transient_registration.finance_details.update_balance
       @transient_registration.finance_details.save!
