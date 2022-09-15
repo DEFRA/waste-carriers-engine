@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 require "rest-client"
+require_relative 'govpay'
 
 module WasteCarriersEngine
   class GovpayRefundService < ::WasteCarriersEngine::BaseService
     include CanSendGovpayRequest
 
-    def initialize(transient_registration, payment, amount, current_user)
-      @transient_registration = transient_registration
+    def run(payment:, amount:, merchant_code:)
       @payment = payment
       @amount = amount
-      @current_user = current_user
-    end
 
-    def call
-      return :cannot_refund unless payment.refundable?(amount)
-      return error if error
+      byebug
+
+      return false unless govpay_payment.refundable?(amount)
+      return false if error
+      return false unless refund.success?
 
       refund
     end
@@ -24,8 +24,27 @@ module WasteCarriersEngine
 
     attr_reader :transient_registration, :payment, :current_user
 
+    def govpay_payment
+      @govpay_payment ||= GovpayPaymentDetailsService.new(govpay_id: payment.govpay_id, entity: ::WasteCarriersEngine::Registration).payment
+    end
+
     def refund
-      @refund ||= Govpay::Refund.new response
+      @refund ||= ::WasteCarriersEngine::Govpay::Refund.new response
+    end
+
+    def error
+      return @error if defined?(@error)
+
+      @error = if status_code.is_a?(Integer) && (400..500) === status_code
+        Govpay::Error.new response
+      end
+    end
+
+    def params
+      {
+        amount: amount,
+        refund_amount_available: govpay_payment.refund.amount_available
+      }
     end
 
     def request
@@ -39,36 +58,8 @@ module WasteCarriersEngine
       @response ||= JSON.parse(request)
     end
 
-    def error
-      return @error if defined?(@error)
-
-      @error = if code.is_a?(Integer) && (400..500) === code
-        Govpay::Error.new response
-      end
-    end
-
-    def code
+    def status_code
       request.code
-    end
-
-    def params
-      {
-        amount: amount,
-        refund_amount_available: payment.refund.amount_available
-      }
-    end
-
-    def payment_callback_url
-      host = Rails.configuration.host
-      path = WasteCarriersEngine::Engine.routes.url_helpers.payment_callback_govpay_forms_path(
-        token: @transient_registration.token, uuid: @order.payment_uuid
-      )
-
-      [host, path].join
-    end
-
-    def govpay_redirect_url
-      @govpay_redirect_url ||= response.body.dig("_links", "next_url", "href")
     end
   end
 end

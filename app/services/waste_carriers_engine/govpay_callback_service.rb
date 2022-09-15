@@ -7,7 +7,7 @@ module WasteCarriersEngine
 
     def initialize(payment_uuid)
       @payment_uuid = payment_uuid
-      @payment_status = GovpayPaymentDetailsService.new(@payment_uuid).govpay_payment_status
+      @payment_status = GovpayPaymentDetailsService.new(payment_uuid: @payment_uuid).govpay_payment_status
       @transient_registration = transient_registration_by_payment_uuid
       @order = order_by_payment_uuid
     end
