@@ -15,7 +15,9 @@ module WasteCarriersEngine
 
     def call
       return :cannot_refund unless payment.refundable?(amount)
+      return error if error
 
+      refund
     end
 
     private
@@ -26,13 +28,27 @@ module WasteCarriersEngine
       @refund ||= Govpay::Refund.new response
     end
 
-    def response
-      @response ||=
-        JSON.parse(
-          send_request(
-            :post, "/payments/#{payment.payment_id}/refunds", params
-          )
+    def request
+      @request ||=
+        send_request(
+          :post, "/payments/#{payment.payment_id}/refunds", params
         )
+    end
+
+    def response
+      @response ||= JSON.parse(request)
+    end
+
+    def error
+      return @error if defined?(@error)
+
+      @error = if code.is_a?(Integer) && (400..500) === code
+        Govpay::Error.new response
+      end
+    end
+
+    def code
+      request.code
     end
 
     def params

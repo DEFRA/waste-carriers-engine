@@ -36,7 +36,7 @@ gem "turbolinks"
 
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
-  gem "pry-byebug"
+  gem "byebug"
   # Apply our style guide to ensure consistency in how the code is written
   gem "defra_ruby_style"
   gem "dotenv-rails"
