@@ -37,9 +37,9 @@ module WasteCarriersEngine
         end
       end
 
-      context "with an AD address as the contact email" do
+      context "with a nil contact email" do
         before do
-          registration.contact_email = WasteCarriersEngine.configuration.assisted_digital_email
+          registration.contact_email = nil
         end
 
         it "sends a confirmation letter" do

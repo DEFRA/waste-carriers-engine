@@ -23,8 +23,6 @@ module WasteCarriersEngine
   end
 
   class Configuration
-    # AD config
-    attr_accessor :assisted_digital_email
     # Link to dashboard from user journeys
     attr_accessor :link_from_journeys_to_dashboards
     # Companies house API config

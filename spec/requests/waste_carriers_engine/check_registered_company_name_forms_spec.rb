@@ -10,7 +10,7 @@ module WasteCarriersEngine
     let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
 
     before do
-      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company)
+      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(company_name)
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(company_address)
     end
@@ -42,6 +42,18 @@ module WasteCarriersEngine
 
             company_address.each do |line|
               expect(response.body).to include(line)
+            end
+          end
+
+          context "when the company house API is down" do
+            before do
+              allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_raise(StandardError)
+            end
+
+            it "raises an error" do
+              get check_registered_company_name_forms_path(transient_registration[:token])
+
+              expect(response).to render_template("waste_carriers_engine/check_registered_company_name_forms/companies_house_down")
             end
           end
         end

@@ -9,7 +9,7 @@ module WasteCarriersEngine
     let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
 
     before do
-      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company)
+      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(registered_company_name)
       allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(company_address)
     end

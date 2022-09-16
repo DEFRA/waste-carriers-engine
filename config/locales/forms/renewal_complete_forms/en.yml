@@ -6,7 +6,9 @@ en:
         heading: Renewal complete
         highlight_text: "Your registration number is still"
         paragraph_1: "Your registration has been renewed until %{date}."
-        paragraph_2: "We have sent a confirmation email to %{email}."
+        paragraph_2: 
+          email: "We have sent a confirmation email to %{email}."
+          letter: "We have sent a confirmation letter"
         paragraph_3: "A payment confirmation will be sent to %{email}."
         subheading_2: What happens next
         paragraph_4:

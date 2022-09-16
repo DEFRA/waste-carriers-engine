@@ -1,17 +1,24 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "Search scopes" do |record_class:, factory:|
-  let(:non_matching_record) do
-    create(factory,
-           :has_required_data)
+  let!(:non_matching_record) { create(factory, :has_required_data) }
+
+  shared_examples "a matching and a non matching record" do
+    it "returns a matching record" do
+      expect(scope).to include(matching_record)
+    end
+
+    it "does not return others" do
+      expect(scope).not_to include(non_matching_record)
+    end
   end
 
   describe "#search_term" do
     let(:term) { nil }
     let(:scope) { record_class.search_term(term) }
 
-    it "returns everything when no search term is given" do
-      expect(scope.length).to eq(record_class.all.length)
+    it "returns nothing when no search term is given" do
+      expect(scope).to be_empty
     end
 
     context "when the search term is a reg_identifier" do
@@ -21,13 +28,7 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
         create(factory, :has_required_data, reg_identifier: term)
       end
 
-      it "returns records with a matching reg_identifier" do
-        expect(scope).to include(matching_record)
-      end
-
-      it "does not return others" do
-        expect(scope).not_to include(non_matching_record)
-      end
+      it_behaves_like "a matching and a non matching record"
     end
 
     context "when the search term is a registered_company_name" do
@@ -37,17 +38,11 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
         create(factory, :has_required_data, registered_company_name: "Absolute Skips Ltd")
       end
 
-      it "returns records with a matching registered_company_name" do
-        expect(scope).to include(matching_record)
-      end
-
-      it "does not return others" do
-        expect(scope).not_to include(non_matching_record)
-      end
+      it_behaves_like "a matching and a non matching record"
     end
 
     context "when the search term is a name" do
-      let(:term) { "Lee" }
+      let!(:term) { "Lee" }
 
       let(:matching_company_name_record) do
         create(factory, :has_required_data, company_name: "Stan Lee Waste Company")
@@ -85,6 +80,10 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
       it "does not return others" do
         expect(scope).not_to include(non_matching_record)
       end
+    end
+
+    context "when the seach term is a telephone number" do
+      it_behaves_like "searching phone number attribute", factory: factory
     end
 
     context "when the search term has special characters" do

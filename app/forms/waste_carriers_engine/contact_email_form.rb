@@ -11,6 +11,10 @@ module WasteCarriersEngine
     after_initialize :populate_confirmed_email
 
     def submit(params)
+      # Blank email address vluaes should be processed as nil
+      params[:contact_email] = nil if params[:contact_email].blank?
+      params[:confirmed_email] = nil if params[:confirmed_email].blank?
+
       # Assign the params for validation and pass them to the BaseForm method for updating
       self.confirmed_email = params[:confirmed_email]
       self.no_contact_email = params[:no_contact_email]

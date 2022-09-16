@@ -30,11 +30,13 @@ module WasteCarriersEngine
       end
 
       context "when the form is valid" do
+        before { contact_email_form.transient_registration.contact_email = nil }
+
         context "when running in the front office" do
           before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false) }
 
           context "with an email address" do
-            let(:contact_email) { contact_email_form.contact_email }
+            let(:contact_email) { Faker::Internet.email }
 
             it_behaves_like "should submit"
           end
@@ -44,16 +46,26 @@ module WasteCarriersEngine
           before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true) }
 
           context "with an email address" do
-            let(:contact_email) { contact_email_form.contact_email }
+            let(:contact_email) { Faker::Internet.email }
 
             it_behaves_like "should submit"
+
+            it "populates contact_email" do
+              expect { contact_email_form.submit(ActionController::Parameters.new(params)) }
+                .to change { contact_email_form.transient_registration.contact_email }.to(contact_email)
+            end
           end
 
-          context "without an email address" do
-            let(:contact_email) { nil }
+          context "with a blank email address" do
+            let(:contact_email) { "" }
             let(:no_contact_email) { "1" }
 
             it_behaves_like "should submit"
+
+            it "does not populate contact_email" do
+              expect { contact_email_form.submit(ActionController::Parameters.new(params)) }
+                .not_to change { contact_email_form.transient_registration.contact_email }.from(nil)
+            end
           end
         end
       end
@@ -80,7 +92,7 @@ module WasteCarriersEngine
           end
 
           context "with an email address and with the no-email-address option selected" do
-            let(:contact_email) { contact_email_form.contact_email }
+            let(:contact_email) { Faker::Internet.email }
             let(:no_contact_email) { "1" }
 
             it_behaves_like "should not submit"
