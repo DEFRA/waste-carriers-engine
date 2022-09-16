@@ -321,6 +321,13 @@ module WasteCarriersEngine
       temp_use_registered_company_details == "no"
     end
 
+    def reuse_registered_address?
+      temp_reuse_registered_address == "yes"
+    end
+
+    def set_contact_address_as_registered_address
+      WasteCarriersEngine::ContactAddressAsRegisteredAddressService.run(self)
+    end
 
     def send_renewal_pending_online_payment_email
       WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration: self)
