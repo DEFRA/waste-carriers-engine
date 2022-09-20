@@ -16,7 +16,10 @@ module WasteCarriersEngine
     end
 
     # TODO: Remove this when the feature flag is no longer required
-    # before { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true) }
+    before do
+      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
+      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(true)
+    end
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
@@ -137,6 +140,12 @@ module WasteCarriersEngine
                 end.to change { transient_registration.finance_details.payments.count }.from(0).to(1)
               end
 
+              it "does not log an error" do
+                expect(Airbrake).not_to receive(:notify)
+
+                get payment_callback_govpay_forms_path(token, order.payment_uuid)
+              end
+
               context "when it has been flagged for conviction checks" do
                 before { transient_registration.conviction_sign_offs = [build(:conviction_sign_off)] }
 
@@ -228,14 +237,28 @@ module WasteCarriersEngine
               context "when the payment uuid is valid" do
                 it "redirects to payment_summary_form" do
                   get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
                   expect(response).to redirect_to(new_payment_summary_form_path(token))
+                end
+
+                it "logs an error" do
+                  expect(Airbrake).to receive(:notify)
+
+                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
                 end
               end
 
               context "when the payment uuid is invalid" do
                 it "redirects to payment_summary_form" do
-                  get payment_callback_govpay_forms_path(token, "invalid_payment_uuid")
+                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
                   expect(response).to redirect_to(new_payment_summary_form_path(token))
+                end
+
+                it "logs an error" do
+                  expect(Airbrake).to receive(:notify)
+
+                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
                 end
               end
             end
