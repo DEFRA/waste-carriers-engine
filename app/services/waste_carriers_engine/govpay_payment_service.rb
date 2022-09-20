@@ -27,7 +27,7 @@ module WasteCarriersEngine
       else
         :error
       end
-    rescue StandardError => e
+    rescue StandardError
       # The error will have been logged by CanSendGovPayRequest, just return an error response here
       :error
     end
