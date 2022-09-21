@@ -321,7 +321,6 @@ module WasteCarriersEngine
       temp_use_registered_company_details == "no"
     end
 
-
     def send_renewal_pending_online_payment_email
       WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration: self)
     rescue StandardError => e
