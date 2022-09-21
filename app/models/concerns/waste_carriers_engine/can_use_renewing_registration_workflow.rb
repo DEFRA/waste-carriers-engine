@@ -248,7 +248,7 @@ module WasteCarriersEngine
                       after: :set_metadata_route
 
           transitions from: :confirm_bank_transfer_form, to: :renewal_received_pending_payment_form,
-                      success: :send_renewal_received_pending_payment_email,
+                      success: :send_renewal_pending_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -321,6 +321,14 @@ module WasteCarriersEngine
       temp_use_registered_company_details == "no"
     end
 
+    def reuse_registered_address?
+      temp_reuse_registered_address == "yes"
+    end
+
+    def set_contact_address_as_registered_address
+      WasteCarriersEngine::ContactAddressAsRegisteredAddressService.run(self)
+    end
+
     def send_renewal_pending_online_payment_email
       WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration: self)
     rescue StandardError => e
@@ -333,7 +341,7 @@ module WasteCarriersEngine
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
 
-    def send_renewal_received_pending_payment_email
+    def send_renewal_pending_payment_email
       WasteCarriersEngine::Notify::RenewalPendingPaymentEmailService.run(registration: self)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
