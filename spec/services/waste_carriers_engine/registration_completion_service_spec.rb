@@ -297,7 +297,10 @@ module WasteCarriersEngine
 
         context "temporary additional debugging" do
 
-          before { allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true }
+          before do
+            allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
+            allow(FeatureToggle).to receive(:active?).with(:govpay_payments).and_return true
+          end
 
           it "logs an error" do
             expect(Airbrake).to receive(:notify)

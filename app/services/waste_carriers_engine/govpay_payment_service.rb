@@ -27,6 +27,9 @@ module WasteCarriersEngine
       else
         :error
       end
+    rescue StandardError
+      # The error will have been logged by CanSendGovPayRequest, just return an error response here
+      :error
     end
 
     def payment_callback_url

@@ -206,7 +206,6 @@ module WasteCarriersEngine
           transitions from: :company_address_manual_form, to: :declare_convictions_form
 
           # Main people
-
           transitions from: :main_people_form, to: :company_name_form, if: :company_name_required?
 
           transitions from: :main_people_form, to: :use_trading_name_form
