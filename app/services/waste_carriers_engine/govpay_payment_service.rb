@@ -52,7 +52,8 @@ module WasteCarriersEngine
         amount: @order.total_amount,
         return_url: payment_callback_url,
         reference: @order.order_code,
-        description: "Your Waste Carrier Registration #{@transient_registration.reg_identifier}"
+        description: "Your Waste Carrier Registration #{@transient_registration.reg_identifier}",
+        moto: WasteCarriersEngine.configuration.host_is_back_office?
       }
     end
   end

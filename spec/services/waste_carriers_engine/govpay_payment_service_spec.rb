@@ -52,6 +52,24 @@ module WasteCarriersEngine
         it "does not create a new payment" do
           expect { govpay_service.prepare_for_payment }.not_to change { transient_registration.finance_details.payments.length }
         end
+
+        context "when the request is from the back-office" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true) }
+
+          it "sends the moto flag to GovPay" do
+            expect(govpay_service).to receive(:send_request).with(anything, anything, hash_including(moto: true))
+            govpay_service.prepare_for_payment
+          end
+        end
+
+        context "when the request is from the front-office" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false) }
+
+          it "does not send the moto flag to GovPay" do
+            expect(govpay_service).to receive(:send_request).with(anything, anything, hash_not_including(moto: true))
+            govpay_service.prepare_for_payment
+          end
+        end
       end
 
       context "when the request is invalid" do
