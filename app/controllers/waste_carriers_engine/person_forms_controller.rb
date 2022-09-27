@@ -11,7 +11,7 @@ module WasteCarriersEngine
     end
 
     def submit_and_add_another(form_class, form)
-      return unless set_up_form(fomr_class: form_class, form: form, token: params[:token])
+      return unless set_up_form(form_class: form_class, form: form, token: params[:token])
 
       form_instance_variable = instance_variable_get("@#{form}")
 
