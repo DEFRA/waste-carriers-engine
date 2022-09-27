@@ -33,7 +33,7 @@ module WasteCarriersEngine
         # Orders paid using alternate payment methods are not currently
         # included in the card order export. Just log these.
         Rails.logger.warn("Copy card order payment incomplete " \
-          "for registration #{@transient_registration.reg_identifier}")
+                          "for registration #{@transient_registration.reg_identifier}")
       else
         OrderItemLog.create_from_registration(registration, Time.current)
       end

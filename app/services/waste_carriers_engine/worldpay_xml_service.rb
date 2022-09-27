@@ -38,9 +38,10 @@ module WasteCarriersEngine
 
         xml.amount(currencyCode: "GBP", value: value, exponent: "2")
 
-        if @transient_registration.is_a?(WasteCarriersEngine::RenewingRegistration)
+        case @transient_registration
+        when WasteCarriersEngine::RenewingRegistration
           xml.orderContent "Waste Carrier Registration renewal: #{reg_identifier} for #{company_name}"
-        elsif @transient_registration.is_a?(WasteCarriersEngine::EditRegistration)
+        when WasteCarriersEngine::EditRegistration
           xml.orderContent "Waste Carrier Registration edit: #{reg_identifier} for #{company_name}"
         else
           xml.orderContent "Waste Carrier Registration: #{reg_identifier} for #{company_name}"
