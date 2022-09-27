@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "2.7.5"
+ruby "3.1.2"
 
 # Temporary workaround until we implement webpack assets
 # See: https://github.com/sass/sassc-rails/issues/114
@@ -15,21 +15,22 @@ gemspec
 # GOV.UK styling
 gem "defra_ruby_template"
 
-# Use jquery as the JavaScript library
-gem "jquery-rails"
-
 # Use MongoDB as the database
-gem "mongoid", "~> 7.3"
+gem "mongoid", "~> 7.5"
 # Implement document-level locking
-gem "mongoid-locker"
+gem "mongoid-locker", "~> 2.0.0"
 
 # Use CanCanCan for user roles and permissions
-gem "cancancan", "~> 3.2.1"
+gem "cancancan", "~> 3.3"
 
 # Use Devise for user authentication
-gem "devise", ">= 4.4.3"
+gem "devise", ">= 4.8"
 
-gem "secure_headers", "~> 5.0"
+gem "matrix"
+
+gem "net-smtp"
+
+gem "secure_headers", "~> 6.3"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
@@ -41,6 +42,7 @@ group :development, :test do
   gem "defra_ruby_style"
   gem "dotenv-rails"
   gem "rspec-rails"
+  gem "rubocop-rspec", require: false
 end
 
 group :development do
@@ -52,11 +54,6 @@ group :development do
   gem "spring-commands-rspec"
 
   gem "stateoscope", "~> 0.1.3", group: :development
-end
-
-group :production do
-  # Used for Heroku logging and asset serving
-  gem "rails_12factor"
 end
 
 group :test do
