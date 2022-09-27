@@ -7,21 +7,30 @@ module WasteCarriersEngine
 
     # rubocop:disable Metrics/BlockLength
     included do
-      PAYMENT_TYPES = [
-        CASH = "CASH",
-        CHEQUE = "CHEQUE",
-        POSTALORDER = "POSTALORDER",
-        BANKTRANSFER = "BANKTRANSFER",
-        WORLDPAY = "WORLDPAY",
-        WORLDPAY_MISSED = "WORLDPAY_MISSED",
-        GOVPAY = "GOVPAY",
-        REFUND = "REFUND",
-        WRITEOFFSMALL = "WRITEOFFSMALL",
-        WRITEOFFLARGE = "WRITEOFFLARGE",
-        REVERSAL = "REVERSAL"
-      ].freeze
 
-      RECEIVABLE_PAYMENT_TYPES = [CASH, CHEQUE, POSTALORDER, BANKTRANSFER, WORLDPAY, WORLDPAY_MISSED, GOVPAY].freeze
+      const_set(:PAYMENT_TYPES, [
+                  CASH = "CASH",
+                  CHEQUE = "CHEQUE",
+                  POSTALORDER = "POSTALORDER",
+                  BANKTRANSFER = "BANKTRANSFER",
+                  WORLDPAY = "WORLDPAY",
+                  WORLDPAY_MISSED = "WORLDPAY_MISSED",
+                  GOVPAY = "GOVPAY",
+                  REFUND = "REFUND",
+                  WRITEOFFSMALL = "WRITEOFFSMALL",
+                  WRITEOFFLARGE = "WRITEOFFLARGE",
+                  REVERSAL = "REVERSAL"
+                ])
+
+      const_set(:RECEIVABLE_PAYMENT_TYPES, [
+                  CASH,
+                  CHEQUE,
+                  POSTALORDER,
+                  BANKTRANSFER,
+                  WORLDPAY,
+                  WORLDPAY_MISSED,
+                  GOVPAY
+                ])
 
       field :paymentType, as: :payment_type, type: String
 

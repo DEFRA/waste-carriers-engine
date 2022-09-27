@@ -124,7 +124,7 @@ module WasteCarriersEngine
         return no_matches_regex if search_term.length < min_digits
 
         # Regex can search for a number with spaces and dashes anywhere and for UK numbers either starting in 0 or +44
-        "(\\+44|0|\\+)?[\\s-]*" + search_term.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join
+        "(\\+44|0|\\+)?[\\s-]*#{search_term.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join}"
       end
 
       def charity?
