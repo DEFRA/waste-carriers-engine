@@ -23,8 +23,8 @@ en:
       manual_address:
         house_number_label: Building name or number
         house_number_hint: For example, a business premises name or house number
-        address_line_1_label: Address line 1
-        address_line_2_label: Address line 2 (optional)
+        address_line1_label: Address line 1
+        address_line2_label: Address line 2 (optional)
         town_city_label: Town or city
         postcode_label: Postcode (optional)
         preset_postcode_label: Postcode

@@ -29,10 +29,10 @@ module WasteCarriersEngine
           end
 
           it "should assign the correct address_lines" do
-            expect(address[:address_line_1]).to eq("42")
-            expect(address[:address_line_2]).to eq("BAZ STREET")
-            expect(address[:address_line_3]).to eq("QUX CORNER")
-            expect(address[:address_line_4]).to eq("QUUX VILLAGE")
+            expect(address[:address_line1]).to eq("42")
+            expect(address[:address_line2]).to eq("BAZ STREET")
+            expect(address[:address_line3]).to eq("QUX CORNER")
+            expect(address[:address_line4]).to eq("QUUX VILLAGE")
           end
         end
 
@@ -47,10 +47,10 @@ module WasteCarriersEngine
           end
 
           it "should skip blank fields when assigning lines" do
-            expect(address[:address_line_1]).to eq("QUX CORNER")
-            expect(address[:address_line_2]).to eq("QUUX VILLAGE")
-            expect(address[:address_line_3].present?).to eq(false)
-            expect(address[:address_line_4].present?).to eq(false)
+            expect(address[:address_line1]).to eq("QUX CORNER")
+            expect(address[:address_line2]).to eq("QUUX VILLAGE")
+            expect(address[:address_line3].present?).to eq(false)
+            expect(address[:address_line4].present?).to eq(false)
           end
         end
       end
@@ -119,26 +119,26 @@ module WasteCarriersEngine
           context "with a building name only" do
             before { os_places_data["subBuildingName"] = nil }
             it "uses the building name" do
-              expect(subject[:address_line_1]).to eq os_places_data["buildingName"]
+              expect(subject[:address_line1]).to eq os_places_data["buildingName"]
             end
           end
           context "with a sub-building name only" do
             before { os_places_data["buildingName"] = nil }
             it "uses the sub-building name" do
-              expect(subject[:address_line_1]).to eq os_places_data["subBuildingName"]
+              expect(subject[:address_line1]).to eq os_places_data["subBuildingName"]
             end
           end
           context "with both sub-building name and building name" do
             it "comnbines sub-building and building names" do
-              expect(subject[:address_line_1]).to eq "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}"
+              expect(subject[:address_line1]).to eq "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}"
             end
           end
         end
 
         context "with other optional fields not populated" do
-          it_behaves_like "skips blank field", "buildingNumber",       :address_line_2, "dependentThroughfare"
-          it_behaves_like "skips blank field", "dependentThroughfare", :address_line_3, "thoroughfareName"
-          it_behaves_like "skips blank field", "thoroughfareName",     :address_line_4, "dependentLocality"
+          it_behaves_like "skips blank field", "buildingNumber",       :address_line2, "dependentThroughfare"
+          it_behaves_like "skips blank field", "dependentThroughfare", :address_line3, "thoroughfareName"
+          it_behaves_like "skips blank field", "thoroughfareName",     :address_line4, "dependentLocality"
         end
       end
 
@@ -152,11 +152,11 @@ module WasteCarriersEngine
         end
         it "includes the PO box number after the organisation details" do
           expect(subject[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
-          expect(subject[:address_line_1]).to eq po_box_number
+          expect(subject[:address_line1]).to eq po_box_number
         end
         it "includes the PO box number before the street details" do
-          expect(subject[:address_line_1]).to eq po_box_number
-          expect(subject[:address_line_2]).to eq os_places_data["dependentThroughfare"]
+          expect(subject[:address_line1]).to eq po_box_number
+          expect(subject[:address_line2]).to eq os_places_data["dependentThroughfare"]
         end
       end
     end

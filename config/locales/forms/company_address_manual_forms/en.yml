@@ -27,10 +27,10 @@ en:
             house_number:
               blank: "Enter the building name or number"
               too_long: "The building name or number must be no longer than 200 characters"
-            address_line_1:
+            address_line1:
               blank: "Enter an address line 1"
               too_long: "The address line 1 must be no longer than 160 characters"
-            address_line_2:
+            address_line2:
               too_long: "The address line 2 must be no longer than 70 characters"
             town_city:
               blank: "Enter a town or city"

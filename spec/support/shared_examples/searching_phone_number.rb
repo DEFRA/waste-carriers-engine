@@ -14,7 +14,7 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
   let(:normal_number) { "01234567890" }
   let(:number_with_spaces) { "012 3456 7890" }
   let(:number_with_dashes) { "012-3456-7890" }
-  let(:number_starting_with_44) { "+441234567890" }
+  let(:number_starting_with_plus44) { "+441234567890" }
   let(:international_number) { "+78121234567" }
   let(:number_with_text) { "Landline 01234567890" }
 
@@ -41,7 +41,7 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
     end
 
     context "but the search term starts with +44" do
-      let(:term) { number_starting_with_44 }
+      let(:term) { number_starting_with_plus44 }
       it_behaves_like "matching and non matching registrations"
 
       context "and the search term is short" do
@@ -79,7 +79,7 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
     end
 
     context "and the number in the database starts with +44" do
-      let(:matching_phone_number) { number_starting_with_44 }
+      let(:matching_phone_number) { number_starting_with_plus44 }
 
       it_behaves_like "matching and non matching registrations"
     end

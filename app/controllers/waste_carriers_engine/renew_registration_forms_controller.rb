@@ -7,7 +7,7 @@ module WasteCarriersEngine
     end
 
     def create
-      return false unless set_up_form(RenewRegistrationForm, "renew_registration_form", params[:token])
+      return false unless set_up_form(form_class: RenewRegistrationForm, form: "renew_registration_form", token: params[:token])
 
       submit_form(@renew_registration_form, transient_registration_attributes)
     end

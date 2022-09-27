@@ -6,8 +6,8 @@ module WasteCarriersEngine
     include CanValidateManualAddress
 
     delegate :overseas?, :contact_address, to: :transient_registration
-    delegate :house_number, :address_line_1, :postcode, to: :contact_address, allow_nil: true
-    delegate :address_line_2, :town_city, :country, to: :contact_address, allow_nil: true
+    delegate :house_number, :address_line1, :postcode, to: :contact_address, allow_nil: true
+    delegate :address_line2, :town_city, :country, to: :contact_address, allow_nil: true
 
     after_initialize :clean_address, unless: :saved_address_still_valid?
 

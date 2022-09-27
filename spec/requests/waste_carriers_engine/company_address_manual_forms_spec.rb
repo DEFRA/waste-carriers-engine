@@ -28,7 +28,7 @@ module WasteCarriersEngine
               {
                 company_address: {
                   house_number: "42",
-                  address_line_1: "Foo Terrace",
+                  address_line1: "Foo Terrace",
                   town_city: "Barton"
                 }
               }
@@ -78,7 +78,7 @@ module WasteCarriersEngine
                 post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
 
                 expect(transient_registration.reload.registered_address).to_not eq(old_registered_address)
-                expect(transient_registration.reload.registered_address.address_line_1).to eq("Foo Terrace")
+                expect(transient_registration.reload.registered_address.address_line1).to eq("Foo Terrace")
                 expect(transient_registration.reload.contact_address).to eq(old_contact_address)
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)
               end
@@ -98,7 +98,7 @@ module WasteCarriersEngine
             {
               company_address: {
                 house_number: "42",
-                address_line_1: "Foo Terrace",
+                address_line1: "Foo Terrace",
                 town_city: "Barton"
               }
             }

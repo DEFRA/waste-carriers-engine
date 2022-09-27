@@ -51,10 +51,10 @@ module WasteCarriersEngine
 
       # Get all the possible address lines, then remove the blank ones
       [address.house_number,
-       address.address_line_1,
-       address.address_line_2,
-       address.address_line_3,
-       address.address_line_4,
+       address.address_line1,
+       address.address_line2,
+       address.address_line3,
+       address.address_line4,
        address.town_city,
        address.postcode,
        address.country].reject(&:blank?)

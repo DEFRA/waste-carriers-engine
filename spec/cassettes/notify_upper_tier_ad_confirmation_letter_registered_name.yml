@@ -8,8 +8,8 @@ http_interactions:
       string: '{"template_id":"92817aa7-6289-4837-a033-96d287644cb3","reference":"CBDU13","personalisation":{"contact_name":"Jane
         Doe","reg_identifier":"CBDU13","company_name":"Zenith Limited","registered_address":"42,
         Foo Gardens, Baz City, BS1 1AA","phone_number":"03708 506506","date_registered":"17
-        March 2022","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
-        Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA","expiry_date":"17
+        March 2022","address_line1":"Jane Doe","address_line2":"42","address_line3":"Foo
+        Gardens","address_line4":"Baz City","address_line5":"BS1 1AA","expiry_date":"17
         March 2023","registration_type":"carrier, broker and dealer"}}'
     headers:
       User-Agent:

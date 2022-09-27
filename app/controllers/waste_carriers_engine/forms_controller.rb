@@ -10,7 +10,7 @@ module WasteCarriersEngine
 
     # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
     def new(form_class, form)
-      return false unless set_up_form(form_class, form, params[:token], true)
+      return false unless set_up_form(form_class: form_class, form: form, token: params[:token], get_request: true)
 
       fetch_presenters
 
@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
     # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
     def create(form_class, form)
-      return false unless set_up_form(form_class, form, params[:token])
+      return false unless set_up_form(form_class: form_class, form: form, token: params[:token])
 
       fetch_presenters
 
@@ -57,7 +57,7 @@ module WasteCarriersEngine
 
     # Expects a form class name (eg BusinessTypeForm), a snake_case name for the form (eg business_type_form),
     # and the token param
-    def set_up_form(form_class, form, token, get_request = false)
+    def set_up_form(form_class:, form:, token:, get_request: false)
       find_or_initialize_transient_registration(token)
 
       set_workflow_state if get_request

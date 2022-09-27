@@ -21,7 +21,7 @@ module WasteCarriersEngine
 
       it "reuses the registered_address as the contact_address" do
         expect(contact_address.house_number).to eq(registered_address.house_number)
-        expect(contact_address.address_line_1).to eq(registered_address.address_line_1)
+        expect(contact_address.address_line1).to eq(registered_address.address_line1)
         expect(contact_address.town_city).to eq(registered_address.town_city)
         expect(contact_address.postcode).to eq(registered_address.postcode)
       end
