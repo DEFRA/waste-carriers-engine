@@ -29,13 +29,13 @@ module WasteCarriersEngine
       registration.save!
 
       # Log the order items only if payment is complete.
-      if !@transient_registration.unpaid_balance?
-        OrderItemLog.create_from_registration(registration, Time.current)
-      else
+      if @transient_registration.unpaid_balance?
         # Orders paid using alternate payment methods are not currently
         # included in the card order export. Just log these.
-        Rails.logger.warn("Copy card order payment incomplete "\
-        "for registration #{@transient_registration.reg_identifier}")
+        Rails.logger.warn("Copy card order payment incomplete " \
+          "for registration #{@transient_registration.reg_identifier}")
+      else
+        OrderItemLog.create_from_registration(registration, Time.current)
       end
     end
 

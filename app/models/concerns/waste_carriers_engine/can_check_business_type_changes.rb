@@ -21,12 +21,10 @@ module WasteCarriersEngine
         when business_type
           true
         # Otherwise, check if the change is allowed based on the previous type
-        when "authority"
+        when "authority", "publicBody"
           changing_to?("localAuthority")
         when "limitedCompany"
           changing_to?("limitedLiabilityPartnership")
-        when "publicBody"
-          changing_to?("localAuthority")
         # There are no valid changes for charity or soleTrader
         else
           false

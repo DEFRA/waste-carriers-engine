@@ -36,7 +36,7 @@ module WasteCarriersEngine
       end
 
       def authorization
-        @_authorization ||= "Basic " + Base64.encode64(username + ":" + password).to_s
+        @_authorization ||= "Basic #{Base64.encode64(username + ":" + password).to_s}"
       end
 
       def username

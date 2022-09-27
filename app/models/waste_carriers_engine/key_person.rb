@@ -33,11 +33,7 @@ module WasteCarriersEngine
 
     def set_date_of_birth
       self.dob = Date.new(dob_year, dob_month, dob_day)
-    rescue NoMethodError
-      errors.add(:dob, :invalid_date)
-    rescue ArgumentError
-      errors.add(:dob, :invalid_date)
-    rescue TypeError
+    rescue NoMethodError, ArgumentError, TypeError
       errors.add(:dob, :invalid_date)
     end
 
