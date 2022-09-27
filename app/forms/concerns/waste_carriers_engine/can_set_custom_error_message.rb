@@ -10,8 +10,8 @@ module WasteCarriersEngine
 
         errors.each do |error|
           messages[error] = I18n.t("activemodel.errors.models." \
-                                       "waste_carriers_engine/#{form_name}" \
-                                       ".attributes.#{attribute}.#{error}")
+                                   "waste_carriers_engine/#{form_name}" \
+                                   ".attributes.#{attribute}.#{error}")
         end
 
         messages

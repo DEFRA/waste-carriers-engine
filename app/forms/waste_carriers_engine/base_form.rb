@@ -17,7 +17,7 @@ module WasteCarriersEngine
     # Registrations also don't have tokens, so don't try to validate them.
     validates :token, presence: true, if: lambda {
       transient_registration&.persisted? &&
-        transient_registration&.is_a?(TransientRegistration)
+        transient_registration.is_a?(TransientRegistration)
     }
     validates(
       :reg_identifier,
@@ -60,7 +60,7 @@ module WasteCarriersEngine
 
     def token
       # Registrations don't have tokens, so don't try to delegate.
-      return unless transient_registration&.is_a?(TransientRegistration)
+      return unless transient_registration.is_a?(TransientRegistration)
 
       transient_registration.token
     end

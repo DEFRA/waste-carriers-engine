@@ -2,8 +2,7 @@
 
 module WasteCarriersEngine
   class PersonForm < ::WasteCarriersEngine::BaseForm
-    attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :dob
-    attr_accessor :new_person
+    attr_accessor :first_name, :last_name, :position, :dob_day, :dob_month, :dob_year, :dob, :new_person
 
     validate :old_enough?
 

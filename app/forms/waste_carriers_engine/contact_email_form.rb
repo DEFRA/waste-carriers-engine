@@ -3,8 +3,7 @@
 module WasteCarriersEngine
   class ContactEmailForm < ::WasteCarriersEngine::BaseForm
     delegate :contact_email, to: :transient_registration
-    attr_accessor :confirmed_email
-    attr_accessor :no_contact_email
+    attr_accessor :confirmed_email, :no_contact_email
 
     validates_with ContactEmailValidator, attributes: [:contact_email]
 
