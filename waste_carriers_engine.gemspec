@@ -15,30 +15,31 @@ Gem::Specification.new do |s|
   s.summary     = "WasteCarriersEngine package containing shared functionality"
   s.description = "WasteCarriersEngine package containing shared functionality"
   s.license     = "The Open Government Licence (OGL) Version 3"
+  s.metadata["rubygems_mfa_required"] = "true"
+  s.required_ruby_version = ">= 3.1.2"
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", ">= 6.1.4"
   # Use MongoDB as the database
   s.add_dependency "mongoid"
   # Implement document-level locking
+  # Note v2.0.1 interferes with the delegate method
   s.add_dependency "mongoid-locker", "2.0.0"
-  # Use jquery as the JavaScript library
-  s.add_dependency "jquery-rails"
+
   # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
   s.add_dependency "turbolinks"
   # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-  s.add_dependency "jbuilder", "~> 2.0"
+  s.add_dependency "jbuilder", "~> 2.11"
 
   # Use AASM to manage states and transitions
-  s.add_dependency "aasm", "~> 4.12"
+  s.add_dependency "aasm", "~> 5.3"
 
   # Use rest-client for external requests, eg. to Companies House
-  s.add_dependency "rest-client", "~> 2.0"
+  s.add_dependency "rest-client", "~> 2.1"
 
   # Use High Voltage for static pages
-  s.add_dependency "high_voltage", "~> 3.0"
+  s.add_dependency "high_voltage", "~> 3.1"
 
   # Validations
   s.add_dependency "defra_ruby_validators", ">= 2.5.0"
