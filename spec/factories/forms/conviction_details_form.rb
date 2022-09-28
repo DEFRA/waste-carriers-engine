@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :conviction_details_form, class: WasteCarriersEngine::ConvictionDetailsForm do
+  factory :conviction_details_form, class: "WasteCarriersEngine::ConvictionDetailsForm" do
     trait :has_required_data do
       first_name { "Foo" }
       last_name { "Bar" }

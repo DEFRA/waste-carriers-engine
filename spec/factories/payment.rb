@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :payment, class: WasteCarriersEngine::Payment do
+  factory :payment, class: "WasteCarriersEngine::Payment" do
     trait :worldpay do
       payment_type { "WORLDPAY" }
     end

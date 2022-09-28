@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :service_provided_form, class: WasteCarriersEngine::ServiceProvidedForm do
+  factory :service_provided_form, class: "WasteCarriersEngine::ServiceProvidedForm" do
     trait :has_required_data do
       initialize_with do
         new(

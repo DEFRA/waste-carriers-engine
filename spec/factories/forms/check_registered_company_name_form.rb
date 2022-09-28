@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :check_registered_company_name_form, class: WasteCarriersEngine::CheckRegisteredCompanyNameForm do
+  factory :check_registered_company_name_form, class: "WasteCarriersEngine::CheckRegisteredCompanyNameForm" do
 
     # set a default type
     transient do

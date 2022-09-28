@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :transient_registration, class: WasteCarriersEngine::TransientRegistration do
+  factory :transient_registration, class: "WasteCarriersEngine::TransientRegistration" do
     trait :has_required_data do
       location { "england" }
       declared_convictions { "no" }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :renewing_registration, class: WasteCarriersEngine::RenewingRegistration do
+  factory :renewing_registration, class: "WasteCarriersEngine::RenewingRegistration" do
     # Create a new registration when initializing so we can copy its data
     initialize_with { new(reg_identifier: create(:registration, :has_required_data, :expires_soon).reg_identifier) }
 
