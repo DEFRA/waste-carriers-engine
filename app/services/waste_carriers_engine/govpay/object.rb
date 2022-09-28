@@ -12,11 +12,12 @@ module WasteCarriersEngine
       end
 
       def to_ostruct(obj)
-        if obj.is_a?(Hash)
+        case obj
+        when Hash
           OpenStruct.new(obj.transform_values { |v| to_ostruct(v) })
-        elsif obj.is_a?(Array)
+        when Array
           obj.map { |o| to_ostruct(o) }
-        elsif obj.is_a?(String)
+        when String
           string_reader(obj)&.strip
         else # Likely a primative value
           obj
