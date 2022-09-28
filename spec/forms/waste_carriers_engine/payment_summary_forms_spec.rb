@@ -20,7 +20,7 @@ module WasteCarriersEngine
           let(:payment_method) { "card" }
           let(:card_confirmation_email) { "foo@example.com" }
 
-          it "should submit" do
+          it "submits" do
             expect(payment_summary_form.submit(params)).to eq(true)
           end
         end
@@ -29,7 +29,7 @@ module WasteCarriersEngine
           let(:payment_method) { "foo" }
           let(:card_confirmation_email) { "foo@com" }
 
-          it "should not submit" do
+          it "does not submit" do
             expect(payment_summary_form.submit(params)).to eq(false)
           end
         end
@@ -50,7 +50,7 @@ module WasteCarriersEngine
         context "and the form is valid" do
           let(:payment_method) { "card" }
 
-          it "should submit" do
+          it "submits" do
             expect(payment_summary_form.submit(params)).to eq(true)
           end
         end
@@ -58,7 +58,7 @@ module WasteCarriersEngine
         context "and the form is not valid" do
           let(:payment_method) { "foo" }
 
-          it "should not submit" do
+          it "does not submit" do
             expect(payment_summary_form.submit(params)).to eq(false)
           end
         end

@@ -9,7 +9,7 @@ module WasteCarriersEngine
         let(:business_type_form) { build(:business_type_form, :has_required_data) }
         let(:valid_params) { { token: business_type_form.token, business_type: "limitedCompany" } }
 
-        it "should submit" do
+        it "submits" do
           expect(business_type_form.submit(valid_params)).to eq(true)
         end
       end
@@ -18,7 +18,7 @@ module WasteCarriersEngine
         let(:business_type_form) { build(:business_type_form, :has_required_data) }
         let(:invalid_params) { { token: "foo", business_type: "foo" } }
 
-        it "should not submit" do
+        it "does not submit" do
           expect(business_type_form.submit(invalid_params)).to eq(false)
         end
       end

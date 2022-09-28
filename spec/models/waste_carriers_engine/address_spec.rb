@@ -24,11 +24,11 @@ module WasteCarriersEngine
             address.assign_house_number_and_address_lines(data)
           end
 
-          it "should assign the correct house_number" do
+          it "assigns the correct house_number" do
             expect(address[:house_number]).to eq("FOO HOUSE, BAR BUILDINGS")
           end
 
-          it "should assign the correct address_lines" do
+          it "assigns the correct address_lines" do
             expect(address[:address_line1]).to eq("42")
             expect(address[:address_line2]).to eq("BAZ STREET")
             expect(address[:address_line3]).to eq("QUX CORNER")
@@ -42,11 +42,11 @@ module WasteCarriersEngine
             address.assign_house_number_and_address_lines(data)
           end
 
-          it "should assign the correct house_number" do
+          it "assigns the correct house_number" do
             expect(address[:house_number]).to eq("BAR BUILDINGS")
           end
 
-          it "should skip blank fields when assigning lines" do
+          it "skips blank fields when assigning lines" do
             expect(address[:address_line1]).to eq("QUX CORNER")
             expect(address[:address_line2]).to eq("QUUX VILLAGE")
             expect(address[:address_line3].present?).to eq(false)

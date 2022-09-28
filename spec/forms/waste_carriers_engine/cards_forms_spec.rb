@@ -14,7 +14,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(cards_form.submit(valid_params)).to eq(true)
         end
       end
@@ -27,7 +27,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(cards_form.submit(invalid_params)).to eq(false)
         end
       end
@@ -42,7 +42,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should change the value to zero" do
+        it "changes the value to zero" do
           cards_form.submit(blank_params)
           expect(transient_registration.reload.temp_cards).to eq(0)
         end
@@ -58,7 +58,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(cards_form.submit(outside_range_params)).to eq(false)
         end
       end

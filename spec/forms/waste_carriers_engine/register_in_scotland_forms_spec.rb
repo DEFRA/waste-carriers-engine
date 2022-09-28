@@ -14,7 +14,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(register_in_scotland_form.submit(valid_params)).to eq(true)
         end
       end
@@ -24,7 +24,7 @@ module WasteCarriersEngine
           expect(register_in_scotland_form).to receive(:valid?).and_return(false)
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(register_in_scotland_form.submit({})).to eq(false)
         end
       end

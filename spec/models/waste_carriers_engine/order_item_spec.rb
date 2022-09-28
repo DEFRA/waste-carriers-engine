@@ -24,19 +24,19 @@ module WasteCarriersEngine
     describe "new_renewal_item" do
       let(:order_item) { described_class.new_renewal_item }
 
-      it "should have a type of 'RENEW'" do
+      it "has a type of 'RENEW'" do
         expect(order_item.type).to eq(described_class::TYPES[:renew])
       end
 
-      it "should set the correct amount" do
+      it "sets the correct amount" do
         expect(order_item.amount).to eq(10_000)
       end
 
-      it "should set the correct quantity" do
+      it "sets the correct quantity" do
         expect(order_item.quantity).to eq(1)
       end
 
-      it "should set the correct description" do
+      it "sets the correct description" do
         expect(order_item.description).to eq("renewal of registration")
       end
     end
@@ -44,19 +44,19 @@ module WasteCarriersEngine
     describe "new_registration_item" do
       let(:order_item) { described_class.new_registration_item }
 
-      it "should have a type of 'RENEW'" do
+      it "has a type of 'RENEW'" do
         expect(order_item.type).to eq(described_class::TYPES[:new_registration])
       end
 
-      it "should set the correct amount" do
+      it "sets the correct amount" do
         expect(order_item.amount).to eq(12_000)
       end
 
-      it "should set the correct quantity" do
+      it "sets the correct quantity" do
         expect(order_item.quantity).to eq(1)
       end
 
-      it "should set the correct description" do
+      it "sets the correct description" do
         expect(order_item.description).to eq("initial registration")
       end
     end
@@ -64,19 +64,19 @@ module WasteCarriersEngine
     describe "new_type_change_item" do
       let(:order_item) { described_class.new_type_change_item }
 
-      it "should have a type of 'EDIT'" do
+      it "has a type of 'EDIT'" do
         expect(order_item.type).to eq(described_class::TYPES[:edit])
       end
 
-      it "should set the correct quantity" do
+      it "sets the correct quantity" do
         expect(order_item.quantity).to eq(1)
       end
 
-      it "should set the correct amount" do
+      it "sets the correct amount" do
         expect(order_item.amount).to eq(2_500)
       end
 
-      it "should set the correct description" do
+      it "sets the correct description" do
         expect(order_item.description).to eq("changing carrier type")
       end
     end
@@ -85,26 +85,26 @@ module WasteCarriersEngine
       let(:cards) { 3 }
       let(:order_item) { described_class.new_copy_cards_item(cards) }
 
-      it "should have a type of 'COPY_CARDS'" do
+      it "has a type of 'COPY_CARDS'" do
         expect(order_item.type).to eq(described_class::TYPES[:copy_cards])
       end
 
-      it "should set the correct amount" do
+      it "sets the correct amount" do
         expect(order_item.amount).to eq(3_000)
       end
 
-      it "should set the correct quantity" do
+      it "sets the correct quantity" do
         expect(order_item.quantity).to eq(3)
       end
 
-      it "should set the correct description" do
+      it "sets the correct description" do
         expect(order_item.description).to eq("3 registration cards")
       end
 
       context "when the number of cards is 1" do
         let(:cards) { 1 }
 
-        it "should set the correct description" do
+        it "sets the correct description" do
           expect(order_item.description).to eq("1 registration card")
         end
       end

@@ -13,7 +13,7 @@ module WasteCarriersEngine
       context "when the form is valid" do
         let(:valid_params) { { token: check_your_answers_form.token } }
 
-        it "should submit" do
+        it "submits" do
           expect(check_your_answers_form.submit(valid_params)).to be_truthy
         end
       end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
           expect(check_your_answers_form).to receive(:valid?).and_return(false)
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(check_your_answers_form.submit({})).to be_falsey
         end
       end
@@ -407,7 +407,7 @@ module WasteCarriersEngine
     end
 
     describe "custom_error_messages" do
-      it "should get the correct error" do
+      it "gets the correct error" do
         hash = { inclusion: "Select a valid principal place of business" }
 
         expect(described_class.custom_error_messages(:location, :inclusion)).to eq(hash)

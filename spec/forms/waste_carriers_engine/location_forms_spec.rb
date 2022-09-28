@@ -14,7 +14,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(location_form.submit(valid_params)).to eq(true)
         end
       end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         let(:location_form) { build(:location_form, :has_required_data) }
         let(:invalid_params) { { location: "foo" } }
 
-        it "should not submit" do
+        it "does not submit" do
           expect(location_form.submit(invalid_params)).to eq(false)
         end
       end

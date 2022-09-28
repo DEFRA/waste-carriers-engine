@@ -18,26 +18,26 @@ module WasteCarriersEngine
       let(:order) { Order.new_order(transient_registration, payment_method, current_user.email) }
       let(:payment_method) { :worldpay }
 
-      it "should have a valid order_id" do
+      it "has a valid order_id" do
         Timecop.freeze(Time.new(2018, 1, 1)) do
           expect(order[:order_id]).to eq("1514764800")
         end
       end
 
-      it "should have a matching order_id and order_code" do
+      it "has a matching order_id and order_code" do
         expect(order[:order_id]).to eq(order[:order_code])
       end
 
-      it "should include 1 renewal item" do
+      it "includes 1 renewal item" do
         matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:renew] }
         expect(matching_item).to_not be_nil
       end
 
-      it "should have the correct total_amount" do
+      it "has the correct total_amount" do
         expect(order.total_amount).to eq(10_000)
       end
 
-      it "should have the correct updated_by_user" do
+      it "has the correct updated_by_user" do
         expect(order.updated_by_user).to eq(current_user.email)
       end
 
@@ -53,12 +53,12 @@ module WasteCarriersEngine
         end
       end
 
-      it "should have the correct description" do
+      it "has the correct description" do
         expect(order.description).to eq("Renewal of registration")
       end
 
       context "when the registration type has not changed" do
-        it "should not include a type change item" do
+        it "does not include a type change item" do
           matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:edit] }
           expect(matching_item).to be_nil
         end
@@ -69,16 +69,16 @@ module WasteCarriersEngine
           transient_registration.registration_type = "broker_dealer"
         end
 
-        it "should include a type change item" do
+        it "includes a type change item" do
           matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:edit] }
           expect(matching_item).to_not be_nil
         end
 
-        it "should have the correct total_amount" do
+        it "has the correct total_amount" do
           expect(order.total_amount).to eq(12_500)
         end
 
-        it "should have the correct description" do
+        it "has the correct description" do
           expect(order.description).to eq("Renewal of registration, plus changing carrier type")
         end
       end
@@ -88,7 +88,7 @@ module WasteCarriersEngine
           transient_registration.temp_cards = 0
         end
 
-        it "should not include a copy cards item" do
+        it "does not include a copy cards item" do
           matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:copy_cards] }
           expect(matching_item).to be_nil
         end
@@ -99,7 +99,7 @@ module WasteCarriersEngine
           transient_registration.temp_cards = nil
         end
 
-        it "should not include a copy cards item" do
+        it "does not include a copy cards item" do
           matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:copy_cards] }
           expect(matching_item).to be_nil
         end
@@ -110,30 +110,30 @@ module WasteCarriersEngine
           transient_registration.temp_cards = 3
         end
 
-        it "should include a copy cards item" do
+        it "includes a copy cards item" do
           matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:copy_cards] }
           expect(matching_item).to_not be_nil
         end
 
-        it "should have the correct total_amount" do
+        it "has the correct total_amount" do
           expect(order.total_amount).to eq(13_000)
         end
 
-        it "should have the correct description" do
+        it "has the correct description" do
           expect(order.description).to eq("Renewal of registration, plus 3 registration cards")
         end
       end
 
       context "when it is a Worldpay order" do
-        it "should have the correct payment_method" do
+        it "has the correct payment_method" do
           expect(order.payment_method).to eq("ONLINE")
         end
 
-        it "should have the correct merchant_id" do
+        it "has the correct merchant_id" do
           expect(order.merchant_id).to eq("MERCHANTCODE")
         end
 
-        it "should have the correct world_pay_status" do
+        it "has the correct world_pay_status" do
           expect(order.world_pay_status).to eq("IN_PROGRESS")
         end
       end
@@ -141,11 +141,11 @@ module WasteCarriersEngine
       context "when it is a govpay order" do
         let(:payment_method) { :govpay }
 
-        it "should have the correct payment_method" do
+        it "has the correct payment_method" do
           expect(order.payment_method).to eq("ONLINE")
         end
 
-        it "should have the correct world_pay_status" do
+        it "has the correct world_pay_status" do
           expect(order.govpay_status).to eq("IN_PROGRESS")
         end
       end
@@ -153,15 +153,15 @@ module WasteCarriersEngine
       context "when it is a bank transfer order" do
         let(:order) { Order.new_order(transient_registration, :bank_transfer, current_user) }
 
-        it "should have the correct payment_method" do
+        it "has the correct payment_method" do
           expect(order.payment_method).to eq("OFFLINE")
         end
 
-        it "should have the correct merchant_id" do
+        it "has the correct merchant_id" do
           expect(order.merchant_id).to eq(nil)
         end
 
-        it "should have the correct world_pay_status" do
+        it "has the correct world_pay_status" do
           expect(order.world_pay_status).to eq(nil)
         end
       end

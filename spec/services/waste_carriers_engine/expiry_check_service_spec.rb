@@ -113,7 +113,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.yesterday) }
         subject { ExpiryCheckService.new(registration) }
 
-        it "should be expired" do
+        it "is expired" do
           expect(subject.expired?).to eq(true)
         end
       end
@@ -122,7 +122,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.today) }
         subject { ExpiryCheckService.new(registration) }
 
-        it "should be expired" do
+        it "is expired" do
           expect(subject.expired?).to eq(true)
         end
       end
@@ -131,7 +131,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.tomorrow) }
         subject { ExpiryCheckService.new(registration) }
 
-        it "should not be expired" do
+        it "is not expired" do
           expect(subject.expired?).to eq(false)
         end
       end
@@ -174,7 +174,7 @@ module WasteCarriersEngine
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 2.day) }
           subject { ExpiryCheckService.new(registration) }
 
-          it "should not be in the window" do
+          it "is not in the window" do
             expect(subject.in_renewal_window?).to eq(false)
           end
         end
@@ -183,7 +183,7 @@ module WasteCarriersEngine
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 1.day) }
           subject { ExpiryCheckService.new(registration) }
 
-          it "should not be in the window" do
+          it "is not in the window" do
             expect(subject.in_renewal_window?).to eq(false)
           end
         end
@@ -192,7 +192,7 @@ module WasteCarriersEngine
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now) }
           subject { ExpiryCheckService.new(registration) }
 
-          it "should be in the window" do
+          it "is in the window" do
             expect(subject.in_renewal_window?).to eq(true)
           end
         end
@@ -201,7 +201,7 @@ module WasteCarriersEngine
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now - 1.day) }
           subject { ExpiryCheckService.new(registration) }
 
-          it "should be in the window" do
+          it "is in the window" do
             expect(subject.in_renewal_window?).to eq(true)
           end
         end

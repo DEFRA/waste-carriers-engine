@@ -10,7 +10,7 @@ module WasteCarriersEngine
       context "when the form is valid" do
         let(:valid_params) { { token: confirm_bank_transfer_form.token } }
 
-        it "should submit" do
+        it "submits" do
           expect(confirm_bank_transfer_form.submit(valid_params)).to eq(true)
         end
       end
@@ -20,7 +20,7 @@ module WasteCarriersEngine
           expect(confirm_bank_transfer_form).to receive(:valid?).and_return(false)
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(confirm_bank_transfer_form.submit({})).to eq(false)
         end
       end

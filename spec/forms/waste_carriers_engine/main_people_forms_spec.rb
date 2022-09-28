@@ -17,11 +17,11 @@ module WasteCarriersEngine
             dob_day: main_people_form.dob_day }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(main_people_form.submit(valid_params)).to eq(true)
         end
 
-        it "should set a person_type of 'KEY'" do
+        it "sets a person_type of 'KEY'" do
           main_people_form.submit(valid_params)
           expect(main_people_form.new_person.person_type).to eq("KEY")
         end
@@ -30,7 +30,7 @@ module WasteCarriersEngine
       context "when the form is not valid" do
         let(:invalid_params) { { token: "foo" } }
 
-        it "should not submit" do
+        it "does not submit" do
           expect(main_people_form.submit(invalid_params)).to eq(false)
         end
       end
@@ -51,7 +51,7 @@ module WasteCarriersEngine
             main_people_form.business_type = "overseas"
           end
 
-          it "should submit" do
+          it "submits" do
             expect(main_people_form.submit(blank_params)).to eq(true)
           end
         end
@@ -62,11 +62,11 @@ module WasteCarriersEngine
             main_people_form.business_type = "partnership"
           end
 
-          it "should not submit" do
+          it "does not submit" do
             expect(main_people_form.submit(blank_params)).to eq(false)
           end
 
-          it "should raise individual errors for each blank field" do
+          it "raises individual errors for each blank field" do
             main_people_form.submit(blank_params)
             expect(main_people_form.errors.attribute_names).to include(:first_name, :last_name, :dob)
           end
@@ -84,27 +84,27 @@ module WasteCarriersEngine
         end
         let(:main_people_form) { MainPeopleForm.new(transient_registration) }
 
-        it "should prefill the first_name" do
+        it "prefills the first_name" do
           first_name = transient_registration.key_people.first.first_name
           expect(main_people_form.first_name).to eq(first_name)
         end
 
-        it "should prefill the last_name" do
+        it "prefills the last_name" do
           last_name = transient_registration.key_people.first.last_name
           expect(main_people_form.last_name).to eq(last_name)
         end
 
-        it "should prefill the dob_day" do
+        it "prefills the dob_day" do
           dob_day = transient_registration.key_people.first.dob_day
           expect(main_people_form.dob_day).to eq(dob_day)
         end
 
-        it "should prefill the dob_month" do
+        it "prefills the dob_month" do
           dob_month = transient_registration.key_people.first.dob_month
           expect(main_people_form.dob_month).to eq(dob_month)
         end
 
-        it "should prefill the dob_year" do
+        it "prefills the dob_year" do
           dob_year = transient_registration.key_people.first.dob_year
           expect(main_people_form.dob_year).to eq(dob_year)
         end
@@ -328,12 +328,12 @@ module WasteCarriersEngine
             main_people_form.business_type = "limitedCompany"
           end
 
-          it "should be valid when 16 years old" do
+          it "is valid when 16 years old" do
             main_people_form.dob = Date.today - 16.years
             expect(main_people_form).to be_valid
           end
 
-          it "should not be valid when less than 16 years old" do
+          it "is not valid when less than 16 years old" do
             main_people_form.dob = Date.today - 15.years
             expect(main_people_form).to_not be_valid
           end
@@ -344,12 +344,12 @@ module WasteCarriersEngine
             main_people_form.business_type = "soleTrader"
           end
 
-          it "should be valid when 17 years old" do
+          it "is valid when 17 years old" do
             main_people_form.dob = Date.today - 17.years
             expect(main_people_form).to be_valid
           end
 
-          it "should not be valid when less than 17 years old" do
+          it "is not valid when less than 17 years old" do
             main_people_form.dob = Date.today - 16.years
             expect(main_people_form).to_not be_valid
           end

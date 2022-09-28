@@ -21,7 +21,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(contact_address_form.submit(valid_params)).to eq(true)
         end
       end
@@ -30,7 +30,7 @@ module WasteCarriersEngine
         let(:contact_address_form) { build(:contact_address_form, :has_required_data) }
         let(:invalid_params) { { token: "foo" } }
 
-        it "should not submit" do
+        it "does not submit" do
           expect(contact_address_form.submit(invalid_params)).to eq(false)
         end
       end

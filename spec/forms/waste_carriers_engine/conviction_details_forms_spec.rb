@@ -18,11 +18,11 @@ module WasteCarriersEngine
             dob_day: conviction_details_form.dob_day }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(conviction_details_form.submit(valid_params)).to eq(true)
         end
 
-        it "should set a person_type of 'RELEVANT'" do
+        it "sets a person_type of 'RELEVANT'" do
           conviction_details_form.submit(valid_params)
           expect(conviction_details_form.new_person.person_type).to eq("RELEVANT")
         end
@@ -31,7 +31,7 @@ module WasteCarriersEngine
       context "when the form is not valid" do
         let(:invalid_params) { { token: "foo" } }
 
-        it "should not submit" do
+        it "does not submit" do
           expect(conviction_details_form.submit(invalid_params)).to eq(false)
         end
       end
@@ -52,7 +52,7 @@ module WasteCarriersEngine
             conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :relevant)])
           end
 
-          it "should submit" do
+          it "submits" do
             expect(conviction_details_form.submit(blank_params)).to eq(true)
           end
         end
@@ -62,11 +62,11 @@ module WasteCarriersEngine
             conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :main)])
           end
 
-          it "should not submit" do
+          it "does not submit" do
             expect(conviction_details_form.submit(blank_params)).to eq(false)
           end
 
-          it "should raise individual errors for each blank field" do
+          it "raises individual errors for each blank field" do
             conviction_details_form.submit(blank_params)
             expect(conviction_details_form.errors.attribute_names).to include(:first_name, :last_name, :position, :dob)
           end
@@ -309,7 +309,7 @@ module WasteCarriersEngine
             conviction_details_form.dob = Date.today
           end
 
-          it "should not be valid" do
+          it "is not valid" do
             expect(conviction_details_form).to_not be_valid
           end
         end

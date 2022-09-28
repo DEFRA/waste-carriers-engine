@@ -8,7 +8,7 @@ module WasteCarriersEngine
       let(:copy_cards_bank_transfer_form) { build(:copy_cards_bank_transfer_form, :has_required_data) }
 
       context "when the form is valid" do
-        it "should submit" do
+        it "submits" do
           expect(copy_cards_bank_transfer_form.submit({})).to eq(true)
         end
       end
@@ -18,7 +18,7 @@ module WasteCarriersEngine
           expect(copy_cards_bank_transfer_form).to receive(:valid?).and_return(false)
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(copy_cards_bank_transfer_form.submit({})).to eq(false)
         end
       end

@@ -13,7 +13,7 @@ module WasteCarriersEngine
         let(:contact_postcode_form) { build(:contact_postcode_form, :has_required_data) }
         let(:valid_params) { { token: contact_postcode_form.token, temp_contact_postcode: "BS1 5AH" } }
 
-        it "should submit" do
+        it "submits" do
           expect(contact_postcode_form.submit(valid_params)).to eq(true)
         end
 
@@ -44,7 +44,7 @@ module WasteCarriersEngine
         let(:contact_postcode_form) { build(:contact_postcode_form, :has_required_data) }
         let(:invalid_params) { { token: "foo" } }
 
-        it "should not submit" do
+        it "does not submit" do
           expect(contact_postcode_form.submit(invalid_params)).to eq(false)
         end
       end

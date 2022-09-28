@@ -10,7 +10,7 @@ module WasteCarriersEngine
       context "when the form is valid" do
         let(:valid_params) { { token: renewal_information_form.token } }
 
-        it "should submit" do
+        it "submits" do
           expect(renewal_information_form.submit(valid_params)).to eq(true)
         end
       end
@@ -20,7 +20,7 @@ module WasteCarriersEngine
           expect(renewal_information_form).to receive(:valid?).and_return(false)
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(renewal_information_form.submit({})).to eq(false)
         end
       end

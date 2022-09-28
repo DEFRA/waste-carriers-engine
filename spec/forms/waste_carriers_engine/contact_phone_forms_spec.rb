@@ -14,7 +14,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(contact_phone_form.submit(valid_params)).to eq(true)
         end
       end
@@ -28,7 +28,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(contact_phone_form.submit(invalid_params)).to eq(false)
         end
       end

@@ -14,7 +14,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(declaration_form.submit(valid_params)).to eq(true)
         end
 
@@ -22,7 +22,7 @@ module WasteCarriersEngine
           let(:declaration_form) { build(:declaration_form, :has_new_registration_data) }
           let(:transient_registration) { declaration_form.transient_registration }
 
-          it "should assign a reg identifier number to the transient registration object" do
+          it "assigns a reg identifier number to the transient registration object" do
             expect { declaration_form.submit(valid_params) }.to change { transient_registration.reload.attributes["regIdentifier"] }.to("1")
           end
         end
@@ -37,7 +37,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(declaration_form.submit(invalid_params)).to eq(false)
         end
       end

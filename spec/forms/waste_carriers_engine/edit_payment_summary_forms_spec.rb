@@ -12,7 +12,7 @@ module WasteCarriersEngine
           { temp_payment_method: "card" }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(edit_payment_summary_form.submit(valid_params)).to eq(true)
         end
       end
@@ -22,7 +22,7 @@ module WasteCarriersEngine
           expect(edit_payment_summary_form).to receive(:valid?).and_return(false)
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(edit_payment_summary_form.submit({})).to eq(false)
         end
       end

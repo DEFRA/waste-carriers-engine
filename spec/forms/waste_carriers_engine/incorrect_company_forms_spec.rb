@@ -10,7 +10,7 @@ module WasteCarriersEngine
       context "when the form is valid" do
         let(:valid_params) { { token: incorrect_company_form.token } }
 
-        it "should submit" do
+        it "submits" do
           expect(incorrect_company_form.submit(valid_params)).to be_truthy
         end
       end
@@ -20,7 +20,7 @@ module WasteCarriersEngine
           expect(incorrect_company_form).to receive(:valid?).and_return(false)
         end
 
-        it "should not submit" do
+        it "does not submit" do
           expect(incorrect_company_form.submit({})).to be_falsey
         end
       end

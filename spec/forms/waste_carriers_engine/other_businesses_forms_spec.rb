@@ -14,7 +14,7 @@ module WasteCarriersEngine
           }
         end
 
-        it "should submit" do
+        it "submits" do
           expect(other_businesses_form.submit(valid_params)).to eq(true)
         end
       end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         let(:other_businesses_form) { build(:other_businesses_form, :has_required_data) }
         let(:invalid_params) { { other_businesses: "foo" } }
 
-        it "should not submit" do
+        it "does not submit" do
           expect(other_businesses_form.submit(invalid_params)).to eq(false)
         end
       end

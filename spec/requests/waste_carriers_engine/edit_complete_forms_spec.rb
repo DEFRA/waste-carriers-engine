@@ -104,7 +104,7 @@ module WasteCarriersEngine
               let(:email) { "behindthescenes@example.com" }
               let(:expires_on) { Date.today + 42.days }
 
-              it "it does not overwrite those details" do
+              it "does not overwrite those details" do
                 # We have to be careful of lazy let() evaluation. We need to
                 # ensure the transient_registration (edit record) is created
                 # before we make our changes to the registration. So these
