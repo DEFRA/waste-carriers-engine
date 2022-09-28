@@ -99,7 +99,7 @@ module WasteCarriersEngine
       end
 
       private_class_method def self.term_without_ignorable_org_words(term)
-        word_array = term.downcase.split(" ")
+        word_array = term.downcase.split
         word_array.reject! { |word| IGNORABLE_ORG_NAME_WORDS.include?(word) }
         word_array.join(" ")
       end
