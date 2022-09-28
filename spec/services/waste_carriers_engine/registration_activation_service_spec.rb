@@ -43,7 +43,7 @@ module WasteCarriersEngine
         before { allow(registration).to receive(:unpaid_balance?).and_return(true) }
 
         it "does not activate the registration" do
-          expect { service }.to_not change { registration.active? }
+          expect { service }.not_to change { registration.active? }
         end
 
         it "does not create an order item log" do
@@ -55,7 +55,7 @@ module WasteCarriersEngine
         before { allow(registration).to receive(:pending_manual_conviction_check?).and_return(true) }
 
         it "does not activate the registration" do
-          expect { service }.to_not change { registration.active? }
+          expect { service }.not_to change { registration.active? }
         end
 
         it "does not create an order item log" do

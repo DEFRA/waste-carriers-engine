@@ -8,7 +8,7 @@ module WasteCarriersEngine
       context "when a user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -37,7 +37,7 @@ module WasteCarriersEngine
               end
 
               context "when the registration cannot be renewed" do
-                before(:each) { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
+                before { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
 
                 it "redirects to the unrenewable error page" do
                   get new_renewal_start_form_path(registration.reg_identifier)
@@ -146,7 +146,7 @@ module WasteCarriersEngine
       end
 
       context "when a user is not signed in" do
-        before(:each) do
+        before do
           user = create(:user)
           sign_out(user)
         end
@@ -164,7 +164,7 @@ module WasteCarriersEngine
       context "when a user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -230,7 +230,7 @@ module WasteCarriersEngine
                 end
 
                 context "when the registration cannot be renewed" do
-                  before(:each) { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
+                  before { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
 
                   it "redirects to the unrenewable error page" do
                     get new_renewal_start_form_path(valid_registration)
@@ -323,7 +323,7 @@ module WasteCarriersEngine
         let(:registration) { create(:registration, :has_required_data) }
         let(:valid_registration) { registration.reg_identifier }
 
-        before(:each) do
+        before do
           user = create(:user)
           sign_out(user)
         end

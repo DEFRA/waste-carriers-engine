@@ -10,7 +10,7 @@ module WasteCarriersEngine
             declared_convictions: declared_convictions,
             workflow_state: "contact_name_form")
     end
-    let(:declared_convictions) {}
+    let(:declared_convictions) { nil }
 
     describe "#workflow_state" do
       context ":contact_name_form state transitions" do

@@ -30,7 +30,7 @@ module WasteCarriersEngine
         let(:tier) { "LOWER" }
 
         it "returns 'false'" do
-          expect(subject.complex_organisation_details?).to eq(false)
+          expect(subject.complex_organisation_details?).to be false
         end
       end
 

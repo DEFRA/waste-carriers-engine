@@ -35,7 +35,7 @@ RSpec.shared_examples "validate yes no" do |form_factory, field|
       let(:yes_or_no_value) { "foo" }
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.shared_examples "validate yes no" do |form_factory, field|
       let(:yes_or_no_value) { "" }
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.shared_examples "validate yes no" do |form_factory, field|
       let(:yes_or_no_value) { nil }
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
   end

@@ -26,7 +26,7 @@ RSpec.shared_examples "GovpayCallbackService valid unsuccessful action" do |vali
     end
 
     it "returns true" do
-      expect(govpay_service.public_send(valid_action)).to eq(true)
+      expect(govpay_service.public_send(valid_action)).to be true
     end
 
     it "updates the order status" do
@@ -41,7 +41,7 @@ RSpec.shared_examples "GovpayCallbackService valid unsuccessful action" do |vali
     end
 
     it "returns false" do
-      expect(govpay_service.public_send(valid_action)).to eq(false)
+      expect(govpay_service.public_send(valid_action)).to be false
     end
 
     it "does not update the order" do

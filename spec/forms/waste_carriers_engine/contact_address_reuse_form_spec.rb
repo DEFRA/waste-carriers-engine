@@ -11,13 +11,13 @@ module WasteCarriersEngine
         let(:valid_params) { { temp_reuse_registered_address: "no" } }
 
         it "submits" do
-          expect(contact_address_reuse_form.submit(valid_params)).to eq(true)
+          expect(contact_address_reuse_form.submit(valid_params)).to be true
         end
       end
 
       context "when the form is not valid" do
         it "does not submit" do
-          expect(contact_address_reuse_form.submit({})).to eq(false)
+          expect(contact_address_reuse_form.submit({})).to be false
         end
       end
     end

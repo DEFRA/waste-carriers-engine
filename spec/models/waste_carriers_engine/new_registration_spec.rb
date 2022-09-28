@@ -17,7 +17,7 @@ module WasteCarriersEngine
         let(:temp_check_your_tier) { nil }
 
         it "returns false" do
-          expect(subject.tier_known?).to eq(false)
+          expect(subject.tier_known?).to be false
         end
       end
 
@@ -25,7 +25,7 @@ module WasteCarriersEngine
         let(:temp_check_your_tier) { "unknown" }
 
         it "returns false" do
-          expect(subject.tier_known?).to eq(false)
+          expect(subject.tier_known?).to be false
         end
       end
 
@@ -33,7 +33,7 @@ module WasteCarriersEngine
         let(:temp_check_your_tier) { "lower" }
 
         it "returns true" do
-          expect(subject.tier_known?).to eq(true)
+          expect(subject.tier_known?).to be true
         end
       end
     end

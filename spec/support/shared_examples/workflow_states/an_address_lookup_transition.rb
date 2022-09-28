@@ -12,7 +12,7 @@ RSpec.shared_examples "an address lookup transition" do |next_state_if_not_skipp
       next_state = next_state_if_not_skipping_to_manual
       alt_state = "#{address_type}_address_manual_form".to_sym
 
-      before(:each) { subject.temp_os_places_error = nil }
+      before { subject.temp_os_places_error = nil }
 
       it "changes to #{next_state} after the 'next' event" do
 
@@ -30,7 +30,7 @@ RSpec.shared_examples "an address lookup transition" do |next_state_if_not_skipp
     context "when subject.skip_to_manual_address? is true" do
       next_state = "#{address_type}_address_manual_form".to_sym
 
-      before(:each) { subject.temp_os_places_error = true }
+      before { subject.temp_os_places_error = true }
 
       it "changes to #{next_state} after the 'next' event" do
         expect(subject).to transition_from(current_state).to(next_state).on_event(:next)

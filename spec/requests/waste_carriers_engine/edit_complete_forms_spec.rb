@@ -7,7 +7,7 @@ module WasteCarriersEngine
     describe "GET new_edit_complete_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -60,7 +60,7 @@ module WasteCarriersEngine
               # But don't modify finance details or other non-editable attributes
               expect(registration.account_email).to eq(old_account_email)
               expect(registration.expires_on).to eq(old_expires_on)
-              expect(registration.expires_on).to_not eq(different_expires_on)
+              expect(registration.expires_on).not_to eq(different_expires_on)
               expect(registration.finance_details).to eq(old_finance_details)
               expect(registration.relevant_people).to eq(old_relevant_people)
 
@@ -111,8 +111,8 @@ module WasteCarriersEngine
                 # expects not only ensure that, they also mean the transient
                 # is initialised before we then apply changes to the
                 # registration.
-                expect(transient_registration.account_email).to_not eq(email)
-                expect(transient_registration.expires_on).to_not eq(expires_on)
+                expect(transient_registration.account_email).not_to eq(email)
+                expect(transient_registration.expires_on).not_to eq(expires_on)
 
                 registration.account_email = email
                 registration.expires_on = expires_on
@@ -136,12 +136,12 @@ module WasteCarriersEngine
               get new_edit_complete_form_path(transient_registration.token)
               registration.reload
 
-              expect(registration.contact_email).to_not eq(updated_email)
+              expect(registration.contact_email).not_to eq(updated_email)
 
-              expect(registration.main_people.first.first_name).to_not eq(updated_person.first_name)
+              expect(registration.main_people.first.first_name).not_to eq(updated_person.first_name)
 
-              expect(registration.registered_address.postcode).to_not eq(updated_registered_address.postcode)
-              expect(registration.contact_address.postcode).to_not eq(updated_contact_address.postcode)
+              expect(registration.registered_address.postcode).not_to eq(updated_registered_address.postcode)
+              expect(registration.contact_address.postcode).not_to eq(updated_contact_address.postcode)
 
               expect(WasteCarriersEngine::TransientRegistration.count).to eq(1)
 

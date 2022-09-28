@@ -26,7 +26,7 @@ module WasteCarriersEngine
       end
 
       it "persists" do
-        expect(finance_details.persisted?).to eq(true)
+        expect(finance_details.persisted?).to be true
       end
     end
 

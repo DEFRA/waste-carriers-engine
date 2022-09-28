@@ -12,7 +12,7 @@ RSpec.shared_examples "a postcode transition" do |address_type:, factory:|
       next_state = "#{address_type}_address_form".to_sym
       alt_state = "#{address_type}_address_manual_form".to_sym
 
-      before(:each) { subject.temp_os_places_error = nil }
+      before { subject.temp_os_places_error = nil }
 
       it "can only transition to either #{next_state} or #{alt_state}" do
         permitted_states = Helpers::WorkflowStates.permitted_states(subject)
@@ -35,7 +35,7 @@ RSpec.shared_examples "a postcode transition" do |address_type:, factory:|
     context "when subject.skip_to_manual_address? is true" do
       next_state = "#{address_type}_address_manual_form".to_sym
 
-      before(:each) { subject.temp_os_places_error = true }
+      before { subject.temp_os_places_error = true }
 
       it "can only transition to either #{next_state}" do
         permitted_states = Helpers::WorkflowStates.permitted_states(subject)

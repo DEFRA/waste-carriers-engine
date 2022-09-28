@@ -13,7 +13,7 @@ module WasteCarriersEngine
             workflow_state: "renewal_information_form")
     end
     let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
-    let(:business_type) {}
+    let(:business_type) { nil }
     let(:location) { "england" }
 
     describe "#workflow_state" do

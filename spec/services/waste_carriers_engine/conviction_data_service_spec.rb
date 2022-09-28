@@ -30,7 +30,7 @@ module WasteCarriersEngine
 
           it "does not create a conviction_search_result" do
             conviction_data_service
-            expect(transient_registration.reload.conviction_sign_offs).to_not exist
+            expect(transient_registration.reload.conviction_sign_offs).not_to exist
           end
         end
 

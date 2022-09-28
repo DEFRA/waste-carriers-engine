@@ -11,7 +11,7 @@ module WasteCarriersEngine
         let(:valid_params) { { token: renewal_information_form.token } }
 
         it "submits" do
-          expect(renewal_information_form.submit(valid_params)).to eq(true)
+          expect(renewal_information_form.submit(valid_params)).to be true
         end
       end
 
@@ -21,7 +21,7 @@ module WasteCarriersEngine
         end
 
         it "does not submit" do
-          expect(renewal_information_form.submit({})).to eq(false)
+          expect(renewal_information_form.submit({})).to be false
         end
       end
     end

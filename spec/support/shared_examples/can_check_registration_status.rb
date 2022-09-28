@@ -24,7 +24,7 @@ RSpec.shared_examples "Can check registration status" do |factory:|
       before { resource.metaData.status = "PENDING" }
 
       it "returns false" do
-        expect(resource).to_not be_active
+        expect(resource).not_to be_active
       end
     end
   end
@@ -42,7 +42,7 @@ RSpec.shared_examples "Can check registration status" do |factory:|
       before { resource.metaData.status = "ACTIVE" }
 
       it "returns false" do
-        expect(resource).to_not be_expired
+        expect(resource).not_to be_expired
       end
     end
   end
@@ -60,7 +60,7 @@ RSpec.shared_examples "Can check registration status" do |factory:|
       before { resource.metaData.status = "ACTIVE" }
 
       it "returns false" do
-        expect(resource).to_not be_inactive
+        expect(resource).not_to be_inactive
       end
     end
   end
@@ -78,7 +78,7 @@ RSpec.shared_examples "Can check registration status" do |factory:|
       before { resource.metaData.status = "ACTIVE" }
 
       it "returns false" do
-        expect(resource).to_not be_pending
+        expect(resource).not_to be_pending
       end
     end
   end
@@ -96,7 +96,7 @@ RSpec.shared_examples "Can check registration status" do |factory:|
       before { resource.metaData.status = "ACTIVE" }
 
       it "returns false" do
-        expect(resource).to_not be_refused
+        expect(resource).not_to be_refused
       end
     end
   end
@@ -114,7 +114,7 @@ RSpec.shared_examples "Can check registration status" do |factory:|
       before { resource.metaData.status = "ACTIVE" }
 
       it "returns false" do
-        expect(resource).to_not be_revoked
+        expect(resource).not_to be_revoked
       end
     end
   end

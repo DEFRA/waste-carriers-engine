@@ -12,7 +12,7 @@ RSpec.shared_examples "valid only if company_name is not required" do
       before { form.transient_registration.temp_use_trading_name = "yes" }
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
   end
@@ -21,7 +21,7 @@ RSpec.shared_examples "valid only if company_name is not required" do
     before { allow(form.transient_registration).to receive(:company_name_required?).and_return(true) }
 
     it "is not valid" do
-      expect(form).to_not be_valid
+      expect(form).not_to be_valid
     end
   end
 end
@@ -55,7 +55,7 @@ RSpec.shared_examples "validate company_name" do |form_factory|
       end
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
   end

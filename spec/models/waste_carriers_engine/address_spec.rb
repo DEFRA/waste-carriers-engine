@@ -49,8 +49,8 @@ module WasteCarriersEngine
           it "skips blank fields when assigning lines" do
             expect(address[:address_line1]).to eq("QUX CORNER")
             expect(address[:address_line2]).to eq("QUUX VILLAGE")
-            expect(address[:address_line3].present?).to eq(false)
-            expect(address[:address_line4].present?).to eq(false)
+            expect(address[:address_line3].present?).to be false
+            expect(address[:address_line4].present?).to be false
           end
         end
       end

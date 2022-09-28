@@ -8,6 +8,6 @@ RSpec.shared_examples "Having a secure token" do
 
     transient_registration.save
 
-    expect(transient_registration.reload.token).to_not be_nil
+    expect(transient_registration.reload.token).not_to be_nil
   end
 end

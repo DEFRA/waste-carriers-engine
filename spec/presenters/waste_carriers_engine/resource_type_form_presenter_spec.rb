@@ -19,7 +19,7 @@ module WasteCarriersEngine
         let(:object) { double(:object) }
 
         it "returns false" do
-          expect(subject).to_not be_a_new_registration
+          expect(subject).not_to be_a_new_registration
         end
       end
     end
@@ -37,7 +37,7 @@ module WasteCarriersEngine
         let(:object) { double(:object) }
 
         it "returns false" do
-          expect(subject).to_not be_a_renewal
+          expect(subject).not_to be_a_renewal
         end
       end
     end

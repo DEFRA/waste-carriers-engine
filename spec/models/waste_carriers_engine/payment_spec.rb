@@ -35,7 +35,7 @@ module WasteCarriersEngine
           result = transient_registration.finance_details.payments.refundable
 
           expect(result).to include(cash_payment)
-          expect(result).to_not include(refund_payment)
+          expect(result).not_to include(refund_payment)
         end
       end
 
@@ -54,7 +54,7 @@ module WasteCarriersEngine
           result = transient_registration.finance_details.payments.reversible
 
           expect(result).to include(cash_payment)
-          expect(result).to_not include(refund_payment)
+          expect(result).not_to include(refund_payment)
         end
       end
 

@@ -21,7 +21,7 @@ module WasteCarriersEngine
         end
 
         it "submits" do
-          expect(company_address_form.submit(valid_params)).to eq(true)
+          expect(company_address_form.submit(valid_params)).to be true
         end
       end
 
@@ -30,7 +30,7 @@ module WasteCarriersEngine
         let(:invalid_params) { { token: "foo" } }
 
         it "does not submit" do
-          expect(company_address_form.submit(invalid_params)).to eq(false)
+          expect(company_address_form.submit(invalid_params)).to be false
         end
       end
     end
@@ -40,12 +40,12 @@ module WasteCarriersEngine
 
       describe "#addresses" do
         context "when no address is selected" do
-          before(:each) do
+          before do
             company_address_form.transient_registration.addresses = nil
           end
 
           it "is not valid" do
-            expect(company_address_form).to_not be_valid
+            expect(company_address_form).not_to be_valid
           end
         end
       end

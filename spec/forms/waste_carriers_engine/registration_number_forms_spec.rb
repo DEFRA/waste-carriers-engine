@@ -14,11 +14,11 @@ module WasteCarriersEngine
         let(:valid_params) { { token: registration_number_form.token, company_no: "09360070" } }
 
         it "submits" do
-          expect(registration_number_form.submit(valid_params)).to eq(true)
+          expect(registration_number_form.submit(valid_params)).to be true
         end
 
         context "when the token is less than 8 characters" do
-          before(:each) { valid_params[:company_no] = "946107" }
+          before { valid_params[:company_no] = "946107" }
 
           it "increases the length" do
             registration_number_form.submit(valid_params)
@@ -26,7 +26,7 @@ module WasteCarriersEngine
           end
 
           it "submits" do
-            expect(registration_number_form.submit(valid_params)).to eq(true)
+            expect(registration_number_form.submit(valid_params)).to be true
           end
         end
       end
@@ -36,7 +36,7 @@ module WasteCarriersEngine
         let(:invalid_params) { { token: "foo", company_no: "foo" } }
 
         it "does not submit" do
-          expect(registration_number_form.submit(invalid_params)).to eq(false)
+          expect(registration_number_form.submit(invalid_params)).to be false
         end
       end
     end

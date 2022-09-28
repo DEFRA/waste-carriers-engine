@@ -31,7 +31,7 @@ module WasteCarriersEngine
         end
 
         it "does not explode" do
-          expect { subject }.to_not raise_error
+          expect { subject }.not_to raise_error
         end
 
         it "checks for matching entities" do

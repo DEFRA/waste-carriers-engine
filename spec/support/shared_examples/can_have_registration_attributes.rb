@@ -33,7 +33,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:resource) { build(factory, declared_convictions: "yes") }
 
       it "returns true" do
-        expect(resource.declared_convictions?).to eq(true)
+        expect(resource.declared_convictions?).to be true
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:resource) { build(factory, declared_convictions: "no") }
 
       it "returns false" do
-        expect(resource.declared_convictions?).to eq(false)
+        expect(resource.declared_convictions?).to be false
       end
     end
   end
@@ -200,7 +200,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns true" do
-        expect(resource.assisted_digital?).to eq(true)
+        expect(resource.assisted_digital?).to be true
       end
     end
 
@@ -210,7 +210,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns true" do
-        expect(resource.assisted_digital?).to eq(true)
+        expect(resource.assisted_digital?).to be true
       end
     end
 
@@ -220,7 +220,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.assisted_digital?).to eq(false)
+        expect(resource.assisted_digital?).to be false
       end
     end
   end
@@ -249,7 +249,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.conviction_check_required?).to eq(false)
+        expect(resource.conviction_check_required?).to be false
       end
     end
 
@@ -264,7 +264,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns false" do
-          expect(resource.conviction_check_required?).to eq(false)
+          expect(resource.conviction_check_required?).to be false
         end
       end
 
@@ -274,7 +274,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns true" do
-          expect(resource.conviction_check_required?).to eq(true)
+          expect(resource.conviction_check_required?).to be true
         end
       end
     end
@@ -287,7 +287,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.conviction_check_approved?).to eq(false)
+        expect(resource.conviction_check_approved?).to be false
       end
     end
 
@@ -302,7 +302,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns false" do
-          expect(resource.conviction_check_approved?).to eq(false)
+          expect(resource.conviction_check_approved?).to be false
         end
       end
 
@@ -312,7 +312,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns true" do
-          expect(resource.conviction_check_approved?).to eq(true)
+          expect(resource.conviction_check_approved?).to be true
         end
       end
     end
@@ -325,7 +325,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.unpaid_balance?).to eq(false)
+        expect(resource.unpaid_balance?).to be false
       end
     end
 
@@ -335,7 +335,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.unpaid_balance?).to eq(false)
+        expect(resource.unpaid_balance?).to be false
       end
     end
 
@@ -345,7 +345,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.unpaid_balance?).to eq(false)
+        expect(resource.unpaid_balance?).to be false
       end
     end
 
@@ -355,7 +355,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns true" do
-        expect(resource.unpaid_balance?).to eq(true)
+        expect(resource.unpaid_balance?).to be true
       end
     end
   end

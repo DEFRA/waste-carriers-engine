@@ -90,7 +90,7 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
       let(:term) { "*" }
 
       it "does not break the search" do
-        expect { scope }.to_not raise_error
+        expect { scope }.not_to raise_error
       end
     end
   end

@@ -13,7 +13,7 @@ module WasteCarriersEngine
         end
 
         it "submits" do
-          expect(edit_payment_summary_form.submit(valid_params)).to eq(true)
+          expect(edit_payment_summary_form.submit(valid_params)).to be true
         end
       end
 
@@ -23,7 +23,7 @@ module WasteCarriersEngine
         end
 
         it "does not submit" do
-          expect(edit_payment_summary_form.submit({})).to eq(false)
+          expect(edit_payment_summary_form.submit({})).to be false
         end
       end
     end

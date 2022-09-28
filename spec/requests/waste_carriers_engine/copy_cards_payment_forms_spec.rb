@@ -8,7 +8,7 @@ module WasteCarriersEngine
       context "when a user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -32,7 +32,7 @@ module WasteCarriersEngine
       end
 
       context "when a user is not signed in" do
-        before(:each) do
+        before do
           user = create(:user)
           sign_out(user)
         end
@@ -50,7 +50,7 @@ module WasteCarriersEngine
       context "when a user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -114,7 +114,7 @@ module WasteCarriersEngine
       end
 
       context "when a user is not signed in" do
-        before(:each) do
+        before do
           user = create(:user)
           sign_out(user)
         end

@@ -36,7 +36,7 @@ module WasteCarriersEngine
           before { allow_any_instance_of(GovpayValidatorService).to receive(:valid_success?).and_return(true) }
 
           it "returns true" do
-            expect(govpay_service.valid_success?).to eq(true)
+            expect(govpay_service.valid_success?).to be true
           end
 
           it "updates the payment status" do
@@ -59,7 +59,7 @@ module WasteCarriersEngine
           before { allow_any_instance_of(GovpayValidatorService).to receive(:valid_success?).and_return(false) }
 
           it "returns false" do
-            expect(govpay_service.valid_success?).to eq(false)
+            expect(govpay_service.valid_success?).to be false
           end
 
           it "does not update the order" do

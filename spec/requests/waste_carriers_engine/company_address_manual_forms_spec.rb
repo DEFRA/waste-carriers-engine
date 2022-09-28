@@ -9,7 +9,7 @@ module WasteCarriersEngine
     describe "POST company_address_manual_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -77,7 +77,7 @@ module WasteCarriersEngine
 
                 post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
 
-                expect(transient_registration.reload.registered_address).to_not eq(old_registered_address)
+                expect(transient_registration.reload.registered_address).not_to eq(old_registered_address)
                 expect(transient_registration.reload.registered_address.address_line1).to eq("Foo Terrace")
                 expect(transient_registration.reload.contact_address).to eq(old_contact_address)
                 expect(transient_registration.reload.addresses.count).to eq(number_of_addresses)

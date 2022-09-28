@@ -37,7 +37,7 @@ RSpec.shared_examples "WorldpayService valid unsuccessful action" do |valid_acti
     end
 
     it "returns true" do
-      expect(worldpay_service.public_send(valid_action)).to eq(true)
+      expect(worldpay_service.public_send(valid_action)).to be true
     end
 
     it "updates the order status" do
@@ -52,7 +52,7 @@ RSpec.shared_examples "WorldpayService valid unsuccessful action" do |valid_acti
     end
 
     it "returns false" do
-      expect(worldpay_service.public_send(valid_action)).to eq(false)
+      expect(worldpay_service.public_send(valid_action)).to be false
     end
 
     it "does not update the order" do

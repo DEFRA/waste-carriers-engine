@@ -30,7 +30,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
       end
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
       end
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
 
@@ -58,7 +58,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
       end
 
       it "is not valid" do
-        expect(form).to_not be_valid
+        expect(form).not_to be_valid
       end
     end
 

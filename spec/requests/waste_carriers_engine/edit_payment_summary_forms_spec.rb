@@ -8,7 +8,7 @@ module WasteCarriersEngine
       context "when a user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -35,7 +35,7 @@ module WasteCarriersEngine
 
           context "when it already has a finance_details" do
             it "does not modify the finance_details" do
-              expect { get new_edit_payment_summary_form_path(edit_registration.token) }.to_not change { edit_registration.finance_details }
+              expect { get new_edit_payment_summary_form_path(edit_registration.token) }.not_to change { edit_registration.finance_details }
             end
           end
 
@@ -51,7 +51,7 @@ module WasteCarriersEngine
 
               get new_edit_payment_summary_form_path(edit_registration.token)
 
-              expect(edit_registration.reload.finance_details).to_not be_nil
+              expect(edit_registration.reload.finance_details).not_to be_nil
             end
           end
         end
@@ -62,7 +62,7 @@ module WasteCarriersEngine
       context "when a user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 

@@ -11,7 +11,7 @@ module WasteCarriersEngine
         let(:valid_params) { { token: confirm_bank_transfer_form.token } }
 
         it "submits" do
-          expect(confirm_bank_transfer_form.submit(valid_params)).to eq(true)
+          expect(confirm_bank_transfer_form.submit(valid_params)).to be true
         end
       end
 
@@ -21,7 +21,7 @@ module WasteCarriersEngine
         end
 
         it "does not submit" do
-          expect(confirm_bank_transfer_form.submit({})).to eq(false)
+          expect(confirm_bank_transfer_form.submit({})).to be false
         end
       end
     end

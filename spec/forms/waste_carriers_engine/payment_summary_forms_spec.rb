@@ -21,7 +21,7 @@ module WasteCarriersEngine
           let(:card_confirmation_email) { "foo@example.com" }
 
           it "submits" do
-            expect(payment_summary_form.submit(params)).to eq(true)
+            expect(payment_summary_form.submit(params)).to be true
           end
         end
 
@@ -30,13 +30,13 @@ module WasteCarriersEngine
           let(:card_confirmation_email) { "foo@com" }
 
           it "does not submit" do
-            expect(payment_summary_form.submit(params)).to eq(false)
+            expect(payment_summary_form.submit(params)).to be false
           end
         end
       end
 
       context "when hosted in the back-office" do
-        before(:each) do
+        before do
           allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
         end
 
@@ -51,7 +51,7 @@ module WasteCarriersEngine
           let(:payment_method) { "card" }
 
           it "submits" do
-            expect(payment_summary_form.submit(params)).to eq(true)
+            expect(payment_summary_form.submit(params)).to be true
           end
         end
 
@@ -59,7 +59,7 @@ module WasteCarriersEngine
           let(:payment_method) { "foo" }
 
           it "does not submit" do
-            expect(payment_summary_form.submit(params)).to eq(false)
+            expect(payment_summary_form.submit(params)).to be false
           end
         end
       end
@@ -67,7 +67,7 @@ module WasteCarriersEngine
     end
 
     describe "#valid?" do
-      before(:each) do
+      before do
         payment_summary_form.transient_registration.temp_payment_method = temp_payment_method
       end
 
@@ -113,13 +113,13 @@ module WasteCarriersEngine
           let(:card_confirmation_email) { "hello@example.com" }
 
           it "is not valid" do
-            expect(payment_summary_form).to_not be_valid
+            expect(payment_summary_form).not_to be_valid
           end
         end
       end
 
       context "when hosted in the back-office" do
-        before(:each) do
+        before do
           allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
         end
 
@@ -143,7 +143,7 @@ module WasteCarriersEngine
           let(:temp_payment_method) { "I am a payment method, don't you know?" }
 
           it "is not valid" do
-            expect(payment_summary_form).to_not be_valid
+            expect(payment_summary_form).not_to be_valid
           end
         end
       end

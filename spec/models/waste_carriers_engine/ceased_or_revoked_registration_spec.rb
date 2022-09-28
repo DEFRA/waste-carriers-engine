@@ -20,13 +20,13 @@ module WasteCarriersEngine
           it "is not valid if the reg_identifier is in the wrong format" do
             ceased_or_revoked_registration.reg_identifier = "foo"
 
-            expect(ceased_or_revoked_registration).to_not be_valid
+            expect(ceased_or_revoked_registration).not_to be_valid
           end
 
           it "is not valid if no matching registration exists" do
             ceased_or_revoked_registration.reg_identifier = "CBDU999999"
 
-            expect(ceased_or_revoked_registration).to_not be_valid
+            expect(ceased_or_revoked_registration).not_to be_valid
           end
         end
       end

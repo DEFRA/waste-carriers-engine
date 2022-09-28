@@ -7,7 +7,7 @@ module WasteCarriersEngine
     describe "GET new_renewal_complete_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -36,7 +36,7 @@ module WasteCarriersEngine
               get new_renewal_complete_form_path(transient_registration.token)
 
               expect(response).to have_http_status(200)
-              expect(registration.reload.expires_on).to_not eq(old_expires_on)
+              expect(registration.reload.expires_on).not_to eq(old_expires_on)
             end
           end
 

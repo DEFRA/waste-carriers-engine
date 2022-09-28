@@ -40,7 +40,7 @@ module WasteCarriersEngine
         it "includes that instead of the contact email" do
           xml = worldpay_xml_service.build_xml
           expect(xml).to include("receipt@example.com")
-          expect(xml).to_not include(transient_registration.contact_email)
+          expect(xml).not_to include(transient_registration.contact_email)
         end
       end
     end

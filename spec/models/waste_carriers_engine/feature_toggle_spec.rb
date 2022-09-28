@@ -16,7 +16,7 @@ module WasteCarriersEngine
           let(:active) { true }
 
           it "returns true" do
-            expect(described_class.active?(key)).to eq(true)
+            expect(described_class.active?(key)).to be true
           end
         end
 
@@ -24,7 +24,7 @@ module WasteCarriersEngine
           let(:active) { false }
 
           it "returns false" do
-            expect(described_class.active?(key)).to eq(false)
+            expect(described_class.active?(key)).to be false
           end
         end
       end

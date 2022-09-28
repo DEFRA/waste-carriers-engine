@@ -30,7 +30,7 @@ module WasteCarriersEngine
 
       it "includes 1 renewal item" do
         matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:renew] }
-        expect(matching_item).to_not be_nil
+        expect(matching_item).not_to be_nil
       end
 
       it "has the correct total_amount" do
@@ -71,7 +71,7 @@ module WasteCarriersEngine
 
         it "includes a type change item" do
           matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:edit] }
-          expect(matching_item).to_not be_nil
+          expect(matching_item).not_to be_nil
         end
 
         it "has the correct total_amount" do
@@ -112,7 +112,7 @@ module WasteCarriersEngine
 
         it "includes a copy cards item" do
           matching_item = order[:order_items].find { |item| item[:type] == OrderItem::TYPES[:copy_cards] }
-          expect(matching_item).to_not be_nil
+          expect(matching_item).not_to be_nil
         end
 
         it "has the correct total_amount" do

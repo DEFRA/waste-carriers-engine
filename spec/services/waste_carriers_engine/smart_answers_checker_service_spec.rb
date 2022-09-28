@@ -15,7 +15,7 @@ module WasteCarriersEngine
           before { transient_registration.construction_waste = "no" }
 
           it "returns true" do
-            expect(service.lower_tier?).to eq(true)
+            expect(service.lower_tier?).to be true
           end
         end
 
@@ -23,7 +23,7 @@ module WasteCarriersEngine
           before { transient_registration.construction_waste = "yes" }
 
           it "returns false" do
-            expect(service.lower_tier?).to eq(false)
+            expect(service.lower_tier?).to be false
           end
         end
       end
@@ -38,7 +38,7 @@ module WasteCarriersEngine
             before { transient_registration.construction_waste = "no" }
 
             it "returns true" do
-              expect(service.lower_tier?).to eq(true)
+              expect(service.lower_tier?).to be true
             end
           end
 
@@ -46,7 +46,7 @@ module WasteCarriersEngine
             before { transient_registration.construction_waste = "yes" }
 
             it "returns false" do
-              expect(service.lower_tier?).to eq(false)
+              expect(service.lower_tier?).to be false
             end
           end
         end
@@ -58,7 +58,7 @@ module WasteCarriersEngine
             before { transient_registration.only_amf = "no" }
 
             it "returns false" do
-              expect(service.lower_tier?).to eq(false)
+              expect(service.lower_tier?).to be false
             end
           end
 
@@ -66,7 +66,7 @@ module WasteCarriersEngine
             before { transient_registration.only_amf = "yes" }
 
             it "returns true" do
-              expect(service.lower_tier?).to eq(true)
+              expect(service.lower_tier?).to be true
             end
           end
         end

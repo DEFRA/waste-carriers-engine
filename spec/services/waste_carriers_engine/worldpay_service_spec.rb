@@ -38,7 +38,7 @@ module WasteCarriersEngine
 
     describe "prepare_params" do
       context "when the params are nil" do
-        let(:params) {}
+        let(:params) { nil }
 
         it "sets params to nil" do
           expect(worldpay_service.instance_variable_get(:@params)).to eq(nil)
@@ -146,7 +146,7 @@ module WasteCarriersEngine
         end
 
         it "returns true" do
-          expect(worldpay_service.valid_success?).to eq(true)
+          expect(worldpay_service.valid_success?).to be true
         end
 
         it "updates the payment status" do
@@ -171,7 +171,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(worldpay_service.valid_success?).to eq(false)
+          expect(worldpay_service.valid_success?).to be false
         end
 
         it "does not update the order" do

@@ -33,7 +33,7 @@ module WasteCarriersEngine
         let(:govpay_status) { valid_status }
 
         it "returns true" do
-          expect(govpay_validator_service.public_send(method)).to eq(true)
+          expect(govpay_validator_service.public_send(method)).to be true
         end
       end
 
@@ -41,7 +41,7 @@ module WasteCarriersEngine
         let(:govpay_status) { invalid_status }
 
         it "returns false" do
-          expect(govpay_validator_service.public_send(method)).to eq(false)
+          expect(govpay_validator_service.public_send(method)).to be false
         end
       end
     end
@@ -51,7 +51,7 @@ module WasteCarriersEngine
       context "when the govpay status is valid" do
 
         it "returns true" do
-          expect(govpay_validator_service.valid_success?).to eq(true)
+          expect(govpay_validator_service.valid_success?).to be true
         end
       end
 
@@ -59,7 +59,7 @@ module WasteCarriersEngine
 
         let(:govpay_status) { "failed" }
         it "returns false" do
-          expect(govpay_validator_service.valid_success?).to eq(false)
+          expect(govpay_validator_service.valid_success?).to be false
         end
       end
 
@@ -67,7 +67,7 @@ module WasteCarriersEngine
         let(:order) { nil }
 
         it "returns false" do
-          expect(govpay_validator_service.valid_success?).to eq(false)
+          expect(govpay_validator_service.valid_success?).to be false
         end
       end
 
@@ -75,7 +75,7 @@ module WasteCarriersEngine
         let(:govpay_validator_service) { GovpayValidatorService.new(order, nil, govpay_status) }
 
         it "returns false" do
-          expect(govpay_validator_service.valid_success?).to eq(false)
+          expect(govpay_validator_service.valid_success?).to be false
         end
       end
 
@@ -83,7 +83,7 @@ module WasteCarriersEngine
         let(:govpay_validator_service) { GovpayValidatorService.new(order, "bad_payment_uuid", govpay_status) }
 
         it "returns false" do
-          expect(govpay_validator_service.valid_success?).to eq(false)
+          expect(govpay_validator_service.valid_success?).to be false
         end
       end
     end
@@ -106,11 +106,11 @@ module WasteCarriersEngine
 
     describe "valid_govpay_status?" do
       it "returns true when the status matches the values for the response type" do
-        expect(described_class.valid_govpay_status?(:success, "success")).to eq(true)
+        expect(described_class.valid_govpay_status?(:success, "success")).to be true
       end
 
       it "returns false when the status does not match the values for the response type" do
-        expect(described_class.valid_govpay_status?(:success, "FOO")).to eq(false)
+        expect(described_class.valid_govpay_status?(:success, "FOO")).to be false
       end
     end
   end

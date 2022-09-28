@@ -11,7 +11,7 @@ module WasteCarriersEngine
         let(:transient_registration) { double(:transient_registration, charity?: true) }
 
         it "returns false" do
-          expect(subject.show_smart_answers_results?).to eq(false)
+          expect(subject.show_smart_answers_results?).to be false
         end
       end
 
@@ -25,7 +25,7 @@ module WasteCarriersEngine
           let(:transient_registration) { double(:transient_registration, charity?: false) }
 
           it "returns true" do
-            expect(subject.show_smart_answers_results?).to eq(true)
+            expect(subject.show_smart_answers_results?).to be true
           end
         end
 
@@ -39,7 +39,7 @@ module WasteCarriersEngine
             let(:tier_known) { true }
 
             it "returns false" do
-              expect(subject.show_smart_answers_results?).to eq(false)
+              expect(subject.show_smart_answers_results?).to be false
             end
           end
 
@@ -47,7 +47,7 @@ module WasteCarriersEngine
             let(:tier_known) { false }
 
             it "returns true" do
-              expect(subject.show_smart_answers_results?).to eq(true)
+              expect(subject.show_smart_answers_results?).to be true
             end
           end
         end

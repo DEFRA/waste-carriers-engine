@@ -19,7 +19,7 @@ module WasteCarriersEngine
         end
 
         it "submits" do
-          expect(conviction_details_form.submit(valid_params)).to eq(true)
+          expect(conviction_details_form.submit(valid_params)).to be true
         end
 
         it "sets a person_type of 'RELEVANT'" do
@@ -32,7 +32,7 @@ module WasteCarriersEngine
         let(:invalid_params) { { token: "foo" } }
 
         it "does not submit" do
-          expect(conviction_details_form.submit(invalid_params)).to eq(false)
+          expect(conviction_details_form.submit(invalid_params)).to be false
         end
       end
 
@@ -48,22 +48,22 @@ module WasteCarriersEngine
         end
 
         context "when the transient registration already has enough people with convictions" do
-          before(:each) do
+          before do
             conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :relevant)])
           end
 
           it "submits" do
-            expect(conviction_details_form.submit(blank_params)).to eq(true)
+            expect(conviction_details_form.submit(blank_params)).to be true
           end
         end
 
         context "when the transient registration does not have enough people with convictions" do
-          before(:each) do
+          before do
             conviction_details_form.transient_registration.update_attributes(key_people: [build(:key_person, :has_required_data, :main)])
           end
 
           it "does not submit" do
-            expect(conviction_details_form.submit(blank_params)).to eq(false)
+            expect(conviction_details_form.submit(blank_params)).to be false
           end
 
           it "raises individual errors for each blank field" do
@@ -85,22 +85,22 @@ module WasteCarriersEngine
         end
 
         context "when a first_name is blank" do
-          before(:each) do
+          before do
             conviction_details_form.first_name = ""
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a first_name is too long" do
-          before(:each) do
+          before do
             conviction_details_form.first_name = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
       end
@@ -113,22 +113,22 @@ module WasteCarriersEngine
         end
 
         context "when a last_name is blank" do
-          before(:each) do
+          before do
             conviction_details_form.last_name = ""
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a last_name is too long" do
-          before(:each) do
+          before do
             conviction_details_form.last_name = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
       end
@@ -141,22 +141,22 @@ module WasteCarriersEngine
         end
 
         context "when a position is blank" do
-          before(:each) do
+          before do
             conviction_details_form.position = ""
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a position is too long" do
-          before(:each) do
+          before do
             conviction_details_form.position = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
       end
@@ -169,32 +169,32 @@ module WasteCarriersEngine
         end
 
         context "when a dob_day is blank" do
-          before(:each) do
+          before do
             conviction_details_form.dob_day = ""
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a dob_day is not an integer" do
-          before(:each) do
+          before do
             conviction_details_form.dob_day = "1.5"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a dob_day is not in the correct range" do
-          before(:each) do
+          before do
             conviction_details_form.dob_day = "42"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
       end
@@ -207,32 +207,32 @@ module WasteCarriersEngine
         end
 
         context "when a dob_month is blank" do
-          before(:each) do
+          before do
             conviction_details_form.dob_month = ""
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a dob_month is not an integer" do
-          before(:each) do
+          before do
             conviction_details_form.dob_month = "9.75"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a dob_month is not in the correct range" do
-          before(:each) do
+          before do
             conviction_details_form.dob_month = "13"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
       end
@@ -245,32 +245,32 @@ module WasteCarriersEngine
         end
 
         context "when a dob_year is blank" do
-          before(:each) do
+          before do
             conviction_details_form.dob_year = ""
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a dob_year is not an integer" do
-          before(:each) do
+          before do
             conviction_details_form.dob_year = "3.14"
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a dob_year is not in the correct range" do
-          before(:each) do
+          before do
             conviction_details_form.dob_year = (Date.today + 1.year).year.to_i
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
       end
@@ -283,34 +283,34 @@ module WasteCarriersEngine
         end
 
         context "when all the dob fields are empty" do
-          before(:each) do
+          before do
             conviction_details_form.dob_day = ""
             conviction_details_form.dob_month = ""
             conviction_details_form.dob_year = ""
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when a dob is not a valid date" do
-          before(:each) do
+          before do
             conviction_details_form.dob = nil
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
 
         context "when the dob is below the age limit" do
-          before(:each) do
+          before do
             conviction_details_form.dob = Date.today
           end
 
           it "is not valid" do
-            expect(conviction_details_form).to_not be_valid
+            expect(conviction_details_form).not_to be_valid
           end
         end
       end

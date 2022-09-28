@@ -9,7 +9,7 @@ RSpec.shared_examples "Can reference single document in collection" do |subject_
         subject.public_send("#{attribute}=", new_object_for_collection)
         subject.assign_attributes(attribute => new_object_for_collection.clone)
 
-        expect { subject.save! }.to_not raise_error
+        expect { subject.save! }.not_to raise_error
       end
     end
   end
@@ -32,7 +32,7 @@ RSpec.shared_examples "Can reference single document in collection" do |subject_
 
   describe "##{attribute}=" do
     it "updates the object's collection with the new object" do
-      expect(subject.public_send(collection)).to_not include(new_object_for_collection)
+      expect(subject.public_send(collection)).not_to include(new_object_for_collection)
 
       subject.public_send("#{attribute}=", new_object_for_collection)
 

@@ -72,7 +72,7 @@ module WasteCarriersEngine
           expect(registration).to receive(:write_attributes).with(copyable_attributes)
 
           # Does not merge finance details
-          expect(reg_finance_details).to_not receive(:update_balance)
+          expect(reg_finance_details).not_to receive(:update_balance)
 
           # Saves the registration
           expect(registration).to receive(:save!)

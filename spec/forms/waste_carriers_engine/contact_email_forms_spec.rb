@@ -19,13 +19,13 @@ module WasteCarriersEngine
 
       shared_examples "should submit" do
         it "submits the form successfully" do
-          expect(contact_email_form.submit(ActionController::Parameters.new(params))).to eq(true)
+          expect(contact_email_form.submit(ActionController::Parameters.new(params))).to be true
         end
       end
 
       shared_examples "should not submit" do
         it "does not submit the form successfully" do
-          expect(contact_email_form.submit(ActionController::Parameters.new(params))).to eq(false)
+          expect(contact_email_form.submit(ActionController::Parameters.new(params))).to be false
         end
       end
 
@@ -121,10 +121,10 @@ module WasteCarriersEngine
       end
 
       context "when a confirmed_email does not match the contact_email" do
-        before(:each) { contact_email_form.confirmed_email = "no_matchy@example.com" }
+        before { contact_email_form.confirmed_email = "no_matchy@example.com" }
 
         it "is not valid" do
-          expect(contact_email_form).to_not be_valid
+          expect(contact_email_form).not_to be_valid
         end
       end
     end

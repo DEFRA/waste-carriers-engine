@@ -56,18 +56,18 @@ module WasteCarriersEngine
         context "when a RenewingRegistration is created" do
           it "is not valid if the reg_identifier is in the wrong format" do
             renewing_registration.reg_identifier = "foo"
-            expect(renewing_registration).to_not be_valid
+            expect(renewing_registration).not_to be_valid
           end
 
           it "is not valid if no matching registration exists" do
             renewing_registration.reg_identifier = "CBDU999999"
-            expect(renewing_registration).to_not be_valid
+            expect(renewing_registration).not_to be_valid
           end
 
           it "is not valid if the reg_identifier is already in use" do
             existing_renewing_registration = create(:renewing_registration, :has_required_data)
             renewing_registration.reg_identifier = existing_renewing_registration.reg_identifier
-            expect(renewing_registration).to_not be_valid
+            expect(renewing_registration).not_to be_valid
           end
         end
       end
@@ -123,7 +123,7 @@ module WasteCarriersEngine
     describe "#renewal_application_submitted?" do
       context "when the workflow_state is not a completed one" do
         it "returns false" do
-          expect(renewing_registration.renewal_application_submitted?).to eq(false)
+          expect(renewing_registration.renewal_application_submitted?).to be false
         end
       end
 
@@ -136,7 +136,7 @@ module WasteCarriersEngine
           end
 
           it "returns true" do
-            expect(renewing_registration.renewal_application_submitted?).to eq(true)
+            expect(renewing_registration.renewal_application_submitted?).to be true
           end
         end
       end
@@ -147,14 +147,14 @@ module WasteCarriersEngine
         let(:revoked_renewing_registration) { build(:renewing_registration, :has_revoked_registration) }
 
         it "returns false" do
-          expect(revoked_renewing_registration.can_be_renewed?).to eq(false)
+          expect(revoked_renewing_registration.can_be_renewed?).to be false
         end
       end
 
       context "when the declaration is confirmed" do
         it "returns true" do
           renewing_registration.declaration = 1
-          expect(renewing_registration.can_be_renewed?).to eq(true)
+          expect(renewing_registration.can_be_renewed?).to be true
         end
       end
 
@@ -163,7 +163,7 @@ module WasteCarriersEngine
           before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true) }
 
           it "returns true" do
-            expect(renewing_registration.can_be_renewed?).to eq(true)
+            expect(renewing_registration.can_be_renewed?).to be true
           end
         end
 
@@ -174,7 +174,7 @@ module WasteCarriersEngine
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
 
             it "returns true" do
-              expect(renewing_registration.can_be_renewed?).to eq(true)
+              expect(renewing_registration.can_be_renewed?).to be true
             end
           end
 
@@ -182,7 +182,7 @@ module WasteCarriersEngine
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
 
             it "returns false" do
-              expect(renewing_registration.can_be_renewed?).to eq(false)
+              expect(renewing_registration.can_be_renewed?).to be false
             end
           end
         end
@@ -196,7 +196,7 @@ module WasteCarriersEngine
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true) }
 
             it "returns true" do
-              expect(renewing_registration.can_be_renewed?).to eq(true)
+              expect(renewing_registration.can_be_renewed?).to be true
             end
           end
 
@@ -207,7 +207,7 @@ module WasteCarriersEngine
               before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
 
               it "returns true" do
-                expect(renewing_registration.can_be_renewed?).to eq(true)
+                expect(renewing_registration.can_be_renewed?).to be true
               end
             end
 
@@ -215,7 +215,7 @@ module WasteCarriersEngine
               before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
 
               it "returns false" do
-                expect(renewing_registration.can_be_renewed?).to eq(false)
+                expect(renewing_registration.can_be_renewed?).to be false
               end
             end
           end
@@ -227,7 +227,7 @@ module WasteCarriersEngine
       context "when the transient registration is ready to complete" do
         let(:renewing_registration) { build(:renewing_registration, :is_ready_to_complete) }
         it "returns true" do
-          expect(renewing_registration.ready_to_complete?).to eq(true)
+          expect(renewing_registration.ready_to_complete?).to be true
         end
       end
 
@@ -235,19 +235,19 @@ module WasteCarriersEngine
         context "because it is not submitted" do
           let(:renewing_registration) { build(:renewing_registration, workflow_state: "bank_transfer_form") }
           it "returns false" do
-            expect(renewing_registration.ready_to_complete?).to eq(false)
+            expect(renewing_registration.ready_to_complete?).to be false
           end
         end
 
         context "because it has outstanding payments" do
           it "returns false" do
-            expect(renewing_registration.ready_to_complete?).to eq(false)
+            expect(renewing_registration.ready_to_complete?).to be false
           end
         end
 
         context "because it has outstanding conviction checks" do
           it "returns false" do
-            expect(renewing_registration.ready_to_complete?).to eq(false)
+            expect(renewing_registration.ready_to_complete?).to be false
           end
         end
       end
@@ -258,7 +258,7 @@ module WasteCarriersEngine
         let(:renewing_registration) { build(:renewing_registration, :has_required_data) }
 
         it "returns false" do
-          expect(renewing_registration.stuck?).to eq(false)
+          expect(renewing_registration.stuck?).to be false
         end
       end
 
@@ -267,7 +267,7 @@ module WasteCarriersEngine
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :revoked) }
 
           it "returns false" do
-            expect(renewing_registration.stuck?).to eq(false)
+            expect(renewing_registration.stuck?).to be false
           end
         end
 
@@ -275,7 +275,7 @@ module WasteCarriersEngine
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :has_unpaid_balance) }
 
           it "returns false" do
-            expect(renewing_registration.stuck?).to eq(false)
+            expect(renewing_registration.stuck?).to be false
           end
         end
 
@@ -283,7 +283,7 @@ module WasteCarriersEngine
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :requires_conviction_check) }
 
           it "returns false" do
-            expect(renewing_registration.stuck?).to eq(false)
+            expect(renewing_registration.stuck?).to be false
           end
         end
 
@@ -291,7 +291,7 @@ module WasteCarriersEngine
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :has_paid_balance) }
 
           it "returns true" do
-            expect(renewing_registration.stuck?).to eq(true)
+            expect(renewing_registration.stuck?).to be true
           end
         end
       end
@@ -300,7 +300,7 @@ module WasteCarriersEngine
     describe "#pending_payment?" do
       context "when the renewal is not in a completed workflow_state" do
         it "returns false" do
-          expect(renewing_registration.pending_payment?).to eq(false)
+          expect(renewing_registration.pending_payment?).to be false
         end
       end
 
@@ -315,7 +315,7 @@ module WasteCarriersEngine
           end
 
           it "returns false" do
-            expect(renewing_registration.pending_payment?).to eq(false)
+            expect(renewing_registration.pending_payment?).to be false
           end
         end
 
@@ -325,7 +325,7 @@ module WasteCarriersEngine
           end
 
           it "returns true" do
-            expect(renewing_registration.pending_payment?).to eq(true)
+            expect(renewing_registration.pending_payment?).to be true
           end
         end
       end
@@ -334,7 +334,7 @@ module WasteCarriersEngine
     describe "#pending_manual_conviction_check?" do
       context "when the renewal is not in a completed workflow_state" do
         it "returns false" do
-          expect(renewing_registration.pending_manual_conviction_check?).to eq(false)
+          expect(renewing_registration.pending_manual_conviction_check?).to be false
         end
       end
 
@@ -349,7 +349,7 @@ module WasteCarriersEngine
           end
 
           it "returns false" do
-            expect(renewing_registration.pending_manual_conviction_check?).to eq(false)
+            expect(renewing_registration.pending_manual_conviction_check?).to be false
           end
         end
 
@@ -362,13 +362,13 @@ module WasteCarriersEngine
             let(:revoked_renewing_registration) { build(:renewing_registration, :has_revoked_registration) }
 
             it "returns false" do
-              expect(revoked_renewing_registration.pending_manual_conviction_check?).to eq(false)
+              expect(revoked_renewing_registration.pending_manual_conviction_check?).to be false
             end
           end
 
           context "when the registration is active" do
             it "returns true" do
-              expect(renewing_registration.pending_manual_conviction_check?).to eq(true)
+              expect(renewing_registration.pending_manual_conviction_check?).to be true
             end
           end
         end

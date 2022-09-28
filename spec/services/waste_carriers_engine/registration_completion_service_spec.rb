@@ -284,7 +284,7 @@ module WasteCarriersEngine
           end
 
           it "does not send the pending conviction check email" do
-            expect(Notify::RegistrationPendingConvictionCheckEmailService).to_not receive(:run)
+            expect(Notify::RegistrationPendingConvictionCheckEmailService).not_to receive(:run)
 
             described_class.run(transient_registration)
           end

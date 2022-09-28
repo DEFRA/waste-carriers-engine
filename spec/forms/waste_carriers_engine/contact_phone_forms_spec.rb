@@ -15,7 +15,7 @@ module WasteCarriersEngine
         end
 
         it "submits" do
-          expect(contact_phone_form.submit(valid_params)).to eq(true)
+          expect(contact_phone_form.submit(valid_params)).to be true
         end
       end
 
@@ -29,7 +29,7 @@ module WasteCarriersEngine
         end
 
         it "does not submit" do
-          expect(contact_phone_form.submit(invalid_params)).to eq(false)
+          expect(contact_phone_form.submit(invalid_params)).to be false
         end
       end
     end

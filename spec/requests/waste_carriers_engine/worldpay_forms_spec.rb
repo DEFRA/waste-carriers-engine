@@ -10,7 +10,7 @@ module WasteCarriersEngine
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
-      before(:each) do
+      before do
         sign_in(user)
       end
 
@@ -39,7 +39,7 @@ module WasteCarriersEngine
             get new_worldpay_form_path(token)
 
             expect(response.location).to include("https://hpp-sandbox.worldpay.com/")
-            expect(transient_registration.reload.finance_details).to_not eq(nil)
+            expect(transient_registration.reload.finance_details).not_to eq(nil)
           end
 
           context "when the transient_registration is a new registration" do
@@ -53,7 +53,7 @@ module WasteCarriersEngine
 
             it "creates a new finance_details" do
               get new_worldpay_form_path(token)
-              expect(transient_registration.reload.finance_details).to_not eq(nil)
+              expect(transient_registration.reload.finance_details).not_to eq(nil)
             end
           end
 
@@ -154,7 +154,7 @@ module WasteCarriersEngine
                 end
 
                 it "does not raise an error" do
-                  expect { get success_worldpay_forms_path(token), params: params }.to_not raise_error
+                  expect { get success_worldpay_forms_path(token), params: params }.not_to raise_error
                 end
               end
             end

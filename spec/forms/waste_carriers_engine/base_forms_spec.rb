@@ -39,7 +39,7 @@ module WasteCarriersEngine
 
         context "when the resource is a transient_registration" do
           it "is not valid" do
-            expect(base_form).to_not be_valid
+            expect(base_form).not_to be_valid
           end
         end
 
@@ -71,7 +71,7 @@ module WasteCarriersEngine
         end
 
         it "is not valid" do
-          expect(form).to_not be_valid
+          expect(form).not_to be_valid
         end
 
         it "inherits the errors from the transient_registration" do

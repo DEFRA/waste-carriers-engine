@@ -7,7 +7,7 @@ module WasteCarriersEngine
     describe "GET new_edit_bank_transfer_form" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -35,7 +35,7 @@ module WasteCarriersEngine
 
             second_finance_details = transient_registration.reload.finance_details
 
-            expect(first_finance_details).to_not eq(second_finance_details)
+            expect(first_finance_details).not_to eq(second_finance_details)
           end
         end
       end
@@ -45,7 +45,7 @@ module WasteCarriersEngine
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 

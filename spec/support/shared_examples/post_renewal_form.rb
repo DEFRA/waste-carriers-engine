@@ -15,7 +15,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
   context "when a valid user is signed in" do
     let(:user) { create(:user) }
 
-    before(:each) do
+    before do
       sign_in(user)
     end
 
@@ -53,7 +53,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
 
             post_form_with_params(form, transient_registration.token, valid_params)
             expect(transient_registration.reload[test_attribute]).to eq(expected_value)
-            expect(transient_registration.reload[:workflow_state]).to_not eq(state_before_request)
+            expect(transient_registration.reload[:workflow_state]).not_to eq(state_before_request)
             expect(response).to have_http_status(302)
           end
         end

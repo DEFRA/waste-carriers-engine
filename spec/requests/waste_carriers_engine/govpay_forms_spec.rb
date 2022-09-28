@@ -23,7 +23,7 @@ module WasteCarriersEngine
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
-      before(:each) do
+      before do
         sign_in(user)
       end
 
@@ -170,7 +170,7 @@ module WasteCarriersEngine
                   end
 
                   it "does not raise an error" do
-                    expect { get payment_callback_govpay_forms_path(token, order.payment_uuid) }.to_not raise_error
+                    expect { get payment_callback_govpay_forms_path(token, order.payment_uuid) }.not_to raise_error
                   end
                 end
               end

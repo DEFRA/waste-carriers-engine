@@ -14,7 +14,7 @@ module WasteCarriersEngine
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
 
-        before(:each) do
+        before do
           sign_in(user)
         end
 
@@ -90,7 +90,7 @@ module WasteCarriersEngine
     describe "GET skip_to_manual_address_contact_address_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
-        before(:each) do
+        before do
           sign_in(user)
         end
 

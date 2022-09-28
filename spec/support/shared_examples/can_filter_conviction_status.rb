@@ -99,13 +99,13 @@ RSpec.shared_examples "Can filter conviction status" do
 
     it "only returns results with the correct status" do
       expect(scope).to include(possible_match)
-      expect(scope).to_not include(checks_in_progress)
-      expect(scope).to_not include(approved)
-      expect(scope).to_not include(rejected)
-      expect(scope).to_not include(old_confirmed_record)
-      expect(scope).to_not include(no_status_pending)
-      expect(scope).to_not include(no_status_active)
-      expect(scope).to_not include(no_status_approved)
+      expect(scope).not_to include(checks_in_progress)
+      expect(scope).not_to include(approved)
+      expect(scope).not_to include(rejected)
+      expect(scope).not_to include(old_confirmed_record)
+      expect(scope).not_to include(no_status_pending)
+      expect(scope).not_to include(no_status_active)
+      expect(scope).not_to include(no_status_approved)
     end
   end
 
@@ -113,14 +113,14 @@ RSpec.shared_examples "Can filter conviction status" do
     let(:scope) { described_class.convictions_checks_in_progress }
 
     it "only returns results with the correct status" do
-      expect(scope).to_not include(possible_match)
+      expect(scope).not_to include(possible_match)
       expect(scope).to include(checks_in_progress)
-      expect(scope).to_not include(approved)
-      expect(scope).to_not include(rejected)
-      expect(scope).to_not include(old_confirmed_record)
-      expect(scope).to_not include(no_status_pending)
-      expect(scope).to_not include(no_status_active)
-      expect(scope).to_not include(no_status_approved)
+      expect(scope).not_to include(approved)
+      expect(scope).not_to include(rejected)
+      expect(scope).not_to include(old_confirmed_record)
+      expect(scope).not_to include(no_status_pending)
+      expect(scope).not_to include(no_status_active)
+      expect(scope).not_to include(no_status_approved)
     end
   end
 
@@ -128,14 +128,14 @@ RSpec.shared_examples "Can filter conviction status" do
     let(:scope) { described_class.convictions_approved }
 
     it "only returns results with the correct status" do
-      expect(scope).to_not include(possible_match)
-      expect(scope).to_not include(checks_in_progress)
+      expect(scope).not_to include(possible_match)
+      expect(scope).not_to include(checks_in_progress)
       expect(scope).to include(approved)
-      expect(scope).to_not include(rejected)
-      expect(scope).to_not include(old_confirmed_record)
-      expect(scope).to_not include(no_status_pending)
-      expect(scope).to_not include(no_status_active)
-      expect(scope).to_not include(no_status_approved)
+      expect(scope).not_to include(rejected)
+      expect(scope).not_to include(old_confirmed_record)
+      expect(scope).not_to include(no_status_pending)
+      expect(scope).not_to include(no_status_active)
+      expect(scope).not_to include(no_status_approved)
     end
   end
 
@@ -143,14 +143,14 @@ RSpec.shared_examples "Can filter conviction status" do
     let(:scope) { described_class.convictions_rejected }
 
     it "only returns results with the correct status" do
-      expect(scope).to_not include(possible_match)
-      expect(scope).to_not include(checks_in_progress)
-      expect(scope).to_not include(approved)
+      expect(scope).not_to include(possible_match)
+      expect(scope).not_to include(checks_in_progress)
+      expect(scope).not_to include(approved)
       expect(scope).to include(rejected)
-      expect(scope).to_not include(old_confirmed_record)
-      expect(scope).to_not include(no_status_pending)
-      expect(scope).to_not include(no_status_active)
-      expect(scope).to_not include(no_status_approved)
+      expect(scope).not_to include(old_confirmed_record)
+      expect(scope).not_to include(no_status_pending)
+      expect(scope).not_to include(no_status_active)
+      expect(scope).not_to include(no_status_approved)
     end
   end
 
@@ -158,14 +158,14 @@ RSpec.shared_examples "Can filter conviction status" do
     let(:scope) { described_class.convictions_new_without_status }
 
     it "only returns results with the correct status" do
-      expect(scope).to_not include(possible_match)
-      expect(scope).to_not include(checks_in_progress)
-      expect(scope).to_not include(approved)
-      expect(scope).to_not include(rejected)
-      expect(scope).to_not include(old_confirmed_record)
+      expect(scope).not_to include(possible_match)
+      expect(scope).not_to include(checks_in_progress)
+      expect(scope).not_to include(approved)
+      expect(scope).not_to include(rejected)
+      expect(scope).not_to include(old_confirmed_record)
       expect(scope).to include(no_status_pending)
-      expect(scope).to_not include(no_status_active)
-      expect(scope).to_not include(no_status_approved)
+      expect(scope).not_to include(no_status_active)
+      expect(scope).not_to include(no_status_approved)
     end
   end
 end

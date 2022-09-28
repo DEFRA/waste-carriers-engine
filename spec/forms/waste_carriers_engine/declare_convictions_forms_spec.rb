@@ -15,7 +15,7 @@ module WasteCarriersEngine
         end
 
         it "submits" do
-          expect(declare_convictions_form.submit(valid_params)).to eq(true)
+          expect(declare_convictions_form.submit(valid_params)).to be true
         end
       end
 
@@ -29,7 +29,7 @@ module WasteCarriersEngine
         end
 
         it "does not submit" do
-          expect(declare_convictions_form.submit(invalid_params)).to eq(false)
+          expect(declare_convictions_form.submit(invalid_params)).to be false
         end
       end
     end

@@ -15,7 +15,7 @@ module WasteCarriersEngine
         end
 
         it "submits" do
-          expect(declaration_form.submit(valid_params)).to eq(true)
+          expect(declaration_form.submit(valid_params)).to be true
         end
 
         context "when the transient registration is a new registration object" do
@@ -38,7 +38,7 @@ module WasteCarriersEngine
         end
 
         it "does not submit" do
-          expect(declaration_form.submit(invalid_params)).to eq(false)
+          expect(declaration_form.submit(invalid_params)).to be false
         end
       end
     end
@@ -54,22 +54,22 @@ module WasteCarriersEngine
         end
 
         context "when a declaration is blank" do
-          before(:each) do
+          before do
             declaration_form.transient_registration.declaration = ""
           end
 
           it "is not valid" do
-            expect(declaration_form).to_not be_valid
+            expect(declaration_form).not_to be_valid
           end
         end
 
         context "when a declaration is 0" do
-          before(:each) do
+          before do
             declaration_form.transient_registration.declaration = 0
           end
 
           it "is not valid" do
-            expect(declaration_form).to_not be_valid
+            expect(declaration_form).not_to be_valid
           end
         end
       end

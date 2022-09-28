@@ -91,8 +91,8 @@ module WasteCarriersEngine
         let(:service) { described_class.run(registration: registration, ignore_extended_grace_window: true) }
 
         before do
-          expect(FeatureToggle).to_not receive(:active?).with(:use_extended_grace_window)
-          expect(WasteCarriersEngine.configuration).to_not receive(:host_is_back_office?)
+          expect(FeatureToggle).not_to receive(:active?).with(:use_extended_grace_window)
+          expect(WasteCarriersEngine.configuration).not_to receive(:host_is_back_office?)
         end
 
         context "when the registration had a COVID extension" do

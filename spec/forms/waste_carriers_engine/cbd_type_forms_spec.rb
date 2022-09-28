@@ -10,7 +10,7 @@ module WasteCarriersEngine
         let(:valid_params) { { token: cbd_type_form.token, registration_type: cbd_type_form.registration_type } }
 
         it "submits" do
-          expect(cbd_type_form.submit(valid_params)).to eq(true)
+          expect(cbd_type_form.submit(valid_params)).to be true
         end
       end
 
@@ -19,7 +19,7 @@ module WasteCarriersEngine
         let(:invalid_params) { { token: "foo", registration_type: "bar" } }
 
         it "does not submit" do
-          expect(cbd_type_form.submit(invalid_params)).to eq(false)
+          expect(cbd_type_form.submit(invalid_params)).to be false
         end
       end
     end

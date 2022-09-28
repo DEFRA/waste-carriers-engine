@@ -14,11 +14,11 @@ module WasteCarriersEngine
         let(:valid_params) { { token: company_postcode_form.token, temp_company_postcode: "BS1 5AH" } }
 
         it "submits" do
-          expect(company_postcode_form.submit(valid_params)).to eq(true)
+          expect(company_postcode_form.submit(valid_params)).to be true
         end
 
         context "when the postcode is lowercase" do
-          before(:each) do
+          before do
             valid_params[:temp_company_postcode] = "bs1 6ah"
           end
 
@@ -29,7 +29,7 @@ module WasteCarriersEngine
         end
 
         context "when the postcode has trailing spaces" do
-          before(:each) do
+          before do
             valid_params[:temp_company_postcode] = "BS1 6AH      "
           end
 
@@ -45,7 +45,7 @@ module WasteCarriersEngine
         let(:invalid_params) { { token: "foo" } }
 
         it "does not submit" do
-          expect(company_postcode_form.submit(invalid_params)).to eq(false)
+          expect(company_postcode_form.submit(invalid_params)).to be false
         end
       end
     end

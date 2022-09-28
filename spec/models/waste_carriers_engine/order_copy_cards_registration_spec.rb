@@ -19,12 +19,12 @@ module WasteCarriersEngine
         context "when a OrderCopyCardsRegistration is created" do
           it "is not valid if the reg_identifier is in the wrong format" do
             order_copy_cards_registration.reg_identifier = "foo"
-            expect(order_copy_cards_registration).to_not be_valid
+            expect(order_copy_cards_registration).not_to be_valid
           end
 
           it "is not valid if no matching registration exists" do
             order_copy_cards_registration.reg_identifier = "CBDU999999"
-            expect(order_copy_cards_registration).to_not be_valid
+            expect(order_copy_cards_registration).not_to be_valid
           end
         end
       end

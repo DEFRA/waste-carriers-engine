@@ -27,7 +27,7 @@ module WasteCarriersEngine
         end
 
         it "cannot be rejected" do
-          expect(conviction_sign_off).to_not allow_event :reject
+          expect(conviction_sign_off).not_to allow_event :reject
         end
       end
 
@@ -35,7 +35,7 @@ module WasteCarriersEngine
         let(:conviction_sign_off) { build(:conviction_sign_off, :checks_in_progress) }
 
         it "cannot begin checks" do
-          expect(conviction_sign_off).to_not allow_event :begin_checks
+          expect(conviction_sign_off).not_to allow_event :begin_checks
         end
 
         it "can be approved" do
@@ -51,15 +51,15 @@ module WasteCarriersEngine
         let(:conviction_sign_off) { build(:conviction_sign_off, :approved) }
 
         it "cannot begin checks" do
-          expect(conviction_sign_off).to_not allow_event :begin_checks
+          expect(conviction_sign_off).not_to allow_event :begin_checks
         end
 
         it "cannot be approved" do
-          expect(conviction_sign_off).to_not allow_event :approve
+          expect(conviction_sign_off).not_to allow_event :approve
         end
 
         it "cannot be rejected" do
-          expect(conviction_sign_off).to_not allow_event :reject
+          expect(conviction_sign_off).not_to allow_event :reject
         end
       end
 
@@ -67,15 +67,15 @@ module WasteCarriersEngine
         let(:conviction_sign_off) { build(:conviction_sign_off, :rejected) }
 
         it "cannot begin checks" do
-          expect(conviction_sign_off).to_not allow_event :begin_checks
+          expect(conviction_sign_off).not_to allow_event :begin_checks
         end
 
         it "cannot be approved" do
-          expect(conviction_sign_off).to_not allow_event :approve
+          expect(conviction_sign_off).not_to allow_event :approve
         end
 
         it "cannot be rejected" do
-          expect(conviction_sign_off).to_not allow_event :reject
+          expect(conviction_sign_off).not_to allow_event :reject
         end
       end
 

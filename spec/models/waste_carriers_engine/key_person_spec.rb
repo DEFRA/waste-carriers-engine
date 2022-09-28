@@ -55,7 +55,7 @@ module WasteCarriersEngine
         let(:key_person) { build(:key_person, :has_required_data) }
 
         it "returns false" do
-          expect(key_person.conviction_check_required?).to eq(false)
+          expect(key_person.conviction_check_required?).to be false
         end
       end
 
@@ -67,7 +67,7 @@ module WasteCarriersEngine
         end
 
         it "returns true" do
-          expect(key_person.conviction_check_required?).to eq(true)
+          expect(key_person.conviction_check_required?).to be true
         end
       end
 
@@ -79,7 +79,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(key_person.conviction_check_required?).to eq(false)
+          expect(key_person.conviction_check_required?).to be false
         end
       end
 
@@ -91,7 +91,7 @@ module WasteCarriersEngine
         end
 
         it "returns true" do
-          expect(key_person.conviction_check_required?).to eq(true)
+          expect(key_person.conviction_check_required?).to be true
         end
       end
     end

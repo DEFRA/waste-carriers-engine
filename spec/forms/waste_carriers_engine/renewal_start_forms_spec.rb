@@ -9,7 +9,7 @@ module WasteCarriersEngine
       let(:valid_params) { { token: renewal_start_form.token } }
 
       it "submits" do
-        expect(renewal_start_form.submit(valid_params)).to eq(true)
+        expect(renewal_start_form.submit(valid_params)).to be true
       end
     end
   end

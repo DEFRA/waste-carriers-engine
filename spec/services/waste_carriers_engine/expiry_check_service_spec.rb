@@ -114,7 +114,7 @@ module WasteCarriersEngine
         subject { ExpiryCheckService.new(registration) }
 
         it "is expired" do
-          expect(subject.expired?).to eq(true)
+          expect(subject.expired?).to be true
         end
       end
 
@@ -123,7 +123,7 @@ module WasteCarriersEngine
         subject { ExpiryCheckService.new(registration) }
 
         it "is expired" do
-          expect(subject.expired?).to eq(true)
+          expect(subject.expired?).to be true
         end
       end
 
@@ -132,7 +132,7 @@ module WasteCarriersEngine
         subject { ExpiryCheckService.new(registration) }
 
         it "is not expired" do
-          expect(subject.expired?).to eq(false)
+          expect(subject.expired?).to be false
         end
       end
 
@@ -144,7 +144,7 @@ module WasteCarriersEngine
           Timecop.freeze(Time.find_zone("London").local(2020, 3, 27, 23, 59)) do
             # GMT is now in effect (not BST)
             # UK local time & UTC are both 23:59 on 27 March 2020
-            expect(subject.expired?).to eq(false)
+            expect(subject.expired?).to be false
           end
         end
       end
@@ -158,7 +158,7 @@ module WasteCarriersEngine
             # BST is now in effect (not GMT)
             # UK local time is 23:59 on 26 October 2018
             # UTC time is 22:59 on 26 October 2018
-            expect(subject.expired?).to eq(false)
+            expect(subject.expired?).to be false
           end
         end
       end
@@ -175,7 +175,7 @@ module WasteCarriersEngine
           subject { ExpiryCheckService.new(registration) }
 
           it "is not in the window" do
-            expect(subject.in_renewal_window?).to eq(false)
+            expect(subject.in_renewal_window?).to be false
           end
         end
 
@@ -184,7 +184,7 @@ module WasteCarriersEngine
           subject { ExpiryCheckService.new(registration) }
 
           it "is not in the window" do
-            expect(subject.in_renewal_window?).to eq(false)
+            expect(subject.in_renewal_window?).to be false
           end
         end
 
@@ -193,7 +193,7 @@ module WasteCarriersEngine
           subject { ExpiryCheckService.new(registration) }
 
           it "is in the window" do
-            expect(subject.in_renewal_window?).to eq(true)
+            expect(subject.in_renewal_window?).to be true
           end
         end
 
@@ -202,7 +202,7 @@ module WasteCarriersEngine
           subject { ExpiryCheckService.new(registration) }
 
           it "is in the window" do
-            expect(subject.in_renewal_window?).to eq(true)
+            expect(subject.in_renewal_window?).to be true
           end
         end
       end
@@ -221,7 +221,7 @@ module WasteCarriersEngine
         let(:expires_on) { 2.days.from_now }
 
         it "returns false" do
-          expect(subject.in_expiry_grace_window?).to eq(false)
+          expect(subject.in_expiry_grace_window?).to be false
         end
       end
 
@@ -229,7 +229,7 @@ module WasteCarriersEngine
         let(:expires_on) { Time.now }
 
         it "returns true" do
-          expect(subject.in_expiry_grace_window?).to eq(true)
+          expect(subject.in_expiry_grace_window?).to be true
         end
       end
 
@@ -240,7 +240,7 @@ module WasteCarriersEngine
           let(:last_day) { 1.day.from_now }
 
           it "returns true" do
-            expect(subject.in_expiry_grace_window?).to eq(true)
+            expect(subject.in_expiry_grace_window?).to be true
           end
         end
 
@@ -248,7 +248,7 @@ module WasteCarriersEngine
           let(:last_day) { Date.current }
 
           it "returns true" do
-            expect(subject.in_expiry_grace_window?).to eq(true)
+            expect(subject.in_expiry_grace_window?).to be true
           end
         end
 
@@ -256,7 +256,7 @@ module WasteCarriersEngine
           let(:last_day) { 1.day.ago }
 
           it "returns false" do
-            expect(subject.in_expiry_grace_window?).to eq(false)
+            expect(subject.in_expiry_grace_window?).to be false
           end
         end
       end

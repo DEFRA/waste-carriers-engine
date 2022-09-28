@@ -63,7 +63,7 @@ module WasteCarriersEngine
           it "does not include the finished button" do
             get new_registration_completed_form_path(transient_registration.token)
 
-            expect(response.body).to_not include("Finished")
+            expect(response.body).not_to include("Finished")
           end
         end
 

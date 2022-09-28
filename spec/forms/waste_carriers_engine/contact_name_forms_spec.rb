@@ -16,7 +16,7 @@ module WasteCarriersEngine
         end
 
         it "submits" do
-          expect(contact_name_form.submit(valid_params)).to eq(true)
+          expect(contact_name_form.submit(valid_params)).to be true
         end
       end
 
@@ -25,7 +25,7 @@ module WasteCarriersEngine
         let(:invalid_params) { { first_name: "", last_name: "" } }
 
         it "does not submit" do
-          expect(contact_name_form.submit(invalid_params)).to eq(false)
+          expect(contact_name_form.submit(invalid_params)).to be false
         end
       end
     end

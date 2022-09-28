@@ -10,7 +10,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::CASH }
 
       it "returns true" do
-        expect(resource.cash?).to eq(true)
+        expect(resource.cash?).to be true
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.cash?).to eq(false)
+        expect(resource.cash?).to be false
       end
     end
   end
@@ -32,7 +32,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::BANKTRANSFER }
 
       it "returns true" do
-        expect(resource.bank_transfer?).to eq(true)
+        expect(resource.bank_transfer?).to be true
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.bank_transfer?).to eq(false)
+        expect(resource.bank_transfer?).to be false
       end
     end
   end
@@ -54,7 +54,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::WORLDPAY }
 
       it "returns true" do
-        expect(resource.worldpay?).to eq(true)
+        expect(resource.worldpay?).to be true
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.worldpay?).to eq(false)
+        expect(resource.worldpay?).to be false
       end
     end
   end
@@ -76,7 +76,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::WORLDPAY_MISSED }
 
       it "returns true" do
-        expect(resource.worldpay_missed?).to eq(true)
+        expect(resource.worldpay_missed?).to be true
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.worldpay_missed?).to eq(false)
+        expect(resource.worldpay_missed?).to be false
       end
     end
   end
@@ -98,7 +98,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::GOVPAY }
 
       it "returns true" do
-        expect(resource.govpay?).to eq(true)
+        expect(resource.govpay?).to be true
       end
     end
 
@@ -106,7 +106,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.govpay?).to eq(false)
+        expect(resource.govpay?).to be false
       end
     end
   end
@@ -120,7 +120,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::REFUND }
 
       it "returns true" do
-        expect(resource.refund?).to eq(true)
+        expect(resource.refund?).to be true
       end
     end
 
@@ -128,7 +128,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.refund?).to eq(false)
+        expect(resource.refund?).to be false
       end
     end
   end
@@ -142,7 +142,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::WRITEOFFSMALL }
 
       it "returns true" do
-        expect(resource.writeoff_small?).to eq(true)
+        expect(resource.writeoff_small?).to be true
       end
     end
 
@@ -150,7 +150,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.writeoff_small?).to eq(false)
+        expect(resource.writeoff_small?).to be false
       end
     end
   end
@@ -164,7 +164,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::WRITEOFFLARGE }
 
       it "returns true" do
-        expect(resource.writeoff_large?).to eq(true)
+        expect(resource.writeoff_large?).to be true
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.writeoff_large?).to eq(false)
+        expect(resource.writeoff_large?).to be false
       end
     end
   end
@@ -186,7 +186,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::REVERSAL }
 
       it "returns true" do
-        expect(resource.reversal?).to eq(true)
+        expect(resource.reversal?).to be true
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.reversal?).to eq(false)
+        expect(resource.reversal?).to be false
       end
     end
   end
@@ -208,7 +208,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::CHEQUE }
 
       it "returns true" do
-        expect(resource.cheque?).to eq(true)
+        expect(resource.cheque?).to be true
       end
     end
 
@@ -216,7 +216,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.cheque?).to eq(false)
+        expect(resource.cheque?).to be false
       end
     end
   end
@@ -230,7 +230,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { WasteCarriersEngine::Payment::POSTALORDER }
 
       it "returns true" do
-        expect(resource.postal_order?).to eq(true)
+        expect(resource.postal_order?).to be true
       end
     end
 
@@ -238,7 +238,7 @@ RSpec.shared_examples "Can have payment type" do |resource:|
       let(:payment_type) { "foo" }
 
       it "returns false" do
-        expect(resource.postal_order?).to eq(false)
+        expect(resource.postal_order?).to be false
       end
     end
   end

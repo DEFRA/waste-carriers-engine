@@ -21,12 +21,12 @@ module WasteCarriersEngine
         context "when an EditRegistration is created" do
           it "is not valid if the reg_identifier is in the wrong format" do
             edit_registration.reg_identifier = "foo"
-            expect(edit_registration).to_not be_valid
+            expect(edit_registration).not_to be_valid
           end
 
           it "is not valid if no matching registration exists" do
             edit_registration.reg_identifier = "CBDU999999"
-            expect(edit_registration).to_not be_valid
+            expect(edit_registration).not_to be_valid
           end
         end
       end

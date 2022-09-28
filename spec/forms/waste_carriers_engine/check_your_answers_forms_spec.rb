@@ -54,7 +54,7 @@ module WasteCarriersEngine
           end
 
           it "is not valid" do
-            expect(check_your_answers_form).to_not be_valid
+            expect(check_your_answers_form).not_to be_valid
           end
         end
 
@@ -85,7 +85,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
@@ -109,7 +109,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
 
@@ -119,7 +119,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
@@ -132,7 +132,7 @@ module WasteCarriersEngine
           end
 
           it "is not valid" do
-            expect(check_your_answers_form).to_not be_valid
+            expect(check_your_answers_form).not_to be_valid
           end
         end
 
@@ -163,7 +163,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
@@ -187,7 +187,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
 
@@ -197,7 +197,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
@@ -227,7 +227,7 @@ module WasteCarriersEngine
           end
 
           it "is not valid" do
-            expect(check_your_answers_form).to_not be_valid
+            expect(check_your_answers_form).not_to be_valid
           end
         end
 
@@ -239,7 +239,7 @@ module WasteCarriersEngine
           end
 
           it "is not valid" do
-            expect(check_your_answers_form).to_not be_valid
+            expect(check_your_answers_form).not_to be_valid
           end
         end
 
@@ -262,7 +262,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
@@ -287,7 +287,7 @@ module WasteCarriersEngine
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
@@ -302,7 +302,7 @@ module WasteCarriersEngine
           end
 
           context "when declared_convictions does not expect there to be people" do
-            before(:each) do
+            before do
               check_your_answers_form.transient_registration.declared_convictions = "no"
             end
 
@@ -312,12 +312,12 @@ module WasteCarriersEngine
           end
 
           context "when declared_convictions expects there to be people" do
-            before(:each) do
+            before do
               check_your_answers_form.transient_registration.declared_convictions = "yes"
             end
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
@@ -342,7 +342,7 @@ module WasteCarriersEngine
           end
 
           it "is not valid" do
-            expect(check_your_answers_form).to_not be_valid
+            expect(check_your_answers_form).not_to be_valid
           end
         end
       end
@@ -369,7 +369,7 @@ module WasteCarriersEngine
               before { check_your_answers_form.transient_registration.location = "overseas" }
 
               it "is not valid" do
-                expect(check_your_answers_form).to_not be_valid
+                expect(check_your_answers_form).not_to be_valid
               end
             end
           end
@@ -378,30 +378,30 @@ module WasteCarriersEngine
             before { check_your_answers_form.transient_registration.tier = "LOWER" }
 
             it "is not valid" do
-              expect(check_your_answers_form).to_not be_valid
+              expect(check_your_answers_form).not_to be_valid
             end
           end
         end
       end
 
       context "when the business type has an invalid change" do
-        before(:each) do
+        before do
           check_your_answers_form.transient_registration.business_type = "limitedCompany"
           check_your_answers_form.transient_registration.registration.update_attributes(business_type: "soleTrader")
         end
 
         it "is not valid" do
-          expect(check_your_answers_form).to_not be_valid
+          expect(check_your_answers_form).not_to be_valid
         end
       end
 
       context "when the business type has changed to charity" do
-        before(:each) do
+        before do
           check_your_answers_form.transient_registration.business_type = "charity"
         end
 
         it "is not valid" do
-          expect(check_your_answers_form).to_not be_valid
+          expect(check_your_answers_form).not_to be_valid
         end
       end
     end

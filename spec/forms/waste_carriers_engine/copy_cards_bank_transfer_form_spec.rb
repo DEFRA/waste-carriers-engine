@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
       context "when the form is valid" do
         it "submits" do
-          expect(copy_cards_bank_transfer_form.submit({})).to eq(true)
+          expect(copy_cards_bank_transfer_form.submit({})).to be true
         end
       end
 
@@ -19,7 +19,7 @@ module WasteCarriersEngine
         end
 
         it "does not submit" do
-          expect(copy_cards_bank_transfer_form.submit({})).to eq(false)
+          expect(copy_cards_bank_transfer_form.submit({})).to be false
         end
       end
     end

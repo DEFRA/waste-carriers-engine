@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "StartForms", type: :request do
     # TODO: Remove once new registration is no longer behind a feature toggle
-    before(:each) { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:new_registration).and_return(true) }
+    before { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:new_registration).and_return(true) }
 
     describe "GET new_start_form_path" do
       it "returns a 200 response and render the new template" do

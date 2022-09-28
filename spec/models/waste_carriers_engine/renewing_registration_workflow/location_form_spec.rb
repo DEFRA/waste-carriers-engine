@@ -10,7 +10,7 @@ module WasteCarriersEngine
             location: location,
             workflow_state: "location_form")
     end
-    let(:location) {}
+    let(:location) { nil }
 
     describe "#workflow_state" do
       context ":location_form state transitions" do

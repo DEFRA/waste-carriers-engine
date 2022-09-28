@@ -7,10 +7,10 @@ module WasteCarriersEngine
     describe "#reg_identifier" do
       context "when a registration has no reg_identifier" do
         let(:registration) { build(:registration, :has_required_data) }
-        before(:each) { registration.tier = nil }
+        before { registration.tier = nil }
 
         it "is not valid" do
-          expect(registration).to_not be_valid
+          expect(registration).not_to be_valid
         end
       end
 
@@ -18,10 +18,10 @@ module WasteCarriersEngine
         let(:registration_a) { create(:registration, :has_required_data) }
         let(:registration_b) { create(:registration, :has_required_data) }
 
-        before(:each) { registration_b.reg_identifier = registration_a.reg_identifier }
+        before { registration_b.reg_identifier = registration_a.reg_identifier }
 
         it "is not valid" do
-          expect(registration_b).to_not be_valid
+          expect(registration_b).not_to be_valid
         end
       end
     end
@@ -38,7 +38,7 @@ module WasteCarriersEngine
 
       context "when one has not been set" do
         context "and the registration can be renewed" do
-          before(:each) do
+          before do
             allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true)
           end
 
@@ -79,7 +79,7 @@ module WasteCarriersEngine
       context "when the registration has no past_registrations" do
         it "returns false" do
           expect(registration.past_registrations).to be_empty
-          expect(registration).to_not be_already_renewed
+          expect(registration).not_to be_already_renewed
         end
       end
 
@@ -92,7 +92,7 @@ module WasteCarriersEngine
           end
 
           it "returns false" do
-            expect(registration).to_not be_already_renewed
+            expect(registration).not_to be_already_renewed
           end
         end
 
@@ -107,7 +107,7 @@ module WasteCarriersEngine
             end
 
             it "returns false" do
-              expect(registration).to_not be_already_renewed
+              expect(registration).not_to be_already_renewed
             end
           end
 
@@ -139,7 +139,7 @@ module WasteCarriersEngine
         let(:expires_on) { Time.now.to_date }
 
         it "returns false" do
-          expect(registration).to_not be_past_renewal_window
+          expect(registration).not_to be_past_renewal_window
         end
       end
     end
@@ -153,7 +153,7 @@ module WasteCarriersEngine
           result = described_class.active
 
           expect(result).to include(active_registration)
-          expect(result).to_not include(revoked_registration)
+          expect(result).not_to include(revoked_registration)
         end
       end
 
@@ -167,7 +167,7 @@ module WasteCarriersEngine
 
           expect(result).to include(active)
           expect(result).to include(expired)
-          expect(result).to_not include(revoked)
+          expect(result).not_to include(revoked)
         end
       end
 
@@ -188,9 +188,9 @@ module WasteCarriersEngine
           expect(result).to include(future_expire_date)
           expect(result).to include(past_covid_extension_in_grace_window)
           expect(result).to include(lower_tier)
-          expect(result).to_not include(past_covid_extension_not_in_grace_window)
-          expect(result).to_not include(past_covid_extension_edge_grace_window)
-          expect(result).to_not include(past_not_covid)
+          expect(result).not_to include(past_covid_extension_not_in_grace_window)
+          expect(result).not_to include(past_covid_extension_edge_grace_window)
+          expect(result).not_to include(past_not_covid)
         end
       end
 
@@ -202,7 +202,7 @@ module WasteCarriersEngine
           result = described_class.expired_at_end_of_today
 
           expect(result).to include(expired_registration)
-          expect(result).to_not include(active_registration)
+          expect(result).not_to include(active_registration)
         end
       end
 
@@ -214,7 +214,7 @@ module WasteCarriersEngine
           result = described_class.upper_tier
 
           expect(result).to include(upper_tier_registration)
-          expect(result).to_not include(lower_tier_registration)
+          expect(result).not_to include(lower_tier_registration)
         end
       end
 
@@ -226,7 +226,7 @@ module WasteCarriersEngine
           results = described_class.not_cancelled
 
           expect(results).to include(active_registration)
-          expect(results).to_not include(cancelled_registration)
+          expect(results).not_to include(cancelled_registration)
         end
       end
     end
@@ -246,7 +246,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, tier: nil) }
 
         it "is not valid" do
-          expect(registration).to_not be_valid
+          expect(registration).not_to be_valid
         end
       end
 
@@ -270,7 +270,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, tier: "foo") }
 
         it "is not valid" do
-          expect(registration).to_not be_valid
+          expect(registration).not_to be_valid
         end
       end
     end
@@ -308,7 +308,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, addresses: []) }
 
         it "is not valid" do
-          expect(registration).to_not be_valid
+          expect(registration).not_to be_valid
         end
       end
 
@@ -381,7 +381,7 @@ module WasteCarriersEngine
           end
 
           it "is not valid" do
-            expect(registration).to_not be_valid
+            expect(registration).not_to be_valid
           end
         end
       end
@@ -533,7 +533,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data, metaData: nil) }
 
         it "is not valid" do
-          expect(registration).to_not be_valid
+          expect(registration).not_to be_valid
         end
       end
 
@@ -548,7 +548,7 @@ module WasteCarriersEngine
 
           it "is not valid without a status" do
             registration.metaData.status = nil
-            expect(registration).to_not be_valid
+            expect(registration).not_to be_valid
           end
         end
 
@@ -575,21 +575,21 @@ module WasteCarriersEngine
           end
 
           it "cannot be revoked" do
-            expect(registration.metaData).to_not allow_event :revoke
+            expect(registration.metaData).not_to allow_event :revoke
           end
 
           it "cannot be renewed" do
-            expect(registration.metaData).to_not allow_event :renew
+            expect(registration.metaData).not_to allow_event :renew
           end
 
           it "cannot expire" do
-            expect(registration.metaData).to_not allow_event :expire
+            expect(registration.metaData).not_to allow_event :expire
           end
 
           it "cannot transition to 'revoked', 'renewed' or 'expired'" do
-            expect(registration.metaData).to_not allow_transition_to(:REVOKED)
-            expect(registration.metaData).to_not allow_transition_to(:renewed)
-            expect(registration.metaData).to_not allow_transition_to(:EXPIRED)
+            expect(registration.metaData).not_to allow_transition_to(:REVOKED)
+            expect(registration.metaData).not_to allow_transition_to(:renewed)
+            expect(registration.metaData).not_to allow_transition_to(:EXPIRED)
           end
         end
 
@@ -627,16 +627,16 @@ module WasteCarriersEngine
           end
 
           it "cannot be refused" do
-            expect(registration.metaData).to_not allow_event :refuse
+            expect(registration.metaData).not_to allow_event :refuse
           end
 
           it "cannot be activated" do
-            expect(registration.metaData).to_not allow_event :activate
+            expect(registration.metaData).not_to allow_event :activate
           end
 
           it "cannot transition to 'pending' or 'refused'" do
-            expect(registration.metaData).to_not allow_transition_to(:PENDING)
-            expect(registration.metaData).to_not allow_transition_to(:REFUSED)
+            expect(registration.metaData).not_to allow_transition_to(:PENDING)
+            expect(registration.metaData).not_to allow_transition_to(:REFUSED)
           end
         end
 
@@ -648,10 +648,10 @@ module WasteCarriersEngine
           end
 
           it "cannot transition to other states" do
-            expect(registration.metaData).to_not allow_transition_to(:PENDING)
-            expect(registration.metaData).to_not allow_transition_to(:ACTIVE)
-            expect(registration.metaData).to_not allow_transition_to(:REFUSED)
-            expect(registration.metaData).to_not allow_transition_to(:REVOKED)
+            expect(registration.metaData).not_to allow_transition_to(:PENDING)
+            expect(registration.metaData).not_to allow_transition_to(:ACTIVE)
+            expect(registration.metaData).not_to allow_transition_to(:REFUSED)
+            expect(registration.metaData).not_to allow_transition_to(:REVOKED)
           end
         end
 
@@ -663,10 +663,10 @@ module WasteCarriersEngine
           end
 
           it "cannot transition to other states" do
-            expect(registration.metaData).to_not allow_transition_to(:PENDING)
-            expect(registration.metaData).to_not allow_transition_to(:ACTIVE)
-            expect(registration.metaData).to_not allow_transition_to(:REFUSED)
-            expect(registration.metaData).to_not allow_transition_to(:REVOKED)
+            expect(registration.metaData).not_to allow_transition_to(:PENDING)
+            expect(registration.metaData).not_to allow_transition_to(:ACTIVE)
+            expect(registration.metaData).not_to allow_transition_to(:REFUSED)
+            expect(registration.metaData).not_to allow_transition_to(:REVOKED)
           end
         end
 
@@ -678,21 +678,21 @@ module WasteCarriersEngine
           end
 
           it "cannot be revoked" do
-            expect(registration.metaData).to_not allow_event :revoke
+            expect(registration.metaData).not_to allow_event :revoke
           end
 
           it "cannot be refused" do
-            expect(registration.metaData).to_not allow_event :refuse
+            expect(registration.metaData).not_to allow_event :refuse
           end
 
           it "cannot expire" do
-            expect(registration.metaData).to_not allow_event :expire
+            expect(registration.metaData).not_to allow_event :expire
           end
 
           it "cannot transition to 'pending', 'refused', 'revoked'" do
-            expect(registration.metaData).to_not allow_transition_to(:PENDING)
-            expect(registration.metaData).to_not allow_transition_to(:REFUSED)
-            expect(registration.metaData).to_not allow_transition_to(:REVOKED)
+            expect(registration.metaData).not_to allow_transition_to(:PENDING)
+            expect(registration.metaData).not_to allow_transition_to(:REFUSED)
+            expect(registration.metaData).not_to allow_transition_to(:REVOKED)
           end
         end
       end
@@ -720,7 +720,7 @@ module WasteCarriersEngine
         before { registration.tier = "LOWER" }
 
         it "returns false" do
-          expect(registration.can_start_renewal?).to eq(false)
+          expect(registration.can_start_renewal?).to be false
         end
       end
 
@@ -731,7 +731,7 @@ module WasteCarriersEngine
           before { registration.metaData.status = %w[REVOKED REFUSED].sample }
 
           it "returns false" do
-            expect(registration.can_start_renewal?).to eq(false)
+            expect(registration.can_start_renewal?).to be false
           end
         end
 
@@ -745,7 +745,7 @@ module WasteCarriersEngine
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true) }
 
             it "returns true" do
-              expect(registration.can_start_renewal?).to eq(true)
+              expect(registration.can_start_renewal?).to be true
             end
           end
 
@@ -756,7 +756,7 @@ module WasteCarriersEngine
               before { allow_any_instance_of(ExpiryCheckService).to receive(:expired?).and_return(true) }
 
               it "returns false" do
-                expect(registration.can_start_renewal?).to eq(false)
+                expect(registration.can_start_renewal?).to be false
               end
             end
 
@@ -767,7 +767,7 @@ module WasteCarriersEngine
                 before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
 
                 it "returns true" do
-                  expect(registration.can_start_renewal?).to eq(true)
+                  expect(registration.can_start_renewal?).to be true
                 end
               end
 
@@ -775,7 +775,7 @@ module WasteCarriersEngine
                 before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
 
                 it "returns false" do
-                  expect(registration.can_start_renewal?).to eq(false)
+                  expect(registration.can_start_renewal?).to be false
                 end
               end
             end

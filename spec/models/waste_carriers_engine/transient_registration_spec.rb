@@ -103,7 +103,7 @@ module WasteCarriersEngine
         let(:unpaid_balance) { false }
 
         it "returns false" do
-          expect(transient_registration.pending_payment?).to eq(false)
+          expect(transient_registration.pending_payment?).to be false
         end
       end
 
@@ -111,7 +111,7 @@ module WasteCarriersEngine
         let(:unpaid_balance) { true }
 
         it "returns true" do
-          expect(transient_registration.pending_payment?).to eq(true)
+          expect(transient_registration.pending_payment?).to be true
         end
       end
     end
@@ -128,7 +128,7 @@ module WasteCarriersEngine
           end
 
           it "returns true" do
-            expect(transient_registration.pending_online_payment?).to eq(true)
+            expect(transient_registration.pending_online_payment?).to be true
           end
         end
 
@@ -138,7 +138,7 @@ module WasteCarriersEngine
           end
 
           it "returns false" do
-            expect(transient_registration.pending_online_payment?).to eq(false)
+            expect(transient_registration.pending_online_payment?).to be false
           end
         end
       end
@@ -149,7 +149,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(transient_registration.pending_online_payment?).to eq(false)
+          expect(transient_registration.pending_online_payment?).to be false
         end
       end
     end
@@ -161,7 +161,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(transient_registration.pending_manual_conviction_check?).to eq(false)
+          expect(transient_registration.pending_manual_conviction_check?).to be false
         end
       end
 
@@ -171,7 +171,7 @@ module WasteCarriersEngine
         end
 
         it "returns true" do
-          expect(transient_registration.pending_manual_conviction_check?).to eq(true)
+          expect(transient_registration.pending_manual_conviction_check?).to be true
         end
       end
     end
