@@ -13,7 +13,7 @@ module WasteCarriersEngine
                        invalid_params: { temp_cards: 999_999 },
                        test_attribute: :temp_cards
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "cards_form")
         end

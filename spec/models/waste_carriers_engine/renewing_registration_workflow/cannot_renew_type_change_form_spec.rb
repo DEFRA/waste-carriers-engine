@@ -11,8 +11,8 @@ module WasteCarriersEngine
     end
 
     describe "#workflow_state" do
-      context ":cannot_renew_type_change_form state transitions" do
-        context "on next" do
+      context "with :cannot_renew_type_change_form state transitions" do
+        context "with :next transition" do
           it "does not respond to the 'next' event" do
             expect(subject).not_to allow_event :next
           end

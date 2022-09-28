@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe CeasedOrRevokedRegistration, type: :model do
     subject(:ceased_or_revoked_registration) { build(:ceased_or_revoked_registration) }
 
-    context "default status" do
+    context "with default status" do
       context "when a CeasedOrRevokedRegistration is created" do
         it "has the state of :cease_or_revoke_form" do
           expect(ceased_or_revoked_registration).to have_state(:cease_or_revoke_form)
@@ -14,7 +14,7 @@ module WasteCarriersEngine
       end
     end
 
-    context "Validations" do
+    context "with validations" do
       describe "reg_identifier" do
         context "when a CeasedOrRevokedRegistration is created" do
           it "is not valid if the reg_identifier is in the wrong format" do

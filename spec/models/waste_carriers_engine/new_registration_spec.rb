@@ -39,13 +39,13 @@ module WasteCarriersEngine
     end
 
     describe "#reg_identifier" do
-      context "if there is no reg_identifier number persisted in the db yet" do
+      context "when there is no reg_identifier number persisted in the db yet" do
         it "returns nil" do
           expect(subject.reg_identifier).to be_nil
         end
       end
 
-      context "if there is a reg_identifier number persisted in the db" do
+      context "when there is a reg_identifier number persisted in the db" do
         context "when the registation is a lower tier" do
           subject(:new_registration) { build(:new_registration, :lower, reg_identifier: 3) }
 

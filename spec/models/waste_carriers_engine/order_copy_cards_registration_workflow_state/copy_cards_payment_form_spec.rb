@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:order_copy_cards_registration, workflow_state: "copy_cards_payment_form") }
 
     describe "#workflow_state" do
-      context ":worldpay_form state transitions" do
-        context "on next" do
+      context "with :worldpay_form state transitions" do
+        context "with :next transition" do
           context "when the method is paying by card" do
             before { subject.temp_payment_method = "card" }
 

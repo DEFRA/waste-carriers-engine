@@ -25,26 +25,26 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
   context "when the number in the database has not got any spaces or dashes and doesn't start in +44" do
     let(:matching_phone_number) { normal_number }
 
-    context "and the search term has not got any spaces or dashes and doesn't start in +44" do
+    context "when the search term has not got any spaces or dashes and doesn't start in +44" do
       let(:term) { normal_number }
       it_behaves_like "matching and non matching registrations"
     end
 
-    context "but the search term has spaces" do
+    context "when the search term has spaces" do
       let(:term) { number_with_spaces }
       it_behaves_like "matching and non matching registrations"
     end
 
-    context "but the search term has dashes" do
+    context "when the search term has dashes" do
       let(:term) { number_with_dashes }
       it_behaves_like "matching and non matching registrations"
     end
 
-    context "but the search term starts with +44" do
+    context "when the search term starts with +44" do
       let(:term) { number_starting_with_plus44 }
       it_behaves_like "matching and non matching registrations"
 
-      context "and the search term is short" do
+      context "when the search term is short" do
         let(:term) { "+44 12345678" }
 
         it "returns no matches with no error" do
@@ -66,19 +66,19 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
   context "when the search term has not got any spaces or dashes and doesn't start in +44" do
     let(:term) { normal_number }
 
-    context "and the number in the database has spaces" do
+    context "when the number in the database has spaces" do
       let(:matching_phone_number) { number_with_spaces }
 
       it_behaves_like "matching and non matching registrations"
     end
 
-    context "and the number in the database has dashes" do
+    context "when the number in the database has dashes" do
       let(:matching_phone_number) { number_with_dashes }
 
       it_behaves_like "matching and non matching registrations"
     end
 
-    context "and the number in the database starts with +44" do
+    context "when the number in the database starts with +44" do
       let(:matching_phone_number) { number_starting_with_plus44 }
 
       it_behaves_like "matching and non matching registrations"
@@ -88,13 +88,13 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
   context "when the search term is in international number format" do
     let(:term) { international_number }
 
-    context "and the number in the database is in international number format" do
+    context "when the number in the database is in international number format" do
       let(:matching_phone_number) { international_number }
 
       it_behaves_like "matching and non matching registrations"
     end
 
-    context "and the number in the database is not in international number format" do
+    context "when the number in the database is not in international number format" do
       let(:matching_phone_number) { normal_number }
 
       it "does not match any registrations" do

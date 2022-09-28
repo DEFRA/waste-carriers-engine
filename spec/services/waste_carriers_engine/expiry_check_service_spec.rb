@@ -170,7 +170,7 @@ module WasteCarriersEngine
           allow(Rails.configuration).to receive(:renewal_window).and_return(3)
         end
 
-        context "and the expiry date is 3 months and 2 days from today" do
+        context "when the expiry date is 3 months and 2 days from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 2.day) }
           subject { ExpiryCheckService.new(registration) }
 
@@ -179,7 +179,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "and the expiry date is 3 months and 1 day from today" do
+        context "when the expiry date is 3 months and 1 day from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 1.day) }
           subject { ExpiryCheckService.new(registration) }
 
@@ -188,7 +188,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "and the expiry date is 3 months from today" do
+        context "when the expiry date is 3 months from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now) }
           subject { ExpiryCheckService.new(registration) }
 
@@ -197,7 +197,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "and the expiry date is less than 3 months from today" do
+        context "when the expiry date is less than 3 months from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now - 1.day) }
           subject { ExpiryCheckService.new(registration) }
 

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe KeyPerson, type: :model do
-    context "Initialization" do
+    context "with initialization" do
       describe "#set_individual_dob_fields" do
         context "when there is a valid dob" do
           let(:key_person) { KeyPerson.new(dob: Date.new(2000, 2, 1)) }

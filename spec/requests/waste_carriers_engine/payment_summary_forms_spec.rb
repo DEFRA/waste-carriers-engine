@@ -23,7 +23,7 @@ module WasteCarriersEngine
                          test_attribute: :temp_payment_method
       end
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "payment_summary_form")
         end

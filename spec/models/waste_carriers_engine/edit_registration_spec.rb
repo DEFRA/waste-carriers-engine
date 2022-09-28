@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     it_should_behave_like "Can check if registration type changed"
 
-    context "default status" do
+    context "with default status" do
       context "when an EditRegistration is created" do
         it "has the state of :edit_form" do
           expect(edit_registration).to have_state(:edit_form)
@@ -16,7 +16,7 @@ module WasteCarriersEngine
       end
     end
 
-    context "Validations" do
+    context "with validations" do
       describe "reg_identifier" do
         context "when an EditRegistration is created" do
           it "is not valid if the reg_identifier is in the wrong format" do

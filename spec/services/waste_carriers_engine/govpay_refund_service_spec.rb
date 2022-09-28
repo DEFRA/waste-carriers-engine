@@ -42,13 +42,13 @@ module WasteCarriersEngine
       end
 
       context "when the request is invalid" do
-        context "because the amount to refund is higher than available" do
+        context "when the amount to refund is higher than available" do
           let(:amount) { 300_000 }
 
           it { expect(govpay_refund).to be false }
         end
 
-        context "because the refund was unsuccessful" do
+        context "when the refund was unsuccessful" do
           let(:refund_response) { :get_refund_response_unsuccessful }
 
           it { expect(govpay_refund).to be false }

@@ -7,7 +7,7 @@ module WasteCarriersEngine
     include_examples "GET flexible form", "waste_types_form"
 
     describe "POST waste_types_form_path" do
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "waste_types_form")
         end

@@ -28,13 +28,13 @@ module WasteCarriersEngine
             expect(subject).to be_truthy
           end
 
-          context "for a new registration" do
+          context "with a new registration" do
             it "updates the transient registration" do
               expect { subject }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(registered_company_name)
             end
           end
 
-          context "for a registration renewal" do
+          context "with a registration renewal" do
             let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :renewing_registration, :has_required_data) }
 
             it "updates the transient registration" do

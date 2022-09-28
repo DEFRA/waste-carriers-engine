@@ -17,8 +17,8 @@ module WasteCarriersEngine
     let(:location) { "england" }
 
     describe "#workflow_state" do
-      context ":renewal_information_form state transitions" do
-        context "on next" do
+      context "with :renewal_information_form state transitions" do
+        context "with :next transition" do
 
           shared_examples "main_people_form or company_name_form based on tier" do
             context "when upper tier" do

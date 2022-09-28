@@ -9,8 +9,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "govpay_form") }
 
     describe "#workflow_state" do
-      context ":govpay_form state transitions" do
-        context "on next" do
+      context "with :govpay_form state transitions" do
+        context "with :next transition" do
           include_examples "has next transition", next_state: "registration_completed_form"
 
           context "when there are pending convictions" do

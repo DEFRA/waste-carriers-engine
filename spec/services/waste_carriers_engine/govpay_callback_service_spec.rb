@@ -29,7 +29,7 @@ module WasteCarriersEngine
     let(:govpay_service) { GovpayCallbackService.new(order.payment_uuid) }
 
     describe "#payment_callback" do
-      context "valid_success?" do
+      context "with valid_success?" do
         before { allow(GovpayPaymentDetailsService).to receive(:payment_status).with(order.govpay_id).and_return(:success) }
 
         context "when the status is valid" do
@@ -74,22 +74,6 @@ module WasteCarriersEngine
           end
         end
       end
-
-      # context "#valid_failure?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_failure?, "failed"
-      # end
-
-      # context "#valid_pending?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_pending?, "created"
-      # end
-
-      # context "#valid_cancel?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_cancel?, "cancelled"
-      # end
-
-      # context "#valid_error?" do
-      #   it_should_behave_like "GovpayCallbackService valid unsuccessful action", :valid_error?, "error"
-      # end
     end
   end
 end

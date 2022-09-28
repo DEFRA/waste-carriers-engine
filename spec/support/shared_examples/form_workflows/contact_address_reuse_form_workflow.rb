@@ -12,8 +12,8 @@ RSpec.shared_examples "company_address_reuse_form workflow" do |factory:|
       )
     end
 
-    context ":contact_address_reuse_form state transitions" do
-      context "on next" do
+    context "with :contact_address_reuse_form state transitions" do
+      context "with :next transition" do
         context "when the temp_reuse_registered_address is `yes`" do
           let(:temp_reuse_registered_address) { "yes" }
 

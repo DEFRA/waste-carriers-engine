@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "location_form") }
 
     describe "#workflow_state" do
-      context ":location_form state transitions" do
-        context "on next" do
+      context "with :location_form state transitions" do
+        context "with :next transition" do
           subject { build(:new_registration, workflow_state: "location_form", location: location) }
 
           context "when the location is northern_ireland" do

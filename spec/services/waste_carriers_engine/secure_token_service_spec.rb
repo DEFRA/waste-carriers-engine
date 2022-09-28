@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe SecureTokenService do
 
     describe ".run" do
-      context "the return value" do
+      context "when the return value" do
         it "is a string" do
           expect(described_class.run).to be_a(String)
         end

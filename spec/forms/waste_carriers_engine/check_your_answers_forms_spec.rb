@@ -354,10 +354,10 @@ module WasteCarriersEngine
             check_your_answers_form.transient_registration.temp_use_trading_name = "no"
           end
 
-          context "for an upper tier registration" do
+          context "with an upper tier registration" do
             before { check_your_answers_form.transient_registration.tier = "UPPER" }
 
-            context "based in England" do
+            context "when based in England" do
               before { check_your_answers_form.transient_registration.location = "england" }
 
               it "is valid" do
@@ -365,7 +365,7 @@ module WasteCarriersEngine
               end
             end
 
-            context "based overseas" do
+            context "when based overseas" do
               before { check_your_answers_form.transient_registration.location = "overseas" }
 
               it "is not valid" do
@@ -374,7 +374,7 @@ module WasteCarriersEngine
             end
           end
 
-          context "for a lower tier registration" do
+          context "with a lower tier registration" do
             before { check_your_answers_form.transient_registration.tier = "LOWER" }
 
             it "is not valid" do

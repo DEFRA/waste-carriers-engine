@@ -13,8 +13,8 @@ module WasteCarriersEngine
     let(:declared_convictions) { nil }
 
     describe "#workflow_state" do
-      context ":declare_convictions_form state transitions" do
-        context "on next" do
+      context "with :declare_convictions_form state transitions" do
+        context "with :next transition" do
 
           context "when declared_convictions is yes" do
             let(:declared_convictions) { "yes" }

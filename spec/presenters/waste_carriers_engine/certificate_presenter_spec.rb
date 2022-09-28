@@ -103,7 +103,7 @@ module WasteCarriersEngine
           carrier_broker_dealer: "An upper tier waste carrier, broker and dealer"
         }
         test_values.each do |type, expected|
-          context "and is a '#{type}'" do
+          context "when is a '#{type}'" do
             let(:registration_type) { type }
 
             it "returns '#{expected}'" do

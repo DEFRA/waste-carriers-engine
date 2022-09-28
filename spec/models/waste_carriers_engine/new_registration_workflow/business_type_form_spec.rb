@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "business_type_form") }
 
     describe "#workflow_state" do
-      context ":business_type_form state transitions" do
-        context "on next" do
+      context "with :business_type_form state transitions" do
+        context "with :next transition" do
           context "when the business type is a lower tier specific type" do
             subject { build(:new_registration, workflow_state: "business_type_form", business_type: "charity") }
 

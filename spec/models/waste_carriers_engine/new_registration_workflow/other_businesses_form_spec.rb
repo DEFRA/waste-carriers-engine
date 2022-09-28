@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "other_businesses_form") }
 
     describe "#workflow_state" do
-      context ":other_businesses_form state transitions" do
-        context "on next" do
+      context "with :other_businesses_form state transitions" do
+        context "with :next transition" do
           context "when they only carries their own waste" do
             subject { build(:new_registration, workflow_state: "other_businesses_form", other_businesses: "no") }
 

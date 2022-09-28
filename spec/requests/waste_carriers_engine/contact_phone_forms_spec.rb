@@ -13,7 +13,7 @@ module WasteCarriersEngine
                        invalid_params: { phone_number: "foo" },
                        test_attribute: :phone_number
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "contact_phone_form")
         end

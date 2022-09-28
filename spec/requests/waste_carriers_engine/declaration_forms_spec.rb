@@ -17,7 +17,7 @@ module WasteCarriersEngine
                        invalid_params: { declaration: "foo" },
                        test_attribute: :declaration
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "declaration_form")
         end

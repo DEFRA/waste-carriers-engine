@@ -162,7 +162,7 @@ module WasteCarriersEngine
         end
 
         # This only applies to attributes where a value could be set, but not always - for example, smart answers
-        context "if the registration has an attribute which is not in the transient_registration" do
+        context "when the registration has an attribute which is not in the transient_registration" do
           before do
             registration.update_attributes(construction_waste: true)
           end

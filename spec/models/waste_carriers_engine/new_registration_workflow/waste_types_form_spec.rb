@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "waste_types_form") }
 
     describe "#workflow_state" do
-      context ":waste_types_form state transitions" do
-        context "on next" do
+      context "with :waste_types_form state transitions" do
+        context "with :next transition" do
           let(:smart_answer_checker_service) { double(:smart_answer_checker_service, lower_tier?: lower_tier) }
 
           before do

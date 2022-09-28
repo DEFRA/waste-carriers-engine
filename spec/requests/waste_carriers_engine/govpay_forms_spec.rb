@@ -196,7 +196,7 @@ module WasteCarriersEngine
             end
           end
 
-          context "for pending govpay statuses" do
+          context "with pending govpay statuses" do
 
             RSpec.shared_examples "payment is pending" do
 
@@ -230,7 +230,7 @@ module WasteCarriersEngine
             end
           end
 
-          context "for unsuccessful govpay statuses" do
+          context "with unsuccessful govpay statuses" do
 
             RSpec.shared_examples "payment is unsuccessful" do
 
@@ -263,30 +263,30 @@ module WasteCarriersEngine
               end
             end
 
-            context "when govpay status is cancel" do
+            context "with cancelled status" do
               let(:govpay_status) { "cancelled" }
               it_behaves_like "payment is unsuccessful"
             end
 
-            context "failure" do
+            context "with failure status" do
               let(:govpay_status) { "failure" }
               it_behaves_like "payment is unsuccessful"
             end
 
-            context "error" do
+            context "with an error status" do
               let(:govpay_status) { "not_found" }
               it_behaves_like "payment is unsuccessful"
             end
           end
 
-          context "for an invalid success status" do
+          context "with an invalid success status" do
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "success" }
             it_behaves_like "payment is unsuccessful"
           end
 
-          context "for an invalid failure status" do
+          context "with an invalid failure status" do
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "cancelled" }

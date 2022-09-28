@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "construction_demolition_form") }
 
     describe "#workflow_state" do
-      context ":construction_demolition_form state transitions" do
-        context "on next" do
+      context "with :construction_demolition_form state transitions" do
+        context "with :next transition" do
           let(:smart_answer_checker_service) { double(:smart_answer_checker_service, lower_tier?: lower_tier) }
 
           before do

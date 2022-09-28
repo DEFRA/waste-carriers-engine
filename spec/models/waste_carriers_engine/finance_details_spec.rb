@@ -55,10 +55,10 @@ module WasteCarriersEngine
         end
       end
 
-      context "returns the difference from 0 balance" do
+      context "when the balance is more than 0" do
         let(:balance) { 4 }
 
-        it "returns 0" do
+        it "returns the difference from 0 balance" do
           expect(subject.zero_difference_balance).to eq(4)
         end
       end

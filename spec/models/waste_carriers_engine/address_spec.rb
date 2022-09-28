@@ -95,7 +95,7 @@ module WasteCarriersEngine
           expect(subject.attributes.keys).not_to include(nil)
         end
 
-        context "organisation details" do
+        context "with organisation details" do
           context "with an organisation name only" do
             before { os_places_data["departmentName"] = nil }
             it "uses the organisation name" do
@@ -115,7 +115,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "building details" do
+        context "with building details" do
           context "with a building name only" do
             before { os_places_data["subBuildingName"] = nil }
             it "uses the building name" do

@@ -35,7 +35,7 @@ module WasteCarriersEngine
               .and_call_original
           end
 
-          context "an upper tier registration" do
+          context "with an upper tier registration" do
             let(:template_id) { "6d54a9bc-9b62-4d93-a40a-d06d04ed58ca" }
             let(:registration) { create(:registration, :has_required_data, :already_renewed) }
             let(:registration_type) { "carrier, broker and dealer" }

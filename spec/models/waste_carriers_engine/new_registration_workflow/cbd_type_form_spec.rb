@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "cbd_type_form") }
 
     describe "#workflow_state" do
-      context ":cbd_type_form state transitions" do
-        context "on next" do
+      context "with :cbd_type_form state transitions" do
+        context "with :next transition" do
           context "when a company registration number is required" do
             subject { build(:new_registration, workflow_state: "cbd_type_form", business_type: "limitedCompany") }
 

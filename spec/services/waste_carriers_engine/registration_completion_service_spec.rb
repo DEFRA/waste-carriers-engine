@@ -295,7 +295,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "temporary additional debugging" do
+        context "with temporary additional debugging" do
 
           before do
             allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true

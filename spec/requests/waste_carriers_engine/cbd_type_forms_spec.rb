@@ -13,7 +13,7 @@ module WasteCarriersEngine
                        invalid_params: { registration_type: "foo" },
                        test_attribute: :registration_type
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "cbd_type_form")
         end

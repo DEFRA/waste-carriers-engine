@@ -11,8 +11,8 @@ module WasteCarriersEngine
     end
 
     describe "#workflow_state" do
-      context ":renewal_start_form state transitions" do
-        context "on next" do
+      context "with :renewal_start_form state transitions" do
+        context "with :next transition" do
           include_examples "has next transition", next_state: "location_form"
         end
       end

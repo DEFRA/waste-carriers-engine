@@ -13,7 +13,7 @@ module WasteCarriersEngine
                        invalid_params: { declared_convictions: "foo" },
                        test_attribute: :declared_convictions
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "declare_convictions_form")
         end

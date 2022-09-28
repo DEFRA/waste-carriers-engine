@@ -74,23 +74,23 @@ module WasteCarriersEngine
     end
 
     describe "#valid?" do
-      context "sole trader" do
+      context "with a sole trader" do
         before { allow(subject).to receive(:business_type).and_return("soleTrader") }
-        context "upper tier" do
+        context "with an upper tier registration" do
           before { allow(subject).to receive(:tier).and_return("UPPER") }
           it_behaves_like "business name is optional"
         end
-        context "lower tier" do
+        context "with a lower tier registration" do
           before { allow(subject).to receive(:tier).and_return("LOWER") }
           # WCR does not capture sole trader name for lower tier registrations, so business name is required
           it_behaves_like "business name is required"
         end
       end
-      context "limited company" do
+      context "with a limited company" do
         before { allow(subject).to receive(:business_type).and_return("limitedCompany") }
         it_behaves_like "limited company or limited liability partnership"
       end
-      context "limited liability partnership" do
+      context "with a limited liability partnership" do
         before { allow(subject).to receive(:business_type).and_return("limitedLiabilityPartnership") }
         it_behaves_like "limited company or limited liability partnership"
       end

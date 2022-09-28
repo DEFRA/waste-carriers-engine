@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:renewing_registration, workflow_state: "check_registered_company_name_form") }
 
     describe "#workflow_state" do
-      context ":check_registered_company_name_form state transitions" do
-        context "on next" do
+      context "with :check_registered_company_name_form state transitions" do
+        context "with :next transition" do
           context "when the user confirms their company house details are correct" do
             subject { build(:new_registration, workflow_state: "check_registered_company_name_form", temp_use_registered_company_details: "yes") }
 

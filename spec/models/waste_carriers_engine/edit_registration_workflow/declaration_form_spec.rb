@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:edit_registration, workflow_state: "declaration_form") }
 
     describe "#workflow_state" do
-      context ":declaration_form state transitions" do
-        context "on next" do
+      context "with :declaration_form state transitions" do
+        context "with :next transition" do
           include_examples "has next transition", next_state: "edit_complete_form"
 
           context "when the registration has changed business type" do

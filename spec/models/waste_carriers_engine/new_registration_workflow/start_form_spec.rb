@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject(:new_registration) { build(:new_registration, temp_start_option: temp_start_option) }
 
     describe "#workflow_state" do
-      context ":start_form state transitions" do
-        context "on next" do
+      context "with :start_form state transitions" do
+        context "with :next transition" do
           context "when the temp_start_option is `renew`" do
             let(:temp_start_option) { WasteCarriersEngine::StartForm::RENEW }
 

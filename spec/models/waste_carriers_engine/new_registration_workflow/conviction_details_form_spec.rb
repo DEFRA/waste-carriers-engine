@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "conviction_details_form") }
 
     describe "#workflow_state" do
-      context ":conviction_details_form state transitions" do
-        context "on next" do
+      context "with :conviction_details_form state transitions" do
+        context "with :next transition" do
           include_examples "has next transition", next_state: "contact_name_form"
         end
       end

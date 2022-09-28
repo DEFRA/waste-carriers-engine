@@ -13,7 +13,7 @@ module WasteCarriersEngine
                        invalid_params: { temp_use_trading_name: "" },
                        test_attribute: :temp_use_trading_name
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, :has_required_data, tier: "LOWER", workflow_state: "use_trading_name_form")
         end

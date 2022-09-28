@@ -51,7 +51,7 @@ module WasteCarriersEngine
       end
     end
 
-    context "Validations" do
+    context "with validations" do
       describe "reg_identifier" do
         context "when a RenewingRegistration is created" do
           it "is not valid if the reg_identifier is in the wrong format" do
@@ -170,7 +170,7 @@ module WasteCarriersEngine
         context "when it is not within the grace window" do
           before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(false) }
 
-          context "and when it is within the renewal window" do
+          context "when it is within the renewal window" do
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
 
             it "returns true" do
@@ -178,7 +178,7 @@ module WasteCarriersEngine
             end
           end
 
-          context "and when it is not within the renewal window" do
+          context "when it is not within the renewal window" do
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
 
             it "returns false" do
@@ -203,7 +203,7 @@ module WasteCarriersEngine
           context "when it is not within the grace window" do
             before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(false) }
 
-            context "and when it is within the renewal window" do
+            context "when it is within the renewal window" do
               before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
 
               it "returns true" do
@@ -211,7 +211,7 @@ module WasteCarriersEngine
               end
             end
 
-            context "and when it is not within the renewal window" do
+            context "when it is not within the renewal window" do
               before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
 
               it "returns false" do
@@ -232,20 +232,20 @@ module WasteCarriersEngine
       end
 
       context "when the transient registration is not ready to complete" do
-        context "because it is not submitted" do
+        context "when it is not submitted" do
           let(:renewing_registration) { build(:renewing_registration, workflow_state: "bank_transfer_form") }
           it "returns false" do
             expect(renewing_registration.ready_to_complete?).to be false
           end
         end
 
-        context "because it has outstanding payments" do
+        context "when it has outstanding payments" do
           it "returns false" do
             expect(renewing_registration.ready_to_complete?).to be false
           end
         end
 
-        context "because it has outstanding conviction checks" do
+        context "when it has outstanding conviction checks" do
           it "returns false" do
             expect(renewing_registration.ready_to_complete?).to be false
           end
@@ -263,7 +263,7 @@ module WasteCarriersEngine
       end
 
       context "when the registration is submitted" do
-        context "and has been revoked" do
+        context "when has been revoked" do
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :revoked) }
 
           it "returns false" do
@@ -271,7 +271,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "and has an outstanding payment" do
+        context "when has an outstanding payment" do
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :has_unpaid_balance) }
 
           it "returns false" do
@@ -279,7 +279,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "and has an outstanding conviction check" do
+        context "when has an outstanding conviction check" do
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :requires_conviction_check) }
 
           it "returns false" do
@@ -287,7 +287,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "and has no outstanding checks" do
+        context "when has no outstanding checks" do
           let(:renewing_registration) { build(:renewing_registration, :has_required_data, :is_submitted, :has_paid_balance) }
 
           it "returns true" do

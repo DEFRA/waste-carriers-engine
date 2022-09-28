@@ -37,7 +37,7 @@ module WasteCarriersEngine
       end
 
       context "when one has not been set" do
-        context "and the registration can be renewed" do
+        context "when the registration can be renewed" do
           before do
             allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true)
           end
@@ -61,7 +61,7 @@ module WasteCarriersEngine
           end
         end
 
-        context "and the registration cannot be renewed" do
+        context "when the registration cannot be renewed" do
           let(:registration) { create(:registration, :has_required_data) }
 
           it "returns nothing" do

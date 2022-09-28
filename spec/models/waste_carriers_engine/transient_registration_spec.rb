@@ -192,7 +192,7 @@ module WasteCarriersEngine
         }
       end
 
-      context "valid change" do
+      context "with a valid change" do
 
         it "allows all valid changes" do
           valid_changes.each do |old_type, new_types|
@@ -207,7 +207,7 @@ module WasteCarriersEngine
         end
       end
 
-      context "invalid change" do
+      context "with an invalid change" do
         it "does not allow invalid changes" do
           business_types.each do |old_type|
             allow_any_instance_of(Registration).to receive(:business_type).and_return(old_type)

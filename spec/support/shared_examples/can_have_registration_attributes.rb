@@ -457,16 +457,16 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
     end
 
-    context "for a sole trader" do
+    context "with a sole trader" do
       let(:business_type) { "soleTrader" }
 
-      context "upper tier" do
+      context "with an upper tier registration" do
         it "returns the sole trader's name" do
           expect(subject).to eq "#{resource.key_people[0].first_name} #{resource.key_people[0].last_name}"
         end
       end
 
-      context "lower tier" do
+      context "with a lower tier registration" do
         let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
         it "returns nil" do
           expect(subject).to be_nil
@@ -474,12 +474,12 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
     end
 
-    context "for a limited company" do
+    context "with a limited company" do
       let(:business_type) { "limitedCompany" }
       it_behaves_like "LTD or LLP"
     end
 
-    context "for a limited liability partnership" do
+    context "with a limited liability partnership" do
       let(:business_type) { "limitedLiabilityPartnership" }
       it_behaves_like "LTD or LLP"
     end
@@ -494,14 +494,14 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     subject { resource.company_name_required? }
 
     shared_examples "it is required for lower tier only" do
-      context "upper tier" do
+      context "with an upper tier registration" do
         let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
         it "returns false" do
           expect(subject).to be false
         end
       end
 
-      context "lower tier" do
+      context "with a lower tier registration" do
         let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
         it "returns true" do
           expect(subject).to be true
@@ -509,22 +509,22 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
     end
 
-    context "for a limited company" do
+    context "with a limited company" do
       let(:business_type) { "limitedCompany" }
       it_behaves_like "it is required for lower tier only"
     end
 
-    context "for a limited liability partnership" do
+    context "with a limited liability partnership" do
       let(:business_type) { "limitedLiabilityPartnership" }
       it_behaves_like "it is required for lower tier only"
     end
 
-    context "for a sole trader" do
+    context "with a sole trader" do
       let(:business_type) { "soleTrader" }
       it_behaves_like "it is required for lower tier only"
     end
 
-    context "for an overseas business" do
+    context "with an overseas business" do
       let(:business_type) { "soleTrader" }
       let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
       before { resource.location = "overseas" }

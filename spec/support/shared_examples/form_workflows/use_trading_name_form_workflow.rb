@@ -2,11 +2,11 @@
 
 RSpec.shared_examples "use_trading_name_form workflow" do |factory:|
   describe "#workflow_state" do
-    context ":use_trading_name_form state transitions" do
+    context "with :use_trading_name_form state transitions" do
 
       subject { build(factory, workflow_state: "use_trading_name_form", **params) }
 
-      context "on next" do
+      context "with :next transition" do
         context "when the user selects Yes" do
           let(:params) { { temp_use_trading_name: "yes" } }
 

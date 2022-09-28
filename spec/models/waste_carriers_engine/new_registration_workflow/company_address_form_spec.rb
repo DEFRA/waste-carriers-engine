@@ -23,8 +23,8 @@ module WasteCarriersEngine
     end
 
     describe "#workflow_state" do
-      context ":company_address_form state transitions" do
-        context "on next" do
+      context "with :company_address_form state transitions" do
+        context "with :next transition" do
           context "when the registration is upper tier" do
             subject { build(:new_registration, :upper, workflow_state: "company_address_form") }
 

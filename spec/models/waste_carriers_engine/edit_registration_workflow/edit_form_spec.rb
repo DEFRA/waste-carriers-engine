@@ -7,7 +7,7 @@ module WasteCarriersEngine
     subject(:edit_registration) { build(:edit_registration) }
 
     describe "#workflow_state" do
-      context ":edit_form state transitions" do
+      context "with :edit_form state transitions" do
         current_state = :edit_form
         non_address_editable_form_states = %i[
           cbd_type_form
@@ -67,7 +67,7 @@ module WasteCarriersEngine
             expect(subject).to transition_from(current_state).to(expected_state).on_event(event)
           end
 
-          context "on next" do
+          context "with :next transition" do
             include_examples "has next transition", next_state: "declaration_form"
           end
         end

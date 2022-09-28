@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "payment_summary_form") }
 
     describe "#workflow_state" do
-      context ":payment_summary_form state transitions" do
-        context "on next" do
+      context "with :payment_summary_form state transitions" do
+        context "with :next transition" do
           context "when the user choose to pay by card" do
             subject { build(:new_registration, workflow_state: "payment_summary_form", temp_payment_method: "card") }
 

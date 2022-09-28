@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     describe "POST other_businesses_form_path" do
 
-      context "When the transient_registration is a new registration" do
+      context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "other_businesses_form")
         end

@@ -10,8 +10,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "your_tier_form", temp_check_your_tier: "unknown") }
 
     describe "#workflow_state" do
-      context ":your_tier_form state transitions" do
-        context "on next" do
+      context "with :your_tier_form state transitions" do
+        context "with :next transition" do
 
           subject { build(:new_registration, business_type: business_type, tier: tier, workflow_state: "your_tier_form") }
 

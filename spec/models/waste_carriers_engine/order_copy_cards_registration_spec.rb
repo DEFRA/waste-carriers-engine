@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe OrderCopyCardsRegistration, type: :model do
     subject(:order_copy_cards_registration) { build(:order_copy_cards_registration) }
 
-    context "default status" do
+    context "with default status" do
       context "when a OrderCopyCardsRegistration is created" do
         it "has the state of :copy_cards_form" do
           expect(order_copy_cards_registration).to have_state(:copy_cards_form)
@@ -14,7 +14,7 @@ module WasteCarriersEngine
       end
     end
 
-    context "Validations" do
+    context "with validations" do
       describe "reg_identifier" do
         context "when a OrderCopyCardsRegistration is created" do
           it "is not valid if the reg_identifier is in the wrong format" do

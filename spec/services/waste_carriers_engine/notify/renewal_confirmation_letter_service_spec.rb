@@ -10,7 +10,7 @@ module WasteCarriersEngine
         allow_any_instance_of(WasteCarriersEngine::Address).to receive(:postcode).and_return("BS1 1AA")
       end
 
-      context "upper tier" do
+      context "with an upper tier registration" do
         describe ".run" do
           let(:registration) { create(:registration, :has_required_data, expires_on: 1.year.from_now) }
           let(:template_id) { "f703000e-1e76-4529-912d-966691578da0" }

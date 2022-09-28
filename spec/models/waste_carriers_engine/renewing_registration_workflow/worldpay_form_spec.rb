@@ -14,8 +14,8 @@ module WasteCarriersEngine
     end
 
     describe "#workflow_state" do
-      context ":worldpay_form state transitions" do
-        context "on next" do
+      context "with :worldpay_form state transitions" do
+        context "with :next transition" do
           context "when a conviction check is not required" do
             before do
               allow(subject).to receive(:conviction_check_required?).and_return(false)

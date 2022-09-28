@@ -46,13 +46,13 @@ RSpec.describe DefraRubyCompaniesHouse do
     end
 
     context "when there is a problem with the companies house API" do
-      context "and the requests time out" do
+      context "when the requests time out" do
         it "raises a standard error" do
           expect { subject }.to raise_error(StandardError)
         end
       end
 
-      context "and requests return an error" do
+      context "when requests return an error" do
         before { stub_request(:get, /#{Rails.configuration.companies_house_host}*/).to_raise(SocketError) }
 
         it "raises an exception" do

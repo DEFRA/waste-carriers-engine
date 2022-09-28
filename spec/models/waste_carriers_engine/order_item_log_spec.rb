@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe OrderItemLog, type: :model do
     describe "#initialize" do
 
-      context "for a new registration" do
+      context "with a new registration" do
         let(:registration) { create(:registration, :has_required_data, :has_copy_cards_order) }
         let(:order) { registration.finance_details.orders[0] }
         let(:registration_order_item) { order.order_items[0] }
@@ -48,7 +48,7 @@ module WasteCarriersEngine
         3.times { registration.finance_details.orders << build(:order, :has_copy_cards_item) }
       end
 
-      context "for a new registration" do
+      context "with a new registration" do
         it "creates the correct number of order item logs" do
           expect { subject }.to change { OrderItemLog.count }
             .from(0)
@@ -56,7 +56,7 @@ module WasteCarriersEngine
         end
       end
 
-      context "for a registration with previously logged order items" do
+      context "with a registration with previously logged order items" do
         let(:new_order) { build(:order, :has_copy_cards_item) }
 
         before do
@@ -83,7 +83,7 @@ module WasteCarriersEngine
       end
     end
 
-    context "#active_registration?" do
+    describe "#active_registration?" do
       let(:order_item_log) { build(:order_item_log, registration: registration) }
 
       subject { order_item_log.active_registration? }

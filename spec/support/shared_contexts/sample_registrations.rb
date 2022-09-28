@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_context "Sample registration with defaults" do |factory|
+RSpec.shared_context "with a sample registration with defaults" do |factory|
   let(:company_name) { Faker::Lorem.sentence(word_count: 3) }
   let(:registered_company_name) { nil }
   let(:tier) { "UPPER" }

@@ -7,8 +7,8 @@ module WasteCarriersEngine
     subject { build(:new_registration, workflow_state: "service_provided_form") }
 
     describe "#workflow_state" do
-      context ":service_provided_form state transitions" do
-        context "on next" do
+      context "with :service_provided_form state transitions" do
+        context "with :next transition" do
           context "when waste is their main service" do
             subject { build(:new_registration, workflow_state: "service_provided_form", is_main_service: "yes") }
 

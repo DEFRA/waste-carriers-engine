@@ -11,8 +11,8 @@ module WasteCarriersEngine
     end
 
     describe "#workflow_state" do
-      context ":business_type_form state transitions" do
-        context "on next" do
+      context "with :business_type_form state transitions" do
+        context "with :next transition" do
           {
             # Permutation table of old business_type, new business_type and the state that should result
             # Example where the business_type doesn't change:

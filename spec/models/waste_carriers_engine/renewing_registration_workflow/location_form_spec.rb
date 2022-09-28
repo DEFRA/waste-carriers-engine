@@ -13,8 +13,8 @@ module WasteCarriersEngine
     let(:location) { nil }
 
     describe "#workflow_state" do
-      context ":location_form state transitions" do
-        context "on next" do
+      context "with :location_form state transitions" do
+        context "with :next transition" do
 
           { # Permutation table of location and the state that should result
             "england" => :business_type_form,
