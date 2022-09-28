@@ -59,20 +59,19 @@ module WasteCarriersEngine
     end
 
     def self.new_from_non_online_payment(params, order)
-      payment = Payment.new
+      payment = Payment.new(params.slice(:amount,
+                                         :comment,
+                                         :date_received,
+                                         :date_received_day,
+                                         :date_received_month,
+                                         :date_received_year,
+                                         :payment_type,
+                                         :registration_reference,
+                                         :updated_by_user))
 
-      payment[:amount] = params[:amount]
-      payment[:comment] = params[:comment]
       payment[:currency] = "GBP"
       payment[:date_entered] = Date.current
-      payment[:date_received] = params[:date_received]
-      payment[:date_received_day] = params[:date_received_day]
-      payment[:date_received_month] = params[:date_received_month]
-      payment[:date_received_year] = params[:date_received_year]
       payment[:order_key] = SecureRandom.uuid.split("-").last
-      payment[:payment_type] = params[:payment_type]
-      payment[:registration_reference] = params[:registration_reference]
-      payment[:updated_by_user] = params[:updated_by_user]
 
       payment.finance_details = order.finance_details
 
