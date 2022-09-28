@@ -4,6 +4,9 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module Notify
+
+    # TODO Refactor to remove the use of allow_any_instance_of
+    # rubocop:disable RSpec/AnyInstance
     RSpec.describe RegistrationPendingPaymentEmailService do
       let(:template_id) { "b8b68a4c-adc9-4fe6-86cd-3d5a83822c47" }
       let(:registration) { create(:registration, :has_required_data) }
@@ -36,7 +39,7 @@ module WasteCarriersEngine
       describe ".run" do
         context "with a contact_email" do
           before do
-            expect_any_instance_of(Notifications::Client)
+            allow_any_instance_of(Notifications::Client)
               .to receive(:send_email)
               .with(expected_notify_options)
               .and_call_original
@@ -68,5 +71,6 @@ module WasteCarriersEngine
         end
       end
     end
+    # rubocop:enable RSpec/AnyInstance
   end
 end

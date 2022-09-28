@@ -81,8 +81,10 @@ module WasteCarriersEngine
           end
 
           context "when there is an error setting up the govpay url" do
+            let(:govpay_service) { instance_double(GovpayPaymentService) }
             before do
-              allow_any_instance_of(GovpayPaymentService).to receive(:prepare_for_payment).and_return(:error)
+              allow(GovpayPaymentService).to receive(:new).and_return(govpay_service)
+              allow(govpay_service).to receive(:prepare_for_payment).and_return(:error)
             end
 
             it "redirects to payment_summary_form" do
@@ -164,9 +166,12 @@ module WasteCarriersEngine
                 end
 
                 context "when the mailer fails" do
+                  let(:mailer_instance) { instance_double(ActionMailer::MessageDelivery) }
+
                   before do
+                    allow(ActionMailer::MessageDelivery).to receive(:new).and_return(mailer_instance)
                     allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
-                    allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_raise(StandardError)
+                    allow(mailer_instance).to receive(:deliver_now).and_raise(StandardError)
                   end
 
                   it "does not raise an error" do

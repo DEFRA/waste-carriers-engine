@@ -4,9 +4,6 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "DeclarationForms", type: :request do
-    before do
-      allow_any_instance_of(RestClient::Request).to receive(:execute).and_return("foo")
-    end
 
     include_examples "GET locked-in form", "declaration_form"
 

@@ -3,6 +3,8 @@
 require "webmock/rspec"
 require "rails_helper"
 
+# WorldpayForms will be retired shortly, so not worth refactoring to avoid allow_any_instance_of
+# rubocop:disable RSpec/AnyInstance
 module WasteCarriersEngine
   RSpec.describe "WorldpayForms", type: :request do
     let(:host) { "https://secure-test.worldpay.com" }
@@ -249,3 +251,4 @@ module WasteCarriersEngine
     end
   end
 end
+# rubocop:enable RSpec/AnyInstance

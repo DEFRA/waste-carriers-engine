@@ -196,7 +196,8 @@ module WasteCarriersEngine
 
         it "allows all valid changes" do
           valid_changes.each do |old_type, new_types|
-            allow_any_instance_of(Registration).to receive(:business_type).and_return(old_type)
+            renewing_registration.registration.business_type = old_type
+            renewing_registration.registration.save!
 
             new_types.each do |new_type|
               allow(renewing_registration).to receive(:business_type).and_return(new_type)
@@ -210,7 +211,8 @@ module WasteCarriersEngine
       context "with an invalid change" do
         it "does not allow invalid changes" do
           business_types.each do |old_type|
-            allow_any_instance_of(Registration).to receive(:business_type).and_return(old_type)
+            renewing_registration.registration.business_type = old_type
+            renewing_registration.registration.save!
 
             business_types.each do |new_type|
               next if old_type == new_type

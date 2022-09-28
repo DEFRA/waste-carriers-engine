@@ -165,8 +165,11 @@ module WasteCarriersEngine
 
       context "when a user is signed in" do
         let(:user) { create(:user) }
+        let(:ability_instance) { instance_double(Ability) }
 
         before do
+          allow(Ability).to receive(:new).and_return(ability_instance)
+          allow(ability_instance).to receive(:can?).with(:edit, edit_registration.registration).and_return(true)
           sign_in(user)
         end
 
@@ -242,7 +245,7 @@ module WasteCarriersEngine
         context "when the user does not have permission" do
           it "returns a 302 response, redirects to the permissions error and does not modify the workflow_state" do
             original_state = edit_registration.workflow_state
-            expect_any_instance_of(Ability).to receive(:can?).with(:edit, edit_registration.registration).and_return(false)
+            allow(ability_instance).to receive(:can?).with(:edit, edit_registration.registration).and_return(false)
 
             get cbd_type_edit_forms_path(token)
 
@@ -259,7 +262,7 @@ module WasteCarriersEngine
           context "when the user does not have permission" do
             it "returns a 302 response, redirects to the permissions error and does not create a new transient registration" do
               original_tr_count = EditRegistration.count
-              expect_any_instance_of(Ability).to receive(:can?).with(:edit, registration).and_return(false)
+              allow(ability_instance).to receive(:can?).with(:edit, registration).and_return(false)
 
               get cbd_type_edit_forms_path(token)
 

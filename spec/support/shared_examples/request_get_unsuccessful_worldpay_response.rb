@@ -20,7 +20,10 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
       end
       let(:token) { transient_registration.token }
 
+      let(:worldpay_service_instance) { instance_double(WasteCarriersEngine::WorldpayService) }
+
       before do
+        allow(WasteCarriersEngine::WorldpayService).to receive(:new).and_return(worldpay_service_instance)
         transient_registration.prepare_for_payment(:worldpay, user)
       end
 
@@ -42,7 +45,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
 
       context "when the params are valid" do
         before do
-          allow_any_instance_of(WasteCarriersEngine::WorldpayService).to receive(validation_action).and_return(true)
+          allow(worldpay_service_instance).to receive(validation_action).and_return(true)
         end
 
         it "redirects to payment_summary_form" do
@@ -53,7 +56,7 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
 
       context "when the params are not valid" do
         before do
-          allow_any_instance_of(WasteCarriersEngine::WorldpayService).to receive(validation_action).and_return(false)
+          allow(worldpay_service_instance).to receive(validation_action).and_return(false)
         end
 
         it "redirects to payment_summary_form" do

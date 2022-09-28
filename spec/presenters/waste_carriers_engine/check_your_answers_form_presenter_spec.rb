@@ -55,7 +55,7 @@ module WasteCarriersEngine
     end
 
     describe "#entity_display_name" do
-      include_context "Sample registration with defaults", :transient_registration
+      include_context "with a sample registration with defaults", :transient_registration
 
       describe "#entity_display_name" do
         let(:transient_registration) { resource }

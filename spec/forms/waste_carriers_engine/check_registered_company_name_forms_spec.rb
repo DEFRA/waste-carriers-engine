@@ -4,6 +4,10 @@ require "rails_helper"
 require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
+  # TODO Refactor DefraRubyCompaniesHouse to remove exception raising from the contructor
+  # so that allow_any_instance_of can be replaced using an instance_double, which bypasses
+  # the contructor for the doubled class and therefore breaks specs re the load_company exception
+  # rubocop:disable RSpec/AnyInstance
   RSpec.describe CheckRegisteredCompanyNameForm, type: :model do
     let(:registered_company_name) { Faker::Company.name }
     let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
@@ -79,4 +83,5 @@ module WasteCarriersEngine
 
     include_examples "validate yes no", :check_registered_company_name_form, :temp_use_registered_company_details
   end
+  # rubocop:enable RSpec/AnyInstance
 end

@@ -38,8 +38,11 @@ module WasteCarriersEngine
 
       context "when one has not been set" do
         context "when the registration can be renewed" do
+          let(:expiry_check_service) { instance_double(ExpiryCheckService) }
+
           before do
-            allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true)
+            allow(ExpiryCheckService).to receive(:new).and_return(expiry_check_service)
+            allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(true)
           end
 
           let(:registration) do
@@ -715,6 +718,11 @@ module WasteCarriersEngine
 
     describe "#can_start_renewal?" do
       let(:registration) { build(:registration, :has_required_data) }
+      let(:expiry_check_service) { instance_double(ExpiryCheckService) }
+
+      before do
+        allow(ExpiryCheckService).to receive(:new).and_return(expiry_check_service)
+      end
 
       context "when the registration is lower tier" do
         before { registration.tier = "LOWER" }
@@ -742,7 +750,7 @@ module WasteCarriersEngine
           end
 
           context "when the registration is in the grace window" do
-            before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true) }
+            before { allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(true) }
 
             it "returns true" do
               expect(registration.can_start_renewal?).to be true
@@ -750,10 +758,10 @@ module WasteCarriersEngine
           end
 
           context "when the registration is not in the grace window" do
-            before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(false) }
+            before { allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(false) }
 
             context "when the registration is past the expiry date" do
-              before { allow_any_instance_of(ExpiryCheckService).to receive(:expired?).and_return(true) }
+              before { allow(expiry_check_service).to receive(:expired?).and_return(true) }
 
               it "returns false" do
                 expect(registration.can_start_renewal?).to be false
@@ -761,10 +769,10 @@ module WasteCarriersEngine
             end
 
             context "when the registration is not past the expiry date" do
-              before { allow_any_instance_of(ExpiryCheckService).to receive(:expired?).and_return(false) }
+              before { allow(expiry_check_service).to receive(:expired?).and_return(false) }
 
               context "when the registration is in the renewal window" do
-                before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
+                before { allow(expiry_check_service).to receive(:in_renewal_window?).and_return(true) }
 
                 it "returns true" do
                   expect(registration.can_start_renewal?).to be true
@@ -772,7 +780,7 @@ module WasteCarriersEngine
               end
 
               context "when the result is not in the renewal window" do
-                before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
+                before { allow(expiry_check_service).to receive(:in_renewal_window?).and_return(false) }
 
                 it "returns false" do
                   expect(registration.can_start_renewal?).to be false

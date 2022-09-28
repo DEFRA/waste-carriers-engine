@@ -96,10 +96,12 @@ module WasteCarriersEngine
       context "when the request is valid" do
         let(:root) { Rails.configuration.wcrs_renewals_url }
         let(:reg_id) { transient_registration.reg_identifier }
+        let(:worldpay_url_service) { instance_double(WorldpayUrlService) }
 
         # Stub the WorldpayUrlService as we're testing that separately
         before do
-          allow_any_instance_of(WorldpayUrlService).to receive(:format_link).and_return("LINK GOES HERE")
+          allow(WorldpayUrlService).to receive(:new).and_return(worldpay_url_service)
+          allow(worldpay_url_service).to receive(:format_link).and_return("LINK GOES HERE")
 
           stub_request(:any, /.*#{host}.*/).to_return(
             status: 200,
@@ -120,8 +122,11 @@ module WasteCarriersEngine
       end
 
       context "when the request is invalid" do
+        let(:worldpay_xml_service) { instance_double(WorldpayXmlService) }
+
         before do
-          allow_any_instance_of(WorldpayXmlService).to receive(:build_xml).and_return("foo")
+          allow(WorldpayXmlService).to receive(:new).and_return(worldpay_xml_service)
+          allow(worldpay_xml_service).to receive(:build_xml).and_return("foo")
 
           stub_request(:any, /.*#{host}.*/).to_return(
             status: 200,
@@ -136,13 +141,16 @@ module WasteCarriersEngine
     end
 
     describe "valid_success?" do
+      let(:worldpay_validator_service) { instance_double(WorldpayValidatorService) }
+
       before do
+        allow(WorldpayValidatorService).to receive(:new).and_return(worldpay_validator_service)
         params[:paymentStatus] = "AUTHORISED"
       end
 
       context "when the params are valid" do
         before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_success?).and_return(true)
+          allow(worldpay_validator_service).to receive(:valid_success?).and_return(true)
         end
 
         it "returns true" do
@@ -167,7 +175,7 @@ module WasteCarriersEngine
 
       context "when the params are invalid" do
         before do
-          allow_any_instance_of(WorldpayValidatorService).to receive(:valid_success?).and_return(false)
+          allow(worldpay_validator_service).to receive(:valid_success?).and_return(false)
         end
 
         it "returns false" do

@@ -24,8 +24,8 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
 
       # This is generated based on the time, so to avoid any millisecond malarky, let's just stub it
-      allow_any_instance_of(Order).to receive(:order_code).and_return("1234567890")
-      allow_any_instance_of(Order).to receive(:total_amount).and_return(10_000)
+      allow(order).to receive(:order_code).and_return("1234567890")
+      allow(order).to receive(:total_amount).and_return(10_000)
     end
 
     describe "#build_xml" do

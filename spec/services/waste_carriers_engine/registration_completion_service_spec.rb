@@ -319,7 +319,12 @@ module WasteCarriersEngine
           end
 
           context "when activating the registration raises an exception" do
-            before { allow_any_instance_of(RegistrationActivationService).to receive(:run).and_raise(StandardError) }
+            let(:registration_activation_service) { instance_double(RegistrationActivationService) }
+
+            before do
+              allow(RegistrationActivationService).to receive(:new).and_return(registration_activation_service)
+              allow(registration_activation_service).to receive(:run).and_raise(StandardError)
+            end
 
             it "logs an error" do
               expect(Airbrake).to receive(:notify).at_least(:once)

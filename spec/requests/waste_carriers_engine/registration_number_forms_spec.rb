@@ -7,8 +7,11 @@ module WasteCarriersEngine
     include_examples "GET flexible form", "registration_number_form"
 
     describe "POST registration_number_forms_path" do
+      let(:drch_validator) { instance_double(DefraRuby::Validators::CompaniesHouseService) }
+
       before do
-        allow_any_instance_of(DefraRuby::Validators::CompaniesHouseService).to receive(:status).and_return(:active)
+        allow(DefraRuby::Validators::CompaniesHouseService).to receive(:new).and_return(drch_validator)
+        allow(drch_validator).to receive(:status).and_return(:active)
       end
 
       context "when a valid user is signed in" do

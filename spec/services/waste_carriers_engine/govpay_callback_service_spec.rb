@@ -29,11 +29,15 @@ module WasteCarriersEngine
     let(:govpay_service) { GovpayCallbackService.new(order.payment_uuid) }
 
     describe "#payment_callback" do
+      let(:govpay_validator_service) { instance_double(GovpayValidatorService) }
+
+      before { allow(GovpayValidatorService).to receive(:new).and_return(govpay_validator_service) }
+
       context "with valid_success?" do
         before { allow(GovpayPaymentDetailsService).to receive(:payment_status).with(order.govpay_id).and_return(:success) }
 
         context "when the status is valid" do
-          before { allow_any_instance_of(GovpayValidatorService).to receive(:valid_success?).and_return(true) }
+          before { allow(govpay_validator_service).to receive(:valid_success?).and_return(true) }
 
           it "returns true" do
             expect(govpay_service.valid_success?).to be true
@@ -56,7 +60,7 @@ module WasteCarriersEngine
         end
 
         context "when the status is invalid" do
-          before { allow_any_instance_of(GovpayValidatorService).to receive(:valid_success?).and_return(false) }
+          before { allow(govpay_validator_service).to receive(:valid_success?).and_return(false) }
 
           it "returns false" do
             expect(govpay_service.valid_success?).to be false

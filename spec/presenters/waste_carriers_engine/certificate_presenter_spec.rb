@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe CertificatePresenter do
     subject { described_class.new(registration, view) }
 
-    include_context "Sample registration with defaults", :registration do
+    include_context "with a sample registration with defaults", :registration do
       let(:registration_type) { "carrier_broker_dealer" }
       let(:route) { "DIGITAL" }
     end

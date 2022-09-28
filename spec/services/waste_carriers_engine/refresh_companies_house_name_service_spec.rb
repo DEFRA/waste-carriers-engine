@@ -9,10 +9,12 @@ RSpec.describe WasteCarriersEngine::RefreshCompaniesHouseNameService do
   let(:registration) { create(:registration, :has_required_data, registered_company_name: old_registered_name) }
   let(:reg_identifier) { registration.reg_identifier }
   let(:companies_house_name) { new_registered_name }
+  let(:drch_instance) { instance_double(DefraRubyCompaniesHouse) }
 
   before do
-    allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
-    allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(companies_house_name)
+    allow(DefraRubyCompaniesHouse).to receive(:new).and_return(drch_instance)
+    allow(drch_instance).to receive(:load_company).and_return(true)
+    allow(drch_instance).to receive(:company_name).and_return(companies_house_name)
   end
 
   subject { described_class.run(reg_identifier: reg_identifier) }

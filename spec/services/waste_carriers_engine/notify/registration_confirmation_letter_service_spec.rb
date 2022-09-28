@@ -4,11 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module Notify
+
+    # TODO Refactor to remove the use of allow_any_instance_of
+    # rubocop:disable RSpec/AnyInstance
     RSpec.describe RegistrationConfirmationLetterService do
-      before do
-        # Make sure it's a real postcode for Notify validation purposes
-        allow_any_instance_of(WasteCarriersEngine::Address).to receive(:postcode).and_return("BS1 1AA")
-      end
 
       context "with an upper tier registration" do
         describe ".run" do
@@ -29,7 +28,7 @@ module WasteCarriersEngine
                 registration_type: "carrier, broker and dealer",
                 reg_identifier: registration.reg_identifier,
                 company_name: expected_company_name,
-                registered_address: "42, Foo Gardens, Baz City, BS1 1AA",
+                registered_address: "42, Foo Gardens, Baz City, FA1 1KE",
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
                 expiry_date: registration.expires_on.in_time_zone("London").to_date.strftime("%e %B %Y"),
@@ -37,7 +36,7 @@ module WasteCarriersEngine
                 address_line2: "42",
                 address_line3: "Foo Gardens",
                 address_line4: "Baz City",
-                address_line5: "BS1 1AA"
+                address_line5: "FA1 1KE"
               }
             }
           end
@@ -50,7 +49,7 @@ module WasteCarriersEngine
           end
 
           before do
-            expect_any_instance_of(Notifications::Client)
+            allow_any_instance_of(Notifications::Client)
               .to receive(:send_letter)
               .with(expected_notify_options)
               .and_call_original
@@ -117,14 +116,14 @@ module WasteCarriersEngine
                 contact_name: "Jane Doe",
                 reg_identifier: registration.reg_identifier,
                 company_name: "Acme Waste",
-                registered_address: "42, Foo Gardens, Baz City, BS1 1AA",
+                registered_address: "42, Foo Gardens, Baz City, FA1 1KE",
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
                 address_line1: "Jane Doe",
                 address_line2: "42",
                 address_line3: "Foo Gardens",
                 address_line4: "Baz City",
-                address_line5: "BS1 1AA"
+                address_line5: "FA1 1KE"
               }
             }
           end
@@ -153,5 +152,6 @@ module WasteCarriersEngine
         end
       end
     end
+    # rubocop:enable RSpec/AnyInstance
   end
 end

@@ -143,6 +143,13 @@ module WasteCarriersEngine
     end
 
     describe "#can_be_renewed?" do
+      let(:expiry_check_service) { instance_double(ExpiryCheckService) }
+
+      before do
+        allow(ExpiryCheckService).to receive(:new).and_return(expiry_check_service)
+        allow(expiry_check_service).to receive(:expired?).and_return(false)
+      end
+
       context "when a registration is neither active or expired" do
         let(:revoked_renewing_registration) { build(:renewing_registration, :has_revoked_registration) }
 
@@ -159,8 +166,9 @@ module WasteCarriersEngine
       end
 
       context "when a registration is active" do
+
         context "when it is within the grace window" do
-          before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true) }
+          before { allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(true) }
 
           it "returns true" do
             expect(renewing_registration.can_be_renewed?).to be true
@@ -168,10 +176,10 @@ module WasteCarriersEngine
         end
 
         context "when it is not within the grace window" do
-          before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(false) }
+          before { allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(false) }
 
           context "when it is within the renewal window" do
-            before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
+            before { allow(expiry_check_service).to receive(:in_renewal_window?).and_return(true) }
 
             it "returns true" do
               expect(renewing_registration.can_be_renewed?).to be true
@@ -179,7 +187,7 @@ module WasteCarriersEngine
           end
 
           context "when it is not within the renewal window" do
-            before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
+            before { allow(expiry_check_service).to receive(:in_renewal_window?).and_return(false) }
 
             it "returns false" do
               expect(renewing_registration.can_be_renewed?).to be false
@@ -193,7 +201,7 @@ module WasteCarriersEngine
 
         context "when a registration is active" do
           context "when it is within the grace window" do
-            before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(true) }
+            before { allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(true) }
 
             it "returns true" do
               expect(renewing_registration.can_be_renewed?).to be true
@@ -201,10 +209,10 @@ module WasteCarriersEngine
           end
 
           context "when it is not within the grace window" do
-            before { allow_any_instance_of(ExpiryCheckService).to receive(:in_expiry_grace_window?).and_return(false) }
+            before { allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(false) }
 
             context "when it is within the renewal window" do
-              before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(true) }
+              before { allow(expiry_check_service).to receive(:in_renewal_window?).and_return(true) }
 
               it "returns true" do
                 expect(renewing_registration.can_be_renewed?).to be true
@@ -212,7 +220,7 @@ module WasteCarriersEngine
             end
 
             context "when it is not within the renewal window" do
-              before { allow_any_instance_of(ExpiryCheckService).to receive(:in_renewal_window?).and_return(false) }
+              before { allow(expiry_check_service).to receive(:in_renewal_window?).and_return(false) }
 
               it "returns false" do
                 expect(renewing_registration.can_be_renewed?).to be false

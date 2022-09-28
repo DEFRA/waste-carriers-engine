@@ -2,7 +2,7 @@
 
 RSpec.shared_examples "Can present entity display name" do |factory:|
 
-  include_context "Sample registration with defaults", factory
+  include_context "with a sample registration with defaults", factory
   let(:registration) { resource }
 
   let(:upper_tier) { WasteCarriersEngine::Registration::UPPER_TIER }
