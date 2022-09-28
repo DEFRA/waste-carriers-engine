@@ -2,3 +2,5 @@ inherit_gem:
   defra_ruby_style:
     - default.yml
 require: rubocop-rspec
+Style/OpenStructUse:
+  Enabled: false
