@@ -26,7 +26,6 @@ module WasteCarriersEngine
 
     def update_registration
       merge_finance_details
-
       registration.save!
 
       # Log the order items only if payment is complete.

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module Notify
-    RSpec.describe RenewalPendingWorldpayPaymentEmailService do
+    RSpec.describe RenewalPendingOnlinePaymentEmailService do
       let(:template_id) { "3da098e3-3db2-4c99-8e96-ed9d1a8ef227" }
       let(:registration) { create(:registration, :has_required_data) }
 
@@ -36,7 +36,7 @@ module WasteCarriersEngine
           end
 
           subject do
-            VCR.use_cassette("notify_renewal_pending_worldpay_payment_sends_an_email") do
+            VCR.use_cassette("notify_renewal_pending_online_payment_sends_an_email") do
               described_class.run(registration: registration)
             end
           end
@@ -45,7 +45,7 @@ module WasteCarriersEngine
             expect(subject).to be_a(Notifications::Client::ResponseNotification)
             expect(subject.template["id"]).to eq(template_id)
             expect(subject.content["subject"]).to match(
-              /Your application to renew waste carriers registration CBDU\d has been received/
+              /Your application to renew waste carriers registration CBDU\d+ has been received/
             )
           end
         end

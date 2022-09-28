@@ -89,6 +89,28 @@ RSpec.shared_examples "Can have payment type" do |resource:|
     end
   end
 
+  describe "#govpay?" do
+    before do
+      resource.payment_type = payment_type
+    end
+
+    context "when the payment type is govpay" do
+      let(:payment_type) { WasteCarriersEngine::Payment::GOVPAY }
+
+      it "returns true" do
+        expect(resource.govpay?).to eq(true)
+      end
+    end
+
+    context "when the payment type is not govpay" do
+      let(:payment_type) { "foo" }
+
+      it "returns false" do
+        expect(resource.govpay?).to eq(false)
+      end
+    end
+  end
+
   describe "#refund?" do
     before do
       resource.payment_type = payment_type

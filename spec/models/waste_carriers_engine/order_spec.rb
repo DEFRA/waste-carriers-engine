@@ -15,7 +15,8 @@ module WasteCarriersEngine
     let(:current_user) { build(:user) }
 
     describe "new_order" do
-      let(:order) { Order.new_order(transient_registration, :worldpay, current_user.email) }
+      let(:order) { Order.new_order(transient_registration, payment_method, current_user.email) }
+      let(:payment_method) { :worldpay }
 
       it "should have a valid order_id" do
         Timecop.freeze(Time.new(2018, 1, 1)) do
@@ -137,6 +138,18 @@ module WasteCarriersEngine
         end
       end
 
+      context "when it is a govpay order" do
+        let(:payment_method) { :govpay }
+
+        it "should have the correct payment_method" do
+          expect(order.payment_method).to eq("ONLINE")
+        end
+
+        it "should have the correct world_pay_status" do
+          expect(order.govpay_status).to eq("IN_PROGRESS")
+        end
+      end
+
       context "when it is a bank transfer order" do
         let(:order) { Order.new_order(transient_registration, :bank_transfer, current_user) }
 
@@ -154,12 +167,12 @@ module WasteCarriersEngine
       end
     end
 
-    describe "update_after_worldpay" do
+    describe "update_after_online_payment" do
       let(:finance_details) { transient_registration.prepare_for_payment(:worldpay, current_user) }
       let(:order) { finance_details.orders.first }
 
       it "copies the worldpay status to the order" do
-        order.update_after_worldpay("AUTHORISED")
+        order.update_after_online_payment("AUTHORISED")
         expect(order.world_pay_status).to eq("AUTHORISED")
       end
 
@@ -168,8 +181,28 @@ module WasteCarriersEngine
           # Wipe the date first so we know the value has been added
           order.update_attributes(date_last_updated: nil)
 
-          order.update_after_worldpay("AUTHORISED")
+          order.update_after_online_payment("AUTHORISED")
           expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
+        end
+      end
+    end
+
+    describe "#payment_uuid" do
+      let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
+      let(:order) { described_class.new(finance_details: transient_registration.finance_details) }
+
+      context "with no pre-existing uuid" do
+        it "generates and saves a uuid" do
+          expect(order[:payment_uuid]).to be_nil
+          expect(order.payment_uuid).to be_present
+          expect(order[:payment_uuid]).to be_present
+        end
+      end
+
+      context "with a pre-existing uuid" do
+        it "returns the existing uuid" do
+          uuid = order.payment_uuid
+          expect(order.payment_uuid).to eq uuid
         end
       end
     end

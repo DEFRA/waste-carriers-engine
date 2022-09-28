@@ -116,7 +116,7 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#pending_worldpay_payment?" do
+    describe "#pending_online_payment?" do
       context "when the renewal has an order" do
         before do
           transient_registration.finance_details = build(:finance_details, :has_order)
@@ -128,7 +128,7 @@ module WasteCarriersEngine
           end
 
           it "returns true" do
-            expect(transient_registration.pending_worldpay_payment?).to eq(true)
+            expect(transient_registration.pending_online_payment?).to eq(true)
           end
         end
 
@@ -138,7 +138,7 @@ module WasteCarriersEngine
           end
 
           it "returns false" do
-            expect(transient_registration.pending_worldpay_payment?).to eq(false)
+            expect(transient_registration.pending_online_payment?).to eq(false)
           end
         end
       end
@@ -149,7 +149,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(transient_registration.pending_worldpay_payment?).to eq(false)
+          expect(transient_registration.pending_online_payment?).to eq(false)
         end
       end
     end

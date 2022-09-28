@@ -142,14 +142,14 @@ module WasteCarriersEngine
           transient_registration.save
         end
 
-        it "sends a pending worldpay confirmation email with notify" do
-          allow(Notify::RegistrationPendingWorldpayPaymentEmailService)
+        it "sends a pending online payment confirmation email with notify" do
+          allow(Notify::RegistrationPendingOnlinePaymentEmailService)
             .to receive(:run)
             .and_call_original
 
           registration = described_class.run(transient_registration)
 
-          expect(Notify::RegistrationPendingWorldpayPaymentEmailService)
+          expect(Notify::RegistrationPendingOnlinePaymentEmailService)
             .to have_received(:run)
             .with(registration: registration)
             .once
@@ -159,7 +159,7 @@ module WasteCarriersEngine
           before do
             the_error = StandardError.new("Oops!")
 
-            allow(Notify::RegistrationPendingWorldpayPaymentEmailService)
+            allow(Notify::RegistrationPendingOnlinePaymentEmailService)
               .to receive(:run)
               .and_raise(the_error)
 
@@ -297,7 +297,10 @@ module WasteCarriersEngine
 
         context "temporary additional debugging" do
 
-          before { allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true }
+          before do
+            allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
+            allow(FeatureToggle).to receive(:active?).with(:govpay_payments).and_return true
+          end
 
           it "logs an error" do
             expect(Airbrake).to receive(:notify)

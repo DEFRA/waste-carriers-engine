@@ -53,12 +53,14 @@ module WasteCarriersEngine
         state :cards_form
         state :payment_summary_form
         state :worldpay_form
+        state :govpay_form
         state :confirm_bank_transfer_form
 
         state :renewal_complete_form
         state :renewal_received_pending_conviction_form
         state :renewal_received_pending_payment_form
         state :renewal_received_pending_worldpay_payment_form
+        state :renewal_received_pending_govpay_payment_form
 
         state :cannot_renew_type_change_form
 
@@ -205,14 +207,17 @@ module WasteCarriersEngine
           # Payment & completion
           transitions from: :cards_form, to: :payment_summary_form
 
+          transitions from: :payment_summary_form, to: :govpay_form,
+                      if: :paying_by_card_govpay?
+
           transitions from: :payment_summary_form, to: :worldpay_form,
                       if: :paying_by_card?
 
           transitions from: :payment_summary_form, to: :confirm_bank_transfer_form
 
           transitions from: :worldpay_form, to: :renewal_received_pending_worldpay_payment_form,
-                      if: :pending_worldpay_payment?,
-                      success: :send_renewal_pending_worldpay_payment_email,
+                      if: :pending_online_payment?,
+                      success: :send_renewal_pending_online_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -229,8 +234,21 @@ module WasteCarriersEngine
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
 
+          transitions from: :govpay_form, to: :renewal_received_pending_govpay_payment_form,
+                      if: :pending_online_payment?,
+                      success: :send_renewal_pending_online_payment_email,
+                      after: :set_metadata_route
+
+          transitions from: :govpay_form, to: :renewal_received_pending_conviction_form,
+                      if: :conviction_check_required?,
+                      success: :send_renewal_pending_checks_email,
+                      after: :set_metadata_route
+
+          transitions from: :govpay_form, to: :renewal_complete_form,
+                      after: :set_metadata_route
+
           transitions from: :confirm_bank_transfer_form, to: :renewal_received_pending_payment_form,
-                      success: :send_renewal_received_pending_payment_email,
+                      success: :send_renewal_pending_payment_email,
                       # TODO: This don't get triggered if in the `success`
                       # callback block, hence we went for `after`
                       after: :set_metadata_route
@@ -291,6 +309,10 @@ module WasteCarriersEngine
       temp_payment_method == "card"
     end
 
+    def paying_by_card_govpay?
+      WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && paying_by_card?
+    end
+
     def use_trading_name?
       temp_use_trading_name == "yes"
     end
@@ -307,8 +329,8 @@ module WasteCarriersEngine
       WasteCarriersEngine::ContactAddressAsRegisteredAddressService.run(self)
     end
 
-    def send_renewal_pending_worldpay_payment_email
-      WasteCarriersEngine::Notify::RenewalPendingWorldpayPaymentEmailService.run(registration: self)
+    def send_renewal_pending_online_payment_email
+      WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration: self)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
@@ -319,7 +341,7 @@ module WasteCarriersEngine
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
 
-    def send_renewal_received_pending_payment_email
+    def send_renewal_pending_payment_email
       WasteCarriersEngine::Notify::RenewalPendingPaymentEmailService.run(registration: self)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)

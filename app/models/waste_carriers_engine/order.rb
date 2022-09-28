@@ -13,10 +13,13 @@ module WasteCarriersEngine
     field :orderCode, as: :order_code,               type: String
     field :paymentMethod, as: :payment_method,       type: String
     field :merchantId, as: :merchant_id,             type: String
+    field :payment_uuid,                             type: String
     field :totalAmount, as: :total_amount,           type: Integer
     field :currency,                                 type: String
     field :dateCreated, as: :date_created,           type: DateTime
     field :worldPayStatus, as: :world_pay_status,    type: String
+    field :govpayId, as: :govpay_id,                 type: String
+    field :govpayStatus, as: :govpay_status,         type: String
     field :dateLastUpdated, as: :date_last_updated,  type: DateTime
     field :updatedByUser, as: :updated_by_user,      type: String
     field :description,                              type: String
@@ -26,7 +29,7 @@ module WasteCarriersEngine
     field :order_item_reference,                     type: String
 
     # TODO: Move to a service
-    def self.new_order(transient_registration, method, user_email)
+    def self.new_order(transient_registration, method, user_email) # rubocop:disable Metrics/CyclomaticComplexity
       order = new_order_for(user_email)
 
       card_count = transient_registration.temp_cards
@@ -42,6 +45,7 @@ module WasteCarriersEngine
 
       order.add_bank_transfer_attributes if method == :bank_transfer
       order.add_worldpay_attributes if method == :worldpay
+      order.add_govpay_attributes if method == :govpay
 
       order
     end
@@ -55,7 +59,7 @@ module WasteCarriersEngine
 
       order[:date_created] = Time.current
       order[:date_last_updated] = order[:date_created]
-      order[:updated_by_user] = user_email
+      order[:updated_by_user] = user_email.is_a?(String) ? user_email : user_email&.email
 
       order
     end
@@ -70,6 +74,11 @@ module WasteCarriersEngine
       self.merchant_id = Rails.configuration.worldpay_merchantcode
     end
 
+    def add_govpay_attributes
+      self.payment_method = "ONLINE"
+      self.govpay_status = "IN_PROGRESS"
+    end
+
     def generate_id
       Time.now.to_i.to_s
     end
@@ -78,10 +87,22 @@ module WasteCarriersEngine
       self.description = generate_description
     end
 
-    def update_after_worldpay(status)
-      self.world_pay_status = status
+    def update_after_online_payment(status, govpay_id = nil)
+      if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
+        self.govpay_status = status
+        self.govpay_id = govpay_id if govpay_id
+      else
+        self.world_pay_status = status
+      end
       self.date_last_updated = Time.current
       save!
+    end
+
+    # Generate a uuid for the payment associated with this order, on demand
+    def payment_uuid
+      update_attributes!(payment_uuid: SecureRandom.uuid) unless self[:payment_uuid]
+
+      self[:payment_uuid]
     end
 
     private
