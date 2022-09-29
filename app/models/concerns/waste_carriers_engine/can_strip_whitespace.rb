@@ -16,6 +16,8 @@ module WasteCarriersEngine
           strip_hash(value)
         when Array
           strip_array(value)
+        else
+          value
         end
       end
     end
