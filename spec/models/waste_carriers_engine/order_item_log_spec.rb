@@ -43,6 +43,7 @@ module WasteCarriersEngine
 
     describe ".create_from_registration" do
       let(:registration) { create(:registration, :has_required_data, :has_copy_cards_order) }
+
       subject(:order_item_log) { described_class.create_from_registration(registration) }
       before do
         3.times { registration.finance_details.orders << build(:order, :has_copy_cards_item) }

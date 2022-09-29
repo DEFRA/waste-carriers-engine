@@ -26,6 +26,7 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with an invalid company number" do
       let(:company_no) { invalid_company_no }
+
       it "raises a standard error" do
         expect { company_name_for_number }.to raise_error(StandardError)
       end
@@ -33,6 +34,7 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with a valid company number" do
       let(:company_no) { valid_company_no }
+
       it "returns the company name" do
         expect(company_name_for_number).to eq "BOGUS LIMITED"
       end
@@ -40,6 +42,7 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with a short company number" do
       let(:company_no) { short_company_no }
+
       it "returns the company name" do
         expect(company_name_for_number).to eq "BOGUS LIMITED"
       end
@@ -67,6 +70,7 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with an invalid company number" do
       let(:company_no) { invalid_company_no }
+
       it "raises a standard error" do
         expect { address_for_company_number }.to raise_error(StandardError)
       end
@@ -74,6 +78,7 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with a valid company number" do
       let(:company_no) { valid_company_no }
+
       it "returns the address lines" do
         expect(address_for_company_number).to eq ["R House", "Middle Street", "Thereabouts", "HD1 2BN"]
       end
@@ -81,6 +86,7 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with a short company number" do
       let(:company_no) { short_company_no }
+
       it "returns the address lines" do
         expect(address_for_company_number).to eq ["R House", "Middle Street", "Thereabouts", "HD1 2BN"]
       end

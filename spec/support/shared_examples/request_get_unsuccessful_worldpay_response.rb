@@ -3,6 +3,7 @@
 RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
   context "when a valid user is signed in" do
     let(:user) { create(:user) }
+
     before do
       sign_in(user)
     end
@@ -18,6 +19,19 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
                workflow_state: "worldpay_form",
                workflow_history: ["payment_summary_form"])
       end
+      let(:order) do
+        transient_registration.finance_details.orders.first
+      end
+      let(:params) do
+        {
+          orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}"
+        }
+      end
+      let(:validation_action) { "valid_#{action}?".to_sym }
+      let(:path) do
+        path_route = "#{action}_worldpay_forms_path".to_sym
+        public_send(path_route, token)
+      end
       let(:token) { transient_registration.token }
 
       let(:worldpay_service_instance) { instance_double(WasteCarriersEngine::WorldpayService) }
@@ -25,22 +39,6 @@ RSpec.shared_examples "GET unsuccessful Worldpay response" do |action|
       before do
         allow(WasteCarriersEngine::WorldpayService).to receive(:new).and_return(worldpay_service_instance)
         transient_registration.prepare_for_payment(:worldpay, user)
-      end
-
-      let(:order) do
-        transient_registration.finance_details.orders.first
-      end
-
-      let(:params) do
-        {
-          orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}"
-        }
-      end
-
-      let(:validation_action) { "valid_#{action}?".to_sym }
-      let(:path) do
-        path_route = "#{action}_worldpay_forms_path".to_sym
-        public_send(path_route, token)
       end
 
       context "when the params are valid" do

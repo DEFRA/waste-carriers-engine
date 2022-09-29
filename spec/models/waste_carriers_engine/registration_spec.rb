@@ -7,6 +7,7 @@ module WasteCarriersEngine
     describe "#reg_identifier" do
       context "when a registration has no reg_identifier" do
         let(:registration) { build(:registration, :has_required_data) }
+
         before { registration.tier = nil }
 
         it "is not valid" do
@@ -39,12 +40,6 @@ module WasteCarriersEngine
       context "when one has not been set" do
         context "when the registration can be renewed" do
           let(:expiry_check_service) { instance_double(ExpiryCheckService) }
-
-          before do
-            allow(ExpiryCheckService).to receive(:new).and_return(expiry_check_service)
-            allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(true)
-          end
-
           let(:registration) do
             reg = create(
               :registration,
@@ -54,6 +49,11 @@ module WasteCarriersEngine
             )
             reg.metaData.status = "ACTIVE"
             reg
+          end
+
+          before do
+            allow(ExpiryCheckService).to receive(:new).and_return(expiry_check_service)
+            allow(expiry_check_service).to receive(:in_expiry_grace_window?).and_return(true)
           end
 
           it "returns a new token" do
@@ -703,8 +703,8 @@ module WasteCarriersEngine
 
     describe "search" do
       it_behaves_like "Search scopes",
-                            record_class: described_class,
-                            factory: :registration
+                      record_class: described_class,
+                      factory: :registration
     end
 
     describe "#renewal" do
@@ -794,17 +794,17 @@ module WasteCarriersEngine
 
     describe "status" do
       it_behaves_like "Can check registration status",
-                            factory: :registration
+                      factory: :registration
     end
 
     describe "registration attributes" do
       it_behaves_like "Can have registration attributes",
-                            factory: :registration
+                      factory: :registration
     end
 
     describe "entity_display names" do
       it_behaves_like "Can present entity display name",
-                            factory: :registration
+                      factory: :registration
     end
 
     describe "conviction scopes" do

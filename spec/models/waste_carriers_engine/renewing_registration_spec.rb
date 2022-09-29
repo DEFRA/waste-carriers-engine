@@ -96,7 +96,7 @@ module WasteCarriersEngine
         let(:revoked_renewing_registration) { build(:renewing_registration, :has_revoked_registration) }
 
         it "does not import it" do
-          expect(revoked_renewing_registration.metaData.revoked_reason).to eq(nil)
+          expect(revoked_renewing_registration.metaData.revoked_reason).to be_nil
         end
       end
 
@@ -112,17 +112,17 @@ module WasteCarriersEngine
 
         it "does not copy over private contact information" do
           renewing_registration = described_class.new(reg_identifier: registration.reg_identifier)
-          expect(renewing_registration.first_name).to eq(nil)
-          expect(renewing_registration.last_name).to eq(nil)
-          expect(renewing_registration.phone_number).to eq(nil)
-          expect(renewing_registration.contact_email).to eq(nil)
+          expect(renewing_registration.first_name).to be_nil
+          expect(renewing_registration.last_name).to be_nil
+          expect(renewing_registration.phone_number).to be_nil
+          expect(renewing_registration.contact_email).to be_nil
         end
       end
     end
 
     describe "status" do
       it_behaves_like "Can check registration status",
-                            factory: :renewing_registration
+                      factory: :renewing_registration
     end
 
     describe "#renewal_application_submitted?" do
@@ -239,6 +239,7 @@ module WasteCarriersEngine
     describe "#ready_to_complete?" do
       context "when the transient registration is ready to complete" do
         let(:renewing_registration) { build(:renewing_registration, :is_ready_to_complete) }
+
         it "returns true" do
           expect(renewing_registration.ready_to_complete?).to be true
         end
@@ -247,6 +248,7 @@ module WasteCarriersEngine
       context "when the transient registration is not ready to complete" do
         context "when it is not submitted" do
           let(:renewing_registration) { build(:renewing_registration, workflow_state: "bank_transfer_form") }
+
           it "returns false" do
             expect(renewing_registration.ready_to_complete?).to be false
           end

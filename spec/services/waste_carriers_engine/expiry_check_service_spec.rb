@@ -32,6 +32,7 @@ module WasteCarriersEngine
     describe "#attributes" do
       context "when initialized with an upper tier registration" do
         let(:registration) { build(:registration, :has_required_data, :expires_later) }
+
         subject(:check_service) { described_class.new(registration) }
 
         it ":expiry_date is within 1 hour of the registration's" do
@@ -70,10 +71,11 @@ module WasteCarriersEngine
 
       context "when initialized with lower tier registration" do
         let(:registration) { build(:registration, :has_required_data, :lower_tier) }
+
         subject(:check_service) { described_class.new(registration) }
 
         it ":expiry_date is nil" do
-          expect(check_service.expiry_date).to eq(nil)
+          expect(check_service.expiry_date).to be_nil
         end
       end
     end
@@ -85,6 +87,7 @@ module WasteCarriersEngine
         end
 
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.new(2018, 3, 25)) }
+
         subject(:check_service) { described_class.new(registration) }
 
         it "returns a date of 2017-12-25" do
@@ -100,6 +103,7 @@ module WasteCarriersEngine
         end
 
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.new(2018, 3, 25)) }
+
         subject(:check_service) { described_class.new(registration) }
 
         it "returns a date of 2021-03-25" do
@@ -111,6 +115,7 @@ module WasteCarriersEngine
     describe "#expired?" do
       context "when the registration expired yesterday" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.yesterday) }
+
         subject(:check_service) { described_class.new(registration) }
 
         it "is expired" do
@@ -120,6 +125,7 @@ module WasteCarriersEngine
 
       context "when the registration expires today" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.today) }
+
         subject(:check_service) { described_class.new(registration) }
 
         it "is expired" do
@@ -129,6 +135,7 @@ module WasteCarriersEngine
 
       context "when the registration expires tomorrow" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.tomorrow) }
+
         subject(:check_service) { described_class.new(registration) }
 
         it "is not expired" do
@@ -172,6 +179,7 @@ module WasteCarriersEngine
 
         context "when the expiry date is 3 months and 2 days from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 2.day) }
+
           subject(:check_service) { described_class.new(registration) }
 
           it "is not in the window" do
@@ -181,6 +189,7 @@ module WasteCarriersEngine
 
         context "when the expiry date is 3 months and 1 day from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 1.day) }
+
           subject(:check_service) { described_class.new(registration) }
 
           it "is not in the window" do
@@ -190,6 +199,7 @@ module WasteCarriersEngine
 
         context "when the expiry date is 3 months from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now) }
+
           subject(:check_service) { described_class.new(registration) }
 
           it "is in the window" do
@@ -199,6 +209,7 @@ module WasteCarriersEngine
 
         context "when the expiry date is less than 3 months from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now - 1.day) }
+
           subject(:check_service) { described_class.new(registration) }
 
           it "is in the window" do
@@ -211,6 +222,7 @@ module WasteCarriersEngine
     describe "#in_expiry_grace_window?" do
       let(:last_day) { Date.current }
       let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
+
       subject(:check_service) { described_class.new(registration) }
 
       before do

@@ -6,11 +6,6 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe GovpayPaymentDetailsService do
     let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
-    before do
-      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
-      allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
-    end
-
     let(:transient_registration) do
       create(:renewing_registration,
              :has_required_data,
@@ -19,6 +14,11 @@ module WasteCarriersEngine
              temp_cards: 0)
     end
     let(:current_user) { build(:user) }
+
+    before do
+      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
+      allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
+    end
 
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)

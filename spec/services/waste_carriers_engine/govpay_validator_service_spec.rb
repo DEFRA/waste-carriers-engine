@@ -48,6 +48,7 @@ module WasteCarriersEngine
 
     describe "valid_success?" do
       let(:govpay_status) { "success" }
+
       context "when the govpay status is valid" do
 
         it "returns true" do
@@ -58,6 +59,7 @@ module WasteCarriersEngine
       context "when the govpay status is not valid" do
 
         let(:govpay_status) { "failed" }
+
         it "returns false" do
           expect(govpay_validator_service.valid_success?).to be false
         end

@@ -6,8 +6,6 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe WorldpayService do
     let(:host) { "https://secure-test.worldpay.com" }
-    before { allow(Rails.configuration).to receive(:worldpay_url).and_return(host) }
-
     let(:transient_registration) do
       create(:renewing_registration,
              :has_required_data,
@@ -16,13 +14,6 @@ module WasteCarriersEngine
              temp_cards: 0)
     end
     let(:current_user) { build(:user) }
-
-    before do
-      allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
-
-      transient_registration.prepare_for_payment(:worldpay, current_user)
-    end
-
     let(:order) { transient_registration.finance_details.orders.first }
     # An incomplete set of params which should still be valid when we stub the validation service
     let(:params) do
@@ -33,15 +24,22 @@ module WasteCarriersEngine
         reg_identifier: transient_registration.reg_identifier
       }
     end
-
     let(:worldpay_service) { described_class.new(transient_registration, order, current_user, params) }
+
+    before { allow(Rails.configuration).to receive(:worldpay_url).and_return(host) }
+
+    before do
+      allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
+
+      transient_registration.prepare_for_payment(:worldpay, current_user)
+    end
 
     describe "prepare_params" do
       context "when the params are nil" do
         let(:params) { nil }
 
         it "sets params to nil" do
-          expect(worldpay_service.instance_variable_get(:@params)).to eq(nil)
+          expect(worldpay_service.instance_variable_get(:@params)).to be_nil
         end
       end
 

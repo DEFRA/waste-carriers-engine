@@ -8,10 +8,12 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "WorldpayForms", type: :request do
     let(:host) { "https://secure-test.worldpay.com" }
+
     before { allow(Rails.configuration).to receive(:worldpay_url).and_return(host) }
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
+
       before do
         sign_in(user)
       end
@@ -41,7 +43,7 @@ module WasteCarriersEngine
             get new_worldpay_form_path(token)
 
             expect(response.location).to include("https://hpp-sandbox.worldpay.com/")
-            expect(transient_registration.reload.finance_details).not_to eq(nil)
+            expect(transient_registration.reload.finance_details).not_to be_nil
           end
 
           context "when the transient_registration is a new registration" do
@@ -55,7 +57,7 @@ module WasteCarriersEngine
 
             it "creates a new finance_details" do
               get new_worldpay_form_path(token)
-              expect(transient_registration.reload.finance_details).not_to eq(nil)
+              expect(transient_registration.reload.finance_details).not_to be_nil
             end
           end
 

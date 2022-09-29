@@ -13,6 +13,7 @@ module WasteCarriersEngine
 
     describe "#submit" do
       let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
+
       context "when the form is valid" do
         let(:valid_params) { { token: check_your_answers_form.token } }
 

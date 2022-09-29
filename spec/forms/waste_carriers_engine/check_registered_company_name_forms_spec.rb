@@ -4,7 +4,7 @@ require "rails_helper"
 require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
-  # TODO Refactor DefraRubyCompaniesHouse to remove exception raising from the contructor
+  # TODO: Refactor DefraRubyCompaniesHouse to remove exception raising from the contructor
   # so that allow_any_instance_of can be replaced using an instance_double, which bypasses
   # the contructor for the doubled class and therefore breaks specs re the load_company exception
   # rubocop:disable RSpec/AnyInstance
@@ -47,6 +47,7 @@ module WasteCarriersEngine
 
             context "when the existing registration does not have a registered company name" do
               before { transient_registration.registered_company_name = nil }
+
               it "clears the company_name value" do
                 expect { form_submit }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
               end
@@ -54,6 +55,7 @@ module WasteCarriersEngine
 
             context "when the existing registration has a registered company name" do
               before { transient_registration.registered_company_name = Faker::Company.name }
+
               it "clears the company_name value" do
                 expect { form_submit }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
               end

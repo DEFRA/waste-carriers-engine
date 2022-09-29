@@ -158,11 +158,11 @@ module WasteCarriersEngine
         end
 
         it "has the correct merchant_id" do
-          expect(order.merchant_id).to eq(nil)
+          expect(order.merchant_id).to be_nil
         end
 
         it "has the correct world_pay_status" do
-          expect(order.world_pay_status).to eq(nil)
+          expect(order.world_pay_status).to be_nil
         end
       end
     end

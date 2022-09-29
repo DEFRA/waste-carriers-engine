@@ -14,9 +14,9 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context "with :confirm_bank_transfer_form state transitions" do
         context "with :next transition" do
-          include_examples "has next transition", next_state: "renewal_received_pending_payment_form"
-
           before { allow(Notify::RenewalPendingPaymentEmailService).to receive(:run) }
+
+          include_examples "has next transition", next_state: "renewal_received_pending_payment_form"
 
           it "sends a confirmation email after the 'next' event" do
             renewing_registration.next!

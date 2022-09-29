@@ -49,7 +49,7 @@ module WasteCarriersEngine
             it "returns nil and does not create a new past_registration" do
               past_registration_count = registration.past_registrations.count
 
-              expect(past_registration).to eq(nil)
+              expect(past_registration).to be_nil
 
               expect(registration.reload.past_registrations.count).to eq(past_registration_count)
             end

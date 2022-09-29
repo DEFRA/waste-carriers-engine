@@ -9,6 +9,7 @@ module WasteCarriersEngine
     describe "POST company_address_manual_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end

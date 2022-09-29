@@ -7,6 +7,7 @@ module WasteCarriersEngine
     describe "GET new_copy_cards_bank_transfer_form" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end

@@ -29,6 +29,7 @@ module WasteCarriersEngine
     describe "POST declaration_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end
@@ -47,8 +48,8 @@ module WasteCarriersEngine
           it "creates new conviction_search_results for the registration and key people" do
             post_form_with_params("declaration_form", transient_registration.token, params)
 
-            expect(transient_registration.reload.conviction_search_result).not_to eq(nil)
-            expect(transient_registration.reload.key_people.first.conviction_search_result).not_to eq(nil)
+            expect(transient_registration.reload.conviction_search_result).not_to be_nil
+            expect(transient_registration.reload.key_people.first.conviction_search_result).not_to be_nil
           end
         end
       end

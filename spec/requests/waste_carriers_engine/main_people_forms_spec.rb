@@ -9,6 +9,7 @@ module WasteCarriersEngine
     describe "POST main_people_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end
@@ -213,6 +214,7 @@ module WasteCarriersEngine
     describe "DELETE delete_person_main_people_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end

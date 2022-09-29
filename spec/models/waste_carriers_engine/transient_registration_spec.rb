@@ -39,8 +39,8 @@ module WasteCarriersEngine
 
     describe "search" do
       it_behaves_like "Search scopes",
-                            record_class: described_class,
-                            factory: :transient_registration
+                      record_class: described_class,
+                      factory: :transient_registration
     end
 
     describe "secure token" do
@@ -49,12 +49,12 @@ module WasteCarriersEngine
 
     describe "registration attributes" do
       it_behaves_like "Can have registration attributes",
-                            factory: :transient_registration
+                      factory: :transient_registration
     end
 
     describe "entity_display names" do
       it_behaves_like "Can present entity display name",
-                            factory: :transient_registration
+                      factory: :transient_registration
     end
 
     describe "conviction scopes" do

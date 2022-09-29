@@ -61,7 +61,7 @@ module WasteCarriersEngine
         let(:registration) { build(:registration, :has_required_data) }
 
         it "returns nil" do
-          expect(described_class.run(registration: registration)).to eq(nil)
+          expect(described_class.run(registration: registration)).to be_nil
         end
       end
     end

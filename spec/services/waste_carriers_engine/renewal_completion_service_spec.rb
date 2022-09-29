@@ -175,7 +175,7 @@ module WasteCarriersEngine
 
           it "updates the attribute to be nil in the registration" do
             renewal_completion_service.complete_renewal
-            expect(registration.reload.construction_waste).to eq(nil)
+            expect(registration.reload.construction_waste).to be_nil
           end
         end
 

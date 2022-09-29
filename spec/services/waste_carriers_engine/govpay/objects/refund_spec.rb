@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe WasteCarriersEngine::Govpay::Refund do
   subject(:refund) { described_class.new(params) }
+
   let(:params) { JSON.parse(file_fixture("govpay/get_refund_response_success.json").read) }
 
   describe "#status" do

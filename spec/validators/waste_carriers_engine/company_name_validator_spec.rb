@@ -20,7 +20,6 @@ module Test
 end
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/BlockLength
   RSpec.describe CompanyNameValidator do
     subject(:validatable) { Test::CompanyNameValidatable.new }
 
@@ -63,14 +62,19 @@ module WasteCarriersEngine
 
       context "with a business name" do
         before { allow(validatable).to receive(:company_name).and_return(Faker::Company.name) }
+
         it_behaves_like "is valid"
       end
+
       context "without a business name" do
         before { allow(validatable).to receive(:company_name).and_return(nil) }
+
         it_behaves_like "is valid"
       end
+
       context "with a blank business name" do
         before { allow(validatable).to receive(:company_name).and_return("") }
+
         it_behaves_like "is valid"
       end
     end
@@ -81,6 +85,7 @@ module WasteCarriersEngine
 
         it_behaves_like "business name is optional"
       end
+
       context "without a registered company name" do
         before { allow(validatable).to receive(:registered_company_name).and_return(nil) }
 
@@ -119,5 +124,4 @@ module WasteCarriersEngine
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end

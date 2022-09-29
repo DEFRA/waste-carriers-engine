@@ -3,7 +3,7 @@
 require "rails_helper"
 require "defra_ruby_companies_house"
 
-# TODO Refactor DefraRubyCompaniesHouse to remove exception raising from the contructor
+# TODO: Refactor DefraRubyCompaniesHouse to remove exception raising from the contructor
 # so that allow_any_instance_of can be replaced using an instance_double, which bypasses
 # the contructor for the doubled class and therefore breaks specs re the load_company exception
 # rubocop:disable RSpec/AnyInstance
@@ -24,6 +24,7 @@ module WasteCarriersEngine
     describe "GET check_registered_company_name_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end

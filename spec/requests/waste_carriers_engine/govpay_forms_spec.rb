@@ -24,6 +24,7 @@ module WasteCarriersEngine
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
+
       before do
         sign_in(user)
       end
@@ -83,6 +84,7 @@ module WasteCarriersEngine
 
           context "when there is an error setting up the govpay url" do
             let(:govpay_service) { instance_double(GovpayPaymentService) }
+
             before do
               allow(GovpayPaymentService).to receive(:new).and_return(govpay_service)
               allow(govpay_service).to receive(:prepare_for_payment).and_return(:error)
@@ -227,11 +229,13 @@ module WasteCarriersEngine
 
             context "when govpay status is created" do
               let(:govpay_status) { "created" }
+
               it_behaves_like "payment is pending"
             end
 
             context "when govpay status is submitted" do
               let(:govpay_status) { "submitted" }
+
               it_behaves_like "payment is pending"
             end
           end
@@ -271,16 +275,19 @@ module WasteCarriersEngine
 
             context "with cancelled status" do
               let(:govpay_status) { "cancelled" }
+
               it_behaves_like "payment is unsuccessful"
             end
 
             context "with failure status" do
               let(:govpay_status) { "failure" }
+
               it_behaves_like "payment is unsuccessful"
             end
 
             context "with an error status" do
               let(:govpay_status) { "not_found" }
+
               it_behaves_like "payment is unsuccessful"
             end
           end
@@ -289,6 +296,7 @@ module WasteCarriersEngine
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "success" }
+
             it_behaves_like "payment is unsuccessful"
           end
 
@@ -296,6 +304,7 @@ module WasteCarriersEngine
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "cancelled" }
+
             it_behaves_like "payment is unsuccessful"
           end
         end

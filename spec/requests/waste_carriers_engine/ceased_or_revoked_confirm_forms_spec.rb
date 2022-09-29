@@ -57,6 +57,7 @@ module WasteCarriersEngine
     describe "POST ceased_or_revoked_confirm_forms_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end

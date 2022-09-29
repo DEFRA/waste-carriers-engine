@@ -7,14 +7,8 @@ module WasteCarriersEngine
     RSpec.describe OrganisationMatchService do
       describe "run" do
         let(:time) { Time.new(2019, 1, 1) }
-        before do
-          allow(Time).to receive(:current).and_return(time)
-          allow(Entity).to receive(:matching_organisations).and_return([entity_a])
-        end
-
         let(:name) { "foo" }
         let(:company_no) { "bar" }
-
         let(:entity_a) do
           double(:entity,
                  system_flag: "foo",
@@ -28,6 +22,11 @@ module WasteCarriersEngine
                  name: "quuz")
         end
 
+        before do
+          allow(Time).to receive(:current).and_return(time)
+          allow(Entity).to receive(:matching_organisations).and_return([entity_a])
+        end
+
         subject(:run_match_service) { described_class.run(name: name, company_no: company_no) }
 
         it "does not explode" do
@@ -38,7 +37,7 @@ module WasteCarriersEngine
           run_match_service
 
           expect(Entity).to have_received(:matching_organisations).with(name: name,
-                                                                  company_no: company_no)
+                                                                        company_no: company_no)
         end
 
         context "when there are matches" do

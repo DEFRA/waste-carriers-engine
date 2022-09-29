@@ -5,19 +5,11 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO Refactor to remove the use of allow_any_instance_of
+    # TODO: Refactor to remove the use of allow_any_instance_of
     # rubocop:disable RSpec/AnyInstance
     RSpec.describe RenewalPendingOnlinePaymentEmailService do
       let(:template_id) { "3da098e3-3db2-4c99-8e96-ed9d1a8ef227" }
-      let(:registration) { create(:registration, :has_required_data) }
-
-      before do
-        registration.finance_details = build(:finance_details, :has_required_data)
-        registration.save
-      end
-
       let(:reg_identifier) { registration.reg_identifier }
-
       let(:expected_notify_options) do
         {
           email_address: "foo@example.com",
@@ -27,6 +19,12 @@ module WasteCarriersEngine
             registration_type: "carrier, broker and dealer"
           }
         }
+      end
+      let(:registration) { create(:registration, :has_required_data) }
+
+      before do
+        registration.finance_details = build(:finance_details, :has_required_data)
+        registration.save
       end
 
       describe ".run" do

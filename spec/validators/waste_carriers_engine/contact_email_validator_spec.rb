@@ -21,6 +21,7 @@ module WasteCarriersEngine
 
     let(:contact_email) { Faker::Internet.email }
     let(:confirmed_email) { contact_email }
+
     before do
       allow(validatable).to receive(:contact_email).and_return(contact_email)
       allow(validatable).to receive(:confirmed_email).and_return(confirmed_email)
@@ -42,27 +43,32 @@ module WasteCarriersEngine
     RSpec.shared_examples "contact email address is required" do
       context "with an email address" do
         let(:contact_email) { Faker::Internet.email }
+
         it_behaves_like "is valid"
       end
 
       context "without an email address" do
         let(:contact_email) { nil }
+
         it_behaves_like "is not valid"
       end
 
       context "with a matching confirmed email address" do
         let(:confirmed_email) { contact_email }
+
         it_behaves_like "is valid"
       end
 
       context "with a mismatched confirmed email address" do
         let(:confirmed_email) { "not@chance.com" }
+
         it_behaves_like "is not valid"
       end
     end
 
     context "when running in the front office" do
       before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false) }
+
       let(:no_contact_email) { nil }
 
       it_behaves_like "contact email address is required"
@@ -73,11 +79,13 @@ module WasteCarriersEngine
 
       context "with no_contact_email set to zero" do
         let(:no_contact_email) { "0" }
+
         it_behaves_like "contact email address is required"
       end
 
       context "with no_contact_email set to nil" do
         let(:no_contact_email) { nil }
+
         it_behaves_like "contact email address is required"
       end
 
@@ -86,11 +94,13 @@ module WasteCarriersEngine
 
         context "with an email address" do
           let(:contact_email) { Faker::Internet.email }
+
           it_behaves_like "is not valid"
         end
 
         context "without an email address" do
           let(:contact_email) { nil }
+
           it_behaves_like "is valid"
         end
       end

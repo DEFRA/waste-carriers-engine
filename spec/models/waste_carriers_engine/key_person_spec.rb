@@ -44,7 +44,7 @@ module WasteCarriersEngine
           let(:key_person) { described_class.new(dob_day: 31, dob_month: 2, dob_year: 2000) }
 
           it "returns nil when setting date of birth" do
-            expect(key_person.dob).to eq(nil)
+            expect(key_person.dob).to be_nil
           end
         end
       end

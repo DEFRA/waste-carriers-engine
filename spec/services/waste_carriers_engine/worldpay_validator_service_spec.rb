@@ -11,6 +11,19 @@ module WasteCarriersEngine
              :has_finance_details,
              temp_cards: 0)
     end
+    let(:order) { transient_registration.finance_details.orders.first }
+    let(:params) do
+      {
+        orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
+        paymentStatus: "REFUSED",
+        paymentAmount: order.total_amount,
+        paymentCurrency: "GBP",
+        mac: "b32f74da10bf1d9ebfd262d673e58fb9",
+        source: "WP",
+        reg_identifier: transient_registration.reg_identifier
+      }
+    end
+    let(:worldpay_validator_service) { described_class.new(order, params) }
 
     before do
       allow(Rails.configuration).to receive(:worldpay_admin_code).and_return("ADMIN_CODE")
@@ -24,21 +37,6 @@ module WasteCarriersEngine
         transient_registration.prepare_for_payment(:worldpay, current_user)
       end
     end
-
-    let(:order) { transient_registration.finance_details.orders.first }
-    let(:params) do
-      {
-        orderKey: "#{Rails.configuration.worldpay_admin_code}^#{Rails.configuration.worldpay_merchantcode}^#{order.order_code}",
-        paymentStatus: "REFUSED",
-        paymentAmount: order.total_amount,
-        paymentCurrency: "GBP",
-        mac: "b32f74da10bf1d9ebfd262d673e58fb9",
-        source: "WP",
-        reg_identifier: transient_registration.reg_identifier
-      }
-    end
-
-    let(:worldpay_validator_service) { described_class.new(order, params) }
 
     describe "valid_success?" do
       let(:params) do

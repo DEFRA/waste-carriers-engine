@@ -56,7 +56,7 @@ module WasteCarriersEngine
       end
     end
 
-    # Note: The OS Places API response payload spells dependentThoroughfare as dependentThroughfare.
+    # NOTE: The OS Places API response payload spells dependentThoroughfare as dependentThroughfare.
     describe ".create_from_os_places_data" do
       let(:os_places_data) { JSON.parse(file_fixture("os_places_response.json").read) }
 
@@ -64,6 +64,7 @@ module WasteCarriersEngine
 
       shared_examples "skips blank field" do |blank_field, address_line, next_field|
         before { os_places_data[blank_field] = nil }
+
         it "skips to the next field" do
           expect(address_from_os_places[address_line]).to eq os_places_data[next_field]
         end
@@ -98,16 +99,20 @@ module WasteCarriersEngine
         context "with organisation details" do
           context "with an organisation name only" do
             before { os_places_data["departmentName"] = nil }
+
             it "uses the organisation name" do
               expect(address_from_os_places[:house_number]).to eq os_places_data["organisationName"]
             end
           end
+
           context "with a department name only" do
             before { os_places_data["organisationName"] = nil }
+
             it "uses the department name" do
               expect(address_from_os_places[:house_number]).to eq os_places_data["departmentName"]
             end
           end
+
           context "with both department name and organisation name" do
             it "comnbines department and organisation names" do
               expect(address_from_os_places[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
@@ -118,16 +123,20 @@ module WasteCarriersEngine
         context "with building details" do
           context "with a building name only" do
             before { os_places_data["subBuildingName"] = nil }
+
             it "uses the building name" do
               expect(address_from_os_places[:address_line1]).to eq os_places_data["buildingName"]
             end
           end
+
           context "with a sub-building name only" do
             before { os_places_data["buildingName"] = nil }
+
             it "uses the sub-building name" do
               expect(address_from_os_places[:address_line1]).to eq os_places_data["subBuildingName"]
             end
           end
+
           context "with both sub-building name and building name" do
             it "comnbines sub-building and building names" do
               expect(address_from_os_places[:address_line1]).to eq "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}"
@@ -144,16 +153,19 @@ module WasteCarriersEngine
 
       context "with a PO box number" do
         let(:po_box_number) { "PO Box #{Faker::Number.number(digits: 4)}" }
+
         before do
           os_places_data["postOfficeBoxNumber"] = po_box_number
           os_places_data["subBuildingName"] = nil
           os_places_data["buildingName"] = nil
           os_places_data["buildingNumber"] = nil
         end
+
         it "includes the PO box number after the organisation details" do
           expect(address_from_os_places[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
           expect(address_from_os_places[:address_line1]).to eq po_box_number
         end
+
         it "includes the PO box number before the street details" do
           expect(address_from_os_places[:address_line1]).to eq po_box_number
           expect(address_from_os_places[:address_line2]).to eq os_places_data["dependentThroughfare"]

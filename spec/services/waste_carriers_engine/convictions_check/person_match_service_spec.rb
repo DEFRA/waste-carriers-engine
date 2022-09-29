@@ -7,15 +7,9 @@ module WasteCarriersEngine
     RSpec.describe PersonMatchService do
       describe "run" do
         let(:time) { Time.new(2019, 1, 1) }
-        before do
-          allow(Time).to receive(:current).and_return(time)
-          allow(Entity).to receive(:matching_people).and_return([entity_a])
-        end
-
         let(:first_name) { "foo" }
         let(:last_name) { "bar" }
         let(:date_of_birth) { Date.today }
-
         let(:entity_a) do
           double(:entity,
                  system_flag: "foo",
@@ -29,6 +23,11 @@ module WasteCarriersEngine
                  name: "quuz")
         end
 
+        before do
+          allow(Time).to receive(:current).and_return(time)
+          allow(Entity).to receive(:matching_people).and_return([entity_a])
+        end
+
         subject(:run_match_service) { described_class.run(first_name: first_name, last_name: last_name, date_of_birth: date_of_birth) }
 
         it "does not explode" do
@@ -39,8 +38,8 @@ module WasteCarriersEngine
           run_match_service
 
           expect(Entity).to have_received(:matching_people).with(first_name: first_name,
-                                                           last_name: last_name,
-                                                           date_of_birth: date_of_birth)
+                                                                 last_name: last_name,
+                                                                 date_of_birth: date_of_birth)
         end
 
         context "when there are matches" do

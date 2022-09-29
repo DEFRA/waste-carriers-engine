@@ -27,21 +27,25 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
 
     context "when the search term has not got any spaces or dashes and doesn't start in +44" do
       let(:term) { normal_number }
+
       it_behaves_like "matching and non matching registrations"
     end
 
     context "when the search term has spaces" do
       let(:term) { number_with_spaces }
+
       it_behaves_like "matching and non matching registrations"
     end
 
     context "when the search term has dashes" do
       let(:term) { number_with_dashes }
+
       it_behaves_like "matching and non matching registrations"
     end
 
     context "when the search term starts with +44" do
       let(:term) { number_starting_with_plus44 }
+
       it_behaves_like "matching and non matching registrations"
 
       context "when the search term is short" do

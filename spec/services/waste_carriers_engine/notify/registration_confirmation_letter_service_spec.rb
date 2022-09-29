@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO Refactor to remove the use of allow_any_instance_of
+    # TODO: Refactor to remove the use of allow_any_instance_of
     # rubocop:disable RSpec/AnyInstance
     RSpec.describe RegistrationConfirmationLetterService do
 
@@ -42,6 +42,7 @@ module WasteCarriersEngine
           end
 
           let(:cassette_name) { "notify_upper_tier_ad_confirmation_letter_business_name" }
+
           subject(:run_service) do
             VCR.use_cassette(cassette_name) do
               described_class.run(registration: registration)

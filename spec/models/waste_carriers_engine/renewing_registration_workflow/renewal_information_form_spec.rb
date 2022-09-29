@@ -23,11 +23,13 @@ module WasteCarriersEngine
           shared_examples "main_people_form or company_name_form based on tier" do
             context "when upper tier" do
               let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
+
               include_examples "has next transition", next_state: "main_people_form"
             end
 
             context "when lower tier" do
               let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
+
               include_examples "has next transition", next_state: "company_name_form"
             end
           end

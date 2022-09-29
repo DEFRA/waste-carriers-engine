@@ -35,16 +35,19 @@ module WasteCarriersEngine
 
     context "with no contact email address" do
       let(:contact_email) { nil }
+
       it_behaves_like "is valid"
     end
 
     context "with a valid email address" do
       let(:contact_email) { Faker::Internet.email }
+
       it_behaves_like "is valid"
     end
 
     context "with an invalid email address" do
       let(:contact_email) { "not_a_valid_email" }
+
       it_behaves_like "is not valid"
     end
   end

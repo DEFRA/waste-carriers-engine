@@ -5,6 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "CheckYourAnswersForms", type: :request do
     let(:drch_validator) { instance_double(DefraRuby::Validators::CompaniesHouseService) }
+
     before do
       allow(DefraRuby::Validators::CompaniesHouseService).to receive(:new).and_return(drch_validator)
       allow(drch_validator).to receive(:status).and_return(:active)

@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO Refactor to remove the use of allow_any_instance_of
+    # TODO: Refactor to remove the use of allow_any_instance_of
     # rubocop:disable RSpec/AnyInstance
     RSpec.describe RegistrationPendingConvictionCheckEmailService do
       let(:template_id) { "e7dbb0d2-feca-4f59-a5e6-576e5051f4e0" }

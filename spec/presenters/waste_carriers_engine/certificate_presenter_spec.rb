@@ -20,6 +20,7 @@ module WasteCarriersEngine
 
     describe "#entity_display_name" do
       let(:registered_company_name) { Faker::Company.name }
+
       it "returns legal_entity_name trading as company_name" do
         expect(presenter.entity_display_name).to eq("#{registered_company_name} trading as #{company_name}")
       end

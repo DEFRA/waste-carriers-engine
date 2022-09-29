@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO Refactor to remove the use of allow_any_instance_of
+    # TODO: Refactor to remove the use of allow_any_instance_of
     # rubocop:disable RSpec/AnyInstance
     RSpec.describe CopyCardsOrderCompletedEmailService do
       describe ".run" do

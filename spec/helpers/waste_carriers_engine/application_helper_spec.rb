@@ -42,7 +42,7 @@ module WasteCarriersEngine
 
     describe "#current_git_commit" do
       it "returns nil when run in the test environment" do
-        expect(helper.current_git_commit).to eq(nil)
+        expect(helper.current_git_commit).to be_nil
       end
     end
 

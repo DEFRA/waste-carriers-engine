@@ -6,6 +6,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe GovpayCallbackService do
     let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
+    let(:govpay_service) { described_class.new(order.payment_uuid) }
     let(:transient_registration) do
       create(:renewing_registration,
              :has_required_data,
@@ -25,8 +26,6 @@ module WasteCarriersEngine
       order.govpay_id = "a_govpay_id"
       order.save!
     end
-
-    let(:govpay_service) { described_class.new(order.payment_uuid) }
 
     describe "#payment_callback" do
       let(:govpay_validator_service) { instance_double(GovpayValidatorService) }

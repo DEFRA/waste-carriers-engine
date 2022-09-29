@@ -9,6 +9,7 @@
 RSpec.shared_examples "GET flexible form" do |form|
   context "when a valid user is signed in" do
     let(:user) { create(:user) }
+
     before do
       sign_in(user)
     end

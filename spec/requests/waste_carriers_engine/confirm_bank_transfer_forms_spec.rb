@@ -9,6 +9,7 @@ module WasteCarriersEngine
     describe "GET new_confirm_bank_transfer_form" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
+
         before do
           sign_in(user)
         end
@@ -54,7 +55,7 @@ module WasteCarriersEngine
 
               get new_confirm_bank_transfer_form_path(transient_registration.token)
 
-              expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to eq(nil)
+              expect(transient_registration.reload.finance_details.orders.first.world_pay_status).to be_nil
               expect(transient_registration.reload.finance_details.orders.count).to eq(old_order_count)
             end
           end
