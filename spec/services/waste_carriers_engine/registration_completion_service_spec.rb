@@ -163,7 +163,7 @@ module WasteCarriersEngine
               .to receive(:run)
               .and_raise(the_error)
 
-            expect(Airbrake)
+            allow(Airbrake)
               .to receive(:notify)
               .with(the_error, { registration_no: transient_registration.reg_identifier })
           end
@@ -207,7 +207,7 @@ module WasteCarriersEngine
               .to receive(:run)
               .and_raise(the_error)
 
-            expect(Airbrake)
+            allow(Airbrake)
               .to receive(:notify)
               .with(the_error, { registration_no: transient_registration.reg_identifier })
           end
@@ -260,7 +260,7 @@ module WasteCarriersEngine
                 .to receive(:run)
                 .and_raise(the_error)
 
-              expect(Airbrake)
+              allow(Airbrake)
                 .to receive(:notify)
                 .with(the_error, { registration_no: transient_registration.reg_identifier })
             end
@@ -279,14 +279,16 @@ module WasteCarriersEngine
           let(:finance_details) { build(:finance_details, :has_required_data) }
 
           before do
+            allow(Notify::RegistrationPendingConvictionCheckEmailService).to receive(:run)
+
             transient_registration.finance_details = finance_details
             transient_registration.save
           end
 
           it "does not send the pending conviction check email" do
-            expect(Notify::RegistrationPendingConvictionCheckEmailService).not_to receive(:run)
-
             described_class.run(transient_registration)
+
+            expect(Notify::RegistrationPendingConvictionCheckEmailService).not_to have_received(:run)
           end
 
           it "does not create an order item log" do
@@ -298,23 +300,24 @@ module WasteCarriersEngine
         context "with temporary additional debugging" do
 
           before do
+            allow(Airbrake).to receive(:notify)
             allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
             allow(FeatureToggle).to receive(:active?).with(:govpay_payments).and_return true
           end
 
           it "logs an error" do
-            expect(Airbrake).to receive(:notify)
-
             described_class.new.log_transient_registration_details("foo", transient_registration)
+
+            expect(Airbrake).to have_received(:notify)
           end
 
           context "with a nil transient_registration" do
             before { allow(transient_registration).to receive(:nil?).and_return(true) }
 
             it "logs an error" do
-              expect(Airbrake).to receive(:notify)
-
               described_class.new.log_transient_registration_details("foo", transient_registration)
+
+              expect(Airbrake).to have_received(:notify)
             end
           end
 
@@ -327,9 +330,9 @@ module WasteCarriersEngine
             end
 
             it "logs an error" do
-              expect(Airbrake).to receive(:notify).at_least(:once)
-
               described_class.run(transient_registration)
+
+              expect(Airbrake).to have_received(:notify).at_least(:once)
             end
           end
         end

@@ -181,7 +181,7 @@ module WasteCarriersEngine
       end
 
       it "sets the correct order_key" do
-        expect(SecureRandom).to receive(:uuid).and_return("__-1514764800")
+        allow(SecureRandom).to receive(:uuid).and_return("__-1514764800")
 
         expect(payment.order_key).to eq("1514764800")
       end

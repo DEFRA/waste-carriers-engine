@@ -70,12 +70,12 @@ module WasteCarriersEngine
           end
 
           it "logs the exception" do
-            expect(Airbrake)
-              .to receive(:notify)
-              .with(the_error, { reg_identifier: transient_registration.reg_identifier })
-
             begin
               get new_registration_received_pending_govpay_payment_form_path(transient_registration.token)
+
+              expect(Airbrake)
+              .to have_received(:notify)
+              .with(the_error, { reg_identifier: transient_registration.reg_identifier })
             rescue ActionView::Template::Error
               # Capture the exception raised in the view
             end

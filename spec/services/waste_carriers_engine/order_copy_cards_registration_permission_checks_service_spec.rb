@@ -11,17 +11,20 @@ module WasteCarriersEngine
 
     describe ".run" do
       before do
-        expect(transient_registration).to receive(:valid?).and_return(valid)
-        expect(PermissionChecksResult).to receive(:new).and_return(result)
+        allow(PermissionChecksResult).to receive(:new).and_return(result)
+        allow(result).to receive(:invalid!)
+        allow(result).to receive(:needs_permissions!)
+        allow(result).to receive(:pass!)
+        allow(transient_registration).to receive(:valid?).and_return(valid)
       end
 
       context "when the transient registration is not valid" do
         let(:valid) { false }
 
         it "returns an invalid result" do
-          expect(result).to receive(:invalid!)
-
           expect(described_class.run(params)).to eq(result)
+
+          expect(result).to have_received(:invalid!)
         end
       end
 
@@ -33,17 +36,17 @@ module WasteCarriersEngine
         before do
           allow(transient_registration).to receive(:registration).and_return(registration)
 
-          expect(Ability).to receive(:new).with(user).and_return(ability)
-          expect(ability).to receive(:can?).with(:order_copy_cards, registration).and_return(can)
+          allow(Ability).to receive(:new).with(user).and_return(ability)
+          allow(ability).to receive(:can?).with(:order_copy_cards, registration).and_return(can)
         end
 
         context "when the user does not have the correct permissions" do
           let(:can) { false }
 
           it "returns a missing permissions result" do
-            expect(result).to receive(:needs_permissions!)
-
             expect(described_class.run(params)).to eq(result)
+
+            expect(result).to have_received(:needs_permissions!)
           end
         end
 
@@ -54,16 +57,16 @@ module WasteCarriersEngine
           before do
             allow(transient_registration).to receive(:registration).and_return(registration)
 
-            expect(registration).to receive(:active?).and_return(active)
+            allow(registration).to receive(:active?).and_return(active)
           end
 
           context "when the registration is not active" do
             let(:active) { false }
 
             it "returns an invalid result" do
-              expect(result).to receive(:invalid!)
-
               expect(described_class.run(params)).to eq(result)
+
+              expect(result).to have_received(:invalid!)
             end
           end
 
@@ -71,9 +74,9 @@ module WasteCarriersEngine
             let(:active) { true }
 
             it "returns a pass result" do
-              expect(result).to receive(:pass!)
-
               expect(described_class.run(params)).to eq(result)
+
+              expect(result).to have_received(:pass!)
             end
           end
         end

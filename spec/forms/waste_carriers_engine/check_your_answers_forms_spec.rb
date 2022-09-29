@@ -23,7 +23,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         before do
-          expect(check_your_answers_form).to receive(:valid?).and_return(false)
+          allow(check_your_answers_form).to receive(:valid?).and_return(false)
         end
 
         it "does not submit" do

@@ -17,7 +17,7 @@ module WasteCarriersEngine
 
       context "when the transient_registration is not a charity" do
         before do
-          expect(presenter).to receive(:new_registration?).and_return(new_registration)
+          allow(presenter).to receive(:new_registration?).and_return(new_registration)
         end
 
         context "when the transient_registration is not a new_registration" do

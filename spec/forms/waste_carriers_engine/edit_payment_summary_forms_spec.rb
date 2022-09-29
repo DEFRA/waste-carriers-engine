@@ -19,7 +19,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         before do
-          expect(edit_payment_summary_form).to receive(:valid?).and_return(false)
+          allow(edit_payment_summary_form).to receive(:valid?).and_return(false)
         end
 
         it "does not submit" do

@@ -82,8 +82,9 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     let(:resource) { build(factory, location: location, business_type: business_type) }
 
     context "when the location is within the UK" do
+      before { allow(resource).to receive(:uk_location?).and_return(true) }
+
       it "returns false" do
-        expect(resource).to receive(:uk_location?).and_return(true)
         expect(resource).not_to be_overseas
       end
     end
@@ -161,13 +162,15 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       finance_detail2 = double(:finance_detail2, amount: 30)
       finance_details = double(:finance_details, payments: [finance_detail1, finance_detail2])
 
-      expect(resource).to receive(:finance_details).and_return(finance_details)
+      allow(resource).to receive(:finance_details).and_return(finance_details)
+
       expect(resource.amount_paid).to eq(53)
     end
 
     context "when there are no finance details" do
-      it "return 0" do
-        expect(resource).to receive(:finance_details)
+      it "returns 0" do
+        allow(resource).to receive(:finance_details)
+
         expect(resource.amount_paid).to eq(0)
       end
     end

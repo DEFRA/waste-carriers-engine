@@ -13,38 +13,51 @@ module WasteCarriersEngine
 
       # Ensure registration activation date is prior to the card order date
       before do
+        allow(registration).to receive(:save!)
+        allow(registration.finance_details).to receive(:update_balance)
+        allow(transient_registration).to receive(:delete)
+
         registration.metaData.dateActivated = 1.month.ago
       end
 
       RSpec.shared_examples "completes the order" do |notify_email_service|
+        before do
+          allow(notify_email_service).to receive(:run)
+        end
+
         it "merges finance details" do
-          expect(registration.finance_details).to receive(:update_balance)
           described_class.run(transient_registration)
+
+          expect(registration.finance_details).to have_received(:update_balance)
         end
 
         it "merges the order" do
           described_class.run(transient_registration)
+
           expect(registration.finance_details.orders).to include(transient_finance_details.orders[0])
         end
 
         it "deletes the transient registration" do
-          expect(transient_registration).to receive(:delete)
           described_class.run(transient_registration)
+
+          expect(transient_registration).to have_received(:delete)
         end
 
         it "saves the registration" do
-          expect(registration).to receive(:save!)
           described_class.run(transient_registration)
+
+          expect(registration).to have_received(:save!)
         end
 
         context "with a non-assisted-digital email address" do
           let(:contact_email) { Faker::Internet.email }
 
           it "sends an email using the appropriate service" do
-            expect(notify_email_service)
-              .to receive(:run)
-              .with(registration: registration, order: transient_finance_details.orders[0])
             described_class.run(transient_registration)
+
+            expect(notify_email_service)
+              .to have_received(:run)
+              .with(registration: registration, order: transient_finance_details.orders[0])
           end
         end
 
@@ -52,7 +65,9 @@ module WasteCarriersEngine
           let(:contact_email) { nil }
 
           it "does not send an email" do
-            expect(notify_email_service).not_to receive(:run)
+            described_class.run(transient_registration)
+
+            expect(notify_email_service).not_to have_received(:run)
           end
         end
       end

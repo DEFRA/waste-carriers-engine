@@ -7,17 +7,19 @@ module WasteCarriersEngine
     let(:transient_registration) { build(:transient_registration, :has_required_data) }
 
     describe "#set_metadata_route" do
-      it "updates the transient registration's metadata route" do
+      let(:metadata_route) { double(:metadata_route) }
+
+      before do
         allow_message_expectations_on_nil
+        allow(Rails.configuration).to receive(:metadata_route).and_return(metadata_route)
+        allow(transient_registration.metaData).to receive(:route=)
+        allow(transient_registration).to receive(:save)
+      end
 
-        metadata_route = double(:metadata_route)
-
-        expect(Rails.configuration).to receive(:metadata_route).and_return(metadata_route)
-
-        expect(transient_registration.metaData).to receive(:route=).with(metadata_route)
-        expect(transient_registration).to receive(:save)
-
+      it "updates the transient registration's metadata route" do
         transient_registration.set_metadata_route
+
+        expect(transient_registration.metaData).to have_received(:route=).with(metadata_route)
       end
     end
 
@@ -25,12 +27,12 @@ module WasteCarriersEngine
       context "when a new transient registration is created" do
         it "updates the transient registration's created_at" do
           time = double(:time)
-
-          expect(Time).to receive(:current).and_return(time)
-
-          expect(transient_registration).to receive(:created_at=).with(time)
+          allow(Time).to receive(:current).and_return(time)
+          allow(transient_registration).to receive(:created_at=)
 
           transient_registration.save
+
+          expect(transient_registration).to have_received(:created_at=).with(time)
         end
       end
     end

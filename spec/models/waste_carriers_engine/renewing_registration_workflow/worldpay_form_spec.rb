@@ -18,6 +18,7 @@ module WasteCarriersEngine
         context "with :next transition" do
           context "when a conviction check is not required" do
             before do
+              allow(Notifications::Client).to receive(:new)
               allow(renewing_registration).to receive(:conviction_check_required?).and_return(false)
             end
 
@@ -29,48 +30,48 @@ module WasteCarriersEngine
               include_examples "has next transition", next_state: "renewal_complete_form"
 
               it "does not send a confirmation email after the 'next' event" do
-                # An older incarnation of this spec checked that ActionMailer
-                # did not send *any* emails.
                 # Here we check to see if the notification service has been invoked,
                 # which should tell us if *any* emails have been sent.
-                expect(Notifications::Client).not_to receive(:new)
-
                 renewing_registration.next!
+
+                expect(Notifications::Client).not_to have_received(:new)
               end
             end
 
             context "when there is a pending WorldPay payment" do
               before do
+                allow(Notify::RenewalPendingOnlinePaymentEmailService).to receive(:run)
                 allow(renewing_registration).to receive(:pending_online_payment?).and_return(true)
               end
 
               include_examples "has next transition", next_state: "renewal_received_pending_worldpay_payment_form"
 
               it "sends a confirmation email after the 'next' event" do
+                renewing_registration.next!
+
                 expect(Notify::RenewalPendingOnlinePaymentEmailService)
-                  .to receive(:run)
+                  .to have_received(:run)
                   .with(registration: renewing_registration)
                   .once
-
-                  renewing_registration.next!
               end
             end
           end
 
           context "when a conviction check is required" do
             before do
+              allow(Notify::RenewalPendingChecksEmailService).to receive(:run)
               allow(renewing_registration).to receive(:conviction_check_required?).and_return(true)
             end
 
             include_examples "has next transition", next_state: "renewal_received_pending_conviction_form"
 
             it "sends a confirmation email after the 'next' event" do
+              renewing_registration.next!
+
               expect(Notify::RenewalPendingChecksEmailService)
-                .to receive(:run)
+                .to have_received(:run)
                 .with(registration: renewing_registration)
                 .once
-
-                renewing_registration.next!
             end
           end
         end

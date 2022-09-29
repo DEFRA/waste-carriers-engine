@@ -13,6 +13,8 @@ RSpec.shared_examples "company_address_reuse_form workflow" do |factory:|
     end
 
     context "with :contact_address_reuse_form state transitions" do
+      before { allow(WasteCarriersEngine::ContactAddressAsRegisteredAddressService).to receive(:run) }
+
       context "with :next transition" do
         context "when the temp_reuse_registered_address is `yes`" do
           let(:temp_reuse_registered_address) { "yes" }
@@ -20,11 +22,11 @@ RSpec.shared_examples "company_address_reuse_form workflow" do |factory:|
           include_examples "has next transition", next_state: "check_your_answers_form"
 
           it "invokes the ContactAddressAsRegisteredAddressService" do
-            expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
-              .to receive(:run)
-              .with(subject)
-
             subject.next
+
+            expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
+              .to have_received(:run)
+              .with(subject)
           end
         end
 
@@ -34,10 +36,10 @@ RSpec.shared_examples "company_address_reuse_form workflow" do |factory:|
           include_examples "has next transition", next_state: "contact_postcode_form"
 
           it "does not invoke the ContactAddressAsRegisteredAddressService" do
-            expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
-              .not_to receive(:run)
-
             subject.next
+
+            expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
+              .not_to have_received(:run)
           end
         end
       end

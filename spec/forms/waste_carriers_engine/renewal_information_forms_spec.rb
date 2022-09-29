@@ -17,7 +17,7 @@ module WasteCarriersEngine
 
       context "when the form is not valid" do
         before do
-          expect(renewal_information_form).to receive(:valid?).and_return(false)
+          allow(renewal_information_form).to receive(:valid?).and_return(false)
         end
 
         it "does not submit" do

@@ -16,13 +16,15 @@ module WasteCarriersEngine
         context "with :next transition" do
           include_examples "has next transition", next_state: "renewal_received_pending_payment_form"
 
+          before { allow(Notify::RenewalPendingPaymentEmailService).to receive(:run) }
+
           it "sends a confirmation email after the 'next' event" do
+            renewing_registration.next!
+
             expect(Notify::RenewalPendingPaymentEmailService)
-              .to receive(:run)
+              .to have_received(:run)
               .with(registration: renewing_registration)
               .once
-
-              renewing_registration.next!
           end
         end
       end

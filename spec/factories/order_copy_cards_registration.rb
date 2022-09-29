@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :order_copy_cards_registration, class: "WasteCarriersEngine::OrderCopyCardsRegistration" do
-    initialize_with { new(reg_identifier: create(:registration, :has_required_data, :is_active).reg_identifier) }
+    initialize_with { new(reg_identifier: create(:registration, :has_required_data, :is_active, contact_email: defined?(contact_email) ? contact_email : nil).reg_identifier) }
 
     trait :has_finance_details do
       temp_cards { 1 }

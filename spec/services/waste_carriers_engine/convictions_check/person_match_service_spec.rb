@@ -7,7 +7,10 @@ module WasteCarriersEngine
     RSpec.describe PersonMatchService do
       describe "run" do
         let(:time) { Time.new(2019, 1, 1) }
-        before { allow(Time).to receive(:current).and_return(time) }
+        before do
+          allow(Time).to receive(:current).and_return(time)
+          allow(Entity).to receive(:matching_people).and_return([entity_a])
+        end
 
         let(:first_name) { "foo" }
         let(:last_name) { "bar" }
@@ -33,12 +36,11 @@ module WasteCarriersEngine
         end
 
         it "checks for matching entities" do
-          expect(Entity).to receive(:matching_people).with(first_name: first_name,
+          run_match_service
+
+          expect(Entity).to have_received(:matching_people).with(first_name: first_name,
                                                            last_name: last_name,
                                                            date_of_birth: date_of_birth)
-                                                     .and_return([entity_a])
-
-          run_match_service
         end
 
         context "when there are matches" do

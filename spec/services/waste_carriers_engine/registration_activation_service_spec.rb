@@ -18,10 +18,9 @@ module WasteCarriersEngine
           allow(registration).to receive(:unpaid_balance?).and_return(false)
           allow(registration).to receive(:pending_manual_conviction_check?).and_return(false)
 
-          expect(RegistrationConfirmationService)
+          allow(RegistrationConfirmationService)
             .to receive(:run)
             .with(registration: registration)
-            .once
         end
 
         it "updates the date_activated" do

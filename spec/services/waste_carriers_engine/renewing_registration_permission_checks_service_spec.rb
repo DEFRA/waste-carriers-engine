@@ -6,8 +6,8 @@ module WasteCarriersEngine
   RSpec.describe RenewingRegistrationPermissionChecksService do
 
     before do
-      expect(transient_registration).to receive(:valid?).and_return(valid)
-      expect(PermissionChecksResult).to receive(:new).and_return(result)
+      allow(transient_registration).to receive(:valid?).and_return(valid)
+      allow(PermissionChecksResult).to receive(:new).and_return(result)
     end
 
     describe ".run" do
@@ -16,13 +16,20 @@ module WasteCarriersEngine
       let(:result) { double(:result) }
       let(:params) { { transient_registration: transient_registration, user: user } }
 
+      before do
+        allow(result).to receive(:invalid!)
+        allow(result).to receive(:needs_permissions!)
+        allow(result).to receive(:pass!)
+        allow(result).to receive(:unrenewable!)
+      end
+
       context "when the transient registration is not valid" do
         let(:valid) { false }
 
         it "returns an invalid result" do
-          expect(result).to receive(:invalid!)
-
           expect(described_class.run(params)).to eq(result)
+
+          expect(result).to have_received(:invalid!)
         end
       end
 
@@ -42,9 +49,9 @@ module WasteCarriersEngine
           let(:can) { false }
 
           it "returns a missing permissions result" do
-            expect(result).to receive(:needs_permissions!)
-
             expect(described_class.run(params)).to eq(result)
+
+            expect(result).to have_received(:needs_permissions!)
           end
         end
 
@@ -54,17 +61,16 @@ module WasteCarriersEngine
 
           before do
             allow(transient_registration).to receive(:registration).and_return(registration)
-
-            expect(transient_registration).to receive(:can_be_renewed?).and_return(renewable)
+            allow(transient_registration).to receive(:can_be_renewed?).and_return(renewable)
           end
 
           context "when the transient_registration cannot be renewed" do
             let(:renewable) { false }
 
             it "returns an unrenewable result" do
-              expect(result).to receive(:unrenewable!)
-
               expect(described_class.run(params)).to eq(result)
+
+              expect(result).to have_received(:unrenewable!)
             end
           end
 
@@ -75,16 +81,16 @@ module WasteCarriersEngine
               let(:transient_registration) { double(:transient_registration, from_magic_link: true) }
 
               it "returns a pass result" do
-                expect(result).to receive(:pass!)
-
                 expect(described_class.run(params)).to eq(result)
+
+                expect(result).to have_received(:pass!)
               end
             end
 
             it "returns a pass result" do
-              expect(result).to receive(:pass!)
-
               expect(described_class.run(params)).to eq(result)
+
+              expect(result).to have_received(:pass!)
             end
           end
         end
@@ -99,14 +105,15 @@ module WasteCarriersEngine
         let(:user) { nil }
 
         before do
+          allow(Airbrake).to receive(:notify)
           allow(FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return true
           allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
         end
 
         it "logs an error and raises a NoMethodError" do
-          expect(Airbrake).to receive(:notify)
-
           expect { described_class.run(params) }.to raise_error(NoMethodError)
+
+          expect(Airbrake).to have_received(:notify)
         end
       end
     end

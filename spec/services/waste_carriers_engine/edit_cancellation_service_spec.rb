@@ -8,9 +8,11 @@ module WasteCarriersEngine
       let(:edit_registration) { double(:edit_registration) }
 
       it "deletes the edit_registration" do
-        expect(edit_registration).to receive(:delete)
+        allow(edit_registration).to receive(:delete)
 
         described_class.run(edit_registration: edit_registration)
+
+        expect(edit_registration).to have_received(:delete)
       end
     end
   end

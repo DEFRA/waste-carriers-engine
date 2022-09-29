@@ -59,69 +59,83 @@ module WasteCarriersEngine
     end
 
     describe ".run" do
+      let(:reg_orders) { double(:orders) }
+      let(:reg_payments) { double(:payments) }
+      let(:transient_order) { double(:transient_order) }
+      let(:transient_payment) { double(:transient_payment) }
+
+      before do
+        allow(contact_address).to receive(:first_name=)
+        allow(contact_address).to receive(:last_name=)
+        allow(edit_registration).to receive(:delete)
+        allow(PastRegistration).to receive(:build_past_registration)
+        allow(registration).to receive(:save!)
+        allow(registration).to receive(:write_attributes)
+        allow(reg_finance_details).to receive(:orders).and_return(reg_orders)
+        allow(reg_finance_details).to receive(:payments).and_return(reg_payments).twice
+        allow(reg_finance_details).to receive(:update_balance)
+        allow(reg_orders).to receive(:<<).with(transient_order)
+        allow(reg_payments).to receive(:<<).with(transient_payment)
+        allow(transient_finance_details).to receive(:orders).and_return([transient_order])
+        allow(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
+      end
+
       context "when given an edit_registration" do
         it "updates the registration without merging finance details and deletes the edit_registration" do
-          # Sets up the contact address data
-          expect(contact_address).to receive(:first_name=).with(first_name)
-          expect(contact_address).to receive(:last_name=).with(last_name)
-
-          # Creates a past_registration
-          expect(PastRegistration).to receive(:build_past_registration).with(registration, :edit)
-
-          # Updates the registration
-          expect(registration).to receive(:write_attributes).with(copyable_attributes)
-
-          # Does not merge finance details
-          expect(reg_finance_details).not_to receive(:update_balance)
-
-          # Saves the registration
-          expect(registration).to receive(:save!)
-
-          # Deletes transient registration
-          expect(edit_registration).to receive(:delete)
 
           described_class.run(edit_registration: edit_registration)
+
+          # Sets up the contact address data
+          expect(contact_address).to have_received(:first_name=).with(first_name)
+          expect(contact_address).to have_received(:last_name=).with(last_name)
+
+          # Creates a past_registration
+          expect(PastRegistration).to have_received(:build_past_registration).with(registration, :edit)
+
+          # Updates the registration
+          expect(registration).to have_received(:write_attributes).with(copyable_attributes)
+
+          # Does not merge finance details
+          expect(reg_finance_details).not_to have_received(:update_balance)
+
+          # Saves the registration
+          expect(registration).to have_received(:save!)
+
+          # Deletes transient registration
+          expect(edit_registration).to have_received(:delete)
         end
 
         context "when the carrier type has changed" do
           let(:registration_type_changed) { true }
 
           it "updates the registration, merges finance details and deletes the edit_registration" do
-            reg_orders = double(:orders)
-            reg_payments = double(:payments)
-            transient_order = double(:transient_order)
-            transient_payment = double(:transient_payment)
-
-            # Sets up the contact address data
-            expect(contact_address).to receive(:first_name=).with(first_name)
-            expect(contact_address).to receive(:last_name=).with(last_name)
-
-            # Creates a past_registration
-            expect(PastRegistration).to receive(:build_past_registration).with(registration, :edit)
-
-            # Updates the registration
-            expect(registration).to receive(:write_attributes).with(copyable_attributes)
-
-            # Updates the balance
-            expect(reg_finance_details).to receive(:update_balance)
-
-            # Merges orders
-            allow(reg_finance_details).to receive(:orders).and_return(reg_orders)
-            allow(transient_finance_details).to receive(:orders).and_return([transient_order])
-            expect(reg_orders).to receive(:<<).with(transient_order)
-
-            # Merges payments
-            expect(reg_finance_details).to receive(:payments).and_return(reg_payments).twice
-            expect(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
-            expect(reg_payments).to receive(:<<).with(transient_payment)
-
-            # Saves the registration
-            expect(registration).to receive(:save!)
-
-            # Deletes transient registration
-            expect(edit_registration).to receive(:delete)
 
             described_class.run(edit_registration: edit_registration)
+
+            # Sets up the contact address data
+            expect(contact_address).to have_received(:first_name=).with(first_name)
+            expect(contact_address).to have_received(:last_name=).with(last_name)
+
+            # Creates a past_registration
+            expect(PastRegistration).to have_received(:build_past_registration).with(registration, :edit)
+
+            # Updates the registration
+            expect(registration).to have_received(:write_attributes).with(copyable_attributes)
+
+            # Updates the balance
+            expect(reg_finance_details).to have_received(:update_balance)
+
+            # Merges orders
+            expect(reg_orders).to have_received(:<<).with(transient_order)
+
+            # Merges payments
+            expect(reg_payments).to have_received(:<<).with(transient_payment)
+
+            # Saves the registration
+            expect(registration).to have_received(:save!)
+
+            # Deletes transient registration
+            expect(edit_registration).to have_received(:delete)
           end
         end
       end

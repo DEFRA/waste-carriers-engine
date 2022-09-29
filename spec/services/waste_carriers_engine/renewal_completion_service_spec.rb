@@ -33,6 +33,12 @@ module WasteCarriersEngine
     end
 
     describe "#complete_renewal" do
+
+      before do
+        allow(Notify::RenewalConfirmationEmailService).to receive(:run)
+        allow(Notify::RenewalConfirmationLetterService).to receive(:run)
+      end
+
       context "when the renewal can be completed" do
         it "creates a new past_registration" do
           number_of_past_registrations = registration.past_registrations.count
@@ -191,12 +197,12 @@ module WasteCarriersEngine
         end
 
         it "sends a confirmation email" do
+          renewal_completion_service.complete_renewal
+
           expect(Notify::RenewalConfirmationEmailService)
-            .to receive(:run)
+            .to have_received(:run)
             .with(registration: registration)
             .once
-
-          renewal_completion_service.complete_renewal
         end
 
         context "when there is no contact email" do
@@ -205,12 +211,12 @@ module WasteCarriersEngine
           end
 
           it "sends a confirmation letter" do
+            renewal_completion_service.complete_renewal
+
             expect(Notify::RenewalConfirmationLetterService)
-              .to receive(:run)
+              .to have_received(:run)
               .with(registration: registration)
               .once
-
-            renewal_completion_service.complete_renewal
           end
         end
       end
@@ -276,7 +282,7 @@ module WasteCarriersEngine
             .to receive(:run)
             .and_raise(the_error)
 
-          expect(Airbrake)
+          allow(Airbrake)
             .to receive(:notify)
             .with(the_error, { registration_no: transient_registration.reg_identifier })
         end

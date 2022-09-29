@@ -13,6 +13,7 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:govpay_merchant_code).and_return("some_merchant_code")
       allow(Rails.configuration).to receive(:govpay_api_token).and_return("some_token")
+      allow(Airbrake).to receive(:notify)
     end
 
     # TODO: Remove this when the feature flag is no longer required
@@ -143,9 +144,9 @@ module WasteCarriersEngine
               end
 
               it "does not log an error" do
-                expect(Airbrake).not_to receive(:notify)
-
                 get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
+                expect(Airbrake).not_to have_received(:notify)
               end
 
               context "when it has been flagged for conviction checks" do
@@ -247,9 +248,9 @@ module WasteCarriersEngine
                 end
 
                 it "logs an error" do
-                  expect(Airbrake).to receive(:notify)
-
                   get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
+                  expect(Airbrake).to have_received(:notify)
                 end
               end
 
@@ -261,9 +262,9 @@ module WasteCarriersEngine
                 end
 
                 it "logs an error" do
-                  expect(Airbrake).to receive(:notify)
-
                   get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
+                  expect(Airbrake).to have_received(:notify)
                 end
               end
             end

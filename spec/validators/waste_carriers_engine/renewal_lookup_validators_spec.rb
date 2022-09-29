@@ -18,7 +18,7 @@ module WasteCarriersEngine
 
     context "when there is no matching registration" do
       before do
-        expect(Registration).to receive(:where).and_return([])
+        allow(Registration).to receive(:where).and_return([])
       end
 
       it "is invalid and sets the correct error message" do
@@ -39,7 +39,7 @@ module WasteCarriersEngine
       end
 
       before do
-        expect(Registration).to receive(:where).and_return([registration])
+        allow(Registration).to receive(:where).and_return([registration])
       end
 
       context "when it's lower tier" do
@@ -73,7 +73,7 @@ module WasteCarriersEngine
           let(:expired_check_service) { false }
 
           before do
-            expect(ExpiryCheckService).to receive(:new).and_return(check_service)
+            allow(ExpiryCheckService).to receive(:new).and_return(check_service)
           end
 
           context "when it's not yet in the renewal window" do
@@ -100,7 +100,7 @@ module WasteCarriersEngine
           let(:expired_check_service) { true }
 
           before do
-            expect(ExpiryCheckService).to receive(:new).and_return(check_service)
+            allow(ExpiryCheckService).to receive(:new).and_return(check_service)
           end
 
           context "when it's beyond the expiry grace period" do
