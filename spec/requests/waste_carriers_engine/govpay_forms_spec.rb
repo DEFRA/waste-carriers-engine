@@ -249,9 +249,9 @@ module WasteCarriersEngine
               end
 
               it "does not log an error" do
-                expect(Airbrake).not_to receive(:notify)
-
                 get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
+                expect(Airbrake).not_to have_received(:notify)
               end
             end
 
@@ -264,24 +264,27 @@ module WasteCarriersEngine
               end
 
               it "logs an error" do
-                expect(Airbrake).to receive(:notify)
-
                 get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
+                expect(Airbrake).to have_received(:notify)
               end
             end
 
             context "with cancelled status" do
               let(:govpay_status) { "cancelled" }
+
               it_behaves_like "payment is unsuccessful but no error"
             end
 
             context "with failure status" do
               let(:govpay_status) { "failure" }
+
               it_behaves_like "payment is unsuccessful but no error"
             end
 
             context "with an error status" do
               let(:govpay_status) { "not_found" }
+
               it_behaves_like "payment is unsuccessful with an error"
             end
           end
@@ -290,6 +293,7 @@ module WasteCarriersEngine
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "success" }
+
             it_behaves_like "payment is unsuccessful with an error"
           end
 
@@ -297,6 +301,7 @@ module WasteCarriersEngine
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "cancelled" }
+
             it_behaves_like "payment is unsuccessful with an error"
           end
         end
