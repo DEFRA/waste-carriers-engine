@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe OrderAndTotalPresenter do
-    subject { described_class.new(form, view) }
+    subject(:presenter) { described_class.new(form, view) }
 
     let(:form) { double(:form, transient_registration: transient_registration) }
     let(:transient_registration) do
@@ -43,7 +43,7 @@ module WasteCarriersEngine
             amount: 500
           }
         ]
-        expect(subject.order_items).to eq(expected_list)
+        expect(presenter.order_items).to eq(expected_list)
       end
 
       context "when the transient registration is a renewal" do
@@ -70,14 +70,14 @@ module WasteCarriersEngine
               amount: 500
             }
           ]
-          expect(subject.order_items).to eq(expected_list)
+          expect(presenter.order_items).to eq(expected_list)
         end
       end
     end
 
     describe "#total_cost" do
       it "returns the balance" do
-        expect(subject.total_cost).to eq(balance)
+        expect(presenter.total_cost).to eq(balance)
       end
     end
   end

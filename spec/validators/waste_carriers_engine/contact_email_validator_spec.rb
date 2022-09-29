@@ -17,25 +17,25 @@ end
 module WasteCarriersEngine
   RSpec.describe ContactEmailValidator do
 
-    subject { Test::ContactEmailValidatable.new }
+    subject(:validatable) { Test::ContactEmailValidatable.new }
 
     let(:contact_email) { Faker::Internet.email }
     let(:confirmed_email) { contact_email }
     before do
-      allow(subject).to receive(:contact_email).and_return(contact_email)
-      allow(subject).to receive(:confirmed_email).and_return(confirmed_email)
-      allow(subject).to receive(:no_contact_email).and_return(no_contact_email)
+      allow(validatable).to receive(:contact_email).and_return(contact_email)
+      allow(validatable).to receive(:confirmed_email).and_return(confirmed_email)
+      allow(validatable).to receive(:no_contact_email).and_return(no_contact_email)
     end
 
     shared_examples "is valid" do
       it "passes the validity check" do
-        expect(subject).to be_valid
+        expect(validatable).to be_valid
       end
     end
 
     shared_examples "is not valid" do
       it "does not pass the validity check" do
-        expect(subject).not_to be_valid
+        expect(validatable).not_to be_valid
       end
     end
 

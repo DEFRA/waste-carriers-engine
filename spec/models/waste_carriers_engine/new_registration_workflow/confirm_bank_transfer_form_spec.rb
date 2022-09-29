@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe NewRegistration do
-    subject { build(:new_registration, workflow_state: "confirm_bank_transfer_form") }
+    subject(:new_registration) { build(:new_registration, workflow_state: "confirm_bank_transfer_form") }
 
     describe "#workflow_state" do
       context "with :confirm_bank_transfer_form state transitions" do
@@ -14,7 +14,7 @@ module WasteCarriersEngine
           it "set a metadata route" do
             allow(Rails.configuration).to receive(:metadata_route).and_return("test_route")
 
-            expect { subject.next! }.to change { subject.metaData.route }.to("test_route")
+            expect { new_registration.next! }.to change { new_registration.metaData.route }.to("test_route")
           end
         end
       end

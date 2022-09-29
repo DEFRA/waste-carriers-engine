@@ -6,7 +6,7 @@ module WasteCarriersEngine
     private
 
     def all_checks_pass?
-      transient_registration_is_valid? && user_has_permission? && registation_is_active?
+      transient_registration_is_valid? && user_has_permission? && registration_is_active?
     end
 
     def user_has_permission?
@@ -17,7 +17,7 @@ module WasteCarriersEngine
       false
     end
 
-    def registation_is_active?
+    def registration_is_active?
       return true if registration.active?
 
       permission_check_result.invalid!

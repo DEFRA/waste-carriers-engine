@@ -43,16 +43,16 @@ module WasteCarriersEngine
             let(:registration) { create(:registration, :has_required_data, :lower_tier) }
             let(:registration_type) { nil }
 
-            subject do
+            subject(:run_service) do
               VCR.use_cassette("notify_lower_tier_registration_confirmation_sends_an_email") do
                 described_class.run(registration: registration)
               end
             end
 
             it "sends an email" do
-              expect(subject).to be_a(Notifications::Client::ResponseNotification)
-              expect(subject.template["id"]).to eq(template_id)
-              expect(subject.content["subject"]).to eq("Waste Carrier Registration Complete")
+              expect(run_service).to be_a(Notifications::Client::ResponseNotification)
+              expect(run_service.template["id"]).to eq(template_id)
+              expect(run_service.content["subject"]).to eq("Waste Carrier Registration Complete")
             end
           end
 
@@ -61,16 +61,16 @@ module WasteCarriersEngine
             let(:registration) { create(:registration, :has_required_data, :already_renewed) }
             let(:registration_type) { "carrier, broker and dealer" }
 
-            subject do
+            subject(:run_service) do
               VCR.use_cassette("notify_upper_tier_registration_confirmation_sends_an_email") do
                 described_class.run(registration: registration)
               end
             end
 
             it "sends an email" do
-              expect(subject).to be_a(Notifications::Client::ResponseNotification)
-              expect(subject.template["id"]).to eq(template_id)
-              expect(subject.content["subject"]).to eq("Waste Carrier Registration Complete")
+              expect(run_service).to be_a(Notifications::Client::ResponseNotification)
+              expect(run_service.template["id"]).to eq(template_id)
+              expect(run_service.content["subject"]).to eq("Waste Carrier Registration Complete")
             end
           end
         end

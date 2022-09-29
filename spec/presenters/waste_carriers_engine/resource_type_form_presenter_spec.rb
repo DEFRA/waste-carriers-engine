@@ -4,14 +4,14 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe ResourceTypeFormPresenter do
-    subject { described_class.new(object) }
+    subject(:presenter) { described_class.new(object) }
 
     describe "#new_registration?" do
       context "when the object is of type NewRegistration" do
         let(:object) { WasteCarriersEngine::NewRegistration.new }
 
         it "returns true" do
-          expect(subject).to be_a_new_registration
+          expect(presenter).to be_a_new_registration
         end
       end
 
@@ -19,7 +19,7 @@ module WasteCarriersEngine
         let(:object) { double(:object) }
 
         it "returns false" do
-          expect(subject).not_to be_a_new_registration
+          expect(presenter).not_to be_a_new_registration
         end
       end
     end
@@ -29,7 +29,7 @@ module WasteCarriersEngine
         let(:object) { WasteCarriersEngine::RenewingRegistration.new }
 
         it "returns true" do
-          expect(subject).to be_a_renewal
+          expect(presenter).to be_a_renewal
         end
       end
 
@@ -37,7 +37,7 @@ module WasteCarriersEngine
         let(:object) { double(:object) }
 
         it "returns false" do
-          expect(subject).not_to be_a_renewal
+          expect(presenter).not_to be_a_renewal
         end
       end
     end

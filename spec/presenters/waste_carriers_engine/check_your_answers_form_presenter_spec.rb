@@ -4,20 +4,20 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe CheckYourAnswersFormPresenter do
-    subject { described_class.new(transient_registration) }
+    subject(:presenter) { described_class.new(transient_registration) }
 
     describe "#show_smart_answers_results?" do
       context "when the transient_registration is a charity" do
         let(:transient_registration) { double(:transient_registration, charity?: true) }
 
         it "returns false" do
-          expect(subject.show_smart_answers_results?).to be false
+          expect(presenter.show_smart_answers_results?).to be false
         end
       end
 
       context "when the transient_registration is not a charity" do
         before do
-          expect(subject).to receive(:new_registration?).and_return(new_registration)
+          expect(presenter).to receive(:new_registration?).and_return(new_registration)
         end
 
         context "when the transient_registration is not a new_registration" do
@@ -25,7 +25,7 @@ module WasteCarriersEngine
           let(:transient_registration) { double(:transient_registration, charity?: false) }
 
           it "returns true" do
-            expect(subject.show_smart_answers_results?).to be true
+            expect(presenter.show_smart_answers_results?).to be true
           end
         end
 
@@ -39,7 +39,7 @@ module WasteCarriersEngine
             let(:tier_known) { true }
 
             it "returns false" do
-              expect(subject.show_smart_answers_results?).to be false
+              expect(presenter.show_smart_answers_results?).to be false
             end
           end
 
@@ -47,7 +47,7 @@ module WasteCarriersEngine
             let(:tier_known) { false }
 
             it "returns true" do
-              expect(subject.show_smart_answers_results?).to be true
+              expect(presenter.show_smart_answers_results?).to be true
             end
           end
         end
@@ -61,7 +61,7 @@ module WasteCarriersEngine
         let(:transient_registration) { resource }
         let(:registered_company_name) { Faker::Company.name }
         it "returns legal_entity_name trading as company_name" do
-          expect(subject.entity_display_name).to eq("#{registered_company_name} trading as #{company_name}")
+          expect(presenter.entity_display_name).to eq("#{registered_company_name} trading as #{company_name}")
         end
       end
     end

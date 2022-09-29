@@ -22,19 +22,19 @@ module WasteCarriersEngine
       let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :new_registration, :has_required_data) }
 
       context "when the form is valid" do
-        subject { check_registered_company_name_form.submit(valid_params) }
+        subject(:form_submit) { check_registered_company_name_form.submit(valid_params) }
 
         context "when the user selects yes to the company house details being correct" do
           let(:valid_params) { { token: check_registered_company_name_form.token, temp_use_registered_company_details: "yes" } }
           let(:transient_registration) { check_registered_company_name_form.transient_registration }
 
           it "submits" do
-            expect(subject).to be_truthy
+            expect(form_submit).to be_truthy
           end
 
           context "with a new registration" do
             it "updates the transient registration" do
-              expect { subject }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(registered_company_name)
+              expect { form_submit }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(registered_company_name)
             end
           end
 
@@ -42,20 +42,20 @@ module WasteCarriersEngine
             let(:check_registered_company_name_form) { build(:check_registered_company_name_form, :renewing_registration, :has_required_data) }
 
             it "updates the transient registration" do
-              expect { subject }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(registered_company_name)
+              expect { form_submit }.to change { transient_registration.reload.attributes["registeredCompanyName"] }.to(registered_company_name)
             end
 
             context "when the existing registration does not have a registered company name" do
               before { transient_registration.registered_company_name = nil }
               it "clears the company_name value" do
-                expect { subject }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
+                expect { form_submit }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
               end
             end
 
             context "when the existing registration has a registered company name" do
               before { transient_registration.registered_company_name = Faker::Company.name }
               it "clears the company_name value" do
-                expect { subject }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
+                expect { form_submit }.to change { transient_registration.reload.attributes["companyName"] }.to(nil)
               end
             end
           end
@@ -65,7 +65,7 @@ module WasteCarriersEngine
           let(:valid_params) { { token: check_registered_company_name_form.token, temp_use_registered_company_details: "no" } }
 
           it "submits" do
-            expect(subject).to be_truthy
+            expect(form_submit).to be_truthy
           end
         end
       end

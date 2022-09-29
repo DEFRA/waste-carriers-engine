@@ -43,16 +43,16 @@ module WasteCarriersEngine
             let(:registration) { create(:registration, :has_required_data, :already_renewed) }
             let(:registration_type) { "carrier, broker and dealer" }
 
-            subject do
+            subject(:run_service) do
               VCR.use_cassette("notify_upper_tier_renewal_confirmation_sends_an_email") do
                 described_class.run(registration: registration)
               end
             end
 
             it "sends an email" do
-              expect(subject).to be_a(Notifications::Client::ResponseNotification)
-              expect(subject.template["id"]).to eq(template_id)
-              expect(subject.content["subject"])
+              expect(run_service).to be_a(Notifications::Client::ResponseNotification)
+              expect(run_service.template["id"]).to eq(template_id)
+              expect(run_service.content["subject"])
                 .to match(/Your waste carriers registration CBDU\d has been renewed/)
             end
           end

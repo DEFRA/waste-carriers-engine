@@ -236,17 +236,17 @@ module WasteCarriersEngine
     describe "#next_state!" do
       let(:new_registration) { build(:new_registration, :has_required_data) }
 
-      subject { new_registration.next_state! }
+      subject(:next_state) { new_registration.next_state! }
 
       context "with no available next state" do
         before { new_registration.workflow_state = "registration_completed_form" }
 
         it "does not change the state" do
-          expect { subject }.not_to change { new_registration.workflow_state }
+          expect { next_state }.not_to change { new_registration.workflow_state }
         end
 
         it "does not add to workflow history" do
-          expect { subject }.not_to change { new_registration.workflow_history }
+          expect { next_state }.not_to change { new_registration.workflow_history }
         end
       end
 
@@ -254,11 +254,11 @@ module WasteCarriersEngine
         before { new_registration.workflow_state = "not_valid" }
 
         it "does not change the state" do
-          expect { subject }.not_to change { new_registration.workflow_state }
+          expect { next_state }.not_to change { new_registration.workflow_state }
         end
 
         it "does not add to workflow history" do
-          expect { subject }.not_to change { new_registration.workflow_history }
+          expect { next_state }.not_to change { new_registration.workflow_history }
         end
       end
 
@@ -266,15 +266,15 @@ module WasteCarriersEngine
         before { new_registration.workflow_state = "location_form" }
 
         it "changes the state" do
-          expect { subject }.to change { new_registration.workflow_state }.to("business_type_form")
+          expect { next_state }.to change { new_registration.workflow_state }.to("business_type_form")
         end
 
         it "adds to workflow history" do
-          expect { subject }.to change { new_registration.workflow_history.length }.from(0).to(1)
+          expect { next_state }.to change { new_registration.workflow_history.length }.from(0).to(1)
         end
 
         it "adds the previous state to workflow history" do
-          expect { subject }.to change { new_registration.workflow_history }.to(["location_form"])
+          expect { next_state }.to change { new_registration.workflow_history }.to(["location_form"])
         end
       end
     end
@@ -282,18 +282,18 @@ module WasteCarriersEngine
     describe "#previous_valid_state!" do
       let(:new_registration) { build(:new_registration, :has_required_data) }
 
-      subject { new_registration.previous_valid_state! }
+      subject(:previous_state) { new_registration.previous_valid_state! }
 
       context "with no workflow history" do
         before { new_registration.workflow_history = [] }
         before { new_registration.workflow_state = "location_form" }
 
         it "uses the default state" do
-          expect { subject }.to change { new_registration.workflow_state }.to("start_form")
+          expect { previous_state }.to change { new_registration.workflow_state }.to("start_form")
         end
 
         it "does not modify workflow history" do
-          expect { subject }.not_to change { new_registration.workflow_history }
+          expect { previous_state }.not_to change { new_registration.workflow_history }
         end
       end
 
@@ -301,11 +301,11 @@ module WasteCarriersEngine
         before { new_registration.workflow_history = %w[another_form location_form not_valid] }
 
         it "skips the invalid state" do
-          expect { subject }.to change { new_registration.workflow_state }.to("location_form")
+          expect { previous_state }.to change { new_registration.workflow_state }.to("location_form")
         end
 
         it "deletes multiple items workflow history" do
-          expect { subject }.to change { new_registration.workflow_history.length }.by(-2)
+          expect { previous_state }.to change { new_registration.workflow_history.length }.by(-2)
         end
       end
 
@@ -316,11 +316,11 @@ module WasteCarriersEngine
         end
 
         it "uses the default state" do
-          expect { subject }.to change { new_registration.workflow_state }.to("start_form")
+          expect { previous_state }.to change { new_registration.workflow_state }.to("start_form")
         end
 
         it "deletes all items from workflow history" do
-          expect { subject }.to change { new_registration.workflow_history.length }.to(0)
+          expect { previous_state }.to change { new_registration.workflow_history.length }.to(0)
         end
       end
 
@@ -331,11 +331,11 @@ module WasteCarriersEngine
         end
 
         it "changes the state" do
-          expect { subject }.to change { new_registration.workflow_state }.to("location_form")
+          expect { previous_state }.to change { new_registration.workflow_state }.to("location_form")
         end
 
         it "deletes from workflow history" do
-          expect { subject }.to change { new_registration.workflow_history.length }.by(-1)
+          expect { previous_state }.to change { new_registration.workflow_history.length }.by(-1)
         end
       end
 
@@ -346,11 +346,11 @@ module WasteCarriersEngine
         end
 
         it "skips the duplicated state" do
-          expect { subject }.to change { new_registration.workflow_state }.to("start_form")
+          expect { previous_state }.to change { new_registration.workflow_state }.to("start_form")
         end
 
         it "deletes from workflow history" do
-          expect { subject }.to change { new_registration.workflow_history.length }.to(0)
+          expect { previous_state }.to change { new_registration.workflow_history.length }.to(0)
         end
       end
     end

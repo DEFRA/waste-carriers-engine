@@ -7,7 +7,7 @@ module WasteCarriersEngine
     describe ".run" do
       let(:registration) { create(:registration, :has_required_data) }
 
-      subject { described_class.run(registration: registration) }
+      subject(:run_service) { described_class.run(registration: registration) }
 
       context "with a valid contact email" do
         it "sends a confirmation email" do
@@ -16,7 +16,7 @@ module WasteCarriersEngine
             .with(registration: registration)
             .once
 
-          subject
+          run_service
         end
 
         context "when an error occurs" do
@@ -32,7 +32,7 @@ module WasteCarriersEngine
               .to receive(:notify)
               .with(the_error, { registration_no: registration.reg_identifier })
 
-            subject
+            run_service
           end
         end
       end
@@ -48,7 +48,7 @@ module WasteCarriersEngine
             .with(registration: registration)
             .once
 
-          subject
+          run_service
         end
       end
 
@@ -61,7 +61,7 @@ module WasteCarriersEngine
             .with(registration: registration)
             .once
 
-          subject
+          run_service
         end
       end
     end

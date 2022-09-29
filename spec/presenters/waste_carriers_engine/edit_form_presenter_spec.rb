@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe EditFormPresenter do
-    subject { described_class.new(form, view) }
+    subject(:presenter) { described_class.new(form, view) }
 
     let(:form) { double(:form, transient_registration: transient_registration) }
 
@@ -15,7 +15,7 @@ module WasteCarriersEngine
         it "returns nothing" do
           allow(transient_registration).to receive(:receipt_email)
 
-          expect(subject.receipt_email).to be_nil
+          expect(presenter.receipt_email).to be_nil
         end
       end
 
@@ -24,7 +24,7 @@ module WasteCarriersEngine
         let(:receipt_email) { "foo@example.com" }
 
         it "returns the value in receipt email" do
-          expect(subject.receipt_email).to eq(receipt_email)
+          expect(presenter.receipt_email).to eq(receipt_email)
         end
       end
     end

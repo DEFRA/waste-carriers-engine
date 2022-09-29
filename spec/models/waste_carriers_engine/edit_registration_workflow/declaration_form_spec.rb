@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe EditRegistration do
-    subject { build(:edit_registration, workflow_state: "declaration_form") }
+    subject(:declaration_form) { build(:edit_registration, workflow_state: "declaration_form") }
 
     describe "#workflow_state" do
       context "with :declaration_form state transitions" do
@@ -12,7 +12,7 @@ module WasteCarriersEngine
           include_examples "has next transition", next_state: "edit_complete_form"
 
           context "when the registration has changed business type" do
-            before { subject.registration_type = "carrier_dealer" }
+            before { declaration_form.registration_type = "carrier_dealer" }
 
             include_examples "has next transition", next_state: "edit_payment_summary_form"
           end

@@ -11,8 +11,6 @@ module WasteCarriersEngine
              key_people: [key_person])
     end
 
-    subject { EntityMatchingService.run(transient_registration) }
-
     describe "run" do
       it "creates valid conviction_search_results" do
         expect(ConvictionsCheck::OrganisationMatchService).to receive(:run).with(name: transient_registration.company_name,
@@ -23,7 +21,7 @@ module WasteCarriersEngine
                                                                            date_of_birth: key_person.dob)
                                                                      .and_return(match_result: "YES")
 
-        subject
+        EntityMatchingService.run(transient_registration)
 
         expect(transient_registration.reload.conviction_search_result.match_result).to eq("YES")
         expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("YES")

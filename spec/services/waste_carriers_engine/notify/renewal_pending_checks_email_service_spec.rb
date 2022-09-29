@@ -38,16 +38,16 @@ module WasteCarriersEngine
               .and_call_original
           end
 
-          subject do
+          subject(:run_service) do
             VCR.use_cassette("notify_renewal_pending_checks_sends_an_email") do
               described_class.run(registration: registration)
             end
           end
 
           it "sends an email" do
-            expect(subject).to be_a(Notifications::Client::ResponseNotification)
-            expect(subject.template["id"]).to eq(template_id)
-            expect(subject.content["subject"]).to match(
+            expect(run_service).to be_a(Notifications::Client::ResponseNotification)
+            expect(run_service.template["id"]).to eq(template_id)
+            expect(run_service.content["subject"]).to match(
               /Your application to renew waste carriers registration CBDU\d has been received/
             )
           end

@@ -32,33 +32,33 @@ module WasteCarriersEngine
     describe "#attributes" do
       context "when initialized with an upper tier registration" do
         let(:registration) { build(:registration, :has_required_data, :expires_later) }
-        subject { ExpiryCheckService.new(registration) }
+        subject(:check_service) { ExpiryCheckService.new(registration) }
 
         it ":expiry_date is within 1 hour of the registration's" do
-          expect(subject.expiry_date).to be_within(1.hour).of(registration.expires_on)
+          expect(check_service.expiry_date).to be_within(1.hour).of(registration.expires_on)
         end
       end
 
       context "when the registration was created in BST and expires in GMT" do
-        subject { ExpiryCheckService.new(bst_registration) }
+        subject(:check_service) { ExpiryCheckService.new(bst_registration) }
 
         # Registration is made during British Summer Time (BST)
         # UK local time is 00:30 on 28 March 2017
         # UTC time is 23:30 on 27 March 2017
         # Registration should expire on 28 March 2020
         it ":expiry_date is an hour ahead of the expires_on date to compensate" do
-          expect(subject.expiry_date).to eq(bst_registration.expires_on + 1.hour)
+          expect(check_service.expiry_date).to eq(bst_registration.expires_on + 1.hour)
         end
       end
 
       context "when the registration was created in GMT and expires in BST" do
-        subject { ExpiryCheckService.new(gmt_registration) }
+        subject(:check_service) { ExpiryCheckService.new(gmt_registration) }
 
         # Registration is made during Greenwich Mean Time (GMT).
         # UK local time & UTC are both 23:30 on 27 October 2015
         # Registration should expire on 27 October 2018
         it ":expiry_date is an hour behind the expires_on date to compensate" do
-          expect(subject.expiry_date).to eq(gmt_registration.expires_on - 1.hour)
+          expect(check_service.expiry_date).to eq(gmt_registration.expires_on - 1.hour)
         end
       end
 
@@ -70,10 +70,10 @@ module WasteCarriersEngine
 
       context "when initialized with lower tier registration" do
         let(:registration) { build(:registration, :has_required_data, :lower_tier) }
-        subject { ExpiryCheckService.new(registration) }
+        subject(:check_service) { ExpiryCheckService.new(registration) }
 
         it ":expiry_date is nil" do
-          expect(subject.expiry_date).to eq(nil)
+          expect(check_service.expiry_date).to eq(nil)
         end
       end
     end
@@ -85,10 +85,10 @@ module WasteCarriersEngine
         end
 
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.new(2018, 3, 25)) }
-        subject { ExpiryCheckService.new(registration) }
+        subject(:check_service) { ExpiryCheckService.new(registration) }
 
         it "returns a date of 2017-12-25" do
-          expect(subject.date_can_renew_from).to eq(Date.new(2017, 12, 25))
+          expect(check_service.date_can_renew_from).to eq(Date.new(2017, 12, 25))
         end
       end
     end
@@ -100,10 +100,10 @@ module WasteCarriersEngine
         end
 
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.new(2018, 3, 25)) }
-        subject { ExpiryCheckService.new(registration) }
+        subject(:check_service) { ExpiryCheckService.new(registration) }
 
         it "returns a date of 2021-03-25" do
-          expect(subject.expiry_date_after_renewal).to eq(Date.new(2021, 3, 25))
+          expect(check_service.expiry_date_after_renewal).to eq(Date.new(2021, 3, 25))
         end
       end
     end
@@ -111,46 +111,46 @@ module WasteCarriersEngine
     describe "#expired?" do
       context "when the registration expired yesterday" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.yesterday) }
-        subject { ExpiryCheckService.new(registration) }
+        subject(:check_service) { ExpiryCheckService.new(registration) }
 
         it "is expired" do
-          expect(subject.expired?).to be true
+          expect(check_service.expired?).to be true
         end
       end
 
       context "when the registration expires today" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.today) }
-        subject { ExpiryCheckService.new(registration) }
+        subject(:check_service) { ExpiryCheckService.new(registration) }
 
         it "is expired" do
-          expect(subject.expired?).to be true
+          expect(check_service.expired?).to be true
         end
       end
 
       context "when the registration expires tomorrow" do
         let(:registration) { build(:registration, :has_required_data, expires_on: Date.tomorrow) }
-        subject { ExpiryCheckService.new(registration) }
+        subject(:check_service) { ExpiryCheckService.new(registration) }
 
         it "is not expired" do
-          expect(subject.expired?).to be false
+          expect(check_service.expired?).to be false
         end
       end
 
       context "when the registration was created in BST and expires in GMT" do
-        subject { ExpiryCheckService.new(bst_registration) }
+        subject(:check_service) { ExpiryCheckService.new(bst_registration) }
 
         it "does not expire a day early due to the time difference" do
           # Skip ahead to the end of the last day the reg should be active
           Timecop.freeze(Time.find_zone("London").local(2020, 3, 27, 23, 59)) do
             # GMT is now in effect (not BST)
             # UK local time & UTC are both 23:59 on 27 March 2020
-            expect(subject.expired?).to be false
+            expect(check_service.expired?).to be false
           end
         end
       end
 
       context "when the registration was created in GMT and expires in BST" do
-        subject { ExpiryCheckService.new(gmt_registration) }
+        subject(:check_service) { ExpiryCheckService.new(gmt_registration) }
 
         it "does not expire a day early due to the time difference" do
           # Skip ahead to the end of the last day the reg should be active
@@ -158,7 +158,7 @@ module WasteCarriersEngine
             # BST is now in effect (not GMT)
             # UK local time is 23:59 on 26 October 2018
             # UTC time is 22:59 on 26 October 2018
-            expect(subject.expired?).to be false
+            expect(check_service.expired?).to be false
           end
         end
       end
@@ -172,37 +172,37 @@ module WasteCarriersEngine
 
         context "when the expiry date is 3 months and 2 days from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 2.day) }
-          subject { ExpiryCheckService.new(registration) }
+          subject(:check_service) { ExpiryCheckService.new(registration) }
 
           it "is not in the window" do
-            expect(subject.in_renewal_window?).to be false
+            expect(check_service.in_renewal_window?).to be false
           end
         end
 
         context "when the expiry date is 3 months and 1 day from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now + 1.day) }
-          subject { ExpiryCheckService.new(registration) }
+          subject(:check_service) { ExpiryCheckService.new(registration) }
 
           it "is not in the window" do
-            expect(subject.in_renewal_window?).to be false
+            expect(check_service.in_renewal_window?).to be false
           end
         end
 
         context "when the expiry date is 3 months from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now) }
-          subject { ExpiryCheckService.new(registration) }
+          subject(:check_service) { ExpiryCheckService.new(registration) }
 
           it "is in the window" do
-            expect(subject.in_renewal_window?).to be true
+            expect(check_service.in_renewal_window?).to be true
           end
         end
 
         context "when the expiry date is less than 3 months from today" do
           let(:registration) { build(:registration, :has_required_data, expires_on: 3.months.from_now - 1.day) }
-          subject { ExpiryCheckService.new(registration) }
+          subject(:check_service) { ExpiryCheckService.new(registration) }
 
           it "is in the window" do
-            expect(subject.in_renewal_window?).to be true
+            expect(check_service.in_renewal_window?).to be true
           end
         end
       end
@@ -211,7 +211,7 @@ module WasteCarriersEngine
     describe "#in_expiry_grace_window?" do
       let(:last_day) { Date.current }
       let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
-      subject { ExpiryCheckService.new(registration) }
+      subject(:check_service) { ExpiryCheckService.new(registration) }
 
       before do
         expect(LastDayOfGraceWindowService).to receive(:run).with(registration: registration, ignore_extended_grace_window: false).and_return(last_day)
@@ -221,7 +221,7 @@ module WasteCarriersEngine
         let(:expires_on) { 2.days.from_now }
 
         it "returns false" do
-          expect(subject.in_expiry_grace_window?).to be false
+          expect(check_service.in_expiry_grace_window?).to be false
         end
       end
 
@@ -229,7 +229,7 @@ module WasteCarriersEngine
         let(:expires_on) { Time.now }
 
         it "returns true" do
-          expect(subject.in_expiry_grace_window?).to be true
+          expect(check_service.in_expiry_grace_window?).to be true
         end
       end
 
@@ -240,7 +240,7 @@ module WasteCarriersEngine
           let(:last_day) { 1.day.from_now }
 
           it "returns true" do
-            expect(subject.in_expiry_grace_window?).to be true
+            expect(check_service.in_expiry_grace_window?).to be true
           end
         end
 
@@ -248,7 +248,7 @@ module WasteCarriersEngine
           let(:last_day) { Date.current }
 
           it "returns true" do
-            expect(subject.in_expiry_grace_window?).to be true
+            expect(check_service.in_expiry_grace_window?).to be true
           end
         end
 
@@ -256,7 +256,7 @@ module WasteCarriersEngine
           let(:last_day) { 1.day.ago }
 
           it "returns false" do
-            expect(subject.in_expiry_grace_window?).to be false
+            expect(check_service.in_expiry_grace_window?).to be false
           end
         end
       end

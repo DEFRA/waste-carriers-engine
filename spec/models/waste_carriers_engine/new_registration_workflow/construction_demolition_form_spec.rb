@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe NewRegistration do
-    subject { build(:new_registration, workflow_state: "construction_demolition_form") }
+    subject(:new_registration) { build(:new_registration, workflow_state: "construction_demolition_form") }
 
     describe "#workflow_state" do
       context "with :construction_demolition_form state transitions" do
@@ -21,7 +21,7 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "your_tier_form"
 
             it "updates the tier of the object to LOWER" do
-              expect { subject.next }.to change { subject.tier }.to(WasteCarriersEngine::NewRegistration::LOWER_TIER)
+              expect { new_registration.next }.to change { new_registration.tier }.to(WasteCarriersEngine::NewRegistration::LOWER_TIER)
             end
           end
 
@@ -31,7 +31,7 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "your_tier_form"
 
             it "updates the tier of the object to UPPER" do
-              expect { subject.next }.to change { subject.tier }.to(WasteCarriersEngine::NewRegistration::UPPER_TIER)
+              expect { new_registration.next }.to change { new_registration.tier }.to(WasteCarriersEngine::NewRegistration::UPPER_TIER)
             end
           end
         end

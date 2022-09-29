@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe CertificatePresenter do
-    subject { described_class.new(registration, view) }
+    subject(:presenter) { described_class.new(registration, view) }
 
     include_context "with a sample registration with defaults", :registration do
       let(:registration_type) { "carrier_broker_dealer" }
@@ -14,14 +14,14 @@ module WasteCarriersEngine
 
     describe "calling root model attributes" do
       it "returns the value of the attribute" do
-        expect(subject.company_name).to eq(company_name)
+        expect(presenter.company_name).to eq(company_name)
       end
     end
 
     describe "#entity_display_name" do
       let(:registered_company_name) { Faker::Company.name }
       it "returns legal_entity_name trading as company_name" do
-        expect(subject.entity_display_name).to eq("#{registered_company_name} trading as #{company_name}")
+        expect(presenter.entity_display_name).to eq("#{registered_company_name} trading as #{company_name}")
       end
     end
 
@@ -30,7 +30,7 @@ module WasteCarriersEngine
         let(:tier) { "LOWER" }
 
         it "returns 'false'" do
-          expect(subject.complex_organisation_details?).to be false
+          expect(presenter.complex_organisation_details?).to be false
         end
       end
 
@@ -45,7 +45,7 @@ module WasteCarriersEngine
             let(:business_type) { type.to_s }
 
             it "returns '#{expected}'" do
-              expect(subject.complex_organisation_details?).to eq(expected)
+              expect(presenter.complex_organisation_details?).to eq(expected)
             end
           end
         end
@@ -57,7 +57,7 @@ module WasteCarriersEngine
         let(:tier) { "LOWER" }
 
         it "returns a generic title" do
-          expect(subject.complex_organisation_heading).to eq("Business name (if applicable)")
+          expect(presenter.complex_organisation_heading).to eq("Business name (if applicable)")
         end
       end
 
@@ -66,13 +66,13 @@ module WasteCarriersEngine
           let(:business_type) { "partnership" }
 
           it "returns 'Partners'" do
-            expect(subject.complex_organisation_heading).to eq("Partners")
+            expect(presenter.complex_organisation_heading).to eq("Partners")
           end
         end
 
         context "when the registration business type is NOT 'partnership'" do
           it "returns a generic title" do
-            expect(subject.complex_organisation_heading).to eq("Business name (if applicable)")
+            expect(presenter.complex_organisation_heading).to eq("Business name (if applicable)")
           end
         end
       end
@@ -84,13 +84,13 @@ module WasteCarriersEngine
 
         it "returns a list of the partners names" do
           expected_list = "#{person_a.first_name} #{person_a.last_name}<br>#{person_b.first_name} #{person_b.last_name}"
-          expect(subject.complex_organisation_name).to eq(expected_list)
+          expect(presenter.complex_organisation_name).to eq(expected_list)
         end
       end
 
       context "when the registration business type is NOT 'partnership'" do
         it "returns the company name" do
-          expect(subject.complex_organisation_name).to eq(company_name)
+          expect(presenter.complex_organisation_name).to eq(company_name)
         end
       end
     end
@@ -107,7 +107,7 @@ module WasteCarriersEngine
             let(:registration_type) { type }
 
             it "returns '#{expected}'" do
-              expect(subject.tier_and_registration_type).to eq(expected)
+              expect(presenter.tier_and_registration_type).to eq(expected)
             end
           end
         end
@@ -119,14 +119,14 @@ module WasteCarriersEngine
         expected = "A lower tier waste carrier, broker and dealer"
 
         it "returns 'expected'" do
-          expect(subject.tier_and_registration_type).to eq(expected)
+          expect(presenter.tier_and_registration_type).to eq(expected)
         end
       end
     end
 
     describe "#list_main_people" do
       it "returns a list of names separated by a <br>" do
-        expect(subject.send(:list_main_people)).to eq(
+        expect(presenter.send(:list_main_people)).to eq(
           "#{person_a.first_name} #{person_a.last_name}<br>#{person_b.first_name} #{person_b.last_name}"
         )
       end
@@ -137,13 +137,13 @@ module WasteCarriersEngine
         let(:route) { "ASSISTED_DIGITAL" }
 
         it "returns 'true'" do
-          expect(subject.assisted_digital?).to be true
+          expect(presenter.assisted_digital?).to be true
         end
       end
 
       context "when the registration is not assisted digital" do
         it "returns 'false'" do
-          expect(subject.assisted_digital?).to be false
+          expect(presenter.assisted_digital?).to be false
         end
       end
     end
@@ -153,7 +153,7 @@ module WasteCarriersEngine
         let(:tier) { "LOWER" }
 
         it "returns the correct message" do
-          expect(subject.renewal_message).to eq("Your registration will last indefinitely so does not need to be renewed but you must update your registration details if they change, within 28 days of the change.")
+          expect(presenter.renewal_message).to eq("Your registration will last indefinitely so does not need to be renewed but you must update your registration details if they change, within 28 days of the change.")
         end
       end
 
@@ -164,7 +164,7 @@ module WasteCarriersEngine
           end
 
           it "returns '1 year'" do
-            expect(subject.renewal_message).to eq("Your registration will last 1 year and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change.")
+            expect(presenter.renewal_message).to eq("Your registration will last 1 year and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change.")
           end
         end
 
@@ -174,7 +174,7 @@ module WasteCarriersEngine
           end
 
           it "returns '3 years'" do
-            expect(subject.renewal_message).to eq("Your registration will last 3 years and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change.")
+            expect(presenter.renewal_message).to eq("Your registration will last 3 years and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change.")
           end
         end
       end

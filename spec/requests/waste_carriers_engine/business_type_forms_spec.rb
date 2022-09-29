@@ -37,10 +37,8 @@ module WasteCarriersEngine
           end
 
           context "when the business type is no longer limitedCompany" do
-            subject { post_form_with_params("business_type_form", transient_registration.token, { business_type: "soleTrader" }) }
-
             it "removes the company attributes" do
-              subject
+              post_form_with_params("business_type_form", transient_registration.token, { business_type: "soleTrader" })
               transient_registration.reload
               expect(transient_registration.company_no).to be_nil
               expect(transient_registration.registered_company_name).to be_nil
@@ -49,10 +47,8 @@ module WasteCarriersEngine
           end
 
           context "when the business type is still limitedCompany" do
-            subject { post_form_with_params("business_type_form", transient_registration.token, { business_type: "limitedCompany" }) }
-
             it "does not remove the company attributes" do
-              subject
+              post_form_with_params("business_type_form", transient_registration.token, { business_type: "limitedCompany" })
               transient_registration.reload
               expect(transient_registration.company_no).to eq(company_no)
               expect(transient_registration.registered_company_name).to eq(registered_company_name)

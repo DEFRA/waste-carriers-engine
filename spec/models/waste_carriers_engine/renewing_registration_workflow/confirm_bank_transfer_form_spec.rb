@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
-    subject do
+    subject(:renewing_registration) do
       build(:renewing_registration,
             :has_required_data,
             :has_unpaid_balance,
@@ -19,10 +19,10 @@ module WasteCarriersEngine
           it "sends a confirmation email after the 'next' event" do
             expect(Notify::RenewalPendingPaymentEmailService)
               .to receive(:run)
-              .with(registration: subject)
+              .with(registration: renewing_registration)
               .once
 
-            subject.next!
+              renewing_registration.next!
           end
         end
       end

@@ -93,25 +93,25 @@ module WasteCarriersEngine
         allow(Rails.configuration).to receive(:host).and_return(callback_host)
       end
 
-      subject { govpay_service.payment_callback_url }
+      subject(:callback_url) { govpay_service.payment_callback_url }
 
       context "when the order does not exist" do
 
         before { transient_registration.finance_details.orders = [] }
 
         it "raises an exception" do
-          expect { subject }.to raise_error(StandardError)
+          expect { callback_url }.to raise_error(StandardError)
         end
       end
 
       context "when the order exists" do
 
         it "the callback url includes the base path" do
-          expect(subject).to start_with(callback_host)
+          expect(callback_url).to start_with(callback_host)
         end
 
         it "the callback url includes the payment uuid" do
-          expect(subject).to include(TransientRegistration.first.finance_details.orders.first.payment_uuid)
+          expect(callback_url).to include(TransientRegistration.first.finance_details.orders.first.payment_uuid)
         end
       end
     end

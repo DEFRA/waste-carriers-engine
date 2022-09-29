@@ -37,10 +37,8 @@ module WasteCarriersEngine
           end
 
           context "when the location is no longer in the UK" do
-            subject { post_form_with_params("location_form", transient_registration.token, { location: "overseas" }) }
-
             it "removes the company attributes" do
-              subject
+              post_form_with_params("location_form", transient_registration.token, { location: "overseas" })
               transient_registration.reload
               expect(transient_registration.company_no).to be_nil
               expect(transient_registration.registered_company_name).to be_nil

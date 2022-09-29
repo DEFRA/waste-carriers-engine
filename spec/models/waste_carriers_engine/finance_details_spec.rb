@@ -33,7 +33,7 @@ module WasteCarriersEngine
     describe "zero_difference_balance" do
       let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
-      subject { transient_registration.finance_details }
+      subject(:finance_details) { transient_registration.finance_details }
 
       before do
         transient_registration.finance_details.balance = balance
@@ -43,7 +43,7 @@ module WasteCarriersEngine
         let(:balance) { 0 }
 
         it "returns 0" do
-          expect(subject.zero_difference_balance).to be_zero
+          expect(finance_details.zero_difference_balance).to be_zero
         end
       end
 
@@ -51,7 +51,7 @@ module WasteCarriersEngine
         let(:balance) { -4 }
 
         it "returns the difference from 0 balance" do
-          expect(subject.zero_difference_balance).to eq(4)
+          expect(finance_details.zero_difference_balance).to eq(4)
         end
       end
 
@@ -59,7 +59,7 @@ module WasteCarriersEngine
         let(:balance) { 4 }
 
         it "returns the difference from 0 balance" do
-          expect(subject.zero_difference_balance).to eq(4)
+          expect(finance_details.zero_difference_balance).to eq(4)
         end
       end
     end
@@ -67,7 +67,7 @@ module WasteCarriersEngine
     describe "overpaid_balance" do
       let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
-      subject { transient_registration.finance_details }
+      subject(:finance_details) { transient_registration.finance_details }
 
       before do
         transient_registration.finance_details.balance = balance
@@ -77,7 +77,7 @@ module WasteCarriersEngine
         let(:balance) { 0 }
 
         it "returns 0" do
-          expect(subject.overpaid_balance).to be_zero
+          expect(finance_details.overpaid_balance).to be_zero
         end
       end
 
@@ -85,7 +85,7 @@ module WasteCarriersEngine
         let(:balance) { -4 }
 
         it "returns the balance but in positive" do
-          expect(subject.overpaid_balance).to eq(4)
+          expect(finance_details.overpaid_balance).to eq(4)
         end
       end
 
@@ -93,7 +93,7 @@ module WasteCarriersEngine
         let(:balance) { 4 }
 
         it "returns 0" do
-          expect(subject.overpaid_balance).to be_zero
+          expect(finance_details.overpaid_balance).to be_zero
         end
       end
     end
@@ -101,7 +101,7 @@ module WasteCarriersEngine
     describe "unpaid_balance" do
       let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
-      subject { transient_registration.finance_details }
+      subject(:finance_details) { transient_registration.finance_details }
 
       before do
         transient_registration.finance_details.balance = balance
@@ -111,7 +111,7 @@ module WasteCarriersEngine
         let(:balance) { 0 }
 
         it "returns 0" do
-          expect(subject.unpaid_balance).to be_zero
+          expect(finance_details.unpaid_balance).to be_zero
         end
       end
 
@@ -119,7 +119,7 @@ module WasteCarriersEngine
         let(:balance) { 4 }
 
         it "returns the balance" do
-          expect(subject.unpaid_balance).to eq(4)
+          expect(finance_details.unpaid_balance).to eq(4)
         end
       end
 
@@ -127,7 +127,7 @@ module WasteCarriersEngine
         let(:balance) { -4 }
 
         it "returns 0" do
-          expect(subject.unpaid_balance).to be_zero
+          expect(finance_details.unpaid_balance).to be_zero
         end
       end
     end

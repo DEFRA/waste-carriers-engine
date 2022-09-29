@@ -33,16 +33,16 @@ module WasteCarriersEngine
               .and_call_original
           end
 
-          subject do
+          subject(:run_service) do
             VCR.use_cassette("notify_registration_pending_conviction_check_sends_an_email") do
               described_class.run(registration: registration)
             end
           end
 
           it "sends an email" do
-            expect(subject).to be_a(Notifications::Client::ResponseNotification)
-            expect(subject.template["id"]).to eq(template_id)
-            expect(subject.content["subject"]).to match(
+            expect(run_service).to be_a(Notifications::Client::ResponseNotification)
+            expect(run_service.template["id"]).to eq(template_id)
+            expect(run_service.content["subject"]).to match(
               /Application received for waste carrier registration CBDU/
             )
           end

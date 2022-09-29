@@ -22,33 +22,33 @@ RSpec.describe DefraRubyCompaniesHouse do
   end
 
   describe "#company_name" do
-    subject { described_class.new(company_no).company_name }
+    subject(:company_name_for_number) { described_class.new(company_no).company_name }
 
     context "with an invalid company number" do
       let(:company_no) { invalid_company_no }
       it "raises a standard error" do
-        expect { subject }.to raise_error(StandardError)
+        expect { company_name_for_number }.to raise_error(StandardError)
       end
     end
 
     context "with a valid company number" do
       let(:company_no) { valid_company_no }
       it "returns the company name" do
-        expect(subject).to eq "BOGUS LIMITED"
+        expect(company_name_for_number).to eq "BOGUS LIMITED"
       end
     end
 
     context "with a short company number" do
       let(:company_no) { short_company_no }
       it "returns the company name" do
-        expect(subject).to eq "BOGUS LIMITED"
+        expect(company_name_for_number).to eq "BOGUS LIMITED"
       end
     end
 
     context "when there is a problem with the companies house API" do
       context "when the requests time out" do
         it "raises a standard error" do
-          expect { subject }.to raise_error(StandardError)
+          expect { company_name_for_number }.to raise_error(StandardError)
         end
       end
 
@@ -56,33 +56,33 @@ RSpec.describe DefraRubyCompaniesHouse do
         before { stub_request(:get, /#{Rails.configuration.companies_house_host}*/).to_raise(SocketError) }
 
         it "raises an exception" do
-          expect { subject.status }.to raise_error(StandardError)
+          expect { company_name_for_number }.to raise_error(StandardError)
         end
       end
     end
   end
 
   describe "#registered_office_address_lines" do
-    subject { described_class.new(company_no).registered_office_address_lines }
+    subject(:address_for_company_number) { described_class.new(company_no).registered_office_address_lines }
 
     context "with an invalid company number" do
       let(:company_no) { invalid_company_no }
       it "raises a standard error" do
-        expect { subject }.to raise_error(StandardError)
+        expect { address_for_company_number }.to raise_error(StandardError)
       end
     end
 
     context "with a valid company number" do
       let(:company_no) { valid_company_no }
       it "returns the address lines" do
-        expect(subject).to eq ["R House", "Middle Street", "Thereabouts", "HD1 2BN"]
+        expect(address_for_company_number).to eq ["R House", "Middle Street", "Thereabouts", "HD1 2BN"]
       end
     end
 
     context "with a short company number" do
       let(:company_no) { short_company_no }
       it "returns the address lines" do
-        expect(subject).to eq ["R House", "Middle Street", "Thereabouts", "HD1 2BN"]
+        expect(address_for_company_number).to eq ["R House", "Middle Street", "Thereabouts", "HD1 2BN"]
       end
     end
   end

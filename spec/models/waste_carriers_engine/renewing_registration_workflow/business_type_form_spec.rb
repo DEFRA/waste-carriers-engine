@@ -4,11 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
-    subject do
-      build(:renewing_registration,
-            :has_required_data,
-            workflow_state: "business_type_form")
-    end
+    subject(:renewing_registration) {  build(:renewing_registration, :has_required_data, workflow_state: "business_type_form") }
 
     describe "#workflow_state" do
       context "with :business_type_form state transitions" do
@@ -35,10 +31,10 @@ module WasteCarriersEngine
             context "when the old type is #{old_type} and the new type is #{new_type}" do
               before do
                 # Update original business_type
-                registration = Registration.where(reg_identifier: subject.reg_identifier).first
+                registration = Registration.where(reg_identifier: renewing_registration.reg_identifier).first
                 registration.update_attributes(business_type: old_type)
                 # Update new business_type
-                subject.business_type = new_type
+                renewing_registration.business_type = new_type
               end
 
               include_examples "has next transition", next_state: expected_next_state

@@ -42,7 +42,7 @@ module WasteCarriersEngine
           end
 
           let(:cassette_name) { "notify_upper_tier_ad_renewal_confirmation_letter_business_name" }
-          subject do
+          subject(:run_service) do
             VCR.use_cassette(cassette_name) do
               described_class.run(registration: registration)
             end
@@ -56,10 +56,10 @@ module WasteCarriersEngine
           end
 
           it "sends a letter" do
-            expect(subject).to be_a(Notifications::Client::ResponseNotification)
-            expect(subject.template["id"]).to eq(template_id)
-            expect(subject.reference).to match(/CBDU*/)
-            expect(subject.content["subject"]).to eq(
+            expect(run_service).to be_a(Notifications::Client::ResponseNotification)
+            expect(run_service.template["id"]).to eq(template_id)
+            expect(run_service.reference).to match(/CBDU*/)
+            expect(run_service.content["subject"]).to eq(
               "Your registration as an upper tier carrier, broker and dealer has been renewed"
             )
           end
@@ -69,7 +69,7 @@ module WasteCarriersEngine
             let(:cassette_name) { "notify_upper_tier_ad_renewal_confirmation_letter_business_name" }
 
             it "includes only the business name" do
-              expect(subject.content["body"]).to match(company_name_regex)
+              expect(run_service.content["body"]).to match(company_name_regex)
             end
           end
 
@@ -87,7 +87,7 @@ module WasteCarriersEngine
               end
 
               it "includes only the business name" do
-                expect(subject.content["body"]).to match(company_name_regex)
+                expect(run_service.content["body"]).to match(company_name_regex)
               end
             end
 
@@ -96,7 +96,7 @@ module WasteCarriersEngine
               let(:cassette_name) { "notify_upper_tier_ad_renewal_confirmation_letter_registered_and_business_name" }
 
               it "includes the presentation name" do
-                expect(subject.content["body"]).to match(company_name_regex)
+                expect(run_service.content["body"]).to match(company_name_regex)
               end
             end
           end

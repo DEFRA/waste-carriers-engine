@@ -26,14 +26,10 @@ module WasteCarriersEngine
                  name: "quuz")
         end
 
-        subject do
-          described_class.run(first_name: first_name,
-                              last_name: last_name,
-                              date_of_birth: date_of_birth)
-        end
+        subject(:run_match_service) { described_class.run(first_name: first_name, last_name: last_name, date_of_birth: date_of_birth) }
 
         it "does not explode" do
-          expect { subject }.not_to raise_error
+          expect { run_match_service }.not_to raise_error
         end
 
         it "checks for matching entities" do
@@ -42,7 +38,7 @@ module WasteCarriersEngine
                                                            date_of_birth: date_of_birth)
                                                      .and_return([entity_a])
 
-          subject
+          run_match_service
         end
 
         context "when there are matches" do
@@ -60,7 +56,7 @@ module WasteCarriersEngine
               matched_name: entity_a.name
             }
 
-            expect(subject).to eq(data)
+            expect(run_match_service).to eq(data)
           end
         end
 
@@ -76,7 +72,7 @@ module WasteCarriersEngine
               match_result: "NO"
             }
 
-            expect(subject).to eq(data)
+            expect(run_match_service).to eq(data)
           end
         end
 
@@ -93,7 +89,7 @@ module WasteCarriersEngine
               matching_system: "ERROR"
             }
 
-            expect(subject).to eq(data)
+            expect(run_match_service).to eq(data)
           end
         end
       end

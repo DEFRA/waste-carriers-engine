@@ -15,21 +15,21 @@ end
 module WasteCarriersEngine
   RSpec.describe OptionalEmailValidator do
 
-    subject { Test::OptionalEmailValidatable.new }
+    subject(:validatable) { Test::OptionalEmailValidatable.new }
 
     before do
-      allow(subject).to receive(:contact_email).and_return(contact_email)
+      allow(validatable).to receive(:contact_email).and_return(contact_email)
     end
 
     shared_examples "is valid" do
       it "passes the validity check" do
-        expect(subject).to be_valid
+        expect(validatable).to be_valid
       end
     end
 
     shared_examples "is not valid" do
       it "does not pass the validity check" do
-        expect(subject).not_to be_valid
+        expect(validatable).not_to be_valid
       end
     end
 
