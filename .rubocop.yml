@@ -4,3 +4,13 @@ inherit_gem:
 require: rubocop-rspec
 Style/OpenStructUse:
   Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/VerifiedDoubles:
+  Enabled: false
+RSpec/RepeatedExampleGroupBody:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
