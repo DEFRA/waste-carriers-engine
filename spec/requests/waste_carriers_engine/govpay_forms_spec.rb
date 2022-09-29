@@ -240,53 +240,49 @@ module WasteCarriersEngine
 
           context "with unsuccessful govpay statuses" do
 
-            RSpec.shared_examples "payment is unsuccessful" do
+            RSpec.shared_examples "payment is unsuccessful but no error" do
 
-              context "when the payment uuid is valid" do
-                it "redirects to payment_summary_form" do
-                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
+              it "redirects to payment_summary_form" do
+                get payment_callback_govpay_forms_path(token, order.payment_uuid)
 
-                  expect(response).to redirect_to(new_payment_summary_form_path(token))
-                end
-
-                it "logs an error" do
-                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
-
-                  expect(Airbrake).to have_received(:notify)
-                end
+                expect(response).to redirect_to(new_payment_summary_form_path(token))
               end
 
-              context "when the payment uuid is invalid" do
-                it "redirects to payment_summary_form" do
-                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
+              it "does not log an error" do
+                expect(Airbrake).not_to receive(:notify)
 
-                  expect(response).to redirect_to(new_payment_summary_form_path(token))
-                end
+                get payment_callback_govpay_forms_path(token, order.payment_uuid)
+              end
+            end
 
-                it "logs an error" do
-                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
+            RSpec.shared_examples "payment is unsuccessful with an error" do
 
-                  expect(Airbrake).to have_received(:notify)
-                end
+              it "redirects to payment_summary_form" do
+                get payment_callback_govpay_forms_path(token, order.payment_uuid)
+
+                expect(response).to redirect_to(new_payment_summary_form_path(token))
+              end
+
+              it "logs an error" do
+                expect(Airbrake).to receive(:notify)
+
+                get payment_callback_govpay_forms_path(token, order.payment_uuid)
               end
             end
 
             context "with cancelled status" do
               let(:govpay_status) { "cancelled" }
-
-              it_behaves_like "payment is unsuccessful"
+              it_behaves_like "payment is unsuccessful but no error"
             end
 
             context "with failure status" do
               let(:govpay_status) { "failure" }
-
-              it_behaves_like "payment is unsuccessful"
+              it_behaves_like "payment is unsuccessful but no error"
             end
 
             context "with an error status" do
               let(:govpay_status) { "not_found" }
-
-              it_behaves_like "payment is unsuccessful"
+              it_behaves_like "payment is unsuccessful with an error"
             end
           end
 
@@ -294,16 +290,14 @@ module WasteCarriersEngine
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "success" }
-
-            it_behaves_like "payment is unsuccessful"
+            it_behaves_like "payment is unsuccessful with an error"
           end
 
           context "with an invalid failure status" do
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
             let(:govpay_status) { "cancelled" }
-
-            it_behaves_like "payment is unsuccessful"
+            it_behaves_like "payment is unsuccessful with an error"
           end
         end
       end
