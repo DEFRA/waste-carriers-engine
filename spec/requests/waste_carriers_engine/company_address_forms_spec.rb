@@ -43,7 +43,7 @@ module WasteCarriersEngine
               post company_address_forms_path(transient_registration.token), params: { company_address_form: valid_params }
 
               expect(transient_registration.reload.company_address.uprn.to_s).to eq("340116")
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
             end
 
             context "when the registration is upper tier" do
@@ -90,7 +90,7 @@ module WasteCarriersEngine
             it "returns a 302 response" do
               post company_address_forms_path("foo"), params: { company_address_form: {} }
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
             end
           end
         end
@@ -114,7 +114,7 @@ module WasteCarriersEngine
             post company_address_forms_path(transient_registration.token), params: { company_address_form: valid_params }
 
             expect(transient_registration.reload.addresses.count).to eq(0)
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end
@@ -142,7 +142,7 @@ module WasteCarriersEngine
             it "returns a 302 response and redirects to the company_address_manual form" do
               get skip_to_manual_address_company_address_forms_path(transient_registration[:token])
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:token]))
             end
           end
@@ -161,7 +161,7 @@ module WasteCarriersEngine
             it "returns a 302 response and redirects to the correct form for the state" do
               get skip_to_manual_address_company_address_forms_path(transient_registration[:token])
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end

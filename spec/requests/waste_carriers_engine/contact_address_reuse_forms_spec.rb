@@ -8,9 +8,9 @@ module WasteCarriersEngine
       sign_in(user)
     end
 
-    include_examples "GET flexible form", "contact_address_reuse_form"
-
     let(:user) { create(:user) }
+
+    include_examples "GET flexible form", "contact_address_reuse_form"
 
     RSpec.shared_examples "new or renewing registration" do
 
@@ -27,7 +27,7 @@ module WasteCarriersEngine
             { temp_reuse_registered_address: "yes" }
           )
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
 
           expect(response).to redirect_to(
             new_check_your_answers_form_path(transient_registration.token)
@@ -43,7 +43,7 @@ module WasteCarriersEngine
             { temp_reuse_registered_address: "no" }
           )
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
 
           expect(response).to redirect_to(
             new_contact_postcode_form_path(transient_registration.token)

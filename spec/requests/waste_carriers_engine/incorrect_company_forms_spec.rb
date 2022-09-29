@@ -14,7 +14,7 @@ module WasteCarriersEngine
       it "redirects to registeration_number_form" do
         post_form_with_params(:incorrect_company_form, transient_registration.token)
 
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(new_registration_number_form_path(transient_registration.token))
       end
     end

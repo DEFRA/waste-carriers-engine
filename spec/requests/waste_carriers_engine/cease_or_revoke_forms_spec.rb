@@ -79,7 +79,7 @@ module WasteCarriersEngine
         it "returns a 302 response and redirects to the sign in page" do
           get new_cease_or_revoke_form_path("foo")
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(new_user_session_path)
         end
       end
@@ -121,7 +121,7 @@ module WasteCarriersEngine
           context "when valid params are submitted" do
             let(:valid_params) { { token: registration.reg_identifier, metaData: { status: "REVOKED", revoked_reason: "Some reason" } } }
 
-            it "creates a transient registration with correct data, returns a 302 response and redirects to the " do
+            it "creates a transient registration with correct data, returns a 302 response and redirects to the ceased_or_revoked_form" do
               expected_tr_count = CeasedOrRevokedRegistration.count + 1
 
               post cease_or_revoke_forms_path(registration.reg_identifier), params: { cease_or_revoke_form: valid_params }
@@ -132,7 +132,7 @@ module WasteCarriersEngine
               expect(transient_registration.metaData.status).to eq("REVOKED")
               expect(transient_registration.metaData.revoked_reason).to eq("Some reason")
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_ceased_or_revoked_confirm_form_path(transient_registration.token))
             end
           end
@@ -143,7 +143,7 @@ module WasteCarriersEngine
             it "returns a 200 response and render the new form" do
               post cease_or_revoke_forms_path(registration.reg_identifier), params: { cease_or_revoke_form: invalid_params }
 
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
               expect(response).to render_template("waste_carriers_engine/cease_or_revoke_forms/new")
             end
           end
@@ -165,7 +165,7 @@ module WasteCarriersEngine
           post cease_or_revoke_forms_path(registration.reg_identifier), params: { renewal_start_form: valid_params }
 
           expect(response).to redirect_to(new_user_session_path)
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(CeasedOrRevokedRegistration.count).to eq(original_tr_count)
         end
       end

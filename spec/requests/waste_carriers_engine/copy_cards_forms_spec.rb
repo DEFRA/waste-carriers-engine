@@ -79,7 +79,7 @@ module WasteCarriersEngine
         it "returns a 302 response and redirects to the sign in page" do
           get new_copy_cards_form_path("foo")
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(new_user_session_path)
         end
       end
@@ -130,7 +130,7 @@ module WasteCarriersEngine
 
               expect(expected_tr_count).to eq(OrderCopyCardsRegistration.count)
               expect(transient_registration.temp_cards).to eq(3)
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_copy_cards_payment_form_path(transient_registration.token))
             end
           end
@@ -141,7 +141,7 @@ module WasteCarriersEngine
             it "returns a 200 response and render the new copy cards form" do
               post copy_cards_forms_path(registration.reg_identifier), params: { copy_cards_form: invalid_params }
 
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
               expect(response).to render_template("waste_carriers_engine/copy_cards_forms/new")
             end
           end
@@ -163,7 +163,7 @@ module WasteCarriersEngine
           post copy_cards_forms_path(registration.reg_identifier), params: { renewal_start_form: valid_params }
 
           expect(response).to redirect_to(new_user_session_path)
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(OrderCopyCardsRegistration.count).to eq(original_tr_count)
         end
       end

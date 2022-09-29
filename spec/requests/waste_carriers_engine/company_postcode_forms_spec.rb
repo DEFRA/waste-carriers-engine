@@ -38,7 +38,7 @@ module WasteCarriersEngine
               post company_postcode_forms_path(transient_registration.token), params: { company_postcode_form: valid_params }
 
               expect(transient_registration.reload[:temp_company_postcode]).to eq(valid_params[:temp_company_postcode])
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_company_address_form_path(transient_registration[:token]))
             end
 
@@ -77,7 +77,7 @@ module WasteCarriersEngine
             post company_postcode_forms_path(transient_registration.token), params: { company_postcode_form: valid_params }
 
             expect(transient_registration.reload[:temp_company_postcode]).not_to eq(valid_params[:temp_company_postcode])
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end
@@ -105,7 +105,7 @@ module WasteCarriersEngine
             it "returns a 302 response and redirects to the company_address_manual form" do
               get skip_to_manual_address_company_postcode_forms_path(transient_registration[:token])
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_company_address_manual_form_path(transient_registration[:token]))
             end
           end
@@ -124,7 +124,7 @@ module WasteCarriersEngine
             it "returns a 302 response and redirects to the correct form for the state" do
               get skip_to_manual_address_company_postcode_forms_path(transient_registration[:token])
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
             end
           end

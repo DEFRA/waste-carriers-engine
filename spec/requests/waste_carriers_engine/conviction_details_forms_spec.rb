@@ -42,7 +42,7 @@ module WasteCarriersEngine
               expect(transient_registration.reload.key_people.count).to eq(total_people_count + 1)
               expect(transient_registration.reload.key_people.last.position).to eq(valid_params[:position])
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_contact_name_form_path(transient_registration[:token]))
             end
 
@@ -182,7 +182,7 @@ module WasteCarriersEngine
             post conviction_details_forms_path(transient_registration.token), params: { conviction_details_form: valid_params }
 
             expect(transient_registration.reload.key_people).not_to exist
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end
@@ -225,7 +225,7 @@ module WasteCarriersEngine
                 # Does not affect other people
                 expect(transient_registration.reload.key_people.where(id: relevant_person_b[:id]).count).to eq(1)
 
-                expect(response).to have_http_status(302)
+                expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_conviction_details_form_path(transient_registration[:token]))
               end
             end

@@ -405,6 +405,8 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
   end
 
   describe "#legal_entity_name" do
+    subject { resource.legal_entity_name }
+
     let(:person_a) { build(:key_person, :main, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
     let(:key_people) { [person_a] }
     let(:registered_company_name) { nil }
@@ -417,8 +419,6 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
             registered_company_name: registered_company_name,
             key_people: key_people)
     end
-
-    subject { resource.legal_entity_name }
 
     shared_examples "returns registered_company_name" do
       it "returns the registered company name" do
@@ -494,12 +494,12 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
   end
 
   describe "#company_name_required?" do
+    subject { resource.company_name_required? }
+
     let(:registered_company_name) { nil }
     let(:resource) do
       build(factory, business_type: business_type, tier: tier, registered_company_name: registered_company_name)
     end
-
-    subject { resource.company_name_required? }
 
     shared_examples "it is required for lower tier only" do
       context "with an upper tier registration" do

@@ -40,7 +40,7 @@ module WasteCarriersEngine
 
               expect(transient_registration.reload.key_people.count).to eq(key_people_count + 1)
               expect(transient_registration.reload.key_people.last.first_name).to eq(valid_params[:first_name])
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_use_trading_name_form_path(transient_registration[:token]))
             end
 
@@ -204,7 +204,7 @@ module WasteCarriersEngine
             post main_people_forms_path(transient_registration.token), params: { main_people_form: valid_params }
 
             expect(transient_registration.reload.key_people).not_to exist
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end
@@ -247,7 +247,7 @@ module WasteCarriersEngine
                 # Does not affect other people
                 expect(transient_registration.reload.key_people.where(id: main_person_b[:id]).count).to eq(1)
 
-                expect(response).to have_http_status(302)
+                expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_main_people_form_path(transient_registration[:token]))
               end
             end

@@ -11,9 +11,9 @@ module Test
     attr_reader :business_type
     attr_reader :tier
 
-    def company_name_required?; true; end
+    def company_name_required? = true
 
-    def temp_use_trading_name; "no"; end
+    def temp_use_trading_name = "no"
 
     validates_with WasteCarriersEngine::CompanyNameValidator, attributes: [:company_name]
   end

@@ -8,7 +8,7 @@ module WasteCarriersEngine
       it "displays the correct page" do
         get page_path(page)
 
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
         expect(response).to render_template(page)
       end
     end

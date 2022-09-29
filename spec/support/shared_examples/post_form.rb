@@ -18,7 +18,7 @@ RSpec.shared_examples "POST form" do |form, options|
       transient_registration.reload
 
       expect(transient_registration.workflow_state).not_to eq(state_before_request)
-      expect(response).to have_http_status(302)
+      expect(response).to have_http_status(:found)
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.shared_examples "POST form" do |form, options|
       transient_registration.reload
 
       expect(transient_registration.workflow_state).to eq(state_before_request)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(response).to render_template("#{form}s/new")
     end
   end

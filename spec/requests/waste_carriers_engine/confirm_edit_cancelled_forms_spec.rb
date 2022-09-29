@@ -29,7 +29,7 @@ module WasteCarriersEngine
           it "returns a 200 status" do
             get new_confirm_edit_cancelled_form_path(transient_registration.token)
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
           end
         end
       end

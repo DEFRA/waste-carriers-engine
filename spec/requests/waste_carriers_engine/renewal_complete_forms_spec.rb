@@ -36,7 +36,7 @@ module WasteCarriersEngine
 
               get new_renewal_complete_form_path(transient_registration.token)
 
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
               expect(registration.reload.expires_on).not_to eq(old_expires_on)
             end
           end

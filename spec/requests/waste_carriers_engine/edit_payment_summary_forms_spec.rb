@@ -92,7 +92,7 @@ module WasteCarriersEngine
                 edit_registration.reload
 
                 expect(edit_registration.temp_payment_method).to eq("card")
-                expect(response).to have_http_status(302)
+                expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_worldpay_form_path(edit_registration.token))
               end
             end
@@ -106,7 +106,7 @@ module WasteCarriersEngine
                 edit_registration.reload
 
                 expect(edit_registration.temp_payment_method).to eq("bank_transfer")
-                expect(response).to have_http_status(302)
+                expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_edit_bank_transfer_form_path(edit_registration.token))
               end
             end
@@ -118,7 +118,7 @@ module WasteCarriersEngine
             it "returns a 200 response and render the new copy cards form" do
               post edit_payment_summary_forms_path(token: edit_registration.token), params: { edit_payment_summary_form: invalid_params }
 
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
               expect(response).to render_template("waste_carriers_engine/edit_payment_summary_forms/new")
             end
           end

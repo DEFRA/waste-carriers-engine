@@ -68,7 +68,7 @@ module WasteCarriersEngine
               # Delete the transient registration
               expect(WasteCarriersEngine::TransientRegistration.count).to eq(0)
 
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
             end
 
             context "when there is a change in registration type" do

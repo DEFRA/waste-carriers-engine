@@ -40,7 +40,7 @@ module WasteCarriersEngine
         it "returns a 302 response and redirects to the invalid page" do
           get new_copy_cards_payment_form_path("foo")
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(page_path("invalid"))
         end
       end
@@ -80,7 +80,7 @@ module WasteCarriersEngine
                 order_copy_cards_registration.reload
 
                 expect(order_copy_cards_registration.temp_payment_method).to eq("card")
-                expect(response).to have_http_status(302)
+                expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_worldpay_form_path(order_copy_cards_registration.token))
               end
             end
@@ -94,7 +94,7 @@ module WasteCarriersEngine
                 order_copy_cards_registration.reload
 
                 expect(order_copy_cards_registration.temp_payment_method).to eq("bank_transfer")
-                expect(response).to have_http_status(302)
+                expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_copy_cards_bank_transfer_form_path(order_copy_cards_registration.token))
               end
             end
@@ -106,7 +106,7 @@ module WasteCarriersEngine
             it "returns a 200 response and render the new copy cards form" do
               post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), params: { copy_cards_payment_form: invalid_params }
 
-              expect(response).to have_http_status(200)
+              expect(response).to have_http_status(:ok)
               expect(response).to render_template("waste_carriers_engine/copy_cards_payment_forms/new")
             end
           end
@@ -122,7 +122,7 @@ module WasteCarriersEngine
         it "returns a 302 response and redirects to an invalid page" do
           post copy_cards_payment_forms_path(token: "1234")
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(page_path("invalid"))
         end
       end

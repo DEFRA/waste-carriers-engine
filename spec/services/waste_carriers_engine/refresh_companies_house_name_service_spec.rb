@@ -5,6 +5,8 @@ require "defra_ruby_companies_house"
 
 RSpec.describe WasteCarriersEngine::RefreshCompaniesHouseNameService do
 
+  subject(:run_service) { described_class.run(reg_identifier: reg_identifier) }
+
   let(:new_registered_name) { Faker::Company.name }
   let(:registration) { create(:registration, :has_required_data, registered_company_name: old_registered_name) }
   let(:reg_identifier) { registration.reg_identifier }
@@ -16,8 +18,6 @@ RSpec.describe WasteCarriersEngine::RefreshCompaniesHouseNameService do
     allow(drch_instance).to receive(:load_company).and_return(true)
     allow(drch_instance).to receive(:company_name).and_return(companies_house_name)
   end
-
-  subject(:run_service) { described_class.run(reg_identifier: reg_identifier) }
 
   context "with no previous companies house name" do
     let(:old_registered_name) { nil }

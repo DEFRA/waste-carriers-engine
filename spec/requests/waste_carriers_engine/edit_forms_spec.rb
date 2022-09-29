@@ -72,7 +72,7 @@ module WasteCarriersEngine
         it "returns a 302 response and redirects to the sign in page" do
           get new_edit_form_path("foo")
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(new_user_session_path)
         end
       end
@@ -119,7 +119,7 @@ module WasteCarriersEngine
             transient_registration = EditRegistration.find_by(reg_identifier: registration.reg_identifier)
 
             expect(expected_tr_count).to eq(EditRegistration.count)
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_declaration_form_path(transient_registration.token))
           end
         end
@@ -133,7 +133,7 @@ module WasteCarriersEngine
             post edit_forms_path(edit_registration.reg_identifier)
 
             expect(expected_tr_count).to eq(EditRegistration.count)
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_declaration_form_path(edit_registration.token))
           end
         end
@@ -153,7 +153,7 @@ module WasteCarriersEngine
           post edit_forms_path(registration.reg_identifier)
 
           expect(response).to redirect_to(new_user_session_path)
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(EditRegistration.count).to eq(original_tr_count)
         end
       end
@@ -250,7 +250,7 @@ module WasteCarriersEngine
             get cbd_type_edit_forms_path(token)
 
             expect(response).to redirect_to("/pages/permission")
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(edit_registration.reload.workflow_state).to eq(original_state)
           end
         end
@@ -267,7 +267,7 @@ module WasteCarriersEngine
               get cbd_type_edit_forms_path(token)
 
               expect(response).to redirect_to("/pages/permission")
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(EditRegistration.count).to eq(original_tr_count)
             end
           end
@@ -288,7 +288,7 @@ module WasteCarriersEngine
             get cbd_type_edit_forms_path(token)
 
             expect(response).to redirect_to(new_user_session_path)
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(EditRegistration.count).to eq(original_tr_count)
           end
         end
@@ -299,7 +299,7 @@ module WasteCarriersEngine
             get cbd_type_edit_forms_path(token)
 
             expect(response).to redirect_to(new_user_session_path)
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(edit_registration.reload.workflow_state).to eq(original_state)
           end
         end

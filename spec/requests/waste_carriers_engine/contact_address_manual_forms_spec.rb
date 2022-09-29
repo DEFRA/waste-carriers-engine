@@ -38,7 +38,7 @@ module WasteCarriersEngine
               post contact_address_manual_forms_path(transient_registration.token), params: { contact_address_manual_form: valid_params }
 
               expect(transient_registration.reload.contact_address.house_number).to eq("42")
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:token]))
             end
 
@@ -90,7 +90,7 @@ module WasteCarriersEngine
             post contact_address_forms_path(transient_registration.token), params: { contact_address_form: valid_params }
 
             expect(transient_registration.reload.addresses.count).to eq(0)
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end

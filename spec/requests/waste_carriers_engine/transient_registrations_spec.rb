@@ -22,7 +22,7 @@ module WasteCarriersEngine
 
             get delete_transient_registration_path(transient_registration[:token])
 
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(redirect_path)
             expect(TransientRegistration.count).to eq(expected_count)
           end
@@ -33,7 +33,7 @@ module WasteCarriersEngine
         it "returns a 302 status and redirects to the login page" do
           get delete_transient_registration_path("foo")
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to("/users/sign_in")
         end
       end
@@ -54,7 +54,7 @@ module WasteCarriersEngine
         it "returns a 302 response" do
           get go_back_forms_path(transient_registration[:token])
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
         end
 
         it "redirects to the previous form in the workflow_history" do

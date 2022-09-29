@@ -13,7 +13,7 @@ module WasteCarriersEngine
 
           get renew_path(token: registration.renew_token)
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(WasteCarriersEngine::RenewingRegistration.count).to eq(expected_count)
 
           transient_registration = registration.renewal
@@ -35,7 +35,7 @@ module WasteCarriersEngine
 
             get renew_path(token: registration.renew_token)
 
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(WasteCarriersEngine::RenewingRegistration.count).to eq(expected_count)
             expect(response).to redirect_to(new_business_type_form_path(transient_registration.token))
           end
@@ -56,7 +56,7 @@ module WasteCarriersEngine
 
             get renew_path(token: registration.renew_token)
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
             expect(response).to render_template(:already_renewed)
           end
         end
@@ -71,7 +71,7 @@ module WasteCarriersEngine
 
             get renew_path(token: registration.renew_token)
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
             expect(response).to render_template(:past_renewal_window)
           end
         end
@@ -81,7 +81,7 @@ module WasteCarriersEngine
         it "returns a 404 response code and the correct template" do
           get renew_path(token: "FooBarBaz")
 
-          expect(response).to have_http_status(404)
+          expect(response).to have_http_status(:not_found)
           expect(response).to render_template(:invalid_magic_link)
         end
       end

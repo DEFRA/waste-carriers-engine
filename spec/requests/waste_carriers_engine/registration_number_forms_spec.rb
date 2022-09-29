@@ -35,7 +35,7 @@ module WasteCarriersEngine
             it "returns a 302 response and redirects to the check_registered_company_name form" do
               post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
 
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
             end
           end
@@ -64,7 +64,7 @@ module WasteCarriersEngine
             post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
 
             expect(transient_registration.reload[:company_no].to_s).not_to eq(valid_params[:company_no])
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
           end
         end

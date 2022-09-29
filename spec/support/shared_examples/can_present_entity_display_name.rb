@@ -2,13 +2,13 @@
 
 RSpec.shared_examples "Can present entity display name" do |factory:|
 
+  subject { registration.entity_display_name }
+
   include_context "with a sample registration with defaults", factory
   let(:registration) { resource }
 
   let(:upper_tier) { WasteCarriersEngine::Registration::UPPER_TIER }
   let(:lower_tier) { WasteCarriersEngine::Registration::LOWER_TIER }
-
-  subject { registration.entity_display_name }
 
   shared_examples "legal_entity_name trading as trading_as_name" do
     it "returns entity name trading as company_name with truncation" do

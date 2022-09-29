@@ -33,7 +33,7 @@ module WasteCarriersEngine
 
               it "returns a success response" do
                 get new_renewal_start_form_path(registration.reg_identifier)
-                expect(response).to have_http_status(200)
+                expect(response).to have_http_status(:ok)
               end
 
               context "when the registration cannot be renewed" do
@@ -57,7 +57,7 @@ module WasteCarriersEngine
 
                 it "returns a success response" do
                   get new_renewal_start_form_path(transient_registration[:token])
-                  expect(response).to have_http_status(200)
+                  expect(response).to have_http_status(:ok)
                 end
               end
 
@@ -154,7 +154,7 @@ module WasteCarriersEngine
         it "returns a 302 response and redirects to the sign in page" do
           get new_renewal_start_form_path("foo")
 
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(new_user_session_path)
         end
       end
@@ -225,7 +225,7 @@ module WasteCarriersEngine
                   expect(transient_registration.reg_identifier).to eq(registration.reg_identifier)
                   expect(transient_registration.company_name).to eq(registration.company_name)
 
-                  expect(response).to have_http_status(302)
+                  expect(response).to have_http_status(:found)
                   expect(response).to redirect_to(new_location_form_path(transient_registration.token))
                 end
 
@@ -259,7 +259,7 @@ module WasteCarriersEngine
               post renewal_start_forms_path(valid_renewal)
 
               expect(RenewingRegistration.count).to eq(original_tr_count)
-              expect(response).to have_http_status(302)
+              expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_location_form_path(valid_renewal))
             end
 
@@ -279,7 +279,7 @@ module WasteCarriersEngine
                 post renewal_start_forms_path(valid_renewal)
 
                 expect(RenewingRegistration.count).to eq(original_tr_count)
-                expect(response).to have_http_status(302)
+                expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_other_businesses_form_path(valid_renewal))
               end
             end
@@ -334,7 +334,7 @@ module WasteCarriersEngine
           post renewal_start_forms_path(valid_registration)
 
           expect(RenewingRegistration.count).to eq(original_tr_count)
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(new_user_session_path)
         end
       end

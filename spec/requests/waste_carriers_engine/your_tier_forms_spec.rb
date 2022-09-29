@@ -11,7 +11,7 @@ module WasteCarriersEngine
         get new_your_tier_form_path(token: new_registration.token)
 
         expect(response).to render_template(:new)
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
     end
 

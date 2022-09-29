@@ -54,7 +54,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
             post_form_with_params(form, transient_registration.token, valid_params)
             expect(transient_registration.reload[test_attribute]).to eq(expected_value)
             expect(transient_registration.reload[:workflow_state]).not_to eq(state_before_request)
-            expect(response).to have_http_status(302)
+            expect(response).to have_http_status(:found)
           end
         end
 
