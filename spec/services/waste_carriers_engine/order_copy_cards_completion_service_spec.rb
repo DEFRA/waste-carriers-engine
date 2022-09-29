@@ -70,7 +70,7 @@ module WasteCarriersEngine
         end
 
         it "does not create an order item log" do
-          expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
+          expect { described_class.run(transient_registration) }.not_to change(OrderItemLog, :count).from(0)
         end
       end
 
@@ -88,7 +88,7 @@ module WasteCarriersEngine
         end
 
         it "creates one or more order item logs" do
-          expect { described_class.run(transient_registration) }.to change { OrderItemLog.count }.from(0)
+          expect { described_class.run(transient_registration) }.to change(OrderItemLog, :count).from(0)
         end
 
         it "creates order item logs with activated_at set to the current time" do

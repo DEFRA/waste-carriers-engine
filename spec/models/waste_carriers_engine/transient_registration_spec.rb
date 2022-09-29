@@ -242,11 +242,11 @@ module WasteCarriersEngine
         before { new_registration.workflow_state = "registration_completed_form" }
 
         it "does not change the state" do
-          expect { next_state }.not_to change { new_registration.workflow_state }
+          expect { next_state }.not_to change(new_registration, :workflow_state)
         end
 
         it "does not add to workflow history" do
-          expect { next_state }.not_to change { new_registration.workflow_history }
+          expect { next_state }.not_to change(new_registration, :workflow_history)
         end
       end
 
@@ -254,11 +254,11 @@ module WasteCarriersEngine
         before { new_registration.workflow_state = "not_valid" }
 
         it "does not change the state" do
-          expect { next_state }.not_to change { new_registration.workflow_state }
+          expect { next_state }.not_to change(new_registration, :workflow_state)
         end
 
         it "does not add to workflow history" do
-          expect { next_state }.not_to change { new_registration.workflow_history }
+          expect { next_state }.not_to change(new_registration, :workflow_history)
         end
       end
 
@@ -266,7 +266,7 @@ module WasteCarriersEngine
         before { new_registration.workflow_state = "location_form" }
 
         it "changes the state" do
-          expect { next_state }.to change { new_registration.workflow_state }.to("business_type_form")
+          expect { next_state }.to change(new_registration, :workflow_state).to("business_type_form")
         end
 
         it "adds to workflow history" do
@@ -274,7 +274,7 @@ module WasteCarriersEngine
         end
 
         it "adds the previous state to workflow history" do
-          expect { next_state }.to change { new_registration.workflow_history }.to(["location_form"])
+          expect { next_state }.to change(new_registration, :workflow_history).to(["location_form"])
         end
       end
     end
@@ -289,11 +289,11 @@ module WasteCarriersEngine
         before { new_registration.workflow_state = "location_form" }
 
         it "uses the default state" do
-          expect { previous_state }.to change { new_registration.workflow_state }.to("start_form")
+          expect { previous_state }.to change(new_registration, :workflow_state).to("start_form")
         end
 
         it "does not modify workflow history" do
-          expect { previous_state }.not_to change { new_registration.workflow_history }
+          expect { previous_state }.not_to change(new_registration, :workflow_history)
         end
       end
 
@@ -301,7 +301,7 @@ module WasteCarriersEngine
         before { new_registration.workflow_history = %w[another_form location_form not_valid] }
 
         it "skips the invalid state" do
-          expect { previous_state }.to change { new_registration.workflow_state }.to("location_form")
+          expect { previous_state }.to change(new_registration, :workflow_state).to("location_form")
         end
 
         it "deletes multiple items workflow history" do
@@ -316,7 +316,7 @@ module WasteCarriersEngine
         end
 
         it "uses the default state" do
-          expect { previous_state }.to change { new_registration.workflow_state }.to("start_form")
+          expect { previous_state }.to change(new_registration, :workflow_state).to("start_form")
         end
 
         it "deletes all items from workflow history" do
@@ -331,7 +331,7 @@ module WasteCarriersEngine
         end
 
         it "changes the state" do
-          expect { previous_state }.to change { new_registration.workflow_state }.to("location_form")
+          expect { previous_state }.to change(new_registration, :workflow_state).to("location_form")
         end
 
         it "deletes from workflow history" do
@@ -346,7 +346,7 @@ module WasteCarriersEngine
         end
 
         it "skips the duplicated state" do
-          expect { previous_state }.to change { new_registration.workflow_state }.to("start_form")
+          expect { previous_state }.to change(new_registration, :workflow_state).to("start_form")
         end
 
         it "deletes from workflow history" do

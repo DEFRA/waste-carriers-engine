@@ -85,7 +85,7 @@ module WasteCarriersEngine
         end
 
         it "creates the correct number of order item logs" do
-          expect { registration }.to change { OrderItemLog.count }
+          expect { registration }.to change(OrderItemLog, :count)
             .from(0)
             .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
         end
@@ -110,7 +110,7 @@ module WasteCarriersEngine
           end
 
           it "creates the correct number of order item logs" do
-            expect { registration }.to change { OrderItemLog.count }
+            expect { registration }.to change(OrderItemLog, :count)
               .from(0)
               .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
           end
@@ -169,7 +169,7 @@ module WasteCarriersEngine
           end
 
           it "does not create an order item log" do
-            expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
+            expect { described_class.run(transient_registration) }.not_to change(OrderItemLog, :count).from(0)
           end
 
           it "notifies Airbrake" do
@@ -213,7 +213,7 @@ module WasteCarriersEngine
           end
 
           it "does not create an order item log" do
-            expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
+            expect { described_class.run(transient_registration) }.not_to change(OrderItemLog, :count).from(0)
           end
 
           it "notifies Airbrake" do
@@ -266,7 +266,7 @@ module WasteCarriersEngine
             end
 
             it "does not create an order item log" do
-              expect { described_class.run(transient_registration) }.not_to change { OrderItemLog.count }.from(0)
+              expect { described_class.run(transient_registration) }.not_to change(OrderItemLog, :count).from(0)
             end
 
             it "notifies Airbrake" do

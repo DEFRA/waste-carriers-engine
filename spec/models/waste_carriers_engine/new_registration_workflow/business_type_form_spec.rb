@@ -15,7 +15,7 @@ module WasteCarriersEngine
             include_examples "has next transition", next_state: "your_tier_form"
 
             it "updates the tier of the object to LOWER" do
-              expect { new_registration.next }.to change { new_registration.tier }.to(WasteCarriersEngine::NewRegistration::LOWER_TIER)
+              expect { new_registration.next }.to change(new_registration, :tier).to(WasteCarriersEngine::NewRegistration::LOWER_TIER)
             end
           end
 

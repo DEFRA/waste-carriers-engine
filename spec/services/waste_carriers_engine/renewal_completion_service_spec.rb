@@ -156,7 +156,7 @@ module WasteCarriersEngine
         end
 
         it "creates the correct number of order item logs" do
-          expect { renewal_completion_service.complete_renewal }.to change { OrderItemLog.count }
+          expect { renewal_completion_service.complete_renewal }.to change(OrderItemLog, :count)
             .from(0)
             .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
         end

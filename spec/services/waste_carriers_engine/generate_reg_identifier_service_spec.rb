@@ -7,7 +7,7 @@ module WasteCarriersEngine
     describe ".run" do
       context "when the Counter collection is empty" do
         it "creates a regid record and start a counter from 1" do
-          expect { described_class.run }.to change { Counter.count }.from(0).to(1)
+          expect { described_class.run }.to change(Counter, :count).from(0).to(1)
         end
       end
 

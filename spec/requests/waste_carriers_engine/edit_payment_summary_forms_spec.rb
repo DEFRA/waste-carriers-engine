@@ -35,7 +35,7 @@ module WasteCarriersEngine
 
           context "when it already has a finance_details" do
             it "does not modify the finance_details" do
-              expect { get new_edit_payment_summary_form_path(edit_registration.token) }.not_to change { edit_registration.finance_details }
+              expect { get new_edit_payment_summary_form_path(edit_registration.token) }.not_to change(edit_registration, :finance_details)
             end
           end
 

@@ -22,19 +22,19 @@ module WasteCarriersEngine
 
     describe "#needs_permissions!" do
       it "set the @error_state instance variable to permission" do
-        expect { result.needs_permissions! }.to change { result.error_state }.to("permission")
+        expect { result.needs_permissions! }.to change(result, :error_state).to("permission")
       end
     end
 
     describe "#unrenewable!" do
       it "set the @error_state instance variable to unrenewable" do
-        expect { result.unrenewable! }.to change { result.error_state }.to("unrenewable")
+        expect { result.unrenewable! }.to change(result, :error_state).to("unrenewable")
       end
     end
 
     describe "#invalid!" do
       it "set the @error_state instance variable to invalid" do
-        expect { result.invalid! }.to change { result.error_state }.to("invalid")
+        expect { result.invalid! }.to change(result, :error_state).to("invalid")
       end
     end
   end
