@@ -26,9 +26,8 @@ module WasteCarriersEngine
     end
     let(:worldpay_service) { described_class.new(transient_registration, order, current_user, params) }
 
-    before { allow(Rails.configuration).to receive(:worldpay_url).and_return(host) }
-
     before do
+      allow(Rails.configuration).to receive(:worldpay_url).and_return(host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
       transient_registration.prepare_for_payment(:worldpay, current_user)

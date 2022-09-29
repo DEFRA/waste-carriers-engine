@@ -77,12 +77,6 @@ RSpec.shared_examples "Can present entity display name" do |factory:|
 
         it_behaves_like "simply company_name"
       end
-
-      context "when lower tier" do
-        let(:tier) { lower_tier }
-
-        it_behaves_like "simply company_name"
-      end
     end
   end
 

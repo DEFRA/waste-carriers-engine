@@ -289,6 +289,8 @@ module WasteCarriersEngine
 
         it "notifies Airbrake" do
           renewal_completion_service.complete_renewal
+
+          expect(Airbrake).to have_received(:notify)
         end
       end
     end

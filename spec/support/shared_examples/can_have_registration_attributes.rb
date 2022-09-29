@@ -322,7 +322,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
   end
 
   describe "#unpaid_balance?" do
-    context do
+    context "with nil finance_details" do
       before do
         resource.finance_details = nil
       end

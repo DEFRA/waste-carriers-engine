@@ -14,9 +14,11 @@ module WasteCarriersEngine
                lower_tier?: lower_tier)
       end
 
+      # rubocop:disable RSpec/MessageChain
       before do
-        expect(transient_registration).to receive_message_chain(:class, :name).and_return(class_double)
+        allow(transient_registration).to receive_message_chain(:class, :name).and_return(class_double)
       end
+      # rubocop:enable RSpec/MessageChain
 
       it "returns data in the correct format" do
         expected_string = "'journey': 'new', 'tier': 'unknown'"

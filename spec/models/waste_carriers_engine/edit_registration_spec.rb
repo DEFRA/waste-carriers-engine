@@ -77,7 +77,7 @@ module WasteCarriersEngine
 
       it "runs the EditFinanceDetailsBuilderService with the correct params" do
         mode = "OFFLINE"
-        user = double(:user)
+        user = instance_double(described_class, :user)
 
         edit_registration.prepare_for_payment(mode, user)
 

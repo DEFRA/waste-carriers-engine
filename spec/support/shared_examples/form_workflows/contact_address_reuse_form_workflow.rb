@@ -15,32 +15,30 @@ RSpec.shared_examples "company_address_reuse_form workflow" do |factory:|
     context "with :contact_address_reuse_form state transitions" do
       before { allow(WasteCarriersEngine::ContactAddressAsRegisteredAddressService).to receive(:run) }
 
-      context "with :next transition" do
-        context "when the temp_reuse_registered_address is `yes`" do
-          let(:temp_reuse_registered_address) { "yes" }
+      context "when the temp_reuse_registered_address is `yes`" do
+        let(:temp_reuse_registered_address) { "yes" }
 
-          include_examples "has next transition", next_state: "check_your_answers_form"
+        include_examples "has next transition", next_state: "check_your_answers_form"
 
-          it "invokes the ContactAddressAsRegisteredAddressService" do
-            subject.next
+        it "invokes the ContactAddressAsRegisteredAddressService" do
+          subject.next
 
-            expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
-              .to have_received(:run)
-              .with(subject)
-          end
+          expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
+            .to have_received(:run)
+            .with(subject)
         end
+      end
 
-        context "when the temp_reuse_registered_address is `no`" do
-          let(:temp_reuse_registered_address) { "no" }
+      context "when the temp_reuse_registered_address is `no`" do
+        let(:temp_reuse_registered_address) { "no" }
 
-          include_examples "has next transition", next_state: "contact_postcode_form"
+        include_examples "has next transition", next_state: "contact_postcode_form"
 
-          it "does not invoke the ContactAddressAsRegisteredAddressService" do
-            subject.next
+        it "does not invoke the ContactAddressAsRegisteredAddressService" do
+          subject.next
 
-            expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
-              .not_to have_received(:run)
-          end
+          expect(WasteCarriersEngine::ContactAddressAsRegisteredAddressService)
+            .not_to have_received(:run)
         end
       end
     end

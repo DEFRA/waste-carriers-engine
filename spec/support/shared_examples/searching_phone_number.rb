@@ -18,9 +18,8 @@ RSpec.shared_examples "searching phone number attribute" do |factory:|
   let(:international_number) { "+78121234567" }
   let(:number_with_text) { "Landline 01234567890" }
 
-  # Use "let!" to ensure these are instantiated in the DB in all cases
-  let!(:non_matching_record) { create(factory, :has_required_data, phone_number: "0121117890") }
-  let!(:matching_record) { create(factory, :has_required_data, phone_number: matching_phone_number) }
+  let(:non_matching_record) { create(factory, :has_required_data, phone_number: "0121117890") }
+  let(:matching_record) { create(factory, :has_required_data, phone_number: matching_phone_number) }
 
   context "when the number in the database has not got any spaces or dashes and doesn't start in +44" do
     let(:matching_phone_number) { normal_number }

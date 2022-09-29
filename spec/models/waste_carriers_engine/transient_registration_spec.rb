@@ -7,7 +7,7 @@ module WasteCarriersEngine
     let(:transient_registration) { build(:transient_registration, :has_required_data) }
 
     describe "#set_metadata_route" do
-      let(:metadata_route) { double(:metadata_route) }
+      let(:metadata_route) { instance_double(described_class, :metadata_route) }
 
       before do
         allow_message_expectations_on_nil
@@ -26,7 +26,7 @@ module WasteCarriersEngine
     describe "#update_created_at" do
       context "when a new transient registration is created" do
         it "updates the transient registration's created_at" do
-          time = double(:time)
+          time = instance_double(described_class, :time)
           allow(Time).to receive(:current).and_return(time)
           allow(transient_registration).to receive(:created_at=)
 
@@ -287,8 +287,10 @@ module WasteCarriersEngine
       subject(:previous_state) { new_registration.previous_valid_state! }
 
       context "with no workflow history" do
-        before { new_registration.workflow_history = [] }
-        before { new_registration.workflow_state = "location_form" }
+        before do
+          new_registration.workflow_history = []
+          new_registration.workflow_state = "location_form"
+        end
 
         it "uses the default state" do
           expect { previous_state }.to change(new_registration, :workflow_state).to("start_form")

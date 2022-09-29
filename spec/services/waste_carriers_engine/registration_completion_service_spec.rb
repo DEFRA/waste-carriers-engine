@@ -174,6 +174,8 @@ module WasteCarriersEngine
 
           it "notifies Airbrake" do
             described_class.run(transient_registration)
+
+            expect(Airbrake).to have_received(:notify)
           end
         end
       end
@@ -218,6 +220,8 @@ module WasteCarriersEngine
 
           it "notifies Airbrake" do
             described_class.run(transient_registration)
+
+            expect(Airbrake).to have_received(:notify)
           end
         end
       end
@@ -271,6 +275,8 @@ module WasteCarriersEngine
 
             it "notifies Airbrake" do
               described_class.run(transient_registration)
+
+              expect(Airbrake).to have_received(:notify)
             end
           end
         end

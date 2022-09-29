@@ -2,9 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe WasteCarriersEngine::Govpay::Error do
-  subject(:error) { described_class.new({}) }
+module WasteCarriersEngine
+  RSpec.describe Govpay::Error do
+    subject(:error) { described_class.new({}) }
 
-  # this is just for coverage for now
-  it { expect { error }.not_to raise_error }
+    # this is just for coverage for now
+    it { expect { error }.not_to raise_error }
+  end
 end

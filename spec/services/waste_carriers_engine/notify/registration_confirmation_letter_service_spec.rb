@@ -136,7 +136,7 @@ module WasteCarriersEngine
           end
 
           before do
-            expect_any_instance_of(Notifications::Client)
+            allow_any_instance_of(Notifications::Client)
               .to receive(:send_letter)
               .with(expected_notify_options)
               .and_call_original

@@ -20,15 +20,10 @@ module WasteCarriersEngine
     before do
       allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
-    end
-
-    before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
       transient_registration.prepare_for_payment(:govpay, current_user)
-    end
 
-    before do
       stub_request(:any, /.*#{govpay_host}.*/).to_return(
         status: 200,
         body: File.read("./spec/fixtures/files/govpay/create_payment_created_response.json")
