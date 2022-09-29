@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe EditRegistration, type: :model do
     subject(:edit_registration) { build(:edit_registration) }
 
-    it_should_behave_like "Can check if registration type changed"
+    it_behaves_like "Can check if registration type changed"
 
     context "with default status" do
       context "when an EditRegistration is created" do
@@ -95,7 +95,7 @@ module WasteCarriersEngine
           before { edit_registration.location = "england" }
 
           it "returns true" do
-            expect(edit_registration.location_changed_from_overseas?).to be_truthy
+            expect(edit_registration).to be_location_changed_from_overseas
           end
         end
 
@@ -103,7 +103,7 @@ module WasteCarriersEngine
           before { edit_registration.location = "overseas" }
 
           it "returns false" do
-            expect(edit_registration.location_changed_from_overseas?).to be_falsey
+            expect(edit_registration).not_to be_location_changed_from_overseas
           end
         end
       end
@@ -115,7 +115,7 @@ module WasteCarriersEngine
           before { edit_registration.location = "england" }
 
           it "returns true" do
-            expect(edit_registration.location_changed_from_overseas?).to be_truthy
+            expect(edit_registration).to be_location_changed_from_overseas
           end
         end
 
@@ -123,7 +123,7 @@ module WasteCarriersEngine
           before { edit_registration.location = "overseas" }
 
           it "returns false" do
-            expect(edit_registration.location_changed_from_overseas?).to be_falsey
+            expect(edit_registration).not_to be_location_changed_from_overseas
           end
         end
       end
@@ -132,7 +132,7 @@ module WasteCarriersEngine
         before { edit_registration.registration.location = "england" }
 
         it "returns false" do
-          expect(edit_registration.location_changed_from_overseas?).to be_falsey
+          expect(edit_registration).not_to be_location_changed_from_overseas
         end
       end
     end

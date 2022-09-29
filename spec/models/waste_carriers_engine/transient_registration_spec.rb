@@ -36,27 +36,27 @@ module WasteCarriersEngine
     end
 
     describe "search" do
-      it_should_behave_like "Search scopes",
+      it_behaves_like "Search scopes",
                             record_class: described_class,
                             factory: :transient_registration
     end
 
     describe "secure token" do
-      it_should_behave_like "Having a secure token"
+      it_behaves_like "Having a secure token"
     end
 
     describe "registration attributes" do
-      it_should_behave_like "Can have registration attributes",
+      it_behaves_like "Can have registration attributes",
                             factory: :transient_registration
     end
 
     describe "entity_display names" do
-      it_should_behave_like "Can present entity display name",
+      it_behaves_like "Can present entity display name",
                             factory: :transient_registration
     end
 
     describe "conviction scopes" do
-      it_should_behave_like "Can filter conviction status"
+      it_behaves_like "Can filter conviction status"
     end
 
     describe "#rejected_conviction_checks?" do
@@ -68,7 +68,7 @@ module WasteCarriersEngine
         let(:conviction_sign_offs) { nil }
 
         it "return false" do
-          expect(transient_registration.rejected_conviction_checks?).to be_falsey
+          expect(transient_registration).not_to be_rejected_conviction_checks
         end
       end
 
@@ -80,7 +80,7 @@ module WasteCarriersEngine
           let(:rejected) { true }
 
           it "returns true" do
-            expect(transient_registration.rejected_conviction_checks?).to be_truthy
+            expect(transient_registration).to be_rejected_conviction_checks
           end
         end
 
@@ -88,7 +88,7 @@ module WasteCarriersEngine
           let(:rejected) { false }
 
           it "returns false" do
-            expect(transient_registration.rejected_conviction_checks?).to be_falsey
+            expect(transient_registration).not_to be_rejected_conviction_checks
           end
         end
       end
@@ -103,7 +103,7 @@ module WasteCarriersEngine
         let(:unpaid_balance) { false }
 
         it "returns false" do
-          expect(transient_registration.pending_payment?).to be false
+          expect(transient_registration).not_to be_pending_payment
         end
       end
 
@@ -111,7 +111,7 @@ module WasteCarriersEngine
         let(:unpaid_balance) { true }
 
         it "returns true" do
-          expect(transient_registration.pending_payment?).to be true
+          expect(transient_registration).to be_pending_payment
         end
       end
     end
@@ -128,7 +128,7 @@ module WasteCarriersEngine
           end
 
           it "returns true" do
-            expect(transient_registration.pending_online_payment?).to be true
+            expect(transient_registration).to be_pending_online_payment
           end
         end
 
@@ -138,7 +138,7 @@ module WasteCarriersEngine
           end
 
           it "returns false" do
-            expect(transient_registration.pending_online_payment?).to be false
+            expect(transient_registration).not_to be_pending_online_payment
           end
         end
       end
@@ -149,7 +149,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(transient_registration.pending_online_payment?).to be false
+          expect(transient_registration).not_to be_pending_online_payment
         end
       end
     end
@@ -161,7 +161,7 @@ module WasteCarriersEngine
         end
 
         it "returns false" do
-          expect(transient_registration.pending_manual_conviction_check?).to be false
+          expect(transient_registration).not_to be_pending_manual_conviction_check
         end
       end
 
@@ -171,7 +171,7 @@ module WasteCarriersEngine
         end
 
         it "returns true" do
-          expect(transient_registration.pending_manual_conviction_check?).to be true
+          expect(transient_registration).to be_pending_manual_conviction_check
         end
       end
     end
@@ -202,7 +202,7 @@ module WasteCarriersEngine
             new_types.each do |new_type|
               allow(renewing_registration).to receive(:business_type).and_return(new_type)
 
-              expect(renewing_registration.business_type_change_valid?).to be_truthy
+              expect(renewing_registration).to be_business_type_change_valid
             end
           end
         end
@@ -220,7 +220,7 @@ module WasteCarriersEngine
 
               allow(renewing_registration).to receive(:business_type).and_return(new_type)
 
-              expect(renewing_registration.business_type_change_valid?).not_to be_truthy
+              expect(renewing_registration).not_to be_business_type_change_valid
             end
           end
         end

@@ -33,35 +33,35 @@ module WasteCarriersEngine
         context "when a feature toggle config exist" do
           context "when it is configured as active" do
             it "returns true" do
-              expect(described_class.active?("active_test_feature")).to be_truthy
+              expect(described_class).to be_active("active_test_feature")
             end
 
             it "accept either strings or syms" do
-              expect(described_class.active?(:active_test_feature)).to be_truthy
+              expect(described_class).to be_active(:active_test_feature)
             end
           end
 
           context "when it is configured as not active" do
             it "returns false" do
-              expect(described_class.active?("not_active_test_feature")).to be_falsey
+              expect(described_class).not_to be_active("not_active_test_feature")
             end
           end
 
           context "when the feature toggle contains a typo in the return value" do
             it "returns false" do
-              expect(described_class.active?("broken_test_feature")).to be_falsey
+              expect(described_class).not_to be_active("broken_test_feature")
             end
           end
 
           context "when the feature toggle contains a typo in the structure level" do
             it "returns false" do
-              expect(described_class.active?("broken_test_feature_2")).to be_falsey
+              expect(described_class).not_to be_active("broken_test_feature_2")
             end
           end
 
           context "when the feature toggle is a string containing 'true'" do
             it "returns true" do
-              expect(described_class.active?("string_true_test_feature")).to be_truthy
+              expect(described_class).to be_active("string_true_test_feature")
             end
           end
 
@@ -74,14 +74,14 @@ module WasteCarriersEngine
             end
 
             it "returns true" do
-              expect(described_class.active?("env_variable_test_feature")).to be_truthy
+              expect(described_class).to be_active("env_variable_test_feature")
             end
           end
         end
 
         context "when a feature toggle config does not exist" do
           it "returns false" do
-            expect(described_class.active?("i_do_not_exist")).to be_falsey
+            expect(described_class).not_to be_active("i_do_not_exist")
           end
         end
       end

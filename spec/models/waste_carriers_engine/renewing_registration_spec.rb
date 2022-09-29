@@ -6,10 +6,10 @@ module WasteCarriersEngine
   RSpec.describe RenewingRegistration, type: :model do
     subject(:renewing_registration) { build(:renewing_registration, :has_required_data) }
 
-    it_should_behave_like "Can check if registration type changed"
+    it_behaves_like "Can check if registration type changed"
 
     describe "scopes" do
-      it_should_behave_like "TransientRegistration named scopes"
+      it_behaves_like "TransientRegistration named scopes"
     end
 
     describe "workflow_state" do
@@ -116,7 +116,7 @@ module WasteCarriersEngine
     end
 
     describe "status" do
-      it_should_behave_like "Can check registration status",
+      it_behaves_like "Can check registration status",
                             factory: :renewing_registration
     end
 

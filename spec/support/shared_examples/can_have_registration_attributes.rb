@@ -54,7 +54,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         let(:location) { uk_location }
 
         it "returns true" do
-          expect(resource.uk_location?).to be_truthy
+          expect(resource).to be_uk_location
         end
       end
     end
@@ -63,7 +63,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:location) { "overseas" }
 
       it "returns false" do
-        expect(resource.uk_location?).to be_falsey
+        expect(resource).not_to be_uk_location
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:location) { nil }
 
       it "returns false" do
-        expect(resource.uk_location?).to be_falsey
+        expect(resource).not_to be_uk_location
       end
     end
   end
@@ -84,7 +84,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     context "when the location is within the UK" do
       it "returns false" do
         expect(resource).to receive(:uk_location?).and_return(true)
-        expect(resource.overseas?).to be_falsey
+        expect(resource).not_to be_overseas
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:location) { "overseas" }
 
       it "returns true" do
-        expect(resource.overseas?).to be_truthy
+        expect(resource).to be_overseas
       end
     end
 
@@ -101,7 +101,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         let(:business_type) { "overseas" }
 
         it "returns true" do
-          expect(resource.overseas?).to be_truthy
+          expect(resource).to be_overseas
         end
       end
 
@@ -109,7 +109,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         let(:business_type) { "soleTrader" }
 
         it "returns false" do
-          expect(resource.overseas?).to be_falsey
+          expect(resource).not_to be_overseas
         end
       end
     end
@@ -122,7 +122,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:tier) { "LOWER" }
 
       it "returns true" do
-        expect(resource.lower_tier?).to be_truthy
+        expect(resource).to be_lower_tier
       end
     end
 
@@ -130,7 +130,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:tier) { "FOO" }
 
       it "returns false" do
-        expect(resource.lower_tier?).to be_falsey
+        expect(resource).not_to be_lower_tier
       end
     end
   end
@@ -142,7 +142,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:tier) { "UPPER" }
 
       it "returns true" do
-        expect(resource.upper_tier?).to be_truthy
+        expect(resource).to be_upper_tier
       end
     end
 
@@ -150,7 +150,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       let(:tier) { "FOO" }
 
       it "returns false" do
-        expect(resource.upper_tier?).to be_falsey
+        expect(resource).not_to be_upper_tier
       end
     end
   end
@@ -200,7 +200,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns true" do
-        expect(resource.assisted_digital?).to be true
+        expect(resource).to be_assisted_digital
       end
     end
 
@@ -210,7 +210,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns true" do
-        expect(resource.assisted_digital?).to be true
+        expect(resource).to be_assisted_digital
       end
     end
 
@@ -220,7 +220,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.assisted_digital?).to be false
+        expect(resource).not_to be_assisted_digital
       end
     end
   end
@@ -249,7 +249,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.conviction_check_required?).to be false
+        expect(resource).not_to be_conviction_check_required
       end
     end
 
@@ -264,7 +264,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns false" do
-          expect(resource.conviction_check_required?).to be false
+          expect(resource).not_to be_conviction_check_required
         end
       end
 
@@ -274,7 +274,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns true" do
-          expect(resource.conviction_check_required?).to be true
+          expect(resource).to be_conviction_check_required
         end
       end
     end
@@ -287,7 +287,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.conviction_check_approved?).to be false
+        expect(resource).not_to be_conviction_check_approved
       end
     end
 
@@ -302,7 +302,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns false" do
-          expect(resource.conviction_check_approved?).to be false
+          expect(resource).not_to be_conviction_check_approved
         end
       end
 
@@ -312,7 +312,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         end
 
         it "returns true" do
-          expect(resource.conviction_check_approved?).to be true
+          expect(resource).to be_conviction_check_approved
         end
       end
     end
@@ -325,7 +325,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.unpaid_balance?).to be false
+        expect(resource).not_to be_unpaid_balance
       end
     end
 
@@ -335,7 +335,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.unpaid_balance?).to be false
+        expect(resource).not_to be_unpaid_balance
       end
     end
 
@@ -345,7 +345,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns false" do
-        expect(resource.unpaid_balance?).to be false
+        expect(resource).not_to be_unpaid_balance
       end
     end
 
@@ -355,7 +355,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
       end
 
       it "returns true" do
-        expect(resource.unpaid_balance?).to be true
+        expect(resource).to be_unpaid_balance
       end
     end
   end

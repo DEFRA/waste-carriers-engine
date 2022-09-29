@@ -702,7 +702,7 @@ module WasteCarriersEngine
     end
 
     describe "search" do
-      it_should_behave_like "Search scopes",
+      it_behaves_like "Search scopes",
                             record_class: described_class,
                             factory: :registration
     end
@@ -793,22 +793,22 @@ module WasteCarriersEngine
     end
 
     describe "status" do
-      it_should_behave_like "Can check registration status",
+      it_behaves_like "Can check registration status",
                             factory: :registration
     end
 
     describe "registration attributes" do
-      it_should_behave_like "Can have registration attributes",
+      it_behaves_like "Can have registration attributes",
                             factory: :registration
     end
 
     describe "entity_display names" do
-      it_should_behave_like "Can present entity display name",
+      it_behaves_like "Can present entity display name",
                             factory: :registration
     end
 
     describe "conviction scopes" do
-      it_should_behave_like "Can filter conviction status"
+      it_behaves_like "Can filter conviction status"
     end
   end
 end

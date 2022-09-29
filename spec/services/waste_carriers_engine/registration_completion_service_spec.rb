@@ -16,7 +16,7 @@ module WasteCarriersEngine
       it "generates a new registration and copies data to it" do
         registration_scope = WasteCarriersEngine::Registration.where(reg_identifier: transient_registration.reg_identifier)
 
-        expect(registration_scope.any?).to be_falsey
+        expect(registration_scope.to_a).to be_empty
 
         registration = described_class.run(transient_registration)
 
@@ -49,7 +49,7 @@ module WasteCarriersEngine
 
         new_registration_scope = WasteCarriersEngine::NewRegistration.where(token: token)
 
-        expect(new_registration_scope.any?).to be_falsey
+        expect(new_registration_scope.to_a).to be_empty
       end
 
       context "when the registration is a lower tier registration" do

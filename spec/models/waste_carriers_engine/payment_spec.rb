@@ -7,7 +7,7 @@ module WasteCarriersEngine
     let(:transient_registration) { build(:renewing_registration, :has_required_data) }
     let(:current_user) { build(:user) }
 
-    it_should_behave_like "Can have payment type", resource: described_class.new
+    it_behaves_like "Can have payment type", resource: described_class.new
 
     describe "default attributes" do
       describe ".currency" do

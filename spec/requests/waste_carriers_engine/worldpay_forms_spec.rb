@@ -239,15 +239,15 @@ module WasteCarriersEngine
     end
 
     describe "#cancel" do
-      it_should_behave_like "GET unsuccessful Worldpay response", :cancel
+      it_behaves_like "GET unsuccessful Worldpay response", :cancel
     end
 
     describe "#error" do
-      it_should_behave_like "GET unsuccessful Worldpay response", :error
+      it_behaves_like "GET unsuccessful Worldpay response", :error
     end
 
     describe "#failure" do
-      it_should_behave_like "GET unsuccessful Worldpay response", :failure
+      it_behaves_like "GET unsuccessful Worldpay response", :failure
     end
   end
 end

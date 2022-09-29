@@ -196,19 +196,19 @@ module WasteCarriersEngine
     end
 
     describe "#valid_failure?" do
-      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_failure?, "REFUSED"
+      it_behaves_like "WorldpayService valid unsuccessful action", :valid_failure?, "REFUSED"
     end
 
     describe "#valid_pending?" do
-      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_pending?, "SENT_FOR_AUTHORISATION"
+      it_behaves_like "WorldpayService valid unsuccessful action", :valid_pending?, "SENT_FOR_AUTHORISATION"
     end
 
     describe "#valid_cancel?" do
-      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_cancel?, "CANCELLED"
+      it_behaves_like "WorldpayService valid unsuccessful action", :valid_cancel?, "CANCELLED"
     end
 
     describe "#valid_error?" do
-      it_should_behave_like "WorldpayService valid unsuccessful action", :valid_error?, "ERROR"
+      it_behaves_like "WorldpayService valid unsuccessful action", :valid_error?, "ERROR"
     end
   end
 end
