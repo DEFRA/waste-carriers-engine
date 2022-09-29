@@ -17,7 +17,7 @@ module WasteCarriersEngine
     end
     let(:registration) { Registration.where(reg_identifier: transient_registration.reg_identifier).first }
 
-    let(:renewal_completion_service) { RenewalCompletionService.new(transient_registration) }
+    let(:renewal_completion_service) { described_class.new(transient_registration) }
 
     before do
       # We have to run this block after the transient registration creation,

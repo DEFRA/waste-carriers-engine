@@ -59,7 +59,7 @@ module WasteCarriersEngine
               workflow_state: "company_address_form")
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:company_address_form) { CompanyAddressForm.new(transient_registration) }
+      let(:company_address_form) { described_class.new(transient_registration) }
 
       describe "#temp_address" do
         it "pre-selects the address" do

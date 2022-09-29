@@ -34,7 +34,7 @@ module WasteCarriersEngine
       }
     end
 
-    let(:worldpay_service) { WorldpayService.new(transient_registration, order, current_user, params) }
+    let(:worldpay_service) { described_class.new(transient_registration, order, current_user, params) }
 
     describe "prepare_params" do
       context "when the params are nil" do

@@ -9,7 +9,7 @@ module WasteCarriersEngine
              :has_required_data)
     end
 
-    let(:conviction_data_service) { ConvictionDataService.run(transient_registration) }
+    let(:conviction_data_service) { described_class.run(transient_registration) }
     let(:entity_matching_service) { instance_double(EntityMatchingService) }
 
     before do

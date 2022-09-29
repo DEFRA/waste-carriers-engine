@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe WasteCarriersEngine::ApplicationHelper, type: :helper do
     describe "feedback_survey_url" do
       it "returns a correctly-formatted URL" do
-        expect(WasteCarriersEngine::ApplicationHelper.feedback_survey_url("foo")).to eq("https://www.smartsurvey.co.uk/s/waste-carriers/?referringpage=foo")
+        expect(described_class.feedback_survey_url("foo")).to eq("https://www.smartsurvey.co.uk/s/waste-carriers/?referringpage=foo")
       end
     end
 

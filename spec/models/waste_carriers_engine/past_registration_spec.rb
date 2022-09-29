@@ -7,7 +7,7 @@ module WasteCarriersEngine
     let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
     describe "build_past_registration" do
-      let(:past_registration) { PastRegistration.build_past_registration(registration) }
+      let(:past_registration) { described_class.build_past_registration(registration) }
 
       it "creates a new past_registration" do
         past_registration_count = registration.past_registrations.count
@@ -28,7 +28,7 @@ module WasteCarriersEngine
       end
 
       context "when :edit is given as an argument" do
-        let(:past_registration) { PastRegistration.build_past_registration(registration, :edit) }
+        let(:past_registration) { described_class.build_past_registration(registration, :edit) }
 
         it "sets the cause to 'edit'" do
           expect(past_registration.cause).to eq("edit")
@@ -37,13 +37,13 @@ module WasteCarriersEngine
 
       context "when there is already a past_registration with the same expiry date" do
         before do
-          PastRegistration.build_past_registration(registration, :edit)
+          described_class.build_past_registration(registration, :edit)
         end
 
         context "when the new version is a renewal" do
           context "when the past registration is a renewal" do
             before do
-              PastRegistration.build_past_registration(registration)
+              described_class.build_past_registration(registration)
             end
 
             it "returns nil and does not create a new past_registration" do
@@ -65,7 +65,7 @@ module WasteCarriersEngine
         end
 
         context "when the new version is an edit" do
-          let(:past_registration) { PastRegistration.build_past_registration(registration, :edit) }
+          let(:past_registration) { described_class.build_past_registration(registration, :edit) }
 
           it "does create a new past_registration" do
             past_registration_count = registration.past_registrations.count

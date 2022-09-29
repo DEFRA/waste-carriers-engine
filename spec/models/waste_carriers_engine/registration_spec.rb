@@ -703,7 +703,7 @@ module WasteCarriersEngine
 
     describe "search" do
       it_should_behave_like "Search scopes",
-                            record_class: WasteCarriersEngine::Registration,
+                            record_class: described_class,
                             factory: :registration
     end
 

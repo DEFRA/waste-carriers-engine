@@ -15,7 +15,7 @@ module WasteCarriersEngine
     end
     let(:order) { transient_registration.finance_details.orders.first }
     let(:current_user) { build(:user) }
-    let(:worldpay_xml_service) { WorldpayXmlService.new(transient_registration, order) }
+    let(:worldpay_xml_service) { described_class.new(transient_registration, order) }
 
     before do
       # Set a specific reg_identifier so we can match our XML

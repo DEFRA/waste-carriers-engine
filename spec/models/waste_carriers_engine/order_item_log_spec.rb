@@ -14,7 +14,7 @@ module WasteCarriersEngine
         subject(:order_item_log) { described_class.create_from_order_item(registration_order_item) }
 
         it "persists the order item log" do
-          expect { order_item_log }.to change(OrderItemLog, :count).from(0).to(1)
+          expect { order_item_log }.to change(described_class, :count).from(0).to(1)
         end
 
         it "saves the registration id" do
@@ -50,7 +50,7 @@ module WasteCarriersEngine
 
       context "with a new registration" do
         it "creates the correct number of order item logs" do
-          expect { order_item_log }.to change(OrderItemLog, :count)
+          expect { order_item_log }.to change(described_class, :count)
             .from(0)
             .to(order_item_count(registration))
         end
@@ -68,7 +68,7 @@ module WasteCarriersEngine
         it "adds only the new order item logs" do
           previous_count = order_item_count(registration)
           registration.finance_details.orders << new_order
-          expect { order_item_log }.to change(OrderItemLog, :count)
+          expect { order_item_log }.to change(described_class, :count)
             .from(previous_count)
             .to(order_item_count(registration))
         end

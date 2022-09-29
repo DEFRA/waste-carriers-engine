@@ -82,7 +82,7 @@ module WasteCarriersEngine
                  business_type: "soleTrader",
                  key_people: [build(:key_person, :has_required_data, :main)])
         end
-        let(:main_people_form) { MainPeopleForm.new(transient_registration) }
+        let(:main_people_form) { described_class.new(transient_registration) }
 
         it "prefills the first_name" do
           first_name = transient_registration.key_people.first.first_name

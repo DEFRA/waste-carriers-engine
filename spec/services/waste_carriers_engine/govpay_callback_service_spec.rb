@@ -26,7 +26,7 @@ module WasteCarriersEngine
       order.save!
     end
 
-    let(:govpay_service) { GovpayCallbackService.new(order.payment_uuid) }
+    let(:govpay_service) { described_class.new(order.payment_uuid) }
 
     describe "#payment_callback" do
       let(:govpay_validator_service) { instance_double(GovpayValidatorService) }

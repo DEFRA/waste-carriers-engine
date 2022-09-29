@@ -24,8 +24,8 @@ module WasteCarriersEngine
         let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
         it "returns a list of payments that have a type which can be refunded" do
-          cash_payment = WasteCarriersEngine::Payment.new(payment_type: "CASH")
-          refund_payment = WasteCarriersEngine::Payment.new(payment_type: "REFUND")
+          cash_payment = described_class.new(payment_type: "CASH")
+          refund_payment = described_class.new(payment_type: "REFUND")
 
           transient_registration.finance_details.payments << cash_payment
           transient_registration.finance_details.payments << refund_payment
@@ -43,8 +43,8 @@ module WasteCarriersEngine
         let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
 
         it "returns a list of payments that have a type which can be reversed" do
-          cash_payment = WasteCarriersEngine::Payment.new(payment_type: "CASH")
-          refund_payment = WasteCarriersEngine::Payment.new(payment_type: "REFUND")
+          cash_payment = described_class.new(payment_type: "CASH")
+          refund_payment = described_class.new(payment_type: "REFUND")
 
           transient_registration.finance_details.payments << cash_payment
           transient_registration.finance_details.payments << refund_payment
@@ -60,11 +60,11 @@ module WasteCarriersEngine
 
       describe ".except_online_not_authorised" do
         let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
-        let(:cash_payment) { WasteCarriersEngine::Payment.new(payment_type: "CASH") }
-        let(:worldpay_payment_authorised) { WasteCarriersEngine::Payment.new(payment_type: "WORLDPAY", world_pay_payment_status: "AUTHORISED") }
-        let(:worldpay_payment_refused) { WasteCarriersEngine::Payment.new(payment_type: "WORLDPAY", world_pay_payment_status: "REFUSED") }
-        let(:govpay_payment_authorised) { WasteCarriersEngine::Payment.new(payment_type: "GOVPAY", govpay_payment_status: "success") }
-        let(:govpay_payment_refused) { WasteCarriersEngine::Payment.new(payment_type: "GOVPAY", govpay_payment_status: "failed") }
+        let(:cash_payment) { described_class.new(payment_type: "CASH") }
+        let(:worldpay_payment_authorised) { described_class.new(payment_type: "WORLDPAY", world_pay_payment_status: "AUTHORISED") }
+        let(:worldpay_payment_refused) { described_class.new(payment_type: "WORLDPAY", world_pay_payment_status: "REFUSED") }
+        let(:govpay_payment_authorised) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "success") }
+        let(:govpay_payment_refused) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "failed") }
 
         before do
           transient_registration.finance_details.payments << cash_payment << worldpay_payment_authorised << govpay_payment_authorised << govpay_payment_refused
@@ -91,7 +91,7 @@ module WasteCarriersEngine
       end
 
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_online_payment(order, current_user.email) }
+      let(:payment) { described_class.new_from_online_payment(order, current_user.email) }
 
       it "sets the correct order_key" do
         expect(payment.order_key).to eq("1514764800")
@@ -144,7 +144,7 @@ module WasteCarriersEngine
       end
 
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_non_online_payment(params, order) }
+      let(:payment) { described_class.new_from_non_online_payment(params, order) }
 
       it "sets the correct amount" do
         expect(payment.amount).to eq(params[:amount])
@@ -201,7 +201,7 @@ module WasteCarriersEngine
 
     describe "update_after_online_payment" do
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { Payment.new_from_online_payment(order, current_user.email) }
+      let(:payment) { described_class.new_from_online_payment(order, current_user.email) }
 
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do

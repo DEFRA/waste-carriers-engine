@@ -15,7 +15,7 @@ module WasteCarriersEngine
     let(:current_user) { build(:user) }
 
     describe "new_order" do
-      let(:order) { Order.new_order(transient_registration, payment_method, current_user.email) }
+      let(:order) { described_class.new_order(transient_registration, payment_method, current_user.email) }
       let(:payment_method) { :worldpay }
 
       it "has a valid order_id" do
@@ -151,7 +151,7 @@ module WasteCarriersEngine
       end
 
       context "when it is a bank transfer order" do
-        let(:order) { Order.new_order(transient_registration, :bank_transfer, current_user) }
+        let(:order) { described_class.new_order(transient_registration, :bank_transfer, current_user) }
 
         it "has the correct payment_method" do
           expect(order.payment_method).to eq("OFFLINE")

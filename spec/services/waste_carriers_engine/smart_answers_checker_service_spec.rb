@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe SmartAnswersCheckerService do
     let(:transient_registration) { build(:renewing_registration) }
-    let(:service) { SmartAnswersCheckerService.new(transient_registration) }
+    let(:service) { described_class.new(transient_registration) }
 
     describe "#lower_tier?" do
       context "when other_businesses is no" do

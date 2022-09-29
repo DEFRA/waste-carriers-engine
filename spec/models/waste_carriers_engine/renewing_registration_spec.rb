@@ -82,7 +82,7 @@ module WasteCarriersEngine
         end
 
         it "strips the whitespace from the attributes" do
-          renewing_registration = RenewingRegistration.new(reg_identifier: registration.reg_identifier)
+          renewing_registration = described_class.new(reg_identifier: registration.reg_identifier)
           expect(renewing_registration.company_name).to eq("test")
         end
       end
@@ -106,7 +106,7 @@ module WasteCarriersEngine
         end
 
         it "does not copy over private contact information" do
-          renewing_registration = RenewingRegistration.new(reg_identifier: registration.reg_identifier)
+          renewing_registration = described_class.new(reg_identifier: registration.reg_identifier)
           expect(renewing_registration.first_name).to eq(nil)
           expect(renewing_registration.last_name).to eq(nil)
           expect(renewing_registration.phone_number).to eq(nil)

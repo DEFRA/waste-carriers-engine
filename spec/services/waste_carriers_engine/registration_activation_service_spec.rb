@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe RegistrationActivationService do
     let(:registration) { create(:registration, :has_required_data, :is_pending) }
 
-    let(:service) { RegistrationActivationService.run(registration: registration) }
+    let(:service) { described_class.run(registration: registration) }
 
     let(:current_time) { Time.new(2020, 1, 1) }
 

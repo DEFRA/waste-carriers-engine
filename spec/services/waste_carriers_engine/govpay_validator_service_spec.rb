@@ -13,7 +13,7 @@ module WasteCarriersEngine
     end
     let(:payment) { Payment.new_from_online_payment(transient_registration.finance_details.orders.first, nil) }
     let(:order) { transient_registration.finance_details.orders.first }
-    let(:govpay_validator_service) { GovpayValidatorService.new(order, payment.uuid, govpay_status) }
+    let(:govpay_validator_service) { described_class.new(order, payment.uuid, govpay_status) }
     let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
 
     before do
@@ -72,7 +72,7 @@ module WasteCarriersEngine
       end
 
       context "when the payment_uuid is not present" do
-        let(:govpay_validator_service) { GovpayValidatorService.new(order, nil, govpay_status) }
+        let(:govpay_validator_service) { described_class.new(order, nil, govpay_status) }
 
         it "returns false" do
           expect(govpay_validator_service.valid_success?).to be false
@@ -80,7 +80,7 @@ module WasteCarriersEngine
       end
 
       context "when the payment_uuid is invalid" do
-        let(:govpay_validator_service) { GovpayValidatorService.new(order, "bad_payment_uuid", govpay_status) }
+        let(:govpay_validator_service) { described_class.new(order, "bad_payment_uuid", govpay_status) }
 
         it "returns false" do
           expect(govpay_validator_service.valid_success?).to be false

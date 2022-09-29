@@ -160,7 +160,7 @@ module WasteCarriersEngine
         )
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:payment_summary_form) { PaymentSummaryForm.new(transient_registration) }
+      let(:payment_summary_form) { described_class.new(transient_registration) }
 
       context "when initialised with a transient_registration with only contact email set" do
         let(:contact_email) { "contact@example.com" }

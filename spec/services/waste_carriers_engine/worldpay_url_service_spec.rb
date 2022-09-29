@@ -14,7 +14,7 @@ module WasteCarriersEngine
     end
     let(:token) { transient_registration.token }
     let(:link_base) { "https://secure-test.worldpay.com/wcc/dispatcher?OrderKey=" }
-    let(:worldpay_url_service) { WorldpayUrlService.new(token, link_base) }
+    let(:worldpay_url_service) { described_class.new(token, link_base) }
 
     describe "format_url" do
       let(:url) { worldpay_url_service.format_link }

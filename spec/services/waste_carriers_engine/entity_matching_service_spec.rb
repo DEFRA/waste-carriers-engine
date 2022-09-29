@@ -21,7 +21,7 @@ module WasteCarriersEngine
                                                                            date_of_birth: key_person.dob)
                                                                      .and_return(match_result: "YES")
 
-        EntityMatchingService.run(transient_registration)
+        described_class.run(transient_registration)
 
         expect(transient_registration.reload.conviction_search_result.match_result).to eq("YES")
         expect(transient_registration.reload.key_people.first.conviction_search_result.match_result).to eq("YES")

@@ -19,7 +19,7 @@ module WasteCarriersEngine
             confirmed_by: nil
           }
         end
-        let(:conviction_sign_off) { ConvictionSearchResult.new_from_entity_matching_service(data) }
+        let(:conviction_sign_off) { described_class.new_from_entity_matching_service(data) }
 
         it "assigns the correct value to match_result" do
           expect(conviction_sign_off.match_result).to eq(data[:match_result])

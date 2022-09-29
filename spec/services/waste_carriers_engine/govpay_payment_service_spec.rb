@@ -28,7 +28,7 @@ module WasteCarriersEngine
 
     let(:order) { transient_registration.finance_details.orders.first }
 
-    let(:govpay_service) { GovpayPaymentService.new(transient_registration, order, current_user) }
+    let(:govpay_service) { described_class.new(transient_registration, order, current_user) }
 
     before do
       stub_request(:any, /.*#{govpay_host}.*/).to_return(

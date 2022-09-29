@@ -38,7 +38,7 @@ module WasteCarriersEngine
       }
     end
 
-    let(:worldpay_validator_service) { WorldpayValidatorService.new(order, params) }
+    let(:worldpay_validator_service) { described_class.new(order, params) }
 
     describe "valid_success?" do
       let(:params) do
@@ -71,7 +71,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
+          allow(described_class).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -125,7 +125,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
+          allow(described_class).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -147,7 +147,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
+          allow(described_class).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do
@@ -176,7 +176,7 @@ module WasteCarriersEngine
 
         context "when the paymentStatus is invalid" do
           before do
-            allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
+            allow(described_class).to receive(:valid_world_pay_status?).and_return(false)
           end
 
           it "returns false" do
@@ -199,7 +199,7 @@ module WasteCarriersEngine
 
       context "when the paymentStatus is invalid" do
         before do
-          allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
+          allow(described_class).to receive(:valid_world_pay_status?).and_return(false)
         end
 
         it "returns false" do

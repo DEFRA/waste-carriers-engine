@@ -16,7 +16,7 @@ module WasteCarriersEngine
           )
         end
         # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-        let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
+        let(:company_address_manual_form) { described_class.new(transient_registration) }
 
         context "when the business is overseas" do
           before do
@@ -108,7 +108,7 @@ module WasteCarriersEngine
         )
       end
       # Don't use FactoryBot for this as we need to make sure it initializes with a specific object
-      let(:company_address_manual_form) { CompanyAddressManualForm.new(transient_registration) }
+      let(:company_address_manual_form) { described_class.new(transient_registration) }
 
       context "when everything meets the requirements" do
         it "is valid" do
