@@ -4,17 +4,17 @@ en:
       new:
         title: Registration complete
         heading: Registration complete
-        highlight_text: "Your registration number is"
+        highlight_text: Your registration number is
         paragraph_1: 
-          email: "We’ve sent a registration confirmation and certificate to %{email}."
-          letter: "We have sent a registration confirmation letter"
-        paragraph_2: "A payment confirmation will be sent to %{email}."
-        subheading_1: "What happens next"
+          email: We've sent a registration confirmation and certificate to %{email}.
+          letter: We have sent a registration confirmation letter.
+        paragraph_2: A payment confirmation will be sent to %{email}.
+        subheading_1: What happens next
         list_1:
           UPPER:
-            - "Your organisation's details will appear on the public register within 5 days."
-            - "We will contact you on this email address before this registration is due to expire in %{expires_on}."
-            - "If we cannot reach you when the renewal is due, you’ll have to pay more for a new upper tier registration."
+            - Your organisation's details will appear on the public register within 5 days.
+            - We will contact you on this email address before this registration is due to expire in %{expires_on}.
+            - If we cannot reach you when the renewal is due, you'll have to pay more for a new upper tier registration.
           LOWER:
-            - "Your organisation's details will appear on the public register within 5 days."
-            - "Lower tier registrations do not expire."
+            - Your organisation's details will appear on the public register within 5 days.
+            - Lower tier registrations do not expire.

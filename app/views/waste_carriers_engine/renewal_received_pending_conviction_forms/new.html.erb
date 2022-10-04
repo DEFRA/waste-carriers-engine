@@ -24,10 +24,16 @@
           </div>
         </div>
 
-        <p class="govuk-body"><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.transient_registration.contact_email) %></p>
+        <% if @renewal_received_pending_conviction_form.transient_registration.contact_email.present? %>
+          <p class="govuk-body"><%= t(".paragraph_1", email: @renewal_received_pending_conviction_form.transient_registration.contact_email) %></p>
+        <% else %>
+          <p class="govuk-body"><%= t(".paragraph_1.letter") %></p>
+        <% end %>
 
         <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
-          <p class="govuk-body"><%= t(".paragraph_2", email: @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt) %></p>
+          <% if @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt.present? %>
+            <p class="govuk-body"><%= t(".paragraph_2", email: @renewal_received_pending_conviction_form.transient_registration.email_to_send_receipt) %></p>
+          <% end %>
         <% end %>
 
         <h2 class="govuk-heading-m"><%= t(".subheading") %></h2>

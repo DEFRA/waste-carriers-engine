@@ -38,8 +38,10 @@
             reg_identifier: @renewal_received_pending_payment_form.reg_identifier,
             amount: @renewal_received_pending_payment_form.transient_registration.finance_details.balance) %>
 
-        <p class="govuk-body"><%= t(".paragraph_1",
-                 email: @renewal_received_pending_payment_form.transient_registration.contact_email) %></p>
+        <% if @renewal_received_pending_payment_form.transient_registration.contact_email.present? %>
+          <p class="govuk-body"><%= t(".paragraph_1", email: @renewal_received_pending_payment_form.transient_registration.contact_email) %></p>
+        <% end %>
+
         <p class="govuk-body"><%= t(".paragraph_2") %></p>
 
         <ul class="govuk-list govuk-list--bullet">

@@ -4,14 +4,14 @@ en:
       new:
         title: Application received
         heading: Application received
-        highlight_text: "Your registration number is still"
-        panel_text: "We cannot register you until your payment clears."
+        highlight_text: Your registration number is still
+        panel_text: We cannot register you until your payment clears.
         subheading: "Next step: pay the renewal charge"
-        paragraph_1: "We’ve sent an email to %{email} with the payment details and instructions."
-        paragraph_2: "We will not register you until your payment clears."
+        paragraph_1: We've sent an email to %{email} with the payment details and instructions.
+        paragraph_2: We will not register you until your payment clears.
         list_1:
-          - "Please allow 5 working days for your payment to reach us."
-          - "Alternatively, contact us to pay by credit or debit card."
+          - Please allow 5 working days for your payment to reach us.
+          - Alternatively, contact us to pay by credit or debit card.
         error_heading: Something is wrong
         next_button: Finished
   activemodel:
@@ -20,6 +20,6 @@ en:
         waste_carriers_engine/renewal_received_pending_payment_form:
           attributes:
             reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+              invalid_format: The registration ID is not in a valid format
+              no_registration: There is no registration matching this ID
+              renewal_in_progress: This renewal is already in progress
