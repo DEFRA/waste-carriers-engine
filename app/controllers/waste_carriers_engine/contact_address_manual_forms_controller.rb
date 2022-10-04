@@ -16,7 +16,7 @@ module WasteCarriersEngine
       params
         .fetch(:contact_address_manual_form, {})
         .permit(
-          contact_address: %i[house_number address_line1 address_line2 town_city postcode country]
+          contact_address: %i[house_number address_line_1 address_line_2 town_city postcode country]
         )
     end
   end

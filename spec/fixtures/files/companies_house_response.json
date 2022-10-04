@@ -22,8 +22,8 @@
       "next_made_up_to":"2021-12-31"
    },
    "registered_office_address":{
-      "address_line1":"R House",
-      "address_line2":"Middle Street",
+      "address_line_1":"R House",
+      "address_line_2":"Middle Street",
       "region":"West Yorkshire",
       "postal_code":"HD1 2BN",
       "locality":"Thereabouts",

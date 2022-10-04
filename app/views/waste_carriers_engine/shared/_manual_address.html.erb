@@ -11,23 +11,23 @@
   %>
 </div>
 
-<div class="govuk-form-group <%= "govuk-form-group--error" if form.errors[:address_line1].any? %>">
-  <% if form.errors[:address_line1].any? %>
-    <span class="govuk-error-message"><%= form.errors[:address_line1].join(", ") %></span>
+<div class="govuk-form-group <%= "govuk-form-group--error" if form.errors[:address_line_1].any? %>">
+  <% if form.errors[:address_line_1].any? %>
+    <span class="govuk-error-message"><%= form.errors[:address_line_1].join(", ") %></span>
   <% end %>
 
-  <%= f.govuk_text_field :address_line1,
-    label: { text: t(".address_line1_label") },
+  <%= f.govuk_text_field :address_line_1,
+    label: { text: t(".address_line_1_label") },
     width: "one-half",
-    value: form.address_line1
+    value: form.address_line_1
   %>
 </div>
 
 <div class="govuk-form-group">
-  <%= f.govuk_text_field :address_line2,
-    label: { text: t(".address_line2_label") },
+  <%= f.govuk_text_field :address_line_2,
+    label: { text: t(".address_line_2_label") },
     width: "one-half",
-    value: form.address_line2
+    value: form.address_line_2
   %>
 </div>
 

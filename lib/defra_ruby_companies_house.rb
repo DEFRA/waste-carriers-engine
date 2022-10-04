@@ -20,8 +20,8 @@ class DefraRubyCompaniesHouse
     address = @company[:registered_office_address]
 
     [
-      address[:address_line1],
-      address[:address_line2],
+      address[:address_line_1],
+      address[:address_line_2],
       address[:locality],
       address[:postal_code]
     ].compact

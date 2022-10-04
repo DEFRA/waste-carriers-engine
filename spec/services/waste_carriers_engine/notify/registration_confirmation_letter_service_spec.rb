@@ -32,11 +32,11 @@ module WasteCarriersEngine
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
                 expiry_date: registration.expires_on.in_time_zone("London").to_date.strftime("%e %B %Y"),
-                address_line1: "Jane Doe",
-                address_line2: "42",
-                address_line3: "Foo Gardens",
-                address_line4: "Baz City",
-                address_line5: "FA1 1KE"
+                address_line_1: "Jane Doe",
+                address_line_2: "42",
+                address_line_3: "Foo Gardens",
+                address_line_4: "Baz City",
+                address_line_5: "FA1 1KE"
               }
             }
           end
@@ -120,11 +120,11 @@ module WasteCarriersEngine
                 registered_address: "42, Foo Gardens, Baz City, FA1 1KE",
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
-                address_line1: "Jane Doe",
-                address_line2: "42",
-                address_line3: "Foo Gardens",
-                address_line4: "Baz City",
-                address_line5: "FA1 1KE"
+                address_line_1: "Jane Doe",
+                address_line_2: "42",
+                address_line_3: "Foo Gardens",
+                address_line_4: "Baz City",
+                address_line_5: "FA1 1KE"
               }
             }
           end

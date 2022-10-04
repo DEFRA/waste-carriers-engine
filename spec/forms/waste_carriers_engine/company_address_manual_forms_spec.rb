@@ -59,7 +59,7 @@ module WasteCarriersEngine
           end
 
           it "does not prefill the form with the existing address" do
-            expect(company_address_manual_form.house_number).not_to eq(company_address.address_line1)
+            expect(company_address_manual_form.house_number).not_to eq(company_address.address_line_1)
           end
         end
       end
@@ -73,7 +73,7 @@ module WasteCarriersEngine
             token: company_address_manual_form.token,
             company_address: {
               house_number: "32",
-              address_line1: "My House Road",
+              address_line_1: "My House Road",
               town_city: "London",
               postcode: "BS3 5AH",
               country: company_address_manual_form.country
@@ -138,10 +138,10 @@ module WasteCarriersEngine
         end
       end
 
-      describe "#address_line1" do
-        context "when the address_line1 is blank" do
+      describe "#address_line_1" do
+        context "when the address_line_1 is blank" do
           before do
-            transient_registration.company_address.address_line1 = nil
+            transient_registration.company_address.address_line_1 = nil
           end
 
           it "is not valid" do
@@ -149,9 +149,9 @@ module WasteCarriersEngine
           end
         end
 
-        context "when the address_line1 is too long" do
+        context "when the address_line_1 is too long" do
           before do
-            transient_registration.company_address.address_line1 = "dj2mpm1gioexmhxsomk9o7oo8h5c7y7o8j2pmnwxefvoy91v9ghm7saz10r2lmdqhl3r6of58qlmlar2qeepah8c9rs8i78s2j94ws6y0gq1mxy4cw6s5myjugw62er6d2gpai0b11gsb18s2sfb9rcllye22b38o4"
+            transient_registration.company_address.address_line_1 = "dj2mpm1gioexmhxsomk9o7oo8h5c7y7o8j2pmnwxefvoy91v9ghm7saz10r2lmdqhl3r6of58qlmlar2qeepah8c9rs8i78s2j94ws6y0gq1mxy4cw6s5myjugw62er6d2gpai0b11gsb18s2sfb9rcllye22b38o4"
           end
 
           it "is not valid" do
@@ -160,10 +160,10 @@ module WasteCarriersEngine
         end
       end
 
-      describe "#address_line2" do
-        context "when the address_line2 is too long" do
+      describe "#address_line_2" do
+        context "when the address_line_2 is too long" do
           before do
-            transient_registration.company_address.address_line2 = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
+            transient_registration.company_address.address_line_2 = "gsm2lgu3q7cg5pcs02ftc1wtpx4lt5ghmyaclhe9qg9li7ibs5ldi3w3n1pt24pbfo0666bq"
           end
 
           it "is not valid" do

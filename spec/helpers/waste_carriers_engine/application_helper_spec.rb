@@ -64,8 +64,8 @@ module WasteCarriersEngine
       let(:address) do
         build(:address,
               house_number: "5",
-              address_line1: "Foo Terrace",
-              address_line2: "Bar Street",
+              address_line_1: "Foo Terrace",
+              address_line_2: "Bar Street",
               town_city: "Bazville",
               postcode: "AB1 2CD",
               country: "Quxland")

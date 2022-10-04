@@ -75,8 +75,8 @@ module WasteCarriersEngine
 
       address = @transient_registration.registered_address
 
-      address1 = [address.house_number, address.address_line1].join(" ")
-      address2 = address.address_line2
+      address1 = [address.house_number, address.address_line_1].join(" ")
+      address2 = address.address_line_2
       postcode = address.postcode.presence || "UNKNOWN"
       city = address.town_city
       country_code = look_up_country_code(address.country)

@@ -14,10 +14,10 @@ module WasteCarriersEngine
     field :addressType, as: :address_type,                              type: String
     field :addressMode, as: :address_mode,                              type: String
     field :houseNumber, as: :house_number,                              type: String
-    field :addressLine1, as: :address_line1,                           type: String
-    field :addressLine2, as: :address_line2,                           type: String
-    field :addressLine3, as: :address_line3,                           type: String
-    field :addressLine4, as: :address_line4,                           type: String
+    field :addressLine1, as: :address_line_1,                           type: String
+    field :addressLine2, as: :address_line_2,                           type: String
+    field :addressLine3, as: :address_line_3,                           type: String
+    field :addressLine4, as: :address_line_4,                           type: String
     field :townCity, as: :town_city,                                    type: String
     field :postcode,                                                    type: String
     field :country,                                                     type: String
@@ -43,8 +43,8 @@ module WasteCarriersEngine
                                end
 
       address[:house_number] = params[:house_number]
-      address[:address_line1] = params[:address_line1]
-      address[:address_line2] = params[:address_line2]
+      address[:address_line_1] = params[:address_line_1]
+      address[:address_line_2] = params[:address_line_2]
       address[:town_city] = params[:town_city]
       address[:postcode] = params[:postcode]
       address[:country] = params[:country]
@@ -85,10 +85,10 @@ module WasteCarriersEngine
       lines = data.values.reject(&:blank?)
 
       address_attributes = %i[house_number
-                              address_line1
-                              address_line2
-                              address_line3
-                              address_line4]
+                              address_line_1
+                              address_line_2
+                              address_line_3
+                              address_line_4]
 
       # Assign lines one at a time until we run out of lines to assign
       write_attribute(address_attributes.shift, lines.shift) until lines.empty?
