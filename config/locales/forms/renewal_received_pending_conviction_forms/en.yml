@@ -5,9 +5,7 @@ en:
         title: Application received
         heading: Application received
         highlight_text: Your registration number is still
-        paragraph_1:
-          email: We have sent a confirmation email to %{email}.
-          letter: We have sent a registration confirmation letter.
+        paragraph_1: We have sent a confirmation email to %{email}.
         paragraph_2: A payment confirmation will be sent to %{email}.
         subheading: What happens next
         paragraph_3: We'll check your details and let you know whether your application has been successful. We aim to do this within 10 working days.
