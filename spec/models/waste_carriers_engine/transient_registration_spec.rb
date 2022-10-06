@@ -4,35 +4,38 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe TransientRegistration, type: :model do
-    let(:transient_registration) { build(:transient_registration, :has_required_data) }
+    let(:transient_registration) { create(:transient_registration, :has_required_data, metaData: build(:metaData, :has_required_data)) }
 
-    describe "#set_metadata_route" do
-      let(:metadata_route) { instance_double(described_class, :metadata_route) }
+    describe "#initialize" do
+      context "when the metadata_route config value is set" do
+        before do
+          allow(Rails.configuration).to receive(:metadata_route).and_return("foo")
+        end
 
-      before do
-        allow_message_expectations_on_nil
-        allow(Rails.configuration).to receive(:metadata_route).and_return(metadata_route)
-        allow(transient_registration.metaData).to receive(:route=)
-        allow(transient_registration).to receive(:save)
+        it "sets a new TransientRegistration's metaData.route to the correct value" do
+          expect(transient_registration.metaData.route).to eq("foo")
+        end
       end
 
-      it "updates the transient registration's metadata route" do
-        transient_registration.set_metadata_route
+      context "when the metadata_route config value is not set" do
+        before do
+          allow(Rails.configuration).to receive(:metadata_route).and_return(nil)
+        end
 
-        expect(transient_registration.metaData).to have_received(:route=).with(metadata_route)
+        it "sets a new TransientRegistration's metaData.route to nil" do
+          expect(transient_registration.metaData.route).to be_nil
+        end
       end
     end
 
     describe "#update_created_at" do
       context "when a new transient registration is created" do
-        it "updates the transient registration's created_at" do
-          time = instance_double(described_class, :time)
-          allow(Time).to receive(:current).and_return(time)
-          allow(transient_registration).to receive(:created_at=)
+        let(:time) { Time.new(2019, 1, 1) }
 
-          transient_registration.save
+        before { allow(Time).to receive(:current).and_return(time) }
 
-          expect(transient_registration).to have_received(:created_at=).with(time)
+        it "sets the transient registration's created_at" do
+          expect(transient_registration.created_at).to eq(time.to_datetime)
         end
       end
     end

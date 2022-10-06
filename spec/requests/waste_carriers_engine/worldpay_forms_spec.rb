@@ -121,8 +121,7 @@ module WasteCarriersEngine
               }
             end
 
-            it "add a new payment to the registration, redirects to renewal_complete_form, updates the metadata route and is idempotent." do
-              allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
+            it "adds a new payment to the registration, redirects to renewal_complete_form and is idempotent." do
               expected_payments_count = transient_registration.finance_details.payments.count + 1
 
               get success_worldpay_forms_path(token), params: params
@@ -131,7 +130,6 @@ module WasteCarriersEngine
               transient_registration.reload
 
               expect(response).to redirect_to(new_renewal_complete_form_path(token))
-              expect(transient_registration.metaData.route).to eq("ASSISTED_DIGITAL")
               expect(transient_registration.finance_details.payments.count).to eq(expected_payments_count)
             end
 
@@ -140,14 +138,9 @@ module WasteCarriersEngine
                 transient_registration.conviction_sign_offs = [build(:conviction_sign_off)]
               end
 
-              it "updates the transient registration metadata attributes from application configuration and redirects to renewal_received_pending_conviction_form" do
-                allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
-
-                expect(transient_registration.reload.metaData.route).to be_nil
-
+              it "redirects to renewal_received_pending_conviction_form" do
                 get success_worldpay_forms_path(token), params: params
 
-                expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
                 expect(response).to redirect_to(new_renewal_received_pending_conviction_form_path(token))
               end
 

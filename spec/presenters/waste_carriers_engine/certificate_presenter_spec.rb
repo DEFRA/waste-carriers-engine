@@ -8,7 +8,6 @@ module WasteCarriersEngine
 
     include_context "with a sample registration with defaults", :registration do
       let(:registration_type) { "carrier_broker_dealer" }
-      let(:route) { "DIGITAL" }
     end
     let(:registration) { resource }
 
@@ -135,7 +134,7 @@ module WasteCarriersEngine
 
     describe "#assisted_digital?" do
       context "when the registration is assisted digital" do
-        let(:route) { "ASSISTED_DIGITAL" }
+        before { allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL") }
 
         it "returns 'true'" do
           expect(presenter.assisted_digital?).to be true

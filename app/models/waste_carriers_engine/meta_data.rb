@@ -19,5 +19,11 @@ module WasteCarriersEngine
 
     validates :status,
               presence: true
+
+    def initialize(params = nil)
+      super(params)
+
+      self.route = Rails.configuration.metadata_route
+    end
   end
 end

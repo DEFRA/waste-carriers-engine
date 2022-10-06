@@ -64,44 +64,5 @@ module WasteCarriersEngine
     end
 
     include_examples "POST without params form", "confirm_bank_transfer_form"
-
-    describe "POST new_confirm_bank_transfer_form" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
-
-        before do
-          sign_in(user)
-        end
-
-        context "when a renewal is in progress" do
-          let(:transient_registration) do
-            create(:renewing_registration,
-                   :has_required_data,
-                   :has_addresses,
-                   :has_key_people,
-                   :has_unpaid_balance,
-                   account_email: user.email)
-          end
-
-          context "when the workflow_state matches the requested form" do
-            before do
-              transient_registration.update_attributes(workflow_state: :confirm_bank_transfer_form)
-            end
-
-            context "when the request is successful" do
-              it "updates the transient registration metadata attributes from application configuration" do
-                allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
-
-                expect(transient_registration.reload.metaData.route).to be_nil
-
-                post_form_with_params(:confirm_bank_transfer_form, transient_registration.token)
-
-                expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
-              end
-            end
-          end
-        end
-      end
-    end
   end
 end

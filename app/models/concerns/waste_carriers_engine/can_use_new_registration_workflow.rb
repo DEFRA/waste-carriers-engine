@@ -253,10 +253,7 @@ module WasteCarriersEngine
           transitions from: :check_your_answers_form, to: :declaration_form
 
           transitions from: :declaration_form, to: :registration_completed_form,
-                      if: :lower_tier?,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+                      if: :lower_tier?
 
           transitions from: :declaration_form, to: :cards_form
 
@@ -271,42 +268,27 @@ module WasteCarriersEngine
 
           transitions from: :payment_summary_form, to: :confirm_bank_transfer_form
 
-          transitions from: :confirm_bank_transfer_form, to: :registration_received_pending_payment_form,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+          transitions from: :confirm_bank_transfer_form, to: :registration_received_pending_payment_form
 
           transitions from: :worldpay_form,
                       to: :registration_received_pending_worldpay_payment_form,
-                      if: :pending_online_payment?,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+                      if: :pending_online_payment?
 
           transitions from: :worldpay_form,
                       to: :registration_received_pending_conviction_form,
-                      if: :conviction_check_required?,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+                      if: :conviction_check_required?
 
-          transitions from: :worldpay_form, to: :registration_completed_form,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+          transitions from: :worldpay_form, to: :registration_completed_form
 
           transitions from: :govpay_form,
                       to: :registration_received_pending_govpay_payment_form,
-                      if: :pending_online_payment?,
-                      after: :set_metadata_route
+                      if: :pending_online_payment?
 
           transitions from: :govpay_form,
                       to: :registration_received_pending_conviction_form,
-                      if: :conviction_check_required?,
-                      after: :set_metadata_route
+                      if: :conviction_check_required?
 
-          transitions from: :govpay_form, to: :registration_completed_form,
-                      after: :set_metadata_route
+          transitions from: :govpay_form, to: :registration_completed_form
         end
 
         # Transitions

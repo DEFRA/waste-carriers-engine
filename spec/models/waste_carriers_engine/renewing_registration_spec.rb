@@ -14,44 +14,9 @@ module WasteCarriersEngine
 
     describe "workflow_state" do
 
-      before { allow(renewing_registration).to receive(:set_metadata_route) }
-
       context "when a RenewingRegistration is created" do
         it "has the state :renewal_start_form" do
           expect(renewing_registration).to have_state(:renewal_start_form)
-        end
-      end
-
-      context "when transitioning from confirm_bank_transfer_form to renewal_received_pending_payment_form successfully" do
-        it "set the transient registration metadata route" do
-          renewing_registration.update_attributes(workflow_state: :confirm_bank_transfer_form)
-          renewing_registration.next
-
-          expect(renewing_registration).to have_received(:set_metadata_route).once
-        end
-      end
-
-      context "when transitioning from worldpay_form to renewal_complete_form successfully" do
-        it "set the transient registration metadata route" do
-          allow(renewing_registration).to receive(:pending_online_payment?).and_return(false)
-          allow(renewing_registration).to receive(:conviction_check_required?).and_return(false)
-
-          renewing_registration.update_attributes(workflow_state: :worldpay_form)
-          renewing_registration.next
-
-          expect(renewing_registration).to have_received(:set_metadata_route).once
-        end
-      end
-
-      context "when transitioning from worldpay_form to renewal_received_pending_conviction_form succesfully" do
-        it "set the transient registration metadata route" do
-          allow(renewing_registration).to receive(:pending_online_payment?).and_return(false)
-          allow(renewing_registration).to receive(:conviction_check_required?).and_return(true)
-
-          renewing_registration.update_attributes(workflow_state: :worldpay_form)
-          renewing_registration.next
-
-          expect(renewing_registration).to have_received(:set_metadata_route).once
         end
       end
     end

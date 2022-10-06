@@ -93,12 +93,12 @@ module WasteCarriersEngine
         end
 
         it "copies the registration's route from the transient_registration to the registration" do
-          transient_registration.metaData.route = "ASSISTED_DIGITAL_FROM_TRANSIENT_REGISTRATION"
+          transient_registration.metaData.route = "ASSISTED_DIGITAL"
           transient_registration.save
 
           renewal_completion_service.complete_renewal
 
-          expect(registration.reload.metaData.route).to eq("ASSISTED_DIGITAL_FROM_TRANSIENT_REGISTRATION")
+          expect(registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
         end
 
         it "keeps existing orders" do

@@ -102,7 +102,6 @@ module WasteCarriersEngine
             allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
             allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(true)
             allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
-            allow(Rails.configuration).to receive(:metadata_route).and_return("ASSISTED_DIGITAL")
             stub_request(:any, %r{.*#{govpay_host}/payments}).to_return(
               status: 200,
               body: file_fixture("govpay/get_payment_response_#{govpay_status}.json")
@@ -127,14 +126,6 @@ module WasteCarriersEngine
                 expect(response).to redirect_to(new_renewal_complete_form_path(token))
               end
 
-              it "updates the metadata route" do
-                expect(transient_registration.reload.metaData.route).to be_nil
-
-                get payment_callback_govpay_forms_path(token, order.payment_uuid)
-
-                expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
-              end
-
               it "is idempotent" do
                 expect do
                   get payment_callback_govpay_forms_path(token, order.payment_uuid)
@@ -151,14 +142,6 @@ module WasteCarriersEngine
 
               context "when it has been flagged for conviction checks" do
                 before { transient_registration.conviction_sign_offs = [build(:conviction_sign_off)] }
-
-                it "updates the transient registration metadata attributes from application configuration" do
-                  expect(transient_registration.reload.metaData.route).to be_nil
-
-                  get payment_callback_govpay_forms_path(token, order.payment_uuid)
-
-                  expect(transient_registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
-                end
 
                 it "redirects to renewal_received_pending_conviction_form" do
                   get payment_callback_govpay_forms_path(token, order.payment_uuid)

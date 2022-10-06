@@ -217,41 +217,26 @@ module WasteCarriersEngine
 
           transitions from: :worldpay_form, to: :renewal_received_pending_worldpay_payment_form,
                       if: :pending_online_payment?,
-                      success: :send_renewal_pending_online_payment_email,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+                      success: :send_renewal_pending_online_payment_email
 
           transitions from: :worldpay_form, to: :renewal_received_pending_conviction_form,
                       if: :conviction_check_required?,
-                      success: :send_renewal_pending_checks_email,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+                      success: :send_renewal_pending_checks_email
 
-          transitions from: :worldpay_form, to: :renewal_complete_form,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+          transitions from: :worldpay_form, to: :renewal_complete_form
 
           transitions from: :govpay_form, to: :renewal_received_pending_govpay_payment_form,
                       if: :pending_online_payment?,
-                      success: :send_renewal_pending_online_payment_email,
-                      after: :set_metadata_route
+                      success: :send_renewal_pending_online_payment_email
 
           transitions from: :govpay_form, to: :renewal_received_pending_conviction_form,
                       if: :conviction_check_required?,
-                      success: :send_renewal_pending_checks_email,
-                      after: :set_metadata_route
+                      success: :send_renewal_pending_checks_email
 
-          transitions from: :govpay_form, to: :renewal_complete_form,
-                      after: :set_metadata_route
+          transitions from: :govpay_form, to: :renewal_complete_form
 
           transitions from: :confirm_bank_transfer_form, to: :renewal_received_pending_payment_form,
-                      success: :send_renewal_pending_payment_email,
-                      # TODO: This don't get triggered if in the `success`
-                      # callback block, hence we went for `after`
-                      after: :set_metadata_route
+                      success: :send_renewal_pending_payment_email
         end
 
         event :skip_to_manual_address do
