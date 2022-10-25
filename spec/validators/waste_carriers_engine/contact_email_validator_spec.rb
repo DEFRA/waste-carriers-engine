@@ -66,7 +66,7 @@ module WasteCarriersEngine
       end
 
       context "with a matching confirmed email address in mixed case" do
-        let(:confirmed_email) { "#{contact_email[0..5].upcase}#{contact_email[6..-1]}" }
+        let(:confirmed_email) { "#{contact_email[0..5].upcase}#{contact_email[6..]}" }
 
         it_behaves_like "is valid"
       end
