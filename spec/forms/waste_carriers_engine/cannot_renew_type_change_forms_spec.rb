@@ -4,6 +4,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe CannotRenewTypeChangeForm, type: :model do
-    pending "No examples currently defined"
+    describe "#workflow_state" do
+      it_behaves_like "a fixed final state",
+                      current_state: :cannot_renew_type_change_form,
+                      factory: :renewing_registration
+    end
   end
 end

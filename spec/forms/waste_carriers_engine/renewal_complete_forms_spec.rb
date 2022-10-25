@@ -4,6 +4,8 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe RenewalCompleteForm, type: :model do
-    pending "No examples currently defined"
+    it_behaves_like "a fixed final state",
+                    current_state: :renewal_complete_form,
+                    factory: :renewing_registration
   end
 end
