@@ -14,7 +14,7 @@ module WasteCarriersEngine
         return true
       end
 
-      if record.confirmed_email != record.contact_email
+      if record.confirmed_email&.downcase != record.contact_email&.downcase
         add_validation_error(record, :confirmed_email, :does_not_match)
         return false
       end

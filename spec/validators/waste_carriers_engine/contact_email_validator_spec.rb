@@ -59,6 +59,18 @@ module WasteCarriersEngine
         it_behaves_like "is valid"
       end
 
+      context "with a matching confirmed email address in a different case" do
+        let(:confirmed_email) { contact_email.upcase }
+
+        it_behaves_like "is valid"
+      end
+
+      context "with a matching confirmed email address in mixed case" do
+        let(:confirmed_email) { "#{contact_email[0..5].upcase}#{contact_email[6..-1]}" }
+
+        it_behaves_like "is valid"
+      end
+
       context "with a mismatched confirmed email address" do
         let(:confirmed_email) { "not@chance.com" }
 
