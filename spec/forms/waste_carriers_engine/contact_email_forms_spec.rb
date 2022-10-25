@@ -12,14 +12,26 @@ module WasteCarriersEngine
         {
           token: contact_email_form.token,
           contact_email: contact_email,
-          confirmed_email: contact_email,
+          confirmed_email: confirmed_email,
           no_contact_email: defined?(no_contact_email) ? no_contact_email : nil
         }
       end
+      let(:confirmed_email) { contact_email }
 
       shared_examples "should submit" do
         it "submits the form successfully" do
           expect(contact_email_form.submit(ActionController::Parameters.new(params))).to be true
+        end
+      end
+
+      shared_examples "should submit and populate the contact_email" do
+        it "submits the form successfully" do
+          expect(contact_email_form.submit(ActionController::Parameters.new(params))).to be true
+        end
+
+        it "populates the contact_email" do
+          expect { contact_email_form.submit(ActionController::Parameters.new(params)) }
+            .to change { contact_email_form.transient_registration.contact_email }.to(contact_email.strip)
         end
       end
 
@@ -38,7 +50,22 @@ module WasteCarriersEngine
           context "with an email address" do
             let(:contact_email) { Faker::Internet.email }
 
-            it_behaves_like "should submit"
+            it_behaves_like "should submit and populate the contact_email"
+          end
+
+          context "with whitespace around the email address" do
+            let(:actual_email) { Faker::Internet.email }
+            let(:contact_email) { "  #{actual_email} " }
+            let(:confirmed_email) { actual_email }
+
+            it_behaves_like "should submit and populate the contact_email"
+          end
+
+          context "with whitespace around the confirmed email address" do
+            let(:contact_email) { Faker::Internet.email }
+            let(:confirmed_email) { "#{contact_email} " }
+
+            it_behaves_like "should submit and populate the contact_email"
           end
         end
 
@@ -48,12 +75,7 @@ module WasteCarriersEngine
           context "with an email address" do
             let(:contact_email) { Faker::Internet.email }
 
-            it_behaves_like "should submit"
-
-            it "populates contact_email" do
-              expect { contact_email_form.submit(ActionController::Parameters.new(params)) }
-                .to change { contact_email_form.transient_registration.contact_email }.to(contact_email)
-            end
+            it_behaves_like "should submit and populate the contact_email"
           end
 
           context "with a blank email address" do
