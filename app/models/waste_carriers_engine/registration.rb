@@ -50,8 +50,17 @@ module WasteCarriersEngine
           "$lt" => Rails.configuration.end_of_covid_extension,
           "$gte" => earliest_day_of_covid_grace_window
         } },
-        # Registration is inactive because it has declared convictions
-        { "$and": ["metaData.status": "PENDING", declared_convictions: "yes"] }
+        # Registration is a renewal pending a convictions check, without a pending payment
+        { "$and": [
+          # ... has declared convictions
+          declared_convictions: "yes",
+          # .... is a renewal
+          "past_registrations.0": { "$exists": true },
+          # ... is pending
+          "metaData.status": "PENDING",
+          # ... does not have a pending payment
+          "financeDetails.balance": { "$lte": 0 }
+        ] }
       )
     end
 

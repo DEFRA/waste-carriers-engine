@@ -213,9 +213,39 @@ module WasteCarriersEngine
           expect(result).not_to include(past_covid_extension_not_in_grace_window)
         end
 
-        it "returns registrations which are pending a conviction check" do
-          pending_check_registration = create(:registration, :has_required_data, :is_pending, declared_convictions: "yes")
-          expect(result).to include(pending_check_registration)
+        context "when a registration is pending a conviction check" do
+          let(:pending_check_registration) do
+            create(:registration,
+                   :has_required_data,
+                   :is_pending,
+                   past_registrations: past_registrations,
+                   declared_convictions: "yes",
+                   finance_details: build(:finance_details, balance: balance))
+          end
+          let(:past_registrations) { [create(:registration, :has_required_data)] }
+          let(:balance) { 0 }
+
+          before { pending_check_registration }
+
+          it "returns registrations which are pending a conviction check" do
+            expect(result).to include(pending_check_registration)
+          end
+
+          context "with an unpaid balance" do
+            let(:balance) { 1 }
+
+            it "does not include the registration" do
+              expect(result).not_to include(pending_check_registration)
+            end
+          end
+
+          context "when not a renewal" do
+            let(:past_registrations) { [] }
+
+            it "does not include the registration" do
+              expect(result).not_to include(pending_check_registration)
+            end
+          end
         end
       end
 
