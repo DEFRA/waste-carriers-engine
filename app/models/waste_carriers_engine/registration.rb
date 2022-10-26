@@ -35,12 +35,12 @@ module WasteCarriersEngine
 
     field :renew_token, type: String
 
-    def self.lower_tier_or_unexpired_or_in_covid_grace_window
+    def self.registrations_for_epr_export
       beginning_of_today = Time.now.in_time_zone("London").beginning_of_day
       normal_expiry_date = beginning_of_today + 1.day
       earliest_day_of_covid_grace_window = beginning_of_today - Rails.configuration.covid_grace_window.days + 1.day
 
-      any_of(
+      unscoped.any_of(
         # Registration is lower tier
         { tier: LOWER_TIER },
         # Registration expires on or after the current date
@@ -49,7 +49,9 @@ module WasteCarriersEngine
         { expires_on: {
           "$lt" => Rails.configuration.end_of_covid_extension,
           "$gte" => earliest_day_of_covid_grace_window
-        } }
+        } },
+        # Registration is inactive because it has declared convictions
+        { "$and": ["metaData.status": "PENDING", declared_convictions: "yes"] }
       )
     end
 
