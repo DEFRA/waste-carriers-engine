@@ -174,78 +174,26 @@ module WasteCarriersEngine
         end
       end
 
-      describe ".registrations_for_epr_export" do
-
-        before do
+      describe ".lower_tier_or_unexpired_or_in_covid_grace_window" do
+        it "returns registrations who are lower tier, unexpired or in the COVID grace window" do
           allow(Rails.configuration).to receive(:end_of_covid_extension).and_return(10.days.ago.to_date)
           allow(Rails.configuration).to receive(:covid_grace_window).and_return(30)
-        end
 
-        subject(:result) { described_class.registrations_for_epr_export }
-
-        it "returns registrations which are unexpired" do
           future_expire_date = create(:registration, :has_required_data, expires_on: 2.days.from_now)
-          expect(result).to include(future_expire_date)
-        end
-
-        it "does not return registrations which are expired" do
-          expired = create(:registration, :has_required_data, expires_on: 2.days.ago)
-          expect(result).not_to include(expired)
-        end
-
-        it "does not return registrations without an expiry date" do
-          not_activated = create(:registration, :has_required_data, expires_on: nil)
-          expect(result).not_to include(not_activated)
-        end
-
-        it "returns registrations which are lower tier" do
-          lower_tier = create(:registration, :has_required_data, :lower_tier, expires_on: nil)
-          expect(result).to include(lower_tier)
-        end
-
-        it "returns registrations which are in the COVID grace window" do
           past_covid_extension_in_grace_window = create(:registration, :has_required_data, expires_on: 20.days.ago)
-          expect(result).to include(past_covid_extension_in_grace_window)
-        end
-
-        it "does not return registrations which are not in the COVID grace window" do
+          past_covid_extension_edge_grace_window = create(:registration, :has_required_data, expires_on: 30.days.ago.beginning_of_day)
           past_covid_extension_not_in_grace_window = create(:registration, :has_required_data, expires_on: 40.days.ago)
+          past_not_covid = create(:registration, :has_required_data, expires_on: 2.days.ago)
+          lower_tier = create(:registration, :has_required_data, :lower_tier, expires_on: nil)
+
+          result = described_class.lower_tier_or_unexpired_or_in_covid_grace_window
+
+          expect(result).to include(future_expire_date)
+          expect(result).to include(past_covid_extension_in_grace_window)
+          expect(result).to include(lower_tier)
           expect(result).not_to include(past_covid_extension_not_in_grace_window)
-        end
-
-        context "when a registration is pending a conviction check" do
-          let(:pending_check_registration) do
-            create(:registration,
-                   :has_required_data,
-                   :is_pending,
-                   past_registrations: past_registrations,
-                   declared_convictions: "yes",
-                   finance_details: build(:finance_details, balance: balance))
-          end
-          let(:past_registrations) { [create(:registration, :has_required_data)] }
-          let(:balance) { 0 }
-
-          before { pending_check_registration }
-
-          it "returns registrations which are pending a conviction check" do
-            expect(result).to include(pending_check_registration)
-          end
-
-          context "with an unpaid balance" do
-            let(:balance) { 1 }
-
-            it "does not include the registration" do
-              expect(result).not_to include(pending_check_registration)
-            end
-          end
-
-          context "when not a renewal" do
-            let(:past_registrations) { [] }
-
-            it "does not include the registration" do
-              expect(result).not_to include(pending_check_registration)
-            end
-          end
+          expect(result).not_to include(past_covid_extension_edge_grace_window)
+          expect(result).not_to include(past_not_covid)
         end
       end
 
