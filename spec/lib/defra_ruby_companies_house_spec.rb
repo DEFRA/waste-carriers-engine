@@ -15,7 +15,7 @@ RSpec.describe DefraRubyCompaniesHouse do
       status: 404
     )
     # ... then add a stub to cover valid company_no values
-    stub_request(:get, /#{Rails.configuration.companies_house_host}[a-zA-Z\d]{8}/).to_return(
+    stub_request(:get, /#{Rails.configuration.companies_house_host}[A-Z\d]{8}/).to_return(
       status: 200,
       body: File.read("./spec/fixtures/files/companies_house_response.json")
     )
@@ -42,6 +42,14 @@ RSpec.describe DefraRubyCompaniesHouse do
 
     context "with a short company number" do
       let(:company_no) { short_company_no }
+
+      it "returns the company name" do
+        expect(company_name_for_number).to eq "BOGUS LIMITED"
+      end
+    end
+
+    context "with a lower case company number" do
+      let(:company_no) { "xy12345z" }
 
       it "returns the company name" do
         expect(company_name_for_number).to eq "BOGUS LIMITED"

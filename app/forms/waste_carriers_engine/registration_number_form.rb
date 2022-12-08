@@ -11,20 +11,15 @@ module WasteCarriersEngine
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating
       # If param isn't set, use a blank string instead to avoid errors with the validator
-      params[:company_no] = process_company_no(params[:company_no])
+      params[:company_no] = format_company_no(params[:company_no])
 
       super
     end
 
     private
 
-    def process_company_no(company_no)
-      return unless company_no.present?
-
-      number = company_no.to_s
-      # Should be 8 characters, so if it's not, add 0s to the start
-      number = "0#{number}" while number.length < 8
-      number
+    def format_company_no(company_no)
+      company_no&.to_s&.upcase&.rjust(8, "0")
     end
   end
 end

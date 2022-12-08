@@ -9,8 +9,8 @@ module WasteCarriersEngine
 
       begin
         company_name
-      rescue StandardError
-        Rails.logger.error "Failed to load"
+      rescue StandardError => e
+        Rails.logger.error "Failed to load: #{e}"
         render(:companies_house_down)
       end
     end

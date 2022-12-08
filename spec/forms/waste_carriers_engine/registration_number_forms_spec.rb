@@ -20,10 +20,23 @@ module WasteCarriersEngine
           expect(registration_number_form.submit(valid_params)).to be true
         end
 
-        context "when the token is less than 8 characters" do
+        context "when the company number contains lower case characters" do
+          before { valid_params[:company_no] = "az016107" }
+
+          it "saves as upper case" do
+            registration_number_form.submit(valid_params)
+            expect(registration_number_form.company_no).to eq("AZ016107")
+          end
+
+          it "submits" do
+            expect(registration_number_form.submit(valid_params)).to be true
+          end
+        end
+
+        context "when the company number is less than 8 characters" do
           before { valid_params[:company_no] = "946107" }
 
-          it "increases the length" do
+          it "increases the length before saving" do
             registration_number_form.submit(valid_params)
             expect(registration_number_form.company_no).to eq("00946107")
           end
