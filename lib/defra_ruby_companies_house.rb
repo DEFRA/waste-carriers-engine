@@ -27,6 +27,10 @@ class DefraRubyCompaniesHouse
     ].compact
   end
 
+  def company_status
+    @company[:company_status] if @company
+  end
+
   private
 
   def format_company_number(company_number)

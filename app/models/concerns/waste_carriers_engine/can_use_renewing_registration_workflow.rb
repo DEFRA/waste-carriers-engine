@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "defra_ruby_companies_house"
+
 module WasteCarriersEngine
   # rubocop:disable Metrics/ModuleLength
   module CanUseRenewingRegistrationWorkflow
@@ -15,6 +17,7 @@ module WasteCarriersEngine
       aasm column: :workflow_state do
         # States / forms
         state :renewal_start_form, initial: true
+        state :start_form
 
         state :location_form
         state :register_in_northern_ireland_form
@@ -25,6 +28,7 @@ module WasteCarriersEngine
 
         state :cbd_type_form
         state :renewal_information_form
+        state :invalid_company_status_form
         state :registration_number_form
         state :check_registered_company_name_form
         state :incorrect_company_form
@@ -99,6 +103,9 @@ module WasteCarriersEngine
           transitions from: :cbd_type_form, to: :renewal_information_form
 
           # Renewal information
+          transitions from: :renewal_information_form, to: :invalid_company_status_form,
+                      if: :company_status_invalid?
+
           transitions from: :renewal_information_form, to: :check_registered_company_name_form,
                       unless: :skip_registration_number?
 
@@ -111,6 +118,8 @@ module WasteCarriersEngine
           transitions from: :renewal_information_form, to: :use_trading_name_form
 
           # Registered company details
+          transitions from: :invalid_company_status_form, to: :start_form
+
           transitions from: :check_registered_company_name_form, to: :incorrect_company_form,
                       if: :incorrect_company_data?
 
@@ -253,6 +262,13 @@ module WasteCarriersEngine
     # rubocop:enable Metrics/BlockLength
 
     private
+
+    def company_status_invalid?
+      return false if company_no.blank?
+
+      company_status = DefraRubyCompaniesHouse.new(company_no).company_status
+      !%w[active voluntary-arrangement].include?(company_status)
+    end
 
     def skip_registration_number?
       !company_no_required?
