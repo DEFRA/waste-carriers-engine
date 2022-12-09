@@ -31,7 +31,7 @@ module WasteCarriersEngine
         end
       end
     rescue ArgumentError
-      Rails.logger.debug "Govpay payment callback error: invalid payment uuid \"#{params[:uuid]}\""
+      Rails.logger.warn "Govpay payment callback error: invalid payment uuid \"#{params[:uuid]}\""
       Airbrake.notify("Govpay callback error", "Invalid payment uuid \"#{params[:uuid]}\"")
       flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.internal_error")
       go_back

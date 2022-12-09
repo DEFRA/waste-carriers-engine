@@ -9,7 +9,7 @@ module WasteCarriersEngine
       private
 
       def send_request(method, path, params = nil)
-        Rails.logger.debug "Sending initial request to Govpay, params: #{params}" unless Rails.env.production?
+        Rails.logger.info "Sending initial request to Govpay, params: #{params}" unless Rails.env.production?
 
         response = nil
         begin
@@ -23,7 +23,7 @@ module WasteCarriersEngine
             }
           )
 
-          Rails.logger.debug "Received response from Govpay: #{response}" unless Rails.env.production?
+          Rails.logger.info "Received response from Govpay: #{response}" unless Rails.env.production?
         rescue StandardError => e
           Rails.logger.error("Error sending request to govpay: #{e}")
           Airbrake.notify(e, message: "Error on govpay request")
