@@ -83,7 +83,7 @@ module WasteCarriersEngine
                       if: :should_register_in_wales?
 
           transitions from: :location_form, to: :cbd_type_form,
-                      if: :based_overseas?
+                      if: :overseas?
 
           transitions from: :location_form, to: :business_type_form
 
@@ -137,7 +137,7 @@ module WasteCarriersEngine
           transitions from: :use_trading_name_form, to: :company_postcode_form
 
           transitions from: :company_name_form, to: :company_address_manual_form,
-                      if: :based_overseas?
+                      if: :overseas?
 
           transitions from: :company_name_form, to: :company_postcode_form
 
@@ -179,7 +179,7 @@ module WasteCarriersEngine
           transitions from: :contact_phone_form, to: :contact_email_form
 
           transitions from: :contact_email_form, to: :contact_address_manual_form,
-                      if: :based_overseas?
+                      if: :overseas?
 
           transitions from: :contact_email_form, to: :contact_address_reuse_form
 
@@ -264,7 +264,7 @@ module WasteCarriersEngine
     private
 
     def company_status_invalid?
-      return false if company_no.blank?
+      return false if company_no.blank? || overseas?
 
       company_status = DefraRubyCompaniesHouse.new(company_no).company_status
       !%w[active voluntary-arrangement].include?(company_status)
@@ -272,10 +272,6 @@ module WasteCarriersEngine
 
     def skip_registration_number?
       !company_no_required?
-    end
-
-    def based_overseas?
-      overseas?
     end
 
     def registered_address_was_manually_entered?

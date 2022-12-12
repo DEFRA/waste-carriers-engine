@@ -11,6 +11,7 @@ module WasteCarriersEngine
             business_type: business_type,
             location: location,
             tier: tier,
+            company_no: company_number,
             workflow_state: "renewal_information_form")
     end
     let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
@@ -18,6 +19,7 @@ module WasteCarriersEngine
     let(:location) { "england" }
     let(:defra_ruby_companies_house) { instance_double(DefraRubyCompaniesHouse) }
     let(:company_status) { "active" }
+    let(:company_number) { "12345678" }
 
     before do
       allow(DefraRubyCompaniesHouse).to receive(:new).and_return(defra_ruby_companies_house)
@@ -105,6 +107,14 @@ module WasteCarriersEngine
             let(:business_type) { "limitedLiabilityPartnership" }
 
             include_examples "check_registered_company_name_form or invalid_company_status_form"
+          end
+
+          context "when the business is overseas" do
+            let(:location) { "overseas" }
+            let(:business_type) { "overseas" }
+            let(:company_number) { "invalid" }
+
+            include_examples "has next transition", next_state: "main_people_form"
           end
         end
       end
