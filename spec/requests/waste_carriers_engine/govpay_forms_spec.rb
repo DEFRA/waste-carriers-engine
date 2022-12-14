@@ -18,6 +18,7 @@ module WasteCarriersEngine
       # TODO: Remove these when the feature flag is no longer required
       allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
       allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(true)
+      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
     end
 
     context "when a valid user is signed in" do

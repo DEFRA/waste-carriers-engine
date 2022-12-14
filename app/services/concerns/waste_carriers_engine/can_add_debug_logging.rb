@@ -4,7 +4,7 @@ module WasteCarriersEngine
   module CanAddDebugLogging
     extend ActiveSupport::Concern
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def log_transient_registration_details(description, transient_registration)
       return unless FeatureToggle.active?(:additional_debug_logging)
 
@@ -23,7 +23,9 @@ module WasteCarriersEngine
                   "expires_on: #{transient_registration.expires_on}, " \
                   "renew_token: #{renew_token(transient_registration)}, " \
                   "metaData.route: #{transient_registration.metaData.route}, " \
-                  "created_at: #{transient_registration.created_at}"
+                  "created_at: #{transient_registration.created_at}, " \
+                  "orders: #{transient_registration.finance_details&.orders}, " \
+                  "payments: #{transient_registration.finance_details&.payments}"
                 )
               end
       Airbrake.notify(error, reg_identifier: transient_registration.reg_identifier) if defined?(Airbrake)
@@ -34,7 +36,7 @@ module WasteCarriersEngine
       Airbrake.notify(e, reg_identifier: transient_registration.reg_identifier) if defined?(Airbrake)
       Rails.logger.warn "Error writing transient registration details to the log: #{e}"
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     private
 

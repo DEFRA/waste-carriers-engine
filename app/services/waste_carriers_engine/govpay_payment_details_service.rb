@@ -65,8 +65,8 @@ module WasteCarriersEngine
         .finance_details
         .orders
         .find_by(payment_uuid: payment_uuid)
-    rescue StandardError
-      raise ArgumentError, "Order not found for payment uuid \"#{payment_uuid}\""
+    rescue StandardError => e
+      raise ArgumentError, "Order not found for payment uuid \"#{payment_uuid}\": #{e}"
     end
   end
 end

@@ -13,6 +13,7 @@ module WasteCarriersEngine
              :has_finance_details,
              temp_cards: 0)
     end
+    let(:order) { transient_registration.finance_details.orders.first }
     let(:current_user) { build(:user) }
 
     before do
@@ -42,8 +43,13 @@ module WasteCarriersEngine
           end
         end
 
+        let(:govpay_id) { "a-valid-govpay-payment-id" }
+
         before do
-          stub_request(:get, /.*#{govpay_host}.*/).to_return(
+          order.govpay_id = govpay_id
+          transient_registration.save!
+
+          stub_request(:get, %r{.*#{govpay_host}/payments.+}).to_return(
             status: 200,
             body: File.read("./spec/fixtures/files/govpay/#{response_fixture}")
           )
