@@ -23,6 +23,7 @@ module WasteCarriersEngine
       status
     rescue StandardError => e
       Rails.logger.error "Failed to retrieve payment status: #{e}"
+      Airbrake.notify "Failed to retrieve payment status: #{e}"
       "error"
     end
 

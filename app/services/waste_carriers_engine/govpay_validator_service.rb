@@ -55,12 +55,14 @@ module WasteCarriersEngine
       return true if @order.present?
 
       Rails.logger.error "Invalid Govpay response: Cannot find matching order"
+      Airbrake.notify "Invalid Govpay response: Cannot find matching order", { payment_uuid: @payment_uuid }
       false
     end
 
     def valid_payment_uuid?
       unless @payment_uuid.present?
         Rails.logger.error "Invalid Govpay response: Missing payment uuid"
+        Airbrake.notify "Invalid Govpay response: Missing payment uuid", order_id: @order&.order_id
         return false
       end
 
@@ -71,7 +73,8 @@ module WasteCarriersEngine
 
       return true if order.present?
 
-      Rails.logger.error "Invalid Govpay response: Cannot find matching order for payment uuid #{@payment_uuid}"
+      Rails.logger.error "Invalid Govpay response: No matching order for payment uuid #{@payment_uuid}"
+      Airbrake.notify "Invalid Govpay response: No matching order for payment uuid", payment_uuid: @payment_uuid
       false
     end
 
@@ -79,6 +82,7 @@ module WasteCarriersEngine
       return true if GovpayValidatorService.valid_govpay_status?(response_type, @govpay_status)
 
       Rails.logger.error "Invalid Govpay response: #{@status} is not a valid payment status for #{response_type}"
+      Airbrake.notify "Invalid Govpay response: \"#{@status}\" is not a valid payment status for \"#{response_type}\""
       false
     end
   end
