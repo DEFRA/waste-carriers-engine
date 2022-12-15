@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- Content updates [\#1286](https://github.com/DEFRA/waste-carriers-engine/pull/1286) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Minor content updates [\#1285](https://github.com/DEFRA/waste-carriers-engine/pull/1285) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Companies house fixes [\#1281](https://github.com/DEFRA/waste-carriers-engine/pull/1281) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - EPR pending convictions check [\#1278](https://github.com/DEFRA/waste-carriers-engine/pull/1278) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Support tracking partial AD registrations [\#1276](https://github.com/DEFRA/waste-carriers-engine/pull/1276) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -389,6 +391,7 @@
 
 **Fixed bugs:**
 
+- Govpay error debug logging [\#1284](https://github.com/DEFRA/waste-carriers-engine/pull/1284) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Overseas company numbers [\#1282](https://github.com/DEFRA/waste-carriers-engine/pull/1282) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Revert "EPR pending convictions check" [\#1279](https://github.com/DEFRA/waste-carriers-engine/pull/1279) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - strip contact email whitespace [\#1277](https://github.com/DEFRA/waste-carriers-engine/pull/1277) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -617,6 +620,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1283](https://github.com/DEFRA/waste-carriers-engine/pull/1283) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Use info-level logging for govpay [\#1280](https://github.com/DEFRA/waste-carriers-engine/pull/1280) ([endofunky](https://github.com/endofunky))
 - Adjust NOTIFY\_API\_KEY lookup [\#1273](https://github.com/DEFRA/waste-carriers-engine/pull/1273) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Upgrade to Ruby 3 [\#1272](https://github.com/DEFRA/waste-carriers-engine/pull/1272) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
