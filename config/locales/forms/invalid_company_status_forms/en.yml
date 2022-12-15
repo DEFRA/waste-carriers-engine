@@ -5,7 +5,4 @@ en:
         title: We could not validate your Companies House number
         heading: We could not validate your Companies House number %{ch_number}
         description: There is an issue with your Companies House number against this registration. In order to renew your company needs to be active or in voluntary arrangement. To proceed you must create a new registration.
-        hint_1: Environment Agency
-        hint_2: Telephone 03708 506 506, Monday to Friday (8am to 6pm)
-        enquiries_email: enquiries@environment-agency.gov.uk
         start_a_new_registration_button: Start a new registration
