@@ -24,8 +24,8 @@ module WasteCarriersEngine
 
           Rails.logger.debug "Received response from WorldPay"
         rescue StandardError => e
-          Rails.logger.error("Error sending refund to worldpay: #{e}")
-          Airbrake.notify(e, message: "Error on WorldPay refund request")
+          Rails.logger.error("Error sending request to worldpay: #{e}")
+          Airbrake.notify(e, message: "Error on WorldPay request")
         end
 
         response
