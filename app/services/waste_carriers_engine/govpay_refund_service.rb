@@ -18,6 +18,10 @@ module WasteCarriersEngine
       return false unless refund.success?
 
       refund
+    rescue StandardError => e
+      Rails.logger.error "#{e.class} error in Govpay refund service for payment #{payment.govpay_id}, amount #{amount}"
+      Airbrake.notify(e, message: "Error in Govpay refund service", govpay_id: payment.govpay_id, amount:)
+      raise e
     end
 
     private

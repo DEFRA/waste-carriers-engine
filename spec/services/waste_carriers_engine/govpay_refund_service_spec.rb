@@ -54,6 +54,38 @@ module WasteCarriersEngine
           it { expect(govpay_refund).to be false }
         end
       end
+
+      context "when the payment details request to Govpay fails" do
+        before do
+          stub_request(:get, "#{govpay_host}/payments/#{payment.govpay_id}").to_return(status: 500)
+          allow(Airbrake).to receive(:notify)
+        end
+
+        it "notifies Airbrake" do
+          govpay_refund
+        rescue StandardError
+          expect(Airbrake).to have_received(:notify).with(RestClient::InternalServerError,
+                                                          hash_including(message: "Error sending govpay request", path: "/payments/#{payment.govpay_id}"))
+          expect(Airbrake).to have_received(:notify).with(GovpayApiError,
+                                                          hash_including(message: "Error in Govpay refund service", govpay_id: payment.govpay_id))
+        end
+      end
+
+      context "when the refund request to Govpay fails" do
+        before do
+          stub_request(:post, "#{govpay_host}/payments/#{payment.govpay_id}/refunds").to_return(status: 500)
+          allow(Airbrake).to receive(:notify)
+        end
+
+        it "notifies Airbrake" do
+          govpay_refund
+        rescue StandardError
+          expect(Airbrake).to have_received(:notify).with(RestClient::InternalServerError,
+                                                          hash_including(message: "Error sending govpay request", path: "/payments/#{payment.govpay_id}/refunds"))
+          expect(Airbrake).to have_received(:notify).with(GovpayApiError,
+                                                          hash_including(message: "Error in Govpay refund service", govpay_id: payment.govpay_id))
+        end
+      end
     end
   end
 end

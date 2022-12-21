@@ -22,13 +22,18 @@ module WasteCarriersEngine
 
       status
     rescue StandardError => e
-      Rails.logger.error "Failed to retrieve payment status: #{e}"
-      Airbrake.notify "Failed to retrieve payment status: #{e}"
-      "error"
+      Rails.logger.error "#{e.class} error retrieving status for payment, " \
+                         "uuid #{@payment_uuid}, govpay id #{govpay_id}: #{e}"
+      Airbrake.notify(e, message: "Failed to retrieve status for payment",
+                         payment_uuid:,
+                         govpay_id:,
+                         entity:)
+
+      raise e
     end
 
     def payment
-      @payment ||= Govpay::Payment.new response
+      @payment ||= Govpay::Payment.new(response)
     end
 
     # Payment status in application terms
@@ -66,6 +71,7 @@ module WasteCarriersEngine
         .orders
         .find_by(payment_uuid: payment_uuid)
     rescue StandardError => e
+      Airbrake.notify(e, message: "Order not found for payment uuid", payment_uuid:)
       raise ArgumentError, "Order not found for payment uuid \"#{payment_uuid}\": #{e}"
     end
   end

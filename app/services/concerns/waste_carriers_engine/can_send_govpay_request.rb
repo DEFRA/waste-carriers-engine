@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+
+  class GovpayApiError < StandardError
+    def initialize(msg = "Govpay API error")
+      super
+    end
+  end
+
   module CanSendGovpayRequest
     extend ActiveSupport::Concern
 
@@ -9,27 +16,27 @@ module WasteCarriersEngine
       private
 
       def send_request(method, path, params = nil)
-        Rails.logger.info "Sending initial request to Govpay, params: #{params}" unless Rails.env.production?
+        Rails.logger.info "Sending #{method} request to Govpay (#{path}), params: #{params}"
 
-        response = nil
         begin
           response = RestClient::Request.execute(
             method: method,
             url: url(path),
-            payload: params.present? ? params.to_json : nil,
+            payload: params.present? ? params.except(:amount).to_json : nil,
             headers: {
               "Authorization" => "Bearer #{bearer_token}",
               "Content-Type" => "application/json"
             }
           )
 
-          Rails.logger.info "Received response from Govpay: #{response}" unless Rails.env.production?
-        rescue StandardError => e
-          Rails.logger.error("Error sending request to govpay: #{e}")
-          Airbrake.notify(e, message: "Error on govpay request")
-        end
+          Rails.logger.info "Received response from Govpay: #{response}"
 
-        response
+          response
+        rescue StandardError => e
+          Rails.logger.error("Error sending request to govpay (#{method} #{path}, params: #{params}): #{e}")
+          Airbrake.notify(e, message: "Error sending govpay request", method:, path:, params:)
+          raise GovpayApiError
+        end
       end
 
       def url(path)

@@ -13,6 +13,8 @@ module WasteCarriersEngine
              :has_finance_details,
              temp_cards: 0)
     end
+    let(:valid_payment_uuid) { transient_registration.finance_details.orders.first.payment_uuid }
+    let(:payment_uuid) { valid_payment_uuid }
     let(:order) { transient_registration.finance_details.orders.first }
     let(:current_user) { build(:user) }
 
@@ -24,13 +26,23 @@ module WasteCarriersEngine
       transient_registration.prepare_for_payment(:govpay, current_user)
     end
 
-    subject { described_class.new(payment_uuid: transient_registration.finance_details.orders.first.payment_uuid) }
+    subject(:service) { described_class.new(payment_uuid: payment_uuid) }
 
     describe "govpay_payment_status" do
 
       context "with an invalid payment uuid" do
+        let(:payment_uuid) { "bad_uuid" }
+
+        before { allow(Airbrake).to receive(:notify) }
+
         it "raises an exception" do
-          expect { described_class.new(payment_uuid: "bad_uuid") }.to raise_exception(ArgumentError)
+          expect { service.govpay_payment_status }.to raise_exception(ArgumentError)
+        end
+
+        it "notifies Airbrake" do
+          service.govpay_payment_status
+        rescue ArgumentError
+          expect(Airbrake).to have_received(:notify).with(StandardError, hash_including(payment_uuid: payment_uuid))
         end
       end
 
@@ -39,7 +51,7 @@ module WasteCarriersEngine
           let(:response_fixture) { "get_payment_response_#{govpay_status}.json" }
 
           it "returns #{expected_status}" do
-            expect(subject.govpay_payment_status).to eq expected_status
+            expect(service.govpay_payment_status).to eq expected_status
           end
         end
 
@@ -48,22 +60,47 @@ module WasteCarriersEngine
         before do
           order.govpay_id = govpay_id
           transient_registration.save!
-
-          stub_request(:get, %r{.*#{govpay_host}/payments.+}).to_return(
-            status: 200,
-            body: File.read("./spec/fixtures/files/govpay/#{response_fixture}")
-          )
         end
 
-        it_behaves_like "expected status is returned", "created", "created"
+        context "when the govpay request succeeds" do
+          before do
+            stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}}).to_return(
+              status: 200,
+              body: File.read("./spec/fixtures/files/govpay/#{response_fixture}")
+            )
+          end
 
-        it_behaves_like "expected status is returned", "submitted", "submitted"
+          it_behaves_like "expected status is returned", "created", "created"
 
-        it_behaves_like "expected status is returned", "success", "success"
+          it_behaves_like "expected status is returned", "submitted", "submitted"
 
-        it_behaves_like "expected status is returned", "cancelled", "cancelled"
+          it_behaves_like "expected status is returned", "success", "success"
 
-        it_behaves_like "expected status is returned", "not_found", "error"
+          it_behaves_like "expected status is returned", "cancelled", "cancelled"
+
+          it_behaves_like "expected status is returned", "not_found", "error"
+        end
+
+        context "when the govpay request fails" do
+          before do
+            stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}}).to_return(status: 500)
+            allow(Airbrake).to receive(:notify)
+          end
+
+          it "raises an exception" do
+            expect { service.govpay_payment_status }.to raise_exception(GovpayApiError)
+          end
+
+          it "notifies Airbrake" do
+            service.govpay_payment_status
+          rescue GovpayApiError
+            expect(Airbrake).to have_received(:notify).with(RestClient::InternalServerError,
+                                                            hash_including(
+                                                              message: "Error sending govpay request",
+                                                              path: "/payments/#{govpay_id}"
+                                                            ))
+          end
+        end
       end
     end
 
