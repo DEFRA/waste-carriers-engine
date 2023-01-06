@@ -113,7 +113,6 @@ module WasteCarriersEngine
         configuration.root_directory = Rails.root
         configuration.logger = Rails.logger
         configuration.environment = ENV.fetch("WCRS_SERVICES_AIRBRAKE_ENVNAME", Rails.env)
-        configuration.ignore_environments = %w[]
       end
     end
   end
