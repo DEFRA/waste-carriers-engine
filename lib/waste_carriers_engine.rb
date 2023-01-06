@@ -112,7 +112,7 @@ module WasteCarriersEngine
       DefraRuby::Alert.configure do |configuration|
         configuration.root_directory = Rails.root
         configuration.logger = Rails.logger
-        configuration.environment = Rails.env
+        configuration.environment = ENV.fetch("WCRS_SERVICES_AIRBRAKE_ENVNAME", Rails.env)
       end
     end
   end
