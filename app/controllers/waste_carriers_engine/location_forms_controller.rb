@@ -6,6 +6,7 @@ module WasteCarriersEngine
 
     def new
       super(LocationForm, "location_form")
+      Airbrake.notify("Test error") # temp debugging
     end
 
     def create
