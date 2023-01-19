@@ -44,6 +44,10 @@ en:
           other: "%{count} addresses found"
 
   # Custom error pages
+  system_error_title: System error
+  system_error_heading: A system error has occurred
+  system_error_text: We are unable to complete this request at this time. Please try again later.
+
   invalid_reg_identifier_title: Cannot find page
   invalid_reg_identifier_heading: We cannot find that page
   invalid_reg_identifier_text: If you have recently completed a registration then check your email.
