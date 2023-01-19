@@ -25,14 +25,20 @@ module WasteCarriersEngine
                     orders: transient_registration.finance_details&.orders.to_s,
                     payments: transient_registration.finance_details&.payments.to_s }
                 end
-      Airbrake.notify(StandardError.new(description), details) if defined?(Airbrake)
+      Airbrake.notify(StandardError.new(description), details)
       Rails.logger.warn "#{description}: #{details}"
 
     # Handle any exceptions which arise while logging
     rescue StandardError => e
-      Airbrake.notify(e, reg_identifier: transient_registration&.reg_identifier) if defined?(Airbrake)
-      Rails.logger.warn "Error writing debugging information for transient registration " \
-                        "#{transient_registration&.reg_identifier} to the log: #{e}"
+      # Allow for the possibility that Airbrake.notify might raise an exception
+      begin
+        Airbrake.notify(e, reg_identifier: transient_registration&.reg_identifier)
+      rescue StandardError
+        Rails.logger.warn "Message not sent to Airbrake due to exception: #{e}"
+      ensure
+        Rails.logger.warn "Error writing debugging information for transient registration " \
+                          "#{transient_registration&.reg_identifier} to the log: #{e}"
+      end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 

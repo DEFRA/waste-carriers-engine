@@ -302,56 +302,6 @@ module WasteCarriersEngine
             expect(OrderItemLog.count).to be_zero
           end
         end
-
-        context "with temporary additional debugging" do
-
-          before do
-            allow(Airbrake).to receive(:notify)
-            allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
-            allow(FeatureToggle).to receive(:active?).with(:govpay_payments).and_return true
-          end
-
-          it "logs an error" do
-            described_class.new.log_transient_registration_details("foo", transient_registration)
-
-            expect(Airbrake).to have_received(:notify)
-          end
-
-          context "with a nil transient_registration" do
-            before { allow(transient_registration).to receive(:nil?).and_return(true) }
-
-            it "logs an error" do
-              described_class.new.log_transient_registration_details("foo", transient_registration)
-
-              expect(Airbrake).to have_received(:notify)
-            end
-          end
-
-          context "when activating the registration raises an exception" do
-            let(:registration_activation_service) { instance_double(RegistrationActivationService) }
-
-            before do
-              allow(RegistrationActivationService).to receive(:new).and_return(registration_activation_service)
-              allow(registration_activation_service).to receive(:run).and_raise(StandardError)
-            end
-
-            it "logs an error" do
-              described_class.run(transient_registration)
-
-              expect(Airbrake).to have_received(:notify).at_least(:once)
-            end
-          end
-
-          context "when the additional logging raises an exception" do
-            before { allow(transient_registration).to receive(:metaData).and_raise(StandardError) }
-
-            it "catches the exception and notifies Airbrake anyway" do
-              described_class.new.log_transient_registration_details("foo", transient_registration)
-
-              expect(Airbrake).to have_received(:notify)
-            end
-          end
-        end
       end
     end
   end
