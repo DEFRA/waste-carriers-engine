@@ -341,6 +341,16 @@ module WasteCarriersEngine
               expect(Airbrake).to have_received(:notify).at_least(:once)
             end
           end
+
+          context "when the additional logging raises an exception" do
+            before { allow(transient_registration).to receive(:metaData).and_raise(StandardError) }
+
+            it "catches the exception and notifies Airbrake anyway" do
+              described_class.new.log_transient_registration_details("foo", transient_registration)
+
+              expect(Airbrake).to have_received(:notify)
+            end
+          end
         end
       end
     end
