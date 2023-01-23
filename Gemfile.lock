@@ -119,8 +119,8 @@ GEM
     concurrent-ruby (1.1.10)
     console (1.13.1)
       fiber-local
-    countries (5.1.2)
-      sixarm_ruby_unaccent (~> 1.1)
+    countries (5.3.0)
+      unaccent (~> 0.3)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -387,7 +387,6 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    sixarm_ruby_unaccent (1.2.0)
     spring (4.1.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -412,6 +411,7 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     uk_postcode (2.1.8)
+    unaccent (0.4.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8)
