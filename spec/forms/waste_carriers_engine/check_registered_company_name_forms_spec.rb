@@ -8,7 +8,7 @@ module WasteCarriersEngine
   # so that allow_any_instance_of can be replaced using an instance_double, which bypasses
   # the contructor for the doubled class and therefore breaks specs re the load_company exception
   # rubocop:disable RSpec/AnyInstance
-  RSpec.describe CheckRegisteredCompanyNameForm, type: :model do
+  RSpec.describe CheckRegisteredCompanyNameForm do
     let(:registered_company_name) { Faker::Company.name }
     let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
 

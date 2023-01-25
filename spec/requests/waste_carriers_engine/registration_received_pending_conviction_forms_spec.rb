@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RegistrationReceivedPendingConvictionForms", type: :request do
+  RSpec.describe "RegistrationReceivedPendingConvictionForms" do
     describe "GET new_registration_received_pending_conviction_form_path" do
       context "when no new registration exists" do
         it "redirects to the invalid page" do

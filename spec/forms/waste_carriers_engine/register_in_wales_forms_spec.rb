@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RegisterInWalesForm, type: :model do
+  RSpec.describe RegisterInWalesForm do
     describe "#submit" do
       let(:register_in_wales_form) { build(:register_in_wales_form, :has_required_data) }
 

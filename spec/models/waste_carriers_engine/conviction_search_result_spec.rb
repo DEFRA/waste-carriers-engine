@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ConvictionSearchResult, type: :model do
+  RSpec.describe ConvictionSearchResult do
     describe "new_from_entity_matching_service" do
       context "when given data from the entity matching service" do
         let(:time) { Time.current }

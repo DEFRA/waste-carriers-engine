@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RenewingRegistration, type: :model do
+  RSpec.describe RenewingRegistration do
     subject(:renewing_registration) { build(:renewing_registration, :has_required_data, workflow_state: "cannot_renew_type_change_form") }
 
     describe "#workflow_state" do

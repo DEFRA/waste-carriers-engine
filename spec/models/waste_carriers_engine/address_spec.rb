@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe Address, type: :model do
+  RSpec.describe Address do
     describe "#assign_house_number_and_address_lines" do
       let(:address) { build(:address) }
 

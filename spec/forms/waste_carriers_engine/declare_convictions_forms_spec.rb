@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe DeclareConvictionsForm, type: :model do
+  RSpec.describe DeclareConvictionsForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:declare_convictions_form) { build(:declare_convictions_form, :has_required_data) }

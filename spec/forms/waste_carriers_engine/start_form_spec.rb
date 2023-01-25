@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe StartForm, type: :model do
+  RSpec.describe StartForm do
     describe "#submit" do
       let(:start_form) { build(:start_form) }
 

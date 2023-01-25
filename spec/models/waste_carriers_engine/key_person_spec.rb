@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe KeyPerson, type: :model do
+  RSpec.describe KeyPerson do
     context "with initialization" do
       describe "#set_individual_dob_fields" do
         context "when there is a valid dob" do

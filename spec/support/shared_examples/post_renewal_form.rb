@@ -81,7 +81,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
       end
 
       context "when the registration cannot be renewed" do
-        before { transient_registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
+        before { transient_registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
 
         it "does not update the transient registration, including workflow_state, and redirects to the unrenewable error page" do
           transient_reg_before_submitting = transient_registration

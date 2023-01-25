@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ContactEmailForm, type: :model do
+  RSpec.describe ContactEmailForm do
 
     describe "#submit" do
       let(:contact_email_form) { build(:contact_email_form, :has_required_data) }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CeasedOrRevokedConfirmForm", type: :request do
+  RSpec.describe "CeasedOrRevokedConfirmForms" do
     describe "GET new_ceased_or_revoked_confirm_form_path" do
       context "when a user is signed in" do
         let(:user) { create(:user) }

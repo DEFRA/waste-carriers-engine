@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CannotRenewTypeChangeForms", type: :request do
+  RSpec.describe "CannotRenewTypeChangeForms" do
     include_examples "GET flexible form", "cannot_renew_type_change_form"
   end
 end

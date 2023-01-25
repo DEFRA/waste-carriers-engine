@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "EditCompleteForms", type: :request do
+  RSpec.describe "EditCompleteForms" do
     describe "GET new_edit_complete_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }

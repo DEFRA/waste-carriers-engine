@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "LocationForms", type: :request do
+  RSpec.describe "LocationForms" do
     include_examples "GET flexible form", "location_form"
 
     describe "POST location_form_path" do

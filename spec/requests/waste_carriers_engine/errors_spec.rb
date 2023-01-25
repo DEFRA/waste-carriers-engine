@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "Errors", type: :request do
+  RSpec.describe "Errors" do
     describe "#show" do
       %w[401 403 404 422].each do |code|
         it "responds with a status of #{code} and renders the error_#{code} template" do

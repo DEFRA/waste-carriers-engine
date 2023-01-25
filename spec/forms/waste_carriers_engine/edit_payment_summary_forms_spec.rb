@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe EditPaymentSummaryForm, type: :model do
+  RSpec.describe EditPaymentSummaryForm do
     describe "#submit" do
       let(:edit_payment_summary_form) { build(:edit_payment_summary_form, :has_required_data) }
 

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "DeclarationForms", type: :request do
+  RSpec.describe "DeclarationForms" do
 
     include_examples "GET locked-in form", "declaration_form"
 

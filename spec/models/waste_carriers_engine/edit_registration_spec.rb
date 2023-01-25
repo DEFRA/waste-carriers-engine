@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe EditRegistration, type: :model do
+  RSpec.describe EditRegistration do
     subject(:edit_registration) { build(:edit_registration) }
 
     it_behaves_like "Can check if registration type changed"

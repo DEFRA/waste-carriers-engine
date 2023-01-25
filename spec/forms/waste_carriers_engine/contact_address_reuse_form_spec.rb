@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ContactAddressReuseForm, type: :model do
+  RSpec.describe ContactAddressReuseForm do
     describe "#submit" do
       let(:contact_address_reuse_form) { build(:contact_address_reuse_form) }
 

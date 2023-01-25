@@ -4,7 +4,7 @@ require "rails_helper"
 require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
-  RSpec.describe RenewingRegistration, type: :model do
+  RSpec.describe RenewingRegistration do
     subject do
       build(:renewing_registration,
             :has_required_data,

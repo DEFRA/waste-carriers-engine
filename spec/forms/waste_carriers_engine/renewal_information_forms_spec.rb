@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RenewalInformationForm, type: :model do
+  RSpec.describe RenewalInformationForm do
     describe "#submit" do
       let(:renewal_information_form) { build(:renewal_information_form, :has_required_data) }
 

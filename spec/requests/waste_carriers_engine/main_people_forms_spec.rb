@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "MainPeopleForms", type: :request do
+  RSpec.describe "MainPeopleForms" do
     include_examples "GET flexible form", "main_people_form"
 
     describe "POST main_people_forms_path" do

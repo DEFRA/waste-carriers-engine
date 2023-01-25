@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CompanyPostcodeForms", type: :request do
+  RSpec.describe "CompanyPostcodeForms" do
     include_examples "GET flexible form", "company_postcode_form"
 
     describe "POST company_postcode_forms_path" do

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CopyCardsBankTransferForm, type: :model do
+  RSpec.describe CopyCardsBankTransferForm do
     describe "#submit" do
       let(:copy_cards_bank_transfer_form) { build(:copy_cards_bank_transfer_form, :has_required_data) }
 

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "StartForms", type: :request do
+  RSpec.describe "StartForms" do
     # TODO: Remove once new registration is no longer behind a feature toggle
     before { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:new_registration).and_return(true) }
 

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe Registration, type: :model do
+  RSpec.describe Registration do
     describe "#reg_identifier" do
       context "when a registration has no reg_identifier" do
         let(:registration) { build(:registration, :has_required_data) }
@@ -131,7 +131,7 @@ module WasteCarriersEngine
       let(:registration) { build(:registration, :has_required_data, expires_on: expires_on) }
 
       context "when the registration has expired too long ago" do
-        let(:expires_on) { Time.now.to_date - Rails.configuration.covid_grace_window.days - 1 }
+        let(:expires_on) { Time.now.to_date - Rails.configuration.grace_window.days - 1 }
 
         it "returns true" do
           expect(registration).to be_past_renewal_window
@@ -174,26 +174,17 @@ module WasteCarriersEngine
         end
       end
 
-      describe ".lower_tier_or_unexpired_or_in_covid_grace_window" do
-        it "returns registrations who are lower tier, unexpired or in the COVID grace window" do
-          allow(Rails.configuration).to receive(:end_of_covid_extension).and_return(10.days.ago.to_date)
-          allow(Rails.configuration).to receive(:covid_grace_window).and_return(30)
-
+      describe ".lower_tier_or_unexpired" do
+        it "returns registrations which are lower tier or unexpired" do
           future_expire_date = create(:registration, :has_required_data, expires_on: 2.days.from_now)
-          past_covid_extension_in_grace_window = create(:registration, :has_required_data, expires_on: 20.days.ago)
-          past_covid_extension_edge_grace_window = create(:registration, :has_required_data, expires_on: 30.days.ago.beginning_of_day)
-          past_covid_extension_not_in_grace_window = create(:registration, :has_required_data, expires_on: 40.days.ago)
-          past_not_covid = create(:registration, :has_required_data, expires_on: 2.days.ago)
+          in_grace_window = create(:registration, :has_required_data, expires_on: 2.days.ago)
           lower_tier = create(:registration, :has_required_data, :lower_tier, expires_on: nil)
 
-          result = described_class.lower_tier_or_unexpired_or_in_covid_grace_window
+          result = described_class.lower_tier_or_unexpired
 
           expect(result).to include(future_expire_date)
-          expect(result).to include(past_covid_extension_in_grace_window)
           expect(result).to include(lower_tier)
-          expect(result).not_to include(past_covid_extension_not_in_grace_window)
-          expect(result).not_to include(past_covid_extension_edge_grace_window)
-          expect(result).not_to include(past_not_covid)
+          expect(result).not_to include(in_grace_window)
         end
       end
 

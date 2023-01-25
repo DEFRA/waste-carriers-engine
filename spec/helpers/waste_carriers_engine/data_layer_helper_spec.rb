@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe WasteCarriersEngine::DataLayerHelper, type: :helper do
+  RSpec.describe WasteCarriersEngine::DataLayerHelper do
     describe "data_layer" do
       let(:class_double) { "WasteCarriersEngine::NewRegistration" }
       let(:upper_tier) { false }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CheckYourAnswersForms", type: :request do
+  RSpec.describe "CheckYourAnswersForms" do
     let(:drch_validator) { instance_double(DefraRuby::Validators::CompaniesHouseService) }
 
     before do

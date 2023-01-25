@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "UseTradingNameForms", type: :request do
+  RSpec.describe "UseTradingNameForms" do
     include_examples "GET flexible form", "use_trading_name_form"
 
     describe "POST use_trading_name_form_path" do

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CbdTypeForm, type: :model do
+  RSpec.describe CbdTypeForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:cbd_type_form) { build(:cbd_type_form, :has_required_data) }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RenewRegistrationForms", type: :request do
+  RSpec.describe "RenewRegistrationForms" do
     describe "GET new_renew_registration_form_path" do
       context "when no new registration exists" do
         it "redirects to the invalid page" do

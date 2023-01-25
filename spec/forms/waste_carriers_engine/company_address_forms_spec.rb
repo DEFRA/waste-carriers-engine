@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CompanyAddressForm, type: :model do
+  RSpec.describe CompanyAddressForm do
     before do
       stub_address_finder_service(uprn: "340116")
     end

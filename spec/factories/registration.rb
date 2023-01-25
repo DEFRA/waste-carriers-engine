@@ -39,7 +39,7 @@ FactoryBot.define do
     end
 
     trait :past_renewal_window do
-      expires_on { Time.now.to_date - Helpers::GraceWindows.current_grace_window - 1 }
+      expires_on { Time.now.to_date - Rails.configuration.grace_window - 1 }
     end
 
     trait :lower_tier do

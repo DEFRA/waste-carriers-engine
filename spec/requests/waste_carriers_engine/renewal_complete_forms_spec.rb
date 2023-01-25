@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RenewalCompleteForms", type: :request do
+  RSpec.describe "RenewalCompleteForms" do
     describe "GET new_renewal_complete_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }

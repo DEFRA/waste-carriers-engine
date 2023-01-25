@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ConstructionDemolitionForm, type: :model do
+  RSpec.describe ConstructionDemolitionForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:construction_demolition_form) { build(:construction_demolition_form, :has_required_data) }

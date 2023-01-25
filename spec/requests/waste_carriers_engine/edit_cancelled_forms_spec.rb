@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "EditCancelledForms", type: :request do
+  RSpec.describe "EditCancelledForms" do
     describe "GET new_edit_cancelled_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CopyCardsOrderCompletedForm", type: :request do
+  RSpec.describe "CopyCardsOrderCompletedForms" do
     describe "GET new_copy_cards_order_completed_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }

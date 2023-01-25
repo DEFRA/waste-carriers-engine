@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe PastRegistration, type: :model do
+  RSpec.describe PastRegistration do
     let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
     describe "build_past_registration" do

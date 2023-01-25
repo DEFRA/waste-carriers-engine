@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "ConvictionDetailsForms", type: :request do
+  RSpec.describe "ConvictionDetailsForms" do
     include_examples "GET flexible form", "conviction_details_form"
 
     describe "POST conviction_details_forms_path" do

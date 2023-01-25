@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RegistrationCompletedForms", type: :request do
+  RSpec.describe "RegistrationCompletedForms" do
     describe "GET new_registration_completed_form_path" do
       context "when no new registration exists" do
         it "redirects to the invalid page" do

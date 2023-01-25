@@ -43,11 +43,8 @@ module WasteCarriersEngine
     # adding 3 days to that date would give the impression the grace window lasts
     # till Oct 4 (i.e. 1 + 3) when in fact we need to include the 1st as one of
     # our grace window days.
-    def in_expiry_grace_window?(ignore_extended_grace_window: false)
-      last_day_of_grace_window = LastDayOfGraceWindowService.run(
-        registration: registration,
-        ignore_extended_grace_window: ignore_extended_grace_window
-      )
+    def in_expiry_grace_window?
+      last_day_of_grace_window = LastDayOfGraceWindowService.run(registration: registration)
 
       current_day_is_within_grace_window?(last_day_of_grace_window)
     end

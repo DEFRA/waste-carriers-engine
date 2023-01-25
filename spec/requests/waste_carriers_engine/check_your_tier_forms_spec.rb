@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CheckYourTierForms", type: :request do
+  RSpec.describe "CheckYourTierForms" do
     describe "GET new_check_your_tier_form_path" do
       context "when a registration is in progress" do
         let(:transient_registration) do

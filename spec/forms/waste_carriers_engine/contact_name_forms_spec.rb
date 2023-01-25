@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ContactNameForm, type: :model do
+  RSpec.describe ContactNameForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:contact_name_form) { build(:contact_name_form, :has_required_data) }

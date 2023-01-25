@@ -8,7 +8,7 @@ require "defra_ruby_companies_house"
 # the contructor for the doubled class and therefore breaks specs re the load_company exception
 # rubocop:disable RSpec/AnyInstance
 module WasteCarriersEngine
-  RSpec.describe "CheckRegisteredCompanyNameForms", type: :request do
+  RSpec.describe "CheckRegisteredCompanyNameForms" do
 
     let(:company_name) { Faker::Company.name }
     let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }

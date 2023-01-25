@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module ConvictionsCheck
-    RSpec.describe Entity, type: :model do
+    RSpec.describe Entity do
 
       describe "public interface" do
         subject(:entity) { described_class.new }

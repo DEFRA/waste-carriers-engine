@@ -4,7 +4,7 @@ require "rails_helper"
 require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
-  RSpec.describe "RenewalInformationForms", type: :request do
+  RSpec.describe "RenewalInformationForms" do
     let(:defra_ruby_companies_house) { instance_double(DefraRubyCompaniesHouse) }
 
     before do

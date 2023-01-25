@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "ContactAddressReuseForms", type: :request do
+  RSpec.describe "ContactAddressReuseForms" do
     before do
       sign_in(user)
     end

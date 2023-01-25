@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RenewingRegistration, type: :model do
+  RSpec.describe RenewingRegistration do
     subject do
       build(:renewing_registration,
             :has_required_data,

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CompanyPostcodeForm, type: :model do
+  RSpec.describe CompanyPostcodeForm do
     before do
       stub_address_finder_service
     end

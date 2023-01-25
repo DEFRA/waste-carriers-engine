@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe NewRegistration, type: :model do
+  RSpec.describe NewRegistration do
     subject(:new_registration) { build(:new_registration) }
 
     describe "scopes" do

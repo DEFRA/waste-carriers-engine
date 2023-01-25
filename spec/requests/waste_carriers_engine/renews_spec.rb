@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "Renews", type: :request do
+  RSpec.describe "Renews" do
     describe "GET renew_path" do
       context "when the renew token is valid" do
         let(:registration) { create(:registration, :has_required_data, :expires_soon) }

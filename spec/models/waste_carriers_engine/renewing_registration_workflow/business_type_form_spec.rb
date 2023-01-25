@@ -3,8 +3,8 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RenewingRegistration, type: :model do
-    subject(:renewing_registration) {  build(:renewing_registration, :has_required_data, workflow_state: "business_type_form") }
+  RSpec.describe RenewingRegistration do
+    subject(:renewing_registration) { build(:renewing_registration, :has_required_data, workflow_state: "business_type_form") }
 
     describe "#workflow_state" do
       context "with :business_type_form state transitions" do

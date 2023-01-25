@@ -106,7 +106,6 @@ module WasteCarriersEngine
 
         before do
           allow(Airbrake).to receive(:notify)
-          allow(FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return true
           allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
         end
 

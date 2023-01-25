@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe FinanceDetails, type: :model do
+  RSpec.describe FinanceDetails do
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_000)
       allow(Rails.configuration).to receive(:type_change_charge).and_return(2_500)

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe DeclarationForm, type: :model do
+  RSpec.describe DeclarationForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:declaration_form) { build(:declaration_form, :has_required_data) }

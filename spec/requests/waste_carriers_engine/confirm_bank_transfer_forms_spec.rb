@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "ConfirmBankTransferForms", type: :request do
+  RSpec.describe "ConfirmBankTransferForms" do
     include_examples "GET locked-in form", "confirm_bank_transfer_form"
 
     describe "GET new_confirm_bank_transfer_form" do

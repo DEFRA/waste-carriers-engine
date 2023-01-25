@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "YourTierForm", type: :request do
+  RSpec.describe "YourTierForm" do
     let(:new_registration) { create(:new_registration, :lower, workflow_state: "your_tier_form") }
 
     describe "GET new_your_tier_form_path" do

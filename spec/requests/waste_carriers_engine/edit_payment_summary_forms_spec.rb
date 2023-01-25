@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "EditPaymentSummaryForms", type: :request do
+  RSpec.describe "EditPaymentSummaryForms" do
     describe "GET new_edit_payment_summary_form_path" do
       context "when a user is signed in" do
         let(:user) { create(:user) }

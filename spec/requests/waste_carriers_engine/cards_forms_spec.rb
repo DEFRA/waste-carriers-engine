@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CardsForms", type: :request do
+  RSpec.describe "CardsForms" do
     include_examples "GET locked-in form", "cards_form"
 
     describe "POST cards_form_path" do

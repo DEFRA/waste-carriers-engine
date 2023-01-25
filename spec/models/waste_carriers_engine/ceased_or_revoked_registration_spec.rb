@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CeasedOrRevokedRegistration, type: :model do
+  RSpec.describe CeasedOrRevokedRegistration do
     subject(:ceased_or_revoked_registration) { build(:ceased_or_revoked_registration) }
 
     context "with default status" do

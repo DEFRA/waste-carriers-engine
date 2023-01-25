@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RenewalStartForm, type: :model do
+  RSpec.describe RenewalStartForm do
     describe "#submit" do
       let(:renewal_start_form) { build(:renewal_start_form, :has_required_data) }
       let(:valid_params) { { token: renewal_start_form.token } }

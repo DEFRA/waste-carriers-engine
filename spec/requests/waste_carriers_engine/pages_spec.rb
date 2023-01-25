@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "Pages", type: :request do
+  RSpec.describe "Pages" do
     %i[invalid os-terms permission privacy unrenewable version].each do |page|
       it "displays the correct page" do
         get page_path(page)

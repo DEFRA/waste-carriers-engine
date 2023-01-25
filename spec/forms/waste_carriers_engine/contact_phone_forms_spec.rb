@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ContactPhoneForm, type: :model do
+  RSpec.describe ContactPhoneForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:contact_phone_form) { build(:contact_phone_form, :has_required_data) }

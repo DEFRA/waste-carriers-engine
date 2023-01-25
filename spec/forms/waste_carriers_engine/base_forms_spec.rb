@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe BaseForm, type: :model do
+  RSpec.describe BaseForm do
     describe "#submit" do
       let(:base_form) { build(:base_form, :has_required_data) }
 

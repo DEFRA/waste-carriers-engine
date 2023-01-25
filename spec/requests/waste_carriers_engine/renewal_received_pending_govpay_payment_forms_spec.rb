@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RenewalReceivedPendingGovpayPaymentForms", type: :request do
+  RSpec.describe "RenewalReceivedPendingGovpayPaymentForms" do
     describe "GET new_renewal_received_pending_govpay_payment_form_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }

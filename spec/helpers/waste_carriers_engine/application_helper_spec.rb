@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe WasteCarriersEngine::ApplicationHelper, type: :helper do
+  RSpec.describe WasteCarriersEngine::ApplicationHelper do
     describe "feedback_survey_url" do
       it "returns a correctly-formatted URL" do
         expect(described_class.feedback_survey_url("foo")).to eq("https://www.smartsurvey.co.uk/s/waste-carriers/?referringpage=foo")

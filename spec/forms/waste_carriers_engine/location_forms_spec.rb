@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe LocationForm, type: :model do
+  RSpec.describe LocationForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:location_form) { build(:location_form, :has_required_data) }

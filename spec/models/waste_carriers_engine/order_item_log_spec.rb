@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe OrderItemLog, type: :model do
+  RSpec.describe OrderItemLog do
     describe "#initialize" do
 
       context "with a new registration" do

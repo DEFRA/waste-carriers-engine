@@ -4,7 +4,7 @@ require "webmock/rspec"
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "GovpayForms", type: :request do
+  RSpec.describe "GovpayForms" do
     let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
     let(:order) { transient_registration.finance_details.orders.first }
     let(:order_key) { "#{Rails.configuration.govpay_merchant_code}^#{order.order_code}" }
@@ -17,7 +17,6 @@ module WasteCarriersEngine
 
       # TODO: Remove these when the feature flag is no longer required
       allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
-      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(true)
       allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
     end
 
@@ -101,7 +100,6 @@ module WasteCarriersEngine
 
           before do
             allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
-            allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:use_extended_grace_window).and_return(true)
             allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
             stub_request(:any, %r{.*#{govpay_host}/payments}).to_return(
               status: 200,

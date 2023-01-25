@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe IncorrectCompanyForm, type: :model do
+  RSpec.describe IncorrectCompanyForm do
     describe "#submit" do
       let(:incorrect_company_form) { build(:incorrect_company_form, :has_required_data) }
 

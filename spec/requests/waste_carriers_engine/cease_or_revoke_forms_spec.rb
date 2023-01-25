@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CeaseOrRevokeForms", type: :request do
+  RSpec.describe "CeaseOrRevokeForms" do
     describe "GET new_cease_or_revoke_form_path" do
       context "when a user is signed in" do
         let(:user) { create(:user) }

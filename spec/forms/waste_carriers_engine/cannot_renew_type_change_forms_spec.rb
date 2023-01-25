@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CannotRenewTypeChangeForm, type: :model do
+  RSpec.describe CannotRenewTypeChangeForm do
     describe "#workflow_state" do
       it_behaves_like "a fixed final state",
                       current_state: :cannot_renew_type_change_form,

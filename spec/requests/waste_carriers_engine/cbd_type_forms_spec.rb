@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "CbdTypeForms", type: :request do
+  RSpec.describe "CbdTypeForms" do
     include_examples "GET flexible form", "cbd_type_form"
 
     describe "POST cbd_type_form_path" do

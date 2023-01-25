@@ -46,6 +46,14 @@ group :development, :test do
 end
 
 group :development do
+  # Allows us to automatically generate the change log from the tags, issues,
+  # labels and pull requests on GitHub. Added as a dependency so all dev's have
+  # access to it to generate a log, and so they are using the same version.
+  # New dev's should first create GitHub personal app token and add it to their
+  # ~/.bash_profile (or equivalent)
+  # https://github.com/skywinder/github-changelog-generator#github-token
+  gem "github_changelog_generator"
+
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem "web-console"
 

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe Payment, type: :model do
+  RSpec.describe Payment do
     let(:transient_registration) { build(:renewing_registration, :has_required_data) }
     let(:current_user) { build(:user) }
 

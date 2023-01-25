@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "PaymentSummaryForms", type: :request do
+  RSpec.describe "PaymentSummaryForms" do
     include_examples "GET locked-in form", "payment_summary_form"
 
     describe "POST payment_summary_form_path" do

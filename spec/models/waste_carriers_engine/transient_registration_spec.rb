@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe TransientRegistration, type: :model do
+  RSpec.describe TransientRegistration do
     let(:transient_registration) { create(:transient_registration, :has_required_data, metaData: build(:metaData, :has_required_data)) }
 
     describe "#initialize" do

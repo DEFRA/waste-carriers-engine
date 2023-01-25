@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "IncorrectCompanyForms", type: :request do
+  RSpec.describe "IncorrectCompanyForms" do
     include_examples "GET flexible form", "incorrect_company_form"
 
     describe "POST incorrect_company_form_path" do

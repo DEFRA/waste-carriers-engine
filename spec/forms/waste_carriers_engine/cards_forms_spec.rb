@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CardsForm, type: :model do
+  RSpec.describe CardsForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:cards_form) { build(:cards_form, :has_required_data) }

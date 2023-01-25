@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "TransientRegistration", type: :request do
+  RSpec.describe "TransientRegistration" do
     describe "GET delete_transient_registration_path" do
       context "when a valid user is signed in" do
         let(:user) { create(:user) }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe CompanyAddressManualForm, type: :model do
+  RSpec.describe CompanyAddressManualForm do
     describe "#initialize" do
       context "when the transient registration has an address already" do
         let(:company_address) { build(:address, :registered, :has_required_data) }

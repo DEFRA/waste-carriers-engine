@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe OrderItem, type: :model do
+  RSpec.describe OrderItem do
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_000)
       allow(Rails.configuration).to receive(:new_registration_charge).and_return(12_000)

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RegistrationReceivedPendingWorldpayPaymentForm", type: :request do
+  RSpec.describe "RegistrationReceivedPendingWorldpayPaymentForms" do
     describe "GET new_registration_received_pending_worldpay_payment_form_path" do
       context "when no new registration exists" do
         it "redirects to the invalid page" do

@@ -4,7 +4,7 @@ require "rails_helper"
 require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
-  RSpec.describe UseTradingNameForm, type: :model do
+  RSpec.describe UseTradingNameForm do
 
     describe "#submit" do
       let(:use_trading_name_form) { build(:use_trading_name_form, :new_registration, :has_required_data) }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe RenewalReceivedPendingPaymentForm, type: :model do
+  RSpec.describe RenewalReceivedPendingPaymentForm do
     describe "#workflow_state" do
       it_behaves_like "a fixed final state",
                       current_state: :renewal_received_pending_payment_form,

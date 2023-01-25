@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "RenewalStartForms", type: :request do
+  RSpec.describe "RenewalStartForms" do
     describe "GET new_renewal_start_form_path" do
       context "when a user is signed in" do
         let(:user) { create(:user) }
@@ -37,7 +37,7 @@ module WasteCarriersEngine
               end
 
               context "when the registration cannot be renewed" do
-                before { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
+                before { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
 
                 it "redirects to the unrenewable error page" do
                   get new_renewal_start_form_path(registration.reg_identifier)
@@ -230,7 +230,7 @@ module WasteCarriersEngine
                 end
 
                 context "when the registration cannot be renewed" do
-                  before { registration.update_attributes(expires_on: Date.today - Helpers::GraceWindows.current_grace_window) }
+                  before { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
 
                   it "redirects to the unrenewable error page" do
                     get new_renewal_start_form_path(valid_registration)

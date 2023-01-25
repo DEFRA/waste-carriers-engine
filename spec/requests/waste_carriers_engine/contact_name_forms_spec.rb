@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "ContactNameForms", type: :request do
+  RSpec.describe "ContactNameForms" do
     include_examples "GET flexible form", "contact_name_form"
 
     describe "POST contact_name_form_path" do

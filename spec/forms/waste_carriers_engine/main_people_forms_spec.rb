@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe MainPeopleForm, type: :model do
+  RSpec.describe MainPeopleForm do
     describe "#submit" do
       let(:main_people_form) { build(:main_people_form, :has_required_data) }
 
@@ -139,7 +139,7 @@ module WasteCarriersEngine
 
         context "when a first name contains a special character" do
           it "is not valid" do
-            "!@€\#£$%^&*()[]{}?\":;~<>/\\+=".each_char do |c|
+            "!@€#£$%^&*()[]{}?\":;~<>/\\+=".each_char do |c|
               main_people_form.first_name = "ab#{c}123"
               expect(main_people_form).not_to be_valid
             end
@@ -172,7 +172,7 @@ module WasteCarriersEngine
 
         context "when a last name contains a special character" do
           it "is not valid" do
-            "!@€\#£$%^&*()[]{}?\":;~<>/\\+=".each_char do |c|
+            "!@€#£$%^&*()[]{}?\":;~<>/\\+=".each_char do |c|
               main_people_form.last_name = "ab#{c}123"
               expect(main_people_form).not_to be_valid
             end

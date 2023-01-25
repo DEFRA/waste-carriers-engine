@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe ServiceProvidedForm, type: :model do
+  RSpec.describe ServiceProvidedForm do
     describe "#submit" do
       context "when the form is valid" do
         let(:service_provided_form) { build(:service_provided_form, :has_required_data) }

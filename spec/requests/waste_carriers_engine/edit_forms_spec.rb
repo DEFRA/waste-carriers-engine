@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe "EditForms", type: :request do
+  RSpec.describe "EditForms" do
     describe "GET new_edit_form_path" do
       context "when a user is signed in" do
         let(:user) { create(:user) }
