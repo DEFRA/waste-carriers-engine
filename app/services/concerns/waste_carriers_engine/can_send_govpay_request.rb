@@ -22,7 +22,7 @@ module WasteCarriersEngine
           response = RestClient::Request.execute(
             method: method,
             url: url(path),
-            payload: params.present? ? params.except(:amount).to_json : nil,
+            payload: params.present? ? params.compact.to_json : nil,
             headers: {
               "Authorization" => "Bearer #{bearer_token}",
               "Content-Type" => "application/json"
