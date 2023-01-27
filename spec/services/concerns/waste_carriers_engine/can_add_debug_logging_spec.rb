@@ -13,7 +13,7 @@ module WasteCarriersEngine
 
       let(:transient_registration) { create(:new_registration, :has_required_data) }
 
-      subject(:log_details) { DebugClass.new.log_transient_registration_details("foo", transient_registration) }
+      subject(:log_details) { DebugClass.new.log_transient_registration_details("foo", nil, transient_registration) }
 
       before do
         allow(Airbrake).to receive(:notify)
