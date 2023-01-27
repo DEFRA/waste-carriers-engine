@@ -19,7 +19,6 @@ module WasteCarriersEngine
                                isMainService
                                constructionWaste
                                onlyAMF
-                               addresses
                                key_people
                                financeDetails
                                declaredConvictions
