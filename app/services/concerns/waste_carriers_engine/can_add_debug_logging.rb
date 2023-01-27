@@ -10,22 +10,22 @@ module WasteCarriersEngine
 
       details = { backtrace: exception.backtrace }
       if transient_registration.nil?
-                  details.merge!({ transient_registration: nil })
-                else
-                details.merge!({ type: transient_registration.class.to_s,
-                    reg_identifier: transient_registration.reg_identifier,
-                    from_magic_link: from_magic_link(transient_registration),
-                    workflow_state: transient_registration.workflow_state,
-                    workflow_history: transient_registration.workflow_history.to_s,
-                    tier: transient_registration.tier,
-                    account_email: transient_registration.account_email,
-                    expires_on: transient_registration.expires_on,
-                    renew_token: renew_token(transient_registration),
-                    "metaData.route": transient_registration.metaData.route,
-                    created_at: transient_registration.created_at,
-                    orders: transient_registration.finance_details&.orders.to_s,
-                    payments: transient_registration.finance_details&.payments.to_s })
-                end
+        details.merge!({ transient_registration: nil })
+      else
+        details.merge!({ type: transient_registration.class.to_s,
+                         reg_identifier: transient_registration.reg_identifier,
+                         from_magic_link: from_magic_link(transient_registration),
+                         workflow_state: transient_registration.workflow_state,
+                         workflow_history: transient_registration.workflow_history.to_s,
+                         tier: transient_registration.tier,
+                         account_email: transient_registration.account_email,
+                         expires_on: transient_registration.expires_on,
+                         renew_token: renew_token(transient_registration),
+                         "metaData.route": transient_registration.metaData.route,
+                         created_at: transient_registration.created_at,
+                         orders: transient_registration.finance_details&.orders.to_s,
+                         payments: transient_registration.finance_details&.payments.to_s })
+      end
       Airbrake.notify(StandardError.new(description), details)
       Rails.logger.warn "#{description}: #{details}"
 
