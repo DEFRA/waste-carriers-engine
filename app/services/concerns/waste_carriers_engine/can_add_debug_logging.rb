@@ -8,7 +8,7 @@ module WasteCarriersEngine
     def log_transient_registration_details(description, exception, transient_registration)
       return unless FeatureToggle.active?(:additional_debug_logging)
 
-      details = { backtrace: exception.backtrace }
+      details = { backtrace: exception&.backtrace }
       if transient_registration.nil?
         details.merge!({ transient_registration: nil })
       else

@@ -52,6 +52,23 @@ module WasteCarriersEngine
         expect(new_registration_scope.to_a).to be_empty
       end
 
+      context "when the activation service raises an exception" do
+        let(:registration_completion_service) { described_class.new }
+        let(:activation_service_instance) { instance_double(RegistrationActivationService) }
+
+        before do
+          allow(registration_completion_service).to receive(:log_transient_registration_details)
+          allow(RegistrationActivationService).to receive(:new).and_return(activation_service_instance)
+          allow(activation_service_instance).to receive(:run).and_raise(StandardError)
+        end
+
+        it "logs the transient registration details" do
+          registration_completion_service.run(transient_registration)
+
+          expect(registration_completion_service).to have_received(:log_transient_registration_details)
+        end
+      end
+
       context "when the registration is a lower tier registration" do
         let(:transient_registration) do
           create(
