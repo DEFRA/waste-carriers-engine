@@ -106,9 +106,11 @@ module WasteCarriersEngine
           end
 
           it "does not update the transient registration, returns a 302 response and redirects to the correct form for the state" do
+            old_registered_address = transient_registration.registered_address
+
             post company_address_forms_path(transient_registration.token), params: { company_address_form: valid_params }
 
-            expect(transient_registration.reload.addresses.count).to eq(0)
+            expect(transient_registration.reload.registered_address).to eq old_registered_address
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_renewal_start_form_path(transient_registration.token))
           end

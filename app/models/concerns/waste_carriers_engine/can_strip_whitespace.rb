@@ -34,6 +34,8 @@ module WasteCarriersEngine
 
     def strip_array(array)
       array.each do |nested_object|
+        return nested_object if nested_object.is_a? BSON::Document
+
         strip_whitespace(nested_object.attributes)
       end
     end

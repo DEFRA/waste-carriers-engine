@@ -12,8 +12,9 @@ module WasteCarriersEngine
     describe "#log_transient_registration_details" do
 
       let(:transient_registration) { create(:new_registration, :has_required_data) }
+      let(:standard_error) { StandardError.new }
 
-      subject(:log_details) { DebugClass.new.log_transient_registration_details("foo", transient_registration) }
+      subject(:log_details) { DebugClass.new.log_transient_registration_details("foo", standard_error, transient_registration) }
 
       before do
         allow(Airbrake).to receive(:notify)
@@ -31,6 +32,24 @@ module WasteCarriersEngine
         it "logs an error" do
           log_details
           expect(Airbrake).to have_received(:notify)
+        end
+      end
+
+      context "with an exception" do
+        it "sends the exception backtrace to Airbrake" do
+          raise standard_error
+        rescue StandardError
+          log_details
+          # The parameters array should include a backtrace entry which includes the name of this spec file
+          expect(Airbrake).to have_received(:notify)
+            .with(
+              instance_of(StandardError),
+              hash_including(
+                backtrace: array_including(
+                  match(/#{File.basename(__FILE__)}/)
+                )
+              )
+            )
         end
       end
 

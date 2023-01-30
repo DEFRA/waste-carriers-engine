@@ -24,6 +24,7 @@ module WasteCarriersEngine
       unless user.present?
         log_transient_registration_details(
           "Permissions check requested for nil user, action: #{action}",
+          nil,
           @transient_registration
         )
       end

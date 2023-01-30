@@ -31,8 +31,8 @@ module WasteCarriersEngine
           respond_to_unsuccessful_payment(govpay_payment_status)
         end
       end
-    rescue ArgumentError
-      log_transient_registration_details("Invalid payment uuid in payment callback", @transient_registration)
+    rescue ArgumentError => e
+      log_transient_registration_details("Invalid payment uuid in payment callback", e, @transient_registration)
       Rails.logger.warn "Govpay payment callback error: invalid payment uuid \"#{params[:uuid]}\""
       Airbrake.notify("Govpay callback error: Invalid payment uuid", payment_uuid: params[:uuid])
       flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.internal_error")
