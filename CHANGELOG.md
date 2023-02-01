@@ -391,6 +391,9 @@
 
 **Fixed bugs:**
 
+- transient registration addresses [\#1317](https://github.com/DEFRA/waste-carriers-engine/pull/1317) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix govpay 400 error [\#1315](https://github.com/DEFRA/waste-carriers-engine/pull/1315) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Govpay refunds error logging [\#1288](https://github.com/DEFRA/waste-carriers-engine/pull/1288) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Govpay error debug logging [\#1284](https://github.com/DEFRA/waste-carriers-engine/pull/1284) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Overseas company numbers [\#1282](https://github.com/DEFRA/waste-carriers-engine/pull/1282) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Revert "EPR pending convictions check" [\#1279](https://github.com/DEFRA/waste-carriers-engine/pull/1279) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -620,6 +623,11 @@
 
 **Merged pull requests:**
 
+- Bump countries from 5.3.0 to 5.3.1 [\#1316](https://github.com/DEFRA/waste-carriers-engine/pull/1316) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Remove covid grace window logic, update gems and fix rubocop warnings [\#1305](https://github.com/DEFRA/waste-carriers-engine/pull/1305) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Handle uncaught exceptions [\#1291](https://github.com/DEFRA/waste-carriers-engine/pull/1291) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Allow Errbit env name to be set [\#1290](https://github.com/DEFRA/waste-carriers-engine/pull/1290) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Update CHANGELOG [\#1287](https://github.com/DEFRA/waste-carriers-engine/pull/1287) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Update CHANGELOG [\#1283](https://github.com/DEFRA/waste-carriers-engine/pull/1283) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Use info-level logging for govpay [\#1280](https://github.com/DEFRA/waste-carriers-engine/pull/1280) ([endofunky](https://github.com/endofunky))
 - Adjust NOTIFY\_API\_KEY lookup [\#1273](https://github.com/DEFRA/waste-carriers-engine/pull/1273) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
