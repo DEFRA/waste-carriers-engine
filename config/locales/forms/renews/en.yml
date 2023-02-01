@@ -2,21 +2,32 @@ en:
   waste_carriers_engine:
     renews:
       already_renewed:
-        title: "That registration has already been renewed"
-        heading: "That registration has already been renewed"
-        paragraph1: "Our records show that registration %{reg_identifier} has already been renewed."
+        title: That registration has already been renewed
+        heading: That registration has already been renewed
+        paragraph1: Our records show that registration %{reg_identifier} has already been renewed.
         paragraph2_html: "If you still need to register as a waste carrier, broker or dealer then <a href=\"%{link_to_new_registration}\">make a new registration.</a>"
-        paragraph3: "If you want to discuss this registration, contact the Environment Agency. You will need your registration number."
+        paragraph3: If you want to discuss this registration, contact the Environment Agency. You will need your registration number.
         paragraph4_html: "Environment Agency helpline: 03708 506 506 (Monday to Friday, 8am to 6pm) <a href=\"mailto:nccc-carrierbroker@environment-agency.gov.uk\">nccc-carrierbroker@environment-agency.gov.uk</a>"
       past_renewal_window:
-        title: "This registration has expired"
-        heading: "This registration has expired"
-        paragraph1: "Your registration has expired so you cannot renew."
-        register_again: "Register again"
+        title: This registration has expired
+        heading: This registration has expired
+        paragraph1: Your registration has expired so you cannot renew.
+        register_again: Register again
       invalid_magic_link:
-        title: "We cannot find that renewal"
-        heading: "We cannot find that renewal"
+        title: We cannot find that renewal
+        heading: We cannot find that renewal
         paragraph1: "Things to try:"
-        point1: "Go back to your email and follow the link again."
-        point2: "Copy the whole link from the email and paste it into your web browser. Make sure that you include all of the characters at the end of the link."
+        point1: Go back to your email and follow the link again.
+        point2: Copy the whole link from the email and paste it into your web browser. Make sure that you include all of the characters at the end of the link.
         point3_html: "If that does not work, <a href=\"%{link_to_new_registration}\">start a new registration</a>."
+    deregisters:
+      deregistration_link_expired:
+        title: This link has expired. We will send a new link to your contact email address.
+        heading: This link has expired. We will send a new link to your contact email address.
+        paragraph1: You can close this window.
+      already_ceased:
+        title: This link has already been cancelled
+        heading: This link has already been cancelled
+      invalid_deregistration_link:
+        title: Invalid Deregistration Link
+        heading: Development Placeholder Heading

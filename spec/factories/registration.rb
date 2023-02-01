@@ -126,6 +126,10 @@ FactoryBot.define do
       metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
     end
 
+    trait :is_inactive do
+      metaData { build(:metaData, :has_required_data, status: :INACTIVE) }
+    end
+
     trait :is_revoked do
       metaData { build(:metaData, :has_required_data, status: :REVOKED) }
     end
