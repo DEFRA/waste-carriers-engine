@@ -91,7 +91,7 @@ module WasteCarriersEngine
 
     describe "prepare_for_payment" do
       context "when the request is valid" do
-        let(:root) { Rails.configuration.wcrs_renewals_url }
+        let(:root) { Rails.configuration.wcrs_fo_link_domain }
         let(:reg_id) { transient_registration.reg_identifier }
         let(:worldpay_url_service) { instance_double(WorldpayUrlService) }
 

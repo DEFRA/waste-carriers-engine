@@ -5,6 +5,7 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanCheckRegistrationStatus
     include CanFilterConvictionStatus
+    include CanHaveDeregistrationToken
     include CanHaveRegistrationAttributes
     include CanPresentEntityDisplayName
     include CanUseLock
