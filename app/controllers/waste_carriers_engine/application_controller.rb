@@ -17,7 +17,7 @@ module WasteCarriersEngine
       Airbrake.notify e
       Rails.logger.error "Unhandled exception: #{e}"
       log_transient_registration_details("Uncaught system error", e, @transient_registration)
-      redirect_to "/bo/pages/system_error"
+      redirect_to page_path("system_error")
     end
 
   end

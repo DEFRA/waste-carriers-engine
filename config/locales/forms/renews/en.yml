@@ -26,8 +26,10 @@ en:
         heading: This link has expired. We will send a new link to your contact email address.
         paragraph1: You can close this window.
       already_ceased:
-        title: This link has already been cancelled
-        heading: This link has already been cancelled
+        title: This link has already been used. Your registration is no longer active.
+        heading: This link has already been used. Your registration is no longer active.
+        paragraph1: You can close this window.
       invalid_deregistration_link:
-        title: Invalid Deregistration Link
-        heading: Development Placeholder Heading
+        title: There is a problem with this registration.
+        heading: There is a problem with this registration.
+        paragraph1: Make sure the link is correctly copied. You can close this window.
