@@ -3,7 +3,9 @@
 module WasteCarriersEngine
   class DeregistrationConfirmationFormsController < WasteCarriersEngine::FormsController
 
-    def new; end
+    def new
+      # TODO: implement later
+    end
 
     private
 
