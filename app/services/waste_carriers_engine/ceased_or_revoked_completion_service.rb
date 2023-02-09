@@ -2,11 +2,12 @@
 
 module WasteCarriersEngine
   class CeasedOrRevokedCompletionService < BaseService
-    attr_reader :transient_registration, :registration
+    attr_reader :transient_registration, :registration, :current_user
 
-    def run(transient_registration)
+    def run(transient_registration:, user:)
       @transient_registration = transient_registration
       @registration = transient_registration.registration
+      @current_user = user
 
       merge_metadata
       destroy_transient_object
@@ -19,10 +20,12 @@ module WasteCarriersEngine
     end
 
     def merge_metadata
-      registration.metaData.status = @transient_registration.metaData.status
-      registration.metaData.revoked_reason = @transient_registration.metaData.revoked_reason
-
-      registration.save!
+      RegistrationDeactivationService.run(
+        registration:,
+        reason: transient_registration.metaData.revoked_reason,
+        email: current_user&.email,
+        status: transient_registration.metaData.status
+      )
     end
   end
 end
