@@ -32,7 +32,7 @@ module WasteCarriersEngine
         end
 
         it "redirects to the deregistration start form" do
-          expect(response).to redirect_to(new_deregistration_confirmation_form_path(registration.deregistration_token))
+          expect(response).to redirect_to(new_deregistration_confirmation_form_path(registration.reg_identifier))
         end
 
         context "when the token has expired" do

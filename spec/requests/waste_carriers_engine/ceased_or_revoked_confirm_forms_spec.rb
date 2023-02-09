@@ -75,6 +75,8 @@ module WasteCarriersEngine
           end
 
           context "when the workflow_state is correct" do
+            before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true) }
+
             it "deletes the transient object, copy data to the registration, redirects to the main dashboard page" do
               registration = transient_registration.registration
 

@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :deregistration_confirmation_form, class: "WasteCarriersEngine::DeregistrationConfirmationForm" do
-    trait :has_required_data do
-      initialize_with { new(create(:registration)) }
+    initialize_with do
+      new(create(:deregistering_registration))
     end
   end
 end
