@@ -4,13 +4,29 @@ module WasteCarriersEngine
   class DeregistrationConfirmationFormsController < WasteCarriersEngine::FormsController
 
     def new
-      # TODO: implement later
+      super(DeregistrationConfirmationForm, "deregistration_confirmation_form")
+    end
+
+    def create
+      find_or_initialize_transient_registration(params[:token])
+
+      return unless super(DeregistrationConfirmationForm, "deregistration_confirmation_form")
+
+      return unless transient_registration_attributes[:temp_confirm_deregistration] == "yes"
+
+      RegistrationDeactivationService.run(registration: @transient_registration.registration)
     end
 
     private
 
-    def validate_token
-      redirect_to(page_path("invalid")) unless Registration.where(deregistration_token: params[:token]).first.present?
+    def find_or_initialize_transient_registration(token)
+      @transient_registration = DeregisteringRegistration.where(reg_identifier: token).first ||
+                                DeregisteringRegistration.where(token: token).first ||
+                                DeregisteringRegistration.new(reg_identifier: token)
+    end
+
+    def transient_registration_attributes
+      params.fetch(:deregistration_confirmation_form, {}).permit(:temp_confirm_deregistration)
     end
   end
 end

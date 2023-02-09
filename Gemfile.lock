@@ -23,7 +23,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.4.0)
+    aasm (5.5.0)
       concurrent-ruby (~> 1.0)
     actioncable (6.1.7.2)
       actionpack (= 6.1.7.2)
@@ -166,7 +166,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (3.1.0)
+    faker (3.1.1)
       i18n (>= 1.8.11, < 2)
     faraday (1.7.0)
       faraday-em_http (~> 1.0)

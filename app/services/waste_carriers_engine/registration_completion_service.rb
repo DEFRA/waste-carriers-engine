@@ -130,6 +130,7 @@ module WasteCarriersEngine
         "temp_lookup_number",
         "temp_tier_check",
         "temp_check_your_tier",
+        "temp_confirm_deregistration",
         "temp_reuse_registered_address",
         "temp_use_registered_company_details",
         "temp_use_trading_name",

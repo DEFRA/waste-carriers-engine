@@ -196,6 +196,11 @@ WasteCarriersEngine::Engine.routes.draw do
               only: %i[new create],
               path: "deregistration-confirmation",
               path_names: { new: "" }
+
+    resources :deregistration_complete_forms,
+              only: %i[new create],
+              path: "deregistration-complete",
+              path_names: { new: "" }
     # End of deregistration flow
 
     resources :renewal_start_forms,

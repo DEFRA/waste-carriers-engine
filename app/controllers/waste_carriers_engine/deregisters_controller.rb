@@ -6,7 +6,7 @@ module WasteCarriersEngine
     before_action :validate_deregistration_token
 
     def new
-      redirect_to new_deregistration_confirmation_form_path(registration.deregistration_token)
+      redirect_to new_deregistration_confirmation_form_path(registration.reg_identifier)
     end
 
     private

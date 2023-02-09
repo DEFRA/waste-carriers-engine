@@ -15,7 +15,7 @@ module WasteCarriersEngine
         state :deregistration_complete_form
         state :start_form
 
-        event :next, guards: [:log_state] do
+        event :next do
           transitions from: :deregistration_confirmation_form, to: :deregistration_complete_form,
                       if: :confirm_deregistration?
 

@@ -59,3 +59,5 @@ en:
   unrenewable_title: Cannot renew registration
   unrenewable_heading: This registration cannot be renewed
   unrenewable_text: You can only renew registrations which are currently active and are due to expire within the next %{months} months.
+
+  front_office_deactivation_reason: Ceased by user %{email}

@@ -1,0 +1,11 @@
+en:
+  waste_carriers_engine:
+    deregistration_complete_forms:
+      new:
+        title: Deregistration complete
+        heading: Deregistration complete
+        highlight_text: The registration %{reg_id} is now inactive and will be removed from the public register
+        subheading_1: What will happen next
+        paragraph_1: We have sent a confirmation email to %{email}.
+        paragraph_2: Your lower tier waste carrier registration has been cancelled and your registration is now inactive.
+        paragraph_3: We will remove your registration from the public register, this could take up to 24 hours.
