@@ -1,5 +1,40 @@
+<% heading = t(".heading", company_name: @transient_registration.company_name).html_safe %>
+
+<% content_for :title, heading %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    Development Placeholder: deregistration_confirmation_form
+
+    <h1 class="govuk-heading-l">
+      <%= heading %>
+    </h1>
+    <legend class="govuk-visually-hidden">
+      <%= heading %>
+    </legend>
+    
+    <%= form_for @deregistration_confirmation_form do |f| %>
+      <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
+
+        <%= 
+          f.govuk_collection_radio_buttons :temp_confirm_deregistration,
+          [
+            OpenStruct.new(
+                     id: "yes",
+                     name: t(".options.yes")
+                   ),
+            OpenStruct.new(
+                      id: "no",
+                      name: t(".options.no")
+            )
+          ],
+          :id,
+          :name,
+          inline: true,
+          legend: -> do %>
+
+        <% end %>
+      <%= f.govuk_submit t(".next_button") %>
+    <% end %>
+
   </div>
 </div>

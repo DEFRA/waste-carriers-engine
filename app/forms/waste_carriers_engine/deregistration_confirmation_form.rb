@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class DeregistrationConfirmationForm
+  class DeregistrationConfirmationForm < WasteCarriersEngine::BaseForm
+    include CannotGoBackForm
 
-    def new
-      render text: "Placeholder deregistration start form"
+    delegate :temp_confirm_deregistration, to: :transient_registration
+
+    validates :temp_confirm_deregistration, inclusion: { in: %w[yes no] }
+
+    def self.can_navigate_flexibly?
+      false
     end
 
-    def submit
-      true
-    end
   end
 end
