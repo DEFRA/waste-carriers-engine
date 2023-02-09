@@ -12,17 +12,17 @@ module WasteCarriersEngine
 
       return unless super(DeregistrationConfirmationForm, "deregistration_confirmation_form")
 
-      return unless transient_registration_attributes[:temp_confirm_deregistration] == "yes"
-
-      RegistrationDeactivationService.run(registration: @transient_registration.registration)
+      if transient_registration_attributes[:temp_confirm_deregistration] == "yes"
+        RegistrationDeactivationService.run(registration: @transient_registration.registration)
+      else
+        @transient_registration.destroy!
+      end
     end
 
     private
 
     def find_or_initialize_transient_registration(token)
-      @transient_registration = DeregisteringRegistration.where(reg_identifier: token).first ||
-                                DeregisteringRegistration.where(token: token).first ||
-                                DeregisteringRegistration.new(reg_identifier: token)
+      @transient_registration = DeregisteringRegistration.new(reg_identifier: token)
     end
 
     def transient_registration_attributes
