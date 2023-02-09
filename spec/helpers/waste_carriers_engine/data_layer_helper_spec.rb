@@ -67,6 +67,16 @@ module WasteCarriersEngine
           end
         end
 
+        context "when the transient_registration is a DeregisteringRegistration" do
+          let(:class_double) { "WasteCarriersEngine::DeregisteringRegistration" }
+
+          it "returns the correct value" do
+            expected_string = "'journey': 'deregister'"
+
+            expect(helper.data_layer(transient_registration)).to include(expected_string)
+          end
+        end
+
         context "when the transient_registration is a RenewingRegistration" do
           let(:class_double) { "WasteCarriersEngine::RenewingRegistration" }
 

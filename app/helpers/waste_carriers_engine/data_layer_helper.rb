@@ -37,6 +37,8 @@ module WasteCarriersEngine
         :order_copy_cards
       when "WasteCarriersEngine::RenewingRegistration"
         :renew
+      when "WasteCarriersEngine::DeregisteringRegistration"
+        :deregister
       else
         raise UnexpectedSubtypeError, "No user journey found for #{subtype_name}"
       end
