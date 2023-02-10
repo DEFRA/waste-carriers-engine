@@ -21,13 +21,13 @@ module WasteCarriersEngine
 
     private
 
-    def find_or_initialize_transient_registration(token)
-      @transient_registration = DeregisteringRegistration.where(token: token).first
+    def find_or_initialize_transient_registration(reg_identifier)
+      @transient_registration = DeregisteringRegistration.where(reg_identifier: reg_identifier).first
       if @transient_registration.present?
         # If a DeregisteringRegistration already exists, reset its workflow state to the beginning
         @transient_registration.update_attributes(workflow_state: "deregistration_confirmation_form")
       else
-        @transient_registration = DeregisteringRegistration.new(token: token)
+        @transient_registration = DeregisteringRegistration.new(reg_identifier: reg_identifier)
       end
     end
 

@@ -20,7 +20,7 @@ module WasteCarriersEngine
 
       subject(:submit_form) do
         post_form_with_params(:deregistration_confirmation_form,
-                              transient_registration.token,
+                              transient_registration.reg_identifier,
                               { temp_confirm_deregistration: selected_option })
       end
 
