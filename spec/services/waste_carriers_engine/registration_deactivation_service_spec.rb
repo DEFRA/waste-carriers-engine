@@ -51,42 +51,6 @@ module WasteCarriersEngine
           end
         end
       end
-
-      context "when run in the back office" do
-        before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true) }
-
-        it "saves the user's email address"
-        it "saves the provided revoked_reason"
-        it "set status to the provided status"
-        it "sets deactivation_route to BACK OFFICE"
-        it "stores the deactivation time"
-      end
-
-      # before do
-      #   allow(transient_registration).to receive(:registration).and_return(registration)
-      #   allow(transient_registration).to receive(:metaData).and_return(transient_registration_metadata)
-      #   allow(transient_registration_metadata).to receive(:status).and_return(status)
-      #   allow(transient_registration_metadata).to receive(:revoked_reason).and_return(revoked_reason)
-      #   allow(transient_registration).to receive(:destroy)
-
-      #   allow(registration_metadata).to receive(:status=)
-      #   allow(registration_metadata).to receive(:revoked_reason=)
-
-      #   allow(registration).to receive(:metaData).and_return(registration_metadata)
-      #   allow(registration).to receive(:save!)
-      # end
-
-      # it "copies metadata from transient object to registration" do
-
-      #   described_class.run(transient_registration)
-
-      #   expect(registration_metadata).to have_received(:status=).with(status)
-      #   expect(registration_metadata).to have_received(:revoked_reason=).with(revoked_reason)
-
-      #   expect(transient_registration).to have_received(:destroy)
-      #   expect(registration).to have_received(:save!)
-
-      # end
     end
   end
 end
