@@ -18,6 +18,7 @@ module WasteCarriersEngine
     field :revokedReason, as: :revoked_reason,         type: String
     field :deactivatedBy, as: :deactivated_by,         type: String
     field :deactivationRoute, as: :deactivation_route, type: String
+    field :distance,                                   type: String
 
     validates :status, presence: true
 
