@@ -19,6 +19,8 @@ module WasteCarriersEngine
       @status = status
 
       set_metadata
+
+      send_confirmation_email unless WasteCarriersEngine.configuration.host_is_back_office?
     end
 
     private
@@ -40,6 +42,10 @@ module WasteCarriersEngine
       registration.metaData.dateDeactivated = Time.zone.now
 
       registration.save!
+    end
+
+    def send_confirmation_email
+      Notify::DeregistrationConfirmationEmailService.run(registration: registration)
     end
   end
 end

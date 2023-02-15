@@ -7,6 +7,7 @@ module WasteCarriersEngine
 
     let(:transient_registration) { create(:deregistering_registration, workflow_state: "deregistration_confirmation_form") }
     let(:original_registration) { transient_registration.registration }
+    let(:email_service) { instance_double(Notify::DeregistrationConfirmationEmailService) }
 
     describe "GET new_deregister_confirmation_form_path" do
       it "loads the form" do
@@ -17,6 +18,11 @@ module WasteCarriersEngine
     end
 
     describe "POST deregister_confirmation_forms_path" do
+
+      before do
+        allow(Notify::DeregistrationConfirmationEmailService).to receive(:new).and_return(email_service)
+        allow(email_service).to receive(:run)
+      end
 
       subject(:submit_form) do
         post_form_with_params(:deregistration_confirmation_form,
