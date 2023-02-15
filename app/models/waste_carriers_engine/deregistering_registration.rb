@@ -11,8 +11,6 @@ module WasteCarriersEngine
     field :temp_confirm_deregistration, type: String
 
     def registration
-      Rails.logger.warn "\n>>>>> getting registration, reg_identifier: \"#{reg_identifier}\""
-      Rails.logger.warn ">>>>> called from #{caller}\n"
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
     end
 

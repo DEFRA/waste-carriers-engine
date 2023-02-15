@@ -21,7 +21,7 @@ module WasteCarriersEngine
                          account_email: transient_registration.account_email,
                          expires_on: transient_registration.expires_on,
                          renew_token: renew_token(transient_registration),
-                         "metaData.route": transient_registration.metaData.route,
+                         "metaData.route": transient_registration.metaData&.route,
                          created_at: transient_registration.created_at,
                          orders: transient_registration.finance_details&.orders.to_s,
                          payments: transient_registration.finance_details&.payments.to_s })
