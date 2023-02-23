@@ -13,6 +13,7 @@ module WasteCarriersEngine
     field :mac_code,                                              type: String
     field :uuid,                                                  type: String
     field :govpay_id,                                             type: String
+    field :moto,                                                  type: Boolean, default: false
     field :dateReceived, as: :date_received,                      type: Date
     field :dateEntered, as: :date_entered,                        type: DateTime
     field :dateReceived_year, as: :date_received_year,            type: Integer
@@ -78,10 +79,12 @@ module WasteCarriersEngine
       payment
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update_after_online_payment(params)
       if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
         self.govpay_payment_status = params[:govpay_status]
         self.govpay_id = params[:govpay_id]
+        self.moto = WasteCarriersEngine.configuration.host_is_back_office?
       else
         self.world_pay_payment_status = params[:paymentStatus]
         self.mac_code = params[:mac]
@@ -94,5 +97,6 @@ module WasteCarriersEngine
       self.date_received_day = date_received.strftime("%-d").to_i
       save!
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

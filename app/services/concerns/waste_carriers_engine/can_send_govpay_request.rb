@@ -15,7 +15,7 @@ module WasteCarriersEngine
     included do
       private
 
-      def send_request(method, path, params = nil)
+      def send_request(method:, path:, params: nil, override_api_token: false)
         Rails.logger.info "Sending #{method} request to Govpay (#{path}), params: #{params}"
 
         begin
@@ -24,7 +24,7 @@ module WasteCarriersEngine
             url: url(path),
             payload: params.present? ? params.compact.to_json : nil,
             headers: {
-              "Authorization" => "Bearer #{bearer_token}",
+              "Authorization" => "Bearer #{bearer_token(override_api_token)}",
               "Content-Type" => "application/json"
             }
           )
@@ -43,8 +43,17 @@ module WasteCarriersEngine
         "#{Rails.configuration.govpay_url}#{path}"
       end
 
-      def bearer_token
-        @bearer_token ||= Rails.configuration.govpay_api_token
+      # Allow the back office to use the "front office" Govpay API token for non-MOTO payment actions
+      def bearer_token(override_api_token)
+        is_back_office = WasteCarriersEngine.configuration.host_is_back_office?
+        back_office_token = Rails.configuration.govpay_back_office_api_token
+        front_office_token = Rails.configuration.govpay_front_office_api_token
+
+        if override_api_token
+          is_back_office ? front_office_token : back_office_token
+        else
+          is_back_office ? back_office_token : front_office_token
+        end
       end
     end
     # rubocop:enable Metrics/BlockLength

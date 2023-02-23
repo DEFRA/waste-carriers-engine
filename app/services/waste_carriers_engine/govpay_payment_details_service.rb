@@ -7,8 +7,10 @@ module WasteCarriersEngine
   class GovpayPaymentDetailsService
     include CanSendGovpayRequest
 
-    def initialize(govpay_id: nil, payment_uuid: nil, entity: ::WasteCarriersEngine::TransientRegistration)
+    def initialize(govpay_id: nil, is_moto: false, payment_uuid: nil,
+                   entity: ::WasteCarriersEngine::TransientRegistration)
       @payment_uuid = payment_uuid
+      @is_moto = is_moto
       @entity = entity
       @govpay_id = govpay_id || order.govpay_id
     end
@@ -55,10 +57,12 @@ module WasteCarriersEngine
     def response
       @response ||=
         JSON.parse(
-          send_request(
-            :get, "/payments/#{govpay_id}"
-          )&.body
+          send_request(method: :get, path: "/payments/#{govpay_id}", params: nil, override_api_token:)&.body
         )
+    end
+
+    def override_api_token
+      !@is_moto && WasteCarriersEngine.configuration.host_is_back_office?
     end
 
     # Because orders are embedded in finance_details, we can't search directly on orders so we need to:

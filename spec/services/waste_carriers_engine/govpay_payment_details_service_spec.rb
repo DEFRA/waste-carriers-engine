@@ -81,6 +81,31 @@ module WasteCarriersEngine
           it_behaves_like "expected status is returned", "not_found", "error"
         end
 
+        context "when the payment is non-MOTO and the request is run from the back-office" do
+          let(:payment) { Payment.new_from_online_payment(transient_registration.finance_details.orders.first, nil) }
+          let(:response_fixture) { "get_payment_response_created.json" }
+          let(:govpay_api_token) { "front_office_token" }
+
+          before do
+            # This ensures that the Govpay API is not stubbed for the back office bearer token,
+            # so the spec will fail if the request is made using the back office token.
+            stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
+              .with(headers: { "Authorization" => "Bearer #{govpay_api_token}" })
+              .to_return(
+                status: 200,
+                body: File.read("./spec/fixtures/files/govpay/#{response_fixture}")
+              )
+
+            allow(Rails.configuration).to receive(:govpay_front_office_api_token).and_return(govpay_api_token)
+            allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
+            payment.update!(moto: false)
+          end
+
+          it "uses the front-office API token and returns created" do
+            expect(service.govpay_payment_status).to eq "created"
+          end
+        end
+
         context "when the govpay request fails" do
           before do
             stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}}).to_return(status: 500)

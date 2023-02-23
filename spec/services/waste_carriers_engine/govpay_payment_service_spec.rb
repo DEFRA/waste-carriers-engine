@@ -56,7 +56,11 @@ module WasteCarriersEngine
             allow(govpay_service).to receive(:send_request)
             govpay_service.prepare_for_payment
 
-            expect(govpay_service).to have_received(:send_request).with(anything, anything, hash_including(moto: true))
+            expect(govpay_service).to have_received(:send_request).with(
+              method: anything,
+              path: anything,
+              params: hash_including(moto: true)
+            )
           end
         end
 
@@ -69,7 +73,11 @@ module WasteCarriersEngine
           it "does not send the moto flag to GovPay" do
             govpay_service.prepare_for_payment
 
-            expect(govpay_service).to have_received(:send_request).with(anything, anything, hash_not_including(moto: true))
+            expect(govpay_service).to have_received(:send_request).with(
+              method: anything,
+              path: anything,
+              params: hash_not_including(moto: true)
+            )
           end
         end
       end

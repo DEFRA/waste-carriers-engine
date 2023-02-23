@@ -8,6 +8,7 @@ module WasteCarriersEngine
     include CanSendGovpayRequest
 
     def run(payment:, amount:, merchant_code: nil) # rubocop:disable Lint/UnusedMethodArgument
+      return false unless WasteCarriersEngine.configuration.host_is_back_office?
       return false unless payment.govpay?
 
       @payment = payment
@@ -28,11 +29,17 @@ module WasteCarriersEngine
 
     attr_reader :transient_registration, :payment, :current_user, :amount
 
+    # Use the FO API token unless this is a MOTO payment
+    def override_api_token
+      !payment.moto
+    end
+
     def govpay_payment
       @govpay_payment ||=
         GovpayPaymentDetailsService.new(
           govpay_id: payment.govpay_id,
-          entity: ::WasteCarriersEngine::Registration
+          entity: ::WasteCarriersEngine::Registration,
+          is_moto: payment.moto
         ).payment
     end
 
@@ -56,7 +63,7 @@ module WasteCarriersEngine
     def request
       @request ||=
         send_request(
-          :post, "/payments/#{payment.govpay_id}/refunds", params
+          method: :post, path: "/payments/#{payment.govpay_id}/refunds", params:, override_api_token:
         )
     end
 

@@ -12,7 +12,8 @@ module WasteCarriersEngine
     before do
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:govpay_merchant_code).and_return("some_merchant_code")
-      allow(Rails.configuration).to receive(:govpay_api_token).and_return("some_token")
+      allow(Rails.configuration).to receive(:govpay_front_office_api_token).and_return("some_token")
+      allow(Rails.configuration).to receive(:govpay_back_office_api_token).and_return("some_token")
       allow(Airbrake).to receive(:notify)
 
       # TODO: Remove these when the feature flag is no longer required
