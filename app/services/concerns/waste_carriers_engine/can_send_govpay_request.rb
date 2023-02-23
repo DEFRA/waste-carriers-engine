@@ -16,7 +16,7 @@ module WasteCarriersEngine
       private
 
       def send_request(method:, path:, params: nil, override_api_token: false)
-        Rails.logger.info "Sending #{method} request to Govpay (#{path}), params: #{params}"
+        Rails.logger.info "Sending #{method} request to Govpay (#{path}), params: #{params}, override_api_token: #{override_api_token}, bearer_oken: #{bearer_token(override_api_token)}"
 
         begin
           response = RestClient::Request.execute(

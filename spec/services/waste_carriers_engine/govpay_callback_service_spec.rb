@@ -58,6 +58,24 @@ module WasteCarriersEngine
           govpay_callback_service.valid_success?
           expect(transient_registration.reload.finance_details.balance).to eq(0)
         end
+
+        context "when run in the front office" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false) }
+  
+          it "calls the GovpayPaymentDetailsService with is_moto: false" do
+            govpay_callback_service.valid_success?
+            expect(GovpayPaymentDetailsService).to have_received(:new).with(hash_not_including(is_moto: true))
+          end
+        end
+
+        context "when run in the back office" do
+          before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true) }
+  
+          it "calls the GovpayPaymentDetailsService with is_moto: true" do
+            govpay_callback_service.valid_success?
+            expect(GovpayPaymentDetailsService).to have_received(:new).with(hash_including(is_moto: true))
+          end
+        end
       end
 
       context "when the status is invalid" do
