@@ -40,8 +40,7 @@ module WasteCarriersEngine
 
     def govpay_payment_details_service
       GovpayPaymentDetailsService.new(payment_uuid: @payment_uuid,
-                                      is_moto: WasteCarriersEngine.configuration.host_is_back_office?
-      )
+                                      is_moto: WasteCarriersEngine.configuration.host_is_back_office?)
     end
 
     def transient_registration_by_payment_uuid

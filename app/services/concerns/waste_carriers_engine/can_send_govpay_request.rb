@@ -16,7 +16,8 @@ module WasteCarriersEngine
       private
 
       def send_request(method:, path:, params: nil, is_moto: false)
-        Rails.logger.info "#{self.class} Sending #{method} request to Govpay (#{path}), params: #{params}, moto: #{is_moto}"
+        Rails.logger.info "#{self.class} Sending #{method} request to Govpay (#{path}), " \
+                          "params: #{params}, moto: #{is_moto}"
 
         begin
           response = RestClient::Request.execute(

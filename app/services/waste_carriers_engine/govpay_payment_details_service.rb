@@ -59,8 +59,7 @@ module WasteCarriersEngine
           send_request(method: :get,
                        path: "/payments/#{govpay_id}",
                        is_moto: @is_moto,
-                       params: nil
-                       )&.body
+                       params: nil)&.body
         )
     end
 
