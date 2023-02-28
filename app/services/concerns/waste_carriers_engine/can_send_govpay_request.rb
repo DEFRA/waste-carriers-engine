@@ -15,8 +15,8 @@ module WasteCarriersEngine
     included do
       private
 
-      def send_request(method:, path:, params: nil, override_api_token: false)
-        Rails.logger.info "Sending #{method} request to Govpay (#{path}), params: #{params}, override_api_token: #{override_api_token}, bearer_oken: #{bearer_token(override_api_token)}"
+      def send_request(method:, path:, params: nil, is_moto: false)
+        Rails.logger.info "#{self.class} Sending #{method} request to Govpay (#{path}), params: #{params}, moto: #{is_moto}"
 
         begin
           response = RestClient::Request.execute(
@@ -24,7 +24,7 @@ module WasteCarriersEngine
             url: url(path),
             payload: params.present? ? params.compact.to_json : nil,
             headers: {
-              "Authorization" => "Bearer #{bearer_token(override_api_token)}",
+              "Authorization" => "Bearer #{bearer_token(is_moto)}",
               "Content-Type" => "application/json"
             }
           )
@@ -44,16 +44,13 @@ module WasteCarriersEngine
       end
 
       # Allow the back office to use the "front office" Govpay API token for non-MOTO payment actions
-      def bearer_token(override_api_token)
-        is_back_office = WasteCarriersEngine.configuration.host_is_back_office?
-        back_office_token = Rails.configuration.govpay_back_office_api_token
-        front_office_token = Rails.configuration.govpay_front_office_api_token
+      def bearer_token(is_moto)
+        @is_back_office ||= WasteCarriersEngine.configuration.host_is_back_office?
+        @front_office_token ||= Rails.configuration.govpay_front_office_api_token
+        return @front_office_token unless @is_back_office
 
-        if override_api_token
-          is_back_office ? front_office_token : back_office_token
-        else
-          is_back_office ? back_office_token : front_office_token
-        end
+        @back_office_token ||= Rails.configuration.govpay_back_office_api_token
+        is_moto ? @back_office_token : @front_office_token
       end
     end
     # rubocop:enable Metrics/BlockLength

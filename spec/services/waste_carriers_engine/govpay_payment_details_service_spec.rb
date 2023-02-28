@@ -16,6 +16,7 @@ module WasteCarriersEngine
     let(:valid_payment_uuid) { transient_registration.finance_details.orders.first.payment_uuid }
     let(:payment_uuid) { valid_payment_uuid }
     let(:order) { transient_registration.finance_details.orders.first }
+    let(:is_moto) { false }
     let(:current_user) { build(:user) }
 
     before do
@@ -26,7 +27,7 @@ module WasteCarriersEngine
       transient_registration.prepare_for_payment(:govpay, current_user)
     end
 
-    subject(:service) { described_class.new(payment_uuid: payment_uuid) }
+    subject(:service) { described_class.new(payment_uuid: payment_uuid, is_moto: is_moto) }
 
     describe "govpay_payment_status" do
 
@@ -81,28 +82,50 @@ module WasteCarriersEngine
           it_behaves_like "expected status is returned", "not_found", "error"
         end
 
-        context "when the payment is non-MOTO and the request is run from the back-office" do
+        context "when the service is run in the back office" do
           let(:payment) { Payment.new_from_online_payment(transient_registration.finance_details.orders.first, nil) }
           let(:response_fixture) { "get_payment_response_created.json" }
-          let(:govpay_api_token) { "front_office_token" }
+          let(:govpay_front_office_api_token) { "front_office_token" }
+          let(:govpay_back_office_api_token) { "back_office_token" }
 
           before do
-            # This ensures that the Govpay API is not stubbed for the back office bearer token,
-            # so the spec will fail if the request is made using the back office token.
-            stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
-              .with(headers: { "Authorization" => "Bearer #{govpay_api_token}" })
-              .to_return(
-                status: 200,
-                body: File.read("./spec/fixtures/files/govpay/#{response_fixture}")
-              )
-
-            allow(Rails.configuration).to receive(:govpay_front_office_api_token).and_return(govpay_api_token)
             allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
-            payment.update!(moto: false)
+            allow(Rails.configuration).to receive(:govpay_front_office_api_token).and_return(govpay_front_office_api_token)
+            allow(Rails.configuration).to receive(:govpay_back_office_api_token).and_return(govpay_back_office_api_token)
           end
 
-          it "uses the front-office API token and returns created" do
-            expect(service.govpay_payment_status).to eq "created"
+          context "when the payment is non-MOTO" do
+            before do
+              payment.update!(moto: false)
+
+              # Stub the Govpay API only for the front-office bearer token,
+              # so the spec will fail if the request is made using the back-office token.
+              stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
+                .with(headers: { "Authorization" => "Bearer #{govpay_front_office_api_token}" })
+                .to_return(status: 200, body: File.read("./spec/fixtures/files/govpay/#{response_fixture}"))
+            end
+
+            it "uses the front-office API token and returns created" do
+              expect(service.govpay_payment_status).to eq "created"
+            end
+          end
+
+          context "when the payment is MOTO" do
+            let(:is_moto) { true }
+
+            before do
+              payment.update!(moto: true)
+
+              # Stub the Govpay API only for the back-office bearer token,
+              # so the spec will fail if the request is made using the front-office token.
+              stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
+                .with(headers: { "Authorization" => "Bearer #{govpay_back_office_api_token}" })
+                .to_return(status: 200, body: File.read("./spec/fixtures/files/govpay/#{response_fixture}"))
+            end
+
+            it "uses the back-office API token and returns created" do
+              expect(service.govpay_payment_status).to eq "created"
+            end
           end
         end
 

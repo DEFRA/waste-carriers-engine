@@ -56,12 +56,12 @@ module WasteCarriersEngine
     def response
       @response ||=
         JSON.parse(
-          send_request(method: :get, path: "/payments/#{govpay_id}", params: nil, override_api_token:)&.body
+          send_request(method: :get,
+                       path: "/payments/#{govpay_id}",
+                       is_moto: @is_moto,
+                       params: nil
+                       )&.body
         )
-    end
-
-    def override_api_token
-      !@is_moto && WasteCarriersEngine.configuration.host_is_back_office?
     end
 
     # Because orders are embedded in finance_details, we can't search directly on orders so we need to:

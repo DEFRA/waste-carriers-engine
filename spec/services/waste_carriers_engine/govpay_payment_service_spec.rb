@@ -57,6 +57,7 @@ module WasteCarriersEngine
             govpay_service.prepare_for_payment
 
             expect(govpay_service).to have_received(:send_request).with(
+              is_moto: true,
               method: anything,
               path: anything,
               params: hash_including(moto: true)
@@ -74,6 +75,7 @@ module WasteCarriersEngine
             govpay_service.prepare_for_payment
 
             expect(govpay_service).to have_received(:send_request).with(
+              is_moto: false,
               method: anything,
               path: anything,
               params: hash_not_including(moto: true)

@@ -13,7 +13,10 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      response = send_request(method: :post, path: "/payments", params: payment_params)
+      response = send_request(method: :post,
+                              path: "/payments",
+                              is_moto: WasteCarriersEngine.configuration.host_is_back_office?,
+                              params: payment_params)
       response_json = JSON.parse(response.body)
 
       govpay_payment_id = response_json["payment_id"]

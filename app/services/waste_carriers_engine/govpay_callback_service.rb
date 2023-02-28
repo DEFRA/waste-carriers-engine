@@ -7,8 +7,7 @@ module WasteCarriersEngine
 
     def initialize(payment_uuid)
       @payment_uuid = payment_uuid
-      is_moto = WasteCarriersEngine.configuration.host_is_back_office?
-      @payment_status = GovpayPaymentDetailsService.new(payment_uuid: @payment_uuid, is_moto: is_moto).govpay_payment_status
+      @payment_status = govpay_payment_details_service.govpay_payment_status
       @transient_registration = transient_registration_by_payment_uuid
       @order = order_by_payment_uuid
     end
@@ -38,6 +37,12 @@ module WasteCarriersEngine
     end
 
     private
+
+    def govpay_payment_details_service
+      GovpayPaymentDetailsService.new(payment_uuid: @payment_uuid,
+                                      is_moto: WasteCarriersEngine.configuration.host_is_back_office?
+      )
+    end
 
     def transient_registration_by_payment_uuid
       TransientRegistration.find_by("financeDetails.orders.payment_uuid": @payment_uuid)
