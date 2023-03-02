@@ -46,16 +46,10 @@ module WasteCarriersEngine
       payment[:updated_by_user] = user_email
       payment.finance_details = order.finance_details
 
-      if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
-        payment[:payment_type] = "GOVPAY"
-        payment[:registration_reference] = "Govpay"
-        payment[:comment] = "Paid via Govpay"
-        payment[:uuid] = order.payment_uuid
-      else
-        payment[:payment_type] = "WORLDPAY"
-        payment[:registration_reference] = "Worldpay"
-        payment[:comment] = "Paid via Worldpay"
-      end
+      payment[:payment_type] = "GOVPAY"
+      payment[:registration_reference] = "Govpay"
+      payment[:comment] = "Paid via Govpay"
+      payment[:uuid] = order.payment_uuid
       payment
     end
 
@@ -79,17 +73,10 @@ module WasteCarriersEngine
       payment
     end
 
-    # rubocop:disable Metrics/AbcSize
     def update_after_online_payment(params)
-      if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
-        self.govpay_payment_status = params[:govpay_status]
-        self.govpay_id = params[:govpay_id]
-        self.moto = WasteCarriersEngine.configuration.host_is_back_office?
-      else
-        self.world_pay_payment_status = params[:paymentStatus]
-        self.mac_code = params[:mac]
-      end
-
+      self.govpay_payment_status = params[:govpay_status]
+      self.govpay_id = params[:govpay_id]
+      self.moto = WasteCarriersEngine.configuration.host_is_back_office?
       self.date_received = Date.current
       self.date_entered = date_received
       self.date_received_year = date_received.strftime("%Y").to_i
@@ -97,6 +84,5 @@ module WasteCarriersEngine
       self.date_received_day = date_received.strftime("%-d").to_i
       save!
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end

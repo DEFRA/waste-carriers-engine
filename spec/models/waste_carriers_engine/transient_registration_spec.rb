@@ -127,9 +127,9 @@ module WasteCarriersEngine
           transient_registration.finance_details = build(:finance_details, :has_order)
         end
 
-        context "when the order's world_pay_status is pending" do
+        context "when the order's govpay_status is pending" do
           before do
-            allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(true)
+            allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(true)
           end
 
           it "returns true" do
@@ -139,7 +139,7 @@ module WasteCarriersEngine
 
         context "when the order's world_pay_status is not pending" do
           before do
-            allow(WorldpayValidatorService).to receive(:valid_world_pay_status?).and_return(false)
+            allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false)
           end
 
           it "returns false" do

@@ -8,7 +8,6 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_000)
       allow(Rails.configuration).to receive(:type_change_charge).and_return(2_500)
       allow(Rails.configuration).to receive(:card_charge).and_return(1_000)
-      allow(Rails.configuration).to receive(:worldpay_merchantcode).and_return("MERCHANTCODE")
     end
 
     let(:transient_registration) { create(:renewing_registration, :has_required_data, temp_cards: 0) }
@@ -16,7 +15,7 @@ module WasteCarriersEngine
 
     describe "new_order" do
       let(:order) { described_class.new_order(transient_registration, payment_method, current_user.email) }
-      let(:payment_method) { :worldpay }
+      let(:payment_method) { :govpay }
 
       it "has a valid order_id" do
         Timecop.freeze(Time.new(2018, 1, 1)) do
@@ -124,20 +123,6 @@ module WasteCarriersEngine
         end
       end
 
-      context "when it is a Worldpay order" do
-        it "has the correct payment_method" do
-          expect(order.payment_method).to eq("ONLINE")
-        end
-
-        it "has the correct merchant_id" do
-          expect(order.merchant_id).to eq("MERCHANTCODE")
-        end
-
-        it "has the correct world_pay_status" do
-          expect(order.world_pay_status).to eq("IN_PROGRESS")
-        end
-      end
-
       context "when it is a govpay order" do
         let(:payment_method) { :govpay }
 
@@ -145,7 +130,7 @@ module WasteCarriersEngine
           expect(order.payment_method).to eq("ONLINE")
         end
 
-        it "has the correct world_pay_status" do
+        it "has the correct govpay_status" do
           expect(order.govpay_status).to eq("IN_PROGRESS")
         end
       end
@@ -161,19 +146,19 @@ module WasteCarriersEngine
           expect(order.merchant_id).to be_nil
         end
 
-        it "has the correct world_pay_status" do
-          expect(order.world_pay_status).to be_nil
+        it "has the correct govpay_status" do
+          expect(order.govpay_status).to be_nil
         end
       end
     end
 
     describe "update_after_online_payment" do
-      let(:finance_details) { transient_registration.prepare_for_payment(:worldpay, current_user) }
+      let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
       let(:order) { finance_details.orders.first }
 
-      it "copies the worldpay status to the order" do
-        order.update_after_online_payment("AUTHORISED")
-        expect(order.world_pay_status).to eq("AUTHORISED")
+      it "copies the govpay status to the order" do
+        order.update_after_online_payment("created")
+        expect(order.govpay_status).to eq("created")
       end
 
       it "updates the date_last_updated" do
@@ -181,7 +166,7 @@ module WasteCarriersEngine
           # Wipe the date first so we know the value has been added
           order.update_attributes(date_last_updated: nil)
 
-          order.update_after_online_payment("AUTHORISED")
+          order.update_after_online_payment("created")
           expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
         end
       end

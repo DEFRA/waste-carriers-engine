@@ -15,10 +15,6 @@ module WasteCarriersEngine
       allow(Rails.configuration).to receive(:govpay_front_office_api_token).and_return("some_token")
       allow(Rails.configuration).to receive(:govpay_back_office_api_token).and_return("some_token")
       allow(Airbrake).to receive(:notify)
-
-      # TODO: Remove these when the feature flag is no longer required
-      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
-      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
     end
 
     context "when a valid user is signed in" do
@@ -100,7 +96,6 @@ module WasteCarriersEngine
           let(:govpay_host) { "https://publicapi.payments.service.gov.uk/v1" }
 
           before do
-            allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
             allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
             stub_request(:any, %r{.*#{govpay_host}/payments}).to_return(
               status: 200,

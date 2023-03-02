@@ -14,7 +14,7 @@ module WasteCarriersEngine
     let(:current_user) { build(:user) }
 
     describe "new_finance_details" do
-      let(:finance_details) { transient_registration.prepare_for_payment(:worldpay, current_user) }
+      let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
 
       it "includes 1 order" do
         order_count = finance_details.orders.length
@@ -142,7 +142,7 @@ module WasteCarriersEngine
 
       context "when there is an order" do
         before do
-          finance_details.orders = [Order.new_order(transient_registration, :worldpay, current_user)]
+          finance_details.orders = [Order.new_order(transient_registration, :govpay, current_user)]
         end
 
         it "has the correct balance" do
@@ -152,7 +152,7 @@ module WasteCarriersEngine
 
         context "when there is also a WorldPay payment" do
           before do
-            finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
+            finance_details.payments = [build(:payment, :govpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
           end
 
           it "has the correct balance" do
@@ -163,7 +163,7 @@ module WasteCarriersEngine
 
         context "when the WorldPay payment is not authorised" do
           before do
-            finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "REFUSED")]
+            finance_details.payments = [build(:payment, :govpay, amount: 5_000, world_pay_payment_status: "REFUSED")]
           end
 
           it "does not include it when calculating the balance" do
@@ -186,7 +186,7 @@ module WasteCarriersEngine
 
       context "when there is a payment only" do
         before do
-          finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
+          finance_details.payments = [build(:payment, :govpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
         end
 
         it "has the correct balance" do

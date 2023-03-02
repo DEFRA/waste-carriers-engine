@@ -73,17 +73,6 @@
                 hint: {
                   text: t(".options.card.hint")
                 } do %>
-
-              <% unless WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) %>
-                <% unless WasteCarriersEngine.configuration.host_is_back_office? %>
-                  <%= f.govuk_text_field :card_confirmation_email,
-                      label:  {
-                        text: t(".payment_confirmation.label")
-                      },
-                      value: @payment_summary_form.card_confirmation_email,
-                      width: "one-half" %>
-                <% end %>
-              <% end %>
             <% end %>
 
           <%= f.govuk_radio_button :temp_payment_method,

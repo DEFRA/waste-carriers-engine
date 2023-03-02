@@ -5,7 +5,7 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include Mongoid::Document
 
-    included do # rubocop:disable Metrics/BlockLength
+    included do
       include AASM
 
       field :workflow_state, type: String
@@ -16,7 +16,6 @@ module WasteCarriersEngine
 
         state :copy_cards_payment_form
         state :govpay_form
-        state :worldpay_form
         state :copy_cards_bank_transfer_form
         state :copy_cards_order_completed_form
 
@@ -27,10 +26,6 @@ module WasteCarriersEngine
 
           transitions from: :copy_cards_payment_form,
                       to: :govpay_form,
-                      if: :paying_by_card_govpay?
-
-          transitions from: :copy_cards_payment_form,
-                      to: :worldpay_form,
                       if: :paying_by_card?
 
           transitions from: :copy_cards_payment_form,
@@ -40,9 +35,6 @@ module WasteCarriersEngine
           transitions from: :copy_cards_bank_transfer_form,
                       to: :copy_cards_order_completed_form
 
-          transitions from: :worldpay_form,
-                      to: :copy_cards_order_completed_form
-
           transitions from: :govpay_form,
                       to: :copy_cards_order_completed_form
         end
@@ -50,10 +42,6 @@ module WasteCarriersEngine
     end
 
     private
-
-    def paying_by_card_govpay?
-      WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && paying_by_card?
-    end
 
     def paying_by_card?
       temp_payment_method == "card"

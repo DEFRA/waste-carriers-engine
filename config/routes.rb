@@ -39,11 +39,6 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "registration-received-pending-payment",
               path_names: { new: "" }
 
-    resources :registration_received_pending_worldpay_payment_forms,
-              only: :new,
-              path: "registration-received-pending-worldpay-payment",
-              path_names: { new: "" }
-
     resources :registration_received_pending_govpay_payment_forms,
               only: :new,
               path: "registration-received-pending-govpay-payment",
@@ -408,36 +403,6 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "payment-summary",
               path_names: { new: "" }
 
-    resources :worldpay_forms,
-              only: %i[new create],
-              path: "worldpay",
-              path_names: { new: "" } do
-                get "success",
-                    to: "worldpay_forms#success",
-                    as: "success",
-                    on: :collection
-
-                get "failure",
-                    to: "worldpay_forms#failure",
-                    as: "failure",
-                    on: :collection
-
-                get "cancel",
-                    to: "worldpay_forms#cancel",
-                    as: "cancel",
-                    on: :collection
-
-                get "error",
-                    to: "worldpay_forms#error",
-                    as: "error",
-                    on: :collection
-
-                get "pending",
-                    to: "worldpay_forms#pending",
-                    as: "pending",
-                    on: :collection
-              end
-
     resources :govpay_forms,
               only: %i[new create],
               path: "govpay",
@@ -466,11 +431,6 @@ WasteCarriersEngine::Engine.routes.draw do
     resources :renewal_received_pending_payment_forms,
               only: %i[new create],
               path: "renewal-received-pending-payment",
-              path_names: { new: "" }
-
-    resources :renewal_received_pending_worldpay_payment_forms,
-              only: %i[new create],
-              path: "renewal-received-pending-worldpay-payment",
               path_names: { new: "" }
 
     resources :renewal_received_pending_govpay_payment_forms,

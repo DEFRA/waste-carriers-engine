@@ -88,24 +88,6 @@ module WasteCarriersEngine
           it "is valid" do
             expect(payment_summary_form).to be_valid
           end
-
-          context "when the receipt email has been set" do
-            context "when to something invalid" do
-              let(:card_confirmation_email) { "foo@bar" }
-
-              it "is not valid" do
-                expect(payment_summary_form).not_to be_valid
-              end
-            end
-
-            context "when set to nothing" do
-              let(:card_confirmation_email) { "" }
-
-              it "is not valid" do
-                expect(payment_summary_form).not_to be_valid
-              end
-            end
-          end
         end
 
         context "when the temp_payment_method is anything else" do
@@ -180,7 +162,5 @@ module WasteCarriersEngine
         end
       end
     end
-
-    include_examples "validate email", :payment_summary_form, :card_confirmation_email
   end
 end

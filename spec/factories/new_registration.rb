@@ -23,12 +23,8 @@ FactoryBot.define do
       upper
 
       after(:build, :create) do |registration|
-        registration.prepare_for_payment(:worldpay, nil)
+        registration.prepare_for_payment(:govpay, nil)
       end
-    end
-
-    trait :has_pending_worldpay_status do
-      finance_details { build(:finance_details, :has_pending_worldpay_order) }
     end
 
     trait :has_pending_govpay_status do

@@ -56,14 +56,12 @@ module WasteCarriersEngine
         state :declaration_form
         state :cards_form
         state :payment_summary_form
-        state :worldpay_form
         state :govpay_form
         state :confirm_bank_transfer_form
 
         state :renewal_complete_form
         state :renewal_received_pending_conviction_form
         state :renewal_received_pending_payment_form
-        state :renewal_received_pending_worldpay_payment_form
         state :renewal_received_pending_govpay_payment_form
 
         state :cannot_renew_type_change_form
@@ -217,22 +215,9 @@ module WasteCarriersEngine
           transitions from: :cards_form, to: :payment_summary_form
 
           transitions from: :payment_summary_form, to: :govpay_form,
-                      if: :paying_by_card_govpay?
-
-          transitions from: :payment_summary_form, to: :worldpay_form,
                       if: :paying_by_card?
 
           transitions from: :payment_summary_form, to: :confirm_bank_transfer_form
-
-          transitions from: :worldpay_form, to: :renewal_received_pending_worldpay_payment_form,
-                      if: :pending_online_payment?,
-                      success: :send_renewal_pending_online_payment_email
-
-          transitions from: :worldpay_form, to: :renewal_received_pending_conviction_form,
-                      if: :conviction_check_required?,
-                      success: :send_renewal_pending_checks_email
-
-          transitions from: :worldpay_form, to: :renewal_complete_form
 
           transitions from: :govpay_form, to: :renewal_received_pending_govpay_payment_form,
                       if: :pending_online_payment?,
@@ -304,10 +289,6 @@ module WasteCarriersEngine
 
     def paying_by_card?
       temp_payment_method == "card"
-    end
-
-    def paying_by_card_govpay?
-      WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && paying_by_card?
     end
 
     def use_trading_name?

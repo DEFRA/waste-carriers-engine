@@ -61,13 +61,11 @@ module WasteCarriersEngine
       describe ".except_online_not_authorised" do
         let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
         let(:cash_payment) { described_class.new(payment_type: "CASH") }
-        let(:worldpay_payment_authorised) { described_class.new(payment_type: "WORLDPAY", world_pay_payment_status: "AUTHORISED") }
-        let(:worldpay_payment_refused) { described_class.new(payment_type: "WORLDPAY", world_pay_payment_status: "REFUSED") }
         let(:govpay_payment_authorised) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "success") }
         let(:govpay_payment_refused) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "failed") }
 
         before do
-          transient_registration.finance_details.payments << cash_payment << worldpay_payment_authorised << govpay_payment_authorised << govpay_payment_refused
+          transient_registration.finance_details.payments << cash_payment << govpay_payment_authorised << govpay_payment_refused
           transient_registration.save
           transient_registration.reload
         end
@@ -75,8 +73,6 @@ module WasteCarriersEngine
         it "returns the expected payments only" do
           result = transient_registration.finance_details.payments.except_online_not_authorised
           expect(result).to include(cash_payment)
-          expect(result).to include(worldpay_payment_authorised)
-          expect(result).not_to include(worldpay_payment_refused)
           expect(result).to include(govpay_payment_authorised)
           expect(result).not_to include(govpay_payment_refused)
         end
@@ -86,7 +82,7 @@ module WasteCarriersEngine
     describe "new_from_online_payment" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
-          transient_registration.prepare_for_payment(:worldpay, current_user)
+          transient_registration.prepare_for_payment(:govpay, current_user)
         end
       end
 
@@ -106,11 +102,11 @@ module WasteCarriersEngine
       end
 
       it "sets the correct payment_type" do
-        expect(payment.payment_type).to eq("WORLDPAY")
+        expect(payment.payment_type).to eq("GOVPAY")
       end
 
       it "sets the correct registration_reference" do
-        expect(payment.registration_reference).to eq("Worldpay")
+        expect(payment.registration_reference).to eq("Govpay")
       end
 
       it "has the correct updated_by_user" do
@@ -118,14 +114,14 @@ module WasteCarriersEngine
       end
 
       it "sets the correct comment" do
-        expect(payment.comment).to eq("Paid via Worldpay")
+        expect(payment.comment).to eq("Paid via Govpay")
       end
     end
 
     describe "new_from_non_online_payment" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
-          transient_registration.prepare_for_payment(:worldpay, current_user)
+          transient_registration.prepare_for_payment(:govpay, current_user)
         end
       end
 
@@ -205,17 +201,13 @@ module WasteCarriersEngine
 
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
-          transient_registration.prepare_for_payment(:worldpay, current_user)
-          payment.update_after_online_payment({ paymentStatus: "AUTHORISED", mac: "foo" })
+          transient_registration.prepare_for_payment(:govpay, current_user)
+          payment.update_after_online_payment({ govpay_status: "created" })
         end
       end
 
       it "updates the payment status" do
-        expect(payment.world_pay_payment_status).to eq("AUTHORISED")
-      end
-
-      it "updates the payment mac_code" do
-        expect(payment.mac_code).to eq("foo")
+        expect(payment.govpay_payment_status).to eq("created")
       end
 
       it "updates the payment date_received" do

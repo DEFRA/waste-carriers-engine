@@ -65,14 +65,12 @@ module WasteCarriersEngine
         state :declaration_form
         state :cards_form
         state :payment_summary_form
-        state :worldpay_form
         state :govpay_form
         state :confirm_bank_transfer_form
 
         state :registration_completed_form
         state :registration_received_pending_payment_form
         state :registration_received_pending_conviction_form
-        state :registration_received_pending_worldpay_payment_form
         state :registration_received_pending_govpay_payment_form
 
         # Transitions
@@ -261,24 +259,11 @@ module WasteCarriersEngine
           transitions from: :cards_form, to: :payment_summary_form
 
           transitions from: :payment_summary_form, to: :govpay_form,
-                      if: :paying_by_card_govpay?
-
-          transitions from: :payment_summary_form, to: :worldpay_form,
                       if: :paying_by_card?
 
           transitions from: :payment_summary_form, to: :confirm_bank_transfer_form
 
           transitions from: :confirm_bank_transfer_form, to: :registration_received_pending_payment_form
-
-          transitions from: :worldpay_form,
-                      to: :registration_received_pending_worldpay_payment_form,
-                      if: :pending_online_payment?
-
-          transitions from: :worldpay_form,
-                      to: :registration_received_pending_conviction_form,
-                      if: :conviction_check_required?
-
-          transitions from: :worldpay_form, to: :registration_completed_form
 
           transitions from: :govpay_form,
                       to: :registration_received_pending_govpay_payment_form,
@@ -363,10 +348,6 @@ module WasteCarriersEngine
 
       def paying_by_card?
         temp_payment_method == "card"
-      end
-
-      def paying_by_card_govpay?
-        WasteCarriersEngine::FeatureToggle.active?(:govpay_payments) && paying_by_card?
       end
 
       def switch_to_lower_tier

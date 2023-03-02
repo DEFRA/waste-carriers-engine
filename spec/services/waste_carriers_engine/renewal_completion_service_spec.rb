@@ -245,7 +245,7 @@ module WasteCarriersEngine
 
         context "when the workflow state is incorrect" do
           before do
-            transient_registration.workflow_state = :worldpay_form
+            transient_registration.workflow_state = :govpay_form
             transient_registration.save
           end
 

@@ -17,15 +17,8 @@ module WasteCarriersEngine
     let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
 
     before do
-      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
-
-      # current_user = build(:user)
-      # # We need to set a specific time so we know what order code to expect
-      # Timecop.freeze(Time.new(2018, 1, 1)) do
-      #   transient_registration.prepare_for_payment(:govpay, current_user)
-      # end
     end
 
     shared_examples "valid and invalid Govpay status" do |method, valid_status, invalid_status|

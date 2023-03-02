@@ -6,6 +6,10 @@ FactoryBot.define do
       payment_type { "WORLDPAY" }
     end
 
+    trait :govpay do
+      payment_type { "GOVPAY" }
+    end
+
     trait :bank_transfer do
       payment_type { "BANKTRANSFER" }
     end

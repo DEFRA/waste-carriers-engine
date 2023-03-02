@@ -151,8 +151,8 @@ module WasteCarriersEngine
         end
       end
 
-      context "when there is a pending worldpay balance" do
-        let(:finance_details) { build(:finance_details, :has_pending_worldpay_order) }
+      context "when there is a pending govpay balance" do
+        let(:finance_details) { build(:finance_details, :has_pending_govpay_order) }
 
         before do
           transient_registration.finance_details = finance_details
@@ -170,30 +170,6 @@ module WasteCarriersEngine
             .to have_received(:run)
             .with(registration: registration)
             .once
-        end
-
-        context "when the mailer fails" do
-          before do
-            the_error = StandardError.new("Oops!")
-
-            allow(Notify::RegistrationPendingOnlinePaymentEmailService)
-              .to receive(:run)
-              .and_raise(the_error)
-
-            allow(Airbrake)
-              .to receive(:notify)
-              .with(the_error, { registration_no: transient_registration.reg_identifier })
-          end
-
-          it "does not create an order item log" do
-            expect { described_class.run(transient_registration) }.not_to change(OrderItemLog, :count).from(0)
-          end
-
-          it "notifies Airbrake" do
-            described_class.run(transient_registration)
-
-            expect(Airbrake).to have_received(:notify)
-          end
         end
       end
 

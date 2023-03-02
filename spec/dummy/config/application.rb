@@ -76,14 +76,6 @@ module Dummy
     config.expires_after = ENV["WCRS_REGISTRATION_EXPIRES_AFTER"].to_i
     config.grace_window = ENV["WCRS_REGISTRATION_GRACE_WINDOW"].to_i
 
-    # Worldpay
-    config.worldpay_url = ENV["WCRS_WORLDPAY_URL"] || "https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp"
-    config.worldpay_admin_code = ENV["WCRS_WORLDPAY_ADMIN_CODE"]
-    config.worldpay_merchantcode = ENV["WCRS_WORLDPAY_ECOM_MERCHANTCODE"]
-    config.worldpay_username =  ENV["WCRS_WORLDPAY_ECOM_USERNAME"]
-    config.worldpay_password = ENV["WCRS_WORLDPAY_ECOM_PASSWORD"]
-    config.worldpay_macsecret =  ENV["WCRS_WORLDPAY_ECOM_MACSECRET"]
-
     # Govpay
     config.govpay_url = ENV["WCRS_GOVPAY_URL"] || "https://publicapi.payments.service.gov.uk"
     config.govpay_merchant_code = ENV["WCRS_GOVPAY_MERCHANT_CODE"]

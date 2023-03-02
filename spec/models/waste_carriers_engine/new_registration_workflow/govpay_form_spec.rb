@@ -4,7 +4,6 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe NewRegistration do
-    before { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true) }
 
     subject { build(:new_registration, workflow_state: "govpay_form") }
 

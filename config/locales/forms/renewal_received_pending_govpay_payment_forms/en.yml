@@ -15,7 +15,7 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine/renewal_received_pending_worldpay_payment_form:
+        waste_carriers_engine/renewal_received_pending_govpay_payment_form:
           attributes:
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"

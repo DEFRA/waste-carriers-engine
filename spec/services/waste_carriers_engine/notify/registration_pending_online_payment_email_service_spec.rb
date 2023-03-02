@@ -38,7 +38,7 @@ module WasteCarriersEngine
           end
 
           subject(:run_service) do
-            VCR.use_cassette("notify_registration_pending_worldpay_payment_sends_an_email") do
+            VCR.use_cassette("notify_registration_pending_govpay_payment_sends_an_email") do
               described_class.run(registration: registration)
             end
           end

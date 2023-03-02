@@ -74,14 +74,14 @@ module WasteCarriersEngine
             context "when the temp payment method is `card`" do
               let(:temp_payment_method) { "card" }
 
-              it "updates the transient registration with correct data, returns a 302 response and redirects to the worldpay form" do
+              it "updates the transient registration with correct data, returns a 302 response and redirects to the govpay form" do
                 post copy_cards_payment_forms_path(token: order_copy_cards_registration.token), params: { copy_cards_payment_form: valid_params }
 
                 order_copy_cards_registration.reload
 
                 expect(order_copy_cards_registration.temp_payment_method).to eq("card")
                 expect(response).to have_http_status(:found)
-                expect(response).to redirect_to(new_worldpay_form_path(order_copy_cards_registration.token))
+                expect(response).to redirect_to(new_govpay_form_path(order_copy_cards_registration.token))
               end
             end
 

@@ -24,7 +24,6 @@ module WasteCarriersEngine
       allow(GovpayPaymentDetailsService).to receive(:new).and_return(govpay_payment_details_service)
       allow(GovpayValidatorService).to receive(:new).and_return(govpay_validator_service)
 
-      allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:govpay_payments).and_return(true)
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 

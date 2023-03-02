@@ -29,7 +29,7 @@ module WasteCarriersEngine
     field :order_item_reference,                     type: String
 
     # TODO: Move to a service
-    def self.new_order(transient_registration, method, user_email) # rubocop:disable Metrics/CyclomaticComplexity
+    def self.new_order(transient_registration, method, user_email)
       order = new_order_for(user_email)
 
       card_count = transient_registration.temp_cards
@@ -44,7 +44,6 @@ module WasteCarriersEngine
       order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
 
       order.add_bank_transfer_attributes if method == :bank_transfer
-      order.add_worldpay_attributes if method == :worldpay
       order.add_govpay_attributes if method == :govpay
 
       order
@@ -68,12 +67,6 @@ module WasteCarriersEngine
       self.payment_method = "OFFLINE"
     end
 
-    def add_worldpay_attributes
-      self.payment_method = "ONLINE"
-      self.world_pay_status = "IN_PROGRESS"
-      self.merchant_id = Rails.configuration.worldpay_merchantcode
-    end
-
     def add_govpay_attributes
       self.payment_method = "ONLINE"
       self.govpay_status = "IN_PROGRESS"
@@ -88,12 +81,8 @@ module WasteCarriersEngine
     end
 
     def update_after_online_payment(status, govpay_id = nil)
-      if WasteCarriersEngine::FeatureToggle.active?(:govpay_payments)
-        self.govpay_status = status
-        self.govpay_id = govpay_id if govpay_id
-      else
-        self.world_pay_status = status
-      end
+      self.govpay_status = status
+      self.govpay_id = govpay_id if govpay_id
       self.date_last_updated = Time.current
       save!
     end

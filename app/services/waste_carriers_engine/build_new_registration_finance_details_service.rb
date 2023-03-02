@@ -19,7 +19,7 @@ module WasteCarriersEngine
 
     private
 
-    def new_registration_order(payment_method) # rubocop:disable Metrics/CyclomaticComplexity
+    def new_registration_order(payment_method)
       order = Order.new_order_for(transient_registration.contact_email)
 
       order.order_items = []
@@ -34,7 +34,6 @@ module WasteCarriersEngine
       order.total_amount = order.order_items.sum(&:amount)
 
       order.add_bank_transfer_attributes if payment_method == :bank_transfer
-      order.add_worldpay_attributes if payment_method == :worldpay
       order.add_govpay_attributes if payment_method == :govpay
 
       order
