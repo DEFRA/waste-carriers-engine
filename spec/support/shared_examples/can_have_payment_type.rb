@@ -89,6 +89,28 @@ RSpec.shared_examples "Can have payment type" do |resource:|
     end
   end
 
+  describe "#missed_card?" do
+    before do
+      resource.payment_type = payment_type
+    end
+
+    context "when the payment type is missed_card" do
+      let(:payment_type) { WasteCarriersEngine::Payment::MISSED_CARD }
+
+      it "returns true" do
+        expect(resource.missed_card?).to be true
+      end
+    end
+
+    context "when the payment type is not missed_card" do
+      let(:payment_type) { "foo" }
+
+      it "returns false" do
+        expect(resource.missed_card?).to be false
+      end
+    end
+  end
+
   describe "#govpay?" do
     before do
       resource.payment_type = payment_type

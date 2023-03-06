@@ -15,6 +15,7 @@ module WasteCarriersEngine
                   BANKTRANSFER = "BANKTRANSFER",
                   WORLDPAY = "WORLDPAY",
                   WORLDPAY_MISSED = "WORLDPAY_MISSED",
+                  MISSED_CARD = "MISSED_CARD",
                   GOVPAY = "GOVPAY",
                   REFUND = "REFUND",
                   WRITEOFFSMALL = "WRITEOFFSMALL",
@@ -58,6 +59,10 @@ module WasteCarriersEngine
 
       def worldpay_missed?
         payment_type == WORLDPAY_MISSED
+      end
+
+      def missed_card?
+        payment_type == MISSED_CARD
       end
 
       def govpay?
