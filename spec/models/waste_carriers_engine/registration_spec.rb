@@ -783,6 +783,39 @@ module WasteCarriersEngine
       end
     end
 
+    describe ".not_selected_for_email" do
+      let(:registration) { create(:registration, :has_required_data) }
+      let(:template_id) { "12345" }
+
+      context "when the registration has not been selected for any emails" do
+        it "returns the registration" do
+          expect(described_class.not_selected_for_email(template_id)).to include(registration)
+        end
+      end
+
+      context "when the registration has been selected for a different email" do
+        before do
+          registration.email_history << { email_type: "foo", template_id: "54321", time: Time.zone.now }
+          registration.save!
+        end
+
+        it "returns the registration" do
+          expect(described_class.not_selected_for_email(template_id)).to include(registration)
+        end
+      end
+
+      context "when the registration has been selected for this email" do
+        before do
+          registration.email_history << { email_type: "foo", template_id: template_id, time: Time.zone.now }
+          registration.save!
+        end
+
+        it "does not return the registration" do
+          expect(described_class.not_selected_for_email(template_id)).not_to include(registration)
+        end
+      end
+    end
+
     describe "status" do
       it_behaves_like "Can check registration status",
                       factory: :registration

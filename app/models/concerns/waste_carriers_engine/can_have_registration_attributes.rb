@@ -66,6 +66,7 @@ module WasteCarriersEngine
       field :registrationType, as: :registration_type,                      type: String
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :uuid,                                                          type: String
+      field :email_history,                                                 type: Array, default: []
       # rubocop:enable Layout/LineLength
 
       # Deprecated attributes
@@ -100,6 +101,8 @@ module WasteCarriersEngine
           none
         end
       }
+
+      scope :not_selected_for_email, ->(template_id) { where.not("email_history.template_id": template_id) }
 
       def self.telephone_regex(term)
         # Clone the search term so we can modify it here without impacting other searches
