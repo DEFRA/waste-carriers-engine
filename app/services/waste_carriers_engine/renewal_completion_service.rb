@@ -129,7 +129,9 @@ module WasteCarriersEngine
         "_id",
         "financeDetails",
         "past_registrations",
-        "renew_token"
+        "renew_token",
+        "deregistration_token",
+        "deregistration_token_created_at"
       )
       renewal_attributes = transient_registration.attributes.except(
         "_id",

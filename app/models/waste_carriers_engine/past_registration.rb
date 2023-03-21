@@ -24,7 +24,9 @@ module WasteCarriersEngine
         "past_registrations",
         "locking_name",
         "locked_at",
-        "renew_token"
+        "renew_token",
+        "deregistration_token",
+        "deregistration_token_created_at"
       )
       past_registration.assign_attributes(attributes)
 
