@@ -25,7 +25,8 @@ module WasteCarriersEngine
                                declaration
                                past_registrations
                                copy_cards
-                               deregistration_token],
+                               deregistration_token,
+                               deregistration_token_created_at],
       copy_addresses: true,
       copy_people: true
     }.freeze
