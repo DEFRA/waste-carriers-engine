@@ -31,7 +31,8 @@ module WasteCarriersEngine
                                firstName
                                lastName
                                phoneNumber
-                               contactEmail],
+                               contactEmail
+                               deregistration_token],
       remove_revoked_reason: true
     }.freeze
 

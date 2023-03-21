@@ -24,7 +24,8 @@ module WasteCarriersEngine
                                conviction_sign_offs
                                declaration
                                past_registrations
-                               copy_cards],
+                               copy_cards
+                               deregistration_token],
       copy_addresses: true,
       copy_people: true
     }.freeze
