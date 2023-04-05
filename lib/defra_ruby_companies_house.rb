@@ -7,7 +7,7 @@ class DefraRubyCompaniesHouse
     @company_url = "#{Rails.configuration.companies_house_host}#{format_company_number(company_no)}"
     @api_key = Rails.configuration.companies_house_api_key
 
-    raise StandardError "Failed to load company" unless load_company
+    raise StandardError, "Failed to load company" unless load_company
   end
 
   def company_name
