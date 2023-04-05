@@ -1,20 +1,10 @@
+inherit_from: .rubocop_todo.yml
+
 inherit_gem:
   defra_ruby_style:
     - default.yml
 require: rubocop-rspec
+
 # Notify uses address_line_1 etc naming convention and we want to align with it
 Naming/VariableNumber:
-  Enabled: false
-# TODO revisit these over time
-RSpec/ExampleLength:
-  Enabled: false
-RSpec/MultipleExpectations:
-  Enabled: false
-RSpec/MultipleMemoizedHelpers:
-  Enabled: false
-RSpec/RepeatedExampleGroupBody:
-  Enabled: false
-RSpec/VerifiedDoubles:
-  Enabled: false
-Style/OpenStructUse:
   Enabled: false
