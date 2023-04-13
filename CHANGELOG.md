@@ -6,7 +6,10 @@
 
 **Implemented enhancements:**
 
+- Add restore attributes to metaData [\#1349](https://github.com/DEFRA/waste-carriers-engine/pull/1349) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Email history [\#1339](https://github.com/DEFRA/waste-carriers-engine/pull/1339) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Deregistration confirmation email [\#1329](https://github.com/DEFRA/waste-carriers-engine/pull/1329) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/dereg conf email [\#1328](https://github.com/DEFRA/waste-carriers-engine/pull/1328) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Confirm deregistration [\#1324](https://github.com/DEFRA/waste-carriers-engine/pull/1324) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Update link handling error pages [\#1321](https://github.com/DEFRA/waste-carriers-engine/pull/1321) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - deregister link [\#1320](https://github.com/DEFRA/waste-carriers-engine/pull/1320) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -395,6 +398,10 @@
 
 **Fixed bugs:**
 
+- add reg\_identifier to deregistration email [\#1346](https://github.com/DEFRA/waste-carriers-engine/pull/1346) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Exclude dereg attributes from attribute copying [\#1343](https://github.com/DEFRA/waste-carriers-engine/pull/1343) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix/dereg token copy error [\#1342](https://github.com/DEFRA/waste-carriers-engine/pull/1342) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- edit registration copy error [\#1341](https://github.com/DEFRA/waste-carriers-engine/pull/1341) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Missed card payment type [\#1335](https://github.com/DEFRA/waste-carriers-engine/pull/1335) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix moto payment checking [\#1332](https://github.com/DEFRA/waste-carriers-engine/pull/1332) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Govpay refunds [\#1331](https://github.com/DEFRA/waste-carriers-engine/pull/1331) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -632,9 +639,12 @@
 
 **Merged pull requests:**
 
+- Bump countries from 5.3.2 to 5.4.0 [\#1350](https://github.com/DEFRA/waste-carriers-engine/pull/1350) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump nokogiri from 1.14.2 to 1.14.3 [\#1348](https://github.com/DEFRA/waste-carriers-engine/pull/1348) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump devise from 4.9.0 to 4.9.2 [\#1347](https://github.com/DEFRA/waste-carriers-engine/pull/1347) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump countries from 5.3.1 to 5.3.2 [\#1344](https://github.com/DEFRA/waste-carriers-engine/pull/1344) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1340](https://github.com/DEFRA/waste-carriers-engine/pull/1340) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Remove redundant Worldpay code [\#1333](https://github.com/DEFRA/waste-carriers-engine/pull/1333) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
-- Deregistration confirmation email [\#1329](https://github.com/DEFRA/waste-carriers-engine/pull/1329) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
-- Feature/dereg conf email [\#1328](https://github.com/DEFRA/waste-carriers-engine/pull/1328) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump faker from 3.1.0 to 3.1.1 [\#1323](https://github.com/DEFRA/waste-carriers-engine/pull/1323) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump aasm from 5.4.0 to 5.5.0 [\#1322](https://github.com/DEFRA/waste-carriers-engine/pull/1322) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1319](https://github.com/DEFRA/waste-carriers-engine/pull/1319) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
