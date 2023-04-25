@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WasteCarriersEngine
   class DetermineAreaService < BaseService
     def run(easting:, northing:)
