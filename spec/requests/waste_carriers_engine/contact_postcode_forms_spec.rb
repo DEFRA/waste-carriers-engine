@@ -45,7 +45,7 @@ module WasteCarriersEngine
               before do
                 response = double(:response, successful?: false, error: "foo")
 
-                allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
+                allow(DefraRuby::Address::EaAddressFacadeV11Service).to receive(:run).and_return(response)
               end
 
               it "redirects to the contact_address_manual form" do

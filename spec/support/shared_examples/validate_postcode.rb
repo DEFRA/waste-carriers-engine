@@ -10,7 +10,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
         example_json = { postcode: "BS1 5AH" }
         response = double(:response, results: [example_json], successful?: true)
 
-        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
+        allow(DefraRuby::Address::EaAddressFacadeV11Service).to receive(:run).and_return(response)
       end
 
       it "is valid" do
@@ -54,7 +54,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
       before do
         response = double(:response, successful?: false, error: DefraRuby::Address::NoMatchError.new)
 
-        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
+        allow(DefraRuby::Address::EaAddressFacadeV11Service).to receive(:run).and_return(response)
       end
 
       it "is not valid" do
@@ -66,7 +66,7 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
       before do
         response = double(:response, successful?: false, error: "foo")
 
-        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
+        allow(DefraRuby::Address::EaAddressFacadeV11Service).to receive(:run).and_return(response)
       end
 
       it "is valid" do
