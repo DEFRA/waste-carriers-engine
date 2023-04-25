@@ -6,6 +6,7 @@ PATH
       countries
       defra_ruby_address
       defra_ruby_alert (~> 2.1)
+      defra_ruby_area (~> 2.0)
       defra_ruby_email
       defra_ruby_validators (>= 2.5.0)
       high_voltage (~> 3.1)
@@ -133,6 +134,9 @@ GEM
       rest-client (~> 2.0)
     defra_ruby_alert (2.1.1)
       airbrake
+    defra_ruby_area (2.0.3)
+      nokogiri (>= 1.13.2)
+      rest-client (~> 2.0)
     defra_ruby_email (1.2.0)
       notifications-ruby-client
       rails (~> 6.0)
@@ -268,7 +272,7 @@ GEM
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     orm_adapter (0.5.0)
-    os_map_ref (0.5.0)
+    os_map_ref (0.1.1)
     parallel (1.22.1)
     parser (3.2.1.1)
       ast (~> 2.4.1)
