@@ -2,12 +2,12 @@
 
 module AddressFinderServiceStubHelper
   def stub_address_finder_service(options = {})
-    os_places_result = JSON.parse(file_fixture("os_places_response.json").read)
-    address_json = [os_places_result.merge(options.stringify_keys)]
+    ea_address_facade_v11_result = JSON.parse(file_fixture("ea_address_facade_v11_response.json").read)
+    address_json = [ea_address_facade_v11_result.merge(options.stringify_keys)]
 
     response = double(:response, results: address_json, successful?: true)
 
-    allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
+    allow(DefraRuby::Address::EaAddressFacadeV11Service).to receive(:run).and_return(response)
   end
 end
 
