@@ -34,6 +34,9 @@ module WasteCarriersEngine
     field :firstName, as: :first_name,                                  type: String
     field :lastName, as: :last_name,                                    type: String
 
+    scope :missing_area, -> { where(area: [nil, ""]) }
+    scope :with_postcode, -> { where(:postcode.ne => nil) }
+
     def self.create_from_manual_entry(params, overseas)
       address = Address.new
 
