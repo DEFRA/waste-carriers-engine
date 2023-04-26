@@ -5,23 +5,28 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe Address do
     describe "scopes" do
-      let(:address_with_area) { create(:address, area: "Area Name") }
-      let(:address_without_area) { create(:address, area: "") }
-      let(:address_with_nil_area) { create(:address, area: nil) }
-      let(:address_with_postcode) { create(:address, postcode: "BS1 5AH") }
-      let(:address_without_postcode) { create(:address, postcode: nil) }
+      let(:registration) { create(:registration, :has_required_data) }
+      let!(:address_with_area) { create(:address, :has_required_data, registration: registration, area: "Area Name") }
+      let!(:address_without_area) { create(:address, :has_required_data, registration: registration, area: "") }
+      let!(:address_with_nil_area) { create(:address, :has_required_data, registration: registration, area: nil) }
+      let!(:address_with_postcode) { create(:address, :has_required_data, registration: registration, postcode: "BS1 5AH") }
+      let!(:address_without_postcode) { create(:address, :has_required_data, registration: registration, postcode: nil) }
 
       describe ".missing_area" do
         it "returns addresses with an empty or nil area" do
-          expect(described_class.missing_area).to include(address_without_area, address_with_nil_area)
-          expect(described_class.missing_area).not_to include(address_with_area)
+          missing_area_addresses = registration.addresses.missing_area
+
+          expect(missing_area_addresses).to include(address_without_area, address_with_nil_area)
+          expect(missing_area_addresses).not_to include(address_with_area)
         end
       end
 
       describe ".with_postcode" do
         it "returns addresses with a postcode" do
-          expect(described_class.with_postcode).to include(address_with_postcode)
-          expect(described_class.with_postcode).not_to include(address_without_postcode)
+          addresses_with_postcode = registration.addresses.with_postcode
+
+          expect(addresses_with_postcode).to include(address_with_postcode)
+          expect(addresses_with_postcode).not_to include(address_without_postcode)
         end
       end
     end
