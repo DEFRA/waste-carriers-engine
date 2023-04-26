@@ -15,7 +15,7 @@ module WasteCarriersEngine
     private
 
     def handle_error(error, easting, northing)
-      Airbrake.notify(error, easting: easting, northing: northing) if defined? Airbrake
+      Airbrake.notify(error, easting: easting, northing: northing)
       Rails.logger.error "Area lookup failed:\n #{error}"
     end
   end
