@@ -14,19 +14,22 @@
   <div class="govuk-date-input__item">
     <%= f.govuk_number_field :dob_day,
         width: 2,
-        label: { text: t(".dob_day") }
+        label: { text: t(".dob_day") },
+        autocomplete: "bday-day"
     %>
   </div>
   <div class="govuk-date-input__item">
        <%= f.govuk_number_field :dob_month,
         width: 2,
-        label: { text: t(".dob_month") }
+        label: { text: t(".dob_month") },
+        autocomplete: "bday-month"
     %>
   </div>
   <div class="govuk-date-input__item">
      <%= f.govuk_number_field :dob_year,
         width: 4,
-        label: { text: t(".dob_year") }
+        label: { text: t(".dob_year") },
+        autocomplete: "bday-year"
     %>
   </div>
 </div>
