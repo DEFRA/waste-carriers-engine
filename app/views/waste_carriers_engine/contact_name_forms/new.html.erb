@@ -16,12 +16,14 @@
 
       <%= f.govuk_text_field :first_name,
           label: { text: t(".first_name_label") },
-          width: "one-half"
+          width: "one-half",
+          autocomplete: "given-name"
       %>
 
       <%= f.govuk_text_field :last_name,
           label: { text: t(".last_name_label") },
-          width: "one-half"
+          width: "one-half",
+          autocomplete: "family-name"
       %>
 
       <%= f.govuk_submit t(".next_button") %>

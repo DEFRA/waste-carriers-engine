@@ -19,7 +19,8 @@
   <%= f.govuk_text_field :address_line_1,
     label: { text: t(".address_line_1_label") },
     width: "one-half",
-    value: form.address_line_1
+    value: form.address_line_1,
+    autocomplete: "address-line1"
   %>
 </div>
 
@@ -27,7 +28,8 @@
   <%= f.govuk_text_field :address_line_2,
     label: { text: t(".address_line_2_label") },
     width: "one-half",
-    value: form.address_line_2
+    value: form.address_line_2,
+    autocomplete: "address-line2"
   %>
 </div>
 
@@ -39,7 +41,8 @@
   <%= f.govuk_text_field :town_city,
     label: { text: t(".town_city_label") },
     width: "one-half",
-    value: form.town_city
+    value: form.town_city,
+    autocomplete: "address-level2"
   %>
 </div>
 
@@ -52,7 +55,8 @@
     <%= f.govuk_text_field :postcode,
       label: { text: t(".postcode_label") },
       width: "one-half",
-      value: form.postcode
+      value: form.postcode,
+      autocomplete: "postal-code"
     %>
   </div>
 
@@ -64,7 +68,8 @@
     <%= f.govuk_text_field :country,
       label: { text: t(".country_label") },
       width: "one-half",
-      value: form.country
+      value: form.country,
+      autocomplete: "country-name"
     %>
   </div>
 <% else %>
