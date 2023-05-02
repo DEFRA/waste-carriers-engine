@@ -12,9 +12,12 @@
         <% @transient_registration.main_people.each do |person| %>
           <li>
             <%= person.first_name %> <%= person.last_name %>
+            <% button_id = "delete_person_#{person.first_name}_#{person.last_name}" %>
+            <label for=<%= button_id %> class="govuk-visually-hidden"><%= t(".delete_person_link") %> <%= person.first_name %> <%= person.last_name %></label>
             <%= button_to(t(".delete_person_link"),
                 delete_person_main_people_forms_path(token: @main_people_form.token, id: person.id),
                 class: "button-link",
+                id: button_id,
                 method: :delete) %>
           </li>
         <% end %>
