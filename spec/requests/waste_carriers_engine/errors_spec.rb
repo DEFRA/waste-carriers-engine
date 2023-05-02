@@ -17,7 +17,7 @@ module WasteCarriersEngine
       it "renders the generic error template when no matching error template exists" do
         get error_path("601")
 
-        expect(response.code).to eq("500")
+        expect(response).to have_http_status(:internal_server_error)
         expect(response).to render_template(:error_generic)
       end
 
@@ -25,7 +25,7 @@ module WasteCarriersEngine
         rails_respond_without_detailed_exceptions do
           get "/this-page-does-not-exist"
 
-          expect(response.code).to eq("404")
+          expect(response).to have_http_status(:not_found)
           expect(response.body).to include(I18n.t("waste_carriers_engine.errors.error_404.clarification"))
         end
       end

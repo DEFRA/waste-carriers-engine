@@ -30,7 +30,7 @@ module WasteCarriersEngine
             get new_edit_payment_summary_form_path(edit_registration.token)
 
             expect(response).to render_template("waste_carriers_engine/edit_payment_summary_forms/new")
-            expect(response.code).to eq("200")
+            expect(response).to have_http_status(:ok)
           end
 
           context "when it already has a finance_details" do

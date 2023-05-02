@@ -26,7 +26,7 @@ module WasteCarriersEngine
             get new_copy_cards_payment_form_path(order_copy_cards_registration.token)
 
             expect(response).to render_template("waste_carriers_engine/copy_cards_payment_forms/new")
-            expect(response.code).to eq("200")
+            expect(response).to have_http_status(:ok)
           end
         end
       end

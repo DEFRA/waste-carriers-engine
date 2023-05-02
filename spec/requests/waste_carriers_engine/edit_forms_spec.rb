@@ -46,7 +46,7 @@ module WasteCarriersEngine
               get new_edit_form_path(registration.reg_identifier)
 
               expect(response).to render_template("waste_carriers_engine/edit_forms/new")
-              expect(response.code).to eq("200")
+              expect(response).to have_http_status(:ok)
             end
 
             context "when the registration business type is an old frontend one" do
@@ -56,7 +56,7 @@ module WasteCarriersEngine
                 get new_edit_form_path(registration.reg_identifier)
 
                 expect(response).to render_template("waste_carriers_engine/edit_forms/new")
-                expect(response.code).to eq("200")
+                expect(response).to have_http_status(:ok)
               end
             end
           end

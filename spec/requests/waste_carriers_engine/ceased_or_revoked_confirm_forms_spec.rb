@@ -34,7 +34,7 @@ module WasteCarriersEngine
             get new_ceased_or_revoked_confirm_form_path(transient_registration.token)
 
             expect(response).to render_template("waste_carriers_engine/ceased_or_revoked_confirm_forms/new")
-            expect(response.code).to eq("200")
+            expect(response).to have_http_status(:ok)
           end
         end
       end

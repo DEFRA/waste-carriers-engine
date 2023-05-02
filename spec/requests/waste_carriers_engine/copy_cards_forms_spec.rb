@@ -46,7 +46,7 @@ module WasteCarriersEngine
               get new_copy_cards_form_path(registration.reg_identifier)
 
               expect(response).to render_template("waste_carriers_engine/copy_cards_forms/new")
-              expect(response.code).to eq("200")
+              expect(response).to have_http_status(:ok)
             end
 
             context "when an order is in progress" do
