@@ -12,7 +12,7 @@ module WasteCarriersEngine
       context "with an upper tier registration" do
         describe ".run" do
           let(:registration) { create(:registration, :has_required_data, expires_on: 1.year.from_now) }
-          let(:template_id) { "f703000e-1e76-4529-912d-966691578da0" }
+          let(:template_id) { "95af7082-1906-4ff1-bef5-f85fe4a5a01c" }
 
           let(:company_name) { "Acme Waste" }
           let(:registered_company_name) { "Zenith Limited" }
@@ -28,7 +28,7 @@ module WasteCarriersEngine
                 registration_type: "carrier, broker and dealer",
                 reg_identifier: registration.reg_identifier,
                 company_name: expected_company_name,
-                registered_address: "42, Foo Gardens, Baz City, FA1 1KE",
+                registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
                 phone_number: "03708 506506",
                 date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
                 expiry_date: registration.expires_on.in_time_zone("London").to_date.strftime("%e %B %Y"),
@@ -36,7 +36,8 @@ module WasteCarriersEngine
                 address_line_2: "42",
                 address_line_3: "Foo Gardens",
                 address_line_4: "Baz City",
-                address_line_5: "FA1 1KE"
+                address_line_5: "BS1 5AH",
+                certificate_creation_date: Date.today.strftime("%e %B %Y")
               }
             }
           end

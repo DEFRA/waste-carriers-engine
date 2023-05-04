@@ -5,14 +5,15 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/letter
     body:
       encoding: UTF-8
-      string: '{"template_id":"0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","reference":"CBDU12","personalisation":{"contact_name":"Jane
-        Doe","reg_identifier":"CBDU12","company_name":"Acme Waste","registered_address":"42,
-        Foo Gardens, Baz City, BS1 1AA","phone_number":"03708 506506","date_registered":"17
-        March 2022","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
-        Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA"}}'
+      string: '{"template_id":"e144cc0c-8903-434f-97a0-c798fcd35beb","reference":"CBDU1","personalisation":{"contact_name":"Jane
+        Doe","reg_identifier":"CBDU1","company_name":"Acme Waste","registered_address":"42,
+        Foo Gardens, Baz City, BS1 5AH","phone_number":"03708 506506","date_registered":"
+        4 May 2023","certificate_creation_date":" 4 May 2023","address_line_1":"Jane
+        Doe","address_line_2":"42","address_line_3":"Foo Gardens","address_line_4":"Baz
+        City","address_line_5":"BS1 5AH"}}'
     headers:
       User-Agent:
-      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      - NOTIFY-API-RUBY-CLIENT/5.4.0
       Content-Type:
       - application/json
       Authorization:
@@ -26,53 +27,63 @@ http_interactions:
       code: 201
       message: Created
     headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2129'
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 04 May 2023 09:37:56 GMT
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
       - GET,PUT,POST,DELETE
       Access-Control-Allow-Origin:
       - "*"
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 17 Mar 2022 13:56:02 GMT
       Server:
-      - nginx
+      - gunicorn
       Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains
+      - max-age=31536000; includeSubDomains; preload
       X-B3-Spanid:
-      - 032f12cc5df887630129c60d8f397b47
+      - 704c3191b5de1fba
       X-B3-Traceid:
-      - 032f12cc5df887630129c60d8f397b47
+      - 02b2976ecc72ec95704c3191b5de1fba
       X-Vcap-Request-Id:
-      - 85de7486-5488-4d60-785d-19ffad83c907
-      Content-Length:
-      - '2017'
-      Connection:
-      - keep-alive
+      - 8e4379f9-8cfe-4ea8-7738-6a87f333d685
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 6fa2f2520e1a521d933565337b2b81de.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - UPJqqEv-BR2bX4u_NZKmKmlt8XWAFtNGTMpAuwa8vezAcXU4nnaTTw==
     body:
       encoding: UTF-8
       string: '{"content":{"body":"Dear Jane Doe\r\nYou are now registered as a lower
         tier waste carrier, broker and dealer.\r\n\r\nYour registration number is
-        CBDU12.\r\n\r\n#As a lower tier waste carrier, broker and dealer:\r\n*you
-        don\u2019t need to pay a registration charge\r\n*you don\u2019t need to renew
-        your registration (it just continues automatically)\r\n\r\nYours sincerely\r\nWaste
-        carrier renewal team\r\n\r\n------------\r\n\r\n\r\n#Certificate of Registration
-        under the Waste (England and Wales) Regulations 2011\r\n#Regulation authority\r\n#Name\r\nEnvironment
+        CBDU1.\r\n\r\n#As a lower tier waste carrier, broker and dealer:\r\n*you don\u2019t
+        need to pay a registration charge\r\n*you don\u2019t need to renew your registration
+        (it just continues automatically)\r\n\r\nYours sincerely\r\nWaste carrier
+        renewal team\r\n\r\n------------\r\n\r\n\r\n#Certificate of Registration under
+        the Waste (England and Wales) Regulations 2011\r\n#Regulation authority\r\n#Name\r\nEnvironment
         Agency\r\n#Address \r\nNational Customer Contact Centre\r\n99 Parkway Avenue\r\nSheffield\r\nS9
         4WF\r\nTelephone number - 03708 506506\r\n\r\nThe Environment Agency certify
         that the following information is entered in the register which they maintain
         under regulation 28 of the Waste (England and Wales) Regulations 2011.\r\n\r\n#Carrier
         details\r\nName of registered carrier - Acme Waste\r\nRegistered as -  A lower
         tier waste carrier, broker and dealer.\r\nRegistered address - 42, Foo Gardens,
-        Baz City, BS1 1AA\r\nTelephone number - 03708 506506\r\nDate of registration
-        - 17 March 2022\r\n\r\n#Updating your details\r\nYour registration will last
-        indefinitely so does not need to be renewed. If any of the details you\u2019ve
-        given us change, you must update them within 28 days by contacting the Environment
-        Agency.\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
-        or contact the Environment Agency helpline: 03708 506506","subject":"You are
-        now registered as a lower tier waste carrier, broker and dealer"},"id":"1b79c93d-6140-49c4-a718-1605c3450d2c","reference":"CBDU12","scheduled_for":null,"template":{"id":"0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/0ad5d154-9e44-4da7-8c1b-b4b14d1057cd","version":15},"uri":"https://api.notifications.service.gov.uk/v2/notifications/1b79c93d-6140-49c4-a718-1605c3450d2c"}
+        Baz City, BS1 5AH\r\nTelephone number - 03708 506506\r\nDate of registration
+        -  4 May 2023\r\n\r\nThis certificate was created on  4 May 2023. These details
+        are correct at the time of certificate generation.\r\n\r\n#Updating your details\r\nYour
+        registration will last indefinitely so does not need to be renewed. If any
+        of the details you\u2019ve given us change, you must update them within 28
+        days by contacting the Environment Agency.\r\n\r\nIf you have enquiries please
+        email nccc-carrierbroker@environment-agency.gov.uk or contact the Environment
+        Agency helpline: 03708 506506","subject":"You are now registered as a lower
+        tier waste carrier, broker and dealer"},"id":"1b7e6322-3a90-4b1d-8a9b-0ca0c76448cc","reference":"CBDU1","scheduled_for":null,"template":{"id":"e144cc0c-8903-434f-97a0-c798fcd35beb","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/e144cc0c-8903-434f-97a0-c798fcd35beb","version":2},"uri":"https://api.notifications.service.gov.uk/v2/notifications/1b7e6322-3a90-4b1d-8a9b-0ca0c76448cc"}
 
-'
-  recorded_at: Thu, 17 Mar 2022 13:55:37 GMT
+        '
+  recorded_at: Thu, 04 May 2023 09:37:56 GMT
 recorded_with: VCR 6.1.0

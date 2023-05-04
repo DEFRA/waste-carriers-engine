@@ -19,17 +19,14 @@ module WasteCarriersEngine
             phone_number: @registration.phone_number,
             registered_address: registered_address,
             date_registered: date_registered,
-            link_to_file: link_to_certificate
+            link_to_file: link_to_certificate,
+            certificate_creation_date: Date.today.strftime("%e %B %Y")
           }
         }
       end
 
       def template_id
-        if @registration.upper_tier?
-          "fe1e4746-c940-4ace-b111-8be64ee53b35"
-        else
-          "889fa2f2-f70c-4b5a-bbc8-d94a8abd3990"
-        end
+        @registration.upper_tier? ? "4526496c-1ae0-4dc6-a564-c7007b76c164" : "8d1fb650-93ef-4260-aa08-0b703bbe5609"
       end
 
       def registered_address

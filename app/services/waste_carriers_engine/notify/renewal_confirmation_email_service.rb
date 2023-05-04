@@ -10,7 +10,7 @@ module WasteCarriersEngine
       def notify_options
         {
           email_address: @registration.contact_email,
-          template_id: "6d54a9bc-9b62-4d93-a40a-d06d04ed58ca",
+          template_id: "ce2d9d55-6e16-45fe-83e2-4513a31ea864",
           personalisation: {
             reg_identifier: @registration.reg_identifier,
             registration_type: registration_type,
@@ -19,7 +19,8 @@ module WasteCarriersEngine
             phone_number: @registration.phone_number,
             registered_address: registered_address,
             date_activated: date_activated,
-            link_to_file: link_to_certificate
+            link_to_file: link_to_certificate,
+            certificate_creation_date: Date.today.strftime("%e %B %Y")
           }
         }
       end

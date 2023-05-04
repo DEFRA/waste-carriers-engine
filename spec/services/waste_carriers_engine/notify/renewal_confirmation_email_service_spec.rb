@@ -19,9 +19,10 @@ module WasteCarriersEngine
               first_name: "Jane",
               last_name: "Doe",
               phone_number: "03708 506506",
-              registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nFA1 1KE",
+              registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH",
               date_activated: registration.metaData.date_activated.strftime("%e %B %Y"),
-              link_to_file: "My certificate"
+              link_to_file: "My certificate",
+              certificate_creation_date: Date.today.strftime("%e %B %Y")
             }
           }
         end
@@ -39,7 +40,7 @@ module WasteCarriersEngine
           end
 
           context "with an upper tier registration" do
-            let(:template_id) { "6d54a9bc-9b62-4d93-a40a-d06d04ed58ca" }
+            let(:template_id) { "ce2d9d55-6e16-45fe-83e2-4513a31ea864" }
             let(:registration) { create(:registration, :has_required_data, :already_renewed) }
             let(:registration_type) { "carrier, broker and dealer" }
 
@@ -53,7 +54,7 @@ module WasteCarriersEngine
               expect(run_service).to be_a(Notifications::Client::ResponseNotification)
               expect(run_service.template["id"]).to eq(template_id)
               expect(run_service.content["subject"])
-                .to match(/Your waste carriers registration CBDU\d has been renewed/)
+                .to match(/Your waste carriers registration CBDU\d+ has been renewed/)
             end
           end
         end
