@@ -5,12 +5,13 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"foo@example.com","template_id":"889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","personalisation":{"reg_identifier":"CBDU11","registration_type":null,"first_name":"Jane","last_name":"Doe","phone_number":"03708
-        506506","registered_address":"42\r\nFoo Gardens\r\nBaz City\r\nFA1 1KE","date_registered":"10
-        May 2021","link_to_file":"Hello World"}}'
+      string: '{"email_address":"foo@example.com","template_id":"8d1fb650-93ef-4260-aa08-0b703bbe5609","personalisation":{"reg_identifier":"CBDU2","registration_type":null,"first_name":"Jane","last_name":"Doe","phone_number":"03708
+        506506","registered_address":"42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH","date_registered":"
+        4 May 2023","link_to_file":"Hello World","certificate_creation_date":" 4 May
+        2023"}}'
     headers:
       User-Agent:
-      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      - NOTIFY-API-RUBY-CLIENT/5.4.0
       Content-Type:
       - application/json
       Authorization:
@@ -24,49 +25,59 @@ http_interactions:
       code: 201
       message: Created
     headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1829'
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 04 May 2023 10:00:08 GMT
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
       - GET,PUT,POST,DELETE
       Access-Control-Allow-Origin:
       - "*"
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 10 May 2021 13:30:32 GMT
       Server:
-      - nginx
+      - gunicorn
       Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains
+      - max-age=31536000; includeSubDomains; preload
       X-B3-Spanid:
-      - fe38abde740d293d
+      - 3b56bf68b38a29fb
       X-B3-Traceid:
-      - fe38abde740d293d
+      - 527c7515f937b4d63b56bf68b38a29fb
       X-Vcap-Request-Id:
-      - 4b3c5fda-481f-41bf-4d40-2409c4919f88
-      Content-Length:
-      - '1710'
-      Connection:
-      - keep-alive
+      - c03572e0-74f3-4d95-6e79-edefc137ed84
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 4c52c2a46d6ce20208b2160aa3b35a5a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - 3znzV_yuWCpElmrIpsGWyq9d7DZ1RIOhX61_bD8udRpoYlIS1oIX-A==
     body:
       encoding: UTF-8
-      string: '{"content":{"body":"#You are now registered as a lower tier waste carrier,
-        broker and dealer\r\n\r\nYour registration number is\r\n\r\n#CBDU11\r\n\r\nYour
+      string: '{"content":{"body":"# You are now registered as a lower tier waste
+        carrier, broker and dealer\r\n\r\nYour registration number is\r\n\r\n# CBDU2\r\n\r\nYour
         registration does not expire, however the link to your certificate will only
-        be available for 18 months. You must download the file and keep it for reference.\r\nDownload
+        be available for 6 months. You must download the file and keep it for reference.\r\nDownload
         your certificate at: Hello World\r\n\r\nJane\r\n\r\nBased on what you told
         us about your organisation and what it does, we have registered you as a lower
-        tier waste carrier.\r\n\r\nBeing a lower tier waste carrier means that:\r\n\r\n*you
-        don\u2019t need to pay a registration charge\r\n*you don\u2019t need to renew
-        your registration (it just continues automatically)\r\n\r\n#Updating your
-        details\r\n\r\nIf any of the details you''ve given us change, you must update
-        them within 28 days by contacting the Environment Agency.\r\n\r\nJane Doe\r\n42\r\nFoo
-        Gardens\r\nBaz City\r\nFA1 1KE\r\n\r\nTelephone number: 03708 506506\r\n\r\nRegistered
-        on: 10 May 2021\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
+        tier waste carrier.\r\n\r\nBeing a lower tier waste carrier means that:\r\n\r\n*
+        you don\u2019t need to pay a registration charge\r\n* you don\u2019t need
+        to renew your registration (it just continues automatically)\r\n\r\n# Updating
+        your details\r\n\r\nIf any of the details you''ve given us change, you must
+        update them within 28 days by contacting the Environment Agency.\r\n\r\nJane
+        Doe\r\n42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH\r\n\r\nTelephone number: 03708
+        506506\r\n\r\nRegistered on:  4 May 2023\r\n\r\nThis certificate was created
+        on  4 May 2023. These details are correct at the time of certificate generation.\r\n\r\nIf
+        you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
         or contact the Environment Agency helpline: 03708 506506\r\n\r\nThis is an
         automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Waste
-        Carrier Registration Complete"},"id":"101ecb50-4e00-4976-b012-40a075e320a3","reference":null,"scheduled_for":null,"template":{"id":"889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/889fa2f2-f70c-4b5a-bbc8-d94a8abd3990","version":13},"uri":"https://api.notifications.service.gov.uk/v2/notifications/101ecb50-4e00-4976-b012-40a075e320a3"}
+        Carrier Registration Complete"},"id":"718f0889-df49-4969-acda-78df540cb6b8","reference":null,"scheduled_for":null,"template":{"id":"8d1fb650-93ef-4260-aa08-0b703bbe5609","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/8d1fb650-93ef-4260-aa08-0b703bbe5609","version":1},"uri":"https://api.notifications.service.gov.uk/v2/notifications/718f0889-df49-4969-acda-78df540cb6b8"}
 
-'
-  recorded_at: Mon, 10 May 2021 13:30:32 GMT
-recorded_with: VCR 6.0.0
+        '
+  recorded_at: Thu, 04 May 2023 10:00:08 GMT
+recorded_with: VCR 6.1.0

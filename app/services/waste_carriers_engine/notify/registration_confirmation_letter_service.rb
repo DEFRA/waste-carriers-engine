@@ -19,9 +19,7 @@ module WasteCarriersEngine
       private
 
       def template
-        return "0ad5d154-9e44-4da7-8c1b-b4b14d1057cd" if @registration.lower_tier?
-
-        "92817aa7-6289-4837-a033-96d287644cb3" # upper_tier
+        @registration.lower_tier? ? "e144cc0c-8903-434f-97a0-c798fcd35beb" : "06bfc531-6a39-42ec-8466-eba1041fb61b"
       end
 
       def personalisation
@@ -43,7 +41,8 @@ module WasteCarriersEngine
           company_name: company_name,
           registered_address: registered_address,
           phone_number: @registration.phone_number,
-          date_registered: date_registered
+          date_registered: date_registered,
+          certificate_creation_date: Date.today.strftime("%e %B %Y")
         }.merge(address_lines)
       end
 

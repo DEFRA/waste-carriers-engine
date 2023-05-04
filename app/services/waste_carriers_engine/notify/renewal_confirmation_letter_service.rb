@@ -18,7 +18,7 @@ module WasteCarriersEngine
       private
 
       def template
-        "f703000e-1e76-4529-912d-966691578da0"
+        "95af7082-1906-4ff1-bef5-f85fe4a5a01c"
       end
 
       def personalisation
@@ -30,7 +30,8 @@ module WasteCarriersEngine
           registered_address: registered_address,
           phone_number: @registration.phone_number,
           date_registered: date_registered,
-          expiry_date: expiry_date
+          expiry_date: expiry_date,
+          certificate_creation_date: Date.today.strftime("%e %B %Y")
         }.merge(address_lines)
       end
 

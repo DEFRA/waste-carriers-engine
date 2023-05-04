@@ -5,13 +5,14 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"foo@example.com","template_id":"6d54a9bc-9b62-4d93-a40a-d06d04ed58ca","personalisation":{"reg_identifier":"CBDU1","registration_type":"carrier,
+      string: '{"email_address":"foo@example.com","template_id":"ce2d9d55-6e16-45fe-83e2-4513a31ea864","personalisation":{"reg_identifier":"CBDU29","registration_type":"carrier,
         broker and dealer","first_name":"Jane","last_name":"Doe","phone_number":"03708
-        506506","registered_address":"42\r\nFoo Gardens\r\nBaz City\r\nFA1 1KE","date_activated":"30
-        April 2021","link_to_file":"My certificate"}}'
+        506506","registered_address":"42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH","date_activated":"
+        4 May 2023","link_to_file":"My certificate","certificate_creation_date":"
+        4 May 2023"}}'
     headers:
       User-Agent:
-      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      - NOTIFY-API-RUBY-CLIENT/5.4.0
       Content-Type:
       - application/json
       Authorization:
@@ -25,53 +26,65 @@ http_interactions:
       code: 201
       message: Created
     headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2302'
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 04 May 2023 10:38:48 GMT
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
       - GET,PUT,POST,DELETE
       Access-Control-Allow-Origin:
       - "*"
-      Content-Type:
-      - application/json
-      Date:
-      - Fri, 30 Apr 2021 14:36:00 GMT
       Server:
-      - nginx
+      - gunicorn
       Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains
+      - max-age=31536000; includeSubDomains; preload
       X-B3-Spanid:
-      - 137b0f5506554061
+      - 17271df15209af88
       X-B3-Traceid:
-      - 137b0f5506554061
+      - 71b23b93eab4b36817271df15209af88
       X-Vcap-Request-Id:
-      - c93bf6ba-e766-4619-4ca2-11ac43f77bba
-      Content-Length:
-      - '2008'
-      Connection:
-      - keep-alive
+      - 7f52bb83-df24-4509-4cd0-13890988e752
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 242a81711c4fc113f186d0cca0b5bb94.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - AD6ZanC0DNs0_mw8F09eX2__kTRAZMJgqu_rW2F6daFGjqdXmSFTPg==
     body:
       encoding: UTF-8
-      string: '{"content":{"body":"#Your registration as an upper tier carrier, broker
-        and dealer has been renewed\r\n\r\nYour registration number is still\r\n\r\n#CBDU1\r\n\r\nDownload
-        your certificate at: My certificate\r\n\r\nBeing an an upper tier waste carrier,
-        broker and dealer means that:\r\n\r\n*you need to renew your registration
-        every 3 years (we\u2019ll send you a reminder)\r\n*you\u2019ll need to pay
-        a registration charge each time you renew\r\n\r\nThere are some simple rules
-        you must follow:\r\n\r\n*if you give your waste to another person or business
-        you must check they are properly authorised to accept it, e.g. as a permitted
-        site or a registered waste carrier\r\n*make sure the correct documentation
-        is completed for each transfer of waste and that it correctly describes the
-        waste\r\n*make sure any waste is safely handled and stored\r\n*minimise the
-        environmental impact of waste by prioritising waste prevention, reuse, recycling
-        and recovery over disposal\r\n\r\n#Updating your details\r\nIf any of the
-        details you\u2019ve given us change, you must update them within 28 days by
-        contacting the Environment Agency.\r\n\r\nJane Doe\r\n\r\n42\r\nFoo Gardens\r\nBaz
-        City\r\nFA1 1KE\r\n\r\nTelephone number: 03708 506506\r\n\r\nRenewed on: 30
-        April 2021\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
+      string: '{"content":{"body":"# Your registration as an upper tier carrier, broker
+        and dealer has been renewed\r\n\r\nYour registration number is still\r\n\r\n#
+        CBDU29\r\n\r\nYour registration lasts for 3 years, however the link to your
+        certificate will only be available for 6 months. You must download the file
+        and keep it for reference.\r\nDownload your certificate at: My certificate\r\n\r\nBeing
+        an an upper tier waste carrier, broker and dealer means that:\r\n\r\n* you
+        need to renew your registration every 3 years (we\u2019ll send you a reminder)\r\n*
+        you\u2019ll need to pay a registration charge each time you renew\r\n\r\nThere
+        are some simple rules you must follow:\r\n\r\n* if you give your waste to
+        another person or business you must check they are properly authorised to
+        accept it, e.g. as a permitted site or a registered waste carrier\r\n* make
+        sure the correct documentation is completed for each transfer of waste and
+        that it correctly describes the waste\r\n* make sure any waste is safely handled
+        and stored\r\n* minimise the environmental impact of waste by prioritising
+        waste prevention, reuse, recycling and recovery over disposal\r\n\r\n# Updating
+        your details\r\nIf any of the details you\u2019ve given us change, you must
+        update them within 28 days by contacting the Environment Agency.\r\n\r\nJane
+        Doe\r\n\r\n42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH\r\n\r\nTelephone number:
+        03708 506506\r\n\r\nRenewed on:  4 May 2023\r\n\r\nThis certificate was created
+        on  4 May 2023. These details are correct at the time of certificate generation.\r\n\r\nIf
+        you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
         or contact the Environment Agency helpline: 03708 506506\r\n\r\nThis is an
         automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Your
-        waste carriers registration CBDU1 has been renewed"},"id":"c2332345-1093-4c47-9b8b-f46a4f249f5d","reference":null,"scheduled_for":null,"template":{"id":"6d54a9bc-9b62-4d93-a40a-d06d04ed58ca","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/6d54a9bc-9b62-4d93-a40a-d06d04ed58ca","version":5},"uri":"https://api.notifications.service.gov.uk/v2/notifications/c2332345-1093-4c47-9b8b-f46a4f249f5d"}
+        waste carriers registration CBDU29 has been renewed"},"id":"c5280e54-c0b5-4c58-b5ea-22b111544613","reference":null,"scheduled_for":null,"template":{"id":"ce2d9d55-6e16-45fe-83e2-4513a31ea864","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/ce2d9d55-6e16-45fe-83e2-4513a31ea864","version":1},"uri":"https://api.notifications.service.gov.uk/v2/notifications/c5280e54-c0b5-4c58-b5ea-22b111544613"}
 
-'
-  recorded_at: Fri, 30 Apr 2021 14:36:00 GMT
-recorded_with: VCR 6.0.0
+        '
+  recorded_at: Thu, 04 May 2023 10:38:47 GMT
+recorded_with: VCR 6.1.0

@@ -5,15 +5,15 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/letter
     body:
       encoding: UTF-8
-      string: '{"template_id":"f703000e-1e76-4529-912d-966691578da0","reference":"CBDU1","personalisation":{"registration_type":"carrier,
+      string: '{"template_id":"95af7082-1906-4ff1-bef5-f85fe4a5a01c","reference":"CBDU1","personalisation":{"registration_type":"carrier,
         broker and dealer","contact_name":"Jane Doe","reg_identifier":"CBDU1","company_name":"Acme
-        Waste","registered_address":"42, Foo Gardens, Baz City, BS1 1AA","phone_number":"03708
-        506506","date_registered":" 1 September 2022","expiry_date":" 1 September
-        2023","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
-        Gardens","address_line_4":"Baz City","address_line_5":"BS1 1AA"}}'
+        Waste","registered_address":"42, Foo Gardens, Baz City, BS1 5AH","phone_number":"03708
+        506506","date_registered":" 4 May 2023","expiry_date":" 4 May 2024","certificate_creation_date":"
+        4 May 2023","address_line_1":"Jane Doe","address_line_2":"42","address_line_3":"Foo
+        Gardens","address_line_4":"Baz City","address_line_5":"BS1 5AH"}}'
     headers:
       User-Agent:
-      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      - NOTIFY-API-RUBY-CLIENT/5.4.0
       Content-Type:
       - application/json
       Authorization:
@@ -30,11 +30,11 @@ http_interactions:
       Content-Type:
       - application/json
       Content-Length:
-      - '2242'
+      - '2347'
       Connection:
       - keep-alive
       Date:
-      - Thu, 01 Sep 2022 10:31:43 GMT
+      - Thu, 04 May 2023 09:44:05 GMT
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
@@ -46,19 +46,19 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-B3-Spanid:
-      - 4c625de0b6750d6b
+      - '6057001011224505'
       X-B3-Traceid:
-      - 2b584578f03b25ca4c625de0b6750d6b
+      - 39065d73813cb9426057001011224505
       X-Vcap-Request-Id:
-      - 8ad292dd-f615-4b75-5ac3-cb546b2f3637
+      - 1958cc5f-311b-4cbf-4437-13b497ed685b
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f1b5ae62d9afc4ed1ebb4ac99a508444.cloudfront.net (CloudFront)
+      - 1.1 4c52c2a46d6ce20208b2160aa3b35a5a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LHR50-C1
+      - LHR50-P3
       X-Amz-Cf-Id:
-      - U3Mpsi9UK4KcrCpEzI-5UusvvqQy0No4UjJ1blyKz69qTUxy3xjUKw==
+      - jN9n50oim5-hmu4nzvC3I2XMPi7EZZemzEbozt-UBlr4AyVStA-EfA==
     body:
       encoding: UTF-8
       string: '{"content":{"body":"Dear Jane Doe\r\n\r\nYour registration number is
@@ -77,15 +77,17 @@ http_interactions:
         regulation 28 of the Waste (England and Wales) Regulations 2011.\r\n#Carrier
         details\r\nName of registered carrier - Acme Waste\r\n\r\nRegistered as -  An
         upper tier waste carrier, broker and dealer\r\n\r\nRegistered address - 42,
-        Foo Gardens, Baz City, BS1 1AA\r\n\r\nTelephone number - 03708 506506\r\n\r\nDate
-        of registration -  1 September 2022\r\n\r\nExpiry date of registration -  1
-        September 2023\r\n\r\n#Updating your details\r\nIf any of the details you\u2019ve
-        given us change, you must update them within 28 days by contacting the Environment
-        Agency.\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
-        or contact the Environment Agency helpline: 03708 506506\r\n\r\nYours sincerely\r\n\r\nWaste
-        carrier renewal team","subject":"Your registration as an upper tier carrier,
-        broker and dealer has been renewed"},"id":"19fe0d02-b1ff-4ef7-b19b-f9be1dd91fb1","reference":"CBDU1","scheduled_for":null,"template":{"id":"f703000e-1e76-4529-912d-966691578da0","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/f703000e-1e76-4529-912d-966691578da0","version":5},"uri":"https://api.notifications.service.gov.uk/v2/notifications/19fe0d02-b1ff-4ef7-b19b-f9be1dd91fb1"}
+        Foo Gardens, Baz City, BS1 5AH\r\n\r\nTelephone number - 03708 506506\r\n\r\nDate
+        of registration -  4 May 2023\r\n\r\nExpiry date of registration -  4 May
+        2024\r\n\r\nThis certificate was created on  4 May 2023. These details are
+        correct at the time of certificate generation.\r\n\r\n#Updating your details\r\nIf
+        any of the details you\u2019ve given us change, you must update them within
+        28 days by contacting the Environment Agency.\r\n\r\nIf you have enquiries
+        please email nccc-carrierbroker@environment-agency.gov.uk or contact the Environment
+        Agency helpline: 03708 506506\r\n\r\nYours sincerely\r\n\r\nWaste carrier
+        renewal team","subject":"Your registration as an upper tier carrier, broker
+        and dealer has been renewed"},"id":"f3e0dc06-1684-492b-9ac7-5184fe8dbabf","reference":"CBDU1","scheduled_for":null,"template":{"id":"95af7082-1906-4ff1-bef5-f85fe4a5a01c","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/95af7082-1906-4ff1-bef5-f85fe4a5a01c","version":1},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f3e0dc06-1684-492b-9ac7-5184fe8dbabf"}
 
-'
-  recorded_at: Thu, 01 Sep 2022 10:31:43 GMT
+        '
+  recorded_at: Thu, 04 May 2023 09:44:05 GMT
 recorded_with: VCR 6.1.0

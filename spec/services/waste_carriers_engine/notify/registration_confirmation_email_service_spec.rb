@@ -19,9 +19,10 @@ module WasteCarriersEngine
               first_name: "Jane",
               last_name: "Doe",
               phone_number: "03708 506506",
-              registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nFA1 1KE",
+              registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH",
               date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
-              link_to_file: "Hello World"
+              link_to_file: "Hello World",
+              certificate_creation_date: Date.today.strftime("%e %B %Y")
             }
           }
         end
@@ -39,7 +40,7 @@ module WasteCarriersEngine
           end
 
           context "with a lower tier registration" do
-            let(:template_id) { "889fa2f2-f70c-4b5a-bbc8-d94a8abd3990" }
+            let(:template_id) { "8d1fb650-93ef-4260-aa08-0b703bbe5609" }
             let(:registration) { create(:registration, :has_required_data, :lower_tier) }
             let(:registration_type) { nil }
 
@@ -57,7 +58,7 @@ module WasteCarriersEngine
           end
 
           context "with an upper tier registration" do
-            let(:template_id) { "fe1e4746-c940-4ace-b111-8be64ee53b35" }
+            let(:template_id) { "4526496c-1ae0-4dc6-a564-c7007b76c164" }
             let(:registration) { create(:registration, :has_required_data, :already_renewed) }
             let(:registration_type) { "carrier, broker and dealer" }
 

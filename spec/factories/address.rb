@@ -6,7 +6,7 @@ FactoryBot.define do
       house_number { "42" }
       address_line_1 { "Foo Gardens" }
       town_city { "Baz City" }
-      postcode { "FA1 1KE" }
+      postcode { "BS1 5AH" }
       uprn { "340116" }
     end
 
