@@ -23,6 +23,7 @@ en:
         carrier_telephone_number: "Telephone number"
         registration_date: "Date of registration"
         expiry_date: "Expiry date of registration (unless revoked)"
+        cert_created_date: "This certificate was created on %{date}. These details are correct at the time of certificate generation."
         heading2: "Making changes to your registration"
         lower_renewal: "Your registration will last indefinitely so does not need to be renewed but you must update your registration details if they change, within 28 days of the change."
         upper_renewal: "Your registration will last %{expires_after_pluralized} and will need to be renewed after this period. If any of your details change, you must notify us within 28 days of the change."

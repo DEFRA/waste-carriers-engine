@@ -57,6 +57,10 @@ module WasteCarriersEngine
       displayable_address(registered_address)
     end
 
+    def certificate_creation_date
+      Date.today.strftime("%e %B %Y")
+    end
+
     private
 
     def expires_after_pluralized

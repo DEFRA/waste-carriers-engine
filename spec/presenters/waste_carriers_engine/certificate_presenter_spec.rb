@@ -148,6 +148,12 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#certificate_creation_date" do
+      it "returns today's date in the expected format" do
+        expect(presenter.certificate_creation_date).to eq Date.today.strftime("%e %B %Y")
+      end
+    end
+
     describe "#renewal_message" do
       context "when the registration is lower tier" do
         let(:tier) { "LOWER" }
