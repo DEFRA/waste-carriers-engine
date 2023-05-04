@@ -13,7 +13,8 @@
           },
           hint: {
             text: t(".company_name_label.#{@company_name_form.business_type}.#{@company_name_form.tier}")
-          } %>
+          },
+          autocomplete: "organization" %>
       <%= f.govuk_submit t(".next_button") %>
     <% end %>
   </div>

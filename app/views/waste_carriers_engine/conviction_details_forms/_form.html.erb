@@ -17,7 +17,8 @@
 
   <%= f.govuk_text_field :position,
       label: { text: t(".position") },
-      width: "one-half" %>
+      width: "one-half",
+      autocomplete: "organization-title" %>
 
   <%= render("waste_carriers_engine/shared/dob", form: @conviction_details_form, f: f) %>
 

@@ -22,11 +22,13 @@
       <%= f.govuk_text_field :contact_email,
           label: { text: t(".contact_email_label") },
           hint: { text: t(".contact_email_hint") },
-          width: "one-half"
+          width: "one-half",
+          autocomplete: "email"
       %>
       <%= f.govuk_text_field :confirmed_email,
           label: { text: t(".confirmed_email_label") },
-          width: "one-half"
+          width: "one-half",
+          autocomplete: "email"
       %>
 
       <% if WasteCarriersEngine.configuration.host_is_back_office? %>
