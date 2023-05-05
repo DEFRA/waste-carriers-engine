@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"foo@example.com","template_id":"4526496c-1ae0-4dc6-a564-c7007b76c164","personalisation":{"reg_identifier":"CBDU2","registration_type":"carrier,
+      string: '{"email_address":"foo@example.com","template_id":"fe1e4746-c940-4ace-b111-8be64ee53b35","personalisation":{"reg_identifier":"CBDU2","registration_type":"carrier,
         broker and dealer","first_name":"Jane","last_name":"Doe","phone_number":"03708
         506506","registered_address":"42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH","date_registered":"
         4 May 2023","link_to_file":"Hello World","certificate_creation_date":" 4 May
@@ -87,7 +87,7 @@ http_interactions:
         generation.\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
         or contact the Environment Agency helpline: 03708 506506\r\n\r\nThis is an
         automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Waste
-        Carrier Registration Complete"},"id":"f21ee201-8e9f-4dd4-93ee-bcde38d6df26","reference":null,"scheduled_for":null,"template":{"id":"4526496c-1ae0-4dc6-a564-c7007b76c164","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/4526496c-1ae0-4dc6-a564-c7007b76c164","version":1},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f21ee201-8e9f-4dd4-93ee-bcde38d6df26"}
+        Carrier Registration Complete"},"id":"f21ee201-8e9f-4dd4-93ee-bcde38d6df26","reference":null,"scheduled_for":null,"template":{"id":"fe1e4746-c940-4ace-b111-8be64ee53b35","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/fe1e4746-c940-4ace-b111-8be64ee53b35","version":1},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f21ee201-8e9f-4dd4-93ee-bcde38d6df26"}
 
         '
   recorded_at: Thu, 04 May 2023 10:03:09 GMT
