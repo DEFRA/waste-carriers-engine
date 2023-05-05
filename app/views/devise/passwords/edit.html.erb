@@ -17,11 +17,13 @@
       <%= f.govuk_password_field :password,
           width: "one-half",
           label: { text: t(".password.label") },
-          hint: { text: t(".password.hint") } %>
+          hint: { text: t(".password.hint") },
+          autocomplete: "off" %>
 
       <%= f.govuk_password_field :password_confirmation,
           width: "one-half",
-          label: { text: t(".password_confirmation.label") } %>
+          label: { text: t(".password_confirmation.label") },
+          autocomplete: "off" %>
 
       <%= f.govuk_submit t(".submit") %>
 
