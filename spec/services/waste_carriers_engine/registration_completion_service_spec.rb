@@ -86,6 +86,15 @@ module WasteCarriersEngine
           expect(registration.finance_details.orders.count).to eq(1)
           expect(registration.finance_details.balance).to eq(0)
         end
+
+        it "does not set conviction search result and sign offs" do
+          transient_registration.conviction_search_result = { match_result: "NO", confirmed: "no" }
+          transient_registration.conviction_sign_offs = [ConvictionSignOff.new]
+          registration = described_class.run(transient_registration)
+
+          expect(registration.conviction_search_result).to be_nil
+          expect(registration.conviction_sign_offs).to be_empty
+        end
       end
 
       context "when the balance has been cleared and there are no pending convictions checks" do

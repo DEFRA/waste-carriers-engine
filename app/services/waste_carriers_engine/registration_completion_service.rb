@@ -17,6 +17,7 @@ module WasteCarriersEngine
         copy_names_to_contact_address
         copy_data_from_transient_registration
         copy_key_people_from_transient_registration
+        copy_conviction_sign_offs_from_transient_registration
 
         set_reg_identifier
         set_expiry_date if registration.upper_tier?
@@ -58,6 +59,14 @@ module WasteCarriersEngine
       return registration.key_people = transient_registration.key_people if transient_registration.declared_convictions?
 
       registration.key_people = transient_registration.main_people
+    end
+
+    def copy_conviction_sign_offs_from_transient_registration
+      # Only copy conviction sign offs if the user has applied for upper tier
+      return unless transient_registration.upper_tier?
+
+      registration.conviction_search_result = transient_registration.conviction_search_result
+      registration.conviction_sign_offs = transient_registration.conviction_sign_offs
     end
 
     def prepare_finance_details_for_lower_tier
@@ -139,7 +148,9 @@ module WasteCarriersEngine
         "workflow_history",
         "locking_name",
         "locked_at",
-        "key_people"
+        "key_people",
+        "conviction_search_result",
+        "conviction_sign_offs"
       )
 
       registration.write_attributes(new_attributes)
