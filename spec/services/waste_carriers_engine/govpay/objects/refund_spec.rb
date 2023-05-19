@@ -9,13 +9,15 @@ module WasteCarriersEngine
     let(:params) { JSON.parse(file_fixture("govpay/get_refund_response_success.json").read) }
 
     describe "#status" do
-      it { expect(refund.status).to eq "success" }
-      it { expect(refund.success?).to be true }
+      it { expect(refund.status).to eq "submitted" }
+      it { expect(refund.success?).to be false }
+      it { expect(refund.submitted?).to be true }
 
       context "with non-successful refund" do
-        let(:params) { super().merge(status: "submitted") }
+        let(:params) { super().merge(status: "error") }
 
         it { expect(refund.success?).to be false }
+        it { expect(refund.submitted?).to be false }
       end
     end
   end

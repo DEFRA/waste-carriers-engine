@@ -12,7 +12,6 @@ module WasteCarriersEngine
     field :currency,                                              type: String, default: "GBP"
     field :mac_code,                                              type: String
     field :uuid,                                                  type: String
-    field :govpay_id,                                             type: String
     field :moto,                                                  type: Boolean, default: false
     field :dateReceived, as: :date_received,                      type: Date
     field :dateEntered, as: :date_entered,                        type: DateTime
@@ -25,17 +24,26 @@ module WasteCarriersEngine
     field :updatedByUser, as: :updated_by_user,                   type: String
     field :comment,                                               type: String
 
+    # for govpay payments and refunds, the unique govpay identifier:
+    field :govpay_id,                                             type: String
+    # for payments of type refund, the govpay id of the payment that was refunded:
+    field :refunded_payment_govpay_id,                            type: String
+
     scope :refundable, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
     scope :reversible, -> { where(payment_type: { "$in" => RECEIVABLE_PAYMENT_TYPES }) }
 
-    # Select payments where the type is not one of the online ones, or if it is, the status is AUTHORISED
-    scope :except_online_not_authorised, lambda {
-                                           where({ "$or" => [
-                                                   { payment_type: { "$nin" => %w[WORLDPAY GOVPAY] } },
-                                                   { world_pay_payment_status: "AUTHORISED" },
-                                                   { govpay_payment_status: "success" }
-                                                 ] })
-                                         }
+    # Select payments where the type is not one of the online ones, or if it is, the status is AUTHORISED / success
+    scope :except_online_not_authorised,
+          lambda {
+            where(
+              { "$or": [
+                { payment_type: { "$nin" => %w[WORLDPAY GOVPAY REFUND] } },
+                { "$and": [{ payment_type: "WORLDPAY" }, { world_pay_payment_status: "AUTHORISED" }] },
+                { "$and": [{ payment_type: "GOVPAY" }, { govpay_payment_status: "success" }] },
+                { "$and": [{ payment_type: "REFUND" }, { govpay_payment_status: "success" }] }
+              ] }
+            )
+          }
 
     def self.new_from_online_payment(order, user_email)
       payment = Payment.new

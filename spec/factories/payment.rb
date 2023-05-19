@@ -13,5 +13,10 @@ FactoryBot.define do
     trait :bank_transfer do
       payment_type { "BANKTRANSFER" }
     end
+
+    trait :govpay_refund do
+      payment_type { WasteCarriersEngine::Payment::REFUND }
+      govpay_id { SecureRandom.hex(22) }
+    end
   end
 end

@@ -152,7 +152,7 @@ module WasteCarriersEngine
 
         context "when there is also a WorldPay payment" do
           before do
-            finance_details.payments = [build(:payment, :govpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
+            finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
           end
 
           it "has the correct balance" do
@@ -163,7 +163,7 @@ module WasteCarriersEngine
 
         context "when the WorldPay payment is not authorised" do
           before do
-            finance_details.payments = [build(:payment, :govpay, amount: 5_000, world_pay_payment_status: "REFUSED")]
+            finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "REFUSED")]
           end
 
           it "does not include it when calculating the balance" do
@@ -186,12 +186,34 @@ module WasteCarriersEngine
 
       context "when there is a payment only" do
         before do
-          finance_details.payments = [build(:payment, :govpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
+          finance_details.payments = [build(:payment, :worldpay, amount: 5_000, world_pay_payment_status: "AUTHORISED")]
         end
 
         it "has the correct balance" do
           finance_details.update_balance
           expect(finance_details.balance).to eq(-5_000)
+        end
+      end
+
+      context "when there is a refund" do
+        let(:refund_amount) { 1_000 }
+        let(:refund) { build(:payment, :govpay_refund, amount: refund_amount, govpay_payment_status: refund_status) }
+
+        before do
+          finance_details.payments << refund
+          finance_details.update_balance
+        end
+
+        context "when the refund is pending" do
+          let(:refund_status) { "submitted" }
+
+          it { expect(finance_details.balance).to be_zero }
+        end
+
+        context "when the refund is complete" do
+          let(:refund_status) { "success" }
+
+          it { expect(finance_details.balance).to eq(-refund_amount) }
         end
       end
     end
