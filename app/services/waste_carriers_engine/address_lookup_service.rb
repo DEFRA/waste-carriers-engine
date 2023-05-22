@@ -5,7 +5,7 @@ require "rest-client"
 module WasteCarriersEngine
   class AddressLookupService < BaseService
     def run(postcode)
-      DefraRuby::Address::EaAddressFacadeV11Service.run(postcode)
+      DefraRuby::Address::OsPlacesAddressLookupService.run(postcode)
     end
   end
 end

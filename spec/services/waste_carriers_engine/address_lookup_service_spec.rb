@@ -8,11 +8,11 @@ module WasteCarriersEngine
       it "does send a request to os places using the defra ruby gem" do
         postcode = "BS1 2AF"
 
-        allow(DefraRuby::Address::EaAddressFacadeV11Service).to receive(:run)
+        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run)
 
         described_class.run(postcode)
 
-        expect(DefraRuby::Address::EaAddressFacadeV11Service).to have_received(:run).with(postcode)
+        expect(DefraRuby::Address::OsPlacesAddressLookupService).to have_received(:run).with(postcode)
       end
     end
   end
