@@ -44,23 +44,9 @@
           <p class="govuk-!-font-weight-bold"><%= t(".paragraph_1") %></p>
         <% end %>
 
-        <details class="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              <%= t(".conviction_types_subheading") %>
-            </span>
-          </summary>
-
-          <div class="govuk-details__text">
-            <p><%= t(".conviction_types_paragraph_1") %></p>
-            <p class="strong"><%= t(".conviction_types_paragraph_2") %></p>
-            <ul class="govuk_list govuk_list--bullet">
-              <% t(".conviction_types").each do |conviction| %>
-                <li><%= conviction[:name] %></li>
-              <% end %>
-            </ul>
-          </div>
-        </details>
+        <p class="govuk-body">
+          <%= link_to t(".conviction_types_link_text"), "/fo/pages/conviction_types", target: "_blank" %>
+        </p>
 
         <%= f.govuk_submit t(".next_button") %>
     </div>

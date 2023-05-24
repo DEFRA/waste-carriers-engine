@@ -1,0 +1,23 @@
+<% content_for :title, t(".title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-body">
+
+    <h1 class="govuk-heading-l">
+      <%= t(".heading") %>
+    </h1>
+
+    <h2 class="govuk-heading-s">
+      <%= t(".subheading") %>
+    </h2>
+
+    <p> <%= t(".paragraph_1") %> </p>
+
+    <ul class="govuk_list govuk_list--bullet">
+      <% t(".conviction_types").each do |conviction| %>
+        <li><%= conviction[:name] %></li>
+      <% end %>
+    </ul>
+
+  </div>
+</div>
