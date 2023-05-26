@@ -7,6 +7,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe DetermineEastingAndNorthingService, type: :service do
     let(:service) { described_class.new }
+    let(:os_places_data) { JSON.parse(file_fixture("os_places_response.json").read) }
     let(:valid_postcode) { "SW1A 1AA" }
     let(:invalid_postcode) { "INVALID" }
 
@@ -15,15 +16,15 @@ module WasteCarriersEngine
         before do
           # Stub AddressLookupService to return a valid response
           allow(AddressLookupService).to receive(:run).with(valid_postcode).and_return(
-            instance_double(DefraRuby::Address::Response, successful?: true, results: [{ "x" => 529_090, "y" => 179_645 }])
+            instance_double(DefraRuby::Address::Response, successful?: true, results: [os_places_data])
           )
         end
 
         it "returns the correct easting and northing values" do
           result = service.run(postcode: valid_postcode)
 
-          expect(result[:easting]).to eq(529_090.0)
-          expect(result[:northing]).to eq(179_645.0)
+          expect(result[:easting]).to eq(358_205.0)
+          expect(result[:northing]).to eq(172_708.0)
         end
       end
 
