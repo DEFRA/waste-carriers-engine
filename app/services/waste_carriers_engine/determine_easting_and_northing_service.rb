@@ -27,8 +27,8 @@ module WasteCarriersEngine
     end
 
     def apply_result_coordinates(result)
-      @result[:easting] = result["x"].to_f
-      @result[:northing] = result["y"].to_f
+      @result[:easting] = result["easting"].to_f
+      @result[:northing] = result["northing"].to_f
     end
 
     def handle_error(error, message, metadata)
