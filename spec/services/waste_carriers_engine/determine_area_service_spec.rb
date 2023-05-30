@@ -37,8 +37,8 @@ module WasteCarriersEngine
         context "with no match found" do
           let(:response) { instance_double(DefraRuby::Area::Response, successful?: false, error: DefraRuby::Area::NoMatchError.new) }
 
-          it "returns 'Outside England'" do
-            expect(described_class.run(coordinates)).to eq "Outside England"
+          it "returns 'Not found'" do
+            expect(described_class.run(coordinates)).to eq "Not found"
           end
         end
 
