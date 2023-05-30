@@ -18,6 +18,11 @@ module WasteCarriersEngine
       return if area.present?
       return unless postcode.present?
 
+      if address.registration.overseas?
+        address.area = "Outside England"
+        return
+      end
+
       x, y = DetermineEastingAndNorthingService.run(postcode: postcode).values
 
       address.area = DetermineAreaService.run(easting: x, northing: y)
