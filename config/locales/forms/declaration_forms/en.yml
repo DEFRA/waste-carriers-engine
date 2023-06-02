@@ -4,8 +4,14 @@ en:
       new:
         title: Declaration
         heading: Declaration
-        list_item_1: By registering, you confirm that the information you have provided is true
-        list_item_2: You can be prosecuted and given an unlimited fine if you give false or misleading information
+        list_item_1: By registering, you confirm that the information you have provided is true and
+        list_item_2: |
+          You are aware that it is an offence, knowingly or recklessly, to provide false or misleading
+          information under Section 7(3)(b) of the Control of Pollution (Amendment) Act 1989. Such an
+          offence may result in the Environment Agency taking enforcement action, including prosecution,
+          in line with our %{policy_link} (opens in a new window).
+        policy_link_text: Enforcement and Sanctions policy
+        policy_link_url: https://www.gov.uk/government/publications/environment-agency-enforcement-and-sanctions-policy/environment-agency-enforcement-and-sanctions-policy
         declaration_text: I understand and agree with the declaration above
         privacy_link_text: "Privacy: how we use your personal information (opens new tab)"
         third_party_text: If you are registering on someone’s behalf then ensure that they have seen a copy of the privacy policy.

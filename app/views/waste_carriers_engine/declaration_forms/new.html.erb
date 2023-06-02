@@ -9,7 +9,7 @@
 
     <ul class="govuk-list govuk-list--bullet">
       <li><%= t(".list_item_1") %></li>
-      <li><%= t(".list_item_2") %></li>
+      <li><%= t(".list_item_2", policy_link: link_to(t(".policy_link_text"), t(".policy_link_url"), target: "_blank")).html_safe %></li>
     </ul>
 
     <%= f.govuk_check_box :declaration,
