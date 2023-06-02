@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   # Note v2.0.1 interferes with the delegate method
   s.add_dependency "mongoid-locker", "2.0.0"
 
+  s.add_dependency "mongo_session_store"
   # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
   s.add_dependency "turbolinks"
   # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
