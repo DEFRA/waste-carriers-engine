@@ -472,6 +472,7 @@ DEPENDENCIES
   github_changelog_generator
   govuk_design_system_formbuilder
   matrix
+  mongo_session_store
   mongoid (~> 7.5)
   mongoid-locker (~> 2.0.0)
   net-smtp

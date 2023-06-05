@@ -20,6 +20,7 @@ gem "mongoid", "~> 7.5"
 # Implement document-level locking
 gem "mongoid-locker", "~> 2.0.0"
 
+gem "mongo_session_store"
 # Use CanCanCan for user roles and permissions
 gem "cancancan", "~> 3.3"
 
