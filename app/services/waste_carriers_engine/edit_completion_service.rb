@@ -42,22 +42,19 @@ module WasteCarriersEngine
       # IMPORTANT! When specifying attributes be sure to use the name as seen in
       # the database and not the alias in the model. For example use
       # accountEmail not account_email.
-      copyable_attributes = transient_registration.attributes.except("_id",
-                                                                     "token",
-                                                                     "accountEmail",
-                                                                     "created_at",
-                                                                     "expires_on",
-                                                                     "financeDetails",
-                                                                     "temp_cards",
-                                                                     "temp_company_postcode",
-                                                                     "temp_contact_postcode",
-                                                                     "temp_os_places_error",
-                                                                     "temp_payment_method",
-                                                                     "_type",
-                                                                     "workflow_state",
-                                                                     "workflow_history")
+      do_not_copy_attributes = %w[
+        _id
+        _type
+        accountEmail
+        created_at
+        expires_on
+        financeDetails
+        token
+        workflow_history
+        workflow_state
+      ].concat(WasteCarriersEngine::EditRegistration.temp_attributes)
 
-      registration.write_attributes(copyable_attributes)
+      registration.write_attributes(transient_registration.attributes.except(*do_not_copy_attributes))
     end
   end
 end

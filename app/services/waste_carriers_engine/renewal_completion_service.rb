@@ -133,27 +133,21 @@ module WasteCarriersEngine
         "deregistration_token",
         "deregistration_token_created_at"
       )
-      renewal_attributes = transient_registration.attributes.except(
-        "_id",
-        "token",
-        "created_at",
-        "financeDetails",
-        "temp_cards",
-        "temp_company_postcode",
-        "temp_contact_postcode",
-        "temp_os_places_error",
-        "temp_payment_method",
-        "temp_tier_check",
-        "temp_reuse_registered_address",
-        "temp_use_registered_company_details",
-        "temp_use_trading_name",
-        "from_magic_link",
-        "_type",
-        "workflow_state",
-        "workflow_history",
-        "locking_name",
-        "locked_at"
-      )
+
+      do_not_copy_attributes = %w[
+        _id
+        token
+        created_at
+        financeDetails
+        from_magic_link
+        _type
+        workflow_state
+        workflow_history
+        locking_name
+        locked_at
+      ].concat(WasteCarriersEngine::RenewingRegistration.temp_attributes)
+
+      renewal_attributes = transient_registration.attributes.except(*do_not_copy_attributes)
 
       remove_unused_attributes(registration_attributes, renewal_attributes)
 
