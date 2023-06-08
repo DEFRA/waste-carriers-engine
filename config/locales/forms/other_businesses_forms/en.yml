@@ -6,7 +6,7 @@ en:
         heading: Are you sure you want to pay by %{payment_method}?
         paragraph: If you don't have your payment details to hand you can return to this page later. Your answers are saved for 30 days.
         payment_method:
-          card: credit card
+          card: credit or debit card
           bank_transfer: bank transfer
         options:
           "yes": "Yes"
