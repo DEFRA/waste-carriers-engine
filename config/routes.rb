@@ -403,6 +403,11 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "payment-summary",
               path_names: { new: "" }
 
+    resources :payment_method_confirmation_forms,
+              only: %i[new create],
+              path: "payment-method-confirmation",
+              path_names: { new: "" }
+
     resources :govpay_forms,
               only: %i[new create],
               path: "govpay",

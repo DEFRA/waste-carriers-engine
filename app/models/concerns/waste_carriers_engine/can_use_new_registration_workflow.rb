@@ -65,6 +65,7 @@ module WasteCarriersEngine
         state :declaration_form
         state :cards_form
         state :payment_summary_form
+        state :payment_method_confirmation_form
         state :govpay_form
         state :confirm_bank_transfer_form
 
@@ -258,10 +259,15 @@ module WasteCarriersEngine
           # Payment & Completion
           transitions from: :cards_form, to: :payment_summary_form
 
-          transitions from: :payment_summary_form, to: :govpay_form,
+          transitions from: :payment_summary_form, to: :payment_method_confirmation_form
+
+          transitions from: :payment_method_confirmation_form, to: :payment_summary_form,
+                      if: :payment_method_not_confirmed?
+
+          transitions from: :payment_method_confirmation_form, to: :govpay_form,
                       if: :paying_by_card?
 
-          transitions from: :payment_summary_form, to: :confirm_bank_transfer_form
+          transitions from: :payment_method_confirmation_form, to: :confirm_bank_transfer_form
 
           transitions from: :confirm_bank_transfer_form, to: :registration_received_pending_payment_form
 
@@ -348,6 +354,10 @@ module WasteCarriersEngine
 
       def paying_by_card?
         temp_payment_method == "card"
+      end
+
+      def payment_method_not_confirmed?
+        temp_confirm_payment_method == "no"
       end
 
       def switch_to_lower_tier
