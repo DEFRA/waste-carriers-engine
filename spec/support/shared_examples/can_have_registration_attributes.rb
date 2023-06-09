@@ -549,13 +549,13 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
-  describe "#phone_type" do
-    it "queries the DiscernUkNumberTypeService with the phone number" do
-      allow(WasteCarriersEngine::DiscernUkNumberTypeService).to receive(:run)
+  describe "#mobile?" do
+    it "queries the VerifyIfMobileService with the phone number" do
+      allow(WasteCarriersEngine::VerifyIfMobileService).to receive(:run)
       phone_number = "01234 567890"
       resource.phone_number = phone_number
-      resource.phone_type
-      expect(WasteCarriersEngine::DiscernUkNumberTypeService).to have_received(:run)
+      resource.mobile?
+      expect(WasteCarriersEngine::VerifyIfMobileService).to have_received(:run)
         .with(phone_number: phone_number)
     end
   end

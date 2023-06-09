@@ -130,8 +130,8 @@ module WasteCarriersEngine
         "(\\+44|0|\\+)?[\\s-]*#{search_term.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join}"
       end
 
-      def phone_type
-        DiscernUkNumberTypeService.run(phone_number:)
+      def mobile?
+        VerifyIfMobileService.run(phone_number:)
       end
 
       def charity?
