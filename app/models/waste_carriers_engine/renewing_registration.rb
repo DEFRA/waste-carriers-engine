@@ -111,6 +111,14 @@ module WasteCarriersEngine
       renewal_application_submitted? && super
     end
 
+    def original_registration_date
+      registration.original_registration_date
+    end
+
+    def original_activation_date
+      registration.original_activation_date
+    end
+
     private
 
     # Check if a transient renewal already exists for this registration so we don't have
