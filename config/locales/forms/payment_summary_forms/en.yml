@@ -24,7 +24,7 @@ en:
           subheading: Where should the card payment confirmation be sent?
           paragraph_1: WorldPay will send a card payment confirmation to this address, once the payment has been processed.
           label: Email address
-        next_button: Proceed to payment
+        next_button: Continue
   activemodel:
     errors:
       models:
