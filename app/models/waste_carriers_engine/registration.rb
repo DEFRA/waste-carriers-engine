@@ -94,6 +94,14 @@ module WasteCarriersEngine
       RenewingRegistration.where(reg_identifier: reg_identifier).first
     end
 
+    def original_registration_date
+      if past_registrations.any?
+        past_registrations.first.metaData&.dateRegistered
+      else
+        metaData&.dateRegistered
+      end
+    end
+
     private
 
     def renewable_tier?

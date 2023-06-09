@@ -783,6 +783,28 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#original_registration_date" do
+      let(:registration) { create(:registration, :has_required_data, metaData: { dateRegistered: 2.years.ago }) }
+
+      describe "when there are past registrations" do
+        let(:crete_past_registration) { PastRegistration.build_past_registration(registration) }
+
+        it "returns a date of the very first registration" do
+          old_registration = crete_past_registration
+          registration.metaData.update(dateRegistered: Date.today)
+          expect(registration.reload.past_registrations.length).to eq(1)
+          expect(registration.original_registration_date.to_date).to eq(old_registration.metaData.dateRegistered.to_date)
+        end
+      end
+
+      describe "when thhere are no past registrations" do
+        it "returns a date of the current registration" do
+          expect(registration.reload.past_registrations.length).to eq(0)
+          expect(registration.original_registration_date.to_date).to eq(registration.metaData.dateRegistered.to_date)
+        end
+      end
+    end
+
     describe ".not_selected_for_email" do
       let(:registration) { create(:registration, :has_required_data) }
       let(:template_id) { "12345" }
