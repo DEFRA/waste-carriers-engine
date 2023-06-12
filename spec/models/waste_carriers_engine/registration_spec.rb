@@ -787,10 +787,10 @@ module WasteCarriersEngine
       let(:registration) { create(:registration, :has_required_data, metaData: { dateRegistered: 2.years.ago }) }
 
       describe "registration renewal" do
-        let(:crete_past_registration) { PastRegistration.build_past_registration(registration) }
+        let(:create_past_registration) { PastRegistration.build_past_registration(registration) }
 
         it "returns registration date of the very first registration" do
-          old_registration = crete_past_registration
+          old_registration = create_past_registration
           registration.metaData.update(dateRegistered: Date.today)
           expect(registration.reload.past_registrations.length).to eq(1)
           expect(registration.original_registration_date.to_date).to eq(old_registration.metaData.dateRegistered.to_date)
@@ -809,10 +809,10 @@ module WasteCarriersEngine
       let(:registration) { create(:registration, :has_required_data, metaData: { dateActivated: 2.years.ago }) }
 
       describe "registration renewal" do
-        let(:crete_past_registration) { PastRegistration.build_past_registration(registration) }
+        let(:create_past_registration) { PastRegistration.build_past_registration(registration) }
 
         it "returns activation date of the very first registration" do
-          old_registration = crete_past_registration
+          old_registration = create_past_registration
           registration.metaData.update(dateActivated: Date.today)
           expect(registration.reload.past_registrations.length).to eq(1)
           expect(registration.original_activation_date.to_date).to eq(old_registration.metaData.dateActivated.to_date)
