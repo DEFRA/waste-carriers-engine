@@ -1,9 +1,13 @@
 en:
   waste_carriers_engine:
-    other_businesses_forms:
+    payment_method_confirmation_forms:
       new:
-        title: Do you ever deal with waste from other businesses or households?
-        heading: Do you ever deal with waste from other businesses or households?
+        title: Confirm payment method
+        heading: Are you sure you want to pay by %{payment_method}?
+        paragraph: If you don't have your payment details to hand you can return to this page later. Your answers are saved for 30 days.
+        payment_method:
+          card: credit or debit card
+          bank_transfer: bank transfer
         options:
           "yes": "Yes"
           "no": "No"
@@ -12,11 +16,10 @@ en:
   activemodel:
     errors:
       models:
-        waste_carriers_engine/other_businesses_form:
+        waste_carriers_engine/payment_method_confirmation_form:
           attributes:
-            other_businesses:
-              inclusion: "Select yes or no"
+            temp_confirm_payment_method:
+              inclusion: Select yes or no
             reg_identifier:
-              invalid_format: "The registration ID is not in a valid format"
-              no_registration: "There is no registration matching this ID"
-              renewal_in_progress: "This renewal is already in progress"
+              invalid_format: The registration ID is not in a valid format
+              no_registration: There is no registration matching this ID
