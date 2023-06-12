@@ -16,11 +16,11 @@ Gem::Specification.new do |s|
   s.description = "WasteCarriersEngine package containing shared functionality"
   s.license     = "The Open Government Licence (OGL) Version 3"
   s.metadata["rubygems_mfa_required"] = "true"
-  s.required_ruby_version = ">= 3.1.2"
+  s.required_ruby_version = ">= 3.2.2"
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "rails", ">= 6.1.4"
+  s.add_dependency "rails", "~> 7.0"
   # Use MongoDB as the database
   s.add_dependency "mongoid"
   # Implement document-level locking
