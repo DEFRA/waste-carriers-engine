@@ -2,22 +2,22 @@ PATH
   remote: .
   specs:
     waste_carriers_engine (0.0.1)
-      aasm (~> 5.3)
+      aasm
       countries
       defra_ruby_address
-      defra_ruby_alert (~> 2.1)
-      defra_ruby_area (~> 2.0)
+      defra_ruby_alert
+      defra_ruby_area
       defra_ruby_email
-      defra_ruby_validators (>= 2.5.0)
-      high_voltage (~> 3.1)
-      jbuilder (~> 2.11)
+      defra_ruby_validators
+      high_voltage
+      jbuilder
       mongo_session_store
       mongoid
-      mongoid-locker (= 2.0.0)
+      mongoid-locker
       nokogiri
       notifications-ruby-client
       rails (~> 7.0)
-      rest-client (~> 2.1)
+      rest-client
       turbolinks
       uk_postcode
       wicked_pdf
@@ -99,7 +99,7 @@ GEM
     airbrake-ruby (6.2.1)
       rbtree3 (~> 0.6)
     ast (2.4.2)
-    async (2.6.1)
+    async (2.6.2)
       console (~> 1.10)
       fiber-annotation
       io-event (~> 1.1)
@@ -246,12 +246,12 @@ GEM
     mongo_session_store (3.2.1)
       actionpack (>= 4.0)
       mongo (~> 2.0)
-    mongoid (7.5.2)
+    mongoid (8.0.3)
       activemodel (>= 5.1, < 7.1, != 7.0.0)
-      mongo (>= 2.10.5, < 3.0.0)
+      mongo (>= 2.18.0, < 3.0.0)
       ruby2_keywords (~> 0.0.5)
-    mongoid-locker (2.0.0)
-      mongoid (>= 5.0, < 8)
+    mongoid-locker (2.0.2)
+      mongoid (>= 5.0, < 9)
     multi_json (1.15.0)
     net-imap (0.3.6)
       date
@@ -293,7 +293,7 @@ GEM
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
     public_suffix (5.0.1)
-    racc (1.7.0)
+    racc (1.7.1)
     rack (2.2.7)
     rack-test (2.1.0)
       rack (>= 1.3)
