@@ -2,9 +2,14 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-    <% if alert || notice %>
+    <%
+      if flash[:alert].present?
+        resource.errors.add(:base, flash[:alert])
+      end
+    %>
+    
+    <% if notice %>
       <div class="govuk-error-summary" role="alert">
-        <p class="govuk-body"><%= alert %></p>
         <p class="govuk-body"><%= notice %></p>
       </div>
     <% end %>
@@ -16,7 +21,7 @@
         builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
       <%= render partial: "waste_carriers_engine/shared/error_summary", locals: { f: f } %>
 
-      <%= f.govuk_text_field :email, width: "one-half" %>
+      <%= f.govuk_text_field :email, autocomplete: "off", autofocus: true, width: "one-half" %>
       <%= f.govuk_password_field :password, width: "one-half", autocomplete: "off" %>
 
       <%= f.submit t(".submit"), class: "govuk-button" %>
