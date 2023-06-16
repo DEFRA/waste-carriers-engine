@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :deregistering_registration, class: "WasteCarriersEngine::DeregisteringRegistration" do
     initialize_with { new(reg_identifier: create(:registration, :has_required_data).reg_identifier) }
 
-    metaData { build(:metaData) }
+    metaData { association(:metaData, strategy: :build) }
 
     transient do
       metadata_status { "ACTIVE" }

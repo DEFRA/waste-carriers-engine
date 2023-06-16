@@ -7,7 +7,7 @@ FactoryBot.define do
     trait :has_finance_details do
       has_changed_registration_type
 
-      finance_details { build(:finance_details, :has_edit_order) }
+      finance_details { association(:finance_details, :has_edit_order, strategy: :build) }
     end
 
     trait :has_changed_registration_type do
