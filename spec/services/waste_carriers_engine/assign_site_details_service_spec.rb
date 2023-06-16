@@ -25,11 +25,22 @@ module WasteCarriersEngine
         before do
           create(:address, :has_required_data, address_type: "REGISTERED", registration: registration)
           allow(DetermineEastingAndNorthingService).to receive(:run).and_return(easting: x, northing: y)
-          allow(DetermineAreaService).to receive(:run).and_return(area)
         end
 
-        it "assigns area" do
-          expect { run_service }.to change { registration.reload.company_address.area }.to(area)
+        context "when the service returns an area" do
+          before { allow(DetermineAreaService).to receive(:run).and_return(area) }
+
+          it "assigns area" do
+            expect { run_service }.to change { registration.reload.company_address.area }.to(area)
+          end
+        end
+
+        context "when the service does not return an area" do
+          before { allow(DetermineAreaService).to receive(:run).and_return(nil) }
+
+          it "does not assign area" do
+            expect { run_service }.not_to change { registration.reload.company_address.area }
+          end
         end
       end
 
