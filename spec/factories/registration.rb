@@ -19,23 +19,8 @@ FactoryBot.define do
       tier { "UPPER" }
 
       metaData { association :metaData, :has_required_data, strategy: :build }
-
-      trait :has_addresses do
-        addresses do
-          [
-            association(:address, :has_required_data, :registered, :from_os_places, strategy: :build),
-            association(:address, :has_required_data, :contact, :from_os_places, strategy: :build)
-          ]
-        end
-      end
-
-      trait :has_paid_finance_details do
-        finance_details { association :finance_details, :has_paid_order_and_payment, strategy: :build }
-      end
-
-      trait :has_copy_cards_order do
-        finance_details { association :finance_details, :has_copy_cards_order, strategy: :build }
-      end
+      has_addresses
+      has_paid_finance_details
 
       key_people do
         [
@@ -43,6 +28,23 @@ FactoryBot.define do
           association(:key_person, :has_required_data, :relevant, strategy: :build)
         ]
       end
+    end
+
+    trait :has_addresses do
+      addresses do
+        [
+          association(:address, :has_required_data, :registered, :from_os_places, strategy: :build),
+          association(:address, :has_required_data, :contact, :from_os_places, strategy: :build)
+        ]
+      end
+    end
+
+    trait :has_paid_finance_details do
+      finance_details { association :finance_details, :has_paid_order_and_payment, strategy: :build }
+    end
+
+    trait :has_copy_cards_order do
+      finance_details { association :finance_details, :has_copy_cards_order, strategy: :build }
     end
 
     trait :already_renewed do
