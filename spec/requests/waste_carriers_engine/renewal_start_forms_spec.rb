@@ -31,9 +31,34 @@ module WasteCarriersEngine
             context "when no renewal is in progress" do
               let(:registration) { create(:registration, :has_required_data, :expires_soon, account_email: user.email) }
 
-              it "returns a success response" do
-                get new_renewal_start_form_path(registration.reg_identifier)
-                expect(response).to have_http_status(:ok)
+              context "when the :block_front_end_logins feature toggle is not enabled" do
+                before do
+                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).and_call_original
+                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:block_front_end_logins).and_return false
+                end
+
+                it "returns a success response" do
+                  get new_renewal_start_form_path(registration.reg_identifier)
+                  expect(response).to have_http_status(:ok)
+                end
+
+                it "loads the renewal start page" do
+                  get new_renewal_start_form_path(registration.reg_identifier)
+                  expect(response.body).to match(/You are about to renew registration CBDU\d+/)
+                end
+
+              end
+
+              context "when the :block_front_end_logins feature toggle is enabled" do
+                before do
+                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).and_call_original
+                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:block_front_end_logins).and_return true
+                end
+
+                it "redirects to the application root" do
+                  get new_renewal_start_form_path(registration.reg_identifier)
+                  expect(response).to redirect_to("/")
+                end
               end
 
               context "when the registration cannot be renewed" do
