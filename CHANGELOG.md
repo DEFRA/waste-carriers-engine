@@ -6,6 +6,14 @@
 
 **Implemented enhancements:**
 
+- Fix/area service [\#1391](https://github.com/DEFRA/waste-carriers-engine/pull/1391) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- RUBY-2497: Add method to get original registration date [\#1388](https://github.com/DEFRA/waste-carriers-engine/pull/1388) ([brujeo](https://github.com/brujeo))
+- Payment confirmation content fixes [\#1387](https://github.com/DEFRA/waste-carriers-engine/pull/1387) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- confirm payment method [\#1386](https://github.com/DEFRA/waste-carriers-engine/pull/1386) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Update declaration content [\#1383](https://github.com/DEFRA/waste-carriers-engine/pull/1383) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Move conviction type detail to a static page [\#1374](https://github.com/DEFRA/waste-carriers-engine/pull/1374) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- cert creation date [\#1362](https://github.com/DEFRA/waste-carriers-engine/pull/1362) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- delete person label [\#1360](https://github.com/DEFRA/waste-carriers-engine/pull/1360) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Add restore attributes to metaData [\#1349](https://github.com/DEFRA/waste-carriers-engine/pull/1349) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Email history [\#1339](https://github.com/DEFRA/waste-carriers-engine/pull/1339) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Deregistration confirmation email [\#1329](https://github.com/DEFRA/waste-carriers-engine/pull/1329) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -398,6 +406,9 @@
 
 **Fixed bugs:**
 
+- Add support for govpay refund statuses [\#1371](https://github.com/DEFRA/waste-carriers-engine/pull/1371) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- remove cert date from confirmation emails [\#1366](https://github.com/DEFRA/waste-carriers-engine/pull/1366) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- add cert generation date to PDF certificate [\#1364](https://github.com/DEFRA/waste-carriers-engine/pull/1364) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - add reg\_identifier to deregistration email [\#1346](https://github.com/DEFRA/waste-carriers-engine/pull/1346) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Exclude dereg attributes from attribute copying [\#1343](https://github.com/DEFRA/waste-carriers-engine/pull/1343) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/dereg token copy error [\#1342](https://github.com/DEFRA/waste-carriers-engine/pull/1342) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -639,6 +650,21 @@
 
 **Merged pull requests:**
 
+- Add phone\_type method calling new DiscernUkNumberTypeService for deciding the type of a phone number [\#1385](https://github.com/DEFRA/waste-carriers-engine/pull/1385) ([jjromeo](https://github.com/jjromeo))
+- Add mongo session store [\#1382](https://github.com/DEFRA/waste-carriers-engine/pull/1382) ([jjromeo](https://github.com/jjromeo))
+- 2423 tweaks [\#1378](https://github.com/DEFRA/waste-carriers-engine/pull/1378) ([jjromeo](https://github.com/jjromeo))
+- Update to fit os places result [\#1377](https://github.com/DEFRA/waste-carriers-engine/pull/1377) ([jjromeo](https://github.com/jjromeo))
+- Update copy to include mobile telephone method and texts as a medium [\#1375](https://github.com/DEFRA/waste-carriers-engine/pull/1375) ([jjromeo](https://github.com/jjromeo))
+- Revert back to using OS places for address lookup [\#1373](https://github.com/DEFRA/waste-carriers-engine/pull/1373) ([jjromeo](https://github.com/jjromeo))
+- Fix/ruby 2464 lower tier registrations flagged for conviction checks [\#1368](https://github.com/DEFRA/waste-carriers-engine/pull/1368) ([brujeo](https://github.com/brujeo))
+- setting automcomplete to off for password fields [\#1365](https://github.com/DEFRA/waste-carriers-engine/pull/1365) ([brujeo](https://github.com/brujeo))
+- Adding more fields to be autocompleted [\#1363](https://github.com/DEFRA/waste-carriers-engine/pull/1363) ([brujeo](https://github.com/brujeo))
+- Bump rspec-rails from 6.0.1 to 6.0.2 [\#1361](https://github.com/DEFRA/waste-carriers-engine/pull/1361) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Feature/ruby 2128 wcr accessibility missing autocomplete [\#1359](https://github.com/DEFRA/waste-carriers-engine/pull/1359) ([brujeo](https://github.com/brujeo))
+- remove downgrade to  os\_map\_ref gem [\#1357](https://github.com/DEFRA/waste-carriers-engine/pull/1357) ([jjromeo](https://github.com/jjromeo))
+- Add code to assign an area to an address through postcode [\#1355](https://github.com/DEFRA/waste-carriers-engine/pull/1355) ([jjromeo](https://github.com/jjromeo))
+- Bump defra\_ruby\_alert from 2.1.1 to 2.2.1 [\#1354](https://github.com/DEFRA/waste-carriers-engine/pull/1354) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1351](https://github.com/DEFRA/waste-carriers-engine/pull/1351) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump countries from 5.3.2 to 5.4.0 [\#1350](https://github.com/DEFRA/waste-carriers-engine/pull/1350) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump nokogiri from 1.14.2 to 1.14.3 [\#1348](https://github.com/DEFRA/waste-carriers-engine/pull/1348) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump devise from 4.9.0 to 4.9.2 [\#1347](https://github.com/DEFRA/waste-carriers-engine/pull/1347) ([dependabot[bot]](https://github.com/apps/dependabot))
