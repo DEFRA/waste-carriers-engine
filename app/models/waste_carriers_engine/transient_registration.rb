@@ -19,6 +19,7 @@ module WasteCarriersEngine
     # Attributes specific to the transient object - all others are in CanHaveRegistrationAttributes
     field :temp_cards, type: Integer
     field :temp_company_postcode, type: String
+    field :temp_confirm_payment_method, type: String
     field :temp_contact_postcode, type: String
     field :temp_os_places_error, type: String # 'yes' or 'no' - should refactor to boolean
     field :temp_payment_method, type: String
@@ -86,6 +87,12 @@ module WasteCarriersEngine
 
       self.workflow_state = last_popped || "start_form"
       save!
+    end
+
+    # This returns the list of attributes starting with 'temp_' so they can be excluded by the
+    # completion services when copying attributes from a transient_registration to a registration.
+    def self.temp_attributes
+      attribute_names.select { |a| a.match(/^temp_/) }
     end
 
     private

@@ -1,0 +1,25 @@
+en:
+  waste_carriers_engine:
+    payment_method_confirmation_forms:
+      new:
+        title: Confirm payment method
+        heading: Are you sure you want to pay by %{payment_method}?
+        paragraph: If you don't have your payment details to hand you can return to this page later. Your answers are saved for 30 days.
+        payment_method:
+          card: credit or debit card
+          bank_transfer: bank transfer
+        options:
+          "yes": "Yes"
+          "no": "No"
+        error_heading: Something is wrong
+        next_button: Continue
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/payment_method_confirmation_form:
+          attributes:
+            temp_confirm_payment_method:
+              inclusion: Select yes or no
+            reg_identifier:
+              invalid_format: The registration ID is not in a valid format
+              no_registration: There is no registration matching this ID

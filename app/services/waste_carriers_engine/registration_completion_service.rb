@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ClassLength
   class RegistrationCompletionService < BaseService
     include CanAddDebugLogging
 
@@ -120,42 +119,26 @@ module WasteCarriersEngine
       registration.reg_identifier = transient_registration.reg_identifier
     end
 
-    # rubocop:disable Metrics/MethodLength
     def copy_data_from_transient_registration
       # Make sure data are loaded into attributes if setted on this instance
       transient_registration.reload
 
-      new_attributes = transient_registration.attributes.except(
-        "_id",
-        "reg_identifier",
-        "token",
-        "created_at",
-        "temp_cards",
-        "temp_company_postcode",
-        "temp_start_option",
-        "temp_contact_postcode",
-        "temp_os_places_error",
-        "temp_payment_method",
-        "temp_lookup_number",
-        "temp_tier_check",
-        "temp_check_your_tier",
-        "temp_confirm_deregistration",
-        "temp_reuse_registered_address",
-        "temp_use_registered_company_details",
-        "temp_use_trading_name",
-        "_type",
-        "workflow_state",
-        "workflow_history",
-        "locking_name",
-        "locked_at",
-        "key_people",
-        "conviction_search_result",
-        "conviction_sign_offs"
-      )
+      do_not_copy_attributes = %w[
+        _id
+        conviction_search_result
+        conviction_sign_offs
+        created_at
+        key_people
+        locked_at
+        locking_name
+        reg_identifier
+        token
+        _type
+        workflow_history
+        workflow_state
+      ].concat(WasteCarriersEngine::NewRegistration.temp_attributes)
 
-      registration.write_attributes(new_attributes)
+      registration.write_attributes(transient_registration.attributes.except(*do_not_copy_attributes))
     end
-    # rubocop:enable Metrics/MethodLength
   end
-  # rubocop:enable Metrics/ClassLength
 end

@@ -238,6 +238,23 @@ module WasteCarriersEngine
       end
     end
 
+    describe ".temp_attributes" do
+      shared_examples "returns all 'temp_' attribute names and no more" do |klass|
+        it "returns all attributes with names starting with 'temp_'" do
+          instance_temp_attrs = klass.attribute_names.select { |a| a.start_with?("temp_") }
+          expect(klass.temp_attributes).to match_array(instance_temp_attrs)
+        end
+
+        it "does not return any attributes with names which do not start with 'temp_'" do
+          expect(klass.temp_attributes).to all(start_with("temp_"))
+        end
+      end
+
+      it_behaves_like "returns all 'temp_' attribute names and no more", WasteCarriersEngine::NewRegistration
+      it_behaves_like "returns all 'temp_' attribute names and no more", WasteCarriersEngine::RenewingRegistration
+      it_behaves_like "returns all 'temp_' attribute names and no more", WasteCarriersEngine::EditRegistration
+    end
+
     describe "#next_state!" do
       let(:new_registration) { build(:new_registration, :has_required_data) }
 
