@@ -20,6 +20,7 @@ module WasteCarriersEngine
 
         # Renew
         state :renew_registration_form
+        state :renewal_stop_form
 
         # Location
         state :location_form
@@ -79,6 +80,9 @@ module WasteCarriersEngine
           # Start
           transitions from: :start_form, to: :location_form,
                       unless: :should_renew?
+
+          transitions from: :start_form, to: :renewal_stop_form,
+                      if: :logins_blocked?
 
           transitions from: :start_form, to: :renew_registration_form,
                       if: :should_renew?
@@ -409,6 +413,10 @@ module WasteCarriersEngine
 
       def use_trading_name?
         temp_use_trading_name == "yes"
+      end
+
+      def logins_blocked?
+        WasteCarriersEngine::FeatureToggle.active?(:block_front_end_logins)
       end
     end
     # rubocop:enable Metrics/BlockLength

@@ -45,8 +45,8 @@ module WasteCarriersEngine
         context "with a failure" do
           let(:response) { instance_double(DefraRuby::Area::Response, successful?: false, error: StandardError.new) }
 
-          it "returns 'Not found'" do
-            expect(described_class.run(coordinates)).to eq "Not found"
+          it "returns nil" do
+            expect(described_class.run(coordinates)).to be_nil
           end
 
           it "uses Airbrake to notify Errbit of the error" do

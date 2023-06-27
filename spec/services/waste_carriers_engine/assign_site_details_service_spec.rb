@@ -8,59 +8,75 @@ module WasteCarriersEngine
       let(:x) { 123_456 }
       let(:y) { 654_321 }
       let(:area) { "Area Name" }
-      let(:registration) { build(:registration, :has_required_data) }
+      let(:registration) { create(:registration, :has_required_data) }
+
+      subject(:run_service) { described_class.run(registration_id: registration.id) }
+
+      before do
+        # We will replace the factory-generated company address with one of our own for test purposes
+        registration.addresses.delete_if { |address| address.address_type == "REGISTERED" }
+
+        allow(DetermineEastingAndNorthingService).to receive(:run)
+        allow(DetermineAreaService).to receive(:run)
+      end
 
       context "when address has a postcode and area is not present" do
-        let(:address) { build(:address, :has_required_data, registration: registration) }
 
         before do
+          create(:address, :has_required_data, address_type: "REGISTERED", registration: registration)
           allow(DetermineEastingAndNorthingService).to receive(:run).and_return(easting: x, northing: y)
-          allow(DetermineAreaService).to receive(:run).and_return(area)
         end
 
-        it "assigns area" do
-          described_class.run(address: address)
-          expect(address.area).to eq(area)
+        context "when the service returns an area" do
+          before { allow(DetermineAreaService).to receive(:run).and_return(area) }
+
+          it "assigns area" do
+            expect { run_service }.to change { registration.reload.company_address.area }.to(area)
+          end
+        end
+
+        context "when the service does not return an area" do
+          before { allow(DetermineAreaService).to receive(:run).and_return(nil) }
+
+          it "does not assign area" do
+            expect { run_service }.not_to change { registration.reload.company_address.area }
+          end
         end
       end
 
       context "when address has an area" do
-        let(:address) { build(:address, :has_required_data, area: area, registration: registration) }
+        before { create(:address, :has_required_data, address_type: "REGISTERED", area: area, registration: registration) }
 
         it "does not change the area" do
-          allow(DetermineEastingAndNorthingService).to receive(:run)
-          allow(DetermineAreaService).to receive(:run)
-
-          described_class.run(address: address)
+          expect { run_service }.not_to change { registration.reload.company_address.area }
 
           expect(DetermineEastingAndNorthingService).not_to have_received(:run)
           expect(DetermineAreaService).not_to have_received(:run)
-          expect(address.area).to eq(area)
         end
       end
 
       context "when address does not have a postcode" do
-        let(:address) { build(:address, :has_required_data, postcode: nil, registration: registration) }
+        before { create(:address, :has_required_data, address_type: "REGISTERED", postcode: nil, registration: registration) }
 
         it "does not assign area" do
-          allow(DetermineEastingAndNorthingService).to receive(:run)
-          allow(DetermineAreaService).to receive(:run)
-
-          described_class.run(address: address)
+          expect { run_service }.not_to change { registration.reload.company_address.area }
 
           expect(DetermineEastingAndNorthingService).not_to have_received(:run)
           expect(DetermineAreaService).not_to have_received(:run)
-          expect(address.area).to be_nil
         end
       end
 
       context "when address has an overseas registration" do
-        let(:overseas_registration) { build(:registration, :has_required_overseas_data) }
-        let(:address) { build(:address, :has_required_data, registration: overseas_registration) }
+        let(:registration) { create(:registration, :has_required_overseas_data) }
+
+        before do
+          # Replace the factory-generated registered address with one of our own for test purposes
+          registration.addresses.delete_if { |address| address.address_type == "REGISTERED" }
+          create(:address, :has_required_data, address_type: "REGISTERED", registration: registration)
+        end
 
         it "assigns area as 'Outside England'" do
-          described_class.run(address: address)
-          expect(address.area).to eq("Outside England")
+          expect { run_service }.to change { registration.reload.company_address.area }.to("Outside England")
         end
       end
     end
