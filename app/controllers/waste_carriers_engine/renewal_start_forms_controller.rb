@@ -5,7 +5,9 @@ module WasteCarriersEngine
     prepend_before_action :authenticate_user!, if: :should_authenticate_user?
 
     def new
-      if !@transient_registration.from_magic_link && WasteCarriersEngine::FeatureToggle.active?(:block_front_end_logins)
+      if !@transient_registration.from_magic_link &&
+         WasteCarriersEngine::FeatureToggle.active?(:block_front_end_logins) &&
+         !WasteCarriersEngine.configuration.host_is_back_office?
         redirect_to "/"
         return
       end

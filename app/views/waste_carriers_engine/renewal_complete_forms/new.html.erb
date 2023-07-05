@@ -32,7 +32,7 @@
         <% end %>
 
         <h2 class="govuk-heading-m"><%= t(".subheading_2") %></h2>
-        <p class="govuk-body"<%= t(".paragraph_4.#{@renewal_complete_form.registration_type}") %></p>
+        <p class="govuk-body"><%= t(".paragraph_4.#{@renewal_complete_form.registration_type}") %></p>
         <p class="govuk-body"><%= t(".paragraph_5.#{@renewal_complete_form.registration_type}") %></p>
 
         <ul class="govuk-list govuk-list--bullet">
@@ -41,20 +41,14 @@
           <% end %>
         </ul>
 
-        <p class="govuk-body"><%= t(".paragraph_6") %></p>
-
-        <ul class="govuk-list govuk-list--bullet">
-          <% t(".list_2").each do |list_item| %>
-            <li><%= list_item %></li>
-          <% end %>
-        </ul>
-
+        <%= render "shared/duty_of_care" %>
+ 
         <h2 class="govuk-heading-m"><%= t(".subheading_3") %></h2>
+        <p class="govuk-body"><%= t(".paragraph_6") %></p>
         <p class="govuk-body"><%= t(".paragraph_7") %></p>
-        <p class="govuk-body"><%= t(".paragraph_8") %></p>
 
         <div class="govuk-inset-text">
-          <p class="govuk-body"><%= t(".paragraph_9") %></p>
+          <p class="govuk-body"><%= t(".paragraph_8") %></p>
         </div>
 
         <p class="govuk-body"><%= link_to(t(".survey_link_text"), t("layouts.application.feedback_url")) %> <%= t(".survey_link_hint") %></p>
