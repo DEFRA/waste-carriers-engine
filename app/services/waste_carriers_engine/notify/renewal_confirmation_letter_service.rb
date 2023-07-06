@@ -64,7 +64,7 @@ module WasteCarriersEngine
       end
 
       def date_registered
-        @registration.metaData.date_registered.in_time_zone("London").to_date.to_s
+        @registration.metaData.date_registered.in_time_zone("London").to_date.strftime("%e %B %Y").to_s
       end
 
       def expiry_date
