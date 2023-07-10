@@ -12,8 +12,8 @@ module WasteCarriersEngine
         registration.finance_details.orders << order
       end
 
-      transient_registration.finance_details.payments.each do |payment|
-        registration.finance_details.payments << payment
+      while transient_registration.finance_details.payments.present?
+        registration.finance_details.payments << transient_registration.finance_details.payments.first
       end
 
       registration.finance_details.update_balance

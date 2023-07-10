@@ -28,7 +28,9 @@ module WasteCarriersEngine
 
     private
     def set_route
-      self.route = Rails.configuration.metadata_route
+      unless route.present?
+        self.route = Rails.configuration.metadata_route
+      end
     end
   end
 end

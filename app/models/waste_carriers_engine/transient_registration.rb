@@ -54,12 +54,6 @@ module WasteCarriersEngine
       conviction_check_required?
     end
 
-    def set_metadata_route
-      metaData.route = Rails.configuration.metadata_route
-
-      save
-    end
-
     def registration
       raise NotImplementedError
     end
