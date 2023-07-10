@@ -827,6 +827,28 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#increment_certificate_version_number" do
+      context "when version number is already present" do
+        let(:meta_data) { build(:metaData, certificateVersionNumber: 1) }
+        let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
+
+        it "increments verson number by 1" do
+          registration.increment_certificate_version_number
+          expect(registration.metaData.certificate_version_number).to eq(2)
+        end
+      end
+
+      context "when one has not been set" do
+        let(:meta_data) { build(:metaData) }
+        let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
+
+        it "sets the version number and increments it by 1" do
+          registration.increment_certificate_version_number
+          expect(registration.metaData.certificate_version_number).to eq(1)
+        end
+      end
+    end
+
     describe ".not_selected_for_email" do
       let(:registration) { create(:registration, :has_required_data) }
       let(:template_id) { "12345" }

@@ -110,6 +110,10 @@ module WasteCarriersEngine
       end
     end
 
+    def increment_certificate_version_number
+      metaData.update(certificateVersionNumber: metaData.certificateVersionNumber.to_i.succ)
+    end
+
     private
 
     def renewable_tier?

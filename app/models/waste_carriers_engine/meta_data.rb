@@ -21,6 +21,7 @@ module WasteCarriersEngine
     field :restoredReason, as: :restored_reason,       type: String
     field :restoredBy, as: :restored_by,               type: String
     field :distance,                                   type: String
+    field :certificateVersionNumber, as: :certificate_version_number, type: Integer
 
     validates :status, presence: true
 
