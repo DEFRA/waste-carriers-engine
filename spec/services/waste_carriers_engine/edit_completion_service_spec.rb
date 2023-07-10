@@ -73,11 +73,14 @@ module WasteCarriersEngine
         allow(registration).to receive(:write_attributes)
         allow(reg_finance_details).to receive(:orders).and_return(reg_orders)
         allow(reg_finance_details).to receive(:payments).and_return(reg_payments).twice
+        allow(reg_finance_details).to receive(:payments).and_return([])
         allow(reg_finance_details).to receive(:update_balance)
         allow(reg_orders).to receive(:<<).with(transient_order)
         allow(reg_payments).to receive(:<<).with(transient_payment)
         allow(transient_finance_details).to receive(:orders).and_return([transient_order])
         allow(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
+        allow(transient_finance_details).to receive(:payments).and_return([])
+        allow(reg_finance_details).to receive(:payments=).with([])
       end
 
       context "when given an edit_registration" do
