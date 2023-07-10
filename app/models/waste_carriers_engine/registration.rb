@@ -110,8 +110,12 @@ module WasteCarriersEngine
       end
     end
 
-    def increment_certificate_version_number
-      metaData.update(certificateVersionNumber: metaData.certificateVersionNumber.to_i.succ)
+    def increment_certificate_version
+      metaData.update(certificateVersion: metaData.certificateVersion.to_i.succ)
+    end
+
+    def reset_certificate_version
+      metaData.update(certificateVersion: 0)
     end
 
     private

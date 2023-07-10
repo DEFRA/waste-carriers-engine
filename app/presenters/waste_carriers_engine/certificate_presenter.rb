@@ -61,10 +61,10 @@ module WasteCarriersEngine
       Date.today.strftime("%e %B %Y")
     end
 
-    def certificate_version_number
-      return 1 if metaData.certificate_version_number.nil?
+    def certificate_version
+      return 1 if metaData.certificate_version.nil?
 
-      metaData.certificate_version_number
+      metaData.certificate_version
     end
 
     private

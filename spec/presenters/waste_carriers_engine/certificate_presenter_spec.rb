@@ -154,18 +154,18 @@ module WasteCarriersEngine
       end
     end
 
-    describe "#certificate_version_number" do
+    describe "#certificate_version" do
       context "when the certificate version number is set" do
-        before { registration.metaData.update(certificate_version_number: 2) }
+        before { registration.metaData.update(certificate_version: 2) }
 
         it "returns certificate version number" do
-          expect(presenter.certificate_version_number).to eq(2)
+          expect(presenter.certificate_version).to eq(2)
         end
       end
 
       context "when the certificate version number is not set" do
         it "returns 1" do
-          expect(presenter.certificate_version_number).to eq(1)
+          expect(presenter.certificate_version).to eq(1)
         end
       end
     end
