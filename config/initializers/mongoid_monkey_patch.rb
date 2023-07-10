@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mongoid
   module Attributes
     module Processing
@@ -10,15 +12,15 @@ module Mongoid
                     name
                   end
 
-        if relations.has_key?(aliased)
+        if relations.key?(aliased)
           pending_relations[aliased.to_s] = value
           return true
         end
-        if nested_attributes.has_key?(aliased)
+        if nested_attributes.key?(aliased)
           pending_nested[name] = value
           return true
         end
-        return false
+        false
       end
     end
   end

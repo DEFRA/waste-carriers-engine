@@ -8,7 +8,7 @@ module WasteCarriersEngine
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
     # This is the instance_delegate method from ruby 3.2.2 forwardable rather than the rails delegate method
-    instance_delegate [:contact_address, :contact_email, :registered_address] => :registration
+    instance_delegate %i[contact_address contact_email registered_address] => :registration
 
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)

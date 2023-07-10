@@ -27,10 +27,11 @@ module WasteCarriersEngine
     after_initialize :set_route
 
     private
+
     def set_route
-      unless route.present?
-        self.route = Rails.configuration.metadata_route
-      end
+      return if route.present?
+
+      self.route = Rails.configuration.metadata_route
     end
   end
 end
