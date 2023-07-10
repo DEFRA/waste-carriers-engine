@@ -61,6 +61,12 @@ module WasteCarriersEngine
       Date.today.strftime("%e %B %Y")
     end
 
+    def certificate_version_number
+      return 1 if metaData.certificate_version_number.nil?
+
+      metaData.certificate_version_number
+    end
+
     private
 
     def expires_after_pluralized
