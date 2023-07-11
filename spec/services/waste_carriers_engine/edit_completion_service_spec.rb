@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -58,13 +59,13 @@ module WasteCarriersEngine
              registration_type_changed?: registration_type_changed)
     end
 
-    describe ".run" do
-      let(:reg_orders) { [double(:orders)] }
-      let(:reg_payments) { [double(:payment)] }
-      let(:transient_order) { double(:transient_order) }
-      let(:transient_payment) { double(:transient_payment) }
-      let(:transient_payments) { [transient_payment] }
+    let(:reg_orders) { [double(:orders)] }
+    let(:reg_payments) { [double(:payment)] }
+    let(:transient_order) { double(:transient_order) }
+    let(:transient_payment) { double(:transient_payment) }
+    let(:transient_payments) { [transient_payment] }
 
+    describe ".run" do
       before do
         allow(contact_address).to receive(:first_name=)
         allow(contact_address).to receive(:last_name=)
@@ -144,3 +145,4 @@ module WasteCarriersEngine
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
