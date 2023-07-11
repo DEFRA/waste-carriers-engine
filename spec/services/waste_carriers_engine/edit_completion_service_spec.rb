@@ -59,10 +59,11 @@ module WasteCarriersEngine
     end
 
     describe ".run" do
-      let(:reg_orders) { double(:orders) }
-      let(:reg_payments) { double(:payments) }
+      let(:reg_orders) { [double(:orders)] }
+      let(:reg_payments) { [double(:payment)] }
       let(:transient_order) { double(:transient_order) }
       let(:transient_payment) { double(:transient_payment) }
+      let(:transient_payments) { [transient_payment] }
 
       before do
         allow(contact_address).to receive(:first_name=)
@@ -72,15 +73,13 @@ module WasteCarriersEngine
         allow(registration).to receive(:save!)
         allow(registration).to receive(:write_attributes)
         allow(reg_finance_details).to receive(:orders).and_return(reg_orders)
-        allow(reg_finance_details).to receive(:payments).and_return(reg_payments).twice
-        allow(reg_finance_details).to receive(:payments).and_return([])
+        allow(reg_finance_details).to receive(:payments).and_return(reg_payments)
         allow(reg_finance_details).to receive(:update_balance)
         allow(reg_orders).to receive(:<<).with(transient_order)
         allow(reg_payments).to receive(:<<).with(transient_payment)
         allow(transient_finance_details).to receive(:orders).and_return([transient_order])
         allow(transient_finance_details).to receive(:payments).and_return([transient_payment]).twice
-        allow(transient_finance_details).to receive(:payments).and_return([])
-        allow(reg_finance_details).to receive(:payments=).with([])
+        allow(transient_finance_details).to receive(:payments).and_return(transient_payments)
       end
 
       context "when given an edit_registration" do

@@ -13,7 +13,7 @@ module WasteCarriersEngine
       end
 
       while transient_registration.finance_details.payments.present?
-        registration.finance_details.payments << transient_registration.finance_details.payments.first
+        registration.finance_details.payments << transient_registration.finance_details.payments.shift
       end
 
       registration.finance_details.update_balance
