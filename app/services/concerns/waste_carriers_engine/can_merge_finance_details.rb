@@ -12,8 +12,13 @@ module WasteCarriersEngine
         registration.finance_details.orders << order
       end
 
-      while transient_registration.finance_details.payments.present?
-        registration.finance_details.payments << transient_registration.finance_details.payments.pop
+      transient_payments_array = []
+      transient_registration.finance_details.payments.each do |payment|
+        transient_payments_array << payment
+      end
+
+      transient_payments_array.each do |payment|
+        registration.finance_details.payments << payment
       end
 
       registration.finance_details.update_balance
