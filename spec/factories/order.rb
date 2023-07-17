@@ -4,8 +4,10 @@ FactoryBot.define do
   factory :order, class: "WasteCarriersEngine::Order" do
     trait :has_required_data do
       order_items do
-        [WasteCarriersEngine::OrderItem.new_renewal_item,
-         WasteCarriersEngine::OrderItem.new_copy_cards_item(1)]
+        [
+          build(:order_item, :new_renewal_item),
+          build(:order_item, :new_copy_cards_item)
+        ]
       end
       total_amount { order_items.sum { |item| item[:amount] } }
     end
@@ -20,7 +22,7 @@ FactoryBot.define do
       date_created { Time.now }
 
       order_items do
-        [WasteCarriersEngine::OrderItem.new_copy_cards_item(1)]
+        [build(:order_item, :new_copy_cards_item)]
       end
       total_amount { order_items.sum { |item| item[:amount] } }
     end
@@ -29,7 +31,7 @@ FactoryBot.define do
       date_created { Time.now }
 
       order_items do
-        [WasteCarriersEngine::OrderItem.new_type_change_item]
+        [build(:order_item, :new_type_change_item)]
       end
       total_amount { order_items.sum { |item| item[:amount] } }
     end
