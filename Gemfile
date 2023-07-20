@@ -18,7 +18,7 @@ gem "defra_ruby_template"
 # Use MongoDB as the database
 gem "mongoid", "~> 7.5"
 # Implement document-level locking
-gem "mongoid-locker", "~> 2.0.0"
+gem "mongoid-locker", "~> 2.0.2"
 
 gem "mongo_session_store"
 # Use CanCanCan for user roles and permissions
