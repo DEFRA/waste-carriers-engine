@@ -15,8 +15,14 @@ module WasteCarriersEngine
       validates :token, presence: true
 
       COMPLETION_PAGES = %w[
-        registration_completed_form
+        registration_completion_form
+        registration_received_pending_conviction_form
+        registration_received_pending_govpay_payment_form
+        registration_received_pending_payment_form
         renewal_complete_form
+        renewal_received_pending_conviction_form
+        renewal_received_pending_govpay_payment_form
+        renewal_received_pending_payment_form
       ].freeze
 
       field :journey_type, type: String
@@ -45,25 +51,20 @@ module WasteCarriersEngine
         update(completed_at: Time.zone.now)
         update(completed_route: route)
         update(registration_data: transient_registration.attributes.slice(
-          :businessType,
-          :declaredConvictions,
-          :registrationType
+          "businessType",
+          "declaredConvictions",
+          "registrationType",
+          "tier"
         ))
       end
 
       def self.average_duration(user_journey_scope)
-        in_scope_completed = user_journey_scope.where.not(completed_at: nil)
-        in_scope_completed_total = in_scope_completed.sum { |uj| uj.completed_at.to_time - uj.created_at.to_time }
-        in_scope_completed_count = in_scope_completed.count
+        total = user_journey_scope.sum { |uj| uj.updated_at.to_time - uj.created_at.to_time }
+        count = user_journey_scope.count
 
-        in_scope_incomplete = user_journey_scope.where(completed_at: nil)
-        in_scope_incomplete_total = in_scope_incomplete.sum { |uj| uj.updated_at.to_time - uj.created_at.to_time }
-        in_scope_incomplete_count = in_scope_incomplete.count
+        return 0 unless count.positive?
 
-        total_count = in_scope_completed_count + in_scope_incomplete_count
-        return 0 unless total_count.positive?
-
-        (in_scope_completed_total + in_scope_incomplete_total) / total_count
+        total / count
       end
     end
   end
