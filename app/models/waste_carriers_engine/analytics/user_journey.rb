@@ -15,8 +15,8 @@ module WasteCarriersEngine
       validates :token, presence: true
 
       COMPLETION_PAGES = %w[
-        registration-completed
-        renewal-complete
+        registration_completed_form
+        renewal_complete_form
       ].freeze
 
       field :journey_type, type: String

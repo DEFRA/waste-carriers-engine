@@ -64,7 +64,7 @@ module WasteCarriersEngine
 
           context "when the latest view is a completion page" do
             before do
-              transient_registration.workflow_state = "registration-completed"
+              transient_registration.workflow_state = "registration_completed_form"
 
               described_class.run(transient_registration:)
             end
