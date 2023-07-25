@@ -82,7 +82,12 @@ module WasteCarriersEngine
           expect(journey.completed_at).to eq completion_time
           expect(journey.completed_route).to eq "DIGITAL"
           expect(journey.registration_data).to include(
-            transient_registration.attributes.slice(:businessType, :registrationType, :declaredConvictions)
+            transient_registration.attributes.slice(
+              "businessType",
+              "declaredConvictions",
+              "registrationType",
+              "tier"
+            )
           )
         end
       end
@@ -98,6 +103,10 @@ module WasteCarriersEngine
 
         let(:completion_time) { Time.zone.now }
 
+        let(:journey_a_duration) { journey_a.completed_at.to_time - journey_a.created_at.to_time }
+        let(:journey_b_duration) { journey_b.completed_at.to_time - journey_b.created_at.to_time }
+        let(:journey_c_duration) { journey_c.updated_at.to_time - journey_c.created_at.to_time }
+
         before do
           Timecop.freeze(completion_time) do
             journey_a.complete_journey(transient_registration_a)
@@ -108,11 +117,21 @@ module WasteCarriersEngine
         end
 
         it "returns the average duration across all user journeys" do
-          total_duration = (journey_a.completed_at.to_time - journey_a.created_at.to_time) +
-                           (journey_b.completed_at.to_time - journey_b.created_at.to_time) +
-                           (journey_c.updated_at.to_time - journey_c.created_at.to_time)
+          total_duration = journey_a_duration + journey_b_duration + journey_c_duration
 
           expect(described_class.average_duration(described_class.all)).to eq total_duration / 3
+        end
+
+        context "with completed registrations only" do
+          it "returns the average duration across completed journeys only" do
+            expect(described_class.average_duration(described_class.completed)).to eq (journey_a_duration + journey_b_duration) / 2
+          end
+        end
+
+        context "with incomplete registrations only" do
+          it "returns the average duration across incomplete journeys only" do
+            expect(described_class.average_duration(described_class.incomplete)).to eq journey_c_duration
+          end
         end
       end
     end

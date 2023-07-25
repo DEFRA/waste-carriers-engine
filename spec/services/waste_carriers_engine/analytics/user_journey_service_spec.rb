@@ -62,9 +62,9 @@ module WasteCarriersEngine
             expect(PageView).to have_received("new")
           end
 
-          context "when the latest view is a completion page" do
+          shared_examples "completion form" do |form|
             before do
-              transient_registration.workflow_state = "registration_completed_form"
+              transient_registration.workflow_state = form
 
               described_class.run(transient_registration:)
             end
@@ -75,6 +75,21 @@ module WasteCarriersEngine
               expect(UserJourney.last.registration_data).to include(
                 transient_registration.attributes.slice(:businessType, :registrationType, :declaredConvictions)
               )
+            end
+          end
+
+          context "when the latest view is a completion form" do
+            %w[
+              registration_completion_form
+              registration_received_pending_conviction_form
+              registration_received_pending_govpay_payment_form
+              registration_received_pending_payment_form
+              renewal_complete_form
+              renewal_received_pending_conviction_form
+              renewal_received_pending_govpay_payment_form
+              renewal_received_pending_payment_form
+            ].each do |form|
+              it_behaves_like "completion form", form
             end
           end
         end
