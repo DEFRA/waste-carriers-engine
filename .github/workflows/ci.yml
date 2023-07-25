@@ -60,6 +60,13 @@ jobs:
         run: |
           bundle exec rubocop --format progress --format json --out rubocop-result.json
 
+      # This includes an extra step to delete .resultset.json to ensure SonarCloud uses coverage.json.
+      - name: Run unit tests
+        run: |
+          bundle exec rails test
+          bundle exec rspec
+          rm -f coverage/.resultset.json
+
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
