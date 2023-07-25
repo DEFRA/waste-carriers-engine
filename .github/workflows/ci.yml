@@ -70,7 +70,7 @@ jobs:
           bundle exec rails test
           bundle exec rspec
           sed -i 's/\/home\/runner\/work\/waste-carriers-engine\/waste-carriers-engine\//\/github\/workspace\//g' coverage/coverage.json
-          
+  
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
