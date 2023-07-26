@@ -6,7 +6,6 @@ RSpec.shared_context "with a sample registration with defaults" do |factory|
   let(:tier) { "UPPER" }
   let(:business_type) { "limitedCompany" }
   let(:registration_type) { "carrier_broker_dealer" }
-  let(:route) { "DIGITAL" }
 
   let(:person_a) { build(:key_person, :main, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
   let(:person_b) { build(:key_person, :main, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
@@ -19,6 +18,6 @@ RSpec.shared_context "with a sample registration with defaults" do |factory|
                    business_type: business_type,
                    tier: tier,
                    key_people: key_people,
-                   metaData: { route: route })
+                   metaData: { route: nil })
   end
 end
