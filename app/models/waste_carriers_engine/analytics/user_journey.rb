@@ -26,7 +26,6 @@ module WasteCarriersEngine
       ].freeze
 
       field :journey_type, type: String
-      field :started_at, type: DateTime
       field :completed_at, type: DateTime
       field :token, type: String
       field :user, type: String
@@ -43,7 +42,7 @@ module WasteCarriersEngine
       scope :completed_digital, -> { where(completed_route: "DIGITAL") }
       scope :completed_assisted_digital, -> { where(completed_route: "ASSISTED_DIGITAL") }
       scope :date_range, lambda { |start_date, end_date|
-        where(:started_at.gte => start_date.midnight, :started_at.lt => end_date.midnight + 1)
+        where(:created_at.gte => start_date.midnight, :created_at.lt => end_date.midnight + 1)
       }
 
       def complete_journey(transient_registration)

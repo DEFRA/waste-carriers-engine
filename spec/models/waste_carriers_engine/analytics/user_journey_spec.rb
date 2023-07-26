@@ -51,10 +51,10 @@ module WasteCarriersEngine
 
         let(:start_date) { 10.days.ago.midnight }
         let(:end_date) { Date.today.midnight }
-        let(:user_journey_a) { create(:user_journey, started_at: start_date - 1.day) }
-        let(:user_journey_b) { create(:user_journey, started_at: start_date) }
-        let(:user_journey_c) { create(:user_journey, started_at: end_date) }
-        let(:user_journey_d) { create(:user_journey, started_at: end_date + 1.day) }
+        let(:user_journey_a) { Timecop.freeze(start_date - 1.day) { create(:user_journey) } }
+        let(:user_journey_b) { Timecop.freeze(start_date) { create(:user_journey) } }
+        let(:user_journey_c) { Timecop.freeze(end_date) { create(:user_journey) } }
+        let(:user_journey_d) { Timecop.freeze(end_date + 1.day) { create(:user_journey) } }
 
         before do
           user_journey_a

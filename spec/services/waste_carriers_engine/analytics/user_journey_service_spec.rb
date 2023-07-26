@@ -49,7 +49,7 @@ module WasteCarriersEngine
 
         context "when a journey already exists for the token" do
           before do
-            create(:user_journey, journey_type: "registration", started_at: 10.minutes.ago, token: transient_registration.token)
+            Timecop.freeze(10.minutes.ago) { create(:user_journey, journey_type: "registration", token: transient_registration.token) }
 
             described_class.run(transient_registration:)
           end

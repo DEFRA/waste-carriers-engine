@@ -44,7 +44,6 @@ module WasteCarriersEngine
 
         UserJourney.create!(
           journey_type: journey_type,
-          started_at: Time.zone.now,
           token: token,
           started_route: route,
           user: current_user&.email

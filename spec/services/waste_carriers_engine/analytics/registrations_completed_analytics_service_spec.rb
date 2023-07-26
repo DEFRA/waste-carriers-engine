@@ -17,9 +17,11 @@ module WasteCarriersEngine
           %i[registration renewal].each do |journey_type|
             %w[DIGITAL ASSISTED_DIGITAL].each do |started_route|
               [start_date - 1.day, start_date, end_date, end_date + 1.day].each do |started_at|
-                create(:user_journey, journey_type, :completed_digital, started_at:, started_route:)
-                create(:user_journey, journey_type, :completed_assisted_digital, started_at:, started_route:)
-                create(:user_journey, journey_type, completed_at: nil, started_at:, started_route:)
+                Timecop.freeze(started_at) do
+                  create(:user_journey, journey_type, :completed_digital, started_route:)
+                  create(:user_journey, journey_type, :completed_assisted_digital, started_route:)
+                  create(:user_journey, journey_type, completed_at: nil, started_route:)
+                end
               end
             end
           end
