@@ -15,7 +15,7 @@ module WasteCarriersEngine
       validates :token, presence: true
 
       COMPLETION_PAGES = %w[
-        registration_completion_form
+        registration_completed_form
         registration_received_pending_conviction_form
         registration_received_pending_govpay_payment_form
         registration_received_pending_payment_form

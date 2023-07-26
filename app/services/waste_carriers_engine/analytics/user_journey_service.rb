@@ -29,7 +29,11 @@ module WasteCarriersEngine
 
         PageView.create!(page: page, time: Time.zone.now, route: route, user_journey: journey)
 
-        journey.complete_journey(transient_registration) if UserJourney::COMPLETION_PAGES.include?(page)
+        if UserJourney::COMPLETION_PAGES.include?(page)
+          journey.complete_journey(transient_registration)
+        else
+          journey.touch
+        end
       end
 
       private

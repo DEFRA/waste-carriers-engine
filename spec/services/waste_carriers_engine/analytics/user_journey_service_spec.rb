@@ -58,6 +58,10 @@ module WasteCarriersEngine
             expect(UserJourney).to have_received(:new).once
           end
 
+          it "updates the journey's updated_at timestamp" do
+            expect(UserJourney.last.updated_at).to be > UserJourney.last.created_at
+          end
+
           it "creates a page view" do
             expect(PageView).to have_received("new")
           end
@@ -80,7 +84,7 @@ module WasteCarriersEngine
 
           context "when the latest view is a completion form" do
             %w[
-              registration_completion_form
+              registration_completed_form
               registration_received_pending_conviction_form
               registration_received_pending_govpay_payment_form
               registration_received_pending_payment_form
