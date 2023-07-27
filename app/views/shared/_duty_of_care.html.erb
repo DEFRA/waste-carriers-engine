@@ -1,0 +1,12 @@
+<p class="govuk-body">
+  <%= t(".paragraph_1", duty_of_care_link: link_to(t(".duty_of_care_link_text"), t(".duty_of_care_url"), target: "_blank")).html_safe %>
+</p>
+
+<h2 class="govuk-heading-m"><%= t(".subheading") %></h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li> <%= t(".steps_list.item_1", public_registers_online_link: link_to(t(".public_registers_online_link_text"), t(".public_registers_online_url"), target: "_blank")).html_safe %> </li>
+  <li> <%= t(".steps_list.item_2", how_to_classify_waste_link: link_to(t(".how_to_classify_waste_text"), t(".how_to_classify_waste_url"), target: "_blank")).html_safe %> </li>
+  <li> <%= t(".steps_list.item_3") %> </li>
+  <li> <%= t(".steps_list.item_4") %> </li>
+</ul>

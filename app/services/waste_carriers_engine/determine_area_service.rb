@@ -11,7 +11,7 @@ module WasteCarriersEngine
       return "Not found" if response.error.instance_of?(DefraRuby::Area::NoMatchError)
 
       handle_error(response.error, easting, northing)
-      "Not found"
+      nil
     end
 
     private

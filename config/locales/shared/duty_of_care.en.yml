@@ -1,0 +1,20 @@
+en:
+  shared:
+    duty_of_care:
+      paragraph_1: |
+        Everyone who produces, manages or handles waste is required to take reasonable measures to prevent
+        the risk of other people in the waste chain committing an offence and prevent the risk of an illegal
+        deposit. How to do this is detailed in the %{duty_of_care_link} (opens in a new window) and will vary
+        based on your relationship to the waste. Failing to take reasonable measures is an offence.
+      duty_of_care_url: https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1073585/Waste_duty_of_care_code_of_practice.pdf
+      duty_of_care_link_text: Waste duty of care code of practice
+      subheading: Steps everyone must take
+      steps_list:
+        item_1: When giving your waste to a third party, or organising a third party to be responsible for the movement of your waste, you must check they hold an appropriate authorisation, e.g. as a permitted site or a registered waste carrier, broker or dealer on %{public_registers_online_link} (opens in a new window).
+        item_2: Completing the required documentation for each transfer of waste, classifying and describing it correctly. %{how_to_classify_waste_link} (opens in a new window).
+        item_3: Storing and handling waste safely.
+        item_4: Following the waste hierarchy to minimise your environmental impact by prioritising, in order, waste prevention, reuse, recycling and then recovery over disposal.
+      public_registers_online_link_text: Public Registers Online
+      public_registers_online_url: https://environment.data.gov.uk/public-register/view/index
+      how_to_classify_waste_text: Classify different types of waste
+      how_to_classify_waste_url: https://www.gov.uk/how-to-classify-different-types-of-waste

@@ -354,5 +354,17 @@ module WasteCarriersEngine
         end
       end
     end
+
+    describe "#original_registration_date" do
+      it "returns original_registration_date for the registration attached" do
+        expect(renewing_registration.original_registration_date.to_date).to eq(renewing_registration.registration.original_registration_date.to_date)
+      end
+    end
+
+    describe "#original_activation_date" do
+      it "returns original_activation_date for the registration attached" do
+        expect(renewing_registration.original_activation_date.to_date).to eq(renewing_registration.registration.original_activation_date.to_date)
+      end
+    end
   end
 end

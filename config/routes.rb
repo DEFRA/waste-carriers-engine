@@ -19,6 +19,11 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "renew-registration",
               path_names: { new: "" }
 
+    resources :renewal_stop_forms,
+              only: %i[new],
+              path: "renewal-stop",
+              path_names: { new: "" }
+
     resources :your_tier_forms,
               only: %i[new create],
               path: "your-tier",

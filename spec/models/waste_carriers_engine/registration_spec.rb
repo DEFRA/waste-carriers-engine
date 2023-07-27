@@ -783,6 +783,50 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#original_registration_date" do
+      let(:registration) { create(:registration, :has_required_data, metaData: { dateRegistered: 2.years.ago }) }
+
+      describe "registration renewal" do
+        let(:create_past_registration) { PastRegistration.build_past_registration(registration) }
+
+        it "returns registration date of the very first registration" do
+          old_registration = create_past_registration
+          registration.metaData.update(dateRegistered: Date.today)
+          expect(registration.reload.past_registrations.length).to eq(1)
+          expect(registration.original_registration_date.to_date).to eq(old_registration.metaData.dateRegistered.to_date)
+        end
+      end
+
+      describe "first and only registration" do
+        it "returns registration date of the current registration" do
+          expect(registration.reload.past_registrations.length).to eq(0)
+          expect(registration.original_registration_date.to_date).to eq(registration.metaData.dateRegistered.to_date)
+        end
+      end
+    end
+
+    describe "#original_activation_date" do
+      let(:registration) { create(:registration, :has_required_data, metaData: { dateActivated: 2.years.ago }) }
+
+      describe "registration renewal" do
+        let(:create_past_registration) { PastRegistration.build_past_registration(registration) }
+
+        it "returns activation date of the very first registration" do
+          old_registration = create_past_registration
+          registration.metaData.update(dateActivated: Date.today)
+          expect(registration.reload.past_registrations.length).to eq(1)
+          expect(registration.original_activation_date.to_date).to eq(old_registration.metaData.dateActivated.to_date)
+        end
+      end
+
+      describe "first and only registration" do
+        it "returns activation date of the current registration" do
+          expect(registration.reload.past_registrations.length).to eq(0)
+          expect(registration.original_activation_date.to_date).to eq(registration.metaData.dateActivated.to_date)
+        end
+      end
+    end
+
     describe ".not_selected_for_email" do
       let(:registration) { create(:registration, :has_required_data) }
       let(:template_id) { "12345" }
