@@ -27,7 +27,7 @@ end
 module Mongoid
   module Attributes
     module Processing
-      include WasteCarriersEngine::MongoidMonkeyPatch
+      prepend WasteCarriersEngine::MongoidMonkeyPatch
     end
   end
 end
