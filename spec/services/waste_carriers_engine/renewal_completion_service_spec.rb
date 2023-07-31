@@ -167,6 +167,13 @@ module WasteCarriersEngine
             .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
         end
 
+        it 'creates the order item logs with the correct activated at' do
+          activated_at = transient_registration.metaData.dateActivated
+          renewal_completion_service.complete_renewal
+          order_item_logs_activated_ats = OrderItemLog.all.pluck(:activated_at)
+          expect(order_item_logs_activated_ats.all? { |a| a.to_s == activated_at.to_s }).to eq true
+        end
+
         # This only applies to attributes where a value could be set, but not always - for example, smart answers
         context "when the registration has an attribute which is not in the transient_registration" do
           before do
