@@ -124,7 +124,7 @@ module WasteCarriersEngine
     # Check if a transient renewal already exists for this registration so we don't have
     # multiple renewals in progress at once
     def no_renewal_in_progress?
-      return unless RenewingRegistration.where(reg_identifier: reg_identifier).exists?
+      return false unless RenewingRegistration.where(reg_identifier: reg_identifier).exists?
 
       errors.add(:reg_identifier, :renewal_in_progress)
     end

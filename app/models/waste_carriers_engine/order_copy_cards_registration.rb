@@ -11,7 +11,7 @@ module WasteCarriersEngine
 
     # This is the instance_delegate method from ruby 3.2.2 forwardable rather than the rails delegate method
     instance_delegate %i[contact_address contact_email registered_address] => :registration
-    
+
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
     end
