@@ -150,7 +150,7 @@ module WasteCarriersEngine
 
     describe "#certificate_creation_date" do
       it "returns today's date in the expected format" do
-        expect(presenter.certificate_creation_date).to eq Date.today.strftime("%e %B %Y")
+        expect(presenter.certificate_creation_date).to eq Date.today.to_s(:standard)
       end
     end
 
