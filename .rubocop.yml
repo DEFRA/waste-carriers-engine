@@ -11,3 +11,6 @@ AllCops:
 # Notify uses address_line_1 etc naming convention and we want to align with it
 Naming/VariableNumber:
   Enabled: false
+
+Style/ArgumentsForwarding:
+  Enabled: false
