@@ -265,12 +265,6 @@ module WasteCarriersEngine
       !company_no_required?
     end
 
-    def registered_address_was_manually_entered?
-      return false unless registered_address
-
-      registered_address.manually_entered?
-    end
-
     def skip_to_manual_address?
       temp_os_places_error
     end

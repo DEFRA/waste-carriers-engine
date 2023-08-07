@@ -338,12 +338,6 @@ module WasteCarriersEngine
         temp_os_places_error
       end
 
-      def contact_address_was_manually_entered?
-        return false unless contact_address
-
-        contact_address.manually_entered?
-      end
-
       def should_register_in_northern_ireland?
         location == "northern_ireland"
       end
