@@ -12,6 +12,11 @@ module WasteCarriersEngine
         registration.finance_details.orders << order
       end
 
+      # To avoid issues which came up during the rails 7 upgrade with direct iteration over
+      # `transient_registration.finance_details.payments` not actually iterating over every payment.
+      # we first collect all payments into a temporary array. This ensures that each payment is iterated
+      # on without interference, as a payment can belong to only one payments collection at a time.
+
       transient_payments_array = []
       transient_registration.finance_details.payments.each do |payment|
         transient_payments_array << payment
