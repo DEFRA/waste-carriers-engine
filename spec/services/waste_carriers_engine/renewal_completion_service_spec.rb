@@ -10,7 +10,7 @@ module WasteCarriersEngine
         :has_required_data,
         :has_addresses,
         :has_key_people,
-        :has_paid_order,
+        :has_paid_order_with_two_orders,
         company_name: "FooBiz",
         workflow_state: "renewal_complete_form"
       )

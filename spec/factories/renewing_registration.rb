@@ -64,6 +64,10 @@ FactoryBot.define do
       finance_details { association(:finance_details, :has_paid_order_and_payment, strategy: :build) }
     end
 
+    trait :has_paid_order_with_two_orders do
+      finance_details { association(:finance_details, :has_paid_orders_and_payments, strategy: :build) }
+    end
+
     trait :has_conviction_search_result do
       conviction_search_result { association(:conviction_search_result, :match_result_no, strategy: :build) }
     end

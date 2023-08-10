@@ -37,8 +37,8 @@ module WasteCarriersEngine
         transient_registration.with_lock do
           copy_names_to_contact_address
           create_past_registration
-          create_order_item_logs
           update_registration
+          create_order_item_logs
           delete_transient_registration
           send_confirmation_messages
         end
@@ -97,7 +97,7 @@ module WasteCarriersEngine
     end
 
     def create_order_item_logs
-      OrderItemLog.create_from_registration(registration)
+      OrderItemLog.create_from_registration(transient_registration)
     end
 
     def delete_transient_registration

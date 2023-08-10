@@ -8,15 +8,29 @@ module WasteCarriersEngine
       initialize_finance_details(registration)
       initialize_finance_details(transient_registration)
 
+      # To avoid issues which arose during the Rails 7 upgrade, where direct iteration over
+      # `transient_registration.finance_details.payments` and `transient_registration.finance_details.orders`
+      # didn't iterate over every payment or order respectively, we first collect all payments and orders
+      # into temporary arrays. This ensures that each payment and each order are iterated over without interference,
+      # as a payment can belong to only one payments collection at a time, and similarly for orders.
+      # This cannot be done using a clone as that changes the ids.
+
+      transient_orders_array = []
       transient_registration.finance_details.orders.each do |order|
+        transient_orders_array << order
+      end
+
+      transient_orders_array.each do |order|
         registration.finance_details.orders << order
       end
 
+      transient_payments_array = []
       transient_registration.finance_details.payments.each do |payment|
-        # To avoid issues which came up during the rails 7 upgrade with direct iteration
-        # over `transient_registration.finance_details.payments` we need to clone the
-        # payment as a payment can belong to only one payments collection at a time.
-          registration.finance_details.payments << payment.clone
+        transient_payments_array << payment
+      end
+
+      transient_payments_array.each do |payment|
+        registration.finance_details.payments << payment
       end
 
       registration.finance_details.update_balance

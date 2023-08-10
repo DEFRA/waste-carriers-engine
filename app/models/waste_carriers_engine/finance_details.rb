@@ -45,5 +45,11 @@ module WasteCarriersEngine
       payment_balance = payments.except_online_not_authorised.sum { |item| item[:amount] }
       self.balance = order_balance - payment_balance
     end
+
+    def find_registration
+      return registration unless registration.nil?
+
+      WasteCarriersEngine::Registration.find_by(reg_identifier: transient_registration.reg_identifier)
+    end
   end
 end
