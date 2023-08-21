@@ -7,7 +7,7 @@ module WasteCarriersEngine
     included do
       scope :convictions_possible_match, lambda {
         upper_tier.where("conviction_sign_offs.0.workflow_state": "possible_match",
-              :"conviction_sign_offs.0.confirmed".ne => "yes")
+                         :"conviction_sign_offs.0.confirmed".ne => "yes")
       }
       scope :convictions_checks_in_progress, lambda {
         upper_tier.where("conviction_sign_offs.0.workflow_state": "checks_in_progress")
@@ -22,9 +22,9 @@ module WasteCarriersEngine
       # and have no workflow_state as a result. We want ones which have not been confirmed and are in a pending state.
       scope :convictions_new_without_status, lambda {
         upper_tier.where(:"conviction_sign_offs.0".exists => true,
-              :"conviction_sign_offs.0.workflow_state".exists => false,
-              :"conviction_sign_offs.0.confirmed".ne => "yes",
-              "metaData.status": "PENDING")
+                         :"conviction_sign_offs.0.workflow_state".exists => false,
+                         :"conviction_sign_offs.0.confirmed".ne => "yes",
+                         "metaData.status": "PENDING")
       }
     end
   end
