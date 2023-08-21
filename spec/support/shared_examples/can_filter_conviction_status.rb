@@ -3,6 +3,7 @@
 RSpec.shared_examples "Can filter conviction status" do
   let(:possible_match) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new(workflow_state: :possible_match)
       ]
@@ -14,6 +15,7 @@ RSpec.shared_examples "Can filter conviction status" do
 
   let(:checks_in_progress) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new(workflow_state: :checks_in_progress)
       ]
@@ -25,6 +27,7 @@ RSpec.shared_examples "Can filter conviction status" do
 
   let(:approved) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new(workflow_state: :approved)
       ]
@@ -36,6 +39,7 @@ RSpec.shared_examples "Can filter conviction status" do
 
   let(:rejected) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new(workflow_state: :rejected)
       ]
@@ -47,6 +51,7 @@ RSpec.shared_examples "Can filter conviction status" do
 
   let(:old_confirmed_record) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new(confirmed: "yes")
       ]
@@ -58,6 +63,7 @@ RSpec.shared_examples "Can filter conviction status" do
 
   let(:no_status_pending) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new
       ],
@@ -71,6 +77,7 @@ RSpec.shared_examples "Can filter conviction status" do
 
   let(:no_status_active) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new
       ],
@@ -84,6 +91,7 @@ RSpec.shared_examples "Can filter conviction status" do
 
   let(:no_status_approved) do
     record = described_class.new(
+      tier: "UPPER",
       conviction_sign_offs: [
         WasteCarriersEngine::ConvictionSignOff.new(confirmed: "yes")
       ]
