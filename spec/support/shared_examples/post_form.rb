@@ -8,6 +8,12 @@
 RSpec.shared_examples "POST form" do |form, options|
   let(:valid_params) { options[:valid_params] }
   let(:invalid_params) { options[:invalid_params] }
+  let(:user_journey_service) { instance_double(WasteCarriersEngine::Analytics::UserJourneyService) }
+
+  before do
+    allow(WasteCarriersEngine::Analytics::UserJourneyService).to receive(:new).and_return(user_journey_service)
+    allow(user_journey_service).to receive(:run)
+  end
 
   context "when the params are valid" do
     it "updates the transient registration's workflow_state and returns a 302 http status" do
@@ -19,6 +25,12 @@ RSpec.shared_examples "POST form" do |form, options|
 
       expect(transient_registration.workflow_state).not_to eq(state_before_request)
       expect(response).to have_http_status(:found)
+    end
+
+    it "calls the user journey service" do
+      post_form_with_params(form, transient_registration.token, valid_params)
+
+      expect(user_journey_service).to have_received(:run)
     end
   end
 
@@ -33,6 +45,12 @@ RSpec.shared_examples "POST form" do |form, options|
       expect(transient_registration.workflow_state).to eq(state_before_request)
       expect(response).to have_http_status(:ok)
       expect(response).to render_template("#{form}s/new")
+    end
+
+    it "calls the user journey service" do
+      post_form_with_params(form, transient_registration.token, valid_params)
+
+      expect(user_journey_service).to have_received(:run)
     end
   end
 end
