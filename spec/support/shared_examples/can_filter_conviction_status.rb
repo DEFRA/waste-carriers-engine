@@ -13,6 +13,18 @@ RSpec.shared_examples "Can filter conviction status" do
     record
   end
 
+  let(:lower_tier) do # Should not be included in any of the scopes
+    record = described_class.new(
+      tier: "LOWER",
+      conviction_sign_offs: [
+        WasteCarriersEngine::ConvictionSignOff.new(workflow_state: :possible_match)
+      ]
+    )
+    # Skip the validation so we don't have to include addresses, etc
+    record.save(validate: false)
+    record
+  end
+
   let(:checks_in_progress) do
     record = described_class.new(
       tier: "UPPER",
@@ -114,6 +126,7 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).not_to include(no_status_pending)
       expect(scope).not_to include(no_status_active)
       expect(scope).not_to include(no_status_approved)
+      expect(scope).not_to include(lower_tier)
     end
   end
 
@@ -129,6 +142,7 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).not_to include(no_status_pending)
       expect(scope).not_to include(no_status_active)
       expect(scope).not_to include(no_status_approved)
+      expect(scope).not_to include(lower_tier)
     end
   end
 
@@ -144,6 +158,7 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).not_to include(no_status_pending)
       expect(scope).not_to include(no_status_active)
       expect(scope).not_to include(no_status_approved)
+      expect(scope).not_to include(lower_tier)
     end
   end
 
@@ -159,6 +174,7 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).not_to include(no_status_pending)
       expect(scope).not_to include(no_status_active)
       expect(scope).not_to include(no_status_approved)
+      expect(scope).not_to include(lower_tier)
     end
   end
 
@@ -174,6 +190,7 @@ RSpec.shared_examples "Can filter conviction status" do
       expect(scope).to include(no_status_pending)
       expect(scope).not_to include(no_status_active)
       expect(scope).not_to include(no_status_approved)
+      expect(scope).not_to include(lower_tier)
     end
   end
 end
