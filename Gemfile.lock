@@ -122,7 +122,7 @@ GEM
     concurrent-ruby (1.2.2)
     console (1.13.1)
       fiber-local
-    countries (5.5.0)
+    countries (5.6.0)
       unaccent (~> 0.3)
     crack (0.4.5)
       rexml
