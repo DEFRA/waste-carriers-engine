@@ -24,8 +24,7 @@ Gem::Specification.new do |s|
   # Use MongoDB as the database
   s.add_dependency "mongoid"
   # Implement document-level locking
-  # Note v2.0.1 interferes with the delegate method
-  s.add_dependency "mongoid-locker", "2.0.0"
+  s.add_dependency "mongoid-locker", "2.0.2"
 
   s.add_dependency "mongo_session_store"
   # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
