@@ -428,7 +428,7 @@ GEM
       ruby-graphviz
     thor (1.2.2)
     tilt (2.0.10)
-    timecop (0.9.6)
+    timecop (0.9.8)
     timeout (0.3.2)
     timers (4.3.3)
     traces (0.11.1)
