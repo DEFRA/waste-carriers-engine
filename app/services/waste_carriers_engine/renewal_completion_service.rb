@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class RenewalCompletionService
     class CannotComplete < StandardError; end
@@ -166,4 +165,3 @@ module WasteCarriersEngine
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
