@@ -124,11 +124,12 @@ module WasteCarriersEngine
     private
 
     def update_certificate_version_history(version, user = nil)
-      metaData.certificateVersionHistory << {
+      certificateVersionHistory = metaData.certificateVersionHistory << {
         version: version,
         generated_at: DateTime.now,
         generated_by: user&.email
       }
+      metaData.update(certificateVersionHistory: certificateVersionHistory)
     end
 
     def renewable_tier?
