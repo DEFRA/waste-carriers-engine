@@ -110,15 +110,26 @@ module WasteCarriersEngine
       end
     end
 
-    def increment_certificate_version
-      metaData.update(certificateVersion: metaData.certificateVersion.to_i.succ)
+    def increment_certificate_version(user = nil)
+      new_version = metaData.certificateVersion.to_i.succ
+      metaData.update(certificateVersion: new_version)
+      update_certificate_version_history(new_version, user)
     end
 
     def reset_certificate_version
       metaData.update(certificateVersion: 0)
+      update_certificate_version_history(0)
     end
 
     private
+
+    def update_certificate_version_history(version, user = nil)
+      metaData.certificateVersionHistory << {
+        version: version,
+        generated_at: DateTime.now,
+        generated_by: user&.email
+      }
+    end
 
     def renewable_tier?
       upper_tier?

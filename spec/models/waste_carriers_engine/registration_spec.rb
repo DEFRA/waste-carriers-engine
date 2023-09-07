@@ -828,13 +828,22 @@ module WasteCarriersEngine
     end
 
     describe "#increment_certificate_version" do
+      let(:user) { create(:user) }
+
       context "when version is already present" do
         let(:meta_data) { build(:metaData, certificateVersion: 1) }
         let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
 
         it "increments verson number by 1" do
-          registration.increment_certificate_version
+          registration.increment_certificate_version(user)
           expect(registration.metaData.certificate_version).to eq(2)
+        end
+
+        it "updates certificate_version_history" do
+          registration.increment_certificate_version(user)
+          expect(registration.metaData.certificate_version_history.last[:version]).to eq(2)
+          expect(registration.metaData.certificate_version_history.last[:generated_by]).to eq(user.email)
+          expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end
 
@@ -843,8 +852,15 @@ module WasteCarriersEngine
         let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
 
         it "sets the version and increments it by 1" do
-          registration.increment_certificate_version
+          registration.increment_certificate_version(user)
           expect(registration.metaData.certificate_version).to eq(1)
+        end
+
+        it "updates certificate_version_history" do
+          registration.increment_certificate_version(user)
+          expect(registration.metaData.certificate_version_history.last[:version]).to eq(1)
+          expect(registration.metaData.certificate_version_history.last[:generated_by]).to eq(user.email)
+          expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end
     end
@@ -858,6 +874,12 @@ module WasteCarriersEngine
           registration.reset_certificate_version
           expect(registration.metaData.certificate_version).to eq(0)
         end
+
+        it "updates certificate_version_history" do
+          registration.reset_certificate_version
+          expect(registration.metaData.certificate_version_history.last[:version]).to eq(0)
+          expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
+        end
       end
 
       context "when one has not been set" do
@@ -867,6 +889,12 @@ module WasteCarriersEngine
         it "sets the version to 0" do
           registration.reset_certificate_version
           expect(registration.metaData.certificate_version).to eq(0)
+        end
+
+        it "updates certificate_version_history" do
+          registration.reset_certificate_version
+          expect(registration.metaData.certificate_version_history.last[:version]).to eq(0)
+          expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end
     end
