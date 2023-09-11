@@ -18,7 +18,7 @@ gem "defra_ruby_template"
 # Use MongoDB as the database
 gem "mongoid", "~> 7.5"
 # Implement document-level locking
-gem "mongoid-locker", "~> 2.0.0"
+gem "mongoid-locker", "~> 2.0.2"
 
 gem "mongo_session_store"
 # Use CanCanCan for user roles and permissions
@@ -72,7 +72,7 @@ group :test do
   gem "govuk_design_system_formbuilder"
   gem "rails-controller-testing"
   gem "rspec-html-matchers"
-  gem "simplecov", "~> 0.17.1", require: false
+  gem "simplecov", "~> 0.22.0", require: false
   gem "timecop"
   gem "vcr"
   gem "webmock", "~> 3.4"

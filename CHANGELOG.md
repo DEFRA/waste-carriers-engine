@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- duty-of-care content [\#1402](https://github.com/DEFRA/waste-carriers-engine/pull/1402) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Add renewal-stop form [\#1393](https://github.com/DEFRA/waste-carriers-engine/pull/1393) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/area service [\#1391](https://github.com/DEFRA/waste-carriers-engine/pull/1391) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - RUBY-2497: Add method to get original registration date [\#1388](https://github.com/DEFRA/waste-carriers-engine/pull/1388) ([brujeo](https://github.com/brujeo))
 - Payment confirmation content fixes [\#1387](https://github.com/DEFRA/waste-carriers-engine/pull/1387) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -406,6 +408,7 @@
 
 **Fixed bugs:**
 
+- fixing an issue with error assigned to wrong property [\#1401](https://github.com/DEFRA/waste-carriers-engine/pull/1401) ([brujeo](https://github.com/brujeo))
 - Add support for govpay refund statuses [\#1371](https://github.com/DEFRA/waste-carriers-engine/pull/1371) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - remove cert date from confirmation emails [\#1366](https://github.com/DEFRA/waste-carriers-engine/pull/1366) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - add cert generation date to PDF certificate [\#1364](https://github.com/DEFRA/waste-carriers-engine/pull/1364) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -650,7 +653,10 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1394](https://github.com/DEFRA/waste-carriers-engine/pull/1394) ([jjromeo](https://github.com/jjromeo))
+- RUBY-2517: Reusing standard error template for login-related errors [\#1390](https://github.com/DEFRA/waste-carriers-engine/pull/1390) ([brujeo](https://github.com/brujeo))
 - Add phone\_type method calling new DiscernUkNumberTypeService for deciding the type of a phone number [\#1385](https://github.com/DEFRA/waste-carriers-engine/pull/1385) ([jjromeo](https://github.com/jjromeo))
+- Bump defra\_ruby\_validators from 2.5.0 to 2.5.1 [\#1384](https://github.com/DEFRA/waste-carriers-engine/pull/1384) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Add mongo session store [\#1382](https://github.com/DEFRA/waste-carriers-engine/pull/1382) ([jjromeo](https://github.com/jjromeo))
 - 2423 tweaks [\#1378](https://github.com/DEFRA/waste-carriers-engine/pull/1378) ([jjromeo](https://github.com/jjromeo))
 - Update to fit os places result [\#1377](https://github.com/DEFRA/waste-carriers-engine/pull/1377) ([jjromeo](https://github.com/jjromeo))
