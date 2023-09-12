@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class RenewalCompletionService
     class CannotComplete < StandardError; end
@@ -41,6 +40,7 @@ module WasteCarriersEngine
           create_order_item_logs
           delete_transient_registration
           send_confirmation_messages
+          reset_certificate_version
         end
       end
     end
@@ -164,6 +164,9 @@ module WasteCarriersEngine
         registration.remove_attribute(old_attribute.to_sym)
       end
     end
+
+    def reset_certificate_version
+      registration.reset_certificate_version
+    end
   end
 end
-# rubocop:enable Metrics/ClassLength

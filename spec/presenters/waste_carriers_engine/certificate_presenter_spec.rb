@@ -154,6 +154,22 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#certificate_version" do
+      context "when the certificate version number is set" do
+        before { registration.metaData.update(certificate_version: 2) }
+
+        it "returns certificate version number" do
+          expect(presenter.certificate_version).to eq(2)
+        end
+      end
+
+      context "when the certificate version number is not set" do
+        it "returns 0" do
+          expect(presenter.certificate_version).to eq(0)
+        end
+      end
+    end
+
     describe "#renewal_message" do
       context "when the registration is lower tier" do
         let(:tier) { "LOWER" }
