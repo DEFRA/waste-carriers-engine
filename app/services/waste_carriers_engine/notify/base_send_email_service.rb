@@ -6,12 +6,13 @@ module WasteCarriersEngine
       include WasteCarriersEngine::ApplicationHelper
       include ActionView::Helpers::NumberHelper
 
-      def run(registration:, order: nil)
+      def run(registration:, order: nil, requester: nil)
         # AD registrations will not have a contact_mail
         return unless registration&.contact_email.present?
 
         @registration = registration
         @order = order
+        @requester = requester
 
         client = Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key)
 
