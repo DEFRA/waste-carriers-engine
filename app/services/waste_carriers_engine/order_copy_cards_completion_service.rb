@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class OrderCopyCardsCompletionService < BaseService
-    include CanMergeFinanceDetails
-
     attr_reader :transient_registration
 
     delegate :registration, to: :transient_registration
@@ -25,7 +23,7 @@ module WasteCarriersEngine
     end
 
     def update_registration
-      merge_finance_details
+      MergeFinanceDetailsService.call(transient_registration:, registration:)
       registration.save!
 
       # Log the order items only if payment is complete.
