@@ -56,6 +56,9 @@ module WasteCarriersEngine
           it "sends an email using the appropriate service" do
             described_class.run(transient_registration)
 
+            order = transient_finance_details.reload.orders[0]
+            expect(order.class).to eq(WasteCarriersEngine::Order)
+
             expect(notify_email_service)
               .to have_received(:run)
               .with(registration: registration, order: transient_finance_details.orders[0])
@@ -100,6 +103,7 @@ module WasteCarriersEngine
 
         it "merges the payment" do
           first_payment = transient_finance_details.payments[0]
+          expect(first_payment.class).to eq(WasteCarriersEngine::Payment)
           described_class.run(transient_registration)
           expect(registration.finance_details.payments).to include(first_payment)
         end

@@ -27,7 +27,10 @@ module WasteCarriersEngine
     end
 
     def copy_data_to_registration
-      MergeFinanceDetailsService.call(registration:, :transient_registration) if transient_registration.registration_type_changed?
+      if transient_registration.registration_type_changed?
+        MergeFinanceDetailsService.call(registration:,
+                                        transient_registration:)
+      end
       copy_attributes
       registration.save!
     end

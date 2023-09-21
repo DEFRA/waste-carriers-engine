@@ -54,7 +54,7 @@ module WasteCarriersEngine
     end
 
     def copy_cards_order
-      @_copy_cards_order ||= transient_registration.finance_details.orders.last
+      @_copy_cards_order ||= transient_registration.reload.finance_details.orders.last
     end
   end
 end
