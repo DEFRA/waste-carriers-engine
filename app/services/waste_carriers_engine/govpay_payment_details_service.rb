@@ -32,6 +32,10 @@ module WasteCarriersEngine
       raise e
     end
 
+    def payment
+      @payment ||= DefraRubyGovpay::Payment.new(response)
+    end
+
     # Payment status in application terms
     def self.payment_status(status)
       {
