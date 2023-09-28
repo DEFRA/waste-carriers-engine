@@ -219,6 +219,20 @@ module WasteCarriersEngine
               .once
           end
         end
+
+        it "resets the certificate version" do
+          registration.metaData.update_attributes(certificate_version: 3)
+          expect(registration.metaData.certificate_version).to eq(3)
+
+          renewal_completion_service.complete_renewal
+          expect(registration.metaData.reload.certificate_version).to eq(0)
+        end
+
+        it "updates certificate version history" do
+          renewal_completion_service.complete_renewal
+          expect(registration.metaData.reload.certificate_version_history.last[:version]).to eq(0)
+          expect(registration.metaData.reload.certificate_version_history.last[:generated_at]).to be_present
+        end
       end
 
       context "when the renewal cannot be completed" do

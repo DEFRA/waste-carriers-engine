@@ -15,6 +15,9 @@ gemspec
 # GOV.UK styling
 gem "defra_ruby_template"
 
+# GovPay integration
+gem "defra_ruby_govpay"
+
 # Use MongoDB as the database
 gem "mongoid", "~> 7.5"
 # Implement document-level locking
