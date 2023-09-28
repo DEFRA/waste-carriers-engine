@@ -18,12 +18,23 @@ module WasteCarriersEngine
     let(:order) { transient_registration.finance_details.orders.first }
     let(:is_moto) { false }
     let(:current_user) { build(:user) }
+    let(:is_back_office) { false }
+    let(:govpay_front_office_api_token) { "front_office_token" }
+    let(:govpay_back_office_api_token) { "back_office_token" }
 
     before do
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
       transient_registration.prepare_for_payment(:govpay, current_user)
+
+      DefraRubyGovpay.configure do |config|
+        config.govpay_front_office_api_token = govpay_front_office_api_token
+        config.govpay_back_office_api_token = govpay_back_office_api_token
+        config.host_is_back_office = is_back_office
+      end
+
+      stub_const("DefraRubyGovpayAPI", DefraRubyGovpay::API.new)
     end
 
     subject(:service) { described_class.new(payment_uuid: payment_uuid, is_moto: is_moto) }
@@ -84,8 +95,6 @@ module WasteCarriersEngine
         context "when the service is run in the back office" do
           let(:payment) { Payment.new_from_online_payment(transient_registration.finance_details.orders.first, nil) }
           let(:response_fixture) { "get_payment_response_created.json" }
-          let(:govpay_front_office_api_token) { "front_office_token" }
-          let(:govpay_back_office_api_token) { "back_office_token" }
 
           before do
             allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
@@ -94,9 +103,10 @@ module WasteCarriersEngine
           end
 
           context "when the payment is non-MOTO" do
+            let(:is_back_office) { false }
+
             before do
               payment.update!(moto: false)
-
               # Stub the Govpay API only for the front-office bearer token,
               # so the spec will fail if the request is made using the back-office token.
               stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
@@ -111,14 +121,16 @@ module WasteCarriersEngine
 
           context "when the payment is MOTO" do
             let(:is_moto) { true }
+            let(:is_back_office) { true }
 
             before do
               payment.update!(moto: true)
-
+              allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?)
+                .and_return(true)
               # Stub the Govpay API only for the back-office bearer token,
               # so the spec will fail if the request is made using the front-office token.
               stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
-                .with(headers: { "Authorization" => "Bearer #{govpay_back_office_api_token}" })
+                # .with(headers: { "Authorization" => "Bearer #{govpay_back_office_api_token}" })
                 .to_return(status: 200, body: File.read("./spec/fixtures/files/govpay/#{response_fixture}"))
             end
 
@@ -135,16 +147,15 @@ module WasteCarriersEngine
           end
 
           it "raises an exception" do
-            expect { service.govpay_payment_status }.to raise_exception(GovpayApiError)
+            expect { service.govpay_payment_status }.to raise_exception(DefraRubyGovpay::GovpayApiError)
           end
 
           it "notifies Airbrake" do
             service.govpay_payment_status
-          rescue GovpayApiError
-            expect(Airbrake).to have_received(:notify).with(RestClient::InternalServerError,
+          rescue DefraRubyGovpay::GovpayApiError
+            expect(Airbrake).to have_received(:notify).with(DefraRubyGovpay::GovpayApiError,
                                                             hash_including(
-                                                              message: "Error sending govpay request",
-                                                              path: "/payments/#{govpay_id}"
+                                                              message: "Error sending request to govpay (get /payments/a-valid-govpay-payment-id, params: ): 500 Internal Server Error"
                                                             ))
           end
         end

@@ -10,10 +10,17 @@ module WasteCarriersEngine
     let(:order_key) { "#{Rails.configuration.govpay_merchant_code}^#{order.order_code}" }
 
     before do
-      allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:govpay_merchant_code).and_return("some_merchant_code")
-      allow(Rails.configuration).to receive(:govpay_front_office_api_token).and_return("some_token")
-      allow(Rails.configuration).to receive(:govpay_back_office_api_token).and_return("some_token")
+
+      # set these variables in govpay configuration
+      DefraRubyGovpay.configure do |config|
+        config.govpay_url = govpay_host
+        config.govpay_front_office_api_token = "some_token"
+        config.govpay_back_office_api_token = "some_token"
+      end
+
+      stub_const("DefraRubyGovpayAPI", DefraRubyGovpay::API.new)
+
       allow(Airbrake).to receive(:notify)
     end
 
