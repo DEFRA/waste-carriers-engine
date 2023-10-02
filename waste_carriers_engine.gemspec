@@ -51,6 +51,8 @@ Gem::Specification.new do |s|
   s.add_dependency "defra_ruby_validators", "~> 2.5.1"
   s.add_dependency "uk_postcode", "~> 2.1.8"
 
+  s.add_dependency "defra_ruby_govpay"
+
   # defra_ruby_alert is a gem we created to manage airbrake across projects
   s.add_dependency "defra_ruby_alert", "~> 2.2.1"
 

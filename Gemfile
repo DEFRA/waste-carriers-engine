@@ -21,6 +21,9 @@ gemspec
 # GOV.UK styling
 gem "defra_ruby_template", "~> 3.13.0"
 
+# GovPay integration
+gem "defra_ruby_govpay"
+
 # Use MongoDB as the database
 gem "mongoid", "~> 8.0.3"
 
