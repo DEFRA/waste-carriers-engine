@@ -57,7 +57,7 @@ module WasteCarriersEngine
     end
 
     def cached_copy_cards_order
-      @_copy_cards_order ||= transient_registration.reload.finance_details.orders.last
+      @cached_copy_cards_order ||= transient_registration.reload.finance_details.orders.last
     end
   end
 end
