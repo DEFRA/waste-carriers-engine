@@ -97,6 +97,7 @@ module WasteCarriersEngine
         before do
           transient_finance_details.payments << build(:payment, :bank_transfer, amount: 500)
           transient_finance_details.update_balance
+          transient_finance_details.save
         end
 
         it_behaves_like "completes the order", Notify::CopyCardsOrderCompletedEmailService
