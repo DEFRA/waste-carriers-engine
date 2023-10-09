@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class EditCompletionService < BaseService
-    include CanMergeFinanceDetails
-
     attr_reader :transient_registration
 
     delegate :registration, to: :transient_registration
@@ -29,7 +27,10 @@ module WasteCarriersEngine
     end
 
     def copy_data_to_registration
-      merge_finance_details if transient_registration.registration_type_changed?
+      if transient_registration.registration_type_changed?
+        MergeFinanceDetailsService.call(registration:,
+                                        transient_registration:)
+      end
       copy_attributes
       registration.save!
     end

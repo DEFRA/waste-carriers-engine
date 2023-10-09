@@ -8,8 +8,6 @@ module WasteCarriersEngine
     class PendingConvictionCheck < StandardError; end
     class WrongStatus < StandardError; end
 
-    include CanMergeFinanceDetails
-
     attr_reader :transient_registration
 
     def initialize(transient_registration)
@@ -78,7 +76,7 @@ module WasteCarriersEngine
 
     def update_registration
       copy_data_from_transient_registration
-      merge_finance_details
+      MergeFinanceDetailsService.call(registration:, transient_registration:)
       extend_expiry_date
       update_meta_data
       registration.save!

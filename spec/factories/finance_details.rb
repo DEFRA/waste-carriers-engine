@@ -50,6 +50,23 @@ FactoryBot.define do
       after(:build, :create, &:update_balance)
     end
 
+    trait :has_paid_orders_and_payments do
+      orders do
+        [
+          build(:order, :has_required_data),
+          build(:order, :has_copy_cards_item)
+        ]
+      end
+      payments do
+        [
+          build(:payment, :bank_transfer, amount: 10_500),
+          build(:payment, :bank_transfer, amount: 500),
+          build(:payment, :bank_transfer, amount: 500)
+        ]
+      end
+      after(:build, :create, &:update_balance)
+    end
+
     trait :has_outstanding_copy_card do
       orders { [build(:order, :has_required_data)] }
       payments { [build(:payment, :bank_transfer, amount: 10_500)] }

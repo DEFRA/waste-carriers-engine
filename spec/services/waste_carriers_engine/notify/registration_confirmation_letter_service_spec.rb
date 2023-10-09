@@ -30,14 +30,14 @@ module WasteCarriersEngine
                 company_name: expected_company_name,
                 registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
                 phone_number: "03708 506506",
-                date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
-                expiry_date: registration.expires_on.in_time_zone("London").to_date.strftime("%e %B %Y"),
+                date_registered: registration.metaData.date_registered.to_s(:standard),
+                expiry_date: registration.expires_on.in_time_zone("London").to_date.to_s(:standard),
                 address_line_1: "Jane Doe",
                 address_line_2: "42",
                 address_line_3: "Foo Gardens",
                 address_line_4: "Baz City",
                 address_line_5: "BS1 5AH",
-                certificate_creation_date: Date.today.strftime("%e %B %Y")
+                certificate_creation_date: Date.today.to_s(:standard)
               }
             }
           end
@@ -120,13 +120,13 @@ module WasteCarriersEngine
                 company_name: "Acme Waste",
                 registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
                 phone_number: "03708 506506",
-                date_registered: registration.metaData.date_registered.strftime("%e %B %Y"),
+                date_registered: registration.metaData.date_registered.to_s(:standard),
                 address_line_1: "Jane Doe",
                 address_line_2: "42",
                 address_line_3: "Foo Gardens",
                 address_line_4: "Baz City",
                 address_line_5: "BS1 5AH",
-                certificate_creation_date: Date.today.strftime("%e %B %Y")
+                certificate_creation_date: Date.today.to_s(:standard)
               }
             }
           end

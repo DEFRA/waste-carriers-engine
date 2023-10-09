@@ -2,8 +2,6 @@
 
 module WasteCarriersEngine
   class OrderCopyCardsCompletionService < BaseService
-    include CanMergeFinanceDetails
-
     attr_reader :transient_registration
 
     delegate :registration, to: :transient_registration
@@ -17,6 +15,9 @@ module WasteCarriersEngine
     private
 
     def complete_order_copy_cards
+      # Called to get copy cards order before transient registration is deleted later
+      cached_copy_cards_order
+
       update_registration
 
       delete_transient_registration
@@ -25,7 +26,7 @@ module WasteCarriersEngine
     end
 
     def update_registration
-      merge_finance_details
+      MergeFinanceDetailsService.call(transient_registration:, registration:)
       registration.save!
 
       # Log the order items only if payment is complete.
@@ -46,17 +47,17 @@ module WasteCarriersEngine
     def send_confirmation_email
       if @transient_registration.unpaid_balance?
         Notify::CopyCardsAwaitingPaymentEmailService
-          .run(registration: registration, order: copy_cards_order)
+          .run(registration: registration, order: cached_copy_cards_order)
       else
         Notify::CopyCardsOrderCompletedEmailService
-          .run(registration: registration, order: copy_cards_order)
+          .run(registration: registration, order: cached_copy_cards_order)
       end
     rescue StandardError => e
       Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)
     end
 
-    def copy_cards_order
-      @_copy_cards_order ||= transient_registration.finance_details.orders.last
+    def cached_copy_cards_order
+      @cached_copy_cards_order ||= transient_registration.reload.finance_details.orders.last
     end
   end
 end

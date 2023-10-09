@@ -35,15 +35,15 @@ FactoryBot.define do
     end
 
     trait :matched_conviction_search_result do
-      conviction_search_result { build(:conviction_search_result, :match_result_yes) }
+      conviction_search_result { association :conviction_search_result, :match_result_yes, strategy: :build }
     end
 
     trait :unmatched_conviction_search_result do
-      conviction_search_result { build(:conviction_search_result, :match_result_no) }
+      conviction_search_result { association :conviction_search_result, :match_result_no, strategy: :build }
     end
 
     trait :unknown_conviction_search_result do
-      conviction_search_result { build(:conviction_search_result, :match_result_unknown) }
+      conviction_search_result { association :conviction_search_result, :match_result_unknown, strategy: :build }
     end
   end
 end

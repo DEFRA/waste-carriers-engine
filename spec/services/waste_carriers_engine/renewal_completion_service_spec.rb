@@ -10,7 +10,7 @@ module WasteCarriersEngine
         :has_required_data,
         :has_addresses,
         :has_key_people,
-        :has_paid_order,
+        :has_paid_order_with_two_orders,
         company_name: "FooBiz",
         workflow_state: "renewal_complete_form"
       )
@@ -165,6 +165,13 @@ module WasteCarriersEngine
           expect { renewal_completion_service.complete_renewal }.to change(OrderItemLog, :count)
             .from(0)
             .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
+        end
+
+        it "creates the order item logs with the correct activated at" do
+          activated_at = transient_registration.metaData.dateActivated
+          renewal_completion_service.complete_renewal
+          order_item_logs_activated_ats = OrderItemLog.all.pluck(:activated_at)
+          expect(order_item_logs_activated_ats.all? { |a| a.to_s == activated_at.to_s }).to be true
         end
 
         # This only applies to attributes where a value could be set, but not always - for example, smart answers

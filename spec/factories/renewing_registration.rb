@@ -18,11 +18,16 @@ FactoryBot.define do
     end
 
     trait :has_addresses do
-      addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
+      addresses do
+        [association(:address, :has_required_data, :registered, :from_os_places, strategy: :build),
+         association(:address, :has_required_data, :contact, :from_os_places, strategy: :build)]
+      end
     end
 
     trait :has_registered_address do
-      addresses { [build(:address, :has_required_data, :registered, :from_os_places)] }
+      addresses do
+        [association(:address, :has_required_data, :registered, :from_os_places, strategy: :build)]
+      end
     end
 
     trait :expires_today do
@@ -31,8 +36,8 @@ FactoryBot.define do
 
     trait :has_key_people do
       key_people do
-        [build(:key_person, :has_required_data, :unmatched_conviction_search_result, :main),
-         build(:key_person, :has_required_data, :unmatched_conviction_search_result, :relevant)]
+        [association(:key_person, :has_required_data, :unmatched_conviction_search_result, :main, strategy: :build),
+         association(:key_person, :has_required_data, :unmatched_conviction_search_result, :relevant, strategy: :build)]
       end
     end
 
@@ -56,32 +61,36 @@ FactoryBot.define do
     end
 
     trait :has_paid_order do
-      finance_details { build(:finance_details, :has_paid_order_and_payment) }
+      finance_details { association(:finance_details, :has_paid_order_and_payment, strategy: :build) }
+    end
+
+    trait :has_paid_order_with_two_orders do
+      finance_details { association(:finance_details, :has_paid_orders_and_payments, strategy: :build) }
     end
 
     trait :has_conviction_search_result do
-      conviction_search_result { build(:conviction_search_result, :match_result_no) }
+      conviction_search_result { association(:conviction_search_result, :match_result_no, strategy: :build) }
     end
 
     trait :requires_conviction_check do
       is_submitted
-      key_people { [build(:key_person, :matched_conviction_search_result)] }
-      conviction_search_result { build(:conviction_search_result, :match_result_yes) }
-      conviction_sign_offs { [build(:conviction_sign_off)] }
+      key_people { [association(:key_person, :matched_conviction_search_result, strategy: :build)] }
+      conviction_search_result { association(:conviction_search_result, :match_result_yes, strategy: :build) }
+      conviction_sign_offs { [association(:conviction_sign_off, strategy: :build)] }
     end
 
     trait :has_rejected_conviction_sign_off do
       declared_convictions
-      conviction_search_result { build(:conviction_sign_off, :rejected) }
+      conviction_search_result { association(:conviction_sign_off, :rejected, strategy: :build) }
     end
 
     trait :has_unpaid_balance do
       is_submitted
-      finance_details { build(:finance_details, balance: 1000) }
+      finance_details { association(:finance_details, balance: 1000, strategy: :build) }
     end
 
     trait :has_paid_balance do
-      finance_details { build(:finance_details, balance: 0) }
+      finance_details { association(:finance_details, balance: 0, strategy: :build) }
     end
 
     trait :has_different_contact_email do
@@ -106,8 +115,8 @@ FactoryBot.define do
 
     trait :has_overseas_addresses do
       addresses do
-        [build(:address, :has_required_data, :registered, :manual_foreign),
-         build(:address, :has_required_data, :contact, :manual_foreign)]
+        [association(:address, :has_required_data, :registered, :manual_foreign, strategy: :build),
+         association(:address, :has_required_data, :contact, :manual_foreign, strategy: :build)]
       end
     end
 
@@ -116,7 +125,7 @@ FactoryBot.define do
       company_no { "12345678" }
 
       key_people do
-        [build(:key_person, :has_matching_conviction, :main)]
+        [association(:key_person, :has_matching_conviction, :main, strategy: :build)]
       end
     end
 

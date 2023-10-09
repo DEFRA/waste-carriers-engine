@@ -68,7 +68,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_valid?
-      return if transient_registration.valid?
+      return false if transient_registration.valid?
 
       transient_registration.errors.each do |error|
         errors.add(:base, error.message)

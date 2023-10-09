@@ -31,7 +31,7 @@ module WasteCarriersEngine
           phone_number: @registration.phone_number,
           date_registered: date_registered,
           expiry_date: expiry_date,
-          certificate_creation_date: Date.today.strftime("%e %B %Y")
+          certificate_creation_date: Date.today.to_s(:standard)
         }.merge(address_lines)
       end
 
@@ -64,11 +64,11 @@ module WasteCarriersEngine
       end
 
       def date_registered
-        @registration.metaData.date_registered.in_time_zone("London").to_date.to_s
+        @registration.metaData.date_registered.in_time_zone("London").to_date.to_s(:standard)
       end
 
       def expiry_date
-        @registration.expires_on.in_time_zone("London").to_date.strftime("%e %B %Y").to_s
+        @registration.expires_on.in_time_zone("London").to_date.to_s(:standard)
       end
 
       def registration_type

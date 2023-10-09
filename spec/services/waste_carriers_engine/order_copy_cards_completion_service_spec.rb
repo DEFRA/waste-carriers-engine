@@ -32,9 +32,10 @@ module WasteCarriersEngine
         end
 
         it "merges the order" do
+          first_order = transient_finance_details.orders[0]
           described_class.run(transient_registration)
 
-          expect(registration.finance_details.orders).to include(transient_finance_details.orders[0])
+          expect(registration.finance_details.orders).to include(first_order)
         end
 
         it "deletes the transient registration" do
@@ -54,6 +55,9 @@ module WasteCarriersEngine
 
           it "sends an email using the appropriate service" do
             described_class.run(transient_registration)
+
+            order = transient_finance_details.reload.orders[0]
+            expect(order.class).to eq(WasteCarriersEngine::Order)
 
             expect(notify_email_service)
               .to have_received(:run)
@@ -93,13 +97,16 @@ module WasteCarriersEngine
         before do
           transient_finance_details.payments << build(:payment, :bank_transfer, amount: 500)
           transient_finance_details.update_balance
+          transient_finance_details.save
         end
 
         it_behaves_like "completes the order", Notify::CopyCardsOrderCompletedEmailService
 
         it "merges the payment" do
+          first_payment = transient_finance_details.payments[0]
+          expect(first_payment.class).to eq(WasteCarriersEngine::Payment)
           described_class.run(transient_registration)
-          expect(registration.finance_details.payments).to include(transient_finance_details.payments[0])
+          expect(registration.finance_details.payments).to include(first_payment)
         end
 
         it "creates one or more order item logs" do

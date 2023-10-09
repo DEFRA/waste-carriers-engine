@@ -18,15 +18,33 @@ FactoryBot.define do
       phone_number { "03708 506506" }
       tier { "UPPER" }
 
-      metaData { build(:metaData, :has_required_data) }
-
+      metaData { association :metaData, :has_required_data, strategy: :build }
       has_addresses
       has_paid_finance_details
 
       key_people do
-        [build(:key_person, :has_required_data, :main),
-         build(:key_person, :has_required_data, :relevant)]
+        [
+          association(:key_person, :has_required_data, :main, strategy: :build),
+          association(:key_person, :has_required_data, :relevant, strategy: :build)
+        ]
       end
+    end
+
+    trait :has_addresses do
+      addresses do
+        [
+          association(:address, :has_required_data, :registered, :from_os_places, strategy: :build),
+          association(:address, :has_required_data, :contact, :from_os_places, strategy: :build)
+        ]
+      end
+    end
+
+    trait :has_paid_finance_details do
+      finance_details { association :finance_details, :has_paid_order_and_payment, strategy: :build }
+    end
+
+    trait :has_copy_cards_order do
+      finance_details { association :finance_details, :has_copy_cards_order, strategy: :build }
     end
 
     trait :already_renewed do
@@ -46,18 +64,6 @@ FactoryBot.define do
       tier { "LOWER" }
     end
 
-    trait :has_addresses do
-      addresses { [build(:address, :has_required_data, :registered, :from_os_places), build(:address, :has_required_data, :contact, :from_os_places)] }
-    end
-
-    trait :has_paid_finance_details do
-      finance_details { build(:finance_details, :has_paid_order_and_payment) }
-    end
-
-    trait :has_copy_cards_order do
-      finance_details { build(:finance_details, :has_copy_cards_order) }
-    end
-
     trait :has_required_overseas_data do
       account_email { "foo@example.com" }
       business_type { "overseas" }
@@ -69,81 +75,85 @@ FactoryBot.define do
       phone_number { "03708 506506" }
       tier { "UPPER" }
 
-      metaData { build(:metaData, :has_required_data) }
+      metaData { association :metaData, :has_required_data, strategy: :build }
 
       addresses do
-        [build(:address, :has_required_data, :contact, :manual_foreign),
-         build(:address, :has_required_data, :registered, :manual_foreign)]
+        [
+          association(:address, :has_required_data, :contact, :manual_foreign, strategy: :build),
+          association(:address, :has_required_data, :registered, :manual_foreign, strategy: :build)
+        ]
       end
 
       key_people do
-        [build(:key_person, :has_required_data, :main),
-         build(:key_person, :has_required_data, :relevant)]
+        [
+          association(:key_person, :has_required_data, :main, strategy: :build),
+          association(:key_person, :has_required_data, :relevant, strategy: :build)
+        ]
       end
     end
 
     trait :has_mulitiple_key_people do
       key_people do
         [
-          build(:key_person, :has_required_data, :main),
-          build(:key_person, :has_required_data, :main, first_name: "Ryan", last_name: "Gosling"),
-          build(:key_person, :has_required_data, :relevant),
-          build(:key_person, :has_required_data, :relevant, first_name: "Corey", last_name: "Stoll")
+          association(:key_person, :has_required_data, :main, strategy: :build),
+          association(:key_person, :has_required_data, :main, first_name: "Ryan", last_name: "Gosling", strategy: :build),
+          association(:key_person, :has_required_data, :relevant, strategy: :build),
+          association(:key_person, :has_required_data, :relevant, first_name: "Corey", last_name: "Stoll", strategy: :build)
         ]
       end
     end
 
     trait :expired_one_month_ago do
-      metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
+      metaData { association :metaData, :has_required_data, status: :EXPIRED, strategy: :build }
       expires_on { 1.month.ago }
     end
 
     trait :expires_soon do
-      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
+      metaData { association :metaData, :has_required_data, status: :ACTIVE, strategy: :build }
       expires_on { 2.months.from_now }
     end
 
     trait :expires_today do
-      metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
+      metaData { association :metaData, :has_required_data, status: :EXPIRED, strategy: :build }
       expires_on { Date.today }
     end
 
     trait :expires_later do
-      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
+      metaData { association :metaData, :has_required_data, status: :ACTIVE, strategy: :build }
       expires_on { 2.years.from_now }
     end
 
     trait :expires_in_3_years do
-      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
+      metaData { association :metaData, :has_required_data, status: :ACTIVE, strategy: :build }
       expires_on { 3.years.from_now }
     end
 
     trait :is_pending do
-      metaData { build(:metaData, :has_required_data, status: :PENDING) }
+      metaData { association :metaData, :has_required_data, status: :PENDING, strategy: :build }
     end
 
     trait :is_active do
-      metaData { build(:metaData, :has_required_data, status: :ACTIVE) }
+      metaData { association :metaData, :has_required_data, status: :ACTIVE, strategy: :build }
     end
 
     trait :is_inactive do
-      metaData { build(:metaData, :has_required_data, status: :INACTIVE) }
+      metaData { association :metaData, :has_required_data, status: :INACTIVE, strategy: :build }
     end
 
     trait :is_revoked do
-      metaData { build(:metaData, :has_required_data, status: :REVOKED) }
+      metaData { association :metaData, :has_required_data, status: :REVOKED, strategy: :build }
     end
 
     trait :is_refused do
-      metaData { build(:metaData, :has_required_data, status: :REFUSED) }
+      metaData { association :metaData, :has_required_data, status: :REFUSED, strategy: :build }
     end
 
     trait :is_expired do
-      metaData { build(:metaData, :has_required_data, status: :EXPIRED) }
+      metaData { association :metaData, :has_required_data, status: :EXPIRED, strategy: :build }
     end
 
     trait :cancelled do
-      metaData { build(:metaData, :cancelled) }
+      metaData { association :metaData, :cancelled, strategy: :build }
     end
   end
 end

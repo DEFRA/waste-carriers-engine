@@ -58,7 +58,7 @@ module WasteCarriersEngine
     end
 
     def certificate_creation_date
-      Date.today.strftime("%e %B %Y")
+      Date.today.to_s(:standard)
     end
 
     def certificate_version

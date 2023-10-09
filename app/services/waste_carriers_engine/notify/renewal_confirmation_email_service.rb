@@ -29,7 +29,7 @@ module WasteCarriersEngine
       end
 
       def date_activated
-        @registration.metaData.date_activated.in_time_zone("London").to_date.to_s
+        @registration.metaData.date_activated.in_time_zone("London").to_date.to_s(:standard)
       end
 
       def certificate_presenter

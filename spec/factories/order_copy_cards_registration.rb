@@ -6,7 +6,7 @@ FactoryBot.define do
 
     trait :has_finance_details do
       temp_cards { 1 }
-      finance_details { build(:finance_details, :has_copy_cards_order) }
+      finance_details { association(:finance_details, :has_copy_cards_order, strategy: :build) }
     end
 
     trait :copy_cards_payment_form_state do

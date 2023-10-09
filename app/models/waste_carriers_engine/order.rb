@@ -41,7 +41,7 @@ module WasteCarriersEngine
 
       order.set_description
 
-      order[:total_amount] = order[:order_items].sum { |item| item[:amount] }
+      order[:total_amount] = order[:order_items].sum { |item| item["amount"] }
 
       order.add_bank_transfer_attributes if method == :bank_transfer
       order.add_govpay_attributes if method == :govpay

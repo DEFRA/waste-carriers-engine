@@ -329,19 +329,13 @@ module WasteCarriersEngine
       end
 
       def registered_address_was_manually_entered?
-        return unless registered_address
+        return false unless registered_address
 
         registered_address.manually_entered?
       end
 
       def skip_to_manual_address?
         temp_os_places_error
-      end
-
-      def contact_address_was_manually_entered?
-        return unless contact_address
-
-        contact_address.manually_entered?
       end
 
       def should_register_in_northern_ireland?

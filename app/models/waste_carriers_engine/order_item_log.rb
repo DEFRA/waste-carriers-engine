@@ -22,7 +22,7 @@ module WasteCarriersEngine
     end
 
     def self.create_from_registration(registration, activation_time = nil)
-      registration.finance_details.orders.each do |order|
+      registration.finance_details.reload.orders.each do |order|
         order.order_items.each do |order_item|
           create_from_order_item(order_item, activation_time)
         end
@@ -31,7 +31,7 @@ module WasteCarriersEngine
 
     def self.create_from_order_item(order_item, activation_time = nil)
       order = order_item.order
-      registration = order.finance_details.registration
+      registration = order.finance_details.find_registration
       OrderItemLog.find_or_create_by(order_item_id: order_item.id) do |order_item_log|
         order_item_log.type            = order_item.type
         order_item_log.quantity        = order_item.quantity
