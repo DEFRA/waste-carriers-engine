@@ -16,6 +16,7 @@ jobs:
       WCRS_TYPE_CHANGE_CHARGE: 4000
       WCRS_CARD_CHARGE: 500
       WCRS_USE_AIRBRAKE: true
+      WCRS_MOCK_ENABLED: true
       # Just used to make the tests pass
       WCRS_WORLDPAY_ECOM_USERNAME: foo
       WCRS_WORLDPAY_ECOM_PASSWORD: foo
