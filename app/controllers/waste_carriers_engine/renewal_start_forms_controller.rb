@@ -6,7 +6,6 @@ module WasteCarriersEngine
 
     def new
       if !@transient_registration.from_magic_link &&
-         WasteCarriersEngine::FeatureToggle.active?(:block_front_end_logins) &&
          !WasteCarriersEngine.configuration.host_is_back_office?
         redirect_to "/"
         return
@@ -33,7 +32,7 @@ module WasteCarriersEngine
     end
 
     def should_authenticate_user?
-      return false if WasteCarriersEngine::FeatureToggle.active?(:block_front_end_logins)
+      return false unless WasteCarriersEngine.configuration.host_is_back_office?
 
       find_or_initialize_transient_registration(params[:token])
 

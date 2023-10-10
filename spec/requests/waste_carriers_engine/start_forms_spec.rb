@@ -60,28 +60,10 @@ module WasteCarriersEngine
       context "when the start option is `renew`" do
         let(:params) { { start_form: { temp_start_option: "renew" }, token: new_registration.token } }
 
-        context "when the :block_front_end_logins feature toggle is inactive" do
-          before { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:block_front_end_logins).and_return false }
+        it "redirects to the renewal-stop page" do
+          post new_start_form_path(params)
 
-          it "updates the transient registration workflow and redirects to the renew_registration_form with a 302 status code" do
-            post new_start_form_path(params)
-
-            new_registration.reload
-
-            expect(response).to redirect_to(new_renew_registration_form_path(new_registration.token))
-            expect(response).to have_http_status(:found)
-            expect(new_registration.workflow_state).to eq("renew_registration_form")
-          end
-        end
-
-        context "when the :block_front_end_logins feature toggle is active" do
-          before { allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:block_front_end_logins).and_return true }
-
-          it "redirects to the renewal-stop page" do
-            post new_start_form_path(params)
-
-            expect(response).to redirect_to new_renewal_stop_form_path(new_registration.token)
-          end
+          expect(response).to redirect_to new_renewal_stop_form_path(new_registration.token)
         end
       end
 

@@ -5,183 +5,11 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "RenewalStartForms" do
     describe "GET new_renewal_start_form_path" do
-      context "when a user is signed in" do
-        let(:user) { create(:user) }
+      let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
-        before do
-          sign_in(user)
-        end
-
-        context "when no matching registration exists" do
-          it "redirects to the invalid token error page" do
-            get new_renewal_start_form_path("CBDU999999999")
-            expect(response).to redirect_to(page_path("invalid"))
-          end
-        end
-
-        context "when the token doesn't match the format" do
-          it "redirects to the invalid token error page" do
-            get new_renewal_start_form_path("foo")
-            expect(response).to redirect_to(page_path("invalid"))
-          end
-        end
-
-        context "when a matching registration exists" do
-          context "when the signed-in user owns the registration" do
-            context "when no renewal is in progress" do
-              let(:registration) { create(:registration, :has_required_data, :expires_soon, account_email: user.email) }
-
-              context "when the :block_front_end_logins feature toggle is not enabled" do
-                before do
-                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).and_call_original
-                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:block_front_end_logins).and_return false
-                end
-
-                it "returns a success response" do
-                  get new_renewal_start_form_path(registration.reg_identifier)
-                  expect(response).to have_http_status(:ok)
-                end
-
-                it "loads the renewal start page" do
-                  get new_renewal_start_form_path(registration.reg_identifier)
-                  expect(response.body).to match(/You are about to renew registration CBDU\d+/)
-                end
-
-              end
-
-              context "when the :block_front_end_logins feature toggle is enabled" do
-                before do
-                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).and_call_original
-                  allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:block_front_end_logins).and_return true
-                end
-
-                it "redirects to the application root" do
-                  get new_renewal_start_form_path(registration.reg_identifier)
-                  expect(response).to redirect_to("/")
-                end
-              end
-
-              context "when the registration cannot be renewed" do
-                before { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
-
-                it "redirects to the unrenewable error page" do
-                  get new_renewal_start_form_path(registration.reg_identifier)
-                  expect(response).to redirect_to(page_path("unrenewable"))
-                end
-              end
-            end
-
-            context "when a renewal is in progress" do
-              context "when a valid transient registration exists" do
-                let(:transient_registration) do
-                  create(:renewing_registration,
-                         :has_required_data,
-                         account_email: user.email,
-                         workflow_state: "renewal_start_form")
-                end
-
-                it "returns a success response" do
-                  get new_renewal_start_form_path(transient_registration[:token])
-                  expect(response).to have_http_status(:ok)
-                end
-              end
-
-              context "when the transient registration is in a different state" do
-                let(:transient_registration) do
-                  create(:renewing_registration,
-                         :has_required_data,
-                         account_email: user.email,
-                         workflow_state: "location_form")
-                end
-
-                context "when the token is a reg_identifier" do
-                  it "redirects to the form for the current state" do
-                    get new_renewal_start_form_path(transient_registration.registration.reg_identifier)
-
-                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
-                  end
-                end
-
-                context "when the token is a secure token" do
-                  it "redirects to the form for the current state" do
-                    get new_renewal_start_form_path(transient_registration[:token])
-
-                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
-                  end
-                end
-              end
-
-              context "when the transient registration is in an invalid state" do
-                let(:transient_registration) do
-                  create(:renewing_registration,
-                         :has_required_data,
-                         account_email: user.email,
-                         workflow_state: "tier_check_form")
-                end
-
-                context "when the token is a reg_identifier" do
-                  it "redirects to the location form" do
-                    get new_renewal_start_form_path(transient_registration.registration.reg_identifier)
-
-                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
-                  end
-                end
-
-                context "when the token is a secure token" do
-                  it "redirects to the location form" do
-                    get new_renewal_start_form_path(transient_registration[:token])
-
-                    expect(response).to redirect_to(new_location_form_path(transient_registration[:token]))
-                  end
-                end
-              end
-            end
-          end
-
-          context "when the signed-in user does not own the registration" do
-            context "when no renewal is in progress" do
-              let(:registration) do
-                create(:registration,
-                       :has_required_data,
-                       :expires_soon,
-                       account_email: "not-#{user.email}")
-              end
-
-              it "redirects to the permissions error page" do
-                get new_renewal_start_form_path(registration.reg_identifier)
-                expect(response).to redirect_to(page_path("permission"))
-              end
-            end
-
-            context "when a renewal is in progress" do
-              let(:transient_registration) do
-                create(:renewing_registration,
-                       :has_required_data,
-                       account_email: "not-#{user.email}",
-                       workflow_state: "renewal_start_form")
-              end
-
-              it "redirects to the permissions error page" do
-                get new_renewal_start_form_path(transient_registration[:token])
-                expect(response).to redirect_to(page_path("permission"))
-              end
-            end
-          end
-        end
-      end
-
-      context "when a user is not signed in" do
-        before do
-          user = create(:user)
-          sign_out(user)
-        end
-
-        it "returns a 302 response and redirects to the sign in page" do
-          get new_renewal_start_form_path("foo")
-
-          expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(new_user_session_path)
-        end
+      it "redirects to the root_path" do
+        get new_renewal_start_form_path(registration.reg_identifier)
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -252,15 +80,6 @@ module WasteCarriersEngine
 
                   expect(response).to have_http_status(:found)
                   expect(response).to redirect_to(new_location_form_path(transient_registration.token))
-                end
-
-                context "when the registration cannot be renewed" do
-                  before { registration.update_attributes(expires_on: Date.today - Rails.configuration.grace_window) }
-
-                  it "redirects to the unrenewable error page" do
-                    get new_renewal_start_form_path(valid_registration)
-                    expect(response).to redirect_to(page_path("unrenewable"))
-                  end
                 end
               end
             end
@@ -341,26 +160,6 @@ module WasteCarriersEngine
               expect(response).to redirect_to(page_path("permission"))
             end
           end
-        end
-      end
-
-      context "when a user is not signed in" do
-        let(:registration) { create(:registration, :has_required_data) }
-        let(:valid_registration) { registration.reg_identifier }
-
-        before do
-          user = create(:user)
-          sign_out(user)
-        end
-
-        it "does not create a new transient registration, returns a 302 response and redirects to the sign in page" do
-          original_tr_count = RenewingRegistration.count
-
-          post renewal_start_forms_path(valid_registration)
-
-          expect(RenewingRegistration.count).to eq(original_tr_count)
-          expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(new_user_session_path)
         end
       end
     end

@@ -410,7 +410,7 @@ module WasteCarriersEngine
       end
 
       def logins_blocked?
-        WasteCarriersEngine::FeatureToggle.active?(:block_front_end_logins)
+        true
       end
     end
     # rubocop:enable Metrics/BlockLength
