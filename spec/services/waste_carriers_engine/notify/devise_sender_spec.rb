@@ -1,0 +1,43 @@
+require "rails_helper"
+
+module WasteCarriersEngine
+  module Notify
+    RSpec.describe DeviseSender do
+      let(:user_with_email) { create(:user, email: "test@example.com") }
+      let(:user_without_email) { create(:user, email: nil) }
+      let(:token) { "example_token" }
+
+      let(:notifications_client) { instance_double(Notifications::Client) }
+
+      before do
+        allow(Notifications::Client).to receive(:new).and_return(notifications_client)
+        allow(notifications_client).to receive(:send_email)
+      end
+
+      describe "#run" do
+        context "with :reset_password_instructions template" do
+          it "uses ResetPasswordInstructionsEmailService" do
+            expect(ResetPasswordInstructionsEmailService).to receive(:new).and_call_original
+            described_class.new.run(template: :reset_password_instructions, record: user_with_email, opts: { token: token })
+          end
+        end
+
+        context "with :unlock_instructions template" do
+          it "uses UnlockInstructionsEmailService" do
+            expect(UnlockInstructionsEmailService).to receive(:new).and_call_original
+            described_class.new.run(template: :unlock_instructions, record: user_with_email, opts: { token: token })
+          end
+        end
+
+        context "with unknown template" do
+          it "raises an error" do
+            expect {
+              described_class.new.run(template: :unknown_template, record: user_with_email, opts: { token: token })
+            }.to raise_error(ArgumentError, "Unknown email template: unknown_template")
+          end
+        end
+      end
+    end
+  end
+end
+

@@ -59,7 +59,7 @@ module Dummy
     # Paths
     # This is the domain to use on URLs for FO services such as renewal and deregistration
     config.wcrs_fo_link_domain = ENV["WCRS_RENEWALS_DOMAIN"] || "http://localhost:3002"
-
+    config.wcrs_back_office_url = ENV["WCRS_BACK_OFFICE_DOMAIN"] || "http://localhost:8001"
     config.wcrs_frontend_url = ENV["WCRS_FRONTEND_DOMAIN"] || "http://localhost:3000"
     config.wcrs_services_url = ENV["WCRS_SERVICES_DOMAIN"] || "http://localhost:8003"
     config.os_places_service_url = ENV["WCRS_OS_PLACES_DOMAIN"] || "http://localhost:8005"

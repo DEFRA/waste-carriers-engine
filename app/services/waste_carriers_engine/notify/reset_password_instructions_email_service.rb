@@ -2,21 +2,21 @@
 
 module WasteCarriersEngine
   module Notify
-    class UnlockInstructionsEmailService < DeviseSender
+    class ResetPasswordInstructionsEmailService < DeviseSender
       private
-      def unlock_url(token)
-        Rails.application.routes.url_helpers.user_unlock_url(
+      def reset_url(token)
+        Rails.application.routes.url_helpers.edit_user_password_url(
           host: Rails.configuration.wcrs_back_office_url,
-          unlock_token: token
+          reset_password_token: token
         )
       end
 
       def notify_options(record, token)
         {
           email_address: record.email,
-          template_id: "a3295516-26a6-4c01-9e3a-d5000f1a86c6",
+          template_id: "bfe66f5e-29ed-4f78-82e1-8baf5548f97a",
           personalisation: {
-            unlock_link: unlock_url(token)
+            reset_password_link: reset_url(token)
           }
         }
       end

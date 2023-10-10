@@ -4,9 +4,9 @@ require "rails_helper"
 
 module WasteCarriersEngine
   module Notify
-    RSpec.describe UnlockInstructionsEmailService do
+    RSpec.describe ResetPasswordInstructionsEmailService do
       describe ".send_email" do
-        let(:template_id) { "a3295516-26a6-4c01-9e3a-d5000f1a86c6" }
+        let(:template_id) { "bfe66f5e-29ed-4f78-82e1-8baf5548f97a" }
         let(:user) { create(:user, email: "test@example.com") }
         let(:token) { "example_token" }
 
@@ -15,9 +15,9 @@ module WasteCarriersEngine
             email_address: user.email,
             template_id: template_id,
             personalisation: {
-              unlock_link: Rails.application.routes.url_helpers.user_unlock_url(
+              reset_password_link: Rails.application.routes.url_helpers.edit_user_password_url(
                 host: Rails.configuration.wcrs_back_office_url,
-                unlock_token: token
+                reset_password_token: token
               )
             }
           }
@@ -50,4 +50,5 @@ module WasteCarriersEngine
     end
   end
 end
+
 

@@ -1,8 +1,8 @@
 class DeviseNotifyMailer < Devise::Mailer
   include Devise::Controllers::UrlHelpers
 
-  def password_change(record, opts = {})
-    send_via_gov_notify(:password_change, record, opts)
+  def reset_password_instructions(record, token, opts = {})
+    send_via_gov_notify(:reset_password_instructions, record, opts.merge(token: token))
   end
 
   def unlock_instructions(record, token, opts = {})
