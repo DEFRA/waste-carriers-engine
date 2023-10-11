@@ -4,6 +4,7 @@ module WasteCarriersEngine
   module Notify
     class UnlockInstructionsEmailService < DeviseSender
       private
+
       def unlock_url(token)
         Rails.application.routes.url_helpers.user_unlock_url(
           host: Rails.configuration.wcrs_back_office_url,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteCarriersEngine
@@ -17,27 +19,30 @@ module WasteCarriersEngine
       describe "#run" do
         context "with :reset_password_instructions template" do
           it "uses ResetPasswordInstructionsEmailService" do
-            expect(ResetPasswordInstructionsEmailService).to receive(:new).and_call_original
+            allow(ResetPasswordInstructionsEmailService).to receive(:new).and_call_original
             described_class.new.run(template: :reset_password_instructions, record: user_with_email, opts: { token: token })
+
+            expect(ResetPasswordInstructionsEmailService).to have_received(:new)
           end
         end
 
         context "with :unlock_instructions template" do
           it "uses UnlockInstructionsEmailService" do
-            expect(UnlockInstructionsEmailService).to receive(:new).and_call_original
+            allow(UnlockInstructionsEmailService).to receive(:new).and_call_original
             described_class.new.run(template: :unlock_instructions, record: user_with_email, opts: { token: token })
+
+            expect(UnlockInstructionsEmailService).to have_received(:new)
           end
         end
 
         context "with unknown template" do
           it "raises an error" do
-            expect {
+            expect do
               described_class.new.run(template: :unknown_template, record: user_with_email, opts: { token: token })
-            }.to raise_error(ArgumentError, "Unknown email template: unknown_template")
+            end.to raise_error(ArgumentError, "Unknown email template: unknown_template")
           end
         end
       end
     end
   end
 end
-

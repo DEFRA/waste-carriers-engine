@@ -4,6 +4,7 @@ module WasteCarriersEngine
   module Notify
     class ResetPasswordInstructionsEmailService < DeviseSender
       private
+
       def reset_url(token)
         Rails.application.routes.url_helpers.edit_user_password_url(
           host: Rails.configuration.wcrs_back_office_url,
