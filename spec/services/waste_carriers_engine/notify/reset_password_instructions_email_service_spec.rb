@@ -29,7 +29,7 @@ module WasteCarriersEngine
           allow(Notifications::Client).to receive(:new).and_return(notifications_client)
           allow(notifications_client).to receive(:send_email)
 
-          described_class.new.send_email(user, token)
+          described_class.new.send_email(user, { token: token })
         end
 
         context "with an email" do
