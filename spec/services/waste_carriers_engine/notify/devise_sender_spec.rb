@@ -6,7 +6,6 @@ module WasteCarriersEngine
   module Notify
     RSpec.describe DeviseSender do
       let(:user_with_email) { create(:user, email: "test@example.com") }
-      let(:user_without_email) { create(:user, email: nil) }
       let(:token) { "example_token" }
 
       let(:notifications_client) { instance_double(Notifications::Client) }
@@ -14,6 +13,22 @@ module WasteCarriersEngine
       before do
         allow(Notifications::Client).to receive(:new).and_return(notifications_client)
         allow(notifications_client).to receive(:send_email)
+      end
+
+      describe ".run" do
+        it "creates a new instance and calls the instance run method" do
+          instance = described_class.new
+          allow(described_class).to receive(:new).and_return(instance)
+          allow(instance).to receive(:run)
+
+          described_class.run(template: :reset_password_instructions, record: user_with_email, opts: { token: token })
+
+          expect(instance).to have_received(:run).with(
+            template: :reset_password_instructions,
+            record: user_with_email,
+            opts: { token: token }
+          )
+        end
       end
 
       describe "#run" do
