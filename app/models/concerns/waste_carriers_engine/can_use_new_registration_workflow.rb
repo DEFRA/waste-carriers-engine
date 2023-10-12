@@ -81,11 +81,7 @@ module WasteCarriersEngine
           transitions from: :start_form, to: :location_form,
                       unless: :should_renew?
 
-          transitions from: :start_form, to: :renewal_stop_form,
-                      if: :logins_blocked?
-
-          transitions from: :start_form, to: :renew_registration_form,
-                      if: :should_renew?
+          transitions from: :start_form, to: :renewal_stop_form
 
           # Location
           transitions from: :location_form, to: :register_in_northern_ireland_form,
@@ -407,10 +403,6 @@ module WasteCarriersEngine
 
       def use_trading_name?
         temp_use_trading_name == "yes"
-      end
-
-      def logins_blocked?
-        true
       end
     end
     # rubocop:enable Metrics/BlockLength
