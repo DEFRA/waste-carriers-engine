@@ -6,6 +6,15 @@
 
 **Implemented enhancements:**
 
+- Feature/ruby 2533 certificate generator service [\#1438](https://github.com/DEFRA/waste-carriers-engine/pull/1438) ([brujeo](https://github.com/brujeo))
+- \[RUBY-2625\] ensure only upper tier registrations come back from conviction scope methods [\#1426](https://github.com/DEFRA/waste-carriers-engine/pull/1426) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2534\] Update content on conviction page to reflect changes [\#1424](https://github.com/DEFRA/waste-carriers-engine/pull/1424) ([jjromeo](https://github.com/jjromeo))
+- sonar cloud config update [\#1416](https://github.com/DEFRA/waste-carriers-engine/pull/1416) ([brujeo](https://github.com/brujeo))
+- Feature/user journey analytics [\#1414](https://github.com/DEFRA/waste-carriers-engine/pull/1414) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix/wcr simplecov json formatter [\#1411](https://github.com/DEFRA/waste-carriers-engine/pull/1411) ([brujeo](https://github.com/brujeo))
+- RUBY-2633: reconfiguring simplecov and sonar-cloud to use coverage.json [\#1409](https://github.com/DEFRA/waste-carriers-engine/pull/1409) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 2612 fb tech debt unit tests [\#1407](https://github.com/DEFRA/waste-carriers-engine/pull/1407) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 2533 wcr changes to certificates for numbering copies [\#1404](https://github.com/DEFRA/waste-carriers-engine/pull/1404) ([brujeo](https://github.com/brujeo))
 - duty-of-care content [\#1402](https://github.com/DEFRA/waste-carriers-engine/pull/1402) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Add renewal-stop form [\#1393](https://github.com/DEFRA/waste-carriers-engine/pull/1393) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/area service [\#1391](https://github.com/DEFRA/waste-carriers-engine/pull/1391) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -408,6 +417,9 @@
 
 **Fixed bugs:**
 
+- Allow wicked\_pdf to use local file storage [\#1443](https://github.com/DEFRA/waste-carriers-engine/pull/1443) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- re-add payment method and get version of defra-ruby-govpay with re-added objects [\#1442](https://github.com/DEFRA/waste-carriers-engine/pull/1442) ([jjromeo](https://github.com/jjromeo))
+- RUBY-2533: Making use of certificate generator service [\#1439](https://github.com/DEFRA/waste-carriers-engine/pull/1439) ([brujeo](https://github.com/brujeo))
 - fixing an issue with error assigned to wrong property [\#1401](https://github.com/DEFRA/waste-carriers-engine/pull/1401) ([brujeo](https://github.com/brujeo))
 - Add support for govpay refund statuses [\#1371](https://github.com/DEFRA/waste-carriers-engine/pull/1371) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - remove cert date from confirmation emails [\#1366](https://github.com/DEFRA/waste-carriers-engine/pull/1366) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -653,11 +665,28 @@
 
 **Merged pull requests:**
 
+- Add require to fix issue with uninitialized constant [\#1444](https://github.com/DEFRA/waste-carriers-engine/pull/1444) ([jjromeo](https://github.com/jjromeo))
+- Bump net-smtp from 0.3.3 to 0.4.0 [\#1440](https://github.com/DEFRA/waste-carriers-engine/pull/1440) ([dependabot[bot]](https://github.com/apps/dependabot))
+- RUBY 2555 wcr tech move govpay integration code to a ruby gem [\#1437](https://github.com/DEFRA/waste-carriers-engine/pull/1437) ([jjromeo](https://github.com/jjromeo))
+- Bump web-console from 4.2.0 to 4.2.1 [\#1434](https://github.com/DEFRA/waste-carriers-engine/pull/1434) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump faker from 3.2.0 to 3.2.1 [\#1433](https://github.com/DEFRA/waste-carriers-engine/pull/1433) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump mongoid from 7.5.3 to 7.5.4 [\#1432](https://github.com/DEFRA/waste-carriers-engine/pull/1432) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump timecop from 0.9.6 to 0.9.8 [\#1431](https://github.com/DEFRA/waste-carriers-engine/pull/1431) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump webmock from 3.18.1 to 3.19.1 [\#1430](https://github.com/DEFRA/waste-carriers-engine/pull/1430) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump wicked\_pdf from 2.6.3 to 2.7.0 [\#1429](https://github.com/DEFRA/waste-carriers-engine/pull/1429) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump nokogiri from 1.15.3 to 1.15.4 [\#1425](https://github.com/DEFRA/waste-carriers-engine/pull/1425) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump protocol-http1 from 0.14.1 to 0.15.1 [\#1420](https://github.com/DEFRA/waste-carriers-engine/pull/1420) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump countries from 5.5.0 to 5.6.0 [\#1419](https://github.com/DEFRA/waste-carriers-engine/pull/1419) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump govuk\_design\_system\_formbuilder from 4.0.0 to 4.1.1 [\#1417](https://github.com/DEFRA/waste-carriers-engine/pull/1417) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1406](https://github.com/DEFRA/waste-carriers-engine/pull/1406) ([jjromeo](https://github.com/jjromeo))
+- Bump defra\_ruby\_validators from 2.5.1 to 2.5.2 [\#1395](https://github.com/DEFRA/waste-carriers-engine/pull/1395) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1394](https://github.com/DEFRA/waste-carriers-engine/pull/1394) ([jjromeo](https://github.com/jjromeo))
 - RUBY-2517: Reusing standard error template for login-related errors [\#1390](https://github.com/DEFRA/waste-carriers-engine/pull/1390) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 2477 wcr tech upgrade to rails 7 [\#1389](https://github.com/DEFRA/waste-carriers-engine/pull/1389) ([jjromeo](https://github.com/jjromeo))
 - Add phone\_type method calling new DiscernUkNumberTypeService for deciding the type of a phone number [\#1385](https://github.com/DEFRA/waste-carriers-engine/pull/1385) ([jjromeo](https://github.com/jjromeo))
 - Bump defra\_ruby\_validators from 2.5.0 to 2.5.1 [\#1384](https://github.com/DEFRA/waste-carriers-engine/pull/1384) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Add mongo session store [\#1382](https://github.com/DEFRA/waste-carriers-engine/pull/1382) ([jjromeo](https://github.com/jjromeo))
+- Bump rspec-rails from 6.0.2 to 6.0.3 [\#1380](https://github.com/DEFRA/waste-carriers-engine/pull/1380) ([dependabot[bot]](https://github.com/apps/dependabot))
 - 2423 tweaks [\#1378](https://github.com/DEFRA/waste-carriers-engine/pull/1378) ([jjromeo](https://github.com/jjromeo))
 - Update to fit os places result [\#1377](https://github.com/DEFRA/waste-carriers-engine/pull/1377) ([jjromeo](https://github.com/jjromeo))
 - Update copy to include mobile telephone method and texts as a medium [\#1375](https://github.com/DEFRA/waste-carriers-engine/pull/1375) ([jjromeo](https://github.com/jjromeo))
