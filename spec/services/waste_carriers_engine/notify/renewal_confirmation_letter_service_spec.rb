@@ -30,7 +30,7 @@ module WasteCarriersEngine
                 company_name: expected_company_name,
                 registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
                 phone_number: "03708 506506",
-                date_registered: registration.metaData.date_registered.to_s(:standard),
+                date_registered: registration.metaData.date_registered.to_fs(:standard),
                 expiry_date: registration.expires_on.in_time_zone("London").to_date.to_s(:standard),
                 address_line_1: "Jane Doe",
                 address_line_2: "42",

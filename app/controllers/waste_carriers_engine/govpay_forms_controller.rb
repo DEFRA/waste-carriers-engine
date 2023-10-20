@@ -14,7 +14,7 @@ module WasteCarriersEngine
         flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.setup_error")
         go_back
       else
-        redirect_to payment_info[:url]
+        redirect_to payment_info[:url], allow_other_host: true
       end
     end
 
