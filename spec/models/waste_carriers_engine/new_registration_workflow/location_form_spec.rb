@@ -3,6 +3,8 @@
 require "rails_helper"
 
 module WasteCarriersEngine
+
+  # New registrations do not have the option to register non-English locations
   RSpec.describe NewRegistration do
     subject { build(:new_registration, workflow_state: "location_form") }
 
@@ -14,19 +16,19 @@ module WasteCarriersEngine
           context "when the location is northern_ireland" do
             let(:location) { "northern_ireland" }
 
-            include_examples "has next transition", next_state: "register_in_northern_ireland_form"
+            include_examples "has next transition", next_state: "must_register_in_northern_ireland_form"
           end
 
           context "when the location is scotland" do
             let(:location) { "scotland" }
 
-            include_examples "has next transition", next_state: "register_in_scotland_form"
+            include_examples "has next transition", next_state: "must_register_in_scotland_form"
           end
 
           context "when the location is wales" do
             let(:location) { "wales" }
 
-            include_examples "has next transition", next_state: "register_in_wales_form"
+            include_examples "has next transition", next_state: "must_register_in_wales_form"
           end
 
           context "when the location is not in the UK" do
