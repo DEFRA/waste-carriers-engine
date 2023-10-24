@@ -116,6 +116,24 @@ module WasteCarriersEngine
 
             include_examples "has next transition", next_state: "main_people_form"
           end
+
+          context "when Companies House Api returns an error" do
+            before do
+              allow(defra_ruby_companies_house).to receive(:company_status).and_raise(StandardError)
+            end
+
+            context "when the business type is limitedCompany with non-UK company number" do
+              let(:business_type) { "limitedCompany" }
+
+              include_examples "has next transition", next_state: "invalid_company_status_form"
+            end
+
+            context "when the business type is limitedLiabilityPartnership with non-UK company number" do
+              let(:business_type) { "limitedLiabilityPartnership" }
+
+              include_examples "has next transition", next_state: "invalid_company_status_form"
+            end
+          end
         end
       end
     end
