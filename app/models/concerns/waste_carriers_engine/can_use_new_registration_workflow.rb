@@ -98,12 +98,6 @@ module WasteCarriersEngine
 
           transitions from: :location_form, to: :business_type_form
 
-          transitions from: :register_in_northern_ireland_form, to: :business_type_form
-
-          transitions from: :register_in_scotland_form, to: :business_type_form
-
-          transitions from: :register_in_wales_form, to: :business_type_form
-
           # Business type
           transitions from: :business_type_form, to: :your_tier_form,
                       if: :switch_to_lower_tier_based_on_business_type?,

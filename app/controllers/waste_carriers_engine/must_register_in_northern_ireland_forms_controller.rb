@@ -5,9 +5,5 @@ module WasteCarriersEngine
     def new
       super(MustRegisterInNorthernIrelandForm, "must_register_in_northern_ireland_form")
     end
-
-    def create
-      super(MustRegisterInNorthernIrelandForm, "must_register_in_northern_ireland_form")
-    end
   end
 end

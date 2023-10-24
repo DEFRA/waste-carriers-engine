@@ -214,7 +214,7 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" }
 
     resources :must_register_in_northern_ireland_forms,
-              only: %i[new],
+              only: %i[new create],
               path: "must-register-in-northern-ireland",
               path_names: { new: "" }
 
@@ -224,7 +224,7 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" }
 
     resources :must_register_in_scotland_forms,
-              only: %i[new],
+              only: %i[new create],
               path: "must-register-in-scotland",
               path_names: { new: "" }
 
@@ -234,7 +234,7 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" }
 
     resources :must_register_in_wales_forms,
-              only: %i[new],
+              only: %i[new create],
               path: "must-register-in-wales",
               path_names: { new: "" }
 
