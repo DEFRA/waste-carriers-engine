@@ -3,7 +3,10 @@ inherit_from: .rubocop_todo.yml
 inherit_gem:
   defra_ruby_style:
     - default.yml
-require: rubocop-rspec
+
+require:
+  - rubocop-factory_bot
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 3.2.2
