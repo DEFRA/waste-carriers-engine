@@ -4,8 +4,8 @@ en:
       new:
         title: You must register in Wales
         heading: You must register in Wales
-        paragraph_1: You cannot register in England, you must register with the appropriate authority for your region.
-        paragraph_2: In Wales you need to register with Natural Resources Wales (NRW). For details on how, visit
+        paragraph_1: You cannot register in England. You must register with the appropriate authority for your region.
+        paragraph_2: In Wales, you need to register with Natural Resources Wales (NRW). For details on how, visit
         service_link: Register or renew as a waste carrier, broker or dealer (Wales)
         paragraph_3: If you have any questions about this, please contact our helpline on 03708 506 506.
   activemodel:
