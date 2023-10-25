@@ -257,8 +257,12 @@ module WasteCarriersEngine
     def company_status_invalid?
       return false if company_no.blank? || overseas?
 
-      company_status = DefraRubyCompaniesHouse.new(company_no).company_status
-      !%w[active voluntary-arrangement].include?(company_status)
+      begin
+        company_status = DefraRubyCompaniesHouse.new(company_no).company_status
+        !%w[active voluntary-arrangement].include?(company_status)
+      rescue StandardError
+        true
+      end
     end
 
     def skip_registration_number?

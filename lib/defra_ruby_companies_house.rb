@@ -6,16 +6,16 @@ class DefraRubyCompaniesHouse
   def initialize(company_no)
     @company_url = "#{Rails.configuration.companies_house_host}#{format_company_number(company_no)}"
     @api_key = Rails.configuration.companies_house_api_key
-
-    raise StandardError, "Failed to load company" unless load_company
   end
 
   def company_name
-    @company[:company_name] if @company
+    load_company unless @company
+
+    @company[:company_name]
   end
 
   def registered_office_address_lines
-    return [] unless @company
+    load_company unless @company
 
     address = @company[:registered_office_address]
 
@@ -28,7 +28,9 @@ class DefraRubyCompaniesHouse
   end
 
   def company_status
-    @company[:company_status] if @company
+    load_company unless @company
+
+    @company[:company_status]
   end
 
   private
@@ -48,6 +50,6 @@ class DefraRubyCompaniesHouse
         )
       ).deep_symbolize_keys
   rescue RestClient::ResourceNotFound, RestClient::NotFound
-    false
+    raise StandardError, "Failed to load company"
   end
 end
