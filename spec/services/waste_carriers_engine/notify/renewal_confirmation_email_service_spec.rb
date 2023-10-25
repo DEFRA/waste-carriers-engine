@@ -20,7 +20,7 @@ module WasteCarriersEngine
               last_name: "Doe",
               phone_number: "03708 506506",
               registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH",
-              date_activated: registration.metaData.date_activated.to_s(:standard),
+              date_activated: registration.metaData.date_activated.to_fs(:standard),
               link_to_file: "My certificate"
             }
           }

@@ -23,7 +23,6 @@ module WasteCarriersEngine
     let(:govpay_back_office_api_token) { "back_office_token" }
 
     before do
-      allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
       transient_registration.prepare_for_payment(:govpay, current_user)
@@ -75,7 +74,7 @@ module WasteCarriersEngine
 
         context "when the govpay request succeeds" do
           before do
-            stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}}).to_return(
+            stub_request(:get, %r{.*#{govpay_host}/(v1/)?payments/#{govpay_id}}).to_return(
               status: 200,
               body: File.read("./spec/fixtures/files/govpay/#{response_fixture}")
             )
@@ -109,7 +108,7 @@ module WasteCarriersEngine
               payment.update!(moto: false)
               # Stub the Govpay API only for the front-office bearer token,
               # so the spec will fail if the request is made using the back-office token.
-              stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
+              stub_request(:get, %r{.*#{govpay_host}/(v1/)?payments/#{govpay_id}})
                 .with(headers: { "Authorization" => "Bearer #{govpay_front_office_api_token}" })
                 .to_return(status: 200, body: File.read("./spec/fixtures/files/govpay/#{response_fixture}"))
             end
@@ -129,7 +128,7 @@ module WasteCarriersEngine
                 .and_return(true)
               # Stub the Govpay API only for the back-office bearer token,
               # so the spec will fail if the request is made using the front-office token.
-              stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}})
+              stub_request(:get, %r{.*#{govpay_host}/(v1/)?payments/#{govpay_id}})
                 # .with(headers: { "Authorization" => "Bearer #{govpay_back_office_api_token}" })
                 .to_return(status: 200, body: File.read("./spec/fixtures/files/govpay/#{response_fixture}"))
             end
@@ -142,7 +141,7 @@ module WasteCarriersEngine
 
         context "when the govpay request fails" do
           before do
-            stub_request(:get, %r{.*#{govpay_host}/payments/#{govpay_id}}).to_return(status: 500)
+            stub_request(:get, %r{.*#{govpay_host}/(v1/)?payments/#{govpay_id}}).to_return(status: 500)
             allow(Airbrake).to receive(:notify)
           end
 
