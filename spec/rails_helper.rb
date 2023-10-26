@@ -51,9 +51,4 @@ RSpec.configure do |config|
   config.before :each, type: :request do
     config.include WasteCarriersEngine::Engine.routes.url_helpers
   end
-
-  # Clean the email queue before running tests
-  config.before(:suite) do
-    ActionMailer::Base.deliveries.clear
-  end
 end

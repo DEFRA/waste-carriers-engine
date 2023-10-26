@@ -150,20 +150,6 @@ module WasteCarriersEngine
 
                   expect(response).to redirect_to(new_renewal_received_pending_conviction_form_path(token))
                 end
-
-                context "when the mailer fails" do
-                  let(:mailer_instance) { instance_double(ActionMailer::MessageDelivery) }
-
-                  before do
-                    allow(ActionMailer::MessageDelivery).to receive(:new).and_return(mailer_instance)
-                    allow(Rails.configuration.action_mailer).to receive(:raise_delivery_errors).and_return(true)
-                    allow(mailer_instance).to receive(:deliver_now).and_raise(StandardError)
-                  end
-
-                  it "does not raise an error" do
-                    expect { get payment_callback_govpay_forms_path(token, order.payment_uuid) }.not_to raise_error
-                  end
-                end
               end
             end
 

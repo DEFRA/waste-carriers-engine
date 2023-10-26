@@ -40,8 +40,6 @@ gem "devise", "~> 4.9.2"
 
 gem "matrix", "~> 0.4.2"
 
-gem "net-smtp", "~> 0.3.3"
-
 gem "secure_headers", "~> 6.5.0"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
