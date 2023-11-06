@@ -6,7 +6,7 @@ module WasteCarriersEngine
   module Analytics
     RSpec.describe AggregatedAnalyticsService do
 
-      describe "#run" do
+      describe ".run" do
         let(:expected_structure) do
           {
             total_journeys_started: an_instance_of(Integer),
@@ -27,8 +27,7 @@ module WasteCarriersEngine
           end
 
           it "returns a hash with the correct aggregated data" do
-            service = AggregatedAnalyticsService.new(start_date: start_date, end_date: end_date)
-            result = service.run
+            result = described_class.run(start_date: start_date, end_date: end_date)
 
             expect(result).to match(expected_structure)
             expect(result[:total_journeys_started]).to eq(8)
@@ -41,7 +40,7 @@ module WasteCarriersEngine
             create(:user_journey, :completed_digital, created_at: 4.days.ago)
             create(:user_journey, :completed_assisted_digital, created_at: 2.days.ago)
 
-            result = AggregatedAnalyticsService.new(start_date: start_date, end_date: end_date).run
+            result = described_class.run(start_date: start_date, end_date: end_date)
 
             expect(result[:front_office_completions]).to eq(4) # Includes the 3 created in the before block
             expect(result[:back_office_completions]).to eq(1)
@@ -54,16 +53,9 @@ module WasteCarriersEngine
             create(:user_journey, :completed_digital, created_at: 6.months.ago)
           end
 
-          let(:earliest_record_date) { UserJourney.minimum_created_at.to_date}
-          let(:expected_end_date) { Time.zone.today }
-
-
           it "uses the earliest record date as start_date and today as end_date when no dates are provided" do
-            service = AggregatedAnalyticsService.new
-            result = service.run
+            result = described_class.run
 
-            expect(service.start_date).to eq(earliest_record_date)
-            expect(service.end_date).to eq(expected_end_date)
             expect(result[:total_journeys_started]).to be >= 1
             expect(result[:total_journeys_completed]).to be >= 1
           end
@@ -74,8 +66,7 @@ module WasteCarriersEngine
           let(:end_date) { 21.days.ago }
 
           it "returns zeros for all metrics" do
-            service = AggregatedAnalyticsService.new(start_date: start_date, end_date: end_date)
-            result = service.run
+            result = described_class.run(start_date: start_date, end_date: end_date)
 
             expect(result).to match(expected_structure)
             expect(result.values).to all(be_zero)

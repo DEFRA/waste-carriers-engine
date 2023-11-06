@@ -47,13 +47,13 @@ module WasteCarriersEngine
       }
 
       def self.minimum_created_at
-        self.collection.aggregate([
-          { '$group' => {
-            '_id' => nil,
-            'minimumCreatedAt' => { '$min' => '$created_at' }
-          }}
-        ]).first['minimumCreatedAt']
-      rescue
+        collection.aggregate([
+                               { "$group" => {
+                                 "_id" => nil,
+                                 "minimumCreatedAt" => { "$min" => "$created_at" }
+                               } }
+                             ]).first["minimumCreatedAt"]
+      rescue StandardError
         nil
       end
 
