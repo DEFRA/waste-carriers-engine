@@ -46,6 +46,17 @@ module WasteCarriersEngine
         where(:created_at.gte => start_date.midnight, :created_at.lt => end_date.midnight + 1)
       }
 
+      def self.minimum_created_at
+        self.collection.aggregate([
+          { '$group' => {
+            '_id' => nil,
+            'minimumCreatedAt' => { '$min' => '$created_at' }
+          }}
+        ]).first['minimumCreatedAt']
+      rescue
+        nil
+      end
+
       def complete_journey(transient_registration)
         route = WasteCarriersEngine.configuration.host_is_back_office? ? "ASSISTED_DIGITAL" : "DIGITAL"
         update(completed_at: Time.zone.now)

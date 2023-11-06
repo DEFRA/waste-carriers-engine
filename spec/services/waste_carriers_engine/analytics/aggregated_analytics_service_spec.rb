@@ -7,8 +7,6 @@ module WasteCarriersEngine
     RSpec.describe AggregatedAnalyticsService do
 
       describe "#run" do
-        let(:start_date) { 7.days.ago }
-        let(:end_date) { Time.zone.today }
         let(:expected_structure) do
           {
             total_journeys_started: an_instance_of(Integer),
@@ -19,32 +17,57 @@ module WasteCarriersEngine
           }
         end
 
-        before do
-          create_list(:user_journey, 5, :started_digital, created_at: 5.days.ago)
-          create_list(:user_journey, 3, :completed_digital, created_at: 3.days.ago)
+        context "with specific date range" do
+          let(:start_date) { 7.days.ago }
+          let(:end_date) { Time.zone.today }
+
+          before do
+            create_list(:user_journey, 5, :started_digital, created_at: 5.days.ago)
+            create_list(:user_journey, 3, :completed_digital, created_at: 3.days.ago)
+          end
+
+          it "returns a hash with the correct aggregated data" do
+            service = AggregatedAnalyticsService.new(start_date: start_date, end_date: end_date)
+            result = service.run
+
+            expect(result).to match(expected_structure)
+            expect(result[:total_journeys_started]).to eq(8)
+            expect(result[:total_journeys_completed]).to eq(3)
+            expect(result[:completion_rate]).to eq(3.0 / 8 * 100)
+          end
+
+          it "calculates completions for digital and assisted digital channels" do
+            create_list(:user_journey, 3, :started_digital, created_at: 5.days.ago)
+            create(:user_journey, :completed_digital, created_at: 4.days.ago)
+            create(:user_journey, :completed_assisted_digital, created_at: 2.days.ago)
+
+            result = AggregatedAnalyticsService.new(start_date: start_date, end_date: end_date).run
+
+            expect(result[:front_office_completions]).to eq(4) # Includes the 3 created in the before block
+            expect(result[:back_office_completions]).to eq(1)
+          end
         end
 
-        it "returns a hash with the correct aggregated data" do
-          service = AggregatedAnalyticsService.new(start_date: start_date, end_date: end_date)
-          result = service.run
+        context "with default date range" do
+          before do
+            create(:user_journey, :started_digital, created_at: 1.year.ago)
+            create(:user_journey, :completed_digital, created_at: 6.months.ago)
+          end
 
-          expect(result).to match(expected_structure)
-          expect(result[:total_journeys_started]).to eq(8)
-          expect(result[:total_journeys_completed]).to eq(3)
-          expect(result[:completion_rate]).to eq(3.0 / 8 * 100)
+          let(:earliest_record_date) { UserJourney.minimum_created_at.to_date}
+          let(:expected_end_date) { Time.zone.today }
+
+
+          it "uses the earliest record date as start_date and today as end_date when no dates are provided" do
+            service = AggregatedAnalyticsService.new
+            result = service.run
+
+            expect(service.start_date).to eq(earliest_record_date)
+            expect(service.end_date).to eq(expected_end_date)
+            expect(result[:total_journeys_started]).to be >= 1
+            expect(result[:total_journeys_completed]).to be >= 1
+          end
         end
-
-        it "calculates completions for digital and assisted digital channels" do
-          create_list(:user_journey, 3, :started_digital, created_at: 5.days.ago)
-          create(:user_journey, :completed_digital, created_at: 4.days.ago)
-          create(:user_journey, :completed_assisted_digital, created_at: 2.days.ago)
-
-          result = AggregatedAnalyticsService.new(start_date: start_date, end_date: end_date).run
-
-          expect(result[:front_office_completions]).to eq(4) # Includes the 3 created in the before block
-          expect(result[:back_office_completions]).to eq(1)
-        end
-
 
         context "when no data is available for the date range" do
           let(:start_date) { 30.days.ago }

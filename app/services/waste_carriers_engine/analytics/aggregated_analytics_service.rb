@@ -3,9 +3,9 @@ module WasteCarriersEngine
     class AggregatedAnalyticsService < BaseService
       attr_reader :start_date, :end_date
 
-      def initialize(start_date:, end_date:)
-        @start_date = start_date
-        @end_date = end_date
+      def initialize(start_date: nil, end_date: nil)
+        @start_date = start_date || default_start_date
+        @end_date = end_date || Time.zone.today
       end
 
       def run
@@ -19,6 +19,10 @@ module WasteCarriersEngine
       end
 
       private
+
+      def default_start_date
+        UserJourney.minimum_created_at.to_date
+      end
 
       def total_journeys_started
         UserJourney.date_range(start_date, end_date).count
