@@ -48,11 +48,11 @@ module WasteCarriersEngine
 
       def self.minimum_created_at
         collection.aggregate([
-                               { "$group" => {
-                                 "_id" => nil,
-                                 "minimumCreatedAt" => { "$min" => "$created_at" }
-                               } }
-                             ]).first["minimumCreatedAt"]
+          { "$group" => {
+            "_id" => nil,
+            "minimumCreatedAt" => { "$min" => "$created_at" }
+          } }
+        ]).first["minimumCreatedAt"]&.in_time_zone
       rescue StandardError
         nil
       end

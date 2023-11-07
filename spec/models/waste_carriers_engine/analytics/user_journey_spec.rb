@@ -134,6 +134,17 @@ module WasteCarriersEngine
           end
         end
       end
+
+      describe ".minimum_created_at" do
+        before do
+          @earliest_created_journey = create(:user_journey, created_at: 5.days.ago)
+          @latest_created_journey = create(:user_journey, created_at: 1.day.ago)
+        end
+
+        it "returns the earliest created user journey" do
+          expect(described_class.minimum_created_at).to be_within(1.second).of(@earliest_created_journey.created_at)
+        end
+      end
     end
   end
 end
