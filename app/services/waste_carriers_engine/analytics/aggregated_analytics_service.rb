@@ -13,8 +13,11 @@ module WasteCarriersEngine
           total_journeys_started: total_journeys_started,
           total_journeys_completed: total_journeys_completed,
           completion_rate: completion_rate,
+          front_office_started: front_office_started,
+          back_office_started: back_office_started,
           front_office_completions: front_office_completions,
-          back_office_completions: back_office_completions
+          back_office_completions: back_office_completions,
+          cross_office_completions: cross_office_completions
         }
       end
 
@@ -38,12 +41,24 @@ module WasteCarriersEngine
         (total_journeys_completed.to_f / total_journeys_started * 100).round(2)
       end
 
+      def front_office_started
+        UserJourney.date_range(start_date, end_date).started_digital.count
+      end
+
+      def back_office_started
+        UserJourney.date_range(start_date, end_date).started_assisted_digital.count
+      end
+
       def front_office_completions
         UserJourney.date_range(start_date, end_date).completed_digital.count
       end
 
       def back_office_completions
         UserJourney.date_range(start_date, end_date).completed_assisted_digital.count
+      end
+
+      def cross_office_completions
+        UserJourney.date_range(start_date, end_date).started_digital.completed_assisted_digital.count
       end
     end
   end

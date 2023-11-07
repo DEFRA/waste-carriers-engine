@@ -10,10 +10,13 @@ module WasteCarriersEngine
         let(:expected_structure) do
           {
             total_journeys_started: an_instance_of(Integer),
+            back_office_started: an_instance_of(Integer),
+            front_office_started: an_instance_of(Integer),
             total_journeys_completed: an_instance_of(Integer),
             completion_rate: an_instance_of(Float),
             front_office_completions: an_instance_of(Integer),
-            back_office_completions: an_instance_of(Integer)
+            back_office_completions: an_instance_of(Integer),
+            cross_office_completions: an_instance_of(Integer)
           }
         end
 
@@ -24,26 +27,32 @@ module WasteCarriersEngine
           before do
             create_list(:user_journey, 5, :started_digital, created_at: 5.days.ago)
             create_list(:user_journey, 3, :completed_digital, created_at: 3.days.ago)
+            create_list(:user_journey, 2, :started_assisted_digital, created_at: 4.days.ago)
+            create(:user_journey, :started_digital, :completed_assisted_digital, created_at: 2.days.ago)
           end
 
           it "returns a hash with the correct aggregated data" do
             result = described_class.run(start_date: start_date, end_date: end_date)
 
             expect(result).to match(expected_structure)
-            expect(result[:total_journeys_started]).to eq(8)
-            expect(result[:total_journeys_completed]).to eq(3)
-            expect(result[:completion_rate]).to eq(3.0 / 8 * 100)
+            expect(result[:total_journeys_started]).to eq(11)
+            expect(result[:back_office_started]).to eq(2)
+            expect(result[:front_office_started]).to eq(9)
+            expect(result[:total_journeys_completed]).to eq(4)
+            expect(result[:completion_rate]).to eq((4.0 / 11 * 100).round(2))
+            expect(result[:cross_office_completions]).to eq(1)
           end
 
           it "calculates completions for digital and assisted digital channels" do
-            create_list(:user_journey, 3, :started_digital, created_at: 5.days.ago)
+            create_list(:user_journey, 1, :started_assisted_digital, created_at: 5.days.ago)
             create(:user_journey, :completed_digital, created_at: 4.days.ago)
-            create(:user_journey, :completed_assisted_digital, created_at: 2.days.ago)
+            create(:user_journey, :started_assisted_digital, :completed_assisted_digital, created_at: 2.days.ago)
 
             result = described_class.run(start_date: start_date, end_date: end_date)
 
-            expect(result[:front_office_completions]).to eq(4) # Includes the 3 created in the before block
-            expect(result[:back_office_completions]).to eq(1)
+            expect(result[:front_office_completions]).to eq(4)
+            expect(result[:back_office_completions]).to eq(2)
+            expect(result[:cross_office_completions]).to eq(1)
           end
         end
 
@@ -58,6 +67,11 @@ module WasteCarriersEngine
 
             expect(result[:total_journeys_started]).to be >= 1
             expect(result[:total_journeys_completed]).to be >= 1
+            expect(result[:front_office_started]).to be >= 1
+            expect(result[:back_office_started]).to eq(0)
+            expect(result[:front_office_completions]).to be >= 1
+            expect(result[:back_office_completions]).to eq(0)
+            expect(result[:cross_office_completions]).to eq(0)
           end
         end
 
