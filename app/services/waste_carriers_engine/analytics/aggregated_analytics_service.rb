@@ -24,7 +24,7 @@ module WasteCarriersEngine
       private
 
       def default_start_date
-        UserJourney.minimum_created_at.to_date
+        UserJourney.minimum_created_at&.to_date.presence || Time.zone.today
       end
 
       def total_journeys_started
