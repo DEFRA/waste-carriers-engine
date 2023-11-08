@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- Add new cannot-register pages for non-england locations [\#1456](https://github.com/DEFRA/waste-carriers-engine/pull/1456) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Feature/ruby 2533 certificate generator service [\#1438](https://github.com/DEFRA/waste-carriers-engine/pull/1438) ([brujeo](https://github.com/brujeo))
 - \[RUBY-2625\] ensure only upper tier registrations come back from conviction scope methods [\#1426](https://github.com/DEFRA/waste-carriers-engine/pull/1426) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-2534\] Update content on conviction page to reflect changes [\#1424](https://github.com/DEFRA/waste-carriers-engine/pull/1424) ([jjromeo](https://github.com/jjromeo))
@@ -417,6 +418,7 @@
 
 **Fixed bugs:**
 
+- Ruby 2378 wcr renewals overseas company can not renew due to non uk company number [\#1455](https://github.com/DEFRA/waste-carriers-engine/pull/1455) ([brujeo](https://github.com/brujeo))
 - Allow wicked\_pdf to use local file storage [\#1443](https://github.com/DEFRA/waste-carriers-engine/pull/1443) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - re-add payment method and get version of defra-ruby-govpay with re-added objects [\#1442](https://github.com/DEFRA/waste-carriers-engine/pull/1442) ([jjromeo](https://github.com/jjromeo))
 - RUBY-2533: Making use of certificate generator service [\#1439](https://github.com/DEFRA/waste-carriers-engine/pull/1439) ([brujeo](https://github.com/brujeo))
@@ -665,6 +667,16 @@
 
 **Merged pull requests:**
 
+- Align with govpay gem error handling [\#1461](https://github.com/DEFRA/waste-carriers-engine/pull/1461) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump faker from 3.2.1 to 3.2.2 [\#1458](https://github.com/DEFRA/waste-carriers-engine/pull/1458) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Remove mailcatcher / smtp / action\_mailer code and config [\#1457](https://github.com/DEFRA/waste-carriers-engine/pull/1457) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump mongoid from 8.0.3 to 8.0.7 [\#1454](https://github.com/DEFRA/waste-carriers-engine/pull/1454) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Refactor to remove duplicate upper\_tier definition [\#1453](https://github.com/DEFRA/waste-carriers-engine/pull/1453) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- \[RUBY-2730\] Update govpay to remove excess logging, small code removal [\#1452](https://github.com/DEFRA/waste-carriers-engine/pull/1452) ([jjromeo](https://github.com/jjromeo))
+- Update CHANGELOG [\#1451](https://github.com/DEFRA/waste-carriers-engine/pull/1451) ([brujeo](https://github.com/brujeo))
+- Bump devise from 4.9.2 to 4.9.3 [\#1450](https://github.com/DEFRA/waste-carriers-engine/pull/1450) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[RUBY-2667\] front-end user logins permanently disabled [\#1449](https://github.com/DEFRA/waste-carriers-engine/pull/1449) ([brujeo](https://github.com/brujeo))
+- Bump actionpack from 7.0.5 to 7.0.8 [\#1446](https://github.com/DEFRA/waste-carriers-engine/pull/1446) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Add require to fix issue with uninitialized constant [\#1444](https://github.com/DEFRA/waste-carriers-engine/pull/1444) ([jjromeo](https://github.com/jjromeo))
 - Bump net-smtp from 0.3.3 to 0.4.0 [\#1440](https://github.com/DEFRA/waste-carriers-engine/pull/1440) ([dependabot[bot]](https://github.com/apps/dependabot))
 - RUBY 2555 wcr tech move govpay integration code to a ruby gem [\#1437](https://github.com/DEFRA/waste-carriers-engine/pull/1437) ([jjromeo](https://github.com/jjromeo))
