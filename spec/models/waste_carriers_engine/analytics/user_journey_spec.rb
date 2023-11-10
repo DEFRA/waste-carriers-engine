@@ -47,26 +47,32 @@ module WasteCarriersEngine
       end
 
       describe ".date_range" do
-        subject(:date_range_results) { described_class.date_range(start_date, end_date) }
+        subject(:date_range_query_results) { described_class.date_range(start_date, end_date) }
 
         let(:start_date) { 10.days.ago.midnight }
         let(:end_date) { Date.today.midnight }
-        let(:user_journey_a) { Timecop.freeze(start_date - 1.day) { create(:user_journey) } }
-        let(:user_journey_b) { Timecop.freeze(start_date) { create(:user_journey) } }
-        let(:user_journey_c) { Timecop.freeze(end_date) { create(:user_journey) } }
-        let(:user_journey_d) { Timecop.freeze(end_date + 1.day) { create(:user_journey) } }
+        let(:journey_started_before_range) { Timecop.freeze(start_date - 2.days) { create(:user_journey, completed_at: start_date - 1.day) } }
+        let(:journey_started_at_range_start) { Timecop.freeze(start_date) { create(:user_journey, completed_at: start_date + 1.day) } }
+        let(:journey_started_before_range_end) { Timecop.freeze(end_date - 1.day) { create(:user_journey, completed_at: end_date) } }
+        let(:journey_started_after_range) { Timecop.freeze(end_date + 1.day) { create(:user_journey, completed_at: end_date + 2.days) } }
+        let(:journey_completed_after_range) { Timecop.freeze(start_date) { create(:user_journey, completed_at: end_date + 1.day) } }
+        let(:journey_started_before_and_ended_within_range) { Timecop.freeze(start_date - 1.day) { create(:user_journey, completed_at: end_date) } }
 
         before do
-          user_journey_a
-          user_journey_b
-          user_journey_c
-          user_journey_d
+          journey_started_before_range
+          journey_started_at_range_start
+          journey_started_before_range_end
+          journey_started_after_range
+          journey_completed_after_range
+          journey_started_before_and_ended_within_range
         end
 
-        it { expect(date_range_results).not_to include(user_journey_a) }
-        it { expect(date_range_results).to include(user_journey_b) }
-        it { expect(date_range_results).to include(user_journey_c) }
-        it { expect(date_range_results).not_to include(user_journey_d) }
+        it { expect(date_range_query_results).not_to include(journey_started_before_range) }
+        it { expect(date_range_query_results).to include(journey_started_at_range_start) }
+        it { expect(date_range_query_results).to include(journey_started_before_range_end) }
+        it { expect(date_range_query_results).not_to include(journey_started_after_range) }
+        it { expect(date_range_query_results).not_to include(journey_completed_after_range) }
+        it { expect(date_range_query_results).not_to include(journey_started_before_and_ended_within_range) }
       end
 
       describe "#complete_journey" do

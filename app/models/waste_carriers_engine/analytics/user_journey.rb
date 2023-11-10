@@ -43,7 +43,12 @@ module WasteCarriersEngine
       scope :completed_digital, -> { where(completed_route: "DIGITAL") }
       scope :completed_assisted_digital, -> { where(completed_route: "ASSISTED_DIGITAL") }
       scope :date_range, lambda { |start_date, end_date|
-        where(:created_at.gte => start_date.midnight, :created_at.lt => end_date.midnight + 1)
+        where(
+          :created_at.gte => start_date.midnight,
+          :created_at.lt => end_date.midnight + 1.day,
+          :completed_at.gte => start_date.midnight,
+          :completed_at.lt => end_date.midnight + 1.day
+        )
       }
 
       def self.minimum_created_at
