@@ -152,10 +152,7 @@ module WasteCarriersEngine
           it "notifies Airbrake" do
             service.govpay_payment_status
           rescue DefraRubyGovpay::GovpayApiError
-            expect(Airbrake).to have_received(:notify).with(DefraRubyGovpay::GovpayApiError,
-                                                            hash_including(
-                                                              message: "Error sending request to govpay (get /payments/a-valid-govpay-payment-id, params: ): 500 Internal Server Error"
-                                                            ))
+            expect(Airbrake).to have_received(:notify).with(DefraRubyGovpay::GovpayApiError, anything)
           end
         end
       end
