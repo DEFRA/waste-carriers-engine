@@ -45,9 +45,12 @@ module WasteCarriersEngine
       scope :date_range, lambda { |start_date, end_date|
         where(
           :created_at.gte => start_date.midnight,
-          :created_at.lt => end_date.midnight + 1.day,
-          :completed_at.gte => start_date.midnight,
-          :completed_at.lt => end_date.midnight + 1.day
+          :created_at.lt => end_date.midnight + 1.day
+        ).and(
+          :$or => [
+            { completed_at: nil },
+            { :completed_at.gte => start_date.midnight, :completed_at.lt => end_date.midnight + 1.day }
+          ]
         )
       }
 

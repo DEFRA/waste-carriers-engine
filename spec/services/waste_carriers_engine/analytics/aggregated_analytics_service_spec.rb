@@ -5,7 +5,6 @@ require "rails_helper"
 module WasteCarriersEngine
   module Analytics
     RSpec.describe AggregatedAnalyticsService do
-
       describe ".run" do
         let(:expected_structure) do
           {
@@ -25,33 +24,25 @@ module WasteCarriersEngine
           let(:end_date) { Time.zone.today }
 
           before do
-            create_list(:user_journey, 5, :started_digital, created_at: 5.days.ago)
-            create_list(:user_journey, 3, :completed_digital, created_at: 3.days.ago)
-            create_list(:user_journey, 2, :started_assisted_digital, created_at: 4.days.ago)
-            create(:user_journey, :started_digital, :completed_assisted_digital, created_at: 2.days.ago)
+            create_list(:user_journey, 5, :started_digital, created_at: 5.days.ago, completed_at: nil)
+            create_list(:user_journey, 3, :completed_digital, created_at: 3.days.ago, completed_at: 2.days.ago)
+            create_list(:user_journey, 2, :started_assisted_digital, created_at: 4.days.ago, completed_at: nil)
+            create(:user_journey, :started_digital, :completed_assisted_digital, created_at: 2.days.ago, completed_at: 1.day.ago)
+            create(:user_journey, created_at: 8.days.ago, completed_at: 6.days.ago)
+            create(:user_journey, created_at: 6.days.ago, completed_at: 5.days.ago)
           end
 
           it "returns a hash with the correct aggregated data" do
             result = described_class.run(start_date: start_date, end_date: end_date)
 
             expect(result).to match(expected_structure)
-            expect(result[:total_journeys_started]).to eq(11)
+            expect(result[:total_journeys_started]).to eq(12)
             expect(result[:back_office_started]).to eq(2)
-            expect(result[:front_office_started]).to eq(9)
-            expect(result[:total_journeys_completed]).to eq(4)
-            expect(result[:completion_rate]).to eq((4.0 / 11 * 100).round(2))
-            expect(result[:cross_office_completions]).to eq(1)
-          end
-
-          it "calculates completions for digital and assisted digital channels" do
-            create_list(:user_journey, 1, :started_assisted_digital, created_at: 5.days.ago)
-            create(:user_journey, :completed_digital, created_at: 4.days.ago)
-            create(:user_journey, :started_assisted_digital, :completed_assisted_digital, created_at: 2.days.ago)
-
-            result = described_class.run(start_date: start_date, end_date: end_date)
-
-            expect(result[:front_office_completions]).to eq(4)
-            expect(result[:back_office_completions]).to eq(2)
+            expect(result[:front_office_started]).to eq(10)
+            expect(result[:total_journeys_completed]).to eq(5)
+            expect(result[:completion_rate]).to eq((5.0 / 12 * 100).round(2))
+            expect(result[:front_office_completions]).to eq(3)
+            expect(result[:back_office_completions]).to eq(1)
             expect(result[:cross_office_completions]).to eq(1)
           end
         end
