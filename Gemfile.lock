@@ -152,7 +152,7 @@ GEM
       notifications-ruby-client
       rails
       sprockets-rails
-    defra_ruby_govpay (0.2.4)
+    defra_ruby_govpay (0.2.5)
       rest-client (~> 2.1)
     defra_ruby_style (0.3.0)
       rubocop (>= 1.0, < 2.0)
@@ -173,8 +173,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.5.0)
     docile (1.4.0)
-    domain_name (0.5.20190701)
-      unf (>= 0.0.5, < 1.0.0)
+    domain_name (0.6.20231109)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -439,9 +438,6 @@ GEM
       concurrent-ruby (~> 1.0)
     uk_postcode (2.1.8)
     unaccent (0.4.0)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
     validates_email_format_of (1.7.2)
       i18n
@@ -470,7 +466,6 @@ PLATFORMS
 DEPENDENCIES
   cancancan (~> 3.5.0)
   database_cleaner-mongoid (~> 2.0.1)
-  defra_ruby_govpay
   defra_ruby_style (~> 0.3.0)
   defra_ruby_template (~> 3.13.0)
   devise (~> 4.9.2)
@@ -480,9 +475,7 @@ DEPENDENCIES
   github_changelog_generator (~> 1.16.4)
   govuk_design_system_formbuilder (~> 4.1.1)
   matrix (~> 0.4.2)
-  mongo_session_store (~> 3.2.1)
-  mongoid (~> 8.0.3)
-  mongoid-locker (~> 2.0.2)
+  mongo_session_store
   pry-byebug (~> 3.10.1)
   rails-controller-testing (~> 1.0.5)
   rspec-html-matchers (~> 0.10.0)

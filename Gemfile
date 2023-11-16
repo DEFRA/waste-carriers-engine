@@ -21,16 +21,7 @@ gemspec
 # GOV.UK styling
 gem "defra_ruby_template", "~> 3.13.0"
 
-# GovPay integration
-gem "defra_ruby_govpay"
-
-# Use MongoDB as the database
-gem "mongoid", "~> 8.0.3"
-
-# Implement document-level locking
-gem "mongoid-locker", "~> 2.0.2"
-
-gem "mongo_session_store", "~> 3.2.1"
+gem "mongo_session_store"
 
 # Use CanCanCan for user roles and permissions
 gem "cancancan", "~> 3.5.0"
