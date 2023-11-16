@@ -79,8 +79,8 @@ module Dummy
     # Govpay
     config.govpay_url = ENV["WCRS_GOVPAY_URL"] || "https://publicapi.payments.service.gov.uk"
     config.govpay_merchant_code = ENV["WCRS_GOVPAY_MERCHANT_CODE"]
-    config.govpay_front_office_api_token = ENV["WCRS_GOVPAY_FRONT_OFFICE_API_TOKEN"]
-    config.govpay_back_office_api_token = ENV["WCRS_GOVPAY_BACK_OFFICE_API_TOKEN"]
+    config.govpay_front_office_api_token = ENV["WCRS_GOVPAY_FRONT_OFFICE_API_TOKEN"] || "token"
+    config.govpay_back_office_api_token = ENV["WCRS_GOVPAY_BACK_OFFICE_API_TOKEN"] || "token"
 
     # Emails
     config.email_service_name = "Waste Carriers Registration Service"
