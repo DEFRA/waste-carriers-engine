@@ -12,15 +12,6 @@ module WasteCarriersEngine
     before do
       allow(Rails.configuration).to receive(:govpay_merchant_code).and_return("some_merchant_code")
 
-      # set these variables in govpay configuration
-      DefraRubyGovpay.configure do |config|
-        config.govpay_url = govpay_host
-        config.govpay_front_office_api_token = "some_token"
-        config.govpay_back_office_api_token = "some_token"
-      end
-
-      stub_const("DefraRubyGovpayAPI", DefraRubyGovpay::API.new)
-
       allow(Airbrake).to receive(:notify)
     end
 
@@ -100,16 +91,18 @@ module WasteCarriersEngine
         end
 
         describe "#payment_callback" do
-          let(:govpay_host) { "https://publicapi.payments.service.gov.uk/v1" }
+          let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
+          let(:payment_service) { instance_double(GovpayPaymentService) }
+          let(:payment_details_service) { instance_double(GovpayPaymentDetailsService) }
 
           before do
             allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
-            stub_request(:any, %r{.*#{govpay_host}/payments}).to_return(
-              status: 200,
-              body: file_fixture("govpay/get_payment_response_#{govpay_status}.json")
-            )
+            allow(GovpayPaymentService).to receive(:new).and_return(payment_service)
+            allow(payment_service).to receive(:prepare_for_payment)
+            allow(GovpayPaymentDetailsService).to receive(:new).and_return(payment_details_service)
+            allow(payment_details_service).to receive(:govpay_payment_status).and_return(govpay_status)
+
             transient_registration.prepare_for_payment(:govpay, user)
-            GovpayPaymentService.new(transient_registration, order, user).prepare_for_payment
           end
 
           context "when govpay status is success" do
@@ -174,7 +167,7 @@ module WasteCarriersEngine
               it "notifies Airbrake" do
                 expect(Airbrake)
                   .to have_received(:notify)
-                  .with("Govpay callback error: Invalid payment uuid", { payment_uuid: "invalid_uuid" })
+                  .with("Govpay callback error for payment uuid", { payment_uuid: "invalid_uuid" })
               end
             end
           end
@@ -254,7 +247,7 @@ module WasteCarriersEngine
             end
 
             context "with failure status" do
-              let(:govpay_status) { "failure" }
+              let(:govpay_status) { "failed" }
 
               it_behaves_like "payment is unsuccessful but no error"
             end

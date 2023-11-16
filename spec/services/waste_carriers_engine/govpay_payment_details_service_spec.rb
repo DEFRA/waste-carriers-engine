@@ -18,22 +18,13 @@ module WasteCarriersEngine
     let(:order) { transient_registration.finance_details.orders.first }
     let(:is_moto) { false }
     let(:current_user) { build(:user) }
-    let(:is_back_office) { false }
-    let(:govpay_front_office_api_token) { "front_office_token" }
-    let(:govpay_back_office_api_token) { "back_office_token" }
+    let(:govpay_front_office_api_token) { Rails.configuration.govpay_front_office_api_token }
+    let(:govpay_back_office_api_token) { Rails.configuration.govpay_back_office_api_token }
 
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
       transient_registration.prepare_for_payment(:govpay, current_user)
-
-      DefraRubyGovpay.configure do |config|
-        config.govpay_front_office_api_token = govpay_front_office_api_token
-        config.govpay_back_office_api_token = govpay_back_office_api_token
-        config.host_is_back_office = is_back_office
-      end
-
-      stub_const("DefraRubyGovpayAPI", DefraRubyGovpay::API.new)
     end
 
     subject(:service) { described_class.new(payment_uuid: payment_uuid, is_moto: is_moto) }
@@ -97,12 +88,9 @@ module WasteCarriersEngine
 
           before do
             allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
-            allow(Rails.configuration).to receive(:govpay_front_office_api_token).and_return(govpay_front_office_api_token)
-            allow(Rails.configuration).to receive(:govpay_back_office_api_token).and_return(govpay_back_office_api_token)
           end
 
           context "when the payment is non-MOTO" do
-            let(:is_back_office) { false }
 
             before do
               payment.update!(moto: false)
@@ -113,19 +101,20 @@ module WasteCarriersEngine
                 .to_return(status: 200, body: File.read("./spec/fixtures/files/govpay/#{response_fixture}"))
             end
 
-            it "uses the front-office API token and returns created" do
+            it "uses the front-office API token" do
+              expect { service.govpay_payment_status }.not_to raise_error
+            end
+
+            it "returns created" do
               expect(service.govpay_payment_status).to eq "created"
             end
           end
 
           context "when the payment is MOTO" do
             let(:is_moto) { true }
-            let(:is_back_office) { true }
 
             before do
               payment.update!(moto: true)
-              allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?)
-                .and_return(true)
               # Stub the Govpay API only for the back-office bearer token,
               # so the spec will fail if the request is made using the front-office token.
               stub_request(:get, %r{.*#{govpay_host}/(v1/)?payments/#{govpay_id}})
@@ -133,7 +122,11 @@ module WasteCarriersEngine
                 .to_return(status: 200, body: File.read("./spec/fixtures/files/govpay/#{response_fixture}"))
             end
 
-            it "uses the back-office API token and returns created" do
+            it "uses the back-office API token" do
+              expect { service.govpay_payment_status }.not_to raise_error
+            end
+
+            it "returns created" do
               expect(service.govpay_payment_status).to eq "created"
             end
           end

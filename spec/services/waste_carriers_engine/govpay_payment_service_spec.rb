@@ -27,19 +27,18 @@ module WasteCarriersEngine
         status: 200,
         body: File.read("./spec/fixtures/files/govpay/create_payment_created_response.json")
       )
-      DefraRubyGovpay.configure do |config|
-        config.govpay_front_office_api_token = "front_office_token"
-        config.govpay_back_office_api_token = "back_office_token"
-      end
-
-      stub_const("DefraRubyGovpayAPI", DefraRubyGovpay::API.new)
     end
 
     describe "prepare_for_payment" do
-      context "when the request is valid" do
-        let(:root) { Rails.configuration.wcrs_fo_link_domain }
-        let(:reg_id) { transient_registration.reg_identifier }
+      let(:defra_ruby_govpay_api) { DefraRubyGovpay::API.new(host_is_back_office:) }
+      let(:host_is_back_office) { WasteCarriersEngine.configuration.host_is_back_office? }
 
+      before do
+        allow(DefraRubyGovpay::API).to receive(:new).and_return(defra_ruby_govpay_api)
+        allow(defra_ruby_govpay_api).to receive(:send_request).with(anything).and_call_original
+      end
+
+      context "when the request is valid" do
         it "returns a link" do
           url = govpay_service.prepare_for_payment[:url]
           # expect the value from the payment response file fixture
@@ -53,17 +52,16 @@ module WasteCarriersEngine
 
         context "when the request is from the back-office" do
           before do
-            allow(DefraRubyGovpayAPI).to receive(:send_request)
             allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(true)
+            allow(defra_ruby_govpay_api).to receive(:send_request).with(anything).and_call_original
           end
 
           it "sends the moto flag to GovPay" do
-            allow(DefraRubyGovpayAPI).to receive(:send_request)
             govpay_service.prepare_for_payment
 
-            expect(DefraRubyGovpayAPI).to have_received(:send_request).with(
+            expect(defra_ruby_govpay_api).to have_received(:send_request).with(
               is_moto: true,
-              method: anything,
+              method: :post,
               path: anything,
               params: hash_including(moto: true)
             )
@@ -71,17 +69,14 @@ module WasteCarriersEngine
         end
 
         context "when the request is from the front-office" do
-          before do
-            allow(DefraRubyGovpayAPI).to receive(:send_request)
-            allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false)
-          end
+          before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false) }
 
           it "does not send the moto flag to GovPay" do
             govpay_service.prepare_for_payment
 
-            expect(DefraRubyGovpayAPI).to have_received(:send_request).with(
+            expect(defra_ruby_govpay_api).to have_received(:send_request).with(
               is_moto: false,
-              method: anything,
+              method: :post,
               path: anything,
               params: hash_not_including(moto: true)
             )
@@ -106,9 +101,7 @@ module WasteCarriersEngine
     describe "#payment_callback_url" do
       let(:callback_host) { Faker::Internet.url }
 
-      before do
-        allow(Rails.configuration).to receive(:host).and_return(callback_host)
-      end
+      before { allow(Rails.configuration).to receive(:host).and_return(callback_host) }
 
       subject(:callback_url) { govpay_service.payment_callback_url }
 

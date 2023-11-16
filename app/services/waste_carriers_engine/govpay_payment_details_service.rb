@@ -52,13 +52,19 @@ module WasteCarriersEngine
 
     attr_reader :payment_uuid, :entity, :govpay_id
 
+    def defra_ruby_govpay_api
+      @defra_ruby_govpay_api ||= DefraRubyGovpay::API.new(
+        host_is_back_office: WasteCarriersEngine.configuration.host_is_back_office?
+      )
+    end
+
     def response
       @response ||=
         JSON.parse(
-          DefraRubyGovpayAPI.send_request(method: :get,
-                                          path: "/payments/#{govpay_id}",
-                                          is_moto: @is_moto,
-                                          params: nil)&.body
+          defra_ruby_govpay_api.send_request(method: :get,
+                                             path: "/payments/#{govpay_id}",
+                                             is_moto: @is_moto,
+                                             params: nil)&.body
         )
     end
 

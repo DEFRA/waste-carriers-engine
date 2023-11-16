@@ -12,10 +12,10 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      response = DefraRubyGovpayAPI.send_request(
+      response = DefraRubyGovpay::API.new(host_is_back_office:).send_request(
         method: :post,
         path: "/payments",
-        is_moto: WasteCarriersEngine.configuration.host_is_back_office?,
+        is_moto: host_is_back_office,
         params: payment_params
       )
 
@@ -51,6 +51,10 @@ module WasteCarriersEngine
     end
 
     private
+
+    def host_is_back_office
+      @host_is_back_office ||= WasteCarriersEngine.configuration.host_is_back_office?
+    end
 
     def payment_params
       {
