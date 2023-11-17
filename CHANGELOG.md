@@ -418,6 +418,7 @@
 
 **Fixed bugs:**
 
+- Fix/ruby 2793 defra ruby govpay config [\#1466](https://github.com/DEFRA/waste-carriers-engine/pull/1466) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Ruby 2378 wcr renewals overseas company can not renew due to non uk company number [\#1455](https://github.com/DEFRA/waste-carriers-engine/pull/1455) ([brujeo](https://github.com/brujeo))
 - Allow wicked\_pdf to use local file storage [\#1443](https://github.com/DEFRA/waste-carriers-engine/pull/1443) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - re-add payment method and get version of defra-ruby-govpay with re-added objects [\#1442](https://github.com/DEFRA/waste-carriers-engine/pull/1442) ([jjromeo](https://github.com/jjromeo))
@@ -667,7 +668,10 @@
 
 **Merged pull requests:**
 
+- Bump defra\_ruby\_govpay from 0.2.3 to 0.2.4 [\#1464](https://github.com/DEFRA/waste-carriers-engine/pull/1464) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1463](https://github.com/DEFRA/waste-carriers-engine/pull/1463) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Align with govpay gem error handling [\#1461](https://github.com/DEFRA/waste-carriers-engine/pull/1461) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- RUBY 2709 wcr analytics metrics improvements [\#1460](https://github.com/DEFRA/waste-carriers-engine/pull/1460) ([jjromeo](https://github.com/jjromeo))
 - Bump faker from 3.2.1 to 3.2.2 [\#1458](https://github.com/DEFRA/waste-carriers-engine/pull/1458) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Remove mailcatcher / smtp / action\_mailer code and config [\#1457](https://github.com/DEFRA/waste-carriers-engine/pull/1457) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump mongoid from 8.0.3 to 8.0.7 [\#1454](https://github.com/DEFRA/waste-carriers-engine/pull/1454) ([dependabot[bot]](https://github.com/apps/dependabot))
