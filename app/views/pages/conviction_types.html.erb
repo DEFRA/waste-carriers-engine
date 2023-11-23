@@ -19,5 +19,15 @@
       <% end %>
     </ul>
 
+    <p> <%= t(".paragraph_2") %> </p>
+
+    <ul class="govuk_list govuk_list--bullet">
+      <% t(".additional_conviction_types").each do |conviction| %>
+        <li><%= conviction[:name] %></li>
+      <% end %>
+    </ul>
+
+    <p> <%= t(".paragraph_3") %> </p>
+
   </div>
 </div>

@@ -33,3 +33,9 @@ en:
         - name: "Waste Electrical and Electronic Equipment Regulations 2013"
         - name: "Scrap Metal Dealers Act 2013"
         - name: "regulation 38 of the Environmental Permitting (England and Wales) Regulations 2016"
+      paragraph_2: "You also need to tell us if:"
+      additional_conviction_types:
+        - name: "You have attempted to or conspired to commit an offence under the above legislation"
+        - name: "You have incited or aided, abetted, counselled or procured the commission of an offence under the above legislation"
+        - name: "You have an unspent offence under Part 2 of the Serious Crime Act 2007 (encouraging or assisting crime) committed in relation to an offence under the above legislation."
+      paragraph_3: "The relevant offences listed above may change if the law changes. This information is for guidance and is not a complete statement of the law."

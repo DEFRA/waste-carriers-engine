@@ -12,9 +12,9 @@ en:
         subheading_1: What happens next
         list_1:
           UPPER:
-            - Your organisation's details will appear on the public register within 5 days.
+            - Your organisation's details will appear on the public register within 24 hours.
             - We will contact you on this email address before this registration is due to expire in %{expires_on}.
             - If we cannot reach you when the renewal is due, you'll have to pay more for a new upper tier registration.
           LOWER:
-            - Your organisation's details will appear on the public register within 5 days.
+            - Your organisation's details will appear on the public register within 24 hours.
             - Lower tier registrations do not expire.
