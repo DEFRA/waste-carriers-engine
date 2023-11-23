@@ -36,8 +36,8 @@ module WasteCarriersEngine
       end
     rescue StandardError => e
       log_transient_registration_details("Error in payment callback", e, @transient_registration)
-      Rails.logger.warn "Govpay payment callback error for payment uuid \"#{params[:uuid]}\""
-      Airbrake.notify("Govpay callback error for payment uuid", payment_uuid: params[:uuid])
+      Rails.logger.warn "Govpay payment callback error for payment uuid \"#{params[:uuid]}\": #{e}"
+      Airbrake.notify(e, message: "Govpay callback error for payment uuid", payment_uuid: params[:uuid])
       flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.internal_error")
       go_back
     end

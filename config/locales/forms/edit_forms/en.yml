@@ -14,7 +14,6 @@ en:
             labels:
               tier: Tier
               registration_type: Type
-              account_email: Account email
           business:
             heading: Waste carrier business details
             labels:

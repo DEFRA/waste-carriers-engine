@@ -10,8 +10,8 @@ module WasteCarriersEngine
     validates :reg_identifier, "waste_carriers_engine/reg_identifier": true
 
     # IMPORTANT! When specifying attributes be sure to use the name as seen in
-    # the database and not the alias in the model. For example use accountEmail
-    # not account_email.
+    # the database and not the alias in the model. For example use financeDetails
+    # not finance_details.
     COPY_DATA_OPTIONS = {
       ignorable_attributes: %w[_id
                                accountEmail

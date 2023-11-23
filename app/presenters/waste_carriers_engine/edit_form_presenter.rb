@@ -20,10 +20,6 @@ module WasteCarriersEngine
       transient_registration.created_at < transient_registration.metaData.last_modified
     end
 
-    def account_email
-      transient_registration.registration.account_email
-    end
-
     def business_type
       I18n.t("#{LOCALES_KEY}.business_type.#{transient_registration.business_type}")
     end

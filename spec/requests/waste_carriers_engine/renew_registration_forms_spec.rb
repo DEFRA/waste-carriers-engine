@@ -108,8 +108,7 @@ module WasteCarriersEngine
         context "when the transient registration is in the wrong state" do
           let(:transient_registration) do
             create(:renewing_registration,
-                   workflow_state: "contact_name_form",
-                   account_email: user.email)
+                   workflow_state: "contact_name_form")
           end
 
           let(:valid_params) { { company_no: "01234567" } }

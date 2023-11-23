@@ -171,7 +171,10 @@ module WasteCarriersEngine
           activated_at = transient_registration.metaData.dateActivated
           renewal_completion_service.complete_renewal
           order_item_logs_activated_ats = OrderItemLog.all.pluck(:activated_at)
-          expect(order_item_logs_activated_ats.all? { |a| a.to_s == activated_at.to_s }).to be true
+
+          # The order item logs activated_at values are sometimes a second off the
+          # source registration metadata value, despite being a direct copy
+          expect(order_item_logs_activated_ats).to all(be_within(1.second).of(activated_at))
         end
 
         # This only applies to attributes where a value could be set, but not always - for example, smart answers

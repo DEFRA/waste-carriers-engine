@@ -60,7 +60,6 @@ module WasteCarriersEngine
                 create(:registration,
                        :has_required_data,
                        :expires_soon,
-                       account_email: user.email,
                        company_name: "Correct Name")
               end
 
@@ -89,7 +88,6 @@ module WasteCarriersEngine
             let(:transient_registration) do
               create(:renewing_registration,
                      :has_required_data,
-                     account_email: user.email,
                      workflow_state: "renewal_start_form")
             end
 
@@ -111,7 +109,6 @@ module WasteCarriersEngine
               let(:transient_registration) do
                 create(:renewing_registration,
                        :has_required_data,
-                       account_email: user.email,
                        workflow_state: "other_businesses_form")
               end
 
@@ -126,38 +123,6 @@ module WasteCarriersEngine
                 expect(response).to have_http_status(:found)
                 expect(response).to redirect_to(new_other_businesses_form_path(valid_renewal))
               end
-            end
-          end
-        end
-
-        context "when the signed-in user does not own the registration" do
-          context "when no renewal is in progress" do
-            let(:registration) do
-              create(:registration,
-                     :has_required_data,
-                     :expires_soon,
-                     account_email: "not-#{user.email}")
-            end
-            let(:valid_registration) { registration.reg_identifier }
-
-            it "redirects to the permissions error page" do
-              post renewal_start_forms_path(valid_registration)
-              expect(response).to redirect_to(page_path("permission"))
-            end
-          end
-
-          context "when a renewal is in progress" do
-            let(:transient_registration) do
-              create(:renewing_registration,
-                     :has_required_data,
-                     account_email: "not-#{user.email}",
-                     workflow_state: "renewal_start_form")
-            end
-            let(:valid_renewal) { transient_registration.token }
-
-            it "redirects to the permissions error page" do
-              post renewal_start_forms_path(valid_renewal)
-              expect(response).to redirect_to(page_path("permission"))
             end
           end
         end

@@ -9,9 +9,6 @@ module WasteCarriersEngine
     describe "POST payment_method_confirmation_form_path" do
       let(:confirmation_response) { "yes" }
       let(:invalid_params) { { temp_confirm_payment_method: "foo" } }
-      # let(:user) { create(:user) }
-
-      # before { sign_in(user) }
 
       shared_examples "redirects based on the confirmation response" do
 

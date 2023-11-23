@@ -109,8 +109,8 @@ module WasteCarriersEngine
           allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
         end
 
-        it "logs an error and raises a NoMethodError" do
-          expect { described_class.run(params) }.to raise_error(NoMethodError)
+        it "logs an error" do
+          described_class.run(params)
 
           expect(Airbrake).to have_received(:notify)
         end

@@ -38,7 +38,6 @@ module WasteCarriersEngine
 
           context "when the workflow_state is correct" do
             it "updates the registration with the new data and deletes the transient object" do
-              old_account_email = registration.account_email
               old_expires_on = registration.expires_on
               old_finance_details = registration.finance_details
               old_relevant_people = registration.relevant_people
@@ -59,7 +58,6 @@ module WasteCarriersEngine
               expect(registration.contact_address.postcode).to eq(updated_contact_address.postcode)
 
               # But don't modify finance details or other non-editable attributes
-              expect(registration.account_email).to eq(old_account_email)
               expect(registration.expires_on).to eq(old_expires_on)
               expect(registration.expires_on).not_to eq(different_expires_on)
               expect(registration.finance_details).to eq(old_finance_details)
@@ -95,7 +93,7 @@ module WasteCarriersEngine
 
             # A registration can be renewed or transferred after an edit is
             # started. So when the edit completes it must not override key
-            # fields lik expiry_date and account_email
+            # fields like expiry_date.
             #
             # See the following PR's for details of what issues this test is
             # confirming is fixed.
@@ -112,17 +110,14 @@ module WasteCarriersEngine
                 # expects not only ensure that, they also mean the transient
                 # is initialised before we then apply changes to the
                 # registration.
-                expect(transient_registration.account_email).not_to eq(email)
                 expect(transient_registration.expires_on).not_to eq(expires_on)
 
-                registration.account_email = email
                 registration.expires_on = expires_on
                 registration.save!
 
                 get new_edit_complete_form_path(transient_registration.token)
                 registration.reload
 
-                expect(registration.account_email).to eq(email)
                 expect(registration.expires_on).to eq(expires_on)
               end
             end

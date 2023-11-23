@@ -29,7 +29,6 @@ module WasteCarriersEngine
                  :has_addresses,
                  :has_conviction_search_result,
                  :has_key_people,
-                 account_email: user.email,
                  workflow_state: "govpay_form",
                  workflow_history: ["payment_summary_form"])
         end
@@ -167,7 +166,7 @@ module WasteCarriersEngine
               it "notifies Airbrake" do
                 expect(Airbrake)
                   .to have_received(:notify)
-                  .with("Govpay callback error for payment uuid", { payment_uuid: "invalid_uuid" })
+                  .with("Invalid Govpay response: Cannot find matching order", { payment_uuid: "invalid_uuid" })
               end
             end
           end

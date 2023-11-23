@@ -39,7 +39,6 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    :has_key_people,
-                   account_email: user.email,
                    workflow_state: "declaration_form")
           end
 
