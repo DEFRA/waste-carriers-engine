@@ -76,7 +76,7 @@ module WasteCarriersEngine
     end
 
     def error_title
-      return content_for :error_title if content_for?(:error_title)
+      content_for :error_title if content_for?(:error_title)
     end
   end
 end

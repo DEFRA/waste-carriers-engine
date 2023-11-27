@@ -42,7 +42,7 @@ module WasteCarriersEngine
       matching_expires_on = registration.past_registrations.not_in(cause: ["edit"]).map(&:expires_on)
       # Check if the current expires_on is included - this indicates that this version of
       # the registration has already been backed up.
-      return true if matching_expires_on.include?(registration.expires_on)
+      true if matching_expires_on.include?(registration.expires_on)
     end
 
     def new_version_due_to_edit?
