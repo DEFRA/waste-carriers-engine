@@ -27,8 +27,7 @@ RSpec.shared_examples "POST without params form" do |form|
              :has_required_data,
              :has_addresses,
              :has_key_people,
-             :has_unpaid_balance,
-             account_email: user.email)
+             :has_unpaid_balance)
     end
 
     context "when the workflow_state matches the requested form" do

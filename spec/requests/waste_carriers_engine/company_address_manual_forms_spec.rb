@@ -19,7 +19,6 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:renewing_registration,
                    :has_required_data,
-                   account_email: user.email,
                    tier: tier,
                    workflow_state: "company_address_manual_form")
           end
@@ -67,7 +66,6 @@ module WasteCarriersEngine
                 create(:renewing_registration,
                        :has_required_data,
                        :has_addresses,
-                       account_email: user.email,
                        workflow_state: "company_address_manual_form")
               end
 
@@ -91,7 +89,6 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:renewing_registration,
                    :has_required_data,
-                   account_email: user.email,
                    workflow_state: "renewal_start_form")
           end
 

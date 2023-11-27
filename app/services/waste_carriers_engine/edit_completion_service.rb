@@ -41,8 +41,8 @@ module WasteCarriersEngine
 
     def copy_attributes
       # IMPORTANT! When specifying attributes be sure to use the name as seen in
-      # the database and not the alias in the model. For example use
-      # accountEmail not account_email.
+      # the database and not the alias in the model. For example use financeDetails
+      # not finance_details.
       do_not_copy_attributes = %w[
         _id
         _type

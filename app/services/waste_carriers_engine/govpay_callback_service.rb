@@ -48,7 +48,7 @@ module WasteCarriersEngine
     end
 
     def order_by_payment_uuid
-      @transient_registration.finance_details.orders.find_by(payment_uuid: @payment_uuid)
+      @transient_registration&.finance_details&.orders&.find_by(payment_uuid: @payment_uuid)
     end
 
     def valid_unsuccessful_payment?(validation_method)

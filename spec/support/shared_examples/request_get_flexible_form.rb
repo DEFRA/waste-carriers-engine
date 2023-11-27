@@ -20,7 +20,6 @@ RSpec.shared_examples "GET flexible form" do |form|
                :has_required_data,
                :has_addresses,
                :has_key_people,
-               account_email: user.email,
                workflow_state: form)
       end
 

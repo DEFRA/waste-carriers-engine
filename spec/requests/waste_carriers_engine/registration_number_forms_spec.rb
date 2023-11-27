@@ -25,7 +25,6 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:new_registration,
                    :has_required_data,
-                   account_email: user.email,
                    workflow_state: "registration_number_form")
           end
 
@@ -54,7 +53,6 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:new_registration,
                    :has_required_data,
-                   account_email: user.email,
                    workflow_state: "renewal_start_form")
           end
 

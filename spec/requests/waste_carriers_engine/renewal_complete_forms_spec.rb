@@ -25,8 +25,7 @@ module WasteCarriersEngine
                    :has_required_data,
                    :has_addresses,
                    :has_key_people,
-                   workflow_state: "renewal_complete_form",
-                   account_email: user.email)
+                   workflow_state: "renewal_complete_form")
           end
 
           context "when the workflow_state is correct" do

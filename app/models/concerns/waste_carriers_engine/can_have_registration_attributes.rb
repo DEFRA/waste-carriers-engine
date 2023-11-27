@@ -41,7 +41,6 @@ module WasteCarriersEngine
                                     :metaData
 
       field :accessCode, as: :address_code,                                 type: String
-      field :accountEmail, as: :account_email,                              type: String
       field :businessType, as: :business_type,                              type: String
       field :companyName, as: :company_name,                                type: String
       field :company_no,                                                    type: String # May include letters, despite name

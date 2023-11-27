@@ -30,7 +30,6 @@ module WasteCarriersEngine
           let(:transient_registration) do
             create(:new_registration,
                    :has_required_data,
-                   account_email: user.email,
                    workflow_state: "check_registered_company_name_form")
           end
 

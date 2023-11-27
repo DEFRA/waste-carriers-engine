@@ -18,7 +18,6 @@ module WasteCarriersEngine
                          workflow_state: transient_registration.workflow_state,
                          workflow_history: transient_registration.workflow_history.to_s,
                          tier: transient_registration.tier,
-                         account_email: transient_registration.account_email,
                          expires_on: transient_registration.expires_on,
                          renew_token: renew_token(transient_registration),
                          "metaData.route": transient_registration.metaData&.route,

@@ -31,8 +31,7 @@ RSpec.shared_examples "POST renewal form" do |form, options|
   context "when a renewal is in progress" do
     let(:transient_registration) do
       create(:renewing_registration,
-             :has_required_data,
-             account_email: user.email)
+             :has_required_data)
     end
 
     context "when the workflow_state matches the requested form" do

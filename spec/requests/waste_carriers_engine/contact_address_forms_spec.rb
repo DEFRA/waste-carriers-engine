@@ -23,7 +23,6 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    :has_postcode,
-                   account_email: user.email,
                    workflow_state: "contact_address_form")
           end
 
@@ -50,7 +49,6 @@ module WasteCarriersEngine
                 create(:renewing_registration,
                        :has_required_data,
                        :has_addresses,
-                       account_email: user.email,
                        workflow_state: "contact_address_form")
               end
 
@@ -72,7 +70,6 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    :has_postcode,
-                   account_email: user.email,
                    workflow_state: "renewal_start_form")
           end
 
@@ -102,7 +99,6 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    :has_postcode,
-                   account_email: user.email,
                    workflow_state: "contact_address_form")
           end
 
@@ -121,7 +117,6 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    :has_postcode,
-                   account_email: user.email,
                    workflow_state: "renewal_start_form")
           end
 

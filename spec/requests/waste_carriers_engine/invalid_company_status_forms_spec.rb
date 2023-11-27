@@ -10,7 +10,6 @@ module WasteCarriersEngine
       let(:transient_registration) do
         create(:renewing_registration,
                :has_required_data,
-               account_email: user.email,
                workflow_state: "invalid_company_status_form")
       end
       let(:user) { create(:user) }

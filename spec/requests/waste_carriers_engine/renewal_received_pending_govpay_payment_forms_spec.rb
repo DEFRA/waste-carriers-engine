@@ -25,8 +25,7 @@ module WasteCarriersEngine
             create(
               :renewing_registration,
               :has_unpaid_balance,
-              workflow_state: "renewal_received_pending_govpay_payment_form",
-              account_email: user.email
+              workflow_state: "renewal_received_pending_govpay_payment_form"
             )
           end
 

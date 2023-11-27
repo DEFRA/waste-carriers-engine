@@ -5,17 +5,12 @@ source "https://rubygems.org"
 ruby "3.2.2"
 
 # Temporary workaround until we implement webpack assets
-
 # See: https://github.com/sass/sassc-rails/issues/114
-
 gem "sassc-rails"
 
 # Declare your gem's dependencies in waste_carriers_engine.gemspec.
-
 # Bundler will treat runtime dependencies like base dependencies, and
-
 # development dependencies will be added by default to the :development group.
-
 gemspec
 
 # GOV.UK styling

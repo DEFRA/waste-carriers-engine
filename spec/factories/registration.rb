@@ -7,7 +7,6 @@ FactoryBot.define do
     end
 
     trait :has_required_data do
-      account_email { "foo@example.com" }
       business_type { "limitedCompany" }
       company_name { "Acme Waste" }
       company_no { "09360070" } # We need to use a valid company number
@@ -65,7 +64,6 @@ FactoryBot.define do
     end
 
     trait :has_required_overseas_data do
-      account_email { "foo@example.com" }
       business_type { "overseas" }
       company_name { "Acme Waste" }
       contact_email { "foo@example.com" }

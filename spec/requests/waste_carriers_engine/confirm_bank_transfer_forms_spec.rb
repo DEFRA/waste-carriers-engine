@@ -19,7 +19,6 @@ module WasteCarriersEngine
             create(:renewing_registration,
                    :has_required_data,
                    :has_unpaid_balance,
-                   account_email: user.email,
                    workflow_state: "confirm_bank_transfer_form")
           end
 
