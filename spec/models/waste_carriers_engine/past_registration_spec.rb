@@ -27,6 +27,22 @@ module WasteCarriersEngine
         expect(past_registration.registered_address).to eq(registration.registered_address)
       end
 
+      context "with non-copyable attribute values" do
+        # Non-copyable attributes include legacy attributes which may have values in the DB
+        # but no accessors in the model, so we need to populate test values below the mongoid layer.
+        before do
+          WasteCarriersEngine::Registration.collection.update_one(
+            { regIdentifier: registration.regIdentifier },
+            { "$set": { accountEmail: "foo@example.com" } }
+          )
+          registration.reload
+        end
+
+        it "builds without error" do
+          expect { described_class.build_past_registration(registration) }.not_to raise_error
+        end
+      end
+
       context "when :edit is given as an argument" do
         let(:past_registration) { described_class.build_past_registration(registration, :edit) }
 

@@ -21,6 +21,7 @@ module WasteCarriersEngine
 
       attributes = registration.attributes.except(
         "_id",
+        "accountEmail",
         "past_registrations",
         "locking_name",
         "locked_at",

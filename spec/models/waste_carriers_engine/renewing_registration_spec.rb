@@ -83,6 +83,24 @@ module WasteCarriersEngine
           expect(renewing_registration.contact_email).to be_nil
         end
       end
+
+      context "with non-copyable attribute values" do
+        let(:registration) { create(:registration, :has_required_data) }
+
+        # Non-copyable attributes include legacy attributes which may have values in the DB
+        # but no accessors in the model, so we need to populate test values below the mongoid layer.
+        before do
+          WasteCarriersEngine::Registration.collection.update_one(
+            { regIdentifier: registration.regIdentifier },
+            { "$set": { accountEmail: "foo@example.com" } }
+          )
+          registration.reload
+        end
+
+        it "builds without error" do
+          expect { described_class.new(reg_identifier: registration.reg_identifier) }.not_to raise_error
+        end
+      end
     end
 
     describe "status" do

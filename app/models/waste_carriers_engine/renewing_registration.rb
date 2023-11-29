@@ -14,26 +14,27 @@ module WasteCarriersEngine
 
     COPY_DATA_OPTIONS = {
       ignorable_attributes: %w[_id
-                               otherBusinesses
-                               renew_token
-                               isMainService
+                               accountEmail
                                constructionWaste
-                               onlyAMF
-                               key_people
-                               financeDetails
-                               declaredConvictions
+                               contactEmail
                                conviction_search_result
                                conviction_sign_offs
-                               declaration
-                               past_registrations
                                copy_cards
-                               receipt_email
-                               firstName
-                               lastName
-                               phoneNumber
-                               contactEmail
+                               declaration
+                               declaredConvictions
                                deregistration_token
-                               deregistration_token_created_at],
+                               deregistration_token_created_at
+                               isMainService
+                               firstName
+                               financeDetails
+                               key_people
+                               lastName
+                               onlyAMF
+                               otherBusinesses
+                               past_registrations
+                               phoneNumber
+                               receipt_email
+                               renew_token],
       remove_revoked_reason: true
     }.freeze
 
