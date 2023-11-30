@@ -76,6 +76,6 @@ Gem::Specification.new do |s|
   # Used to generate a PDF from HTML, in our case, the users certificate
   s.add_dependency "wicked_pdf", "~> 2.6.3"
 
-  s.add_dependency "defra_ruby_area", "~> 2.1"
+  s.add_dependency "defra_ruby_area", "~> 2.2"
 
 end
