@@ -252,7 +252,6 @@ module WasteCarriersEngine
 
       it_behaves_like "returns all 'temp_' attribute names and no more", WasteCarriersEngine::NewRegistration
       it_behaves_like "returns all 'temp_' attribute names and no more", WasteCarriersEngine::RenewingRegistration
-      it_behaves_like "returns all 'temp_' attribute names and no more", WasteCarriersEngine::EditRegistration
     end
 
     describe "#next_state!" do

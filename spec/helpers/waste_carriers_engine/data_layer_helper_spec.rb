@@ -27,41 +27,11 @@ module WasteCarriersEngine
       end
 
       describe "journeys" do
-        context "when the transient_registration is a CeasedOrRevokedRegistration" do
-          let(:class_double) { "WasteCarriersEngine::CeasedOrRevokedRegistration" }
-
-          it "returns the correct value" do
-            expected_string = "'journey': 'cease_or_revoke'"
-
-            expect(helper.data_layer(transient_registration)).to include(expected_string)
-          end
-        end
-
-        context "when the transient_registration is an EditRegistration" do
-          let(:class_double) { "WasteCarriersEngine::EditRegistration" }
-
-          it "returns the correct value" do
-            expected_string = "'journey': 'edit'"
-
-            expect(helper.data_layer(transient_registration)).to include(expected_string)
-          end
-        end
-
         context "when the transient_registration is a NewRegistration" do
           let(:class_double) { "WasteCarriersEngine::NewRegistration" }
 
           it "returns the correct value" do
             expected_string = "'journey': 'new'"
-
-            expect(helper.data_layer(transient_registration)).to include(expected_string)
-          end
-        end
-
-        context "when the transient_registration is an OrderCopyCardsRegistration" do
-          let(:class_double) { "WasteCarriersEngine::OrderCopyCardsRegistration" }
-
-          it "returns the correct value" do
-            expected_string = "'journey': 'order_copy_cards'"
 
             expect(helper.data_layer(transient_registration)).to include(expected_string)
           end

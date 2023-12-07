@@ -38,7 +38,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      # Default behavuour - permit no params
+      # Default behaviour - permit no params
       # Override in subclasses when needed
       params.permit
     end

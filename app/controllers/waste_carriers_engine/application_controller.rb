@@ -18,7 +18,7 @@ module WasteCarriersEngine
 
     rescue_from StandardError do |e|
       Airbrake.notify e
-      Rails.logger.error "Unhandled exception: #{e}"
+      Rails.logger.error "Unhandled exception: #{e}\n#{e.backtrace}"
       log_transient_registration_details("Uncaught system error", e, @transient_registration)
       redirect_to page_path("system_error")
     end

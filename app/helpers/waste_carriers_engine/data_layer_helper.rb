@@ -27,14 +27,8 @@ module WasteCarriersEngine
       subtype_name = transient_registration.class.name
 
       case subtype_name
-      when "WasteCarriersEngine::CeasedOrRevokedRegistration"
-        :cease_or_revoke
-      when "WasteCarriersEngine::EditRegistration"
-        :edit
       when "WasteCarriersEngine::NewRegistration"
         :new
-      when "WasteCarriersEngine::OrderCopyCardsRegistration"
-        :order_copy_cards
       when "WasteCarriersEngine::RenewingRegistration"
         :renew
       when "WasteCarriersEngine::DeregisteringRegistration"

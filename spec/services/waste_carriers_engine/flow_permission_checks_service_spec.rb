@@ -11,9 +11,6 @@ module WasteCarriersEngine
 
       before do
         allow(BlankPermissionCheckService).to receive(:run).and_return(result)
-        allow(CeasedOrRevokedRegistrationPermissionChecksService).to receive(:run).and_return(result)
-        allow(EditRegistrationPermissionChecksService).to receive(:run).and_return(result)
-        allow(OrderCopyCardsRegistrationPermissionChecksService).to receive(:run).and_return(result)
         allow(RenewingRegistrationPermissionChecksService).to receive(:run).and_return(result)
       end
 
@@ -44,36 +41,6 @@ module WasteCarriersEngine
           expect(described_class.run(params)).to eq(result)
 
           expect(BlankPermissionCheckService).to have_received(:run).with(params)
-        end
-      end
-
-      context "when the transient object is an edit registration" do
-        let(:transient_registration) { EditRegistration.new }
-
-        it "runs the correct permission check service and return a result" do
-          expect(described_class.run(params)).to eq(result)
-
-          expect(EditRegistrationPermissionChecksService).to have_received(:run).with(params)
-        end
-      end
-
-      context "when the transient object is an order copy cards registration" do
-        let(:transient_registration) { OrderCopyCardsRegistration.new }
-
-        it "runs the correct permission check service and return a result" do
-          expect(described_class.run(params)).to eq(result)
-
-          expect(OrderCopyCardsRegistrationPermissionChecksService).to have_received(:run).with(params)
-        end
-      end
-
-      context "when the transient object is an CeasedOrRevokedRegistration" do
-        let(:transient_registration) { CeasedOrRevokedRegistration.new }
-
-        it "runs the correct permission check service and return a result" do
-          expect(described_class.run(params)).to eq(result)
-
-          expect(CeasedOrRevokedRegistrationPermissionChecksService).to have_received(:run).with(params)
         end
       end
 
