@@ -45,22 +45,26 @@ module WasteCarriersEngine
     end
 
     describe "POST renew_registration_forms_path" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
 
-        before do
-          sign_in(user)
+      context "when a valid transient registration exists" do
+        let(:transient_registration) do
+          create(:new_registration,
+                 workflow_state: "renew_registration_form")
         end
 
-        context "when a valid transient registration exists" do
-          let(:transient_registration) do
-            create(:new_registration,
-                   workflow_state: "renew_registration_form")
+        context "when valid params are submitted and the registration can be renewed" do
+          let(:registration) { create(:registration, :has_required_data, :expires_soon) }
+          let(:valid_params) { { temp_lookup_number: registration.reg_identifier } }
+
+          it "returns a 302 response and redirects to the renewal_start form" do
+            post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
+
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
           end
 
-          context "when valid params are submitted and the registration can be renewed" do
-            let(:registration) { create(:registration, :has_required_data, :expires_soon) }
-            let(:valid_params) { { temp_lookup_number: registration.reg_identifier } }
+          context "when the params are lowercase" do
+            let(:valid_params) { { temp_lookup_number: registration.reg_identifier.downcase } }
 
             it "returns a 302 response and redirects to the renewal_start form" do
               post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
@@ -68,61 +72,50 @@ module WasteCarriersEngine
               expect(response).to have_http_status(:found)
               expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
             end
-
-            context "when the params are lowercase" do
-              let(:valid_params) { { temp_lookup_number: registration.reg_identifier.downcase } }
-
-              it "returns a 302 response and redirects to the renewal_start form" do
-                post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
-
-                expect(response).to have_http_status(:found)
-                expect(response).to redirect_to(new_renewal_start_form_path(registration.reg_identifier))
-              end
-            end
-          end
-
-          context "when valid params are submitted and the registration cannot be renewed" do
-            let(:registration) { create(:registration, :has_required_data, :expires_later) }
-            let(:valid_params) { { temp_lookup_number: registration.reg_identifier } }
-
-            it "returns a 200 response and renders the new template" do
-              post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
-
-              expect(response).to have_http_status(:ok)
-              expect(response).to render_template("waste_carriers_engine/renew_registration_forms/new")
-            end
-          end
-
-          context "when invalid params are submitted" do
-            let(:invalid_params) { { company_no: "" } }
-
-            it "returns a 200 response and renders the new template" do
-              post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: invalid_params }
-
-              expect(response).to have_http_status(:ok)
-              expect(response).to render_template("waste_carriers_engine/renew_registration_forms/new")
-            end
           end
         end
 
-        context "when the transient registration is in the wrong state" do
-          let(:transient_registration) do
-            create(:renewing_registration,
-                   workflow_state: "contact_name_form")
-          end
+        context "when valid params are submitted and the registration cannot be renewed" do
+          let(:registration) { create(:registration, :has_required_data, :expires_later) }
+          let(:valid_params) { { temp_lookup_number: registration.reg_identifier } }
 
-          let(:valid_params) { { company_no: "01234567" } }
-
-          it "returns a 302 response, redirects to the correct form for the state and set magic link route to false" do
+          it "returns a 200 response and renders the new template" do
             post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
 
-            transient_registration.reload
-
-            expect(response).to have_http_status(:found)
-            expect(response).to redirect_to(new_contact_name_form_path(transient_registration[:token]))
-
-            expect(transient_registration.from_magic_link).to be_falsey
+            expect(response).to have_http_status(:ok)
+            expect(response).to render_template("waste_carriers_engine/renew_registration_forms/new")
           end
+        end
+
+        context "when invalid params are submitted" do
+          let(:invalid_params) { { company_no: "" } }
+
+          it "returns a 200 response and renders the new template" do
+            post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: invalid_params }
+
+            expect(response).to have_http_status(:ok)
+            expect(response).to render_template("waste_carriers_engine/renew_registration_forms/new")
+          end
+        end
+      end
+
+      context "when the transient registration is in the wrong state" do
+        let(:transient_registration) do
+          create(:renewing_registration,
+                 workflow_state: "contact_name_form")
+        end
+
+        let(:valid_params) { { company_no: "01234567" } }
+
+        it "returns a 302 response, redirects to the correct form for the state and set magic link route to false" do
+          post renew_registration_forms_path(transient_registration[:token]), params: { renew_registration_form: valid_params }
+
+          transient_registration.reload
+
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(new_contact_name_form_path(transient_registration[:token]))
+
+          expect(transient_registration.from_magic_link).to be_falsey
         end
       end
     end

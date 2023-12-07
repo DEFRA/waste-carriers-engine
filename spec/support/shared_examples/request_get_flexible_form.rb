@@ -7,71 +7,64 @@
 # If the user loads one of these forms, we change the workflow_state to match their request,
 # so the browser and the database agree about what form the user is currently using.
 RSpec.shared_examples "GET flexible form" do |form|
-  context "when a valid user is signed in" do
-    let(:user) { create(:user) }
 
-    before do
-      sign_in(user)
+  context "when a renewal is in progress" do
+    let(:transient_registration) do
+      create(:renewing_registration,
+             :has_required_data,
+             :has_addresses,
+             :has_key_people,
+             workflow_state: form)
     end
 
-    context "when a renewal is in progress" do
-      let(:transient_registration) do
-        create(:renewing_registration,
-               :has_required_data,
-               :has_addresses,
-               :has_key_people,
-               workflow_state: form)
+    context "when the workflow_state matches the request" do
+      it "loads the requested page" do
+        get new_path_for(form, transient_registration)
+        expect(response).to render_template("#{form}s/new")
       end
+    end
 
-      context "when the workflow_state matches the request" do
-        it "loads the requested page" do
-          get new_path_for(form, transient_registration)
-          expect(response).to render_template("#{form}s/new")
-        end
-      end
-
-      context "when the workflow_state is a flexible form" do
-        let(:saved_state) do
-          # We need to pick a different but also valid state for the transient_registration
-          # 'cbd_type_form' is the default, unless this would actually match!
-          if form == "cbd_type_form"
-            "business_type_form"
-          else
-            "cbd_type_form"
-          end
-        end
-
-        before do
-          transient_registration.update_attributes(workflow_state: saved_state)
-        end
-
-        it "updates the workflow_state to match the requested page and loads the requested page" do
-          get new_path_for(form, transient_registration)
-
-          expect(transient_registration.reload[:workflow_state]).to eq(form)
-          expect(response).to render_template("#{form}s/new")
+    context "when the workflow_state is a flexible form" do
+      let(:saved_state) do
+        # We need to pick a different but also valid state for the transient_registration
+        # 'cbd_type_form' is the default, unless this would actually match!
+        if form == "cbd_type_form"
+          "business_type_form"
+        else
+          "cbd_type_form"
         end
       end
 
-      # Once users are in a locked-in workflow state, for example, the end of the journey,
-      # we don't want them to be able to skip back to an earlier page any more.
-      context "when the workflow_state is a locked-in form" do
-        let(:saved_state) do
-          "payment_summary_form"
-        end
+      before do
+        transient_registration.update_attributes(workflow_state: saved_state)
+      end
 
-        before do
-          transient_registration.update_attributes(workflow_state: saved_state)
-        end
+      it "updates the workflow_state to match the requested page and loads the requested page" do
+        get new_path_for(form, transient_registration)
 
-        it "does not change the workflow_state and redirects to the saved workflow_state" do
-          workflow_state = transient_registration[:workflow_state]
+        expect(transient_registration.reload[:workflow_state]).to eq(form)
+        expect(response).to render_template("#{form}s/new")
+      end
+    end
 
-          get new_path_for(form, transient_registration)
+    # Once users are in a locked-in workflow state, for example, the end of the journey,
+    # we don't want them to be able to skip back to an earlier page any more.
+    context "when the workflow_state is a locked-in form" do
+      let(:saved_state) do
+        "payment_summary_form"
+      end
 
-          expect(transient_registration.reload[:workflow_state]).to eq(saved_state)
-          expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
-        end
+      before do
+        transient_registration.update_attributes(workflow_state: saved_state)
+      end
+
+      it "does not change the workflow_state and redirects to the saved workflow_state" do
+        workflow_state = transient_registration[:workflow_state]
+
+        get new_path_for(form, transient_registration)
+
+        expect(transient_registration.reload[:workflow_state]).to eq(saved_state)
+        expect(response).to redirect_to(new_path_for(workflow_state, transient_registration))
       end
     end
   end

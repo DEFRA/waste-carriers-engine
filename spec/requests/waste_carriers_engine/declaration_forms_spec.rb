@@ -27,29 +27,22 @@ module WasteCarriersEngine
     end
 
     describe "POST declaration_forms_path" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
 
-        before do
-          sign_in(user)
+      context "when a valid transient registration exists" do
+        let!(:transient_registration) do
+          create(:renewing_registration,
+                 :has_required_data,
+                 :has_key_people,
+                 workflow_state: "declaration_form")
         end
 
-        context "when a valid transient registration exists" do
-          let!(:transient_registration) do
-            create(:renewing_registration,
-                   :has_required_data,
-                   :has_key_people,
-                   workflow_state: "declaration_form")
-          end
+        let(:params) { { declaration: 1 } }
 
-          let(:params) { { declaration: 1 } }
+        it "creates new conviction_search_results for the registration and key people" do
+          post_form_with_params("declaration_form", transient_registration.token, params)
 
-          it "creates new conviction_search_results for the registration and key people" do
-            post_form_with_params("declaration_form", transient_registration.token, params)
-
-            expect(transient_registration.reload.conviction_search_result).not_to be_nil
-            expect(transient_registration.reload.key_people.first.conviction_search_result).not_to be_nil
-          end
+          expect(transient_registration.reload.conviction_search_result).not_to be_nil
+          expect(transient_registration.reload.key_people.first.conviction_search_result).not_to be_nil
         end
       end
     end

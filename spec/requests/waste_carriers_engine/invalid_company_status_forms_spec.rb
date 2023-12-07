@@ -12,11 +12,6 @@ module WasteCarriersEngine
                :has_required_data,
                workflow_state: "invalid_company_status_form")
       end
-      let(:user) { create(:user) }
-
-      before do
-        sign_in(user)
-      end
 
       it "redirects to new registration start form" do
         post_form_with_params(:invalid_company_status_form, transient_registration.token)

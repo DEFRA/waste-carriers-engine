@@ -19,43 +19,36 @@ module WasteCarriersEngine
     include_examples "GET flexible form", "check_registered_company_name_form"
 
     describe "GET check_registered_company_name_form_path" do
-      context "when a valid user is signed in" do
-        let(:user) { create(:user) }
 
-        before do
-          sign_in(user)
+      context "when check_registered_company_name_form is given a valid companies house number" do
+        let(:transient_registration) do
+          create(:new_registration,
+                 :has_required_data,
+                 workflow_state: "check_registered_company_name_form")
         end
 
-        context "when check_registered_company_name_form is given a valid companies house number" do
-          let(:transient_registration) do
-            create(:new_registration,
-                   :has_required_data,
-                   workflow_state: "check_registered_company_name_form")
+        it "displays the registered company name" do
+          get check_registered_company_name_forms_path(transient_registration[:token])
+          expect(CGI.unescapeHTML(response.body)).to include(company_name)
+        end
+
+        it "displays the registered company address" do
+          get check_registered_company_name_forms_path(transient_registration[:token])
+
+          company_address.each do |line|
+            expect(response.body).to include(line)
+          end
+        end
+
+        context "when the company house API is down" do
+          before do
+            allow(companies_house_service).to receive(:company_name).and_raise(StandardError)
           end
 
-          it "displays the registered company name" do
+          it "raises an error" do
             get check_registered_company_name_forms_path(transient_registration[:token])
-            expect(CGI.unescapeHTML(response.body)).to include(company_name)
-          end
 
-          it "displays the registered company address" do
-            get check_registered_company_name_forms_path(transient_registration[:token])
-
-            company_address.each do |line|
-              expect(response.body).to include(line)
-            end
-          end
-
-          context "when the company house API is down" do
-            before do
-              allow(companies_house_service).to receive(:company_name).and_raise(StandardError)
-            end
-
-            it "raises an error" do
-              get check_registered_company_name_forms_path(transient_registration[:token])
-
-              expect(response).to render_template("waste_carriers_engine/check_registered_company_name_forms/companies_house_down")
-            end
+            expect(response).to render_template("waste_carriers_engine/check_registered_company_name_forms/companies_house_down")
           end
         end
       end

@@ -4,11 +4,6 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ContactAddressReuseForms" do
-    before do
-      sign_in(user)
-    end
-
-    let(:user) { create(:user) }
 
     include_examples "GET flexible form", "contact_address_reuse_form"
 
