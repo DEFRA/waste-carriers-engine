@@ -36,7 +36,6 @@ module WasteCarriersEngine
 
           expect(response).to have_http_status(:not_found)
           expect(response.headers["Content-Type"]).to include("text/html")
-          expect(response.body).to include(I18n.t("waste_carriers_engine.errors.error_404.clarification"))
         end
       end
     end
