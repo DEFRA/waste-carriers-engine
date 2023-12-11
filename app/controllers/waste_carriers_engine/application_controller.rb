@@ -16,6 +16,11 @@ module WasteCarriersEngine
 
     default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
+    rescue_from ActionController::RoutingError do |e|
+      Rails.logger.error "Page not found: #{e}"
+      redirect_to page_path("error_404")
+    end
+
     rescue_from StandardError do |e|
       Airbrake.notify e
       Rails.logger.error "Unhandled exception: #{e}"
