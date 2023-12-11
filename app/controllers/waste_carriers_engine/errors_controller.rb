@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class ErrorsController < ApplicationController
+    before_action :set_html_response_format
+
     def show
       render(
         template: file_for(template),
@@ -37,6 +39,11 @@ module WasteCarriersEngine
 
     def exception
       request.env["action_dispatch.exception"]
+    end
+
+    # Changes the request format to HTML to always display the error pages
+    def set_html_response_format
+      request.format = :html
     end
   end
 end
