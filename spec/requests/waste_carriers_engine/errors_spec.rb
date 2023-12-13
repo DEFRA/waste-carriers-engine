@@ -29,6 +29,15 @@ module WasteCarriersEngine
           expect(response.body).to include(I18n.t("waste_carriers_engine.errors.error_404.clarification"))
         end
       end
+
+      it "always renders HTML error pages" do
+        rails_respond_without_detailed_exceptions do
+          get "/this-page-does-not-exist.xml"
+
+          expect(response).to have_http_status(:not_found)
+          expect(response.headers["Content-Type"]).to include("text/html")
+        end
+      end
     end
   end
 end
