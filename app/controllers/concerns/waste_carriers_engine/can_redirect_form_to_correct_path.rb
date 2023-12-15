@@ -13,9 +13,6 @@ module WasteCarriersEngine
       # new_state_name_path/:token or start_state_name_path?token=:token
       def form_path
         send("new_#{@transient_registration.workflow_state}_path".to_sym, token: @transient_registration.token)
-      rescue NoMethodError
-        # if unable to find the route in the engine, let the app try to resolve it
-        main_app.send("new_#{@transient_registration.workflow_state}_path".to_sym, token: @transient_registration.token)
       end
     end
   end
