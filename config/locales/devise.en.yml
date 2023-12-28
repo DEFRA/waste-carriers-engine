@@ -40,7 +40,7 @@ en:
         heading: Change your password
         password:
           label: "New password"
-          hint: "8 characters minimum"
+          hint: "14 characters minimum"
         password_confirmation:
           label: "New password confirmation"
         submit: "Change my password"
