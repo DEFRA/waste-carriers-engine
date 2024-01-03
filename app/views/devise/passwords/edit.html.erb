@@ -15,10 +15,21 @@
       <%= f.hidden_field :reset_password_token %>
 
       <%= f.govuk_password_field :password,
-          width: "one-half",
-          label: { text: t(".password.label") },
-          hint: { text: t(".password.hint") },
-          autocomplete: "off" %>
+        width: "one-half", 
+        label: { text: t(".password.label") }, 
+        autocomplete: "off" do %>
+        <span class="govuk-hint">
+          <%= t(".password.hint.text") %>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><%= t(".password.hint.list_item_1") %></li>
+            <li><%= t(".password.hint.list_item_2") %></li>
+            <li><%= t(".password.hint.list_item_3") %></li>
+            <li><%= t(".password.hint.list_item_4") %></li>
+            <li><%= t(".password.hint.list_item_5") %></li>
+            <li><%= t(".password.hint.list_item_6") %></li>
+          </ul>
+        </span>
+      <% end %>
 
       <%= f.govuk_password_field :password_confirmation,
           width: "one-half",
