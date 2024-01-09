@@ -20,7 +20,7 @@ module WasteCarriersEngine
             {
               token: transient_registration[:token],
               contact_address: {
-                house_number: "42",
+                house_number: "43",
                 address_line_1: "Foo Terrace",
                 town_city: "Barton"
               }
@@ -30,7 +30,7 @@ module WasteCarriersEngine
           it "updates the transient registration, returns a 302 response and redirects to the check_your_answers form" do
             post contact_address_manual_forms_path(transient_registration.token), params: { contact_address_manual_form: valid_params }
 
-            expect(transient_registration.reload.contact_address.house_number).to eq("42")
+            expect(transient_registration.reload.contact_address.house_number).to eq("43")
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_check_your_answers_form_path(transient_registration[:token]))
           end

@@ -21,7 +21,7 @@ module WasteCarriersEngine
           let(:valid_params) do
             {
               company_address: {
-                house_number: "42",
+                house_number: "41",
                 address_line_1: "Foo Terrace",
                 town_city: "Barton"
               }
@@ -29,9 +29,10 @@ module WasteCarriersEngine
           end
 
           it "updates the transient registration and returns a 302 response" do
+
             post company_address_manual_forms_path(transient_registration.token), params: { company_address_manual_form: valid_params }
 
-            expect(transient_registration.reload.registered_address.house_number).to eq("42")
+            expect(transient_registration.reload.registered_address.house_number).to eq("41")
             expect(response).to have_http_status(:found)
           end
 

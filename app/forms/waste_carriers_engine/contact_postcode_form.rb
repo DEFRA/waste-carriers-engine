@@ -4,7 +4,8 @@ module WasteCarriersEngine
   class ContactPostcodeForm < PostcodeForm
     delegate :temp_contact_postcode, to: :transient_registration
 
-    validates :temp_contact_postcode, "waste_carriers_engine/postcode": true
+    validates :temp_contact_postcode, "defra_ruby/validators/postcode": true
+    validates :temp_contact_postcode, "waste_carriers_engine/address_lookup": true
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating

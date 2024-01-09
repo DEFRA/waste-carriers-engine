@@ -2,76 +2,63 @@
 
 # Tests for fields using the PostcodeValidator
 RSpec.shared_examples "validate postcode" do |form_factory, field|
-  context "when a valid transient registration exists" do
-    let(:form) { build(form_factory, :has_required_data) }
 
-    context "when a postcode meets the requirements" do
-      before do
-        example_json = { postcode: "BS1 5AH" }
-        response = double(:response, results: [example_json], successful?: true)
+  let(:form) { build(form_factory, :has_required_data) }
 
-        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
-      end
+  describe "form validation" do
 
-      it "is valid" do
-        expect(form).to be_valid
-      end
+    before { form.transient_registration.send("#{field}=", postcode_string) }
+
+    context "when the postcode string is blank" do
+      let(:postcode_string) { "" }
+
+      it { expect(form).not_to be_valid }
     end
 
-    context "when a postcode is blank" do
-      before do
-        # Using 'send' because we have to pass in a field name (for example, instead of form.temp_company_postcode = ?)
-        # TODO: Temporary refactoring code
-        if form.respond_to? "#{field}="
-          form.send("#{field}=", "")
-        else
-          form.transient_registration.send("#{field}=", "")
-        end
-      end
+    context "when the postcode string is not close to valid postcode format" do
+      let(:postcode_string) { "foo" }
 
-      it "is not valid" do
-        expect(form).not_to be_valid
-      end
+      it { expect(form).not_to be_valid }
     end
 
-    context "when a postcode is in the wrong format" do
-      before do
-        # Using 'send' because we have to pass in a field name (for example, instead of form.temp_company_postcode = ?)
-        # TODO: Temporary refactoring code
-        if form.respond_to? "#{field}="
-          form.send("#{field}=", "foo")
-        else
-          form.transient_registration.send("#{field}=", "foo")
-        end
-      end
+    context "when the postcode string has leading 0 instead of O in the outcode" do
+      let(:postcode_string) { "0X129TF" }
 
-      it "is not valid" do
-        expect(form).not_to be_valid
-      end
+      it { expect(form).not_to be_valid }
     end
 
-    context "when a postcode has no matches" do
-      before do
-        response = double(:response, successful?: false, error: DefraRuby::Address::NoMatchError.new)
+    context "when the postcode string has trailing O instead of 0 in the outcode" do
+      let(:postcode_string) { "SSO 9SL" }
 
-        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
-      end
-
-      it "is not valid" do
-        expect(form).not_to be_valid
-      end
+      it { expect(form).not_to be_valid }
     end
+
+    context "when the postcode string has leading O instead of 0 in the incode" do
+      let(:postcode_string) { "SS0 OSL" }
+
+      it { expect(form).not_to be_valid }
+    end
+  end
+
+  describe "handle OSPlacesAddressLookupService responses" do
+    before { allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response) }
 
     context "when a postcode search returns an error" do
-      before do
-        response = double(:response, successful?: false, error: "foo")
+      let(:response) { double(:response, successful?: false, error: "foo") }
 
-        allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
-      end
+      it { expect(form).to be_valid }
+    end
 
-      it "is valid" do
-        expect(form).to be_valid
-      end
+    context "when a postcode search returns no matches" do
+      let(:response) { double(:response, successful?: false, error: DefraRuby::Address::NoMatchError.new) }
+
+      it { expect(form).not_to be_valid }
+    end
+
+    context "when a postcode search returns a match" do
+      let(:response) { double(:response, results: [{ postcode: "BS1 5AH" }], successful?: true) }
+
+      it { expect(form).to be_valid }
     end
   end
 end
