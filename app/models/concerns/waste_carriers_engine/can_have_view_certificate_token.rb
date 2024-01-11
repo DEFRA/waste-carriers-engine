@@ -27,7 +27,8 @@ module WasteCarriersEngine
     end
 
     def view_certificate_token_expires_at
-      @view_certificate_token_validity_period = ENV.fetch("WCRS_VIEW_CERTIFICATE_TOKEN_VALIDITY_PERIOD", DEFAULT_TOKEN_VALIDITY_PERIOD).to_i
+      @view_certificate_token_validity_period = ENV.fetch("WCRS_VIEW_CERTIFICATE_TOKEN_VALIDITY_PERIOD",
+                                                          DEFAULT_TOKEN_VALIDITY_PERIOD).to_i
       view_certificate_token_created_at + @view_certificate_token_validity_period.days
     end
   end
