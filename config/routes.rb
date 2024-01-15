@@ -338,26 +338,32 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" }
 
     get "/back", to: "forms#go_back", as: "go_back_forms"
+  end
 
+  namespace :registrations, param: :reg_identifier, path: "/bo/registrations" do
+    get "certificate", to: "certificates#show"
+    get "pdf_certificate", to: "certificates#pdf"
+    get "certificate_confirm_email", to: "certificates#confirm_email"
+    post "certificate_process_email", to: "certificates#process_email"
   end
 
   mount DefraRubyEmail::Engine => "/email"
 
   # See http://patrickperey.com/railscast-053-handling-exceptions/
   get "(errors)/:status",
-      to: "errors#show",
-      constraints: { status: /\d{3}/ },
-      as: "error"
+    to: "errors#show",
+    constraints: { status: /\d{3}/ },
+    as: "error"
 
   # Renew via magic link token
   get "/renew/:token",
-      to: "renews#new",
-      as: "renew"
+    to: "renews#new",
+    as: "renew"
 
   # Deregister via magic link token
   get "/deregister/:token",
-      to: "deregisters#new",
-      as: "deregister"
+    to: "deregisters#new",
+    as: "deregister"
 
   # Static pages with HighVoltage
   resources :pages, only: [:show], controller: "pages"

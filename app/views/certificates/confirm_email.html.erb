@@ -6,7 +6,7 @@
       </div>
     <% end %>
 
-    <%= form_with url: registration_external_certificate_process_email_path(@registration.reg_identifier), method: :post, html: { class: 'govuk-form-group' } do |form| %>
+    <%= form_with url: registration_certificate_process_email_path(@registration.reg_identifier), method: :post, html: { class: 'govuk-form-group' } do |form| %>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h1 class="govuk-fieldset__heading">
