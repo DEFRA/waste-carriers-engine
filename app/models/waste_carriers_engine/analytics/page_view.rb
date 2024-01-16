@@ -7,7 +7,7 @@ module WasteCarriersEngine
 
       store_in collection: "analytics_page_views"
 
-      belongs_to :user_journey
+      embedded_in :user_journey
 
       field :page, type: String
       field :time, type: DateTime

@@ -27,7 +27,7 @@ module WasteCarriersEngine
         @current_user = current_user
         @journey = find_or_create_user_journey(journey_type, token)
 
-        PageView.create!(page: page, time: Time.zone.now, route: route, user_journey: journey)
+        journey.page_views.create!(page:, route:, time: Time.zone.now)
 
         if UserJourney::COMPLETION_PAGES.include?(page)
           journey.complete_journey(transient_registration)

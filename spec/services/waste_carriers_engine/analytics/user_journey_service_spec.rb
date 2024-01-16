@@ -23,7 +23,7 @@ module WasteCarriersEngine
         shared_examples "new journey" do
           it { expect(UserJourney).to have_received(:new) }
           it { expect(PageView).to have_received(:new) }
-          it { expect(PageView.last.page).to eq page }
+          it { expect(UserJourney.last.page_views.last.page).to eq page }
           it { expect(UserJourney.last.token).to eq token }
           it { expect(UserJourney.last.journey_type).to eq expected_journey_type }
         end
@@ -106,7 +106,7 @@ module WasteCarriersEngine
           end
 
           it { expect(UserJourney.last.started_route).to eq "DIGITAL" }
-          it { expect(PageView.last.route).to eq "DIGITAL" }
+          it { expect(UserJourney.last.page_views.last.route).to eq "DIGITAL" }
         end
 
         context "when it runs in the back office" do
@@ -117,7 +117,7 @@ module WasteCarriersEngine
           end
 
           it { expect(UserJourney.last.started_route).to eq "ASSISTED_DIGITAL" }
-          it { expect(PageView.last.route).to eq "ASSISTED_DIGITAL" }
+          it { expect(UserJourney.last.page_views.last.route).to eq "ASSISTED_DIGITAL" }
         end
 
         context "with a logged-in user" do
