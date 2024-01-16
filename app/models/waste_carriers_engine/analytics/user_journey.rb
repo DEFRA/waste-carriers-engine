@@ -8,11 +8,13 @@ module WasteCarriersEngine
 
       store_in collection: "analytics_user_journeys"
 
-      has_many :page_views, dependent: :destroy
+      embeds_many :page_views
 
       validates :journey_type, inclusion: { in: %w[registration renewal] }
       validates :started_route, inclusion: { in: %w[DIGITAL ASSISTED_DIGITAL] }
       validates :token, presence: true
+
+      START_CUTOFF_PAGE = "location_form"
 
       COMPLETION_PAGES = %w[
         registration_completed_form
@@ -42,6 +44,7 @@ module WasteCarriersEngine
       scope :completed, -> { where.not(completed_at: nil) }
       scope :completed_digital, -> { where(completed_route: "DIGITAL") }
       scope :completed_assisted_digital, -> { where(completed_route: "ASSISTED_DIGITAL") }
+      scope :reached_start_cutoff_page, -> { where("page_views.page": START_CUTOFF_PAGE) }
       scope :date_range, lambda { |start_date, end_date|
         where(
           :created_at.gte => start_date.midnight,

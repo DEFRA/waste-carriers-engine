@@ -33,6 +33,16 @@ module WasteCarriersEngine
         it { expect(described_class.started_assisted_digital.length).to eq count_2 }
       end
 
+      describe "reached_start_cutoff_page" do
+        let!(:journey_initial_page_only) { create(:user_journey, visited_pages: %w[start_form]) }
+        let!(:journey_to_location_page) { create(:user_journey, visited_pages: %w[start_form location_form]) }
+        let!(:journey_past_location_page) { create(:user_journey, visited_pages: %w[start_form location_form business_type_form]) }
+
+        it { expect(described_class.reached_start_cutoff_page).not_to include(journey_initial_page_only) }
+        it { expect(described_class.reached_start_cutoff_page).to include(journey_to_location_page) }
+        it { expect(described_class.reached_start_cutoff_page).to include(journey_past_location_page) }
+      end
+
       describe "completion scopes" do
         before do
           create_list(:user_journey, count_1, :completed_digital)
