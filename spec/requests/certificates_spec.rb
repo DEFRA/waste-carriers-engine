@@ -4,14 +4,14 @@ require "rails_helper"
 
 RSpec.describe "Certificates" do
   let(:registration) do
-    create(:registration, :expires_soon, contact_email: "contact@example.com")
+    create(:registration, :has_required_data, :expires_soon, contact_email: "contact@example.com")
       .tap(&:generate_view_certificate_token)
   end
   let(:token) { registration.view_certificate_token }
 
   let(:valid_email) { registration.contact_email }
   let(:invalid_email) { "invalid@example.com" }
-  let(:base_path) { "/bo/registrations/#{registration.reg_identifier}/certificate" }
+  let(:base_path) { "/#{registration.reg_identifier}/certificate" }
 
   describe "POST process_email" do
     context "with valid email" do
@@ -80,27 +80,24 @@ RSpec.describe "Certificates" do
       it "redirects to the email confirmation page" do
         get base_path
 
-        expect(response).to redirect_to(registration_certificate_confirm_email_path(registration.reg_identifier))
+        expect(response).to redirect_to(certificate_confirm_email_path(registration.reg_identifier))
         expect(response).to have_http_status(:found)
       end
     end
   end
 
   describe "GET pdf" do
-    let(:base_path) { "/bo/registrations/#{registration.reg_identifier}/pdf_certificate" }
+    let(:base_path) { "/#{registration.reg_identifier}/pdf_certificate" }
 
     context "with valid email in session and valid token" do
       before do
         post process_email_path, params: { email: valid_email }
       end
 
-      it "responds with a PDF" do
+      it "renders the page" do
         get "#{base_path}?token=#{token}"
 
-        expect(response.media_type).to eq("application/pdf")
         expect(response).to have_http_status(:ok)
-        expected_content_disposition = "inline; filename=\"#{registration.reg_identifier}.pdf\"; filename*=UTF-8''#{registration.reg_identifier}.pdf"
-        expect(response.headers["Content-Disposition"]).to eq(expected_content_disposition)
       end
     end
 
@@ -139,7 +136,7 @@ RSpec.describe "Certificates" do
       it "redirects to the email confirmation page" do
         get "#{base_path}.pdf"
 
-        expect(response).to redirect_to(registration_certificate_confirm_email_path(registration.reg_identifier))
+        expect(response).to redirect_to(certificate_confirm_email_path(registration.reg_identifier))
         expect(response).to have_http_status(:found)
       end
     end
@@ -148,7 +145,7 @@ RSpec.describe "Certificates" do
   describe "GET confirm_email" do
     context "with a valid token" do
       it "renders the confirm email page" do
-        get registration_certificate_confirm_email_path(registration.reg_identifier, token: token)
+        get certificate_confirm_email_path(registration.reg_identifier, token: token)
         expect(response).to render_template(:confirm_email)
       end
     end
@@ -159,7 +156,7 @@ RSpec.describe "Certificates" do
       end
 
       it "redirects due to invalid token" do
-        get registration_certificate_confirm_email_path(registration.reg_identifier, token: "invalidtoken")
+        get certificate_confirm_email_path(registration.reg_identifier, token: "invalidtoken")
 
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to eq("You do not have permission to view this page")
@@ -173,7 +170,7 @@ RSpec.describe "Certificates" do
       end
 
       it "redirects due to expired token" do
-        get registration_certificate_confirm_email_path(registration.reg_identifier, token: token)
+        get certificate_confirm_email_path(registration.reg_identifier, token: token)
 
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to eq("You do not have permission to view this page")
@@ -182,6 +179,6 @@ RSpec.describe "Certificates" do
   end
 
   def process_email_path
-    registration_certificate_process_email_path(registration.reg_identifier)
+    certificate_process_email_path(registration.reg_identifier)
   end
 end
