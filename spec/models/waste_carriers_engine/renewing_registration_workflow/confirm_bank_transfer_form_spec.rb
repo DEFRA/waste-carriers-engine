@@ -23,7 +23,7 @@ module WasteCarriersEngine
 
             expect(Notify::RenewalPendingPaymentEmailService)
               .to have_received(:run)
-              .with(registration: renewing_registration)
+              .with(registration: renewing_registration.registration)
               .once
           end
         end
