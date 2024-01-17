@@ -38,15 +38,13 @@ table th {
   margin-bottom: 20px;
 }
 
-.certificate_table, .other-tables {
+.certificate_table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-.certificate_table th, .certificate_table td,
-.other-tables th, .other-tables td {
-  border: 1px solid #ddd;
+.certificate_table th, .certificate_table td {
   padding: 8px;
   text-align: left;
 }

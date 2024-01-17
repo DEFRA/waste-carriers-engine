@@ -32,6 +32,7 @@ module WasteCarriersEngine
 
         it "updates the token timestamp" do
           registrable.generate_view_certificate_token
+          Timecop.travel(1.second.from_now)
           expect { registrable.generate_view_certificate_token }.to change(registrable, :view_certificate_token_created_at)
         end
       end
