@@ -3,9 +3,9 @@
 module WasteCarriersEngine
   module CanHaveViewCertificateToken
     extend ActiveSupport::Concern
-    include Mongoid::Document
-    # 6 months
-    DEFAULT_TOKEN_VALIDITY_PERIOD = 183
+    include TokenFunctionality
+
+    DEFAULT_TOKEN_VALIDITY_PERIOD = 183 # days (6 months)
 
     included do
       field :view_certificate_token, type: String
@@ -13,23 +13,12 @@ module WasteCarriersEngine
     end
 
     def generate_view_certificate_token
-      self.view_certificate_token_created_at = Time.now
-      self.view_certificate_token = SecureRandom.uuid
-      save!
-
-      view_certificate_token
+      generate_token(:view_certificate_token, :view_certificate_token_created_at)
     end
 
     def view_certificate_token_valid?
-      return false unless view_certificate_token.present? && view_certificate_token_created_at.present?
-
-      view_certificate_token_expires_at >= Time.now
-    end
-
-    def view_certificate_token_expires_at
-      @view_certificate_token_validity_period = ENV.fetch("WCRS_VIEW_CERTIFICATE_TOKEN_VALIDITY_PERIOD",
-                                                          DEFAULT_TOKEN_VALIDITY_PERIOD).to_i
-      view_certificate_token_created_at + @view_certificate_token_validity_period.days
+      validity_period = ENV.fetch("WCRS_VIEW_CERTIFICATE_TOKEN_VALIDITY_PERIOD", DEFAULT_TOKEN_VALIDITY_PERIOD).to_i
+      token_valid?(:view_certificate_token, :view_certificate_token_created_at, validity_period)
     end
   end
 end
