@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  module TokenFunctionality
+  module CanGenerateAndValidateToken
     extend ActiveSupport::Concern
     include Mongoid::Document
 

@@ -3,7 +3,7 @@
 module WasteCarriersEngine
   module CanHaveDeregistrationToken
     extend ActiveSupport::Concern
-    include TokenFunctionality
+    include CanGenerateAndValidateToken
 
     DEFAULT_TOKEN_VALIDITY_PERIOD = 7 # days
 

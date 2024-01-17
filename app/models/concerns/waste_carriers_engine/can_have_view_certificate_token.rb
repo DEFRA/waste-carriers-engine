@@ -3,7 +3,7 @@
 module WasteCarriersEngine
   module CanHaveViewCertificateToken
     extend ActiveSupport::Concern
-    include TokenFunctionality
+    include CanGenerateAndValidateToken
 
     DEFAULT_TOKEN_VALIDITY_PERIOD = 183 # days (6 months)
 
