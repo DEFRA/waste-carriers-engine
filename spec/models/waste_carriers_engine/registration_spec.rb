@@ -817,6 +817,14 @@ module WasteCarriersEngine
           expect(registration.reload.past_registrations.length).to eq(1)
           expect(registration.original_activation_date.to_date).to eq(old_registration.metaData.dateActivated.to_date)
         end
+
+        it "returns activation date of the next registration if the first one doesn't have activation date set" do
+          old_registration = create_past_registration
+          old_registration.metaData.update(dateActivated: nil)
+          registration.metaData.update(dateActivated: Date.today)
+          expect(registration.reload.past_registrations.length).to eq(1)
+          expect(registration.original_activation_date.to_date).to eq(registration.metaData.dateActivated.to_date)
+        end
       end
 
       describe "first and only registration" do
