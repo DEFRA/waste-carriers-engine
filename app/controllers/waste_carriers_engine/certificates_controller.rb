@@ -26,7 +26,7 @@ module WasteCarriersEngine
     def process_email
       email = params[:email]
       unless valid_email?(email)
-        flash[:error] = I18n.t("external.certificates.process_email.error")
+        flash[:error] = I18n.t(".waste_carriers_engine.certificates.process_email.error")
         render :confirm_email and return
       end
 
@@ -85,7 +85,7 @@ module WasteCarriersEngine
     def ensure_valid_token
       return if valid_token?
 
-      redirect_to "/", notice: I18n.t("external.certificates.errors.token")
+      redirect_to "/", notice: I18n.t(".waste_carriers_engine.certificates.errors.token")
     end
 
     def valid_token?
