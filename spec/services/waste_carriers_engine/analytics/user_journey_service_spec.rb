@@ -7,6 +7,8 @@ module WasteCarriersEngine
     RSpec.describe UserJourneyService do
 
       describe "#run" do
+        subject(:run_service) { described_class.run(transient_registration:) }
+
         let(:page) { "start_form" }
         let(:request_path) { "/foo/#{page}" }
         let(:route) { "DIGITAL" }
@@ -29,7 +31,7 @@ module WasteCarriersEngine
         end
 
         context "when a journey does not already exist for the token" do
-          before { described_class.run(transient_registration:) }
+          before { run_service }
 
           context "with a registration" do
             let(:transient_registration) { create(:new_registration, :has_required_data) }
@@ -50,8 +52,9 @@ module WasteCarriersEngine
         context "when a journey already exists for the token" do
           before do
             Timecop.freeze(10.minutes.ago) { create(:user_journey, journey_type: "registration", token: transient_registration.token) }
+            transient_registration.workflow_state = "location_form"
 
-            described_class.run(transient_registration:)
+            run_service
           end
 
           it "does not start a new journey" do
@@ -66,6 +69,16 @@ module WasteCarriersEngine
             expect(PageView).to have_received("new")
           end
 
+          context "when the service is run twice consecutively for the same page" do
+            before { UserJourney.last.page_views.create(page: "location_form", time: Time.zone.now, route: "DIGITAL") }
+
+            it "is idempotent" do
+              expect { described_class.run(transient_registration:) }.not_to change { UserJourney.last.reload.page_views.length }
+            end
+          end
+        end
+
+        context "when the latest view is a completion form" do
           shared_examples "completion form" do |form|
             before do
               transient_registration.workflow_state = form
@@ -82,19 +95,17 @@ module WasteCarriersEngine
             end
           end
 
-          context "when the latest view is a completion form" do
-            %w[
-              registration_completed_form
-              registration_received_pending_conviction_form
-              registration_received_pending_govpay_payment_form
-              registration_received_pending_payment_form
-              renewal_complete_form
-              renewal_received_pending_conviction_form
-              renewal_received_pending_govpay_payment_form
-              renewal_received_pending_payment_form
-            ].each do |form|
-              it_behaves_like "completion form", form
-            end
+          %w[
+            registration_completed_form
+            registration_received_pending_conviction_form
+            registration_received_pending_govpay_payment_form
+            registration_received_pending_payment_form
+            renewal_complete_form
+            renewal_received_pending_conviction_form
+            renewal_received_pending_govpay_payment_form
+            renewal_received_pending_payment_form
+          ].each do |form|
+            it_behaves_like "completion form", form
           end
         end
 
