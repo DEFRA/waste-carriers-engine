@@ -102,11 +102,10 @@ module WasteCarriersEngine
     end
 
     def original_activation_date
-      if past_registrations.any?
-        past_registrations.map { |x| x.metaData&.dateActivated }.min
-      else
-        metaData&.dateActivated
+      past_activation_dates = past_registrations.filter_map do |x|
+        x.metaData.dateActivated if x.metaData.respond_to?(:dateActivated)
       end
+      past_activation_dates.any? ? past_activation_dates.min : metaData&.dateActivated
     end
 
     def increment_certificate_version(user = nil)
