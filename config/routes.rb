@@ -5,8 +5,7 @@ WasteCarriersEngine::Engine.routes.draw do
   resources :start_forms,
             only: %i[new create],
             path: "start",
-            path_names: { new: "" },
-            constraints: ->(_request) { WasteCarriersEngine::FeatureToggle.active?(:new_registration) }
+            path_names: { new: "" }
 
   get "transient-registration/:token/destroy",
       to: "transient_registrations#destroy",
