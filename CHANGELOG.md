@@ -6,6 +6,14 @@
 
 **Implemented enhancements:**
 
+- RUBY 2794 wcr track communications history per registration [\#1488](https://github.com/DEFRA/waste-carriers-engine/pull/1488) ([jjromeo](https://github.com/jjromeo))
+- Ruby 2794 wcr track comminications history per registration [\#1485](https://github.com/DEFRA/waste-carriers-engine/pull/1485) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2779\] updating password hint on password reset page [\#1484](https://github.com/DEFRA/waste-carriers-engine/pull/1484) ([brujeo](https://github.com/brujeo))
+- \[RUBY-2779\] updating password hint [\#1483](https://github.com/DEFRA/waste-carriers-engine/pull/1483) ([brujeo](https://github.com/brujeo))
+- RUBY 2794 wcr track comminications history per registration [\#1482](https://github.com/DEFRA/waste-carriers-engine/pull/1482) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2817\] Adding Apple/Google pay to list of payment options [\#1479](https://github.com/DEFRA/waste-carriers-engine/pull/1479) ([brujeo](https://github.com/brujeo))
+- \[RUBY-2780\] content change [\#1470](https://github.com/DEFRA/waste-carriers-engine/pull/1470) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 2788 wcr content convictions page addition [\#1469](https://github.com/DEFRA/waste-carriers-engine/pull/1469) ([brujeo](https://github.com/brujeo))
 - Add new cannot-register pages for non-england locations [\#1456](https://github.com/DEFRA/waste-carriers-engine/pull/1456) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Feature/ruby 2533 certificate generator service [\#1438](https://github.com/DEFRA/waste-carriers-engine/pull/1438) ([brujeo](https://github.com/brujeo))
 - \[RUBY-2625\] ensure only upper tier registrations come back from conviction scope methods [\#1426](https://github.com/DEFRA/waste-carriers-engine/pull/1426) ([jjromeo](https://github.com/jjromeo))
@@ -418,6 +426,11 @@
 
 **Fixed bugs:**
 
+- \[RUBY-2842\] refactoring original\_activation\_date method to handle situation when dateActivated is missing [\#1492](https://github.com/DEFRA/waste-carriers-engine/pull/1492) ([brujeo](https://github.com/brujeo))
+- Fix/ruby 2805 postcode validation [\#1487](https://github.com/DEFRA/waste-carriers-engine/pull/1487) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix/ruby 2800 wcr fo missing template 404 errors [\#1480](https://github.com/DEFRA/waste-carriers-engine/pull/1480) ([brujeo](https://github.com/brujeo))
+- adding valid target for aria-labelledby attribute [\#1478](https://github.com/DEFRA/waste-carriers-engine/pull/1478) ([brujeo](https://github.com/brujeo))
+- fix/RUBY-2762\_legacy\_account\_email\_values [\#1475](https://github.com/DEFRA/waste-carriers-engine/pull/1475) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/ruby 2793 defra ruby govpay config [\#1466](https://github.com/DEFRA/waste-carriers-engine/pull/1466) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Ruby 2378 wcr renewals overseas company can not renew due to non uk company number [\#1455](https://github.com/DEFRA/waste-carriers-engine/pull/1455) ([brujeo](https://github.com/brujeo))
 - Allow wicked\_pdf to use local file storage [\#1443](https://github.com/DEFRA/waste-carriers-engine/pull/1443) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -668,6 +681,11 @@
 
 **Merged pull requests:**
 
+- Chore/ruby 2770 move bo functionality to bo [\#1481](https://github.com/DEFRA/waste-carriers-engine/pull/1481) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- update defra\_ruby\_area dependency [\#1476](https://github.com/DEFRA/waste-carriers-engine/pull/1476) ([brujeo](https://github.com/brujeo))
+- Updating defra\_ruby\_area and other dependencies [\#1474](https://github.com/DEFRA/waste-carriers-engine/pull/1474) ([brujeo](https://github.com/brujeo))
+- Drop use of registration account\_email attribute [\#1473](https://github.com/DEFRA/waste-carriers-engine/pull/1473) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Update CHANGELOG [\#1467](https://github.com/DEFRA/waste-carriers-engine/pull/1467) ([brujeo](https://github.com/brujeo))
 - Bump defra\_ruby\_govpay from 0.2.3 to 0.2.4 [\#1464](https://github.com/DEFRA/waste-carriers-engine/pull/1464) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1463](https://github.com/DEFRA/waste-carriers-engine/pull/1463) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Align with govpay gem error handling [\#1461](https://github.com/DEFRA/waste-carriers-engine/pull/1461) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
