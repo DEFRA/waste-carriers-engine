@@ -35,15 +35,25 @@ module WasteCarriersEngine
 
           context "with a registration" do
             let(:transient_registration) { create(:new_registration, :has_required_data) }
-            let(:expected_journey_type) { "registration" }
+            let(:expected_journey_type) { "NewRegistration" }
 
             it_behaves_like "new journey"
           end
 
           context "with a renewal" do
             let(:transient_registration) { create(:renewing_registration, :has_required_data) }
-            let(:expected_journey_type) { "renewal" }
+            let(:expected_journey_type) { "RenewingRegistration" }
             let(:page) { "renewal_start_form" }
+
+            it_behaves_like "new journey"
+          end
+
+          class TestUserJourneyRegistration < NewRegistration; end
+
+          context "with another journey type" do
+            let(:transient_registration) { TestUserJourneyRegistration.new(token: "foo") }
+            let(:expected_journey_type) { "TestUserJourneyRegistration" }
+            let(:page) { "start_form" }
 
             it_behaves_like "new journey"
           end
@@ -51,7 +61,7 @@ module WasteCarriersEngine
 
         context "when a journey already exists for the token" do
           before do
-            Timecop.freeze(10.minutes.ago) { create(:user_journey, journey_type: "registration", token: transient_registration.token) }
+            Timecop.freeze(10.minutes.ago) { create(:user_journey, journey_type: "NewRegistration", token: transient_registration.token) }
             transient_registration.workflow_state = "location_form"
 
             run_service

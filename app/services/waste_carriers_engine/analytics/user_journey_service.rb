@@ -6,21 +6,10 @@ module WasteCarriersEngine
 
       attr_accessor :transient_registration, :journey, :token, :current_user
 
-      JOURNEY_TYPES = {
-        "WasteCarriersEngine::NewRegistration" => "registration",
-        "WasteCarriersEngine::RenewingRegistration" => "renewal"
-      }.freeze
-
       def run(transient_registration:, current_user: nil)
         @transient_registration = transient_registration
         transient_registration_type = transient_registration.class.name
-        journey_type = JOURNEY_TYPES[transient_registration_type]
-
-        unless journey_type.present?
-          Rails.logger.warn "Transient registration type #{transient_registration_type} " \
-                            "unsupported for user journey analytics"
-          return
-        end
+        journey_type = journey_type_from_registration_class
 
         page = transient_registration.workflow_state
         @token = transient_registration.token
@@ -58,6 +47,10 @@ module WasteCarriersEngine
                                        time: transient_registration.metaData&.last_modified || Time.zone.now)
 
         user_journey
+      end
+
+      def journey_type_from_registration_class
+        transient_registration.class.to_s.split("::").last
       end
 
       def start_page_name
