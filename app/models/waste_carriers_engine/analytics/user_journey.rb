@@ -46,10 +46,9 @@ module WasteCarriersEngine
       scope :completed_assisted_digital, -> { where(completed_route: "ASSISTED_DIGITAL") }
 
       # Include if the cutoff page has been visited but is not the last page visited:
-      scope :passed_start_cutoff_page, -> { 
+      scope :passed_start_cutoff_page, lambda {
         where("page_views.page": START_CUTOFF_PAGE,
-              "$expr": { "$ne": [ { "$arrayElemAt": ["$page_views.page", -1] }, "location_form" ] }
-             )
+              "$expr": { "$ne": [{ "$arrayElemAt": ["$page_views.page", -1] }, "location_form"] })
       }
 
       scope :date_range, lambda { |start_date, end_date|

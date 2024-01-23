@@ -8,7 +8,6 @@ module WasteCarriersEngine
 
       def run(transient_registration:, current_user: nil)
         @transient_registration = transient_registration
-        transient_registration_type = transient_registration.class.name
         journey_type = journey_type_from_registration_class
 
         page = transient_registration.workflow_state

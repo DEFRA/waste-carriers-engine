@@ -10,11 +10,10 @@ module WasteCarriersEngine
         subject(:run_service) { described_class.run(transient_registration:) }
 
         let(:page) { "start_form" }
-        let(:request_path) { "/foo/#{page}" }
         let(:route) { "DIGITAL" }
         let(:transient_registration) { create(:new_registration, :has_required_data) }
         let(:token) { transient_registration.token }
-        let(:expected_journey_type) { "registration" }
+        let(:expected_journey_type) { "NewRegistration" }
 
         before do
           allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return false
@@ -48,14 +47,19 @@ module WasteCarriersEngine
             it_behaves_like "new journey"
           end
 
-          class TestUserJourneyRegistration < NewRegistration; end
-
           context "with another journey type" do
-            let(:transient_registration) { TestUserJourneyRegistration.new(token: "foo") }
-            let(:expected_journey_type) { "TestUserJourneyRegistration" }
             let(:page) { "start_form" }
 
-            it_behaves_like "new journey"
+            before do
+              test_user_journey_registration = Class.new(NewRegistration)
+              stub_const("TestUserJourneyRegistration", test_user_journey_registration)
+            end
+
+            it "records the correct journey type" do
+              described_class.run(transient_registration: TestUserJourneyRegistration.new(token: "foo"))
+
+              expect(UserJourney.last.journey_type).to eq "TestUserJourneyRegistration"
+            end
           end
         end
 

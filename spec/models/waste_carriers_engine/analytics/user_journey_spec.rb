@@ -22,9 +22,9 @@ module WasteCarriersEngine
 
         it { expect(described_class.registrations.length).to eq count_1 }
         it { expect(described_class.renewals.length).to eq count_2 }
-        it { expect(described_class.only_types(%w[NewRegistration]).length).to eq count_1}
-        it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq count_2}
-        it { expect(described_class.only_types(%w[NewRegistration RenewingRegistration]).length).to eq count_1 + count_2}
+        it { expect(described_class.only_types(%w[NewRegistration]).length).to eq count_1 }
+        it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq count_2 }
+        it { expect(described_class.only_types(%w[NewRegistration RenewingRegistration]).length).to eq count_1 + count_2 }
       end
 
       describe "start route scopes" do
