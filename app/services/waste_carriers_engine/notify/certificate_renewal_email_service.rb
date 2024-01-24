@@ -40,8 +40,7 @@ module WasteCarriersEngine
       def link_to_file
         return unless @registration.view_certificate_token
 
-
-       WasteCarriersEngine::Engine.routes.url_helpers.certificate_url(
+        WasteCarriersEngine::Engine.routes.url_helpers.certificate_url(
           host: Rails.configuration.wcrs_frontend_url,
           reg_identifier: @registration.reg_identifier,
           token: @registration.view_certificate_token

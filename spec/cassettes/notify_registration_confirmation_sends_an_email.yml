@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"foo@example.com","template_id":"2eae1dbd-08c1-4602-a4d2-e4481a1acc97","personalisation":{"registration_type":"carrier,
+        broker and dealer","reg_identifier":"CBDU2","first_name":"Jane","last_name":"Doe","registered_address":"42,
+        Foo Gardens, Baz City, BS1 5AH","date_registered":"2024-01-24T18:49:32.180+00:00","phone_number":"03708
+        506506","link_to_file":"http://localhost:3000/CBDU2/certificate?token=a77e67a6-81d0-429b-b548-59cfdcc5457d"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.4.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '128'
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 24 Jan 2024 18:50:06 GMT
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - gunicorn
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-B3-Spanid:
+      - 617ac3da7d72836c
+      X-B3-Traceid:
+      - 751244e198f64542617ac3da7d72836c
+      X-Vcap-Request-Id:
+      - 751244e1-98f6-4542-617a-c3da7d72836c
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 507372273c5029d1ae2439349f7f1458.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - A79VNsQLc0KpGlpGmgPkXvZYUX5mxuc-t-6DZ8q4PE2nKX2z1RlSzw==
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"error":"AuthError","message":"Error: Your system clock
+        must be accurate to within 30 seconds"}],"status_code":403}
+
+        '
+  recorded_at: Wed, 24 Jan 2024 18:49:34 GMT
+recorded_with: VCR 6.2.0
