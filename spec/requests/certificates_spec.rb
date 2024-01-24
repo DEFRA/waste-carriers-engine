@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Certificates" do
   let(:registration) do
     create(:registration, :has_required_data, :expires_soon, contact_email: "contact@example.com")
-      .tap(&:generate_view_certificate_token)
+      .tap(&:generate_view_certificate_token!)
   end
   let(:token) { registration.view_certificate_token }
 

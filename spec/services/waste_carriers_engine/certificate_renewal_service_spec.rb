@@ -9,7 +9,7 @@ module WasteCarriersEngine
       let(:service) { described_class.run(registration: registration) }
 
       before do
-        allow(registration).to receive(:generate_view_certificate_token).and_call_original
+        allow(registration).to receive(:generate_view_certificate_token!).and_call_original
         allow(registration).to receive(:save!).and_call_original
         allow(Notify::CertificateRenewalEmailService).to receive(:run).with(registration: registration)
       end
@@ -17,7 +17,7 @@ module WasteCarriersEngine
       context "when the process is successful" do
         it "generates a new view certificate token" do
           service
-          expect(registration).to have_received(:generate_view_certificate_token)
+          expect(registration).to have_received(:generate_view_certificate_token!)
         end
 
         it "sends an email" do
