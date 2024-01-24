@@ -344,6 +344,9 @@ WasteCarriersEngine::Engine.routes.draw do
   get ":reg_identifier/pdf_certificate", to: "certificates#pdf", as: "pdf_certificate"
   get ":reg_identifier/certificate_confirm_email", to: "certificates#confirm_email", as: "certificate_confirm_email"
   post ":reg_identifier/certificate_process_email", to: "certificates#process_email", as: "certificate_process_email"
+  get ":reg_identifier/certificate_renew_token", to: "certificates#renew_token", as: "certificate_renew_token"
+  post ":reg_identifier/certificate_reset_token", to: "certificates#reset_token", as: "certificate_reset_token"
+  get ":reg_identifier/certificate_renewal_sent", to: "certificates#renewal_sent", as: "certificate_renewal_sent"
 
   mount DefraRubyEmail::Engine => "/email"
 
