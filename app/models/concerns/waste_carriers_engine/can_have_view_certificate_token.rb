@@ -12,7 +12,7 @@ module WasteCarriersEngine
       field :view_certificate_token_created_at, type: DateTime
     end
 
-    def generate_view_certificate_token
+    def generate_view_certificate_token!
       generate_token(:view_certificate_token, :view_certificate_token_created_at)
     end
 
