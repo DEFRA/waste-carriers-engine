@@ -10,6 +10,10 @@ module WasteCarriersEngine
     RSpec.describe RegistrationConfirmationEmailService do
       let(:notification_type) { "email" }
 
+      before do
+        registration.generate_view_certificate_token!
+      end
+
       describe ".run" do
         let(:expected_notify_options) do
           {
@@ -23,7 +27,7 @@ module WasteCarriersEngine
               phone_number: "03708 506506",
               registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH",
               date_registered: registration.metaData.date_registered.to_fs(:standard),
-              link_to_file: "Hello World"
+              link_to_file: "http://localhost:3000/#{registration.reg_identifier}/certificate?token=#{registration.view_certificate_token}"
             }
           }
         end

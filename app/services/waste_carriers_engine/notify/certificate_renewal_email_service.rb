@@ -5,7 +5,7 @@ module WasteCarriersEngine
     class CertificateRenewalEmailService < BaseSendEmailService
       include WasteCarriersEngine::ApplicationHelper
       include WasteCarriersEngine::CanRecordCommunication
-      include Rails.application.routes.url_helpers
+      include WasteCarriersEngine::CanAttachCertificate
 
       TEMPLATE_ID = "2eae1dbd-08c1-4602-a4d2-e4481a1acc97"
       COMMS_LABEL = "Resend certificate link"
@@ -24,7 +24,7 @@ module WasteCarriersEngine
             registered_address: registered_address,
             date_registered: date_registered,
             phone_number: @registration.phone_number,
-            link_to_file: link_to_file
+            link_to_file: link_to_certificate
           }
         }
       end
