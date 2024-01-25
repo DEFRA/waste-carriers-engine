@@ -22,7 +22,7 @@ module WasteCarriersEngine
             first_name: @registration.first_name,
             last_name: @registration.last_name,
             registered_address: registered_address,
-            date_registered: @registration.metaData.date_registered,
+            date_registered: date_registered,
             phone_number: @registration.phone_number,
             link_to_file: link_to_file
           }
