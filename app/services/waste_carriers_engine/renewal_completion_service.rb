@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class RenewalCompletionService
     class CannotComplete < StandardError; end
@@ -129,7 +130,9 @@ module WasteCarriersEngine
         "past_registrations",
         "renew_token",
         "deregistration_token",
-        "deregistration_token_created_at"
+        "deregistration_token_created_at",
+        "view_registration_token",
+        "view_registration_token_created_at"
       )
 
       do_not_copy_attributes = %w[
@@ -168,3 +171,4 @@ module WasteCarriersEngine
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

@@ -24,6 +24,8 @@ module WasteCarriersEngine
                                declaredConvictions
                                deregistration_token
                                deregistration_token_created_at
+                               view_certificate_token
+                               view_certificate_token_created_at
                                isMainService
                                firstName
                                financeDetails

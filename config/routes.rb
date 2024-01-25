@@ -337,8 +337,12 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" }
 
     get "/back", to: "forms#go_back", as: "go_back_forms"
-
   end
+
+  get ":reg_identifier/certificate", to: "certificates#show", as: "certificate"
+  get ":reg_identifier/pdf_certificate", to: "certificates#pdf", as: "pdf_certificate"
+  get ":reg_identifier/certificate_confirm_email", to: "certificates#confirm_email", as: "certificate_confirm_email"
+  post ":reg_identifier/certificate_process_email", to: "certificates#process_email", as: "certificate_process_email"
 
   mount DefraRubyEmail::Engine => "/email"
 

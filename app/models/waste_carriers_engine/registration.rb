@@ -9,6 +9,7 @@ module WasteCarriersEngine
     include CanHaveRegistrationAttributes
     include CanPresentEntityDisplayName
     include CanUseLock
+    include CanHaveViewCertificateToken
 
     store_in collection: "registrations"
 
