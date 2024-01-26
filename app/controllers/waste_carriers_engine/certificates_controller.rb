@@ -2,7 +2,7 @@
 
 module WasteCarriersEngine
   class CertificatesController < ::WasteCarriersEngine::ApplicationController
-    before_action :find_registration
+    before_action :find_registration, except: %i[token_renewal_sent]
     before_action :ensure_valid_email, only: %i[show pdf]
     before_action :ensure_valid_token, only: %i[confirm_email show pdf]
 
@@ -33,6 +33,20 @@ module WasteCarriersEngine
       session[:valid_email] = email
       redirect_to certificate_path(@registration.reg_identifier,
                                    token: @registration.view_certificate_token)
+    end
+
+    def renew_token
+      # to render the renew_token view, with registration from before_action
+    end
+
+    def reset_token
+      WasteCarriersEngine::CertificateRenewalService.run(registration: @registration) if valid_email?(params[:email])
+
+      redirect_to certificate_renewal_sent_path
+    end
+
+    def renewal_sent
+      # to render the token_renewal_sent view
     end
 
     private
@@ -83,14 +97,22 @@ module WasteCarriersEngine
     end
 
     def ensure_valid_token
-      return if valid_token?
+      return if token_valid_and_matches?
 
-      redirect_to "/", notice: I18n.t(".waste_carriers_engine.certificates.errors.token")
+      if token_matches?
+        redirect_to certificate_renew_token_path
+      else
+        redirect_to "/", notice: I18n.t(".waste_carriers_engine.certificates.errors.token")
+      end
     end
 
-    def valid_token?
+    def token_valid_and_matches?
       return false unless params[:token].present? && @registration.view_certificate_token_valid?
 
+      token_matches?
+    end
+
+    def token_matches?
       params[:token] == @registration.view_certificate_token
     end
   end

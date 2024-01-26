@@ -177,6 +177,27 @@ module WasteCarriersEngine
           expect(order_item_logs_activated_ats).to all(be_within(1.second).of(activated_at))
         end
 
+        describe "creating a view certificate token" do
+          context "when the registration has a view_certificate_token" do
+            before do
+              registration.update_attributes(view_certificate_token: "foo")
+            end
+
+            it "does not update the view_certificate_token" do
+              renewal_completion_service.complete_renewal
+              expect(registration.reload.view_certificate_token).to eq("foo")
+            end
+          end
+
+          context "when the registration does not have a view_certificate_token" do
+            it "creates a view_certificate_token" do
+              expect(registration.reload.view_certificate_token).to be_nil
+              renewal_completion_service.complete_renewal
+              expect(registration.reload.view_certificate_token).to be_present
+            end
+          end
+        end
+
         # This only applies to attributes where a value could be set, but not always - for example, smart answers
         context "when the registration has an attribute which is not in the transient_registration" do
           before do

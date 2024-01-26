@@ -42,3 +42,10 @@ en:
         legend: "Confirm your email address"
       process_email:
         error: "Invalid email address"
+      renew_token:
+        heading: "The certificate link has expired, enter an email address that was used during registration."
+        email_label: "Email address"
+        hint: "This is the email address that was entered during registration"
+        submit: "Continue"
+      renewal_sent:
+        heading: "If the email address you entered is correct we will send a link to that email address. You can close this window"

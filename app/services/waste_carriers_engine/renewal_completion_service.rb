@@ -38,6 +38,7 @@ module WasteCarriersEngine
           update_registration
           create_order_item_logs
           delete_transient_registration
+          generate_view_certificate_token
           send_confirmation_messages
           reset_certificate_version
         end
@@ -131,8 +132,8 @@ module WasteCarriersEngine
         "renew_token",
         "deregistration_token",
         "deregistration_token_created_at",
-        "view_registration_token",
-        "view_registration_token_created_at"
+        "view_certificate_token",
+        "view_certificate_token_created_at"
       )
 
       do_not_copy_attributes = %w[
@@ -168,6 +169,12 @@ module WasteCarriersEngine
 
     def reset_certificate_version
       registration.reset_certificate_version
+    end
+
+    def generate_view_certificate_token
+      return if registration.view_certificate_token.present?
+
+      registration.generate_view_certificate_token!
     end
   end
 end

@@ -5,13 +5,15 @@ require "rails_helper"
 RSpec.describe "Certificates" do
   let(:registration) do
     create(:registration, :has_required_data, :expires_soon, contact_email: "contact@example.com")
-      .tap(&:generate_view_certificate_token)
+      .tap(&:generate_view_certificate_token!)
   end
   let(:token) { registration.view_certificate_token }
 
   let(:valid_email) { registration.contact_email }
   let(:invalid_email) { "invalid@example.com" }
   let(:base_path) { "/#{registration.reg_identifier}/certificate" }
+  let(:token_renewal_path) { "/#{registration.reg_identifier}/certificate_renew_token" }
+  let(:token_renewal_sent_path) { "/#{registration.reg_identifier}/certificate_renewal_sent" }
 
   describe "POST process_email" do
     context "with valid email" do
@@ -67,8 +69,7 @@ RSpec.describe "Certificates" do
       it "redirects due to expired token" do
         get "#{base_path}?token=#{token}"
 
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to eq("You do not have permission to view this page")
+        expect(response).to redirect_to(token_renewal_path)
       end
     end
 
@@ -123,8 +124,7 @@ RSpec.describe "Certificates" do
       it "redirects due to expired token" do
         get "#{base_path}?token=#{token}"
 
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to eq("You do not have permission to view this page")
+        expect(response).to redirect_to(token_renewal_path)
       end
     end
 
@@ -169,11 +169,54 @@ RSpec.describe "Certificates" do
         registration.reload
       end
 
-      it "redirects due to expired token" do
+      it "redirects due to the renew token page" do
         get certificate_confirm_email_path(registration.reg_identifier, token: token)
 
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to eq("You do not have permission to view this page")
+        expect(response).to redirect_to(token_renewal_path)
+      end
+    end
+  end
+
+  describe "GET certificate_renew_token" do
+    context "when the token has expired" do
+      before do
+        registration.update(view_certificate_token_created_at: 7.months.ago)
+      end
+
+      it "renders the renew token page" do
+        get token_renewal_path
+
+        expect(response).to render_template("waste_carriers_engine/certificates/renew_token")
+      end
+    end
+  end
+
+  describe "POST certificate_reset_token" do
+    before do
+      allow(WasteCarriersEngine::CertificateRenewalService).to receive(:run)
+    end
+
+    context "when the email is valid" do
+
+      it "resets the token and redirects to the token renewal sent page" do
+        post certificate_reset_token_path(reg_identifier: registration.reg_identifier, email: valid_email)
+
+        expect(WasteCarriersEngine::CertificateRenewalService).to have_received(:run).with(registration: registration)
+
+        expect(response).to redirect_to(token_renewal_sent_path)
+        follow_redirect!
+        expect(response).to render_template("waste_carriers_engine/certificates/renewal_sent")
+      end
+    end
+
+    context "when the email is not valid" do
+      it "does not reset the token but still directs to the token renewal sent page" do
+        post certificate_reset_token_path(reg_identifier: registration.reg_identifier, email: invalid_email)
+        expect(WasteCarriersEngine::CertificateRenewalService).not_to have_received(:run).with(registration: registration)
+
+        expect(response).to redirect_to(token_renewal_sent_path)
+        follow_redirect!
+        expect(response).to render_template("waste_carriers_engine/certificates/renewal_sent")
       end
     end
   end

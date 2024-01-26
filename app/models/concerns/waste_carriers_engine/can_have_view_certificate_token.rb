@@ -5,14 +5,14 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include CanGenerateAndValidateToken
 
-    DEFAULT_TOKEN_VALIDITY_PERIOD = 183 # days (6 months)
+    DEFAULT_TOKEN_VALIDITY_PERIOD = 28 # days
 
     included do
       field :view_certificate_token, type: String
       field :view_certificate_token_created_at, type: DateTime
     end
 
-    def generate_view_certificate_token
+    def generate_view_certificate_token!
       generate_token(:view_certificate_token, :view_certificate_token_created_at)
     end
 
