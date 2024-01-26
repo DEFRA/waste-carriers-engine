@@ -25,6 +25,12 @@ module WasteCarriersEngine
             .once
         end
 
+        it "will generate a view certificate token" do
+          expect(registration.view_certificate_token).to be_nil
+          run_service
+          expect(registration.view_certificate_token).not_to be_nil
+        end
+
         context "when an error occurs" do
           it "notifies Airbrake" do
             the_error = StandardError.new("Oops!")

@@ -1,0 +1,23 @@
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" id="main-content" role="main">
+    <% if flash[:error].present? %>
+      <div class="govuk-error-summary" role="alert">
+        <h2 class="govuk-heading-m"><%= flash[:error] %></h2>
+      </div>
+    <% end %>
+
+    <h2 class="govuk-heading-l"><%=t('.heading')%></h2>
+    <%= form_with url: certificate_process_email_path(@registration.reg_identifier), method: :post, html: { class: 'govuk-form-group' }, local: true do |form| %>
+      <div class="govuk-form-group">
+        <%= form.label :email,  t('.email_label'), class: 'govuk-label' %>
+        <span id="email-hint" class="govuk-hint">
+          <%=t('.hint')%>
+        </span>
+        <%= form.email_field :email, required: true, class: 'govuk-input govuk-input--width-20' %>
+      </div>
+
+      </br>
+      <%= form.submit t('.submit'), class: 'govuk-button', data: { module: 'govuk-button' } %>
+    <% end %>
+  </main>
+</div>

@@ -3,35 +3,24 @@
 module WasteCarriersEngine
   module CanHaveDeregistrationToken
     extend ActiveSupport::Concern
-    include Mongoid::Document
+    include CanGenerateAndValidateToken
+
+    DEFAULT_TOKEN_VALIDITY_PERIOD = 7 # days
 
     included do
-      # This is separate to the CanHaveSecureToken token, which never expires.
       field :deregistration_token, type: String
       field :deregistration_token_created_at, type: DateTime
+    end
 
-      def generate_deregistration_token
-        self.deregistration_token_created_at = Time.zone.now
-        self.deregistration_token = SecureTokenService.run
-        save!
+    def generate_deregistration_token
+      generate_token(:deregistration_token, :deregistration_token_created_at)
+    end
 
-        deregistration_token
-      end
+    def deregistration_token_valid?
+      return false unless active?
 
-      def deregistration_token_valid?
-        return false unless active?
-
-        return false unless deregistration_token.present? && deregistration_token_created_at.present?
-
-        deregistration_token_expires_at >= Time.zone.now
-      end
-
-      private
-
-      def deregistration_token_expires_at
-        @deregistration_token_validity_period = ENV.fetch("WCRS_DEREGISTRATION_TOKEN_VALIDITY", 7).to_i
-        deregistration_token_created_at + @deregistration_token_validity_period.days
-      end
+      validity_period = ENV.fetch("WCRS_DEREGISTRATION_TOKEN_VALIDITY", 7).to_i
+      token_valid?(:deregistration_token, :deregistration_token_created_at, validity_period)
     end
   end
 end

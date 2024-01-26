@@ -6,28 +6,19 @@ module WasteCarriersEngine
 
       attr_accessor :transient_registration, :journey, :token, :current_user
 
-      JOURNEY_TYPES = {
-        "WasteCarriersEngine::NewRegistration" => "registration",
-        "WasteCarriersEngine::RenewingRegistration" => "renewal"
-      }.freeze
-
       def run(transient_registration:, current_user: nil)
         @transient_registration = transient_registration
-        transient_registration_type = transient_registration.class.name
-        journey_type = JOURNEY_TYPES[transient_registration_type]
-
-        unless journey_type.present?
-          Rails.logger.warn "Transient registration type #{transient_registration_type} " \
-                            "unsupported for user journey analytics"
-          return
-        end
+        journey_type = journey_type_from_registration_class
 
         page = transient_registration.workflow_state
         @token = transient_registration.token
         @current_user = current_user
         @journey = find_or_create_user_journey(journey_type, token)
 
-        PageView.create!(page: page, time: Time.zone.now, route: route, user_journey: journey)
+        # Log consecutive views of the same page once only
+        return if @journey.page_views.last.present? && @journey.page_views.last.page == page
+
+        journey.page_views.create!(page:, route:, time: Time.zone.now)
 
         if UserJourney::COMPLETION_PAGES.include?(page)
           journey.complete_journey(transient_registration)
@@ -42,12 +33,27 @@ module WasteCarriersEngine
         user_journey = UserJourney.where(token: token).first
         return user_journey if user_journey.present?
 
-        UserJourney.create!(
+        user_journey = UserJourney.create!(
           journey_type: journey_type,
           token: token,
           started_route: route,
           user: current_user&.email
         )
+
+        # start form does not get added automatically as the transient_registration token has not yet been added
+        user_journey.page_views.create(page: start_page_name,
+                                       route:,
+                                       time: transient_registration.metaData&.last_modified || Time.zone.now)
+
+        user_journey
+      end
+
+      def journey_type_from_registration_class
+        transient_registration.class.to_s.split("::").last
+      end
+
+      def start_page_name
+        transient_registration.is_a?(RenewingRegistration) ? "renewal_start_form" : "start_form"
       end
 
       def pagename(request_path)

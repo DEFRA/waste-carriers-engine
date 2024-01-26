@@ -9,37 +9,10 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <style type='text/css'>
-      * {
-        font-family: Helvetica, Arial, Sans-Serif !important;
-        background: #FFF;
-      }
-      h1 {
-        margin-bottom: 20px;
-      }
-      body {
-        margin: 40px 60px;
-      }
-      table tr td:first-child {
-        width: 220px;
-      }
-      ul, li {
-        list-style-type: none;
-        margin-left: 0;
-        padding-left: 0;
-      }
-      li, td, p {
-        font-size: 18px;
-        line-height: 1.5;
-      }
-      table th {
-        margin-top: 20px;
-        text-align: left;
-        font-size: 22px;
-      }
-    </style>
+    <%= stylesheet_link_tag "certificates", media: "all" %>
   </head>
   <body>
+    <%= link_to "View as PDF", pdf_certificate_path(@presenter.reg_identifier, token: params[:token]), class: "govuk-!-display-none-print govuk-button", target: "_blank" %>
     <div id="wrapper">
       <main id="content" role="main" class="group">
         <div class="grid-wrapper">
@@ -63,7 +36,7 @@
                 <tr>
                   <td class="table-column-text"><%=t ".name" %></td>
                   <td>
-                    <%= image_tag "file:///#{WasteCarriersEngine::Engine.root.join('app', 'assets', 'images', 'environment_agency_logo.png')}", alt: "Environment Agency Logo", border: "0", height: "39", width: "129" %>
+                    <%= image_tag "environment_agency_logo.png", alt: "Environment Agency Logo", border: "0", height: "39", width: "129" %>
                   </td>
                 </tr>
                 <tr>
@@ -120,6 +93,10 @@
                     <%= line %><br>
                   <% end %>
                   </td>
+                </tr>
+                <tr>
+                  <td class="table-column-text"><%=t ".carrier_telephone_number" %></td>
+                  <td><%= @presenter.phone_number%></td>
                 </tr>
                 <tr>
                   <td class="table-column-text"><%=t ".registration_date" %></td>

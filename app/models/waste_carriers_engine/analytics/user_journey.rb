@@ -8,11 +8,12 @@ module WasteCarriersEngine
 
       store_in collection: "analytics_user_journeys"
 
-      has_many :page_views, dependent: :destroy
+      embeds_many :page_views
 
-      validates :journey_type, inclusion: { in: %w[registration renewal] }
       validates :started_route, inclusion: { in: %w[DIGITAL ASSISTED_DIGITAL] }
       validates :token, presence: true
+
+      START_CUTOFF_PAGE = "location_form"
 
       COMPLETION_PAGES = %w[
         registration_completed_form
@@ -34,14 +35,22 @@ module WasteCarriersEngine
       field :completed_route, type: String
       field :registration_data, type: Hash
 
-      scope :registrations, -> { where(journey_type: "registration") }
-      scope :renewals, -> { where(journey_type: "renewal") }
+      scope :registrations, -> { where(journey_type: "NewRegistration") }
+      scope :renewals, -> { where(journey_type: "RenewingRegistration") }
+      scope :only_types, ->(journey_types) { where(journey_type: { "$in": journey_types }) }
       scope :started_digital, -> { where(started_route: "DIGITAL") }
       scope :started_assisted_digital, -> { where(started_route: "ASSISTED_DIGITAL") }
       scope :incomplete, -> { where(completed_at: nil) }
       scope :completed, -> { where.not(completed_at: nil) }
       scope :completed_digital, -> { where(completed_route: "DIGITAL") }
       scope :completed_assisted_digital, -> { where(completed_route: "ASSISTED_DIGITAL") }
+
+      # Include if the cutoff page has been visited but is not the last page visited:
+      scope :passed_start_cutoff_page, lambda {
+        where("page_views.page": START_CUTOFF_PAGE,
+              "$expr": { "$ne": [{ "$arrayElemAt": ["$page_views.page", -1] }, "location_form"] })
+      }
+
       scope :date_range, lambda { |start_date, end_date|
         where(
           :created_at.gte => start_date.midnight,

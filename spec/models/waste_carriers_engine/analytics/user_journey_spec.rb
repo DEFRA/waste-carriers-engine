@@ -17,10 +17,14 @@ module WasteCarriersEngine
         before do
           create_list(:user_journey, count_1, :registration)
           create_list(:user_journey, count_2, :renewal)
+          create_list(:user_journey, count_3, journey_type: "Foo")
         end
 
         it { expect(described_class.registrations.length).to eq count_1 }
         it { expect(described_class.renewals.length).to eq count_2 }
+        it { expect(described_class.only_types(%w[NewRegistration]).length).to eq count_1 }
+        it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq count_2 }
+        it { expect(described_class.only_types(%w[NewRegistration RenewingRegistration]).length).to eq count_1 + count_2 }
       end
 
       describe "start route scopes" do
@@ -31,6 +35,16 @@ module WasteCarriersEngine
 
         it { expect(described_class.started_digital.length).to eq count_1 }
         it { expect(described_class.started_assisted_digital.length).to eq count_2 }
+      end
+
+      describe "passed_start_cutoff_page" do
+        let!(:journey_initial_page_only) { create(:user_journey, visited_pages: %w[start_form]) }
+        let!(:journey_to_location_page) { create(:user_journey, visited_pages: %w[start_form location_form]) }
+        let!(:journey_past_location_page) { create(:user_journey, visited_pages: %w[start_form location_form business_type_form]) }
+
+        it { expect(described_class.passed_start_cutoff_page).not_to include(journey_initial_page_only) }
+        it { expect(described_class.passed_start_cutoff_page).not_to include(journey_to_location_page) }
+        it { expect(described_class.passed_start_cutoff_page).to include(journey_past_location_page) }
       end
 
       describe "completion scopes" do

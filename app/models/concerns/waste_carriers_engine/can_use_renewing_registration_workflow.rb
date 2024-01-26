@@ -316,19 +316,19 @@ module WasteCarriersEngine
     end
 
     def send_renewal_pending_online_payment_email
-      WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration: self)
+      WasteCarriersEngine::Notify::RenewalPendingOnlinePaymentEmailService.run(registration:)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
 
     def send_renewal_pending_checks_email
-      WasteCarriersEngine::Notify::RenewalPendingChecksEmailService.run(registration: self)
+      WasteCarriersEngine::Notify::RenewalPendingChecksEmailService.run(registration:)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
 
     def send_renewal_pending_payment_email
-      WasteCarriersEngine::Notify::RenewalPendingPaymentEmailService.run(registration: self)
+      WasteCarriersEngine::Notify::RenewalPendingPaymentEmailService.run(registration:)
     rescue StandardError => e
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end

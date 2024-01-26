@@ -32,6 +32,13 @@ module WasteCarriersEngine
             expect(response).to have_http_status(:ok)
             expect(registration.reload.expires_on).not_to eq(old_expires_on)
           end
+
+          it "records the expected page view" do
+            get new_renewal_complete_form_path(transient_registration.token)
+
+            expect(Analytics::UserJourney.where(token: transient_registration.token).count).to eq 1
+            expect(Analytics::UserJourney.last.page_views.last.page).to eq "renewal_complete_form"
+          end
         end
 
         context "when the workflow_state is not correct" do

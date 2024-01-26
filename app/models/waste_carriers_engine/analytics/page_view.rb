@@ -7,7 +7,11 @@ module WasteCarriersEngine
 
       store_in collection: "analytics_page_views"
 
-      belongs_to :user_journey
+      embedded_in :user_journey
+
+      # TODO: Needed temporarily to support the embed_page_views_in_user_journey migration task;
+      # TODO: Remove this after the migration task has been run in production.
+      field :user_journey_id, type: BSON::ObjectId
 
       field :page, type: String
       field :time, type: DateTime
