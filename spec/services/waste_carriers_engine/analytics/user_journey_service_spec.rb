@@ -110,6 +110,8 @@ module WasteCarriersEngine
           end
 
           %w[
+            edit_complete_form
+            copy_cards_order_completed_form
             registration_completed_form
             registration_received_pending_conviction_form
             registration_received_pending_govpay_payment_form

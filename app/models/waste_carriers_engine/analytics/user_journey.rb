@@ -16,6 +16,8 @@ module WasteCarriersEngine
       START_CUTOFF_PAGE = "location_form"
 
       COMPLETION_PAGES = %w[
+        copy_cards_order_completed_form
+        edit_complete_form
         registration_completed_form
         registration_received_pending_conviction_form
         registration_received_pending_govpay_payment_form
