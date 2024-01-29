@@ -11,8 +11,6 @@ module WasteCarriersEngine
       UPPER_TIER_TEMPLATE_ID = "fe1e4746-c940-4ace-b111-8be64ee53b35"
       UPPER_TIER_COMMS_LABEL = "Upper tier registration complete"
 
-      include CanAttachCertificate
-
       def notify_options
         {
           email_address: @registration.contact_email,
@@ -25,7 +23,7 @@ module WasteCarriersEngine
             phone_number: @registration.phone_number,
             registered_address: registered_address,
             date_registered: date_registered,
-            link_to_file: link_to_certificate
+            link_to_file: WasteCarriersEngine::ViewCertificateLinkService.run(registration: @registration)
           }
         }
       end

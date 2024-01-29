@@ -5,7 +5,6 @@ module WasteCarriersEngine
     class RenewalConfirmationEmailService < BaseSendEmailService
       TEMPLATE_ID = "6d54a9bc-9b62-4d93-a40a-d06d04ed58ca"
       COMMS_LABEL = "Upper tier renewal complete"
-      include CanAttachCertificate
 
       private
 
@@ -21,7 +20,7 @@ module WasteCarriersEngine
             phone_number: @registration.phone_number,
             registered_address: registered_address,
             date_activated: date_activated,
-            link_to_file: link_to_certificate
+            link_to_file: WasteCarriersEngine::ViewCertificateLinkService.run(registration: @registration)
           }
         }
       end
