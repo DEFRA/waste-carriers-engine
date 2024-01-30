@@ -54,7 +54,7 @@ module WasteCarriersEngine
     def ensure_valid_email
       return if valid_email?(session[:valid_email])
 
-      redirect_to confirm_email_path
+      redirect_to certificate_confirm_email_path(@registration.reg_identifier, token: params[:token])
     end
 
     def build_presenter
@@ -90,10 +90,6 @@ module WasteCarriersEngine
 
     def current_user_struct
       UserStruct.new(session[:valid_email])
-    end
-
-    def confirm_email_path
-      certificate_confirm_email_path(@registration.reg_identifier)
     end
 
     def ensure_valid_token

@@ -73,7 +73,7 @@ RSpec.describe "Certificates" do
       end
     end
 
-    context "without valid email in session" do
+    context "without valid email in session or token" do
       before do
         post process_email_path, params: { email: invalid_email }
       end
@@ -82,6 +82,19 @@ RSpec.describe "Certificates" do
         get base_path
 
         expect(response).to redirect_to(certificate_confirm_email_path(registration.reg_identifier))
+        expect(response).to have_http_status(:found)
+      end
+    end
+
+    context "without valid email in session but with valid token" do
+      before do
+        post process_email_path, params: { email: invalid_email }
+      end
+
+      it "redirects to the email confirmation page" do
+        get "#{base_path}?token=#{token}"
+
+        expect(response).to redirect_to(certificate_confirm_email_path(registration.reg_identifier, token: token))
         expect(response).to have_http_status(:found)
       end
     end
