@@ -149,7 +149,12 @@ module WasteCarriersEngine
         locked_at
       ].concat(WasteCarriersEngine::RenewingRegistration.temp_attributes)
 
-      renewal_attributes = transient_registration.attributes.except(*do_not_copy_attributes)
+      renewal_attributes = SafeCopyAttributesService.run(
+        source_instance: transient_registration,
+        target_class: Registration,
+        embedded_documents: %w[addresses metaData financeDetails],
+        attributes_to_exclude: do_not_copy_attributes
+      )
 
       remove_unused_attributes(registration_attributes, renewal_attributes)
 

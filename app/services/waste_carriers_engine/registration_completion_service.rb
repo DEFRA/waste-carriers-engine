@@ -138,7 +138,16 @@ module WasteCarriersEngine
         workflow_state
       ].concat(WasteCarriersEngine::NewRegistration.temp_attributes)
 
-      registration.write_attributes(transient_registration.attributes.except(*do_not_copy_attributes))
+      registration.write_attributes(copyable_attributes(do_not_copy_attributes))
+    end
+
+    def copyable_attributes(do_not_copy_attributes)
+      SafeCopyAttributesService.run(
+        source_instance: transient_registration,
+        target_class: Registration,
+        embedded_documents: %w[addresses metaData financeDetails],
+        attributes_to_exclude: do_not_copy_attributes
+      )
     end
   end
 end
