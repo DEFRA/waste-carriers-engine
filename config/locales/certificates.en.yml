@@ -5,6 +5,7 @@ en:
         token: "You do not have permission to view this page"
       show:
         view_as_pdf: "View certificate as PDF (opens in new window)"
+        title: "Certificate of Registration"
         heading: "Certificate of Registration under the Waste (England and Wales) Regulations 2011"
         authority: "Regulation authority"
         name: "Name"
