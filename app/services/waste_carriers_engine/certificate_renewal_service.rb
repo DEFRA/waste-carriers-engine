@@ -4,7 +4,6 @@ module WasteCarriersEngine
   class CertificateRenewalService < BaseService
     def run(registration:)
       @registration = registration
-      @registration.generate_view_certificate_token!
       send_email
       true
     rescue StandardError => e

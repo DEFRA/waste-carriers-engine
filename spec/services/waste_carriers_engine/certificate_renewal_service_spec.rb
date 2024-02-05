@@ -15,11 +15,6 @@ module WasteCarriersEngine
       end
 
       context "when the process is successful" do
-        it "generates a new view certificate token" do
-          service
-          expect(registration).to have_received(:generate_view_certificate_token!)
-        end
-
         it "sends an email" do
           service
           expect(Notify::CertificateRenewalEmailService).to have_received(:run).with(registration: registration)
@@ -34,7 +29,7 @@ module WasteCarriersEngine
         let(:error) { StandardError.new("Unexpected error") }
 
         before do
-          allow(registration).to receive(:save!).and_raise(error)
+          allow(Notify::CertificateRenewalEmailService).to receive(:run).and_raise(error)
           allow(Rails.logger).to receive(:error)
           allow(Airbrake).to receive(:notify) if defined?(Airbrake)
         end

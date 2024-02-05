@@ -23,7 +23,8 @@ module WasteCarriersEngine
             registered_address: registered_address,
             date_registered: date_registered,
             phone_number: @registration.phone_number,
-            link_to_file: WasteCarriersEngine::ViewCertificateLinkService.run(registration: @registration)
+            link_to_file: WasteCarriersEngine::ViewCertificateLinkService.run(registration: @registration,
+                                                                              renew_token: true)
           }
         }
       end

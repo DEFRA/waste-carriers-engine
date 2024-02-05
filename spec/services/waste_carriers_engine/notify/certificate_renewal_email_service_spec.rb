@@ -35,6 +35,10 @@ module WasteCarriersEngine
           allow(notifications_client).to receive(:send_email).and_return(notifications_client_response_notification)
           allow(notifications_client_response_notification).to receive(:instance_of?)
             .with(Notifications::Client::ResponseNotification).and_return(true)
+          allow(WasteCarriersEngine::ViewCertificateLinkService)
+            .to receive(:run)
+            .with(registration: registration, renew_token: true)
+            .and_call_original
           registration.generate_view_certificate_token!
         end
 
@@ -47,6 +51,11 @@ module WasteCarriersEngine
           it "sends an email" do
             run_service
             expect(notifications_client).to have_received(:send_email).with(expected_notify_options)
+          end
+
+          it "calls the ViewCertificateLinkService with renew_token: true" do
+            run_service
+            expect(WasteCarriersEngine::ViewCertificateLinkService).to have_received(:run).with(registration: registration, renew_token: true)
           end
 
           it_behaves_like "can create a communication record", "email"
