@@ -18,6 +18,9 @@ module WasteCarriersEngine
       COMPLETION_PAGES = %w[
         copy_cards_order_completed_form
         edit_complete_form
+        must_register_in_northern_ireland_form
+        must_register_in_scotland_form
+        must_register_in_wales_form
         registration_completed_form
         registration_received_pending_conviction_form
         registration_received_pending_govpay_payment_form
