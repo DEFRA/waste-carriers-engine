@@ -6,7 +6,7 @@
       </div>
     <% end %>
 
-    <h2 class="govuk-heading-l"><%=t('.heading')%></h2>
+    <h1 class="govuk-heading-l"><%=t('.heading')%></h1>
     <%= form_with url: certificate_reset_token_path(@registration.reg_identifier), method: :post, html: { class: 'govuk-form-group' }, local: true do |form| %>
       <div class="govuk-form-group">
         <%= form.label :email,  t('.email_label'), class: 'govuk-label' %>
