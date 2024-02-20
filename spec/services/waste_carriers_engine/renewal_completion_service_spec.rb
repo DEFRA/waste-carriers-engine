@@ -34,6 +34,8 @@ module WasteCarriersEngine
 
     describe "#complete_renewal" do
 
+      subject(:complete_renewal) { renewal_completion_service.complete_renewal }
+
       before do
         allow(Notify::RenewalConfirmationEmailService).to receive(:run)
         allow(Notify::RenewalConfirmationLetterService).to receive(:run)
@@ -41,14 +43,12 @@ module WasteCarriersEngine
 
       context "when the renewal can be completed" do
         it "creates a new past_registration" do
-          number_of_past_registrations = registration.past_registrations.count
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.past_registrations.count).to eq(number_of_past_registrations + 1)
+          expect { complete_renewal }.to change { registration.reload.past_registrations.count }.by(1)
         end
 
         it "copies attributes from the transient_registration to the registration" do
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.company_name).to eq(transient_registration.company_name)
+          expect { complete_renewal }.to change { registration.reload.company_name }
+                                     .to(transient_registration.company_name)
         end
 
         context "when all temporary attributes are populated" do
@@ -62,114 +62,97 @@ module WasteCarriersEngine
           end
 
           it "does not raise an exception" do
-            expect { renewal_completion_service.complete_renewal }.not_to raise_error
+            expect { complete_renewal }.not_to raise_error
           end
         end
 
         it "does not update the renew_token" do
-          old_token = registration.renew_token
-          renewal_completion_service.complete_renewal
-
-          registration.reload
-          expect(registration.renew_token).to eq(old_token)
+          expect { complete_renewal }.not_to change(registration, :renew_token)
         end
 
         it "copies nested attributes from the transient_registration to the registration" do
           registration.registered_address.update_attributes(postcode: "FOO")
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.registered_address.postcode).to eq(transient_registration.registered_address.postcode)
+          expect { complete_renewal }.to change { registration.reload.registered_address.postcode }
+                                     .to(transient_registration.registered_address.postcode)
         end
 
         it "adds the order from the transient_registration" do
-          new_order = transient_registration.finance_details.orders.first
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.finance_details.orders).to include(new_order)
+          expect { complete_renewal }.to change { registration.reload.finance_details.orders.length }.by(2)
         end
 
         it "adds the payment from the transient_registration" do
-          new_payment = transient_registration.finance_details.payments.first
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.finance_details.payments).to include(new_payment)
+          expect { complete_renewal }.to change { registration.reload.finance_details.payments.length }.by(3)
         end
 
         it "copies the registration's route from the transient_registration to the registration" do
-          transient_registration.metaData.route = "ASSISTED_DIGITAL"
-          transient_registration.save
+          transient_registration.metaData.update(route: "ASSISTED_DIGITAL")
 
-          renewal_completion_service.complete_renewal
-
-          expect(registration.reload.metaData.route).to eq("ASSISTED_DIGITAL")
+          expect { complete_renewal }.to change { registration.reload.metaData.route }.to("ASSISTED_DIGITAL")
         end
 
         it "keeps existing orders" do
           old_order = registration.finance_details.orders.first
-          renewal_completion_service.complete_renewal
+          complete_renewal
           expect(registration.reload.finance_details.orders).to include(old_order)
         end
 
         it "keeps existing payments" do
           old_payment = registration.finance_details.payments.first
-          renewal_completion_service.complete_renewal
+          complete_renewal
           expect(registration.reload.finance_details.payments).to include(old_payment)
         end
 
         it "updates the balance" do
           old_reg_balance = registration.finance_details.balance
+          # Ensure that transient_registration has a non-zero balance
+          transient_registration.finance_details.payments << build(:payment, amount: 50)
+          transient_registration.finance_details.update_balance
+          transient_registration.save!
           transient_reg_balance = transient_registration.finance_details.balance
 
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.finance_details.balance).to eq(
-            old_reg_balance + transient_reg_balance
-          )
+          expect { complete_renewal }.to change { registration.reload.finance_details.balance }
+                                     .to(old_reg_balance + transient_reg_balance)
         end
 
         it "extends expires_on by 3 years" do
           old_expiry_date = registration.expires_on
-          renewal_completion_service.complete_renewal
-          new_expiry_date = registration.reload.expires_on
-
-          expect(new_expiry_date.to_date).to eq((old_expiry_date.to_date + 3.years))
+          expect { complete_renewal }.to change { registration.reload.expires_on }
+                                     .to(old_expiry_date.to_date + 3.years)
         end
 
         it "updates the registration's date_registered" do
           Timecop.freeze do
-            renewal_completion_service.complete_renewal
+            complete_renewal
 
-            date_registered = registration.reload.metaData.date_registered
-
-            expect(date_registered.to_time.to_s).to eq(Time.now.to_s)
+            expect(registration.reload.metaData.date_registered.to_time.to_s).to eq(Time.now.to_s)
           end
         end
 
         it "updates the registration's date_activated" do
           Timecop.freeze do
-            renewal_completion_service.complete_renewal
+            complete_renewal
 
-            date_activated = registration.reload.metaData.date_activated
-
-            expect(date_activated.to_time.to_s).to eq(Time.now.to_s)
+            expect(registration.reload.metaData.date_activated.to_time.to_s).to eq(Time.now.to_s)
           end
         end
 
         it "updates the registration's last_modified" do
           Timecop.freeze do
-            renewal_completion_service.complete_renewal
+            complete_renewal
 
-            last_modified = registration.reload.metaData.last_modified
-
-            expect(last_modified.to_time.to_s).to eq(Time.now.to_s)
+            expect(registration.reload.metaData.last_modified.to_time.to_s).to eq(Time.now.to_s)
           end
         end
 
         it "creates the correct number of order item logs" do
-          expect { renewal_completion_service.complete_renewal }.to change(OrderItemLog, :count)
+          expect { complete_renewal }.to change(OrderItemLog, :count)
             .from(0)
             .to(transient_registration.finance_details.orders.sum { |o| o.order_items.length })
         end
 
         it "creates the order item logs with the correct activated at" do
           activated_at = transient_registration.metaData.dateActivated
-          renewal_completion_service.complete_renewal
+          complete_renewal
           order_item_logs_activated_ats = OrderItemLog.all.pluck(:activated_at)
 
           # The order item logs activated_at values are sometimes a second off the
@@ -179,101 +162,93 @@ module WasteCarriersEngine
 
         describe "creating a view certificate token" do
           context "when the registration has a view_certificate_token" do
-            before do
-              registration.update_attributes(view_certificate_token: "foo")
-            end
+            before { registration.update_attributes(view_certificate_token: "foo") }
 
             it "does not update the view_certificate_token" do
-              renewal_completion_service.complete_renewal
-              expect(registration.reload.view_certificate_token).to eq("foo")
+              expect { complete_renewal }.not_to change { registration.reload.view_certificate_token }.from("foo")
             end
           end
 
           context "when the registration does not have a view_certificate_token" do
             it "creates a view_certificate_token" do
-              expect(registration.reload.view_certificate_token).to be_nil
-              renewal_completion_service.complete_renewal
-              expect(registration.reload.view_certificate_token).to be_present
+              expect { complete_renewal }.to change { registration.reload.view_certificate_token }.from(nil)
             end
           end
         end
 
         # This only applies to attributes where a value could be set, but not always - for example, smart answers
         context "when the registration has an attribute which is not in the transient_registration" do
-          before do
-            registration.update_attributes(construction_waste: true)
-          end
+          before { registration.update_attributes(construction_waste: true) }
 
           it "updates the attribute to be nil in the registration" do
-            renewal_completion_service.complete_renewal
-            expect(registration.reload.construction_waste).to be_nil
+            expect { complete_renewal }.to change { registration.reload.construction_waste }.to(nil)
           end
+        end
+
+        it "copies key people" do
+          transient_registration.key_people << build(:key_person, :has_required_data)
+          expect { complete_renewal }.to change { registration.reload.key_people.count }.by(1)
+        end
+
+        it "copies location" do
+          transient_registration.update(location: "scotland")
+          expect { complete_renewal }.to change { registration.reload.location }.to("scotland")
         end
 
         it "copies the first_name to the contact address" do
           first_name = transient_registration.first_name
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.contact_address.first_name).to eq(first_name)
+          expect { complete_renewal }.to change { registration.reload.contact_address.first_name }.to(first_name)
         end
 
         it "copies the last_name to the contact address" do
           last_name = transient_registration.last_name
-          renewal_completion_service.complete_renewal
-          expect(registration.reload.contact_address.last_name).to eq(last_name)
+          expect { complete_renewal }.to change { registration.reload.contact_address.last_name }.to(last_name)
         end
 
         it "deletes the transient registration" do
-          renewal_completion_service.complete_renewal
+          complete_renewal
           expect(RenewingRegistration.where(reg_identifier: transient_registration.reg_identifier).count).to eq(0)
         end
 
         it "sends a confirmation email" do
-          renewal_completion_service.complete_renewal
+          complete_renewal
 
-          expect(Notify::RenewalConfirmationEmailService)
-            .to have_received(:run)
-            .with(registration: registration)
-            .once
+          expect(Notify::RenewalConfirmationEmailService).to have_received(:run).with(registration: registration).once
         end
 
         context "when there is no contact email" do
-          before do
-            transient_registration.update_attributes(contact_email: nil)
-          end
+          before { transient_registration.update_attributes(contact_email: nil) }
 
           it "sends a confirmation letter" do
-            renewal_completion_service.complete_renewal
+            complete_renewal
 
-            expect(Notify::RenewalConfirmationLetterService)
-              .to have_received(:run)
-              .with(registration: registration)
-              .once
+            expect(Notify::RenewalConfirmationLetterService).to have_received(:run).with(registration: registration).once
           end
         end
 
         it "resets the certificate version" do
           registration.metaData.update_attributes(certificate_version: 3)
-          expect(registration.metaData.certificate_version).to eq(3)
 
-          renewal_completion_service.complete_renewal
-          expect(registration.metaData.reload.certificate_version).to eq(0)
+          expect { complete_renewal }.to change { registration.reload.metaData.certificate_version }.from(3).to(0)
         end
 
         it "updates certificate version history" do
-          renewal_completion_service.complete_renewal
-          expect(registration.metaData.reload.certificate_version_history.last[:version]).to eq(0)
-          expect(registration.metaData.reload.certificate_version_history.last[:generated_at]).to be_present
+          expect { complete_renewal }.to change { registration.reload.metaData.certificate_version_history.length }.by(1)
+        end
+
+        it "sets certificate version history timestamp" do
+          complete_renewal
+
+          expect(registration.reload.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end
 
       context "when the renewal cannot be completed" do
         context "when the renewal is in the wrong status" do
-          before do
-            registration.update_attributes!(metaData: build(:metaData, :has_required_data, status: "REVOKED"))
-          end
+          before { registration.update_attributes!(metaData: build(:metaData, :has_required_data, status: "REVOKED")) }
 
           it "raises a WrongStatus error" do
-            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::WrongStatus)
+            expect { complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::WrongStatus)
           end
         end
 
@@ -284,7 +259,7 @@ module WasteCarriersEngine
           end
 
           it "raises a StillUnpaidBalance error" do
-            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::StillUnpaidBalance)
+            expect { complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::StillUnpaidBalance)
           end
         end
 
@@ -295,7 +270,7 @@ module WasteCarriersEngine
           end
 
           it "raises a WrongWorkflowState error" do
-            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::WrongWorkflowState)
+            expect { complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::WrongWorkflowState)
           end
         end
 
@@ -314,7 +289,7 @@ module WasteCarriersEngine
           end
 
           it "raises a PendingConvictionCheck error" do
-            expect { renewal_completion_service.complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::PendingConvictionCheck)
+            expect { complete_renewal }.to raise_error(WasteCarriersEngine::RenewalCompletionService::PendingConvictionCheck)
           end
         end
       end
@@ -333,7 +308,7 @@ module WasteCarriersEngine
         end
 
         it "notifies Airbrake" do
-          renewal_completion_service.complete_renewal
+          complete_renewal
 
           expect(Airbrake).to have_received(:notify)
         end
