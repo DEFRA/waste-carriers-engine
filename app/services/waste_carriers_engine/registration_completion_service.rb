@@ -120,7 +120,7 @@ module WasteCarriersEngine
     end
 
     def copy_data_from_transient_registration
-      # Make sure data are loaded into attributes if setted on this instance
+      # Make sure data are loaded into attributes if set on this instance
       transient_registration.reload
 
       do_not_copy_attributes = %w[

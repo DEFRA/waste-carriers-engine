@@ -10,12 +10,15 @@ module WasteCarriersEngine
 
       shared_examples "specs for all transient registration types" do
 
-        it { expect(complete_registration.reg_identifier).to be_present }
         it { expect(complete_registration.contact_address).to be_present }
-        it { expect(complete_registration.metaData.route).to be_present }
-        it { expect(complete_registration.metaData.date_registered).to be_present }
         it { expect(complete_registration.finance_details).to be_present }
         it { expect(complete_registration.finance_details.orders.count).to eq(1) }
+        it { expect(complete_registration.key_people).to match_array(transient_registration.key_people.where(person_type: "KEY")) }
+        it { expect(complete_registration.location).to be_present }
+        it { expect(complete_registration.main_people).to match_array(transient_registration.main_people) }
+        it { expect(complete_registration.metaData.route).to be_present }
+        it { expect(complete_registration.metaData.date_registered).to be_present }
+        it { expect(complete_registration.reg_identifier).to be_present }
 
         context "when all temporary attributes are populated" do
           before do
@@ -50,6 +53,7 @@ module WasteCarriersEngine
 
         it { expect(complete_registration.expires_on).to be_nil }
         it { expect(complete_registration).to be_active }
+        it { expect(complete_registration.finance_details.payments.count).to eq(0) }
         it { expect(complete_registration.finance_details.balance).to eq(0) }
 
         it "does not set conviction search result and sign offs" do
@@ -63,7 +67,11 @@ module WasteCarriersEngine
       end
 
       context "when the registration is upper tier" do
-        let(:transient_registration) { create(:new_registration, :has_required_data) }
+        let(:transient_registration) do
+          build(:new_registration, :has_required_data)
+        end
+
+        before { transient_registration.finance_details.payments << build(:payment) }
 
         it_behaves_like "specs for all transient registration types"
 
@@ -71,9 +79,40 @@ module WasteCarriersEngine
           expect { complete_registration }.to change(WasteCarriersEngine::Registration, :count).by(1)
         end
 
-        it { expect(complete_registration.company_address).to be_present }
+        it { expect(complete_registration.company_address).to eq(transient_registration.company_address) }
         it { expect(complete_registration.expires_on).to be_present }
+        it { expect(complete_registration.finance_details.orders.count).to eq(1) }
+        it { expect(complete_registration.finance_details.payments.count).to eq(1) }
         it { expect(complete_registration).to be_pending }
+
+        context "when there are declared convictions" do
+          before do
+            transient_registration.declared_convictions = "yes"
+            ConvictionDataService.run(transient_registration)
+          end
+
+          # it { expect(complete_registration.declared_convictions).to eq "yes" }
+
+          context "when there is a conviction check match against the business" do
+            before do
+              transient_registration.conviction_search_result = build(:conviction_search_result, :match_result_yes)
+              transient_registration.key_people = [build(:key_person, :unmatched_conviction_search_result)]
+            end
+
+            it { expect(complete_registration.conviction_sign_offs).to exist }
+            it { expect(complete_registration.key_people.first.conviction_search_result.match_result).to eq "NO" }
+          end
+
+          context "when there is a conviction check match against a person" do
+            before do
+              transient_registration.conviction_search_result = build(:conviction_search_result, :match_result_no)
+              transient_registration.key_people = [build(:key_person, :matched_conviction_search_result)]
+            end
+
+            it { expect(complete_registration.reload.conviction_sign_offs).to exist }
+            it { expect(complete_registration.key_people.first.conviction_search_result.match_result).to eq "YES" }
+          end
+        end
 
         context "when the balance has been cleared and there are no pending convictions checks" do
           let(:finance_details) { build(:finance_details, :has_paid_order_and_payment) }
