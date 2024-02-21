@@ -19,18 +19,7 @@ module WasteCarriersEngine
 
     let(:renewal_completion_service) { described_class.new(transient_registration) }
 
-    before do
-      # We have to run this block after the transient registration creation,
-      # because it creates a new one as part of the has_required_data trait.
-      # Hence we create the transient, which in turn creates the registration
-      # and we then update it before each test
-      registration.update_attributes!(
-        finance_details: build(
-          :finance_details,
-          :has_outstanding_copy_card
-        )
-      )
-    end
+    before { registration.update(finance_details: build(:finance_details, :has_outstanding_copy_card)) }
 
     describe "#complete_renewal" do
 
@@ -226,20 +215,12 @@ module WasteCarriersEngine
           end
         end
 
-        it "resets the certificate version" do
-          registration.metaData.update_attributes(certificate_version: 3)
-
-          expect { complete_renewal }.to change { registration.reload.metaData.certificate_version }.from(3).to(0)
+        it "increments the certificate version" do
+          expect { complete_renewal }.to change { registration.reload.metaData.certificate_version }.to eq(2)
         end
 
         it "updates certificate version history" do
           expect { complete_renewal }.to change { registration.reload.metaData.certificate_version_history.length }.by(1)
-        end
-
-        it "sets certificate version history timestamp" do
-          complete_renewal
-
-          expect(registration.reload.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end
 

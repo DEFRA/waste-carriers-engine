@@ -23,6 +23,8 @@ module WasteCarriersEngine
 
         update_meta_data
 
+        registration.increment_certificate_version
+
         registration.save!
 
         delete_transient_registration

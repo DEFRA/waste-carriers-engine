@@ -7,15 +7,10 @@ module WasteCarriersEngine
       @requester = requester
       @view = view
 
-      increment_version_number
       init_presenter
     end
 
     private
-
-    def increment_version_number
-      @registration.increment_certificate_version(@requester)
-    end
 
     def init_presenter
       @init_presenter ||= CertificatePresenter.new(@registration, @view)

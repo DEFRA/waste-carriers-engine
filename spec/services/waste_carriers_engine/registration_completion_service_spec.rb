@@ -19,6 +19,8 @@ module WasteCarriersEngine
         it { expect(complete_registration.metaData.route).to be_present }
         it { expect(complete_registration.metaData.date_registered).to be_present }
         it { expect(complete_registration.reg_identifier).to be_present }
+        it { expect(complete_registration.metaData.certificate_version).to eq(1) }
+        it { expect(complete_registration.metaData.certificate_version_history.length).to eq(1) }
 
         context "when all temporary attributes are populated" do
           before do

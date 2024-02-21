@@ -35,22 +35,23 @@ RSpec.describe "Certificates" do
 
   describe "GET show" do
     context "with valid email in session and valid token" do
-      before do
-        post process_email_path, params: { email: valid_email }
-      end
+      subject(:get_certificate) { get "#{base_path}?token=#{token}" }
+
+      before { post process_email_path, params: { email: valid_email } }
 
       it "renders the HTML certificate" do
-        get "#{base_path}?token=#{token}"
+        get_certificate
 
         expect(response.media_type).to eq("text/html")
         expect(response).to have_http_status(:ok)
       end
+
+      it { expect { get_certificate }.not_to change { registration.reload.metaData.certificate_version } }
+      it { expect { get_certificate }.not_to change { registration.metaData.certificate_version_history } }
     end
 
     context "with valid email in session but invalid token" do
-      before do
-        post process_email_path, params: { email: valid_email }
-      end
+      before { post process_email_path, params: { email: valid_email } }
 
       it "redirects due to invalid token" do
         get "#{base_path}?token=invalidtoken"
@@ -74,9 +75,7 @@ RSpec.describe "Certificates" do
     end
 
     context "without valid email in session or token" do
-      before do
-        post process_email_path, params: { email: invalid_email }
-      end
+      before { post process_email_path, params: { email: invalid_email } }
 
       it "redirects to the email confirmation page" do
         get base_path
@@ -87,9 +86,7 @@ RSpec.describe "Certificates" do
     end
 
     context "without valid email in session but with valid token" do
-      before do
-        post process_email_path, params: { email: invalid_email }
-      end
+      before { post process_email_path, params: { email: invalid_email } }
 
       it "redirects to the email confirmation page" do
         get "#{base_path}?token=#{token}"
@@ -101,24 +98,25 @@ RSpec.describe "Certificates" do
   end
 
   describe "GET pdf" do
+    subject(:get_certificate) { get "#{base_path}?token=#{token}" }
+
     let(:base_path) { "/#{registration.reg_identifier}/pdf_certificate" }
 
     context "with valid email in session and valid token" do
-      before do
-        post process_email_path, params: { email: valid_email }
-      end
+      before { post process_email_path, params: { email: valid_email } }
 
       it "renders the page" do
-        get "#{base_path}?token=#{token}"
+        get_certificate
 
         expect(response).to have_http_status(:ok)
       end
+
+      it { expect { get_certificate }.not_to change { registration.reload.metaData.certificate_version } }
+      it { expect { get_certificate }.not_to change { registration.metaData.certificate_version_history } }
     end
 
     context "with valid email in session but invalid token" do
-      before do
-        post process_email_path, params: { email: valid_email }
-      end
+      before { post process_email_path, params: { email: valid_email } }
 
       it "redirects due to invalid token" do
         get "#{base_path}?token=invalidtoken"
@@ -142,9 +140,7 @@ RSpec.describe "Certificates" do
     end
 
     context "without valid email in session" do
-      before do
-        post process_email_path, params: { email: invalid_email }
-      end
+      before { post process_email_path, params: { email: invalid_email } }
 
       it "redirects to the email confirmation page" do
         get "#{base_path}.pdf"
@@ -164,9 +160,7 @@ RSpec.describe "Certificates" do
     end
 
     context "with an invalid token" do
-      before do
-        post process_email_path, params: { email: valid_email }
-      end
+      before { post process_email_path, params: { email: valid_email } }
 
       it "redirects due to invalid token" do
         get certificate_confirm_email_path(registration.reg_identifier, token: "invalidtoken")
@@ -192,9 +186,7 @@ RSpec.describe "Certificates" do
 
   describe "GET certificate_renew_token" do
     context "when the token has expired" do
-      before do
-        registration.update(view_certificate_token_created_at: 7.months.ago)
-      end
+      before { registration.update(view_certificate_token_created_at: 7.months.ago) }
 
       it "renders the renew token page" do
         get token_renewal_path
@@ -205,9 +197,7 @@ RSpec.describe "Certificates" do
   end
 
   describe "POST certificate_reset_token" do
-    before do
-      allow(WasteCarriersEngine::CertificateRenewalService).to receive(:run)
-    end
+    before { allow(WasteCarriersEngine::CertificateRenewalService).to receive(:run) }
 
     context "when the email is valid" do
 

@@ -36,11 +36,11 @@ module WasteCarriersEngine
           copy_names_to_contact_address
           create_past_registration
           update_registration
+          increment_certificate_version
           create_order_item_logs
           delete_transient_registration
           generate_view_certificate_token
           send_confirmation_messages
-          reset_certificate_version
         end
       end
     end
@@ -172,8 +172,8 @@ module WasteCarriersEngine
       end
     end
 
-    def reset_certificate_version
-      registration.reset_certificate_version
+    def increment_certificate_version
+      registration.increment_certificate_version
     end
 
     def generate_view_certificate_token

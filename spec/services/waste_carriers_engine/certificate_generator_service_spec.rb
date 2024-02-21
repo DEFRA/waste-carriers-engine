@@ -8,17 +8,19 @@ module WasteCarriersEngine
       let(:registration) { build(:registration, :has_required_data) }
       let(:requester) { build(:user) }
       let(:view) { ActionController::Base.new.view_context }
-      let(:service) { described_class.new }
+      let(:run_service) { described_class.run(registration: registration, requester: requester, view: view) }
 
-      it "triggers registration.increment_certificate_version" do
-        allow(registration).to receive(:increment_certificate_version)
-        service.run(registration: registration, requester: requester, view: view)
-        expect(registration).to have_received(:increment_certificate_version).with(requester)
+      it "does not change the registration's certificate version" do
+        expect { run_service }.not_to change { registration.metaData.certificate_version }
       end
 
-      it "initializes and return presenter instance" do
+      it "does not change the registration's certificate version history" do
+        expect { run_service }.not_to change { registration.metaData.certificate_version_history }
+      end
+
+      it "initializes and returns a certificate presenter instance" do
         allow(CertificatePresenter).to receive(:new).and_call_original
-        response = service.run(registration: registration, requester: requester, view: view)
+        response = run_service
         expect(CertificatePresenter).to have_received(:new).with(registration, view)
 
         expect(response.class.to_s).to eq("WasteCarriersEngine::CertificatePresenter")
