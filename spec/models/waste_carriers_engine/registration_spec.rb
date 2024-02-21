@@ -839,7 +839,7 @@ module WasteCarriersEngine
       let(:user) { create(:user) }
 
       context "when version is already present" do
-        let(:meta_data) { build(:metaData, certificateVersion: 1) }
+        let(:meta_data) { build(:metaData, certificateVersion: 1, certificateVersionHistory: [{ foo: :bar }]) }
         let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
 
         it "increments verson number by 1" do
@@ -849,59 +849,32 @@ module WasteCarriersEngine
 
         it "updates certificate_version_history" do
           registration.increment_certificate_version(user)
+          expect(registration.metaData.certificate_version_history.length).to eq 2
           expect(registration.metaData.certificate_version_history.last[:version]).to eq(2)
           expect(registration.metaData.certificate_version_history.last[:generated_by]).to eq(user.email)
           expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end
 
-      context "when one has not been set" do
+      context "when version has not been set" do
         let(:meta_data) { build(:metaData) }
         let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
 
-        it "sets the version and increments it by 1" do
+        # The version must default to 1 for historic registrations created before versioning go-live
+        it "defaults to 1" do
+          expect(meta_data.certificate_version).to eq 1
+        end
+
+        it "keeps the version at 1" do
           registration.increment_certificate_version(user)
           expect(registration.metaData.certificate_version).to eq(1)
         end
 
         it "updates certificate_version_history" do
           registration.increment_certificate_version(user)
+          expect(registration.metaData.certificate_version_history.length).to eq 1
           expect(registration.metaData.certificate_version_history.last[:version]).to eq(1)
           expect(registration.metaData.certificate_version_history.last[:generated_by]).to eq(user.email)
-          expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
-        end
-      end
-    end
-
-    describe "#reset_certificate_version" do
-      context "when version is already present" do
-        let(:meta_data) { build(:metaData, certificateVersion: 1) }
-        let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
-
-        it "resets verson to 0" do
-          registration.reset_certificate_version
-          expect(registration.metaData.certificate_version).to eq(0)
-        end
-
-        it "updates certificate_version_history" do
-          registration.reset_certificate_version
-          expect(registration.metaData.certificate_version_history.last[:version]).to eq(0)
-          expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
-        end
-      end
-
-      context "when one has not been set" do
-        let(:meta_data) { build(:metaData) }
-        let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
-
-        it "sets the version to 0" do
-          registration.reset_certificate_version
-          expect(registration.metaData.certificate_version).to eq(0)
-        end
-
-        it "updates certificate_version_history" do
-          registration.reset_certificate_version
-          expect(registration.metaData.certificate_version_history.last[:version]).to eq(0)
           expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end

@@ -62,8 +62,6 @@ module WasteCarriersEngine
     end
 
     def certificate_version
-      return 0 if metaData.certificate_version.nil?
-
       metaData.certificate_version
     end
 

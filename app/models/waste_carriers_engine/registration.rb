@@ -110,25 +110,21 @@ module WasteCarriersEngine
     end
 
     def increment_certificate_version(user = nil)
-      new_version = metaData.certificateVersion.to_i.succ
-      metaData.update(certificateVersion: new_version)
+      # If history is empty, this is the first version so keep the default value
+      new_version = metaData.certificateVersionHistory.empty? ? 1 : metaData.certificateVersion.to_i.succ
+      metaData.update(certificateVersion: new_version) unless new_version == 1
       update_certificate_version_history(new_version, user)
-    end
-
-    def reset_certificate_version
-      metaData.update(certificateVersion: 0)
-      update_certificate_version_history(0)
     end
 
     private
 
     def update_certificate_version_history(version, user = nil)
-      certificate_version_history = metaData.certificateVersionHistory << {
+      metaData.certificateVersionHistory << {
         version: version,
         generated_at: DateTime.now,
         generated_by: user&.email
       }
-      metaData.update(certificateVersionHistory: certificate_version_history)
+      save!
     end
 
     def renewable_tier?

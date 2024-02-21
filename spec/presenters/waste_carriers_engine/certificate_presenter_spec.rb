@@ -164,8 +164,8 @@ module WasteCarriersEngine
       end
 
       context "when the certificate version number is not set" do
-        it "returns 0" do
-          expect(presenter.certificate_version).to eq(0)
+        it "returns 1" do
+          expect(presenter.certificate_version).to eq(1)
         end
       end
     end
