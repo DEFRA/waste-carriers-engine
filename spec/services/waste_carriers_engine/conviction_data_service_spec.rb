@@ -31,9 +31,9 @@ module WasteCarriersEngine
             transient_registration.key_people = [build(:key_person, :unmatched_conviction_search_result)]
           end
 
-          it "does not create a conviction_search_result" do
+          it "creates a conviction_search_result without a match" do
             conviction_data_service
-            expect(transient_registration.reload.conviction_sign_offs).not_to exist
+            expect(transient_registration.reload.conviction_search_result.match_result).to eq "NO"
           end
         end
 
@@ -43,9 +43,9 @@ module WasteCarriersEngine
             transient_registration.key_people = [build(:key_person, :unmatched_conviction_search_result)]
           end
 
-          it "creates a conviction_search_result" do
+          it "creates a conviction_search_result with a match" do
             conviction_data_service
-            expect(transient_registration.reload.conviction_sign_offs).to exist
+            expect(transient_registration.reload.conviction_search_result.match_result).to eq "YES"
           end
         end
 

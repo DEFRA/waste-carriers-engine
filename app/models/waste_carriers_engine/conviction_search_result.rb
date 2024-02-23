@@ -8,7 +8,7 @@ module WasteCarriersEngine
     embedded_in :past_registration, class_name: "WasteCarriersEngine::PastRegistration"
     embedded_in :key_person,        class_name: "WasteCarriersEngine::KeyPerson"
 
-    field :match_result,    type: String
+    field :match_result,    type: String, default: "NO"
     field :matching_system, type: String
     field :reference,       type: String
     field :matched_name,    type: String

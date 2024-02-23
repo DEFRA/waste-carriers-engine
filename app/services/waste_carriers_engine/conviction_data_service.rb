@@ -6,7 +6,7 @@ module WasteCarriersEngine
       @transient_registration = transient_registration
 
       check_for_matches
-      add_conviction_sign_off if transient_registration.declared_convictions? || matching_or_unknown_convictions?
+      add_conviction_sign_off(transient_registration.declared_convictions? || matching_or_unknown_convictions?)
     end
 
     private
@@ -15,9 +15,9 @@ module WasteCarriersEngine
       WasteCarriersEngine::EntityMatchingService.run(@transient_registration)
     end
 
-    def add_conviction_sign_off
+    def add_conviction_sign_off(convictions_present)
       conviction_sign_off = ConvictionSignOff.new
-      conviction_sign_off.confirmed = "no"
+      conviction_sign_off.confirmed = "no" if convictions_present
 
       @transient_registration.conviction_sign_offs = [conviction_sign_off]
     end
