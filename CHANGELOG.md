@@ -6,6 +6,9 @@
 
 **Implemented enhancements:**
 
+- Feature/ruby 2846 certificate versioning [\#1506](https://github.com/DEFRA/waste-carriers-engine/pull/1506) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Add not England completion pages [\#1503](https://github.com/DEFRA/waste-carriers-engine/pull/1503) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Add back-office user journey completion pages [\#1495](https://github.com/DEFRA/waste-carriers-engine/pull/1495) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - RUBY 2794 wcr track communications history per registration [\#1488](https://github.com/DEFRA/waste-carriers-engine/pull/1488) ([jjromeo](https://github.com/jjromeo))
 - Ruby 2794 wcr track comminications history per registration [\#1485](https://github.com/DEFRA/waste-carriers-engine/pull/1485) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-2779\] updating password hint on password reset page [\#1484](https://github.com/DEFRA/waste-carriers-engine/pull/1484) ([brujeo](https://github.com/brujeo))
@@ -426,6 +429,9 @@
 
 **Fixed bugs:**
 
+- Fix/ruby 2860 conviction search results [\#1508](https://github.com/DEFRA/waste-carriers-engine/pull/1508) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix/ruby 2860 missing registration attributes [\#1505](https://github.com/DEFRA/waste-carriers-engine/pull/1505) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Revert 'Outside England' / 'Not found' change [\#1497](https://github.com/DEFRA/waste-carriers-engine/pull/1497) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - \[RUBY-2842\] refactoring original\_activation\_date method to handle situation when dateActivated is missing [\#1492](https://github.com/DEFRA/waste-carriers-engine/pull/1492) ([brujeo](https://github.com/brujeo))
 - Fix/ruby 2805 postcode validation [\#1487](https://github.com/DEFRA/waste-carriers-engine/pull/1487) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/ruby 2800 wcr fo missing template 404 errors [\#1480](https://github.com/DEFRA/waste-carriers-engine/pull/1480) ([brujeo](https://github.com/brujeo))
@@ -681,6 +687,17 @@
 
 **Merged pull requests:**
 
+- Bump mongoid from 8.0.7 to 8.0.8 [\#1510](https://github.com/DEFRA/waste-carriers-engine/pull/1510) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[RUBY-2845\] Update heading tags from h2/h3 to h1 for accessibility in renewal templates [\#1504](https://github.com/DEFRA/waste-carriers-engine/pull/1504) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2845\] Refactor certificate token generation and update services [\#1502](https://github.com/DEFRA/waste-carriers-engine/pull/1502) ([jjromeo](https://github.com/jjromeo))
+- Ruby 2802 wcr accessibility replace pdf certificate with html version [\#1500](https://github.com/DEFRA/waste-carriers-engine/pull/1500) ([jjromeo](https://github.com/jjromeo))
+- Add SafeCopyAttributesService [\#1499](https://github.com/DEFRA/waste-carriers-engine/pull/1499) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Ruby 2845 wcr handle expired certificate link [\#1498](https://github.com/DEFRA/waste-carriers-engine/pull/1498) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2845\] Fix issues with view certificate link [\#1496](https://github.com/DEFRA/waste-carriers-engine/pull/1496) ([jjromeo](https://github.com/jjromeo))
+- RUBY 2845 wcr handle expired certificate link [\#1494](https://github.com/DEFRA/waste-carriers-engine/pull/1494) ([jjromeo](https://github.com/jjromeo))
+- Update CHANGELOG [\#1493](https://github.com/DEFRA/waste-carriers-engine/pull/1493) ([brujeo](https://github.com/brujeo))
+- Move analytics services to the back office [\#1490](https://github.com/DEFRA/waste-carriers-engine/pull/1490) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- \[RUBY-2802\] Add token for viewing certificates and remove carrier telephone number from waste certificate PDF template [\#1486](https://github.com/DEFRA/waste-carriers-engine/pull/1486) ([jjromeo](https://github.com/jjromeo))
 - Chore/ruby 2770 move bo functionality to bo [\#1481](https://github.com/DEFRA/waste-carriers-engine/pull/1481) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - update defra\_ruby\_area dependency [\#1476](https://github.com/DEFRA/waste-carriers-engine/pull/1476) ([brujeo](https://github.com/brujeo))
 - Updating defra\_ruby\_area and other dependencies [\#1474](https://github.com/DEFRA/waste-carriers-engine/pull/1474) ([brujeo](https://github.com/brujeo))
