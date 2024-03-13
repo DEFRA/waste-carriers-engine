@@ -9,6 +9,9 @@ module WasteCarriersEngine
       @user = user
       @cards_count = cards_count
 
+      # Handle race condition if multiple browsers submit the order:
+      return transient_registration.finance_details if transient_registration.finance_details&.orders.present?
+
       finance_details = FinanceDetails.new
       finance_details.transient_registration = transient_registration
 

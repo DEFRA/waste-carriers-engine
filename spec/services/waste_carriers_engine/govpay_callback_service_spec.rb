@@ -8,7 +8,6 @@ module WasteCarriersEngine
     let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
     let(:govpay_callback_service) { described_class.new(order.payment_uuid) }
     let(:govpay_payment_details_service) { instance_double(GovpayPaymentDetailsService) }
-    let(:govpay_validator_service) { instance_double(GovpayValidatorService) }
 
     let(:transient_registration) do
       create(:renewing_registration,
@@ -22,7 +21,6 @@ module WasteCarriersEngine
 
     before do
       allow(GovpayPaymentDetailsService).to receive(:new).and_return(govpay_payment_details_service)
-      allow(GovpayValidatorService).to receive(:new).and_return(govpay_validator_service)
 
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
@@ -37,8 +35,6 @@ module WasteCarriersEngine
       before { allow(govpay_payment_details_service).to receive(:govpay_payment_status).and_return("created") }
 
       context "when the status is valid" do
-        before { allow(govpay_validator_service).to receive(:valid_success?).and_return(true) }
-
         it "returns true" do
           expect(govpay_callback_service.valid_success?).to be true
         end
@@ -75,10 +71,16 @@ module WasteCarriersEngine
             expect(GovpayPaymentDetailsService).to have_received(:new).with(hash_including(is_moto: true))
           end
         end
+
+        context "when a new order is initiated before the first one is completed" do
+          before { transient_registration.prepare_for_payment("card", nil) }
+
+          it { expect(govpay_callback_service.valid_success?).to be true }
+        end
       end
 
       context "when the status is invalid" do
-        before { allow(govpay_validator_service).to receive(:valid_success?).and_return(false) }
+        let(:govpay_callback_service) { described_class.new("invalid_uuid") }
 
         it "returns false" do
           expect(govpay_callback_service.valid_success?).to be false

@@ -8,10 +8,6 @@ module WasteCarriersEngine
       let(:finance_details) { transient_registration.finance_details }
       let(:order) { finance_details.orders.last }
 
-      # before do
-      #   allow(Rails.configuration).to receive(:type_change_charge).and_return(2_500)
-      # end
-
       it "creates a new order" do
         expect { run_service }.to change { finance_details.orders.length }.to 1
       end
@@ -79,6 +75,11 @@ module WasteCarriersEngine
         end
       end
 
+      context "when an order already exists" do
+        before { finance_details.orders << build(:order) }
+
+        it { expect { run_service }.not_to(change { transient_registration.finance_details.orders }) }
+      end
     end
   end
 end
