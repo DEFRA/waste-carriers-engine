@@ -28,27 +28,6 @@ module WasteCarriersEngine
     field :manualOrder, as: :manual_order,           type: String
     field :order_item_reference,                     type: String
 
-    # TODO: Move to a service
-    def self.new_order(transient_registration, method, user_email)
-      order = new_order_for(user_email)
-
-      card_count = transient_registration.temp_cards
-
-      order[:order_items] = [OrderItem.new_renewal_item]
-      order[:order_items] << OrderItem.new_type_change_item if transient_registration.registration_type_changed?
-      # TODO: Review whether card_count.present? is still necessary - this was a fix put in to deal with WC-498
-      order[:order_items] << OrderItem.new_copy_cards_item(card_count) if card_count.present? && card_count.positive?
-
-      order.set_description
-
-      order[:total_amount] = order[:order_items].sum { |item| item["amount"] }
-
-      order.add_bank_transfer_attributes if method == :bank_transfer
-      order.add_govpay_attributes if method == :govpay
-
-      order
-    end
-
     def self.new_order_for(user_email)
       order = Order.new
 

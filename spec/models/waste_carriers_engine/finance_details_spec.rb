@@ -17,8 +17,7 @@ module WasteCarriersEngine
       let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
 
       it "includes 1 order" do
-        order_count = finance_details.orders.length
-        expect(order_count).to eq(1)
+        expect(finance_details.orders.length).to eq(1)
       end
 
       it "has the correct balance" do
@@ -35,9 +34,7 @@ module WasteCarriersEngine
 
       subject(:finance_details) { transient_registration.finance_details }
 
-      before do
-        transient_registration.finance_details.balance = balance
-      end
+      before { transient_registration.finance_details.balance = balance }
 
       context "when the balance is 0" do
         let(:balance) { 0 }
@@ -69,9 +66,7 @@ module WasteCarriersEngine
 
       subject(:finance_details) { transient_registration.finance_details }
 
-      before do
-        transient_registration.finance_details.balance = balance
-      end
+      before { transient_registration.finance_details.balance = balance }
 
       context "when the balance is 0" do
         let(:balance) { 0 }
@@ -103,9 +98,7 @@ module WasteCarriersEngine
 
       subject(:finance_details) { transient_registration.finance_details }
 
-      before do
-        transient_registration.finance_details.balance = balance
-      end
+      before { transient_registration.finance_details.balance = balance }
 
       context "when the balance is 0" do
         let(:balance) { 0 }
@@ -141,9 +134,7 @@ module WasteCarriersEngine
       end
 
       context "when there is an order" do
-        before do
-          finance_details.orders = [Order.new_order(transient_registration, :govpay, current_user)]
-        end
+        let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
 
         it "has the correct balance" do
           finance_details.update_balance

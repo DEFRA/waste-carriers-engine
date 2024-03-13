@@ -16,16 +16,6 @@ module WasteCarriersEngine
 
     validates :balance, presence: true
 
-    def self.new_renewal_finance_details(transient_registration, method, current_user)
-      user_email = current_user&.email || transient_registration.contact_email
-      finance_details = FinanceDetails.new
-      finance_details.transient_registration = transient_registration
-      finance_details[:orders] = [Order.new_order(transient_registration, method, user_email)]
-      finance_details.update_balance
-      finance_details.save!
-      finance_details
-    end
-
     # These amounts are used in a number of finance operations.
     def overpaid_balance
       @_overpaid_balance ||= balance <= 0 ? (balance * -1) : 0
