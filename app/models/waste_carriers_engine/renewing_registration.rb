@@ -67,7 +67,7 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment(mode, user)
-      FinanceDetails.new_renewal_finance_details(self, mode, user)
+      BuildRenewalFinanceDetailsService.run(transient_registration: self, payment_method: mode, user:)
     end
 
     def renewal_application_submitted?

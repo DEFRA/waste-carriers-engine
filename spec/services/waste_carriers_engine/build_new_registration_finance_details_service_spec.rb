@@ -5,57 +5,53 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe BuildNewRegistrationFinanceDetailsService do
     describe ".run" do
+      subject(:run_service) { described_class.run(transient_registration:, payment_method:, user: current_user) }
+
+      let(:payment_method) { :govpay }
       let(:transient_registration) do
-        double(
-          :transient_registration,
+        build(
+          :new_registration,
           contact_email: "user@example.com",
           temp_cards: 2,
-          upper_tier?: true
+          tier: "UPPER",
+          finance_details: build(:finance_details)
         )
       end
-      let(:order) { double(:order, order_items: []) }
+      let(:finance_details) { transient_registration.finance_details }
+      let(:order) { finance_details.orders.last }
+      let(:current_user) { build(:user) }
 
-      before do
-        finance_details = double(:finance_details)
-        order_item_cards = double(:order_item_cards, amount: 10)
-        order_item_registration = double(:order_item_registration, amount: 20)
-        orders = double(:orders)
+      it_behaves_like "build finance details"
 
-        allow(FinanceDetails).to receive(:new).and_return(finance_details)
-        allow(finance_details).to receive(:transient_registration=).with(transient_registration)
-        allow(Order).to receive(:new_order_for).with("user@example.com").and_return(order)
-        allow(OrderItem).to receive(:new_copy_cards_item).with(2).and_return(order_item_cards)
-        allow(OrderItem).to receive(:new_registration_item).and_return(order_item_registration)
-        allow(order).to receive(:set_description)
-        allow(order).to receive(:order_items=).with([])
-        allow(order).to receive(:total_amount=).with(30)
-        allow(finance_details).to receive(:orders).and_return(orders).twice
-        allow(orders).to receive(:<<).with(order)
-        allow(finance_details).to receive(:update_balance)
-        allow(finance_details).to receive(:save!)
-      end
+      context "when temp_cards is 0" do
+        before { transient_registration.temp_cards = 0 }
 
-      context "when the payment method is bank transfer" do
-        let(:payment_method) { :bank_transfer }
-
-        it "updates the transient_registration's finance details with a new order for the given copy cards" do
-          allow(order).to receive(:add_bank_transfer_attributes)
-
-          described_class.run(transient_registration: transient_registration, payment_method: payment_method)
-
-          expect(order).to have_received(:add_bank_transfer_attributes)
+        it "does not include a copy cards item" do
+          run_service
+          matching_item = order[:order_items].find { |item| item["type"] == OrderItem::TYPES[:copy_cards] }
+          expect(matching_item).to be_nil
         end
       end
 
-      context "when the payment method is govpay" do
-        let(:payment_method) { :govpay }
+      context "when temp_cards is not present" do
+        before { transient_registration.temp_cards = nil }
 
-        it "updates the transient_registration's finance details with a new order for the given copy cards" do
-          allow(order).to receive(:add_govpay_attributes)
+        it "does not include a copy cards item" do
+          run_service
+          matching_item = order[:order_items].find { |item| item["type"] == OrderItem::TYPES[:copy_cards] }
+          expect(matching_item).to be_nil
+        end
+      end
 
-          described_class.run(transient_registration: transient_registration, payment_method: payment_method)
+      context "when there are copy cards" do
+        before do
+          transient_registration.temp_cards = 3
+          run_service
+        end
 
-          expect(order).to have_received(:add_govpay_attributes)
+        it "includes a copy cards item" do
+          matching_item = order[:order_items].find { |item| item["type"] == OrderItem::TYPES[:copy_cards] }
+          expect(matching_item).not_to be_nil
         end
       end
     end
