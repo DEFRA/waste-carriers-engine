@@ -66,6 +66,7 @@ module WasteCarriersEngine
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :uuid,                                                          type: String
       field :email_history,                                                 type: Array, default: []
+      field :communications_opted_out,                                      type: Mongoid::Boolean, default: false
       # rubocop:enable Layout/LineLength
 
       # Deprecated attributes
@@ -102,6 +103,7 @@ module WasteCarriersEngine
       }
 
       scope :not_selected_for_email, ->(template_id) { where.not("email_history.template_id": template_id) }
+      scope :communications_accepted, -> { where(communications_opted_out: false) }
 
       scope :upper_tier, -> { where(tier: "UPPER") }
       scope :lower_tier, -> { where(tier: "LOWER") }
