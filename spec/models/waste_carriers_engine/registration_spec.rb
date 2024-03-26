@@ -223,6 +223,19 @@ module WasteCarriersEngine
           expect(results).not_to include(cancelled_registration)
         end
       end
+
+      describe ".communications_accepted" do
+        # rubocop:disable RSpec/LetSetup
+        let!(:registration_not_specified) { create(:registration, :has_required_data) }
+        let!(:registration_opted_in) { create(:registration, :has_required_data, communications_opted_out: false) }
+        let!(:registration_opted_out) { create(:registration, :has_required_data, communications_opted_out: true) }
+        # rubocop:enable RSpec/LetSetup
+
+        it do
+          expect(described_class.communications_accepted)
+            .to contain_exactly(registration_not_specified, registration_opted_in)
+        end
+      end
     end
 
     describe "#expire!" do
