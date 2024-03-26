@@ -347,6 +347,10 @@ WasteCarriersEngine::Engine.routes.draw do
   post ":reg_identifier/certificate_reset_token", to: "certificates#reset_token", as: "certificate_reset_token"
   get ":reg_identifier/certificate_renewal_sent", to: "certificates#renewal_sent", as: "certificate_renewal_sent"
 
+  get "/unsubscribe/:unsubscribe_token", to: "unsubscribe#unsubscribe", as: "unsubscribe"
+  get "/unsubscribe_successful", to: "unsubscribe#unsubscribe_successful", as: "unsubscribe_successful"
+  get "/unsubscribe_failed", to: "unsubscribe#unsubscribe_failed", as: "unsubscribe_failed"
+
   mount DefraRubyEmail::Engine => "/email"
 
   # See http://patrickperey.com/railscast-053-handling-exceptions/

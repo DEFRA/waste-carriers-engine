@@ -1,0 +1,5 @@
+en:
+  unsubscribe:
+    successful: You have successfully unsubscribed from renewal reminder emails.
+    unsuccessful: You could not be unsubscribed. If you copied and pasted the link, try again.
+    close_window: You can close this window.
