@@ -5,11 +5,10 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"foo@example.com","template_id":"77ea008f-7965-4f68-93dc-af11fa072234","personalisation":{"reg_identifier":"CBDU2","registration_type":"carrier,
+      string: '{"email_address":"foo@example.com","template_id":"603840fe-de9e-4824-9715-d975b88ff438","personalisation":{"reg_identifier":"CBDU251","registration_type":"carrier,
         broker and dealer","first_name":"Jane","last_name":"Doe","phone_number":"03708
-        506506","registered_address":"42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH","date_registered":"
-        4 May 2023","link_to_file":"Hello World","certificate_creation_date":" 4 May
-        2023"}}'
+        506506","registered_address":"42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH","date_registered":"26
+        March 2024","link_to_file":"http://localhost:3002/fo/CBDU251/certificate?token=86c0d184-3d8f-44cf-b9a2-9186f3d33a0d","unsubscribe_link":"http://localhost:3002/unsubscribe/12StG6ZGN9DqThg9QN8wroGy"}}'
     headers:
       User-Agent:
       - NOTIFY-API-RUBY-CLIENT/5.4.0
@@ -24,71 +23,75 @@ http_interactions:
   response:
     status:
       code: 201
-      message: Created
+      message: CREATED
     headers:
       Content-Type:
       - application/json
       Content-Length:
-      - '2582'
+      - '3535'
       Connection:
       - keep-alive
       Date:
-      - Thu, 04 May 2023 10:03:09 GMT
+      - Tue, 26 Mar 2024 12:39:20 GMT
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
       - GET,PUT,POST,DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Server:
-      - gunicorn
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-B3-Spanid:
-      - 6fa1dcb3ff791b0d
       X-B3-Traceid:
-      - 0b9d287356fdaba66fa1dcb3ff791b0d
-      X-Vcap-Request-Id:
-      - 25aa0876-7362-4ef6-7a4f-e1dd9e9e7ff9
+      - 1Mnk-v46CTHMYuQGzdCqBwtZBWehBCusv_92JiT_-OY8ufqBEw4W2Q==
+      X-B3-Spanid:
+      - self-4321e303f1e4dc86
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f25262ad6146af3450ccd86dcbcc3780.cloudfront.net (CloudFront)
+      - 1.1 675c3f96928d591debc37b54f2b16dc2.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LHR50-P3
       X-Amz-Cf-Id:
-      - uVfTbDnyFaujc2TCEWYlL4O9ayuZdIq5WAzEF72rndspy9E4-dwBIw==
+      - 1Mnk-v46CTHMYuQGzdCqBwtZBWehBCusv_92JiT_-OY8ufqBEw4W2Q==
     body:
       encoding: UTF-8
       string: '{"content":{"body":"#You are now registered as an upper tier waste
-        carrier, broker and dealer\r\n\r\nYour registration number is\r\n\r\n#CBDU2\r\n\r\n#Your
+        carrier, broker and dealer\r\n\r\nYour registration number is\r\n\r\n#CBDU251\r\n\r\n#Your
         registration lasts for 3 years, however the link to your certificate will
         only be available for 6 months. You must download the file and keep it for
-        reference.\r\n\r\nDownload your certificate at: Hello World\r\n\r\nJane\r\n\r\nBased
+        reference.\r\n\r\nDownload your certificate at: http://localhost:3002/fo/CBDU251/certificate?token=86c0d184-3d8f-44cf-b9a2-9186f3d33a0d\r\n\r\nJane\r\n\r\nBased
         on what you told us about your organisation and what it does, we have registered
         you as an upper tier waste carrier, broker and dealer.\r\n\r\nBeing an upper
         tier waste carrier, broker and dealer means that:\r\n\r\n*you need to renew
         your registration every 3 years\r\n*you\u2019ll need to pay a registration
         charge each time you renew\r\n*we will contact you on this email address when
         your registration is due to be renewed in 3 years'' time\r\n*if we cannot
-        reach you, you\u2019ll have to pay more for a new registration\r\n\r\nThere
-        are some simple rules you must follow:\r\n\r\n*if you give your waste to another
-        person or business you must check they are properly authorised to accept it,
-        for example as a permitted site or a registered waste carrier\r\n*make sure
-        the correct documentation is completed for each transfer of waste and that
-        it correctly describes the waste\r\n*make sure any waste is safely handled
-        and stored\r\n*minimise the environmental impact of waste by prioritising
-        waste prevention, reuse, recycling and recovery over disposal\r\n\r\n#Updating
+        reach you, you\u2019ll have to pay more for a new registration\r\n\r\nEveryone
+        who produces, manages or handles waste is required to take reasonable measures
+        to prevent the risk of other people in the waste chain committing an offence
+        and prevent the risk of an illegal deposit. How to do this is detailed in
+        the [Waste duty of care code of practice](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1073585/Waste_duty_of_care_code_of_practice.pdf)
+        (opens in a new window) and will vary based on your relationship to the waste.
+        Failing to take reasonable measures is an offence.\r\n\r\n#Steps everyone
+        must take\r\n\r\n*When giving your waste to a third party, or organising a
+        third party to be responsible for the movement of your waste, you must check
+        they hold an appropriate authorisation, e.g. as a permitted site or a registered
+        waste carrier, broker or dealer on [Public Registers Online](https://environment.data.gov.uk/public-register/view/index)
+        (opens in a new window).\r\n*Completing the required documentation for each
+        transfer of waste, classifying and describing it correctly. [Classify different
+        types of waste](https://www.gov.uk/how-to-classify-different-types-of-waste)  (opens
+        in a new window).\r\n*Storing and handling waste safely.\r\n*Following the
+        waste hierarchy to minimise your environmental impact by prioritising, in
+        order, waste prevention, reuse, recycling and then recovery over disposal.\r\n\r\n#Updating
         your details\r\n\r\nIf any of the details you''ve given us change, you must
         update them within 28 days by contacting the Environment Agency.\r\n\r\nJane
         Doe\r\n\r\n42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH\r\n\r\nTelephone number:
-        03708 506506\r\n\r\nRegistered on:  4 May 2023\r\n\r\nThis certificate was
-        created on  4 May 2023. These details are correct at the time of certificate
-        generation.\r\n\r\nIf you have enquiries please email nccc-carrierbroker@environment-agency.gov.uk
-        or contact the Environment Agency helpline: 03708 506506\r\n\r\nThis is an
-        automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Waste
-        Carrier Registration Complete"},"id":"f21ee201-8e9f-4dd4-93ee-bcde38d6df26","reference":null,"scheduled_for":null,"template":{"id":"77ea008f-7965-4f68-93dc-af11fa072234","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/fe1e4746-c940-4ace-b111-8be64ee53b35","version":1},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f21ee201-8e9f-4dd4-93ee-bcde38d6df26"}
+        03708 506506\r\n\r\nRegistered on: 26 March 2024\r\n\r\nIf you have enquiries
+        please email nccc-carrierbroker@environment-agency.gov.uk or contact the Environment
+        Agency helpline: 03708 506506\r\n\r\nTo unsubscribe from email reminders\r\n[Unsubscribe]http://localhost:3002/unsubscribe/12StG6ZGN9DqThg9QN8wroGy\r\n\r\nThis
+        is an automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Waste
+        Carrier Registration Complete"},"id":"0fecdc61-9cf8-4876-ba0b-57629d44d825","reference":null,"scheduled_for":null,"template":{"id":"603840fe-de9e-4824-9715-d975b88ff438","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/603840fe-de9e-4824-9715-d975b88ff438","version":2},"uri":"https://api.notifications.service.gov.uk/v2/notifications/0fecdc61-9cf8-4876-ba0b-57629d44d825"}
 
         '
-  recorded_at: Thu, 04 May 2023 10:03:09 GMT
-recorded_with: VCR 6.1.0
+  recorded_at: Tue, 26 Mar 2024 12:39:20 GMT
+recorded_with: VCR 6.2.0

@@ -27,7 +27,8 @@ module WasteCarriersEngine
               phone_number: "03708 506506",
               registered_address: "42\r\nFoo Gardens\r\nBaz City\r\nBS1 5AH",
               date_registered: registration.metaData.date_registered.to_fs(:standard),
-              link_to_file: "http://localhost:3002/fo/#{registration.reg_identifier}/certificate?token=#{registration.view_certificate_token}"
+              link_to_file: "http://localhost:3002/fo/#{registration.reg_identifier}/certificate?token=#{registration.view_certificate_token}",
+              unsubscribe_link: WasteCarriersEngine::UnsubscribeLinkService.run(registration:)
             }
           }
         end
@@ -87,7 +88,7 @@ module WasteCarriersEngine
           end
 
           context "with an upper tier registration" do
-            let(:template_id) { "77ea008f-7965-4f68-93dc-af11fa072234" }
+            let(:template_id) { "603840fe-de9e-4824-9715-d975b88ff438" }
             let(:registration) { create(:registration, :has_required_data, :already_renewed) }
             let(:registration_type) { "carrier, broker and dealer" }
 

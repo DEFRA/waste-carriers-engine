@@ -130,6 +130,7 @@ module WasteCarriersEngine
         "financeDetails",
         "past_registrations",
         "renew_token",
+        "unsubscribe_token",
         "deregistration_token",
         "deregistration_token_created_at",
         "view_certificate_token",
