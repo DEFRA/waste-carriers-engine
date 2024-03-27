@@ -16,10 +16,10 @@ module WasteCarriersEngine
       end
 
       context "when the unsubscribe token is valid" do
-        it "updates the registration's communications_opted_out attribute to true" do
+        it "updates the registration's communications_opted_in attribute to false" do
           get unsubscribe_path(unsubscribe_token:)
           registration.reload
-          expect(registration.communications_opted_out).to be(true)
+          expect(registration.communications_opted_in).to be(false)
         end
 
         it "redirects to the unsubscribe successful page" do

@@ -227,8 +227,8 @@ module WasteCarriersEngine
       describe ".communications_accepted" do
         # rubocop:disable RSpec/LetSetup
         let!(:registration_not_specified) { create(:registration, :has_required_data) }
-        let!(:registration_opted_in) { create(:registration, :has_required_data, communications_opted_out: false) }
-        let!(:registration_opted_out) { create(:registration, :has_required_data, communications_opted_out: true) }
+        let!(:registration_opted_in) { create(:registration, :has_required_data, communications_opted_in: true) }
+        let!(:registration_opted_out) { create(:registration, :has_required_data, communications_opted_in: false) }
         # rubocop:enable RSpec/LetSetup
 
         it do

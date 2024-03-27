@@ -2,6 +2,7 @@
 
 module WasteCarriersEngine
   # Define the attributes a registration or a renewal has
+
   # rubocop:disable Metrics/ModuleLength
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
@@ -18,6 +19,7 @@ module WasteCarriersEngine
       # attributes are aligned. The problem is this doesn't allow us much room
       # for comments in some places, and putting them on the line above breaks
       # the formatting we have in place.
+
       # rubocop:disable Layout/LineLength
       embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
 
@@ -29,7 +31,8 @@ module WasteCarriersEngine
 
       embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
       embeds_many :conviction_sign_offs,    class_name: "WasteCarriersEngine::ConvictionSignOff"
-      embeds_one :finance_details,          class_name: "WasteCarriersEngine::FinanceDetails", store_as: "financeDetails"
+      embeds_one :finance_details,          class_name: "WasteCarriersEngine::FinanceDetails",
+                                            store_as: "financeDetails"
       embeds_many :key_people,              class_name: "WasteCarriersEngine::KeyPerson"
       embeds_one :metaData,                 class_name: "WasteCarriersEngine::MetaData"
 
@@ -66,7 +69,7 @@ module WasteCarriersEngine
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :uuid,                                                          type: String
       field :email_history,                                                 type: Array, default: []
-      field :communications_opted_out,                                      type: Mongoid::Boolean, default: false
+      field :communications_opted_in,                                       type: Mongoid::Boolean, default: true
       # rubocop:enable Layout/LineLength
 
       # Deprecated attributes
@@ -259,17 +262,12 @@ module WasteCarriersEngine
       end
 
       def legal_entity_name
-        # Robocop and SonarCloud disagree over whether this case statement should have a default clause.
-        # rubocop:disable Style/EmptyElse
         case business_type
         when "limitedCompany", "limitedLiabilityPartnership"
           registered_company_name
         when "soleTrader"
           upper_tier? ? first_person_name : nil
-        else
-          nil
         end
-        # rubocop:enable Style/EmptyElse
       end
 
       def first_person_name
@@ -281,4 +279,5 @@ module WasteCarriersEngine
     # rubocop:enable Metrics/BlockLength
   end
   # rubocop:enable Metrics/ModuleLength
+
 end

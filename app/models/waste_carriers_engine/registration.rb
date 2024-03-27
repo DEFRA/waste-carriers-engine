@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ClassLength
   class Registration
     include Mongoid::Document
     include CanCheckRegistrationStatus
@@ -34,7 +35,7 @@ module WasteCarriersEngine
     scope :expired_at_end_of_today, -> { where(:expires_on.lte => Time.now.in_time_zone("London").end_of_day) }
     scope :active_and_expired, -> { where("metaData.status" => { :$in => %w[ACTIVE EXPIRED] }) }
     scope :not_cancelled, -> { where("metaData.status" => { :$nin => %w[INACTIVE] }) }
-    scope :communications_accepted, -> { where(communications_opted_out: false) }
+    scope :communications_accepted, -> { where(communications_opted_in: true) }
 
     field :renew_token, type: String
     field :unsubscribe_token, type: String
@@ -158,4 +159,5 @@ module WasteCarriersEngine
       @_check_service ||= ExpiryCheckService.new(self)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

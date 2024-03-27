@@ -8,7 +8,7 @@ module WasteCarriersEngine
     def unsubscribe
       @registration = Registration.where(unsubscribe_token: params[:unsubscribe_token]).first
       if @registration
-        @registration.update(communications_opted_out: true)
+        @registration.update(communications_opted_in: false)
         create_communication_record
 
         redirect_to unsubscribe_successful_path
