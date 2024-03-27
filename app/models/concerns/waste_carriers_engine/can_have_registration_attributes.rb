@@ -270,8 +270,6 @@ module WasteCarriersEngine
           registered_company_name
         when "soleTrader"
           upper_tier? ? first_person_name : nil
-        else
-          nil
         end
       end
       # rubocop:enable Style/EmptyElse
