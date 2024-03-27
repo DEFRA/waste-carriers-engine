@@ -2,14 +2,6 @@
   <%= stylesheet_link_tag "application" %>
   <%= csrf_meta_tags %>
 
-  <% if @transient_registration.present? %>
-    <script>
-      dataLayer = [{
-        <%= data_layer(@transient_registration) %>
-      }];
-    </script>
-  <% end %>
-
 <% end %>
 
 <% content_for :page_title, title %>
