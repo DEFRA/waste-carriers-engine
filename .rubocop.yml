@@ -30,4 +30,3 @@ Style/DisableCopsWithinSourceCodeDirective:
     - RSpec/AnyInstance
     - RSpec/LetSetup
     - Style/EmptyElse
-     
