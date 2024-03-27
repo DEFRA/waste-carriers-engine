@@ -29,3 +29,5 @@ Style/DisableCopsWithinSourceCodeDirective:
     - Metrics/ModuleLength
     - RSpec/AnyInstance
     - RSpec/LetSetup
+    - Style/EmptyElse
+     

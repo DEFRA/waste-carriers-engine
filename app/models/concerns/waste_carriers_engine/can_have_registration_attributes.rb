@@ -261,14 +261,19 @@ module WasteCarriersEngine
         receipt_email || contact_email
       end
 
+      # rubocop and SonarCloud disagree about this
+      # rubocop:disable Style/EmptyElse
       def legal_entity_name
         case business_type
         when "limitedCompany", "limitedLiabilityPartnership"
           registered_company_name
         when "soleTrader"
           upper_tier? ? first_person_name : nil
+        else
+          nil
         end
       end
+      # rubocop:enable Style/EmptyElse
 
       def first_person_name
         return nil unless key_people.present? && key_people[0].present?
