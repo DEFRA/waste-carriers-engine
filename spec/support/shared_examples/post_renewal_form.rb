@@ -71,11 +71,11 @@ RSpec.shared_examples "POST renewal form" do |form, options|
       context "when the params are empty" do
         # NOTE: Kill it
         it "does not throw an error" do
-          # rubocop:disable Style/BlockDelimiters
-          expect {
+
+          expect do
             post_form_with_params(form, transient_registration.token)
-          }.not_to raise_error
-          # rubocop:enable Style/BlockDelimiters
+          end.not_to raise_error
+
         end
       end
 

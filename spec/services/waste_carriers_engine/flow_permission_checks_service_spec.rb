@@ -5,9 +5,9 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe FlowPermissionChecksService do
     describe ".run" do
-      let(:user) { double(:user) }
+      let(:user) { instance_double(User) }
       let(:params) { { transient_registration: transient_registration, user: user } }
-      let(:result) { double(:result) }
+      let(:result) { instance_double(PermissionChecksResult) }
 
       before do
         allow(BlankPermissionCheckService).to receive(:run).and_return(result)
@@ -45,7 +45,7 @@ module WasteCarriersEngine
       end
 
       context "when there is no permission check service for the given transient object" do
-        let(:transient_registration) { double(:transient_registration) }
+        let(:transient_registration) { instance_double(TransientRegistration) }
 
         it "raises a specific error" do
           expect { described_class.run(params) }.to raise_error(FlowPermissionChecksService::MissingFlowPermissionChecksService)

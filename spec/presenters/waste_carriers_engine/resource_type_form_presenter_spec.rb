@@ -16,7 +16,7 @@ module WasteCarriersEngine
       end
 
       context "when the object is not of type NewRegistration" do
-        let(:object) { double(:object) }
+        let(:object) { instance_double(RenewingRegistration) }
 
         it "returns false" do
           expect(presenter).not_to be_a_new_registration
@@ -34,7 +34,7 @@ module WasteCarriersEngine
       end
 
       context "when the object is not of type RenewingRegistration" do
-        let(:object) { double(:object) }
+        let(:object) { instance_double(NewRegistration) }
 
         it "returns false" do
           expect(presenter).not_to be_a_renewal

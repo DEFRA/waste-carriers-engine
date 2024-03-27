@@ -17,3 +17,15 @@ Naming/VariableNumber:
 
 Style/ArgumentsForwarding:
   Enabled: false
+
+Style/DisableCopsWithinSourceCodeDirective:
+  Enabled: true
+  AllowedCops:
+    - Layout/LineLength
+    - Naming/MemoizedInstanceVariableName
+    - Metrics/BlockLength
+    - Metrics/ClassLength
+    - Metrics/MethodLength
+    - Metrics/ModuleLength
+    - RSpec/AnyInstance
+    - RSpec/LetSetup

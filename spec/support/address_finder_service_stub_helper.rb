@@ -5,7 +5,7 @@ module AddressFinderServiceStubHelper
     ea_address_facade_v11_result = JSON.parse(file_fixture("ea_address_facade_v11_response.json").read)
     address_json = [ea_address_facade_v11_result.merge(options.stringify_keys)]
 
-    response = double(:response, results: address_json, successful?: true)
+    response = instance_double(DefraRuby::Address::Response, results: address_json, successful?: true)
 
     allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
   end

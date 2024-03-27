@@ -59,7 +59,7 @@ module WasteCarriersEngine
       end
 
       context "with a blank email address" do
-        before { registration.contact_email = nil }
+        before { registration.contact_email = "" }
 
         it "sends a confirmation letter" do
           run_service

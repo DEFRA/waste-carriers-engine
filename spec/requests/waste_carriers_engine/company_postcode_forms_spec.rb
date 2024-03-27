@@ -37,7 +37,7 @@ module WasteCarriersEngine
 
           context "when a postcode search returns an error" do
             before do
-              response = double(:response, successful?: false, error: "foo")
+              response = instance_double(DefraRuby::Address::Response, successful?: false, error: "foo")
 
               allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
             end

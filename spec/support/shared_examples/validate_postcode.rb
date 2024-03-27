@@ -44,19 +44,19 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
     before { allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response) }
 
     context "when a postcode search returns an error" do
-      let(:response) { double(:response, successful?: false, error: "foo") }
+      let(:response) { instance_double(DefraRuby::Address::Response, successful?: false, error: "foo") }
 
       it { expect(form).to be_valid }
     end
 
     context "when a postcode search returns no matches" do
-      let(:response) { double(:response, successful?: false, error: DefraRuby::Address::NoMatchError.new) }
+      let(:response) { instance_double(DefraRuby::Address::Response, successful?: false, error: DefraRuby::Address::NoMatchError.new) }
 
       it { expect(form).not_to be_valid }
     end
 
     context "when a postcode search returns a match" do
-      let(:response) { double(:response, results: [{ postcode: "BS1 5AH" }], successful?: true) }
+      let(:response) { instance_double(DefraRuby::Address::Response, results: [{ postcode: "BS1 5AH" }], successful?: true) }
 
       it { expect(form).to be_valid }
     end

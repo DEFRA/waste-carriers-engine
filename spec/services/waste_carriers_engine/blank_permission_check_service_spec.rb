@@ -4,9 +4,9 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe BlankPermissionCheckService do
-    let(:transient_registration) { double(:transient_registration) }
-    let(:user) { double(:user) }
-    let(:result) { double(:result) }
+    let(:transient_registration) { instance_double(TransientRegistration) }
+    let(:user) { instance_double(User) }
+    let(:result) { instance_double(PermissionChecksResult) }
     let(:params) { { transient_registration: transient_registration, user: user } }
 
     describe ".run" do

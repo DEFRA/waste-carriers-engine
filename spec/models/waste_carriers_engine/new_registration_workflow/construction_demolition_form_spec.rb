@@ -9,7 +9,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context "with :construction_demolition_form state transitions" do
         context "with :next transition" do
-          let(:smart_answer_checker_service) { double(:smart_answer_checker_service, lower_tier?: lower_tier) }
+          let(:smart_answer_checker_service) { instance_double(SmartAnswersCheckerService, lower_tier?: lower_tier) }
 
           before do
             allow(SmartAnswersCheckerService).to receive(:new).and_return(smart_answer_checker_service)

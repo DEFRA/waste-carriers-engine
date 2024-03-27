@@ -32,10 +32,10 @@ module WasteCarriersEngine
       let(:active) { false }
       let(:expired) { false }
       let(:registration) do
-        double(:registration,
-               active?: active,
-               expired?: expired,
-               upper_tier?: upper_tier)
+        instance_double(Registration,
+                        active?: active,
+                        expired?: expired,
+                        upper_tier?: upper_tier)
       end
 
       before do
@@ -60,11 +60,11 @@ module WasteCarriersEngine
         let(:in_renewal_window) { false }
 
         let(:check_service) do
-          double(:check_service,
-                 date_can_renew_from: date_can_renew_from,
-                 expired?: expired_check_service,
-                 in_expiry_grace_window?: in_expiry_grace_window,
-                 in_renewal_window?: in_renewal_window)
+          instance_double(ExpiryCheckService,
+                          date_can_renew_from: date_can_renew_from,
+                          expired?: expired_check_service,
+                          in_expiry_grace_window?: in_expiry_grace_window,
+                          in_renewal_window?: in_renewal_window)
         end
 
         context "when the registration is active" do

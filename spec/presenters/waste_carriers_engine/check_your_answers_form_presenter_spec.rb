@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
     describe "#show_smart_answers_results?" do
       context "when the transient_registration is a charity" do
-        let(:transient_registration) { double(:transient_registration, charity?: true) }
+        let(:transient_registration) { instance_double(TransientRegistration, charity?: true) }
 
         it "returns false" do
           expect(presenter.show_smart_answers_results?).to be false
@@ -22,7 +22,7 @@ module WasteCarriersEngine
 
         context "when the transient_registration is not a new_registration" do
           let(:new_registration) { false }
-          let(:transient_registration) { double(:transient_registration, charity?: false) }
+          let(:transient_registration) { instance_double(TransientRegistration, charity?: false) }
 
           it "returns true" do
             expect(presenter.show_smart_answers_results?).to be true
@@ -32,7 +32,7 @@ module WasteCarriersEngine
         context "when the transient_registration is a new_registration" do
           let(:new_registration) { true }
           let(:transient_registration) do
-            double(:transient_registration, charity?: false, tier_known?: tier_known)
+            instance_double(NewRegistration, charity?: false, tier_known?: tier_known)
           end
 
           context "when the tier is known to the user" do

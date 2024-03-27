@@ -158,9 +158,9 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
 
   describe "#amount_paid" do
     it "returns the total amount paid by the user" do
-      finance_detail1 = double(:finance_detail1, amount: 23)
-      finance_detail2 = double(:finance_detail2, amount: 30)
-      finance_details = double(:finance_details, payments: [finance_detail1, finance_detail2])
+      finance_detail1 = instance_double(WasteCarriersEngine::Payment, amount: 23)
+      finance_detail2 = instance_double(WasteCarriersEngine::Payment, amount: 30)
+      finance_details = instance_double(WasteCarriersEngine::FinanceDetails, payments: [finance_detail1, finance_detail2])
 
       allow(resource).to receive(:finance_details).and_return(finance_details)
 
@@ -197,34 +197,17 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
   end
 
   describe "#assisted_digital?" do
+
     context "when the contact email is nil" do
-      before do
-        resource.contact_email = nil
-      end
+      before { resource.contact_email = nil }
 
-      it "returns true" do
-        expect(resource).to be_assisted_digital
-      end
-    end
-
-    context "when the contact email is the nil" do
-      before do
-        resource.contact_email = nil
-      end
-
-      it "returns true" do
-        expect(resource).to be_assisted_digital
-      end
+      it { expect(resource).to be_assisted_digital }
     end
 
     context "when the contact email is an external email" do
-      before do
-        resource.contact_email = "foo@example.com"
-      end
+      before { resource.contact_email = "foo@example.com" }
 
-      it "returns false" do
-        expect(resource).not_to be_assisted_digital
-      end
+      it { expect(resource).not_to be_assisted_digital }
     end
   end
 

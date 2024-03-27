@@ -11,16 +11,16 @@ module WasteCarriersEngine
         let(:last_name) { "bar" }
         let(:date_of_birth) { Date.today }
         let(:entity_a) do
-          double(:entity,
-                 system_flag: "foo",
-                 incident_number: "bar",
-                 name: "baz")
+          instance_double(Entity,
+                          system_flag: "foo",
+                          incident_number: "bar",
+                          name: "baz")
         end
         let(:entity_b) do
-          double(:entity,
-                 system_flag: "qux",
-                 incident_number: "quux",
-                 name: "quuz")
+          instance_double(Entity,
+                          system_flag: "qux",
+                          incident_number: "quux",
+                          name: "quuz")
         end
 
         before do

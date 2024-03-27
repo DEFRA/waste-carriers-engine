@@ -11,9 +11,9 @@ module WasteCarriersEngine
     end
 
     describe ".run" do
-      let(:transient_registration) { double(:transient_registration, from_magic_link: false) }
-      let(:user) { double(:user) }
-      let(:result) { double(:result) }
+      let(:transient_registration) { instance_double(RenewingRegistration, from_magic_link: false) }
+      let(:user) { instance_double(User) }
+      let(:result) { instance_double(PermissionChecksResult) }
       let(:params) { { transient_registration: transient_registration, user: user } }
 
       before do
@@ -35,8 +35,8 @@ module WasteCarriersEngine
 
       context "when the transient registration is valid" do
         let(:valid) { true }
-        let(:registration) { double(:registration) }
-        let(:ability) { double(:ability) }
+        let(:registration) { instance_double(Registration) }
+        let(:ability) { instance_double(Ability) }
 
         before do
           allow(transient_registration).to receive(:registration).and_return(registration)
@@ -57,7 +57,7 @@ module WasteCarriersEngine
 
         context "when the user has the correct permissions" do
           let(:can) { true }
-          let(:registration) { double(:registration) }
+          let(:registration) { instance_double(Registration) }
 
           before do
             allow(transient_registration).to receive(:registration).and_return(registration)
@@ -78,7 +78,7 @@ module WasteCarriersEngine
             let(:renewable) { true }
 
             context "when the transient registration is accessed through a magic link" do
-              let(:transient_registration) { double(:transient_registration, from_magic_link: true) }
+              let(:transient_registration) { instance_double(RenewingRegistration, from_magic_link: true) }
 
               it "returns a pass result" do
                 expect(described_class.run(params)).to eq(result)

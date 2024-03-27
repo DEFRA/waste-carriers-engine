@@ -238,12 +238,16 @@ module WasteCarriersEngine
         end
 
         context "when it has outstanding payments" do
+          before { renewing_registration.registration.finance_details.update(balance: 1) }
+
           it "returns false" do
             expect(renewing_registration.ready_to_complete?).to be false
           end
         end
 
         context "when it has outstanding conviction checks" do
+          before { allow(renewing_registration).to receive(:conviction_check_required?).and_return(true) }
+
           it "returns false" do
             expect(renewing_registration.ready_to_complete?).to be false
           end

@@ -10,16 +10,16 @@ module WasteCarriersEngine
         let(:name) { "foo" }
         let(:company_no) { "bar" }
         let(:entity_a) do
-          double(:entity,
-                 system_flag: "foo",
-                 incident_number: "bar",
-                 name: "baz")
+          instance_double(Entity,
+                          system_flag: "foo",
+                          incident_number: "bar",
+                          name: "baz")
         end
         let(:entity_b) do
-          double(:entity,
-                 system_flag: "qux",
-                 incident_number: "quux",
-                 name: "quuz")
+          instance_double(Entity,
+                          system_flag: "qux",
+                          incident_number: "quux",
+                          name: "quuz")
         end
 
         before do

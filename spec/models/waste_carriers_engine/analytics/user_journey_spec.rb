@@ -7,34 +7,32 @@ module WasteCarriersEngine
 
     RSpec.describe UserJourney do
 
-      # rubocop:disable RSpec/IndexedLet
-      let(:count_1) { Faker::Number.between(from: 1, to: 5) }
-      let(:count_2) { Faker::Number.between(from: 1, to: 5) }
-      let(:count_3) { Faker::Number.between(from: 1, to: 5) }
-      # rubocop:enable RSpec/IndexedLet
+      let(:count_a) { Faker::Number.between(from: 1, to: 5) }
+      let(:count_b) { Faker::Number.between(from: 1, to: 5) }
+      let(:count_c) { Faker::Number.between(from: 1, to: 5) }
 
       describe "journey type scopes" do
         before do
-          create_list(:user_journey, count_1, :registration)
-          create_list(:user_journey, count_2, :renewal)
-          create_list(:user_journey, count_3, journey_type: "Foo")
+          create_list(:user_journey, count_a, :registration)
+          create_list(:user_journey, count_b, :renewal)
+          create_list(:user_journey, count_c, journey_type: "Foo")
         end
 
-        it { expect(described_class.registrations.length).to eq count_1 }
-        it { expect(described_class.renewals.length).to eq count_2 }
-        it { expect(described_class.only_types(%w[NewRegistration]).length).to eq count_1 }
-        it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq count_2 }
-        it { expect(described_class.only_types(%w[NewRegistration RenewingRegistration]).length).to eq count_1 + count_2 }
+        it { expect(described_class.registrations.length).to eq count_a }
+        it { expect(described_class.renewals.length).to eq count_b }
+        it { expect(described_class.only_types(%w[NewRegistration]).length).to eq count_a }
+        it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq count_b }
+        it { expect(described_class.only_types(%w[NewRegistration RenewingRegistration]).length).to eq count_a + count_b }
       end
 
       describe "start route scopes" do
         before do
-          create_list(:user_journey, count_1, :started_digital)
-          create_list(:user_journey, count_2, :started_assisted_digital)
+          create_list(:user_journey, count_a, :started_digital)
+          create_list(:user_journey, count_b, :started_assisted_digital)
         end
 
-        it { expect(described_class.started_digital.length).to eq count_1 }
-        it { expect(described_class.started_assisted_digital.length).to eq count_2 }
+        it { expect(described_class.started_digital.length).to eq count_a }
+        it { expect(described_class.started_assisted_digital.length).to eq count_b }
       end
 
       describe "passed_start_cutoff_page" do
@@ -49,15 +47,15 @@ module WasteCarriersEngine
 
       describe "completion scopes" do
         before do
-          create_list(:user_journey, count_1, :completed_digital)
-          create_list(:user_journey, count_2, :completed_assisted_digital)
-          create_list(:user_journey, count_3, completed_at: nil)
+          create_list(:user_journey, count_a, :completed_digital)
+          create_list(:user_journey, count_b, :completed_assisted_digital)
+          create_list(:user_journey, count_c, completed_at: nil)
         end
 
-        it { expect(described_class.completed_digital.length).to eq count_1 }
-        it { expect(described_class.completed_assisted_digital.length).to eq count_2 }
-        it { expect(described_class.completed.length).to eq count_1 + count_2 }
-        it { expect(described_class.incomplete.length).to eq count_3 }
+        it { expect(described_class.completed_digital.length).to eq count_a }
+        it { expect(described_class.completed_assisted_digital.length).to eq count_b }
+        it { expect(described_class.completed.length).to eq count_a + count_b }
+        it { expect(described_class.incomplete.length).to eq count_c }
       end
 
       describe ".date_range" do

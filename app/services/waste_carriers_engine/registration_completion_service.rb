@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ClassLength
   class RegistrationCompletionService < BaseService
     include CanAddDebugLogging
 
@@ -152,4 +153,5 @@ module WasteCarriersEngine
       )
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

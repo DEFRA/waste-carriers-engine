@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe LastDayOfGraceWindowService do
     describe "run" do
-      let(:registration) { double(:registration) }
+      let(:registration) { instance_double(Registration) }
       let(:expiry_date) { Date.new(2020, 12, 1) }
       let(:expected_date_for_grace_window) { (expiry_date + 5.days) - 1.day }
       let(:service) { described_class.run(registration: registration) }
