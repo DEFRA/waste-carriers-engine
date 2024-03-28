@@ -16,6 +16,7 @@ module WasteCarriersEngine
     end
 
     def can_be_completed?
+      transient_registration.reload
       return false unless transient_registration.ready_to_complete?
       # We check the status of the transient registration as part of its
       # can_be_renewed? method and this is sufficient during the application.
