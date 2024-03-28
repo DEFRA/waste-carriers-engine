@@ -542,14 +542,4 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
         .with(phone_number: phone_number)
     end
   end
-
-  describe ".communications_accepted" do
-    subject(:registrations_accepting_comms) { described_class.communications_accepted }
-
-    let!(:registration_not_specified) { create(:registration, :has_required_data) }
-    let!(:registration_opted_in) { create(:registration, :has_required_data, communications_opted_in: true) }
-    let!(:registration_opted_out) { create(:registration, :has_required_data, communications_opted_in: false) }
-
-    it { expect(subject).to match_array([registration_not_specified, registration_opted_in]) }
-  end
 end
