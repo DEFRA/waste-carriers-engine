@@ -69,6 +69,7 @@ module WasteCarriersEngine
       field :reg_uuid,                                                      type: String # Used by waste-carriers-frontend
       field :uuid,                                                          type: String
       field :email_history,                                                 type: Array, default: []
+      field :communications_opted_in,                                       type: Mongoid::Boolean, default: true
       # rubocop:enable Layout/LineLength
 
       # Deprecated attributes
