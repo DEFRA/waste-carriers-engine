@@ -3,10 +3,13 @@
 module WasteCarriersEngine
   class UnsubscribeLinkService < BaseService
     def run(registration:)
-      Rails.configuration.wcrs_fo_link_domain +
-        WasteCarriersEngine::Engine
-        .routes.url_helpers
-        .unsubscribe_path(unsubscribe_token: registration.unsubscribe_token)
+      # don't use routes.url_helpers as that includes "/bo" when
+      # called from the back office
+      [
+        Rails.configuration.wcrs_fo_link_domain,
+        "/fo/unsubscribe/",
+        registration.unsubscribe_token
+      ].join
     end
   end
 end
