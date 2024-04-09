@@ -23,13 +23,6 @@ jobs:
       WCRS_USE_XVFB_FOR_WICKEDPDF: true
       ENV_VARIABLE_TEST_FEATURE: true
 
-    # Service containers to run with `runner-job`
-    services:
-      mongodb:
-        image: mongo
-        ports:
-        - 27017:27017
-
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Checkout repository
@@ -53,6 +46,7 @@ jobs:
 
       - name: Set up databases
         run: |
+          mlaunch --replicaset --name wcrepl --auth --username mongoAdmin --password password1234
           mongo waste-carriers-test --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
           mongo waste-carriers-users-test --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
 
