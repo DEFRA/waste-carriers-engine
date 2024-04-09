@@ -31,7 +31,7 @@ module WasteCarriersEngine
     end
 
     def comms_label
-      "User unsubscribed from communications"
+      "User unsubscribed from email communication"
     end
 
     def notification_type
