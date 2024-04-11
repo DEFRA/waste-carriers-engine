@@ -92,7 +92,7 @@ module WasteCarriersEngine
         before do
           WasteCarriersEngine::Registration.collection.update_one(
             { regIdentifier: registration.regIdentifier },
-            { "$set": { accountEmail: "foo@example.com" } }
+            { "$set": { accountEmail: "foo@example.com", unsubscribe_token: "foo" } }
           )
           registration.reload
         end
