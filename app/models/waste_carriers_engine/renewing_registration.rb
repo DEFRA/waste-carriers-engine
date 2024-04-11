@@ -36,7 +36,8 @@ module WasteCarriersEngine
                                past_registrations
                                phoneNumber
                                receipt_email
-                               renew_token],
+                               renew_token
+                               unsubscribe_token],
       remove_revoked_reason: true
     }.freeze
 
