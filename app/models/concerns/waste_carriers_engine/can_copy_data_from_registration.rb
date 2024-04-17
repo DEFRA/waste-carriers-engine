@@ -16,13 +16,27 @@ module WasteCarriersEngine
     end
 
     def copy_attributes_from_registration
+      # Omit addresses and key_people from embedded_documents as these will/won't be
+      # copied separately depending on options passed by the class using this concern
       attributes = SafeCopyAttributesService.run(
         source_instance: registration,
         target_class: self.class,
-        embedded_documents: %w[addresses metaData key_people],
+        embedded_documents: %w[metaData],
         attributes_to_exclude: options[:ignorable_attributes]
       )
       assign_attributes(strip_whitespace(attributes))
+    end
+
+    def copy_addresses_from_registration
+      registration.addresses.each do |address|
+        addresses << Address.new(address.attributes.except("_id"))
+      end
+    end
+
+    def copy_people_from_registration
+      registration.key_people.each do |key_person|
+        key_people << KeyPerson.new(key_person.attributes.except("_id", "conviction_search_result"))
+      end
     end
 
     def remove_revoked_reason

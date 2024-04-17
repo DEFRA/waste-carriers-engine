@@ -77,7 +77,7 @@ group :test do
 
   gem "faker", "~> 3.2.0"
 
-  gem "govuk_design_system_formbuilder", "~> 4.1.1"
+  gem "govuk_design_system_formbuilder", "~> 5.3"
 
   gem "rails-controller-testing", "~> 1.0.5"
 
