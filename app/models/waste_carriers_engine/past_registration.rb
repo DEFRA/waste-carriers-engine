@@ -11,6 +11,19 @@ module WasteCarriersEngine
 
     embedded_in :registration, class_name: "WasteCarriersEngine::Registration"
 
+    NON_COPYABLE_ATTRIBUTES = %w[
+      _id
+      accountEmail
+      past_registrations
+      locking_name
+      locked_at
+      renew_token
+      deregistration_token
+      deregistration_token_created_at
+      view_certificate_token
+      view_certificate_token_created_at
+    ].freeze
+
     def self.build_past_registration(registration, cause = nil)
       past_registration = PastRegistration.new
       past_registration.cause = cause if cause.present?
@@ -19,18 +32,13 @@ module WasteCarriersEngine
 
       past_registration.registration = registration
 
-      attributes = registration.attributes.except(
-        "_id",
-        "accountEmail",
-        "past_registrations",
-        "locking_name",
-        "locked_at",
-        "renew_token",
-        "deregistration_token",
-        "deregistration_token_created_at",
-        "view_certificate_token",
-        "view_certificate_token_created_at"
+      attributes = SafeCopyAttributesService.run(
+        source_instance: registration,
+        target_class: self,
+        embedded_documents: %w[addresses metaData financeDetails key_people conviction_search_result],
+        attributes_to_exclude: NON_COPYABLE_ATTRIBUTES
       )
+
       past_registration.assign_attributes(attributes)
 
       past_registration.save!
