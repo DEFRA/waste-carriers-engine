@@ -14,7 +14,7 @@ gem "sassc-rails"
 gemspec
 
 # GOV.UK styling
-gem "defra_ruby_template", "~> 3.13.0"
+gem "defra_ruby_template", "~> 3.13"
 
 gem "mongo_session_store"
 
@@ -22,27 +22,27 @@ gem "mongo_session_store"
 gem "cancancan", "~> 3.5.0"
 
 # Use Devise for user authentication
-gem "devise", "~> 4.9.2"
+gem "devise", "~> 4.9"
 
-gem "matrix", "~> 0.4.2"
+gem "matrix", "~> 0.4"
 
-gem "secure_headers", "~> 6.5.0"
+gem "secure_headers", "~> 6.5"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem "turbolinks", "~> 5.2.1"
+gem "turbolinks", "~> 5.2"
 
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
-  gem "pry-byebug", "~> 3.10.1"
+  gem "pry-byebug"
 
   # Apply our style guide to ensure consistency in how the code is written
-  gem "defra_ruby_style", "~> 0.3.0"
+  gem "defra_ruby_style", "~> 0.3"
 
-  gem "dotenv-rails", "~> 2.8.1"
+  gem "dotenv-rails"
 
-  gem "rspec-rails", "~> 6.0.3"
+  gem "rspec-rails"
 
-  gem "rubocop-rspec", "~> 2.22.0", require: false
+  gem "rubocop-rspec", require: false
 
 end
 
