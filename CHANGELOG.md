@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- Feature/ruby 2973 unsubscribe [\#1519](https://github.com/DEFRA/waste-carriers-engine/pull/1519) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Make email validation case-insensitive in certificates controller and update tests [\#1518](https://github.com/DEFRA/waste-carriers-engine/pull/1518) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 2846 certificate versioning [\#1506](https://github.com/DEFRA/waste-carriers-engine/pull/1506) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - \[RUBY-2845\] Update heading tags from h2/h3 to h1 for accessibility in renewal templates [\#1504](https://github.com/DEFRA/waste-carriers-engine/pull/1504) ([jjromeo](https://github.com/jjromeo))
 - Add not England completion pages [\#1503](https://github.com/DEFRA/waste-carriers-engine/pull/1503) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -432,6 +434,14 @@
 
 **Fixed bugs:**
 
+- fix/RUBY-2973\_reinstate\_copy\_methods [\#1529](https://github.com/DEFRA/waste-carriers-engine/pull/1529) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2973 unsubscribe [\#1527](https://github.com/DEFRA/waste-carriers-engine/pull/1527) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2973 unsubscribe [\#1526](https://github.com/DEFRA/waste-carriers-engine/pull/1526) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2973 unsubscribe [\#1525](https://github.com/DEFRA/waste-carriers-engine/pull/1525) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2973 unsubscribe [\#1524](https://github.com/DEFRA/waste-carriers-engine/pull/1524) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2973 unsubscribe [\#1522](https://github.com/DEFRA/waste-carriers-engine/pull/1522) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2973 unsubscribe [\#1521](https://github.com/DEFRA/waste-carriers-engine/pull/1521) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix/ruby 2975 govpay callback uuids [\#1515](https://github.com/DEFRA/waste-carriers-engine/pull/1515) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - fix/RUBY-2860\_conviction\_signoff [\#1514](https://github.com/DEFRA/waste-carriers-engine/pull/1514) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/ruby 2860 conviction search results [\#1508](https://github.com/DEFRA/waste-carriers-engine/pull/1508) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/ruby 2860 missing registration attributes [\#1505](https://github.com/DEFRA/waste-carriers-engine/pull/1505) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -695,6 +705,9 @@
 
 **Merged pull requests:**
 
+- Bump devise from 4.9.3 to 4.9.4 [\#1523](https://github.com/DEFRA/waste-carriers-engine/pull/1523) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Feature/ruby 2973 unsubscribe [\#1520](https://github.com/DEFRA/waste-carriers-engine/pull/1520) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Update CHANGELOG [\#1516](https://github.com/DEFRA/waste-carriers-engine/pull/1516) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Update CHANGELOG [\#1513](https://github.com/DEFRA/waste-carriers-engine/pull/1513) ([jjromeo](https://github.com/jjromeo))
 - Bump mongoid from 8.0.7 to 8.0.8 [\#1510](https://github.com/DEFRA/waste-carriers-engine/pull/1510) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Add SafeCopyAttributesService [\#1499](https://github.com/DEFRA/waste-carriers-engine/pull/1499) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
