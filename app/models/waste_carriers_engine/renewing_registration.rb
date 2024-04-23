@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module WasteCarriersEngine
   class RenewingRegistration < TransientRegistration
     include CanCheckIfRegistrationTypeChanged
@@ -47,6 +48,10 @@ module WasteCarriersEngine
 
     def registration
       @_registration ||= Registration.find_by(reg_identifier: reg_identifier)
+    end
+
+    def communication_records
+      registration.communication_records
     end
 
     def fee_including_possible_type_change
@@ -141,3 +146,4 @@ module WasteCarriersEngine
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
