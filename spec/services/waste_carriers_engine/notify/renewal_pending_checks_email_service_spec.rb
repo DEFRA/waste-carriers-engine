@@ -10,9 +10,10 @@ module WasteCarriersEngine
     RSpec.describe RenewalPendingChecksEmailService do
       let(:template_id) { "d2442022-4f4c-4edd-afc5-aaa0607dabdf" }
       let(:reg_identifier) { registration.reg_identifier }
+      let(:contact_email) { "foo@example.com" }
       let(:expected_notify_options) do
         {
-          email_address: "foo@example.com",
+          email_address: contact_email,
           template_id: template_id,
           personalisation: {
             reg_identifier: reg_identifier,
@@ -20,12 +21,8 @@ module WasteCarriersEngine
           }
         }
       end
-      let(:registration) { create(:registration, :has_required_data) }
-
-      before do
-        registration.finance_details = build(:finance_details, :has_required_data)
-        registration.save
-      end
+      let(:renewing_registration) { create(:renewing_registration, :has_required_data, :has_finance_details, contact_email: contact_email) }
+      let(:registration) { renewing_registration.registration }
 
       describe ".run" do
         context "with a contact_email" do
@@ -38,11 +35,11 @@ module WasteCarriersEngine
 
           subject(:run_service) do
             VCR.use_cassette("notify_renewal_pending_checks_sends_an_email") do
-              described_class.run(registration: registration)
+              described_class.run(registration: renewing_registration)
             end
           end
 
-          let(:recipient) { registration.contact_email }
+          let(:recipient) { renewing_registration.contact_email }
 
           it "sends an email" do
             expect(run_service).to be_a(Notifications::Client::ResponseNotification)
@@ -56,12 +53,12 @@ module WasteCarriersEngine
         end
 
         context "with no contact_email" do
-          before { registration.contact_email = nil }
+          before { renewing_registration.contact_email = nil }
 
           it "does not attempt to send an email" do
             expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
 
-            described_class.run(registration: registration)
+            described_class.run(registration: renewing_registration)
           end
         end
       end

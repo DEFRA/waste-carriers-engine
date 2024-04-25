@@ -10,6 +10,7 @@ module WasteCarriersEngine
     RSpec.describe RenewalPendingOnlinePaymentEmailService do
       let(:template_id) { "3da098e3-3db2-4c99-8e96-ed9d1a8ef227" }
       let(:reg_identifier) { registration.reg_identifier }
+      let(:contact_email) { "foo@example.com" }
       let(:expected_notify_options) do
         {
           email_address: "foo@example.com",
@@ -20,12 +21,8 @@ module WasteCarriersEngine
           }
         }
       end
-      let(:registration) { create(:registration, :has_required_data) }
-
-      before do
-        registration.finance_details = build(:finance_details, :has_required_data)
-        registration.save
-      end
+      let(:renewing_registration) { create(:renewing_registration, :has_required_data, :has_finance_details, contact_email: contact_email) }
+      let(:registration) { renewing_registration.registration }
 
       describe ".run" do
         context "with a contact_email" do
@@ -38,7 +35,7 @@ module WasteCarriersEngine
 
           subject(:run_service) do
             VCR.use_cassette("notify_renewal_pending_online_payment_sends_an_email") do
-              described_class.run(registration: registration)
+              described_class.run(registration: renewing_registration)
             end
           end
 
@@ -54,12 +51,12 @@ module WasteCarriersEngine
         end
 
         context "with no contact_email" do
-          before { registration.contact_email = nil }
+          before { renewing_registration.contact_email = nil }
 
           it "does not attempt to send an email" do
             expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
 
-            described_class.run(registration: registration)
+            described_class.run(registration: renewing_registration)
           end
         end
       end
