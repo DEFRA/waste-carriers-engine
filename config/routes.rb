@@ -81,11 +81,6 @@ WasteCarriersEngine::Engine.routes.draw do
               path: "location",
               path_names: { new: "" }
 
-    resources :must_register_in_northern_ireland_forms,
-              only: %i[new create],
-              path: "must-register-in-northern-ireland",
-              path_names: { new: "" }
-
     resources :register_in_northern_ireland_forms,
               only: %i[new create],
               path: "register-in-northern-ireland",

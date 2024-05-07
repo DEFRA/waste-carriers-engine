@@ -112,7 +112,6 @@ module WasteCarriersEngine
           %w[
             edit_complete_form
             copy_cards_order_completed_form
-            must_register_in_northern_ireland_form
             must_register_in_scotland_form
             must_register_in_wales_form
             registration_completed_form

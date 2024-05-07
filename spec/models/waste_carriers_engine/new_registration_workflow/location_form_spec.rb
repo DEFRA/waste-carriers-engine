@@ -16,7 +16,7 @@ module WasteCarriersEngine
           context "when the location is northern_ireland" do
             let(:location) { "northern_ireland" }
 
-            include_examples "has next transition", next_state: "must_register_in_northern_ireland_form"
+            include_examples "has next transition", next_state: "register_in_northern_ireland_form"
           end
 
           context "when the location is scotland" do

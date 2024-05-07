@@ -24,7 +24,7 @@ module WasteCarriersEngine
 
         # Location
         state :location_form
-        state :must_register_in_northern_ireland_form
+        state :register_in_northern_ireland_form
         state :must_register_in_scotland_form
         state :must_register_in_wales_form
 
@@ -84,7 +84,7 @@ module WasteCarriersEngine
           transitions from: :start_form, to: :renewal_stop_form
 
           # Location
-          transitions from: :location_form, to: :must_register_in_northern_ireland_form,
+          transitions from: :location_form, to: :register_in_northern_ireland_form,
                       if: :should_register_in_northern_ireland?
 
           transitions from: :location_form, to: :must_register_in_scotland_form,
