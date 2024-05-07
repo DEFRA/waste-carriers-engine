@@ -93,5 +93,16 @@ module Dummy
     config.application_version = "0.0.1".freeze
     config.application_name = "waste-carriers-renewals"
     config.git_repository_url = "https://github.com/DEFRA/#{config.application_name}"
+
+    # Logger
+    config.wcrs_logger_max_files = ENV.fetch("WCRS_LOGGER_MAX_FILES", 3).to_i
+    config.wcrs_logger_max_filesize = ENV.fetch("WCRS_LOGGER_MAX_FILESIZE", 10_000_000).to_i
+    config.wcrs_logger_heartbeat_path = ENV.fetch("wcrs_logger_heartbeat_path", "/pages/heartbeat")
+
+    config.logger = Logger.new(
+      Rails.root.join("log/#{Rails.env}.log"),
+      Rails.application.config.wcrs_logger_max_files,
+      Rails.application.config.wcrs_logger_max_filesize
+    )
   end
 end
