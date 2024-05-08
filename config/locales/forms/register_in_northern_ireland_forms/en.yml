@@ -4,9 +4,10 @@ en:
       new:
         title: Register where you carry, broker or deal waste
         heading: Register where you carry, broker or deal waste
-        paragraph_1: You must register with the Northern Ireland Environment Agency (NIEA) if you carry, broker or deal waste in Northern Ireland (NI).
+        paragraph_1_1: You must
+        service_link: register with the Northern Ireland Environment Agency (NIEA)
+        paragraph_1_2: if you carry, broker or deal waste in Northern Ireland (NI).
         paragraph_2: You must register with the Environment Agency (EA) if you also carry, broker or deal waste in England.
-        service_link: Register or renew as a waste carrier, broker or dealer (Northern Ireland)
         paragraph_3: Select continue to register with the Environment Agency in England.
         next_button: Continue
         contact_ea: Contact the EA on 03708 506 506 if you have questions or need help to register.
