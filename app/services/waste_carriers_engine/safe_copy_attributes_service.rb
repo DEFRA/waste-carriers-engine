@@ -15,7 +15,9 @@ module WasteCarriersEngine
     end
 
     def source_attributes
-      source_instance.attributes.except(*attributes_to_exclude)
+      attributes = source_instance.is_a?(BSON::Document) ? source_instance : source_instance.attributes
+
+      attributes.except(*attributes_to_exclude)
     end
 
     def target_fields
