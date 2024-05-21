@@ -14,10 +14,12 @@ module WasteCarriersEngine
 
       # ensure all available attributes are populated on the source
       before do
-        source_instance.class.fields.keys.excluding("_id").each do |attr|
-          next unless source_instance.send(attr).blank? && source_instance.respond_to?("#{attr}=")
+        unless source_instance.is_a?(BSON::Document)
+          source_instance.class.fields.keys.excluding("_id").each do |attr|
+            next unless source_instance.send(attr).blank? && source_instance.respond_to?("#{attr}=")
 
-          source_instance.send "#{attr}=", 0
+            source_instance.send "#{attr}=", 0
+          end
         end
       end
 
@@ -47,7 +49,7 @@ module WasteCarriersEngine
       context "when the target is a Registration" do
         let(:target_class) { Registration }
         # include all embeds_many relationships
-        let(:embedded_documents) { %w[addresses finainceDetails metaData] }
+        let(:embedded_documents) { %w[addresses financeDetails metaData] }
         let(:copyable_attributes) { %w[location contactEmail] }
         let(:non_copyable_attributes) { %w[workflow_state temp_contact_postcode not_even_an_attribute] }
         let(:exclusion_list) { %w[_id email_history] }
@@ -66,6 +68,12 @@ module WasteCarriersEngine
 
         context "when the source is a DeregisteringRegistration" do
           let(:source_instance) { build(:deregistering_registration) }
+
+          it_behaves_like "returns the correct attributes"
+        end
+
+        context "when the source is a BSON::Document" do
+          let(:source_instance) { BSON::Document.new(build(:new_registration, :has_required_data).attributes) }
 
           it_behaves_like "returns the correct attributes"
         end
