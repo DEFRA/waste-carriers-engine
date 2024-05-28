@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- RUBY 3081 wcr unblock northern ireland location continue journey [\#1535](https://github.com/DEFRA/waste-carriers-engine/pull/1535) ([jjromeo](https://github.com/jjromeo))
+- RUBY 3079 wcr renewal emails are sent to registraton contact email address not renewal email address if different [\#1533](https://github.com/DEFRA/waste-carriers-engine/pull/1533) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 2973 unsubscribe [\#1519](https://github.com/DEFRA/waste-carriers-engine/pull/1519) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Make email validation case-insensitive in certificates controller and update tests [\#1518](https://github.com/DEFRA/waste-carriers-engine/pull/1518) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 2846 certificate versioning [\#1506](https://github.com/DEFRA/waste-carriers-engine/pull/1506) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -434,6 +436,7 @@
 
 **Fixed bugs:**
 
+- \[RUBY-3079\] Add communication\_records to RenewingRegistration and refactor email service specs [\#1531](https://github.com/DEFRA/waste-carriers-engine/pull/1531) ([jjromeo](https://github.com/jjromeo))
 - fix/RUBY-2973\_reinstate\_copy\_methods [\#1529](https://github.com/DEFRA/waste-carriers-engine/pull/1529) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Feature/ruby 2973 unsubscribe [\#1527](https://github.com/DEFRA/waste-carriers-engine/pull/1527) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Feature/ruby 2973 unsubscribe [\#1526](https://github.com/DEFRA/waste-carriers-engine/pull/1526) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -705,6 +708,15 @@
 
 **Merged pull requests:**
 
+- chore/RUBY-3031\_remove\_rails\_log\_monkey\_patch [\#1542](https://github.com/DEFRA/waste-carriers-engine/pull/1542) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- chore/RUBY-3160\_safe\_copy\_bson [\#1541](https://github.com/DEFRA/waste-carriers-engine/pull/1541) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump rails from 7.0.8.1 to 7.0.8.3 [\#1540](https://github.com/DEFRA/waste-carriers-engine/pull/1540) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump govuk\_design\_system\_formbuilder from 5.3.3 to 5.4.0 [\#1539](https://github.com/DEFRA/waste-carriers-engine/pull/1539) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rexml from 3.2.6 to 3.2.8 [\#1537](https://github.com/DEFRA/waste-carriers-engine/pull/1537) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Drop unused MISSED\_CARD payment type [\#1536](https://github.com/DEFRA/waste-carriers-engine/pull/1536) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- chore/log\_rotation [\#1534](https://github.com/DEFRA/waste-carriers-engine/pull/1534) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump govuk\_design\_system\_formbuilder from 5.3.2 to 5.3.3 [\#1532](https://github.com/DEFRA/waste-carriers-engine/pull/1532) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1530](https://github.com/DEFRA/waste-carriers-engine/pull/1530) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump devise from 4.9.3 to 4.9.4 [\#1523](https://github.com/DEFRA/waste-carriers-engine/pull/1523) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Feature/ruby 2973 unsubscribe [\#1520](https://github.com/DEFRA/waste-carriers-engine/pull/1520) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Update CHANGELOG [\#1516](https://github.com/DEFRA/waste-carriers-engine/pull/1516) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
