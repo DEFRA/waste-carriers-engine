@@ -14,7 +14,7 @@ gem "sassc-rails"
 gemspec
 
 # GOV.UK styling
-gem "defra_ruby_template", "~> 3.13.0"
+gem "defra_ruby_template", "~> 5.0"
 
 gem "mongo_session_store"
 
