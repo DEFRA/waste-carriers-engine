@@ -157,7 +157,7 @@ GEM
       rest-client (~> 2.1)
     defra_ruby_style (0.3.0)
       rubocop (>= 1.0, < 2.0)
-    defra_ruby_template (5.4.0)
+    defra_ruby_template (5.4.1)
     defra_ruby_validators (2.6.0)
       activemodel
       i18n
