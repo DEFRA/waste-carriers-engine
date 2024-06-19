@@ -22,6 +22,7 @@ jobs:
       WCRS_WORLDPAY_ECOM_PASSWORD: foo
       WCRS_USE_XVFB_FOR_WICKEDPDF: true
       ENV_VARIABLE_TEST_FEATURE: true
+      WCRS_GOVPAY_CALLBACK_WEBHOOK_SIGNING_SECRET: foo
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
