@@ -17,7 +17,7 @@ module WasteCarriersEngine
       Airbrake.notify(e, body: request.body, signature: pay_signature)
     ensure
       # always return 2xx to Govpay even if validation fails
-      render nothing: true, status: 200
+      render nothing: true, layout: false, status: 200
     end
   end
 end
