@@ -7,7 +7,7 @@ module WasteCarriersEngine
     def process_webhook
       Rails.logger.warn "Processing govpay webhook, body: \n#{request.body.read}, headers:\n"
       request.headers.each do |key, value|
-        Rails.logger.warn "  #{key} = #{v}"
+        Rails.logger.warn "  #{key} = #{value}"
       end
 
       pay_signature = request.headers["Pay-Signature"]
