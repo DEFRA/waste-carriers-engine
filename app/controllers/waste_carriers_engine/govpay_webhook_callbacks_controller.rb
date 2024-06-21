@@ -5,7 +5,10 @@ module WasteCarriersEngine
     protect_from_forgery with: :null_session
 
     def process_webhook
-      Rails.logger.warn "Processing govpay webhook, headers: #{request.headers}\n#{request.body.read}"
+      Rails.logger.warn "Processing govpay webhook, body: \n#{request.body.read}, headers:\n"
+      request.headers.each do |key, value|
+        Rails.logger.warn "  #{key} = #{v}"
+      end
 
       pay_signature = request.headers["Pay-Signature"]
 
