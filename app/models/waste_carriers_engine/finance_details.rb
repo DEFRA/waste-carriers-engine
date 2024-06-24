@@ -26,7 +26,7 @@ module WasteCarriersEngine
     end
 
     def payment_balance
-      @payment_balance ||= payments.except_online_not_authorised.sum { |item| item[:amount] }
+      payments.except_online_not_authorised.sum { |item| item[:amount] }
     end
 
     # This returns any amount of difference of the balance from 0
