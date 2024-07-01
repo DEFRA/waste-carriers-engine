@@ -25,6 +25,10 @@ module WasteCarriersEngine
       @_unpaid_balance ||= [0, balance].max
     end
 
+    def payment_balance
+      payments.except_online_not_authorised.sum { |item| item[:amount] }
+    end
+
     # This returns any amount of difference of the balance from 0
     def zero_difference_balance
       @_zero_difference_balance ||= [overpaid_balance, unpaid_balance].max
@@ -32,7 +36,6 @@ module WasteCarriersEngine
 
     def update_balance
       order_balance = orders.sum { |item| item[:total_amount] }
-      payment_balance = payments.except_online_not_authorised.sum { |item| item[:amount] }
       self.balance = order_balance - payment_balance
     end
 

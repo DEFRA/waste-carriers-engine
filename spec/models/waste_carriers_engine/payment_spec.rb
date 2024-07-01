@@ -63,18 +63,26 @@ module WasteCarriersEngine
         let(:cash_payment) { described_class.new(payment_type: "CASH") }
         let(:govpay_payment_authorised) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "success") }
         let(:govpay_payment_refused) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "failed") }
+        let(:refund_payment_success) { described_class.new(payment_type: "REFUND", govpay_payment_status: "success") }
+        let(:refund_payment_nil_status) { described_class.new(payment_type: "REFUND", govpay_payment_status: nil) }
+        let(:refund_payment_failed) { described_class.new(payment_type: "REFUND", govpay_payment_status: "failed") }
 
         before do
           transient_registration.finance_details.payments << cash_payment << govpay_payment_authorised << govpay_payment_refused
+          transient_registration.finance_details.payments << refund_payment_success << refund_payment_nil_status << refund_payment_failed
           transient_registration.save
           transient_registration.reload
         end
 
         it "returns the expected payments only" do
           result = transient_registration.finance_details.payments.except_online_not_authorised
+
           expect(result).to include(cash_payment)
           expect(result).to include(govpay_payment_authorised)
           expect(result).not_to include(govpay_payment_refused)
+          expect(result).to include(refund_payment_success)
+          expect(result).to include(refund_payment_nil_status)
+          expect(result).not_to include(refund_payment_failed)
         end
       end
     end
