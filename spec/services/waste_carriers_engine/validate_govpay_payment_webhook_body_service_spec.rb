@@ -10,11 +10,17 @@ module WasteCarriersEngine
       let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read).to_s }
       let(:webhook_signing_secret) { ENV.fetch("WCRS_GOVPAY_CALLBACK_WEBHOOK_SIGNING_SECRET") }
       let(:digest) { OpenSSL::Digest.new("sha256") }
-      let(:valid_signature) { OpenSSL::HMAC.digest(digest, webhook_signing_secret, webhook_body) }
+      let(:valid_signature) { Faker::Number.hexadecimal(digits: 20) }
+      let(:signature_service) { instance_double(GovpayPaymentWebhookSignatureService) }
+      let(:signature) { nil }
 
       subject(:run_service) { described_class.run(body: webhook_body, signature:) }
 
-      before { allow(Airbrake).to receive(:notify) }
+      before do
+        allow(GovpayPaymentWebhookSignatureService).to receive(:new).and_return(signature_service)
+        allow(signature_service).to receive(:run).and_return(valid_signature)
+        allow(Airbrake).to receive(:notify)
+      end
 
       shared_examples "fails validation" do
         it "raises an exception" do
