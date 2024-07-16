@@ -2,6 +2,10 @@ en:
   waste_carriers_engine:
     renewal_stop_forms:
       new:
-        title: We will send you an email when it is time for you to renew
-        heading: We will send you an email when it is time for you to renew
-        paragraph: If you need to speak to an advisor contact the helpline on 03708 506 506
+        title: We’ll send you an email when it’s time to renew your registration
+        heading: We’ll send you an email when it’s time to renew your registration
+        paragraph1: We will email you a link to renew your registration 28 days before it expires.
+        paragraph2:
+          line1: If your registration is due to expire in the next 7 days and you have not received a renewal link, call us on
+          line2: 03708 506 506.
+        paragraph3: Please check your junk mail before calling.

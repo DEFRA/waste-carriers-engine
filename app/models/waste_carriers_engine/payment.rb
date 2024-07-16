@@ -36,12 +36,14 @@ module WasteCarriersEngine
     scope :except_online_not_authorised,
           lambda {
             where(
-              { "$or": [
+              "$or": [
                 { payment_type: { "$nin" => %w[WORLDPAY GOVPAY REFUND] } },
                 { "$and": [{ payment_type: "WORLDPAY" }, { world_pay_payment_status: "AUTHORISED" }] },
                 { "$and": [{ payment_type: "GOVPAY" }, { govpay_payment_status: "success" }] },
-                { "$and": [{ payment_type: "REFUND" }, { govpay_payment_status: "success" }] }
-              ] }
+                { "$and": [{ payment_type: "REFUND" }, { govpay_payment_status: "success" }] },
+                { "$and": [{ payment_type: "REFUND" }, { govpay_payment_status: nil },
+                           { world_pay_payment_status: nil }] }
+              ]
             )
           }
 

@@ -708,6 +708,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1543](https://github.com/DEFRA/waste-carriers-engine/pull/1543) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - chore/RUBY-3031\_remove\_rails\_log\_monkey\_patch [\#1542](https://github.com/DEFRA/waste-carriers-engine/pull/1542) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - chore/RUBY-3160\_safe\_copy\_bson [\#1541](https://github.com/DEFRA/waste-carriers-engine/pull/1541) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump rails from 7.0.8.1 to 7.0.8.3 [\#1540](https://github.com/DEFRA/waste-carriers-engine/pull/1540) ([dependabot[bot]](https://github.com/apps/dependabot))
