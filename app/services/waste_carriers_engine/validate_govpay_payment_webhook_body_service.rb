@@ -11,10 +11,6 @@ module WasteCarriersEngine
       return true if body_signature == signature
 
       raise ValidationFailure, "digest/signature header mismatch"
-    rescue StandardError => e
-      Rails.logger.error "Govpay payment webhook body validation failed: #{e}"
-      Airbrake.notify(e, body:, signature:)
-      raise e
     end
   end
 end

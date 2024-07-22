@@ -5,21 +5,19 @@ module WasteCarriersEngine
     protect_from_forgery with: :null_session
 
     def process_webhook
-      Rails.logger.warn "Processing govpay webhook, body: \n#{request.body.read}, headers:\n"
-      request.headers.each do |key, value|
-        Rails.logger.warn "  #{key} = #{value}"
-      end
-
       pay_signature = request.headers["Pay-Signature"]
+      body = request.body.read
 
       raise ArgumentError, "Govpay payment webhook request missing Pay-Signature header" unless pay_signature.present?
 
-      ValidateGovpayPaymentWebhookBodyService.run(body: request.body, signature: pay_signature)
-    rescue StandardError => e
+      ValidateGovpayPaymentWebhookBodyService.run(body: body, signature: pay_signature)
+
+      GovpayWebhookJob.perform_later(JSON.parse(body))
+    rescue StandardError, Mongoid::Errors::DocumentNotFound => e
       Rails.logger.error "Govpay payment webhook body validation failed: #{e}"
-      Airbrake.notify(e, body: request.body, signature: pay_signature)
+      Airbrake.notify(e, body: body, signature: pay_signature)
     ensure
-      # always return 2xx to Govpay even if validation fails
+      # always return 200 to Govpay even if validation fails
       render nothing: true, layout: false, status: 200
     end
   end
