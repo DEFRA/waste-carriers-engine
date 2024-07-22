@@ -23,6 +23,8 @@ require "rspec/rails"
 support_files = Dir["./spec/support/**/*.rb"].reject { |file| file == "./spec/support/simplecov.rb" }
 support_files.each { |f| require f }
 
+ActiveJob::Base.queue_adapter = :test
+
 RSpec.configure do |config|
   config.include RSpecHtmlMatchers
   # RSpec Rails can automatically mix in different behaviours to your tests
