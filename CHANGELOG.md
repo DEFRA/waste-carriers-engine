@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- \[RUBY-3221\] adjusting content of renewal block page [\#1551](https://github.com/DEFRA/waste-carriers-engine/pull/1551) ([brujeo](https://github.com/brujeo))
+- \[RUBY-3215\] Add `payment_balance` method and enhance refund payment handling [\#1550](https://github.com/DEFRA/waste-carriers-engine/pull/1550) ([jjromeo](https://github.com/jjromeo))
 - RUBY 3081 wcr unblock northern ireland location continue journey [\#1535](https://github.com/DEFRA/waste-carriers-engine/pull/1535) ([jjromeo](https://github.com/jjromeo))
 - RUBY 3079 wcr renewal emails are sent to registraton contact email address not renewal email address if different [\#1533](https://github.com/DEFRA/waste-carriers-engine/pull/1533) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 2973 unsubscribe [\#1519](https://github.com/DEFRA/waste-carriers-engine/pull/1519) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -708,6 +710,10 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1549](https://github.com/DEFRA/waste-carriers-engine/pull/1549) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- \[RUBY-3223\] Update defra\_ruby\_template gem to version 5.4, pinned to major version 5 in Gemfile and Gemfile.lock [\#1548](https://github.com/DEFRA/waste-carriers-engine/pull/1548) ([jjromeo](https://github.com/jjromeo))
+- Bump timecop from 0.9.8 to 0.9.10 [\#1547](https://github.com/DEFRA/waste-carriers-engine/pull/1547) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actionpack from 7.0.8.3 to 7.0.8.4 [\#1545](https://github.com/DEFRA/waste-carriers-engine/pull/1545) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1543](https://github.com/DEFRA/waste-carriers-engine/pull/1543) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - chore/RUBY-3031\_remove\_rails\_log\_monkey\_patch [\#1542](https://github.com/DEFRA/waste-carriers-engine/pull/1542) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - chore/RUBY-3160\_safe\_copy\_bson [\#1541](https://github.com/DEFRA/waste-carriers-engine/pull/1541) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
