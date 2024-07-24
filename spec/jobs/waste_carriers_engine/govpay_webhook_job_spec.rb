@@ -42,7 +42,7 @@ module WasteCarriersEngine
         end
       end
 
-      context 'with a payment webhook_body' do
+      context "with a payment webhook_body" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read) }
 
         it "calls the payment webhook service" do
@@ -52,12 +52,12 @@ module WasteCarriersEngine
         end
       end
 
-      context 'with a refund webhook_body' do
+      context "with a refund webhook_body" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_refund_update_body.json").read) }
-  
+
         it "calls the refund webhook service" do
           perform_now
-  
+
           expect(refund_webhook_service).to have_received(:run)
         end
       end
