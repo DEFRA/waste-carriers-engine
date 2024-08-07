@@ -4,16 +4,26 @@ module WasteCarriersEngine
   class GovpayWebhookRefundService < GovpayWebhookBaseService
 
     VALID_STATUS_TRANSITIONS = {
-      "submitted" => %w[success error],
+      "submitted" => %w[success],
       "success" => %w[],
       "error" => %w[]
     }.freeze
 
     private
 
+    def update_payment_or_refund_status
+      WasteCarriersEngine::GovpayUpdateRefundStatusService.run(registration:, refund_id: webhook_payment_or_refund_id,
+                                                               new_status: webhook_payment_or_refund_status)
+      Rails.logger.info "Updated status from #{previous_status} to #{webhook_payment_or_refund_status} " \
+                        "for #{log_webhook_context}"
+    rescue StandardError => e
+      Rails.logger.warn "Error processing webhook for #{log_webhook_context}: #{e}"
+      Airbrake.notify "Error processing webhook for #{log_webhook_context}", e
+    end
+
     def log_webhook_context
-      "for refund #{webhook_payment_or_refund_id}, payment #{webhook_payment_id}, " \
-        "registration #{@registration.regIdentifier}"
+      "refund #{webhook_payment_or_refund_id}, payment #{webhook_payment_id}, " \
+        "registration #{registration.regIdentifier}"
     end
 
     def payment_or_refund_str

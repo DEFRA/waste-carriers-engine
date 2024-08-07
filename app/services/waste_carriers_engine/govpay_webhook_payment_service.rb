@@ -15,6 +15,13 @@ module WasteCarriersEngine
 
     private
 
+    def update_payment_or_refund_status
+      wcr_payment.update(govpay_payment_status: webhook_payment_or_refund_status)
+
+      Rails.logger.info "Updated status from #{previous_status} to #{webhook_payment_or_refund_status} " \
+                        "for #{log_webhook_context}"
+    end
+
     def log_webhook_context
       "for payment #{webhook_payment_or_refund_id}, registration #{@registration.regIdentifier}"
     end

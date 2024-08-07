@@ -19,7 +19,7 @@ module WasteCarriersEngine
                govpay_id: govpay_payment_id,
                govpay_payment_status: "complete")
       end
-      let(:prior_payment_status) { nil }
+      let(:prior_payment_status) { "submitted" }
       let!(:wcr_payment) do
         create(:payment, :govpay_refund,
                finance_details: registration.finance_details,
@@ -28,32 +28,34 @@ module WasteCarriersEngine
                govpay_payment_status: prior_payment_status)
       end
 
+      let(:update_refund_service) { instance_double(WasteCarriersEngine::GovpayUpdateRefundStatusService) }
+
       include_examples "Govpay webhook services error logging"
+
+      shared_examples "failed refund update" do
+        it { expect { run_service }.to raise_error(ArgumentError) }
+
+        it_behaves_like "logs an error"
+      end
 
       context "when the update is not for a refund" do
         before { webhook_body.delete("refund_id") }
 
-        it { expect { run_service }.to raise_error(ArgumentError) }
-
-        it_behaves_like "logs an error"
+        it_behaves_like "failed refund update"
       end
 
       context "when the update is for a refund" do
         context "when status is not present in the update" do
           before { webhook_body["status"] = nil }
 
-          it { expect { run_service }.to raise_error(ArgumentError) }
-
-          it_behaves_like "logs an error"
+          it_behaves_like "failed refund update"
         end
 
         context "when status is present in the update" do
           context "when the refund is not found" do
             before { webhook_body["refund_id"] = "foo" }
 
-            it { expect { run_service }.to raise_error(ArgumentError) }
-
-            it_behaves_like "logs an error"
+            it_behaves_like "failed refund update"
           end
 
           context "when the refund is found" do
@@ -74,7 +76,7 @@ module WasteCarriersEngine
               include_examples "Govpay webhook status transitions"
 
               # unfinished statuses
-              it_behaves_like "valid and invalid transitions", "submitted", %w[success error], %w[]
+              it_behaves_like "valid and invalid transitions", "submitted", %w[success], %w[error]
 
               # finished statuses
               it_behaves_like "no valid transitions", "success"
