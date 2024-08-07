@@ -71,6 +71,12 @@ module WasteCarriersEngine
               end
             end
 
+            context "when the update service raises an exception" do
+              before { allow(WasteCarriersEngine::GovpayUpdateRefundStatusService).to receive(:run).and_raise(StandardError) }
+
+              it_behaves_like "logs an error"
+            end
+
             context "when the refund status has changed" do
 
               include_examples "Govpay webhook status transitions"

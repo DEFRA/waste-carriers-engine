@@ -17,7 +17,7 @@ module WasteCarriersEngine
       Rails.logger.info "Updated status from #{previous_status} to #{webhook_payment_or_refund_status} " \
                         "for #{log_webhook_context}"
     rescue StandardError => e
-      Rails.logger.warn "Error processing webhook for #{log_webhook_context}: #{e}"
+      Rails.logger.error "Error processing webhook for #{log_webhook_context}: #{e}"
       Airbrake.notify "Error processing webhook for #{log_webhook_context}", e
     end
 
