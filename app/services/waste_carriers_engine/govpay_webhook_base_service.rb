@@ -36,10 +36,9 @@ module WasteCarriersEngine
     end
 
     def update_payment_or_refund_status
-      wcr_payment.update(govpay_payment_status: webhook_payment_or_refund_status)
-
-      Rails.logger.info "Updated status from #{previous_status} to #{webhook_payment_or_refund_status} " \
-                        "for #{log_webhook_context}"
+      # :nocov:
+      raise NotImplementedError
+      # :nocov:
     end
 
     def wcr_payment
@@ -71,23 +70,33 @@ module WasteCarriersEngine
 
     # the following methods differ for refunds vs card payments
     def log_webhook_context
+      # :nocov:
       raise NotImplementedError
+      # :nocov:
     end
 
     def payment_or_refund_str
+      # :nocov:
       NotImplementedError
+      # :nocov:
     end
 
     def validate_webhook_body
+      # :nocov:
       raise NotImplementedError
+      # :nocov:
     end
 
     def webhook_payment_or_refund_id
+      # :nocov:
       raise NotImplementedError
+      # :nocov:
     end
 
     def webhook_payment_or_refund_status
+      # :nocov:
       raise NotImplementedError
+      # :nocov:
     end
   end
 end
