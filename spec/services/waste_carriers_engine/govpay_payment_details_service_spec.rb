@@ -71,13 +71,13 @@ module WasteCarriersEngine
             )
           end
 
-          it_behaves_like "expected status is returned", WasteCarriersEngine::Payment::STATUS_CREATED, WasteCarriersEngine::Payment::STATUS_CREATED
+          it_behaves_like "expected status is returned", Payment::STATUS_CREATED, Payment::STATUS_CREATED
 
-          it_behaves_like "expected status is returned", WasteCarriersEngine::Payment::STATUS_SUBMITTED, WasteCarriersEngine::Payment::STATUS_SUBMITTED
+          it_behaves_like "expected status is returned", Payment::STATUS_SUBMITTED, Payment::STATUS_SUBMITTED
 
-          it_behaves_like "expected status is returned", WasteCarriersEngine::Payment::STATUS_SUCCESS, WasteCarriersEngine::Payment::STATUS_SUCCESS
+          it_behaves_like "expected status is returned", Payment::STATUS_SUCCESS, Payment::STATUS_SUCCESS
 
-          it_behaves_like "expected status is returned", WasteCarriersEngine::Payment::STATUS_CANCELLED, WasteCarriersEngine::Payment::STATUS_CANCELLED
+          it_behaves_like "expected status is returned", Payment::STATUS_CANCELLED, Payment::STATUS_CANCELLED
 
           it_behaves_like "expected status is returned", "not_found", "error"
         end
@@ -106,7 +106,7 @@ module WasteCarriersEngine
             end
 
             it "returns created" do
-              expect(service.govpay_payment_status).to eq WasteCarriersEngine::Payment::STATUS_CREATED
+              expect(service.govpay_payment_status).to eq Payment::STATUS_CREATED
             end
           end
 
@@ -127,7 +127,7 @@ module WasteCarriersEngine
             end
 
             it "returns created" do
-              expect(service.govpay_payment_status).to eq WasteCarriersEngine::Payment::STATUS_CREATED
+              expect(service.govpay_payment_status).to eq Payment::STATUS_CREATED
             end
           end
         end
@@ -159,15 +159,15 @@ module WasteCarriersEngine
         end
       end
 
-      it_behaves_like "maps to the expected status", WasteCarriersEngine::Payment::STATUS_CREATED, :pending
+      it_behaves_like "maps to the expected status", Payment::STATUS_CREATED, :pending
 
-      it_behaves_like "maps to the expected status", WasteCarriersEngine::Payment::STATUS_SUBMITTED, :pending
+      it_behaves_like "maps to the expected status", Payment::STATUS_SUBMITTED, :pending
 
-      it_behaves_like "maps to the expected status", WasteCarriersEngine::Payment::STATUS_SUCCESS, :success
+      it_behaves_like "maps to the expected status", Payment::STATUS_SUCCESS, :success
 
-      it_behaves_like "maps to the expected status", WasteCarriersEngine::Payment::STATUS_FAILED, :failure
+      it_behaves_like "maps to the expected status", Payment::STATUS_FAILED, :failure
 
-      it_behaves_like "maps to the expected status", WasteCarriersEngine::Payment::STATUS_CANCELLED, :cancel
+      it_behaves_like "maps to the expected status", Payment::STATUS_CANCELLED, :cancel
 
       it_behaves_like "maps to the expected status", nil, :error
     end

@@ -4,7 +4,7 @@ module WasteCarriersEngine
   class GovpayUpdateRefundStatusService < WasteCarriersEngine::BaseService
 
     def run(registration:, refund_id:, new_status:)
-      return false if new_status != WasteCarriersEngine::Payment::STATUS_SUCCESS
+      return false if new_status != Payment::STATUS_SUCCESS
 
       refund = WasteCarriersEngine::GovpayFindPaymentService.run(payment_id: refund_id)
       return false if refund.blank?
@@ -32,7 +32,7 @@ module WasteCarriersEngine
     def process_success(registration, refund)
       refund.update(
         {
-          govpay_payment_status: WasteCarriersEngine::Payment::STATUS_SUCCESS,
+          govpay_payment_status: Payment::STATUS_SUCCESS,
           comment: I18n.t("refunds.comments.card_complete"),
           order_key: refund.order_key.sub("_PENDING", "_REFUNDED")
         }

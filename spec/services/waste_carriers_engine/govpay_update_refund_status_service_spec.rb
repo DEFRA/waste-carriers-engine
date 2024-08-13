@@ -17,7 +17,7 @@ module WasteCarriersEngine
       subject(:run_service) { described_class.new.run(registration:, refund_id:, new_status: refund_status) }
 
       context "when the refund status has not changed" do
-        let(:refund_status) { WasteCarriersEngine::Payment::STATUS_SUBMITTED }
+        let(:refund_status) { Payment::STATUS_SUBMITTED }
 
         it { expect(run_service).to be false }
         it { expect { run_service }.not_to change { refund.reload.govpay_payment_status } }
@@ -33,10 +33,10 @@ module WasteCarriersEngine
       end
 
       context "when the refund status has changed to success" do
-        let(:refund_status) { WasteCarriersEngine::Payment::STATUS_SUCCESS }
+        let(:refund_status) { Payment::STATUS_SUCCESS }
 
         it { expect(run_service).to be true }
-        it { expect { run_service }.to change { refund.reload.govpay_payment_status }.to(WasteCarriersEngine::Payment::STATUS_SUCCESS) }
+        it { expect { run_service }.to change { refund.reload.govpay_payment_status }.to(Payment::STATUS_SUCCESS) }
         it { expect { run_service }.to change { registration.reload.finance_details.balance }.by(-refund_amount) }
       end
     end

@@ -54,9 +54,9 @@ module WasteCarriersEngine
                 { "$and": [{ payment_type: "WORLDPAY" },
                            { world_pay_payment_status: "AUTHORISED" }] },
                 { "$and": [{ payment_type: "GOVPAY" },
-                           { govpay_payment_status: WasteCarriersEngine::Payment::STATUS_SUCCESS }] },
+                           { govpay_payment_status: Payment::STATUS_SUCCESS }] },
                 { "$and": [{ payment_type: "REFUND" },
-                           { govpay_payment_status: WasteCarriersEngine::Payment::STATUS_SUCCESS }] },
+                           { govpay_payment_status: Payment::STATUS_SUCCESS }] },
                 { "$and": [{ payment_type: "REFUND" },
                            { govpay_payment_status: nil },
                            { world_pay_payment_status: nil }] }

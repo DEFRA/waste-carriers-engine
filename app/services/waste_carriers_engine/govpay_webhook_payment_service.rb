@@ -4,12 +4,12 @@ module WasteCarriersEngine
   class GovpayWebhookPaymentService < GovpayWebhookBaseService
 
     VALID_STATUS_TRANSITIONS = {
-      WasteCarriersEngine::Payment::STATUS_CREATED => %w[started submitted success failed cancelled error],
-      WasteCarriersEngine::Payment::STATUS_STARTED => %w[submitted success failed cancelled error],
-      WasteCarriersEngine::Payment::STATUS_SUBMITTED => %w[success failed cancelled error],
-      WasteCarriersEngine::Payment::STATUS_SUCCESS => %w[],
-      WasteCarriersEngine::Payment::STATUS_FAILED => %w[],
-      WasteCarriersEngine::Payment::STATUS_CANCELLED => %w[],
+      Payment::STATUS_CREATED => %w[started submitted success failed cancelled error],
+      Payment::STATUS_STARTED => %w[submitted success failed cancelled error],
+      Payment::STATUS_SUBMITTED => %w[success failed cancelled error],
+      Payment::STATUS_SUCCESS => %w[],
+      Payment::STATUS_FAILED => %w[],
+      Payment::STATUS_CANCELLED => %w[],
       "error" => %w[]
     }.freeze
 
