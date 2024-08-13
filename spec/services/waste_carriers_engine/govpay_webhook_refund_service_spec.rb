@@ -17,9 +17,9 @@ module WasteCarriersEngine
         create(:payment, :govpay,
                finance_details: registration.finance_details,
                govpay_id: govpay_payment_id,
-               govpay_payment_status: "complete")
+               govpay_payment_status: WasteCarriersEngine::Payment::STATUS_COMPLETE)
       end
-      let(:prior_payment_status) { "submitted" }
+      let(:prior_payment_status) { WasteCarriersEngine::Payment::STATUS_SUBMITTED }
       let!(:wcr_payment) do
         create(:payment, :govpay_refund,
                finance_details: registration.finance_details,
@@ -60,7 +60,7 @@ module WasteCarriersEngine
 
           context "when the refund is found" do
             context "when the refund status has not changed" do
-              let(:prior_payment_status) { "success" }
+              let(:prior_payment_status) { WasteCarriersEngine::Payment::STATUS_SUCCESS }
 
               it { expect { run_service }.not_to change(wcr_payment, :govpay_payment_status) }
 
@@ -82,10 +82,10 @@ module WasteCarriersEngine
               include_examples "Govpay webhook status transitions"
 
               # unfinished statuses
-              it_behaves_like "valid and invalid transitions", "submitted", %w[success], %w[error]
+              it_behaves_like "valid and invalid transitions", WasteCarriersEngine::Payment::STATUS_SUBMITTED, %w[success], %w[error]
 
               # finished statuses
-              it_behaves_like "no valid transitions", "success"
+              it_behaves_like "no valid transitions", WasteCarriersEngine::Payment::STATUS_SUCCESS
               it_behaves_like "no valid transitions", "error"
             end
           end

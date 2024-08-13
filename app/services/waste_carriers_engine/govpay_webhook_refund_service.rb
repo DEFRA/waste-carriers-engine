@@ -4,8 +4,8 @@ module WasteCarriersEngine
   class GovpayWebhookRefundService < GovpayWebhookBaseService
 
     VALID_STATUS_TRANSITIONS = {
-      "submitted" => %w[success],
-      "success" => %w[],
+      WasteCarriersEngine::Payment::STATUS_SUBMITTED => %w[success],
+      WasteCarriersEngine::Payment::STATUS_SUCCESS => %w[],
       "error" => %w[]
     }.freeze
 

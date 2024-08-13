@@ -18,7 +18,7 @@ module WasteCarriersEngine
       status = response&.dig("state", "status") || "error"
 
       # Special case: If failed, check whether this was because of a cancellation
-      status = "cancelled" if status == "failed" && response.dig("state", "code") == "P0030"
+      status = WasteCarriersEngine::Payment::STATUS_CANCELLED if payment_cancelled(status, response)
 
       status
     rescue StandardError => e
@@ -39,11 +39,11 @@ module WasteCarriersEngine
     # Payment status in application terms
     def self.payment_status(status)
       {
-        "created" => :pending,
-        "started" => :pending,
-        "submitted" => :pending,
-        "cancelled" => :cancel,
-        "failed" => :failure,
+        WasteCarriersEngine::Payment::STATUS_CREATED => :pending,
+        WasteCarriersEngine::Payment::STATUS_STARTED => :pending,
+        WasteCarriersEngine::Payment::STATUS_SUBMITTED => :pending,
+        WasteCarriersEngine::Payment::STATUS_CANCELLED => :cancel,
+        WasteCarriersEngine::Payment::STATUS_FAILED => :failure,
         nil => :error
       }.freeze[status] || status.to_sym
     end
@@ -66,6 +66,10 @@ module WasteCarriersEngine
                                              is_moto: @is_moto,
                                              params: nil)&.body
         )
+    end
+
+    def payment_cancelled(status, response)
+      status == WasteCarriersEngine::Payment::STATUS_FAILED && response.dig("state", "code") == "P0030"
     end
 
     # Because orders are embedded in finance_details, we can't search directly on orders so we need to:
