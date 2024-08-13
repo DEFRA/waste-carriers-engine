@@ -62,6 +62,14 @@ FactoryBot.define do
       after(:build, :create, &:update_balance)
     end
 
+    trait :has_overpaid_order_and_payment_govpay do
+      orders { [build(:order, :has_required_data)] }
+      payments do
+        [build(:payment, :govpay, govpay_payment_status: WasteCarriersEngine::Payment::STATUS_SUCCESS, amount: 100_500)]
+      end
+      after(:build, :create, &:update_balance)
+    end
+
     trait :has_outstanding_copy_card do
       orders { [build(:order, :has_required_data)] }
       payments { [build(:payment, :bank_transfer, amount: 10_500)] }

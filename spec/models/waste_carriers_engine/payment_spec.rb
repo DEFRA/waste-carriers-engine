@@ -61,11 +61,11 @@ module WasteCarriersEngine
       describe ".except_online_not_authorised" do
         let(:transient_registration) { build(:renewing_registration, :has_required_data, :has_finance_details) }
         let(:cash_payment) { described_class.new(payment_type: "CASH") }
-        let(:govpay_payment_authorised) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "success") }
-        let(:govpay_payment_refused) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: "failed") }
-        let(:refund_payment_success) { described_class.new(payment_type: "REFUND", govpay_payment_status: "success") }
+        let(:govpay_payment_authorised) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: Payment::STATUS_SUCCESS) }
+        let(:govpay_payment_refused) { described_class.new(payment_type: "GOVPAY", govpay_payment_status: Payment::STATUS_FAILED) }
+        let(:refund_payment_success) { described_class.new(payment_type: "REFUND", govpay_payment_status: Payment::STATUS_SUCCESS) }
         let(:refund_payment_nil_status) { described_class.new(payment_type: "REFUND", govpay_payment_status: nil) }
-        let(:refund_payment_failed) { described_class.new(payment_type: "REFUND", govpay_payment_status: "failed") }
+        let(:refund_payment_failed) { described_class.new(payment_type: "REFUND", govpay_payment_status: Payment::STATUS_FAILED) }
 
         before do
           transient_registration.finance_details.payments << cash_payment << govpay_payment_authorised << govpay_payment_refused
@@ -210,12 +210,12 @@ module WasteCarriersEngine
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
           transient_registration.prepare_for_payment(:govpay, current_user)
-          payment.update_after_online_payment({ govpay_status: "created" })
+          payment.update_after_online_payment({ govpay_status: Payment::STATUS_CREATED })
         end
       end
 
       it "updates the payment status" do
-        expect(payment.govpay_payment_status).to eq("created")
+        expect(payment.govpay_payment_status).to eq(Payment::STATUS_CREATED)
       end
 
       it "updates the payment date_received" do

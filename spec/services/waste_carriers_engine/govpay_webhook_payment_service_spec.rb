@@ -50,7 +50,7 @@ module WasteCarriersEngine
 
           context "when the payment is found" do
             context "when the payment status has not changed" do
-              let(:prior_payment_status) { "submitted" }
+              let(:prior_payment_status) { Payment::STATUS_SUBMITTED }
 
               it { expect { run_service }.not_to change(wcr_payment, :govpay_payment_status) }
 
@@ -66,14 +66,14 @@ module WasteCarriersEngine
               include_examples "Govpay webhook status transitions"
 
               # unfinished statuses
-              it_behaves_like "valid and invalid transitions", "created", %w[started submitted success failed cancelled error], %w[]
+              it_behaves_like "valid and invalid transitions", Payment::STATUS_CREATED, %w[started submitted success failed cancelled error], %w[]
               it_behaves_like "valid and invalid transitions", "started", %w[submitted success failed cancelled error], %w[created]
-              it_behaves_like "valid and invalid transitions", "submitted", %w[success failed cancelled error], %w[started]
+              it_behaves_like "valid and invalid transitions", Payment::STATUS_SUBMITTED, %w[success failed cancelled error], %w[started]
 
               # finished statuses
-              it_behaves_like "no valid transitions", "success"
-              it_behaves_like "no valid transitions", "failed"
-              it_behaves_like "no valid transitions", "cancelled"
+              it_behaves_like "no valid transitions", Payment::STATUS_SUCCESS
+              it_behaves_like "no valid transitions", Payment::STATUS_FAILED
+              it_behaves_like "no valid transitions", Payment::STATUS_CANCELLED
               it_behaves_like "no valid transitions", "error"
             end
           end

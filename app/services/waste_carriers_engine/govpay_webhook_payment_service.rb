@@ -4,16 +4,23 @@ module WasteCarriersEngine
   class GovpayWebhookPaymentService < GovpayWebhookBaseService
 
     VALID_STATUS_TRANSITIONS = {
-      "created" => %w[started submitted success failed cancelled error],
-      "started" => %w[submitted success failed cancelled error],
-      "submitted" => %w[success failed cancelled error],
-      "success" => %w[],
-      "failed" => %w[],
-      "cancelled" => %w[],
+      Payment::STATUS_CREATED => %w[started submitted success failed cancelled error],
+      Payment::STATUS_STARTED => %w[submitted success failed cancelled error],
+      Payment::STATUS_SUBMITTED => %w[success failed cancelled error],
+      Payment::STATUS_SUCCESS => %w[],
+      Payment::STATUS_FAILED => %w[],
+      Payment::STATUS_CANCELLED => %w[],
       "error" => %w[]
     }.freeze
 
     private
+
+    def update_payment_or_refund_status
+      wcr_payment.update(govpay_payment_status: webhook_payment_or_refund_status)
+
+      Rails.logger.info "Updated status from #{previous_status} to #{webhook_payment_or_refund_status} " \
+                        "for #{log_webhook_context}"
+    end
 
     def log_webhook_context
       "for payment #{webhook_payment_or_refund_id}, registration #{@registration.regIdentifier}"

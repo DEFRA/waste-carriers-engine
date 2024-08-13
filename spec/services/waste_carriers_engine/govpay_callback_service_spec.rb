@@ -32,7 +32,7 @@ module WasteCarriersEngine
 
     describe "#payment_callback" do
 
-      before { allow(govpay_payment_details_service).to receive(:govpay_payment_status).and_return("created") }
+      before { allow(govpay_payment_details_service).to receive(:govpay_payment_status).and_return(Payment::STATUS_CREATED) }
 
       context "when the status is valid" do
         it "returns true" do
@@ -41,12 +41,12 @@ module WasteCarriersEngine
 
         it "updates the payment status" do
           govpay_callback_service.valid_success?
-          expect(transient_registration.reload.finance_details.payments.first.govpay_payment_status).to eq("success")
+          expect(transient_registration.reload.finance_details.payments.first.govpay_payment_status).to eq(Payment::STATUS_SUCCESS)
         end
 
         it "updates the order status" do
           govpay_callback_service.valid_success?
-          expect(transient_registration.reload.finance_details.orders.first.govpay_status).to eq("success")
+          expect(transient_registration.reload.finance_details.orders.first.govpay_status).to eq(Payment::STATUS_SUCCESS)
         end
 
         it "updates the balance" do

@@ -13,7 +13,7 @@ module WasteCarriersEngine
     end
 
     def valid_success?
-      return false unless govpay_response_validator("success").valid_success?
+      return false unless govpay_response_validator(Payment::STATUS_SUCCESS).valid_success?
 
       update_payment_data
 
@@ -59,9 +59,12 @@ module WasteCarriersEngine
     end
 
     def update_payment_data
-      @order.update_after_online_payment("success")
+      @order.update_after_online_payment(Payment::STATUS_SUCCESS)
       payment = Payment.new_from_online_payment(@order, user_email)
-      payment.update_after_online_payment(govpay_status: "success", govpay_id: @order.govpay_id)
+      payment.update_after_online_payment(
+        govpay_status: Payment::STATUS_SUCCESS,
+        govpay_id: @order.govpay_id
+      )
 
       @transient_registration.finance_details.update_balance
       @transient_registration.finance_details.save!

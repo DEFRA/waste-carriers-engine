@@ -40,7 +40,7 @@ module WasteCarriersEngine
     end
 
     describe "valid_success?" do
-      let(:govpay_status) { "success" }
+      let(:govpay_status) { Payment::STATUS_SUCCESS }
 
       context "when the govpay status is valid" do
 
@@ -51,7 +51,7 @@ module WasteCarriersEngine
 
       context "when the govpay status is not valid" do
 
-        let(:govpay_status) { "failed" }
+        let(:govpay_status) { Payment::STATUS_FAILED }
 
         it "returns false" do
           expect(govpay_validator_service.valid_success?).to be false
@@ -84,15 +84,15 @@ module WasteCarriersEngine
     end
 
     describe "valid_failure?" do
-      it_behaves_like "valid and invalid Govpay status", "valid_failure?", "failed"
+      it_behaves_like "valid and invalid Govpay status", "valid_failure?", Payment::STATUS_FAILED
     end
 
     describe "valid_pending?" do
-      it_behaves_like "valid and invalid Govpay status", "valid_pending?", "created"
+      it_behaves_like "valid and invalid Govpay status", "valid_pending?", Payment::STATUS_CREATED
     end
 
     describe "valid_cancel?" do
-      it_behaves_like "valid and invalid Govpay status", "valid_cancel?", "cancelled"
+      it_behaves_like "valid and invalid Govpay status", "valid_cancel?", Payment::STATUS_CANCELLED
     end
 
     describe "valid_error?" do
@@ -101,7 +101,7 @@ module WasteCarriersEngine
 
     describe "valid_govpay_status?" do
       it "returns true when the status matches the values for the response type" do
-        expect(described_class.valid_govpay_status?(:success, "success")).to be true
+        expect(described_class.valid_govpay_status?(:success, Payment::STATUS_SUCCESS)).to be true
       end
 
       it "returns false when the status does not match the values for the response type" do

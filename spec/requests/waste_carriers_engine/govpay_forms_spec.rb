@@ -105,7 +105,7 @@ module WasteCarriersEngine
           end
 
           context "when govpay status is success" do
-            let(:govpay_status) { "success" }
+            let(:govpay_status) { Payment::STATUS_SUCCESS }
 
             context "when the payment_uuid is valid and the balance is paid" do
 
@@ -177,7 +177,7 @@ module WasteCarriersEngine
 
               context "when the payment uuid is valid" do
                 before do
-                  order.update!(govpay_status: "created")
+                  order.update!(govpay_status: Payment::STATUS_CREATED)
                 end
 
                 it "redirects to renewal_received_pending_govpay_payment_form" do
@@ -195,13 +195,13 @@ module WasteCarriersEngine
             end
 
             context "when govpay status is created" do
-              let(:govpay_status) { "created" }
+              let(:govpay_status) { Payment::STATUS_CREATED }
 
               it_behaves_like "payment is pending"
             end
 
             context "when govpay status is submitted" do
-              let(:govpay_status) { "submitted" }
+              let(:govpay_status) { Payment::STATUS_SUBMITTED }
 
               it_behaves_like "payment is pending"
             end
@@ -240,13 +240,13 @@ module WasteCarriersEngine
             end
 
             context "with cancelled status" do
-              let(:govpay_status) { "cancelled" }
+              let(:govpay_status) { Payment::STATUS_CANCELLED }
 
               it_behaves_like "payment is unsuccessful but no error"
             end
 
             context "with failure status" do
-              let(:govpay_status) { "failed" }
+              let(:govpay_status) { Payment::STATUS_FAILED }
 
               it_behaves_like "payment is unsuccessful but no error"
             end
@@ -261,7 +261,7 @@ module WasteCarriersEngine
           context "with an invalid success status" do
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
-            let(:govpay_status) { "success" }
+            let(:govpay_status) { Payment::STATUS_SUCCESS }
 
             it_behaves_like "payment is unsuccessful with an error"
           end
@@ -269,7 +269,7 @@ module WasteCarriersEngine
           context "with an invalid failure status" do
             before { allow(GovpayValidatorService).to receive(:valid_govpay_status?).and_return(false) }
 
-            let(:govpay_status) { "cancelled" }
+            let(:govpay_status) { Payment::STATUS_CANCELLED }
 
             it_behaves_like "payment is unsuccessful with an error"
           end

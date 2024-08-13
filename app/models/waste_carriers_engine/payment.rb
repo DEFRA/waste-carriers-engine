@@ -5,6 +5,19 @@ module WasteCarriersEngine
     include Mongoid::Document
     include CanHavePaymentType
 
+    # Govpay payment statuses:
+    STATUS_STARTED = "started"
+    STATUS_CREATED = "created"
+    STATUS_SUBMITTED = "submitted"
+    STATUS_CANCELLED = "cancelled"
+    STATUS_FAILED = "failed"
+    STATUS_SUCCESS = "success"
+    STATUS_COMPLETE = "complete"
+
+    # Historic Worldpay payment statuses:
+    STATUS_REFUSED = "REFUSED"
+    STATUS_AUTHORISED = "AUTHORISED"
+
     embedded_in :finance_details, class_name: "WasteCarriersEngine::FinanceDetails"
 
     field :orderKey, as: :order_key,                              type: String
@@ -38,10 +51,14 @@ module WasteCarriersEngine
             where(
               "$or": [
                 { payment_type: { "$nin" => %w[WORLDPAY GOVPAY REFUND] } },
-                { "$and": [{ payment_type: "WORLDPAY" }, { world_pay_payment_status: "AUTHORISED" }] },
-                { "$and": [{ payment_type: "GOVPAY" }, { govpay_payment_status: "success" }] },
-                { "$and": [{ payment_type: "REFUND" }, { govpay_payment_status: "success" }] },
-                { "$and": [{ payment_type: "REFUND" }, { govpay_payment_status: nil },
+                { "$and": [{ payment_type: "WORLDPAY" },
+                           { world_pay_payment_status: "AUTHORISED" }] },
+                { "$and": [{ payment_type: "GOVPAY" },
+                           { govpay_payment_status: Payment::STATUS_SUCCESS }] },
+                { "$and": [{ payment_type: "REFUND" },
+                           { govpay_payment_status: Payment::STATUS_SUCCESS }] },
+                { "$and": [{ payment_type: "REFUND" },
+                           { govpay_payment_status: nil },
                            { world_pay_payment_status: nil }] }
               ]
             )

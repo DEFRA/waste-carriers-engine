@@ -18,8 +18,8 @@ module WasteCarriersEngine
       let(:order) { finance_details.orders.first }
 
       it "copies the govpay status to the order" do
-        order.update_after_online_payment("created")
-        expect(order.govpay_status).to eq("created")
+        order.update_after_online_payment(Payment::STATUS_CREATED)
+        expect(order.govpay_status).to eq(Payment::STATUS_CREATED)
       end
 
       it "updates the date_last_updated" do
@@ -27,7 +27,7 @@ module WasteCarriersEngine
           # Wipe the date first so we know the value has been added
           order.update_attributes(date_last_updated: nil)
 
-          order.update_after_online_payment("created")
+          order.update_after_online_payment(Payment::STATUS_CREATED)
           expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
         end
       end

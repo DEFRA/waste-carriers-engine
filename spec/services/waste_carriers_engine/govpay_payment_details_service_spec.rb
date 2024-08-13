@@ -71,13 +71,13 @@ module WasteCarriersEngine
             )
           end
 
-          it_behaves_like "expected status is returned", "created", "created"
+          it_behaves_like "expected status is returned", Payment::STATUS_CREATED, Payment::STATUS_CREATED
 
-          it_behaves_like "expected status is returned", "submitted", "submitted"
+          it_behaves_like "expected status is returned", Payment::STATUS_SUBMITTED, Payment::STATUS_SUBMITTED
 
-          it_behaves_like "expected status is returned", "success", "success"
+          it_behaves_like "expected status is returned", Payment::STATUS_SUCCESS, Payment::STATUS_SUCCESS
 
-          it_behaves_like "expected status is returned", "cancelled", "cancelled"
+          it_behaves_like "expected status is returned", Payment::STATUS_CANCELLED, Payment::STATUS_CANCELLED
 
           it_behaves_like "expected status is returned", "not_found", "error"
         end
@@ -106,7 +106,7 @@ module WasteCarriersEngine
             end
 
             it "returns created" do
-              expect(service.govpay_payment_status).to eq "created"
+              expect(service.govpay_payment_status).to eq Payment::STATUS_CREATED
             end
           end
 
@@ -127,7 +127,7 @@ module WasteCarriersEngine
             end
 
             it "returns created" do
-              expect(service.govpay_payment_status).to eq "created"
+              expect(service.govpay_payment_status).to eq Payment::STATUS_CREATED
             end
           end
         end
@@ -159,15 +159,15 @@ module WasteCarriersEngine
         end
       end
 
-      it_behaves_like "maps to the expected status", "created", :pending
+      it_behaves_like "maps to the expected status", Payment::STATUS_CREATED, :pending
 
-      it_behaves_like "maps to the expected status", "submitted", :pending
+      it_behaves_like "maps to the expected status", Payment::STATUS_SUBMITTED, :pending
 
-      it_behaves_like "maps to the expected status", "success", :success
+      it_behaves_like "maps to the expected status", Payment::STATUS_SUCCESS, :success
 
-      it_behaves_like "maps to the expected status", "failed", :failure
+      it_behaves_like "maps to the expected status", Payment::STATUS_FAILED, :failure
 
-      it_behaves_like "maps to the expected status", "cancelled", :cancel
+      it_behaves_like "maps to the expected status", Payment::STATUS_CANCELLED, :cancel
 
       it_behaves_like "maps to the expected status", nil, :error
     end

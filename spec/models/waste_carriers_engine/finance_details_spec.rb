@@ -196,13 +196,13 @@ module WasteCarriersEngine
         end
 
         context "when the refund is pending" do
-          let(:refund_status) { "submitted" }
+          let(:refund_status) { Payment::STATUS_SUBMITTED }
 
           it { expect(finance_details.balance).to be_zero }
         end
 
         context "when the refund is complete" do
-          let(:refund_status) { "success" }
+          let(:refund_status) { Payment::STATUS_SUCCESS }
 
           it { expect(finance_details.balance).to eq(-refund_amount) }
         end

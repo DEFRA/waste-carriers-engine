@@ -40,7 +40,7 @@ module WasteCarriersEngine
         context "when a govpay order already exists" do
           before do
             transient_registration.prepare_for_payment(:govpay, user)
-            transient_registration.finance_details.orders.first.world_pay_status = "CANCELLED"
+            transient_registration.finance_details.orders.first.world_pay_status = Payment::STATUS_CANCELLED
           end
 
           it "replaces the old order and does not increase the order count" do
