@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module Test
+module WasteCarriersEngine
   RenewalLookupValidatable = Struct.new(:temp_lookup_number) do
     include ActiveModel::Validations
 
@@ -10,11 +10,9 @@ module Test
 
     validates_with WasteCarriersEngine::RenewalLookupValidator
   end
-end
 
-module WasteCarriersEngine
   RSpec.describe RenewalLookupValidator do
-    subject(:validatable) { Test::RenewalLookupValidatable.new }
+    subject(:validatable) { RenewalLookupValidatable.new }
 
     context "when there is no matching registration" do
       before do
@@ -23,7 +21,7 @@ module WasteCarriersEngine
 
       it "is invalid and sets the correct error message" do
         expect(validatable).not_to be_valid
-        expect(validatable.errors[:temp_lookup_number].first).to include("no_match")
+        expect(validatable.errors[:temp_lookup_number].first).to include("Enter a valid registration number")
       end
     end
 
@@ -47,7 +45,7 @@ module WasteCarriersEngine
 
         it "is invalid and sets the correct error message" do
           expect(validatable).not_to be_valid
-          expect(validatable.errors[:temp_lookup_number].first).to include("lower_tier")
+          expect(validatable.errors[:temp_lookup_number].first).to include("This is a lower tier registration")
         end
       end
 
@@ -81,7 +79,7 @@ module WasteCarriersEngine
 
             it "is invalid and sets the correct error message" do
               expect(validatable).not_to be_valid
-              expect(validatable.errors[:temp_lookup_number].first).to include("not_yet_renewable")
+              expect(validatable.errors[:temp_lookup_number].first).to include("not eligible for renewal until")
             end
           end
 
@@ -127,7 +125,7 @@ module WasteCarriersEngine
 
           it "is invalid and sets the correct error message" do
             expect(validatable).not_to be_valid
-            expect(validatable.errors[:temp_lookup_number].first).to include("unrenewable_status")
+            expect(validatable.errors[:temp_lookup_number].first).to include("This number is not registered")
           end
         end
       end

@@ -2,7 +2,8 @@
 
 require "rails_helper"
 
-module Test
+module WasteCarriersEngine
+
   ContactEmailValidatable = Struct.new(:contact_email) do
     include ActiveModel::Validations
 
@@ -12,12 +13,10 @@ module Test
 
     validates_with WasteCarriersEngine::ContactEmailValidator, attributes: [:contact_email]
   end
-end
 
-module WasteCarriersEngine
   RSpec.describe ContactEmailValidator do
 
-    subject(:validatable) { Test::ContactEmailValidatable.new }
+    subject(:validatable) { ContactEmailValidatable.new }
 
     let(:contact_email) { Faker::Internet.email }
     let(:confirmed_email) { contact_email }
