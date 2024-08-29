@@ -2,7 +2,8 @@
 
 require "rails_helper"
 
-module Test
+module WasteCarriersEngine
+
   CompanyNameValidatable = Struct.new(:company_name) do
     include ActiveModel::Validations
 
@@ -17,11 +18,9 @@ module Test
 
     validates_with WasteCarriersEngine::CompanyNameValidator, attributes: [:company_name]
   end
-end
 
-module WasteCarriersEngine
   RSpec.describe CompanyNameValidator do
-    subject(:validatable) { Test::CompanyNameValidatable.new }
+    subject(:validatable) { CompanyNameValidatable.new }
 
     RSpec.shared_examples "is valid" do
       it "passes the validity check" do
