@@ -17,9 +17,19 @@ module WasteCarriersEngine
         end
       end
 
-      context "with a valid payment id" do
-        let(:registration) { create(:registration, :has_required_data, finance_details: build(:finance_details, :has_overpaid_order_and_payment_govpay)) }
+      context "with a valid payment id in a Registration" do
+        let(:registration) { create(:registration, :has_required_data, finance_details: build(:finance_details, :with_govpay_refund)) }
         let(:payment) { registration.finance_details.payments.first }
+        let(:payment_id) { payment.govpay_id }
+
+        it "returns the payment" do
+          expect(run_service).to eq payment
+        end
+      end
+
+      context "with a valid payment id in a TransientRegistration" do
+        let(:transient_registration) { create(:transient_registration, :has_required_data, finance_details: build(:finance_details, :with_govpay_refund)) }
+        let(:payment) { transient_registration.finance_details.payments.first }
         let(:payment_id) { payment.govpay_id }
 
         it "returns the payment" do

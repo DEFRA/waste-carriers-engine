@@ -70,6 +70,12 @@ FactoryBot.define do
       after(:build, :create, &:update_balance)
     end
 
+    trait :with_govpay_refund do
+      orders { [build(:order, :has_required_data)] }
+      payments { [build(:payment, :govpay_refund)] }
+      after(:build, :create, &:update_balance)
+    end
+
     trait :has_outstanding_copy_card do
       orders { [build(:order, :has_required_data)] }
       payments { [build(:payment, :bank_transfer, amount: 10_500)] }
