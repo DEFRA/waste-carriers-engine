@@ -1,0 +1,21 @@
+en:
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/company_name_validatable:
+          attributes:
+            company_name:
+              blank: Enter a business or trading name. This will be displayed on the public register.
+        waste_carriers_engine/contact_email_validatable:
+          attributes:
+            no_contact_email:
+              not_blank: You cannot enter email addresses and select 'This customer has no access to an email address'
+            confirmed_email:
+              does_not_match: The email addresses you’ve entered don’t match
+        waste_carriers_engine/renewal_lookup_validatable:
+          attributes:
+            temp_lookup_number:
+              lower_tier: "This is a lower tier registration so never expires. Call our helpline on 03708 506506 if you think this is incorrect."
+              no_match: "Enter a valid registration number"
+              not_yet_renewable: "This registration is not eligible for renewal until %{date}"
+              unrenewable_status: "This number is not registered. Call our helpline on 03708 506506 if you think this is incorrect."
