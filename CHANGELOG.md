@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- \[RUBY-3219\] Refactor `GovpayFindPaymentService` to support finding payments that are inside a transient registration as this is used in GovpayUpdateRefundStatusService to locate the payment [\#1562](https://github.com/DEFRA/waste-carriers-engine/pull/1562) ([jjromeo](https://github.com/jjromeo))
+- Process Gov.UK Pay webhook callbacks [\#1555](https://github.com/DEFRA/waste-carriers-engine/pull/1555) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - \[RUBY-3221\] adjusting content of renewal block page [\#1551](https://github.com/DEFRA/waste-carriers-engine/pull/1551) ([brujeo](https://github.com/brujeo))
 - \[RUBY-3215\] Add `payment_balance` method and enhance refund payment handling [\#1550](https://github.com/DEFRA/waste-carriers-engine/pull/1550) ([jjromeo](https://github.com/jjromeo))
 - RUBY 3081 wcr unblock northern ireland location continue journey [\#1535](https://github.com/DEFRA/waste-carriers-engine/pull/1535) ([jjromeo](https://github.com/jjromeo))
@@ -26,6 +28,7 @@
 - \[RUBY-2817\] Adding Apple/Google pay to list of payment options [\#1479](https://github.com/DEFRA/waste-carriers-engine/pull/1479) ([brujeo](https://github.com/brujeo))
 - \[RUBY-2780\] content change [\#1470](https://github.com/DEFRA/waste-carriers-engine/pull/1470) ([brujeo](https://github.com/brujeo))
 - Feature/ruby 2788 wcr content convictions page addition [\#1469](https://github.com/DEFRA/waste-carriers-engine/pull/1469) ([brujeo](https://github.com/brujeo))
+- RUBY 2709 wcr analytics metrics improvements [\#1460](https://github.com/DEFRA/waste-carriers-engine/pull/1460) ([jjromeo](https://github.com/jjromeo))
 - Add new cannot-register pages for non-england locations [\#1456](https://github.com/DEFRA/waste-carriers-engine/pull/1456) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Feature/ruby 2533 certificate generator service [\#1438](https://github.com/DEFRA/waste-carriers-engine/pull/1438) ([brujeo](https://github.com/brujeo))
 - \[RUBY-2625\] ensure only upper tier registrations come back from conviction scope methods [\#1426](https://github.com/DEFRA/waste-carriers-engine/pull/1426) ([jjromeo](https://github.com/jjromeo))
@@ -438,6 +441,8 @@
 
 **Fixed bugs:**
 
+- Fix/ruby 3145 refunds i18n [\#1561](https://github.com/DEFRA/waste-carriers-engine/pull/1561) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix/ruby 3145 missing refund update logic [\#1558](https://github.com/DEFRA/waste-carriers-engine/pull/1558) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - \[RUBY-3079\] Add communication\_records to RenewingRegistration and refactor email service specs [\#1531](https://github.com/DEFRA/waste-carriers-engine/pull/1531) ([jjromeo](https://github.com/jjromeo))
 - fix/RUBY-2973\_reinstate\_copy\_methods [\#1529](https://github.com/DEFRA/waste-carriers-engine/pull/1529) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Feature/ruby 2973 unsubscribe [\#1527](https://github.com/DEFRA/waste-carriers-engine/pull/1527) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
@@ -710,6 +715,10 @@
 
 **Merged pull requests:**
 
+- Bump rexml from 3.3.2 to 3.3.3 [\#1557](https://github.com/DEFRA/waste-carriers-engine/pull/1557) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rexml from 3.2.8 to 3.3.2 [\#1556](https://github.com/DEFRA/waste-carriers-engine/pull/1556) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1554](https://github.com/DEFRA/waste-carriers-engine/pull/1554) ([jjromeo](https://github.com/jjromeo))
+- Bump govuk\_design\_system\_formbuilder from 5.4.0 to 5.4.1 [\#1553](https://github.com/DEFRA/waste-carriers-engine/pull/1553) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1549](https://github.com/DEFRA/waste-carriers-engine/pull/1549) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - \[RUBY-3223\] Update defra\_ruby\_template gem to version 5.4, pinned to major version 5 in Gemfile and Gemfile.lock [\#1548](https://github.com/DEFRA/waste-carriers-engine/pull/1548) ([jjromeo](https://github.com/jjromeo))
 - Bump timecop from 0.9.8 to 0.9.10 [\#1547](https://github.com/DEFRA/waste-carriers-engine/pull/1547) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -740,7 +749,6 @@
 - Bump defra\_ruby\_govpay from 0.2.3 to 0.2.4 [\#1464](https://github.com/DEFRA/waste-carriers-engine/pull/1464) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1463](https://github.com/DEFRA/waste-carriers-engine/pull/1463) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Align with govpay gem error handling [\#1461](https://github.com/DEFRA/waste-carriers-engine/pull/1461) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
-- RUBY 2709 wcr analytics metrics improvements [\#1460](https://github.com/DEFRA/waste-carriers-engine/pull/1460) ([jjromeo](https://github.com/jjromeo))
 - Bump faker from 3.2.1 to 3.2.2 [\#1458](https://github.com/DEFRA/waste-carriers-engine/pull/1458) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Remove mailcatcher / smtp / action\_mailer code and config [\#1457](https://github.com/DEFRA/waste-carriers-engine/pull/1457) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump mongoid from 8.0.3 to 8.0.7 [\#1454](https://github.com/DEFRA/waste-carriers-engine/pull/1454) ([dependabot[bot]](https://github.com/apps/dependabot))
