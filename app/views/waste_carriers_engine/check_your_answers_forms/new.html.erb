@@ -19,7 +19,6 @@
     <% else %>
       <%= form_for(@check_your_answers_form) do |f| %>
         <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
-        <legend class="govuk-visually-hidden"><%= t(".heading") %></legend>
 
         <% if @presenter.new_registration? %>
           <p class="govuk-body"><%= t(".new_registration.#{@presenter.tier}") %></p>

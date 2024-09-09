@@ -9,9 +9,6 @@
         <%= t(".heading.#{@company_postcode_form.business_type}") %>
       </h1>
        <p class="govuk-body"><%= t(".page_hint") %></p>
-      <legend class="govuk-visually-hidden">
-        <%= t(".heading.#{@company_postcode_form.business_type}") %>
-      </legend>
       <%= f.govuk_text_field :temp_company_postcode,
           width: "one-half",
           label: {

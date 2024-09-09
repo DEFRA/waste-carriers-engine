@@ -9,9 +9,6 @@
       <h1 class="govuk-heading-l">
         <%= t(".heading.#{@registration_number_form.business_type}") %>
       </h1>
-      <span class="govuk-visually-hidden">
-        <%= t(".heading.#{@registration_number_form.business_type}") %>
-      </span>
 
       <%= f.govuk_text_field :company_no,
           label: { text: t(".company_no_label") },
