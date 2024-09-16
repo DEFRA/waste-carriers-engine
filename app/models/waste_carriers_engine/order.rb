@@ -19,7 +19,6 @@ module WasteCarriersEngine
     field :dateCreated, as: :date_created,           type: DateTime
     field :worldPayStatus, as: :world_pay_status,    type: String
     field :govpayId, as: :govpay_id,                 type: String
-    field :govpayStatus, as: :govpay_status,         type: String
     field :dateLastUpdated, as: :date_last_updated,  type: DateTime
     field :updatedByUser, as: :updated_by_user,      type: String
     field :description,                              type: String
@@ -42,13 +41,19 @@ module WasteCarriersEngine
       order
     end
 
+    def govpay_status
+      return nil unless govpay_id
+
+      payment = Payment.find_by(govpay_id: govpay_id)
+      payment&.govpay_payment_status
+    end
+
     def add_bank_transfer_attributes
       self.payment_method = "OFFLINE"
     end
 
     def add_govpay_attributes
       self.payment_method = "ONLINE"
-      self.govpay_status = "IN_PROGRESS"
     end
 
     def generate_id
@@ -59,8 +64,7 @@ module WasteCarriersEngine
       self.description = generate_description
     end
 
-    def update_after_online_payment(status, govpay_id = nil)
-      self.govpay_status = status
+    def update_after_online_payment(govpay_id = nil)
       self.govpay_id = govpay_id if govpay_id
       self.date_last_updated = Time.current
       save!

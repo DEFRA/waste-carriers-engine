@@ -54,12 +54,12 @@ module WasteCarriersEngine
     def valid_unsuccessful_payment?(validation_method)
       return false unless govpay_response_validator(@payment_status).public_send(validation_method)
 
-      @order.update_after_online_payment(@payment_status)
+      @order.update_after_online_payment
       true
     end
 
     def update_payment_data
-      @order.update_after_online_payment(Payment::STATUS_SUCCESS)
+      @order.update_after_online_payment
       payment = Payment.new_from_online_payment(@order, user_email)
       payment.update_after_online_payment(
         govpay_status: Payment::STATUS_SUCCESS,

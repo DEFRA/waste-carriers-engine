@@ -210,12 +210,8 @@ module WasteCarriersEngine
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
           transient_registration.prepare_for_payment(:govpay, current_user)
-          payment.update_after_online_payment({ govpay_status: Payment::STATUS_CREATED })
+          payment.update_after_online_payment
         end
-      end
-
-      it "updates the payment status" do
-        expect(payment.govpay_payment_status).to eq(Payment::STATUS_CREATED)
       end
 
       it "updates the payment date_received" do

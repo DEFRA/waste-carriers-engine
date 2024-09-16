@@ -17,11 +17,6 @@ module WasteCarriersEngine
       let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
       let(:order) { finance_details.orders.first }
 
-      it "copies the govpay status to the order" do
-        order.update_after_online_payment(Payment::STATUS_CREATED)
-        expect(order.govpay_status).to eq(Payment::STATUS_CREATED)
-      end
-
       it "updates the date_last_updated" do
         Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
           # Wipe the date first so we know the value has been added
@@ -49,6 +44,46 @@ module WasteCarriersEngine
         it "returns the existing uuid" do
           uuid = order.payment_uuid
           expect(order.payment_uuid).to eq uuid
+        end
+      end
+
+      describe "#govpay_status" do
+        let(:order) { build(:order) }
+
+        context "when govpay_id is nil" do
+          before { order.govpay_id = nil }
+
+          it "returns nil" do
+            expect(order.govpay_status).to be_nil
+          end
+        end
+
+        context "when govpay_id is present" do
+          let(:govpay_id) { "gov-pay-id-123" }
+
+          before { order.govpay_id = govpay_id }
+
+          context "when associated payment exists" do
+            let(:payment) { build(:payment, govpay_id: govpay_id, govpay_payment_status: "success") }
+
+            before do
+              allow(WasteCarriersEngine::Payment).to receive(:find_by).with(govpay_id: govpay_id).and_return(payment)
+            end
+
+            it "returns the govpay_payment_status of the associated payment" do
+              expect(order.govpay_status).to eq("success")
+            end
+          end
+
+          context "when associated payment does not exist" do
+            before do
+              allow(WasteCarriersEngine::Payment).to receive(:find_by).with(govpay_id: govpay_id).and_return(nil)
+            end
+
+            it "returns nil" do
+              expect(order.govpay_status).to be_nil
+            end
+          end
         end
       end
     end
