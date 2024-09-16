@@ -210,7 +210,7 @@ module WasteCarriersEngine
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
           transient_registration.prepare_for_payment(:govpay, current_user)
-          payment.update_after_online_payment
+          payment.update_after_online_payment({ govpay_status: Payment::STATUS_CREATED })
         end
       end
 

@@ -17,7 +17,17 @@ FactoryBot.define do
     trait :has_pending_govpay_order do
       has_required_data
 
-      orders { [build(:order, :has_pending_govpay_status)] }
+      transient do
+        govpay_id { SecureRandom.hex(22) }
+      end
+
+      orders do
+        [build(:order, :has_required_data, govpay_id: govpay_id)]
+      end
+
+      payments do
+        [build(:payment, :govpay, govpay_id: govpay_id, govpay_payment_status: WasteCarriersEngine::Payment::STATUS_CREATED)]
+      end
     end
 
     trait :has_order do
