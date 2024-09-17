@@ -22,7 +22,7 @@ module WasteCarriersEngine
           # Wipe the date first so we know the value has been added
           order.update_attributes(date_last_updated: nil)
 
-          order.update_after_online_payment(Payment::STATUS_CREATED)
+          order.update_after_online_payment
           expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
         end
       end

@@ -64,8 +64,7 @@ module WasteCarriersEngine
       self.description = generate_description
     end
 
-    def update_after_online_payment(govpay_id = nil)
-      self.govpay_id = govpay_id if govpay_id
+    def update_after_online_payment
       self.date_last_updated = Time.current
       save!
     end
