@@ -59,25 +59,22 @@ module WasteCarriersEngine
         end
 
         context "when govpay_id is present" do
-          let(:govpay_id) { "gov-pay-id-123" }
-
-          before { order.govpay_id = govpay_id }
+          let(:transient_registration) { create(:new_registration, :has_required_data, finance_details: build(:finance_details, :has_pending_govpay_order)) }
+          let(:govpay_id) { transient_registration.finance_details.payments.first.govpay_id }
+          let(:order) { transient_registration.finance_details.orders.first }
 
           context "when associated payment exists" do
-            let(:payment) { build(:payment, govpay_id: govpay_id, govpay_payment_status: "success") }
-
-            before do
-              allow(WasteCarriersEngine::Payment).to receive(:find_by).with(govpay_id: govpay_id).and_return(payment)
-            end
+            let(:payment) { transient_registration.finance_details.payments.first }
 
             it "returns the govpay_payment_status of the associated payment" do
-              expect(order.govpay_status).to eq("success")
+              expect(order.govpay_status).to eq(payment.govpay_payment_status)
+
             end
           end
 
           context "when associated payment does not exist" do
             before do
-              allow(WasteCarriersEngine::Payment).to receive(:find_by).with(govpay_id: govpay_id).and_return(nil)
+              transient_registration.finance_details.orders = [build(:order, :has_required_data, govpay_id: "1234")]
             end
 
             it "returns nil" do
