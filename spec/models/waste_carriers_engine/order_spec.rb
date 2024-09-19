@@ -17,17 +17,12 @@ module WasteCarriersEngine
       let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
       let(:order) { finance_details.orders.first }
 
-      it "copies the govpay status to the order" do
-        order.update_after_online_payment(Payment::STATUS_CREATED)
-        expect(order.govpay_status).to eq(Payment::STATUS_CREATED)
-      end
-
       it "updates the date_last_updated" do
         Timecop.freeze(Time.new(2004, 8, 15, 16, 23, 42)) do
           # Wipe the date first so we know the value has been added
           order.update_attributes(date_last_updated: nil)
 
-          order.update_after_online_payment(Payment::STATUS_CREATED)
+          order.update_after_online_payment
           expect(order.date_last_updated).to eq(Time.new(2004, 8, 15, 16, 23, 42))
         end
       end
@@ -49,6 +44,43 @@ module WasteCarriersEngine
         it "returns the existing uuid" do
           uuid = order.payment_uuid
           expect(order.payment_uuid).to eq uuid
+        end
+      end
+
+      describe "#govpay_status" do
+        let(:order) { build(:order) }
+
+        context "when govpay_id is nil" do
+          before { order.govpay_id = nil }
+
+          it "returns nil" do
+            expect(order.govpay_status).to be_nil
+          end
+        end
+
+        context "when govpay_id is present" do
+          let(:transient_registration) { create(:new_registration, :has_required_data, finance_details: build(:finance_details, :has_pending_govpay_order)) }
+          let(:govpay_id) { transient_registration.finance_details.payments.first.govpay_id }
+          let(:order) { transient_registration.finance_details.orders.first }
+
+          context "when associated payment exists" do
+            let(:payment) { transient_registration.finance_details.payments.first }
+
+            it "returns the govpay_payment_status of the associated payment" do
+              expect(order.govpay_status).to eq(payment.govpay_payment_status)
+
+            end
+          end
+
+          context "when associated payment does not exist" do
+            before do
+              transient_registration.finance_details.orders = [build(:order, :has_required_data, govpay_id: "1234")]
+            end
+
+            it "returns nil" do
+              expect(order.govpay_status).to be_nil
+            end
+          end
         end
       end
     end

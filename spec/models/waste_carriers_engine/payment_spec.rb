@@ -214,10 +214,6 @@ module WasteCarriersEngine
         end
       end
 
-      it "updates the payment status" do
-        expect(payment.govpay_payment_status).to eq(Payment::STATUS_CREATED)
-      end
-
       it "updates the payment date_received" do
         expect(payment.date_received).to eq(Date.new(2018, 3, 4))
       end
