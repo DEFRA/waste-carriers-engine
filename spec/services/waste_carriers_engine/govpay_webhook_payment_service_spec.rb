@@ -79,11 +79,26 @@ module WasteCarriersEngine
           end
         end
       end
-    end
 
-    # used by shared examples - different for payment vs refund webhooks
-    def assign_webhook_status(status)
-      webhook_body["resource"]["state"]["status"] = status
+      context "when the resource_type has different casings" do
+        include_examples "Govpay webhook status transitions"
+        shared_examples "handles case-insensitive resource_type as payment" do |resource_type_value|
+          before do
+            webhook_body["resource_type"] = resource_type_value
+          end
+
+          it_behaves_like "valid and invalid transitions", Payment::STATUS_CREATED, %w[started submitted success failed cancelled error], %w[]
+        end
+
+        %w[payment PAYMENT].each do |case_variant|
+          it_behaves_like "handles case-insensitive resource_type as payment", case_variant
+        end
+      end
+
+      # used by shared examples - different for payment vs refund webhooks
+      def assign_webhook_status(status)
+        webhook_body["resource"]["state"]["status"] = status
+      end
     end
   end
 end
