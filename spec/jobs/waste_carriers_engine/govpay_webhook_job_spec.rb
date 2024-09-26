@@ -33,12 +33,11 @@ module WasteCarriersEngine
 
         before { allow(Airbrake).to receive(:notify) }
 
-        it { expect { perform_later }.to raise_error(StandardError) }
-
         it "notifies Airbrake" do
           perform_now
 
           expect(Airbrake).to have_received(:notify)
+            .with(an_instance_of(ArgumentError), refund_id: nil, payment_id: nil)
         end
       end
 
@@ -60,6 +59,28 @@ module WasteCarriersEngine
 
           expect(refund_webhook_service).to have_received(:run)
         end
+      end
+
+      context "with different casings for resource_type" do
+        shared_examples "a valid payment webhook" do |resource_type_value|
+          let(:webhook_body) do
+            {
+              "resource_type" => resource_type_value,
+              "refund_id" => nil # Ensure it's treated as a payment
+            }
+          end
+
+          it "calls the payment webhook service" do
+            perform_now
+
+            expect(payment_webhook_service).to have_received(:run).with(webhook_body)
+          end
+        end
+
+        it_behaves_like "a valid payment webhook", "payment"
+        it_behaves_like "a valid payment webhook", "Payment"
+        it_behaves_like "a valid payment webhook", "PAYMENT"
+        it_behaves_like "a valid payment webhook", "PaYmEnT"
       end
     end
   end

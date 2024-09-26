@@ -39,7 +39,7 @@ module WasteCarriersEngine
     end
 
     def webhook_resource_type
-      @webhook_resource_type ||= webhook_body["resource_type"]
+      @webhook_resource_type ||= webhook_body["resource_type"]&.downcase
     end
 
     def webhook_payment_or_refund_id
