@@ -33,12 +33,11 @@ module WasteCarriersEngine
 
         before { allow(Airbrake).to receive(:notify) }
 
-        it { expect { perform_later }.to raise_error(StandardError) }
-
         it "notifies Airbrake" do
           perform_now
 
           expect(Airbrake).to have_received(:notify)
+            .with(an_instance_of(ArgumentError), refund_id: nil, payment_id: nil)
         end
       end
 

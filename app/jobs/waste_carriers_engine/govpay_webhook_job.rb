@@ -8,11 +8,15 @@ module WasteCarriersEngine
       elsif webhook_body["refund_id"].present?
         WasteCarriersEngine::GovpayWebhookRefundService.run(webhook_body)
       else
-        raise ArgumentError, "Unrecognised Govpay webhook type: #{webhook_body}"
+        raise ArgumentError, "Unrecognised Govpay webhook type"
       end
     rescue StandardError => e
       Rails.logger.error "Error running GovpayWebhookJob: #{e}"
-      Airbrake.notify(e, webhook_body:)
+      Airbrake.notify(
+        e,
+        refund_id: webhook_body["refund_id"],
+        payment_id: webhook_body["payment_id"]
+      )
     end
   end
 end
