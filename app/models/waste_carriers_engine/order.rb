@@ -44,7 +44,7 @@ module WasteCarriersEngine
     def govpay_status
       return nil unless govpay_id
 
-      payment = finance_details.payments.find_by(govpay_id: govpay_id)
+      payment = finance_details.reload.payments.find_by(govpay_id: govpay_id)
       payment&.govpay_payment_status
     end
 
