@@ -54,41 +54,43 @@ module WasteCarriersEngine
     def respond_to_acceptable_payment(action)
       return unless valid_transient_registration?
 
-      if response_is_valid?(action, params)
+      govpay_callback_service = create_govpay_callback_service(action)
+
+      if govpay_callback_service.process_payment
         log_and_send_govpay_response(true, action)
         @transient_registration.next!
         redirect_to_correct_form
       else
-        log_and_send_govpay_response(false, action)
-        form_error_message(action, :invalid_response)
-        go_back
+        handle_invalid_response(action)
       end
     end
 
     def respond_to_unsuccessful_payment(action)
       return unless valid_transient_registration?
 
-      if response_is_valid?(action, params)
+      govpay_callback_service = create_govpay_callback_service(action)
+
+      if govpay_callback_service.process_payment
         log_and_send_govpay_response(true, action)
         form_error_message(action)
+        go_back
       else
-        log_and_send_govpay_response(false, action)
-        form_error_message(action, :invalid_response)
+        handle_invalid_response(action)
       end
+    end
 
+    def create_govpay_callback_service(action)
+      GovpayCallbackService.new(params[:uuid], action)
+    end
+
+    def handle_invalid_response(action)
+      log_and_send_govpay_response(false, action)
+      form_error_message(action, :invalid_response)
       go_back
     end
 
     def valid_transient_registration?
       setup_checks_pass?
-    end
-
-    def response_is_valid?(action, params)
-      valid_method = "valid_#{GovpayPaymentDetailsService.payment_status(action)}?".to_sym
-      payment_uuid = params[:uuid]
-      govpay_service = GovpayCallbackService.new(payment_uuid)
-
-      govpay_service.public_send(valid_method)
     end
 
     def log_and_send_govpay_response(is_valid, action)

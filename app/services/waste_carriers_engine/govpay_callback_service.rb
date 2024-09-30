@@ -4,58 +4,32 @@ require "rest-client"
 
 module WasteCarriersEngine
   class GovpayCallbackService
-
-    def initialize(payment_uuid)
+    def initialize(payment_uuid, action)
       @payment_uuid = payment_uuid
+      @action = action
       @payment_status = govpay_payment_details_service.govpay_payment_status
       @transient_registration = transient_registration_by_payment_uuid
       @order = order_by_payment_uuid
     end
 
-    def valid_success?
-      return false unless govpay_response_validator(Payment::STATUS_SUCCESS).valid_success?
+    def process_payment
+      return false unless valid_response?
 
-      update_payment_data
+      case GovpayPaymentDetailsService.payment_status(@action)
+      when :success
+        update_payment_data
+      else
+        update_order_status
+      end
 
       true
-    end
-
-    def valid_failure?
-      valid_unsuccessful_payment?(:valid_failure?)
-    end
-
-    def valid_pending?
-      valid_unsuccessful_payment?(:valid_pending?)
-    end
-
-    def valid_cancel?
-      valid_unsuccessful_payment?(:valid_cancel?)
-    end
-
-    def valid_error?
-      valid_unsuccessful_payment?(:valid_error?)
     end
 
     private
 
-    def govpay_payment_details_service
-      GovpayPaymentDetailsService.new(payment_uuid: @payment_uuid,
-                                      is_moto: WasteCarriersEngine.configuration.host_is_back_office?)
-    end
-
-    def transient_registration_by_payment_uuid
-      TransientRegistration.find_by("financeDetails.orders.payment_uuid": @payment_uuid)
-    end
-
-    def order_by_payment_uuid
-      @transient_registration&.finance_details&.orders&.find_by(payment_uuid: @payment_uuid)
-    end
-
-    def valid_unsuccessful_payment?(validation_method)
-      return false unless govpay_response_validator(@payment_status).public_send(validation_method)
-
-      @order.update_after_online_payment
-      true
+    def valid_response?
+      validator = govpay_response_validator(@payment_status)
+      validator.public_send("valid_#{GovpayPaymentDetailsService.payment_status(@action)}?")
     end
 
     def update_payment_data
@@ -65,9 +39,27 @@ module WasteCarriersEngine
         govpay_status: Payment::STATUS_SUCCESS,
         govpay_id: @order.govpay_id
       )
-
       @transient_registration.finance_details.update_balance
       @transient_registration.finance_details.save!
+    end
+
+    def update_order_status
+      @order.update_after_online_payment
+    end
+
+    def govpay_payment_details_service
+      GovpayPaymentDetailsService.new(
+        payment_uuid: @payment_uuid,
+        is_moto: WasteCarriersEngine.configuration.host_is_back_office?
+      )
+    end
+
+    def transient_registration_by_payment_uuid
+      TransientRegistration.find_by("financeDetails.orders.payment_uuid": @payment_uuid)
+    end
+
+    def order_by_payment_uuid
+      @transient_registration&.finance_details&.orders&.find_by(payment_uuid: @payment_uuid)
     end
 
     def govpay_response_validator(govpay_status)
