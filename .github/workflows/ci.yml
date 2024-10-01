@@ -23,6 +23,7 @@ jobs:
       WCRS_USE_XVFB_FOR_WICKEDPDF: true
       ENV_VARIABLE_TEST_FEATURE: true
       WCRS_GOVPAY_CALLBACK_WEBHOOK_SIGNING_SECRET: foo
+      WCRS_GOVPAY_BACK_OFFICE_CALLBACK_WEBHOOK_SIGNING_SECRET: foo2
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
