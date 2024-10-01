@@ -7,8 +7,9 @@ module WasteCarriersEngine
     def run(body:, signature:)
       raise ValidationFailure, "Missing expected signature" if signature.blank?
 
-      body_signature = GovpayPaymentWebhookSignatureService.run(body:)
-      return true if body_signature == signature
+      body_signatures = GovpayPaymentWebhookSignatureService.run(body:)
+
+      return true if body_signatures[:front_office] == signature || body_signatures[:back_office] == signature
 
       raise ValidationFailure, "digest/signature header mismatch"
     end
