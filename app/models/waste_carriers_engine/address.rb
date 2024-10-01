@@ -34,9 +34,6 @@ module WasteCarriersEngine
     field :firstName, as: :first_name,                                  type: String
     field :lastName, as: :last_name,                                    type: String
 
-    scope :missing_area, -> { any_of({ area: nil }, { area: "" }) }
-    scope :with_postcode, -> { where(:postcode.ne => nil) }
-
     def self.create_from_manual_entry(params, overseas)
       address = Address.new
 
@@ -57,22 +54,24 @@ module WasteCarriersEngine
     end
 
     def self.create_from_os_places_data(data)
-      address = Address.new
+      Address.new.update_from_os_places_data(data)
+    end
 
-      address[:uprn] = data["uprn"]
-      address[:address_mode] = "address-results"
-      address[:dependent_locality] = data["dependentLocality"]
-      address[:administrative_area] = data["administrativeArea"]
-      address[:town_city] = data["town"]
-      address[:postcode] = data["postcode"]
-      address[:country] = data["country"]
-      address[:local_authority_update_date] = data["localAuthorityUpdateDate"]
-      address[:easting] = data["easting"]
-      address[:northing] = data["northing"]
+    def update_from_os_places_data(data)
+      self[:uprn] = data["uprn"]
+      self[:address_mode] = "address-results"
+      self[:dependent_locality] = data["dependentLocality"]
+      self[:area] = data["administrativeArea"]
+      self[:town_city] = data["town"]
+      self[:postcode] = data["postcode"]
+      self[:country] = data["country"]
+      self[:local_authority_update_date] = data["localAuthorityUpdateDate"]
+      self[:easting] = data["easting"]
+      self[:northing] = data["northing"]
 
-      address.assign_house_number_and_address_lines(data)
+      assign_house_number_and_address_lines(data)
 
-      address
+      self
     end
 
     def assign_house_number_and_address_lines(os_data)

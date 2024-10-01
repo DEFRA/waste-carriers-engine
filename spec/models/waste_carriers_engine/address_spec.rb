@@ -4,33 +4,6 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe Address do
-    describe "scopes" do
-      let(:registration) { create(:registration, :has_required_data) }
-      let!(:address_with_area) { create(:address, :has_required_data, registration: registration, area: "Area Name") }
-      let!(:address_without_area) { create(:address, :has_required_data, registration: registration, area: "") }
-      let!(:address_with_nil_area) { create(:address, :has_required_data, registration: registration, area: nil) }
-      let!(:address_with_postcode) { create(:address, :has_required_data, registration: registration, postcode: "BS1 5AH") }
-      let!(:address_without_postcode) { create(:address, :has_required_data, registration: registration, postcode: nil) }
-
-      describe ".missing_area" do
-        it "returns addresses with an empty or nil area" do
-          missing_area_addresses = registration.addresses.missing_area
-
-          expect(missing_area_addresses).to include(address_without_area, address_with_nil_area)
-          expect(missing_area_addresses).not_to include(address_with_area)
-        end
-      end
-
-      describe ".with_postcode" do
-        it "returns addresses with a postcode" do
-          addresses_with_postcode = registration.addresses.with_postcode
-
-          expect(addresses_with_postcode).to include(address_with_postcode)
-          expect(addresses_with_postcode).not_to include(address_without_postcode)
-        end
-      end
-    end
-
     describe "#assign_house_number_and_address_lines" do
       let(:address) { build(:address) }
 
@@ -83,23 +56,42 @@ module WasteCarriersEngine
       end
     end
 
-    # NOTE: The OS Places API response payload spells dependentThoroughfare as dependentThroughfare.
     describe ".create_from_os_places_data" do
       let(:os_places_data) { JSON.parse(file_fixture("os_places_response.json").read) }
+      let(:created_address) { instance_double(described_class) }
 
       subject(:address_from_os_places) { described_class.create_from_os_places_data(os_places_data) }
+
+      it { expect(address_from_os_places).to be_a(described_class) }
+
+      it "calls the update_from_os_places_data method to assign the attributes" do
+        allow(described_class).to receive(:new).and_return(created_address)
+        allow(created_address).to receive(:update_from_os_places_data)
+
+        address_from_os_places
+
+        expect(created_address).to have_received(:update_from_os_places_data)
+      end
+    end
+
+    # NOTE: The OS Places API response payload spells dependentThoroughfare as dependentThroughfare.
+    describe "#update_from_os_places_data" do
+      let(:os_places_data) { JSON.parse(file_fixture("os_places_response.json").read) }
+      let(:address_to_update) { build(:address) }
+
+      subject(:updated_address) { address_to_update.update_from_os_places_data(os_places_data) }
 
       shared_examples "skips blank field" do |blank_field, address_line, next_field|
         before { os_places_data[blank_field] = nil }
 
         it "skips to the next field" do
-          expect(address_from_os_places[address_line]).to eq os_places_data[next_field]
+          expect(updated_address[address_line]).to eq os_places_data[next_field]
         end
       end
 
       context "with all relevant fields except PO box number populated in the OS places response" do
         it "includes the correct values" do
-          expect(address_from_os_places.attributes).to include(
+          expect(updated_address.attributes).to include(
             "uprn" => os_places_data["uprn"].to_i,
             "houseNumber" => "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}",
             "addressLine1" => "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}",
@@ -110,7 +102,7 @@ module WasteCarriersEngine
             "postcode" => os_places_data["postcode"],
             "country" => os_places_data["country"],
             "dependentLocality" => os_places_data["dependentLocality"],
-            "administrativeArea" => os_places_data["administrativeArea"],
+            "area" => os_places_data["administrativeArea"],
             "localAuthorityUpdateDate" => os_places_data["localAuthorityUpdateDate"],
             "easting" => os_places_data["easting"].to_i,
             "northing" => os_places_data["northing"].to_i,
@@ -120,7 +112,7 @@ module WasteCarriersEngine
 
         # Overflow check: Confirm that an address created from a maximal OS payload has valid keys.
         it "does not have nil keys" do
-          expect(address_from_os_places.attributes.keys).not_to include(nil)
+          expect(updated_address.attributes.keys).not_to include(nil)
         end
 
         context "with organisation details" do
@@ -128,7 +120,7 @@ module WasteCarriersEngine
             before { os_places_data["departmentName"] = nil }
 
             it "uses the organisation name" do
-              expect(address_from_os_places[:house_number]).to eq os_places_data["organisationName"]
+              expect(updated_address[:house_number]).to eq os_places_data["organisationName"]
             end
           end
 
@@ -136,13 +128,13 @@ module WasteCarriersEngine
             before { os_places_data["organisationName"] = nil }
 
             it "uses the department name" do
-              expect(address_from_os_places[:house_number]).to eq os_places_data["departmentName"]
+              expect(updated_address[:house_number]).to eq os_places_data["departmentName"]
             end
           end
 
           context "with both department name and organisation name" do
             it "comnbines department and organisation names" do
-              expect(address_from_os_places[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
+              expect(updated_address[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
             end
           end
         end
@@ -152,7 +144,7 @@ module WasteCarriersEngine
             before { os_places_data["subBuildingName"] = nil }
 
             it "uses the building name" do
-              expect(address_from_os_places[:address_line_1]).to eq os_places_data["buildingName"]
+              expect(updated_address[:address_line_1]).to eq os_places_data["buildingName"]
             end
           end
 
@@ -160,13 +152,13 @@ module WasteCarriersEngine
             before { os_places_data["buildingName"] = nil }
 
             it "uses the sub-building name" do
-              expect(address_from_os_places[:address_line_1]).to eq os_places_data["subBuildingName"]
+              expect(updated_address[:address_line_1]).to eq os_places_data["subBuildingName"]
             end
           end
 
           context "with both sub-building name and building name" do
             it "comnbines sub-building and building names" do
-              expect(address_from_os_places[:address_line_1]).to eq "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}"
+              expect(updated_address[:address_line_1]).to eq "#{os_places_data['subBuildingName']}, #{os_places_data['buildingName']}"
             end
           end
         end
@@ -189,13 +181,13 @@ module WasteCarriersEngine
         end
 
         it "includes the PO box number after the organisation details" do
-          expect(address_from_os_places[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
-          expect(address_from_os_places[:address_line_1]).to eq po_box_number
+          expect(updated_address[:house_number]).to eq "#{os_places_data['departmentName']}, #{os_places_data['organisationName']}"
+          expect(updated_address[:address_line_1]).to eq po_box_number
         end
 
         it "includes the PO box number before the street details" do
-          expect(address_from_os_places[:address_line_1]).to eq po_box_number
-          expect(address_from_os_places[:address_line_2]).to eq os_places_data["dependentThroughfare"]
+          expect(updated_address[:address_line_1]).to eq po_box_number
+          expect(updated_address[:address_line_2]).to eq os_places_data["dependentThroughfare"]
         end
       end
     end
