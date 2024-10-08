@@ -34,6 +34,8 @@ module WasteCarriersEngine
     field :firstName, as: :first_name,                                  type: String
     field :lastName, as: :last_name,                                    type: String
 
+    validates :address_type, presence: true
+
     def self.create_from_manual_entry(params, overseas)
       address = Address.new
 

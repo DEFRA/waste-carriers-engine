@@ -23,6 +23,7 @@ module WasteCarriersEngine
     def clean_address
       # Prefill the existing address unless the postcode has changed from the existing address's postcode
       transient_registration.company_address = Address.new(
+        address_type: "REGISTERED",
         postcode: transient_registration.temp_company_postcode
       )
     end
