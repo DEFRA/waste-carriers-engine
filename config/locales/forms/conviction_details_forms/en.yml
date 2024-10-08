@@ -4,7 +4,7 @@ en:
       new:
         title: Details of the person with a conviction
         list_of_people: You have added the following people
-        delete_person_link: Delete
+        delete_person_link: Remove
       form:
         heading: Details of the person with a conviction
         paragraph_1: You need to tell us about any relevant people who have unspent convictions.
