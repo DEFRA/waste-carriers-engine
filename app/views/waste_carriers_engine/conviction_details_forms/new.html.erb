@@ -16,6 +16,7 @@
             <%= button_to(t(".delete_person_link"),
                 delete_person_conviction_details_forms_path(token: @conviction_details_form.token, id: person.id),
                 class: "button-link",
+                "aria-label": "#{t(".delete_person_link")} #{person.first_name} #{person.last_name}",
                 id: button_id,
                 method: :delete) %>
           </li>

@@ -4,7 +4,7 @@ en:
       new:
         title: Main people
         list_of_people: You have added the following people
-        delete_person_link: Delete
+        delete_person_link: Remove
       form:
         heading:
           localAuthority: Chief executive details
