@@ -22,16 +22,12 @@ module WasteCarriersEngine
       # rubocop:disable Layout/LineLength
       embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
 
-      # TODO: Remove this and always use `company_address` rather than `registrered_address`
-      # embeds_one :address, as: :registered_address
-
       # Define helper accessor and assignment methods for each address type
-      %w[contact company postal registered].each do |address_type|
+      %w[contact postal registered].each do |address_type|
 
         define_method(:"#{address_type}_address") do
           # handle synonyms
           address_type = "postal" if address_type == "contact"
-          address_type = "registered" if address_type == "company"
 
           addresses.where(address_type: address_type.upcase).first
         end
@@ -39,7 +35,6 @@ module WasteCarriersEngine
         define_method(:"#{address_type}_address=") do |address|
           # handle synonyms
           address_type = "postal" if address_type == "contact"
-          address_type = "registered" if address_type == "company"
 
           unless address.blank? || address.address_type == address_type.upcase
             raise ArgumentError, "Attempted to set #{address_type} address with address of type #{address.address_type}"
