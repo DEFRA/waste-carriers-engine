@@ -102,7 +102,7 @@ module WasteCarriersEngine
             "postcode" => os_places_data["postcode"],
             "country" => os_places_data["country"],
             "dependentLocality" => os_places_data["dependentLocality"],
-            "area" => os_places_data["administrativeArea"],
+            "administrativeArea" => os_places_data["administrativeArea"],
             "localAuthorityUpdateDate" => os_places_data["localAuthorityUpdateDate"],
             "easting" => os_places_data["easting"].to_i,
             "northing" => os_places_data["northing"].to_i,

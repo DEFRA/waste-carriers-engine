@@ -59,7 +59,7 @@ module WasteCarriersEngine
         it { expect(address.uprn).to eq 340_116 }
         it { expect(address.address_mode).to eq "address-results" }
         it { expect(address.dependent_locality).to eq "SOUTH BRISTOL" }
-        it { expect(address.area).to eq("BRISTOL") }
+        it { expect(address.administrative_area).to eq("BRISTOL") }
         it { expect(address.town_city).to eq "BRISTOL" }
         it { expect(address.postcode).to eq "BS1 5AH" }
         it { expect(address.country).to eq "" }

@@ -61,7 +61,7 @@ module WasteCarriersEngine
       self[:uprn] = data["uprn"]
       self[:address_mode] = "address-results"
       self[:dependent_locality] = data["dependentLocality"]
-      self[:area] = data["administrativeArea"]
+      self[:administrative_area] = data["administrativeArea"]
       self[:town_city] = data["town"]
       self[:postcode] = data["postcode"]
       self[:country] = data["country"]
