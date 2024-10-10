@@ -3,15 +3,6 @@
 RSpec.shared_examples "Can have registration attributes" do |factory:|
   let(:resource) { build(factory) }
 
-  include_examples(
-    "Can reference single document in collection",
-    proc { create(factory, :has_required_data, :has_addresses) },
-    :contact_address,
-    proc { subject.addresses.find_by(address_type: "POSTAL") },
-    WasteCarriersEngine::Address.new,
-    :addresses
-  )
-
   describe "#charity?" do
     test_values = {
       charity: true,
@@ -186,7 +177,7 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
   end
 
   describe "#contact_address=" do
-    let(:contact_address) { build(:address) }
+    let(:contact_address) { build(:address, :contact) }
     let(:resource) { build(factory, addresses: []) }
 
     it "set an address of type contact" do

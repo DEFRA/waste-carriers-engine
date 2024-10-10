@@ -20,7 +20,7 @@ module WasteCarriersEngine
         context "when valid params are submitted" do
           let(:valid_params) do
             {
-              company_address: {
+              registered_address: {
                 house_number: "41",
                 address_line_1: "Foo Terrace",
                 town_city: "Barton"
@@ -89,7 +89,7 @@ module WasteCarriersEngine
 
         let(:valid_params) do
           {
-            company_address: {
+            registered_address: {
               house_number: "42",
               address_line_1: "Foo Terrace",
               town_city: "Barton"

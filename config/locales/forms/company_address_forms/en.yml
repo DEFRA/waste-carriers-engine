@@ -22,5 +22,6 @@ en:
       models:
         waste_carriers_engine/company_address_form:
           attributes:
-            company_address:
+            registered_address:
               blank: "Select an address"
+              should_be_uk: "Provide a UK contact address"

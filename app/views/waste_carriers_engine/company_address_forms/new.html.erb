@@ -22,8 +22,8 @@
             go_back_forms_path(@company_address_form.token))  %>
       </p>
 
-      <%= form.fields_for :company_address do |f| %>
-        <%= render("waste_carriers_engine/shared/select_address", form: @company_address_form, address: :company_address, f: f) %>
+      <%= form.fields_for :registered_address do |f| %>
+        <%= render("waste_carriers_engine/shared/select_address", form: @company_address_form, address: :registered_address, f: f) %>
       <% end %>
 
       <p class="govuk-body">

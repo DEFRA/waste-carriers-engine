@@ -22,10 +22,10 @@ module WasteCarriersEngine
     end
 
     def create_address(uprn, type)
-      return {} if uprn.blank?
+      return nil if uprn.blank?
 
       data = temp_addresses.detect { |address| address["uprn"].to_i == uprn.to_i }
-      return {} unless data
+      return nil unless data
 
       address = Address.create_from_os_places_data(data)
       address.assign_attributes(address_type: type)
