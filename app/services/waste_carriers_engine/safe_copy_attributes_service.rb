@@ -2,13 +2,14 @@
 
 module WasteCarriersEngine
   class SafeCopyAttributesService
-    def self.run(source_instance:, target_class:)
-      new(source_instance, target_class).run
+    def self.run(source_instance:, target_class:, attributes_to_exclude: [])
+      new(source_instance, target_class, attributes_to_exclude).run
     end
 
-    def initialize(source_instance, target_class)
+    def initialize(source_instance, target_class, attributes_to_exclude = [])
       @source_instance = source_instance
       @target_class = target_class
+      @attributes_to_exclude = attributes_to_exclude
     end
 
     def run
@@ -20,7 +21,9 @@ module WasteCarriersEngine
     def copy_attributes(source_instance, target_class)
       attributes = extract_attributes(source_instance)
 
-      # Filter attributes to only those defined in the target class, excluding '_id'
+      # Filter attributes / embedded relations to only those defined in
+      # the target class, excluding '_id' AND any attributes
+      # specified in attributes_to_exclude
       valid_attributes = filter_attributes(attributes, target_class)
 
       # Process each embedded relation defined in the target class
@@ -52,10 +55,11 @@ module WasteCarriersEngine
 
     def filter_attributes(attributes, target_class)
       target_field_names = target_class.fields.keys.map(&:to_s)
-      attributes.slice(*target_field_names).except('_id')
+      attributes.slice(*target_field_names).except('_id').except(*@attributes_to_exclude)
     end
 
     def process_embedded_data(data, embedded_class)
+      # Recursively process embedded data
       if data.is_a?(Array)
         data.map { |item| copy_attributes(item, embedded_class) }
       elsif data.is_a?(Hash) || data.is_a?(BSON::Document)

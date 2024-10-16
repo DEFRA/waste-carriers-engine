@@ -20,7 +20,8 @@ module WasteCarriersEngine
       # copied separately depending on options passed by the class using this concern
       attributes = SafeCopyAttributesService.run(
         source_instance: registration,
-        target_class: self.class
+        target_class: self.class,
+        attributes_to_exclude: options[:ignorable_attributes]
       )
       assign_attributes(strip_whitespace(attributes))
     end

@@ -8,9 +8,11 @@ module WasteCarriersEngine
       subject(:run_service) do
         described_class.run(
           source_instance: source_instance,
-          target_class: target_class
+          target_class: target_class,
+          attributes_to_exclude: exclusion_list
         )
       end
+      let(:exclusion_list) { [] }
 
       # Ensure all available attributes are populated on the source
       before do
@@ -35,12 +37,21 @@ module WasteCarriersEngine
           result = run_service
           non_copyable_attributes.each { |attr| expect(result[attr]).to be_nil }
         end
+
+        context "with an exclusion list" do
+          let(:attributes_to_exclude) { exclusion_list }
+
+          it "does not return the excluded attibutes" do
+            expect(run_service.keys).not_to include(exclusion_list)
+          end
+        end
       end
 
       context "when the target is a Registration" do
         let(:target_class) { Registration }
         let(:copyable_attributes) { %w[location contactEmail] }
         let(:non_copyable_attributes) { %w[workflow_state temp_contact_postcode not_even_an_attribute _id email_history] }
+        let(:exclusion_list) { %w[email_history] }
 
         context "when the source is a NewRegistration" do
           let(:source_instance) { build(:new_registration, :has_required_data) }
@@ -78,7 +89,8 @@ module WasteCarriersEngine
         let(:source_instance) { build(:address, :has_required_data) }
         let(:target_class) { Address }
         let(:copyable_attributes) { %w[postcode houseNumber] }
-        let(:non_copyable_attributes) { %w[not_an_attribute neitherIsThis _id royalMailUpdateDate localAuthorityUpdateDate] }
+        let(:non_copyable_attributes) { %w[not_an_attribute neitherIsThis] }
+        let(:exclusion_list) { %w[_id royalMailUpdateDate localAuthorityUpdateDate] }
 
         it_behaves_like "returns the correct attributes"
       end
@@ -88,6 +100,7 @@ module WasteCarriersEngine
         let(:target_class) { KeyPerson }
         let(:copyable_attributes) { %w[first_name dob] }
         let(:non_copyable_attributes) { %w[not_an_attribute neitherIsThis _id position] }
+        let(:exclusion_list) { %w[_id position] }
 
         it_behaves_like "returns the correct attributes"
       end
