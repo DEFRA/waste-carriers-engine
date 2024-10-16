@@ -26,8 +26,8 @@ module WasteCarriersEngine
         expect(contact_address.postcode).to eq(registered_address.postcode)
       end
 
-      it "assigns the CONTACTaddressType to the new contact_address" do
-        expect(contact_address.address_type).to eq("CONTACT")
+      it "assigns the POSTAL addressType to the new contact_address" do
+        expect(contact_address.address_type).to eq("POSTAL")
       end
     end
 

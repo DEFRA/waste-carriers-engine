@@ -23,13 +23,19 @@ module WasteCarriersEngine
       embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
 
       # Define helper accessor and assignment methods for each address type
-      %w[contact registered].each do |address_type|
+      %w[contact postal registered].each do |address_type|
 
         define_method(:"#{address_type}_address") do
+          # handle synonyms
+          address_type = "postal" if address_type == "contact"
+
           addresses.where(address_type: address_type.upcase).first
         end
 
         define_method(:"#{address_type}_address=") do |address|
+          # handle synonyms
+          address_type = "postal" if address_type == "contact"
+
           unless address.blank? || address.address_type == address_type.upcase
             raise ArgumentError, "Attempted to set #{address_type} address with address of type #{address.address_type}"
           end
