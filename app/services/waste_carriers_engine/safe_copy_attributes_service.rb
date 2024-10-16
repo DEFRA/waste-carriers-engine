@@ -1,74 +1,67 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class SafeCopyAttributesService < BaseService
-    attr_accessor :source_instance, :target_class, :embedded_documents, :attributes_to_exclude
+  class SafeCopyAttributesService
+    def self.run(source_instance:, target_class:)
+      new(source_instance, target_class).run
+    end
 
-    def run(source_instance:, target_class:, embedded_documents: [], attributes_to_exclude: [])
+    def initialize(source_instance, target_class)
       @source_instance = source_instance
       @target_class = target_class
-      @embedded_documents = embedded_documents
-      @attributes_to_exclude = attributes_to_exclude
-      safe_copy_attributes(source_instance, target_class)
+    end
+
+    def run
+      copy_attributes(@source_instance, @target_class)
     end
 
     private
 
-    def safe_copy_attributes(source, target_class)
-      attributes = get_attributes(source)
-      filtered_attributes = filter_attributes(attributes, target_class)
+    def copy_attributes(source_instance, target_class)
+      attributes = extract_attributes(source_instance)
 
-      embedded_documents.each do |doc_name|
-        camel_doc_name = doc_name.camelize(:lower)
-        snake_doc_name = doc_name.underscore
+      # Filter attributes to only those defined in the target class, excluding '_id'
+      valid_attributes = filter_attributes(attributes, target_class)
 
-        if attributes.key?(camel_doc_name) || attributes.key?(snake_doc_name)
-          embedded_relation = find_embedded_relation(target_class, doc_name)
-          next unless embedded_relation
+      # Process each embedded relation defined in the target class
+      target_class.embedded_relations.each do |relation_name, relation_metadata|
+        source_relation_data = attributes[relation_name.to_s]
 
-          embedded_class = embedded_relation.class_name.constantize
-          embedded_data = attributes[camel_doc_name] || attributes[snake_doc_name]
+        next unless source_relation_data
 
-          if embedded_data.is_a?(Array)
-            filtered_attributes[embedded_relation.name.to_s] = embedded_data.map do |embedded_doc|
-              safe_copy_attributes(embedded_doc, embedded_class)
-            end
-          elsif embedded_data.is_a?(Hash)
-            filtered_attributes[embedded_relation.name.to_s] = safe_copy_attributes(embedded_data, embedded_class)
-          end
-        end
+        embedded_class = relation_metadata.class_name.constantize
+
+        valid_attributes[relation_name.to_s] = process_embedded_data(
+          source_relation_data,
+          embedded_class
+        )
       end
 
-      filtered_attributes
+      valid_attributes
     end
 
-    def find_embedded_relation(target_class, doc_name)
-      target_class.embedded_relations.values.find do |relation|
-        relation.name.to_s == doc_name.underscore || relation.store_as == doc_name
-      end
-    end
-
-    def get_attributes(source)
-      if source.is_a?(Hash) || source.is_a?(BSON::Document)
-        source.to_h
-      elsif source.respond_to?(:attributes)
-        source.attributes
+    def extract_attributes(source_instance)
+      if source_instance.is_a?(Hash) || source_instance.is_a?(BSON::Document)
+        source_instance.to_h.stringify_keys
+      elsif source_instance.respond_to?(:attributes)
+        source_instance.attributes
       else
-        raise ArgumentError, "Unsupported source type: #{source.class}"
+        raise ArgumentError, "Unsupported source_instance type: #{source_instance.class}"
       end
     end
 
-    def filter_attributes(attributes, klass)
-      valid_fields = target_fields(klass)
-      attributes.select { |k, _| valid_fields.include?(k) || valid_fields.include?(k.to_s) }
-               .except(*attributes_to_exclude)
+    def filter_attributes(attributes, target_class)
+      target_field_names = target_class.fields.keys.map(&:to_s)
+      attributes.slice(*target_field_names).except('_id')
     end
 
-    def target_fields(klass)
-      @target_fields ||= {}
-      @target_fields[klass] ||= begin
-        fields = klass.fields.keys
-        (fields + fields.map(&:underscore) + fields.map { |f| f.camelize(:lower) }).uniq
+    def process_embedded_data(data, embedded_class)
+      if data.is_a?(Array)
+        data.map { |item| copy_attributes(item, embedded_class) }
+      elsif data.is_a?(Hash) || data.is_a?(BSON::Document)
+        copy_attributes(data, embedded_class)
+      else
+        nil
       end
     end
   end
