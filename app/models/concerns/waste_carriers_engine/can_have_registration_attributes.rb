@@ -23,7 +23,7 @@ module WasteCarriersEngine
       embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
 
       # Define helper accessor and assignment methods for each address type
-      %w[contact postal registered].each do |address_type|
+      %w[contact registered].each do |address_type|
 
         define_method(:"#{address_type}_address") do
           # handle synonyms
