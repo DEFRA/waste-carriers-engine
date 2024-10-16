@@ -11,7 +11,7 @@ FactoryBot.define do
     end
 
     trait :contact do
-      address_type { "POSTAL" }
+      address_type { "CONTACT" }
     end
 
     trait :registered do

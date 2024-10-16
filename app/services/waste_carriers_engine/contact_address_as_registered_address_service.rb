@@ -8,7 +8,7 @@ module WasteCarriersEngine
       return unless @transient_registration.registered_address
 
       cloned_address = @transient_registration.registered_address.clone
-      cloned_address.addressType = "POSTAL"
+      cloned_address.addressType = "CONTACT"
 
       @transient_registration.update(contact_address: cloned_address)
     end

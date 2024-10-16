@@ -11,7 +11,7 @@ module WasteCarriersEngine
 
     def submit(params)
       contact_address_params = params.fetch(:contact_address, {})
-      contact_address = create_address(contact_address_params[:uprn], "POSTAL")
+      contact_address = create_address(contact_address_params[:uprn], "CONTACT")
 
       super(contact_address: contact_address)
     end

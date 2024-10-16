@@ -13,7 +13,7 @@ module WasteCarriersEngine
 
     def submit(params)
       address = Address.create_from_manual_entry(params[:contact_address] || {}, transient_registration.overseas?)
-      address.assign_attributes(address_type: "POSTAL")
+      address.assign_attributes(address_type: "CONTACT")
 
       super(contact_address: address)
     end
@@ -23,7 +23,7 @@ module WasteCarriersEngine
     def clean_address
       # Prefill the existing address unless the postcode has changed from the existing address's postcode
       transient_registration.contact_address = Address.new(
-        address_type: "POSTAL",
+        address_type: "CONTACT",
         postcode: transient_registration.temp_contact_postcode
       )
     end
