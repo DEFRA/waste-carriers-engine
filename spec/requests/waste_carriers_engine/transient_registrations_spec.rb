@@ -8,10 +8,6 @@ module WasteCarriersEngine
       context "when a valid user is signed in" do
         let(:user) { create(:user) }
 
-        before do
-          sign_in(user)
-        end
-
         context "when a valid transient registration exists" do
           it "deletes the transient registration, returns a 302 status and redirects to the registration page" do
             transient_registration = create(:renewing_registration, :has_required_data)

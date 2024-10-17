@@ -6,12 +6,6 @@ class User
   # Use the User database
   store_in client: "users", collection: "users"
 
-  devise :database_authenticatable,
-         :lockable,
-         :recoverable,
-         :trackable,
-         :validatable
-
   ## Confirmable
   # Any user confirmation happens in the frontend app - however we need this flag to seed confirmed users
   field :confirmed_at, type: DateTime

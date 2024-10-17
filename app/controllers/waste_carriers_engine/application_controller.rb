@@ -23,6 +23,12 @@ module WasteCarriersEngine
       redirect_to page_path("system_error")
     end
 
+    def current_user
+      return unless defined?(super)
+
+      super
+    end
+
     protected
 
     def record_user_journey

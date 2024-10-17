@@ -150,7 +150,7 @@ module WasteCarriersEngine
         end
 
         context "with a logged-in user" do
-          let(:current_user) { create(:user) }
+          let(:current_user) { build(:user) }
 
           it "stores the current user's email address on the user journey" do
             described_class.run(transient_registration:, current_user:)

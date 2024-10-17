@@ -24,7 +24,6 @@ Make sure you already have:
 
 The engine also expects these gems to be installed in the application in which it is mounted:
 
-- [Devise](https://github.com/plataformatec/devise/) >= 4.4.3
 - [CanCanCan](https://github.com/CanCanCommunity/cancancan) ~> 1.10
 
 And for a User model to be in place. See the [dummy testing app](https://github.com/DEFRA/waste-carriers-engine/tree/master/spec/dummy) for an example of how this might be implemented.

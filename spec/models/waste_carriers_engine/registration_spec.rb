@@ -849,7 +849,7 @@ module WasteCarriersEngine
     end
 
     describe "#increment_certificate_version" do
-      let(:user) { create(:user) }
+      let(:user) { build(:user) }
 
       context "when version is already present" do
         let(:meta_data) { build(:metaData, certificateVersion: 1, certificateVersionHistory: [{ foo: :bar }]) }

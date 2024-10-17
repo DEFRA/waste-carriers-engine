@@ -21,9 +21,6 @@ gem "mongo_session_store"
 # Use CanCanCan for user roles and permissions
 gem "cancancan", "~> 3.5.0"
 
-# Use Devise for user authentication
-gem "devise", "~> 4.9.2"
-
 gem "matrix", "~> 0.4.2"
 
 gem "secure_headers", "~> 6.5.0"

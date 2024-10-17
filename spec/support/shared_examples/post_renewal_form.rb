@@ -13,10 +13,6 @@ RSpec.shared_examples "POST renewal form" do |form, options|
   let(:expected_value) { options[:expected_value] }
   let(:user) { create(:user) }
 
-  before do
-    sign_in(user)
-  end
-
   context "when no transient registration is found" do
     it "does not create a transient registration and redirects to the invalid page" do
       count = WasteCarriersEngine::TransientRegistration.count
