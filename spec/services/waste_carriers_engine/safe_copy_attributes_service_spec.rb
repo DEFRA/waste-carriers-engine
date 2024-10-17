@@ -138,6 +138,46 @@ module WasteCarriersEngine
           expect(order_attributes.keys).to include("currency")
         end
       end
+
+      context "when an embedded relation is included in attributes_to_exclude" do
+        let(:target_class) { Registration }
+        let(:source_instance) do
+          attributes = {
+            "location" => "uk",
+            "contactEmail" => "test@example.com",
+            "financeDetails" => {
+              "orders" => [
+                {
+                  "govpayStatus" => "success",
+                  "currency" => "GBP"
+                }
+              ]
+            }
+          }
+          BSON::Document.new(attributes)
+        end
+
+        let(:copyable_attributes) { %w[location contactEmail] }
+        let(:non_copyable_attributes) { %w[financeDetails _id] }
+        let(:exclusion_list) { %w[financeDetails] }
+        let(:result) { run_service }
+
+        it "does not include the excluded embedded relation" do
+          expect(result.keys).not_to include("financeDetails")
+        end
+
+        it "includes other copyable attributes" do
+          copyable_attributes.each do |attr|
+            expect(result[attr]).not_to be_nil
+          end
+        end
+
+        it "does not include non-copyable attributes" do
+          non_copyable_attributes.each do |attr|
+            expect(result[attr]).to be_nil
+          end
+        end
+      end
     end
   end
 end

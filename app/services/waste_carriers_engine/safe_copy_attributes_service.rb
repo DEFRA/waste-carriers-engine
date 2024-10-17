@@ -49,9 +49,14 @@ module WasteCarriersEngine
       embedded_attributes = {}
 
       target_class.embedded_relations.each do |relation_name, relation_metadata|
-        source_data, key = find_relation_data(attributes, relation_name)
-        next unless source_data
+        # Skip if the relation is in the attributes_to_exclude list
+        next if @attributes_to_exclude.map(&:underscore).include?(relation_name.underscore)
 
+        # Find the corresponding key in attributes (handles snake_case and camelCase)
+        key = matching_attribute_key(attributes, relation_name)
+        next unless key
+
+        source_data = attributes[key]
         embedded_class = relation_metadata.class_name.constantize
         embedded_attributes[key] = process_embedded_data(source_data, embedded_class)
       end
@@ -59,11 +64,16 @@ module WasteCarriersEngine
       embedded_attributes
     end
 
-    # Finds the relation data in the source attributes, handling different naming conventions
-    def find_relation_data(attributes, relation_name)
-      keys_to_check = [relation_name.underscore, relation_name.camelize(:lower)]
-      key = keys_to_check.find { |k| attributes.key?(k) }
-      [attributes[key], key] if key
+    # Finds the attribute key in attributes that corresponds to the relation name
+    def matching_attribute_key(attributes, relation_name)
+      snake_case_name = relation_name.underscore
+      camel_case_name = relation_name.camelize(:lower)
+
+      if attributes.key?(snake_case_name)
+        snake_case_name
+      elsif attributes.key?(camel_case_name)
+        camel_case_name
+      end
     end
 
     # Recursively processes embedded data
