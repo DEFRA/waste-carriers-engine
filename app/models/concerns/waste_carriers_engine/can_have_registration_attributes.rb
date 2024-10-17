@@ -7,7 +7,6 @@ module WasteCarriersEngine
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
     include Mongoid::Document
-    include CanReferenceSingleDocumentInCollection
     include CanHaveTier
 
     # Rubocop sees a module as a block, and as such is not very forgiving in how
@@ -23,11 +22,30 @@ module WasteCarriersEngine
       # rubocop:disable Layout/LineLength
       embeds_many :addresses, class_name: "WasteCarriersEngine::Address"
 
-      # This is our own custom association. See CanReferenceSingleDocumentInCollection for details
-      reference_one :contact_address, collection: :addresses, find_by: { address_type: "POSTAL" }
-      reference_one :company_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
-      # TODO: Remove this and always use `company_address` rather than `registrered_address`
-      reference_one :registered_address, collection: :addresses, find_by: { address_type: "REGISTERED" }
+      # Define helper accessor and assignment methods for each address type
+      %w[contact registered].each do |address_type|
+
+        define_method(:"#{address_type}_address") do
+          # handle synonyms
+          address_type = "postal" if address_type == "contact"
+
+          addresses.where(address_type: address_type.upcase).first
+        end
+
+        define_method(:"#{address_type}_address=") do |address|
+          # handle synonyms
+          address_type = "postal" if address_type == "contact"
+
+          unless address.blank? || address.address_type == address_type.upcase
+            raise ArgumentError, "Attempted to set #{address_type} address with address of type #{address.address_type}"
+          end
+
+          # clear any existing address of this type
+          addresses.where(address_type: address_type.upcase).first&.destroy!
+
+          addresses << address
+        end
+      end
 
       embeds_one :conviction_search_result, class_name: "WasteCarriersEngine::ConvictionSearchResult"
       embeds_many :conviction_sign_offs,    class_name: "WasteCarriersEngine::ConvictionSignOff"
