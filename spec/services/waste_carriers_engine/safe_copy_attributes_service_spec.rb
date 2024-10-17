@@ -118,7 +118,7 @@ module WasteCarriersEngine
                   "govpayStatus" => "success",
                   "currency" => "GBP"
                 }
-              ],
+              ]
 
             }
           }
@@ -130,11 +130,11 @@ module WasteCarriersEngine
         let(:result) { run_service }
         let(:order_attributes) { result["financeDetails"]["orders"].first }
 
-        it "should not have the govpayStatus attribute as it is not present on the order model" do
+        it "does not have the govpayStatus attribute as it is not present on the order model" do
           expect(order_attributes.keys).not_to include("govpayStatus")
         end
 
-        it "should have the currency attribute as it is present on the order model" do
+        it "has the currency attribute as it is present on the order model" do
           expect(order_attributes.keys).to include("currency")
         end
       end

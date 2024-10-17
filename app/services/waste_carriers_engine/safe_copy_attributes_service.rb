@@ -30,12 +30,12 @@ module WasteCarriersEngine
       target_class.embedded_relations.each do |relation_name, relation_metadata|
         # Match the source relation data to a relation embedded in the target class
         # handle source data being camelCase or snake_case
-        if source_relation_data = attributes[relation_name.underscore]
+        if (source_relation_data = attributes[relation_name.underscore])
           original_relation_name = relation_name.underscore
-        elsif source_relation_data = attributes[relation_name.camelize(:lower)]
+        elsif (source_relation_data = attributes[relation_name.camelize(:lower)])
           original_relation_name = relation_name.camelize(:lower)
         else
-        # Proceed only if there is a match
+          # Proceed only if there is a match
           next
         end
 
@@ -62,7 +62,7 @@ module WasteCarriersEngine
 
     def filter_attributes(attributes, target_class)
       target_field_names = target_class.fields.keys.map(&:to_s)
-      attributes.slice(*target_field_names).except('_id').except(*@attributes_to_exclude)
+      attributes.slice(*target_field_names).except("_id").except(*@attributes_to_exclude)
     end
 
     def process_embedded_data(data, embedded_class)
@@ -71,8 +71,6 @@ module WasteCarriersEngine
         data.map { |item| copy_attributes(item, embedded_class) }
       elsif data.is_a?(Hash) || data.is_a?(BSON::Document)
         copy_attributes(data, embedded_class)
-      else
-        nil
       end
     end
   end
