@@ -9,7 +9,7 @@ FactoryBot.define do
             :renewing_registration,
             :has_required_data,
             workflow_state: "company_address_form",
-            company_address: build(:address, :has_required_data, :registered),
+            registered_address: build(:address, :has_required_data, :registered),
             temp_company_postcode: "FA4 3HT"
           )
         )

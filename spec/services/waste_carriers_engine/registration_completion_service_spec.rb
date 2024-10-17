@@ -81,7 +81,7 @@ module WasteCarriersEngine
           expect { complete_registration }.to change(WasteCarriersEngine::Registration, :count).by(1)
         end
 
-        it { expect(complete_registration.company_address).to eq(transient_registration.company_address) }
+        it { expect(complete_registration.registered_address).to eq(transient_registration.registered_address) }
         it { expect(complete_registration.expires_on).to be_present }
         it { expect(complete_registration.finance_details.orders.count).to eq(1) }
         it { expect(complete_registration.finance_details.payments.count).to eq(1) }

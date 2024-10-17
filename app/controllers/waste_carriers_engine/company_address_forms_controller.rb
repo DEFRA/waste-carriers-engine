@@ -13,7 +13,7 @@ module WasteCarriersEngine
     private
 
     def transient_registration_attributes
-      params.fetch(:company_address_form, {}).permit(company_address: [:uprn])
+      params.fetch(:company_address_form, {}).permit(registered_address: [:uprn])
     end
   end
 end
