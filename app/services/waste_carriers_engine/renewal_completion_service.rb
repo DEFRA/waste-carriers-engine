@@ -154,7 +154,6 @@ module WasteCarriersEngine
       renewal_attributes = SafeCopyAttributesService.run(
         source_instance: transient_registration,
         target_class: Registration,
-        embedded_documents: %w[addresses metaData financeDetails key_people conviction_search_result],
         attributes_to_exclude: do_not_copy_attributes
       )
 
