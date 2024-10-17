@@ -16,3 +16,4 @@ en:
           attributes:
             contact_address:
               blank: "Select an address"
+              should_be_uk: "Provide a UK contact address"

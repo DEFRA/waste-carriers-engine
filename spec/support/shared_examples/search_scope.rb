@@ -69,7 +69,7 @@ RSpec.shared_examples "Search scopes" do |record_class:, factory:|
       let(:term) { "SW1A 2AA" }
 
       let(:matching_postcode_record) do
-        address = build(:address, postcode: term)
+        address = build(:address, :contact, postcode: term)
         create(factory, :has_required_data, addresses: [address])
       end
 

@@ -284,7 +284,7 @@ module WasteCarriersEngine
 
     describe "#address" do
       context "when a registration has one address" do
-        let(:address) { build(:address, :has_required_data) }
+        let(:address) { build(:address, :registered, :has_required_data) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
@@ -297,8 +297,8 @@ module WasteCarriersEngine
       end
 
       context "when a registration has multiple addresses" do
-        let(:address_a) { build(:address, :has_required_data) }
-        let(:address_b) { build(:address, :has_required_data) }
+        let(:address_a) { build(:address, :registered, :has_required_data) }
+        let(:address_b) { build(:address, :contact, :has_required_data) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
@@ -321,7 +321,7 @@ module WasteCarriersEngine
 
       context "when registration has an address which has a location" do
         let(:location) { build(:location) }
-        let(:address) { build(:address, :has_required_data, location: location) }
+        let(:address) { build(:address, :registered, :has_required_data, location: location) }
         let(:registration) do
           build(:registration,
                 :has_required_data,
