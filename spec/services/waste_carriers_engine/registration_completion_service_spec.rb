@@ -82,8 +82,8 @@ module WasteCarriersEngine
         end
 
         it do
-          expect(complete_registration.company_address.attributes.except("_id"))
-            .to eq(transient_registration.company_address.attributes.except("_id"))
+          expect(complete_registration.registered_address.attributes.except("_id"))
+            .to eq(transient_registration.registered_address.attributes.except("_id"))
         end
 
         it { expect(complete_registration.expires_on).to be_present }
