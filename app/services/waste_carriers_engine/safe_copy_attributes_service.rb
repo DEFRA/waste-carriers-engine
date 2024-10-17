@@ -28,13 +28,20 @@ module WasteCarriersEngine
 
       # Process each embedded relation defined in the target class
       target_class.embedded_relations.each do |relation_name, relation_metadata|
-        source_relation_data = attributes[relation_name.to_s]
-
-        next unless source_relation_data
+        # Match the source relation data to a relation embedded in the target class
+        # handle source data being camelCase or snake_case
+        if source_relation_data = attributes[relation_name.underscore]
+          original_relation_name = relation_name.underscore
+        elsif source_relation_data = attributes[relation_name.camelize(:lower)]
+          original_relation_name = relation_name.camelize(:lower)
+        else
+        # Proceed only if there is a match
+          next
+        end
 
         embedded_class = relation_metadata.class_name.constantize
 
-        valid_attributes[relation_name.to_s] = process_embedded_data(
+        valid_attributes[original_relation_name] = process_embedded_data(
           source_relation_data,
           embedded_class
         )

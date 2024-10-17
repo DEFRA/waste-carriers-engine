@@ -105,21 +105,38 @@ module WasteCarriersEngine
         it_behaves_like "returns the correct attributes"
       end
 
-      context "when the source is a BSON::Document with an attribute not present on the model" do
+      context "when the source is a BSON::Document with a nested attribute not present on the model" do
         let(:target_class) { Registration }
         let(:source_instance) do
           attributes = {
             "location" => "uk",
             "contactEmail" => "test@example.com",
-            "non_existent_attribute" => "some value"
+            "non_existent_attribute" => "some value",
+            "financeDetails" => {
+              "orders" => [
+                {
+                  "govpayStatus" => "success",
+                  "currency" => "GBP"
+                }
+              ],
+
+            }
           }
           BSON::Document.new(attributes)
         end
 
         let(:copyable_attributes) { %w[location contactEmail] }
         let(:non_copyable_attributes) { %w[non_existent_attribute _id] }
+        let(:result) { run_service }
+        let(:order_attributes) { result["financeDetails"]["orders"].first }
 
-        it_behaves_like "returns the correct attributes"
+        it "should not have the govpayStatus attribute as it is not present on the order model" do
+          expect(order_attributes.keys).not_to include("govpayStatus")
+        end
+
+        it "should have the currency attribute as it is present on the order model" do
+          expect(order_attributes.keys).to include("currency")
+        end
       end
     end
   end
