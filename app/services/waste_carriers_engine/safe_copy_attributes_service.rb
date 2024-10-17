@@ -18,55 +18,56 @@ module WasteCarriersEngine
 
     private
 
-    def copy_attributes(source_instance, target_class)
-      attributes = extract_attributes(source_instance)
-
-      # Filter attributes / embedded relations to only those defined in
-      # the target class, excluding '_id' AND any attributes
-      # specified in attributes_to_exclude
+    # Recursively copies attributes from the source to match the target class
+    def copy_attributes(source, target_class)
+      attributes = extract_attributes(source)
       valid_attributes = filter_attributes(attributes, target_class)
+      embedded_attributes = process_embedded_relations(attributes, target_class)
+      valid_attributes.merge(embedded_attributes)
+    end
 
-      # Process each embedded relation defined in the target class
+    # Extracts attributes from the source instance based on its type
+    def extract_attributes(source)
+      case source
+      when Hash, BSON::Document
+        source.to_h.stringify_keys
+      when ->(obj) { obj.respond_to?(:attributes) }
+        source.attributes
+      else
+        raise ArgumentError, "Unsupported source_instance type: #{source.class}"
+      end
+    end
+
+    # Filters attributes to include only those defined in the target class, excluding specified attributes
+    def filter_attributes(attributes, target_class)
+      target_fields = target_class.fields.keys.map(&:to_s)
+      attributes.slice(*target_fields).except("_id", *@attributes_to_exclude)
+    end
+
+    # Processes embedded relations defined in the target class
+    def process_embedded_relations(attributes, target_class)
+      embedded_attributes = {}
+
       target_class.embedded_relations.each do |relation_name, relation_metadata|
-        # Match the source relation data to a relation embedded in the target class
-        # handle source data being camelCase or snake_case
-        if (source_relation_data = attributes[relation_name.underscore])
-          original_relation_name = relation_name.underscore
-        elsif (source_relation_data = attributes[relation_name.camelize(:lower)])
-          original_relation_name = relation_name.camelize(:lower)
-        else
-          # Proceed only if there is a match
-          next
-        end
+        source_data, key = find_relation_data(attributes, relation_name)
+        next unless source_data
 
         embedded_class = relation_metadata.class_name.constantize
-
-        valid_attributes[original_relation_name] = process_embedded_data(
-          source_relation_data,
-          embedded_class
-        )
+        embedded_attributes[key] = process_embedded_data(source_data, embedded_class)
       end
 
-      valid_attributes
+      embedded_attributes
     end
 
-    def extract_attributes(source_instance)
-      if source_instance.is_a?(Hash) || source_instance.is_a?(BSON::Document)
-        source_instance.to_h.stringify_keys
-      elsif source_instance.respond_to?(:attributes)
-        source_instance.attributes
-      else
-        raise ArgumentError, "Unsupported source_instance type: #{source_instance.class}"
-      end
+    # Finds the relation data in the source attributes, handling different naming conventions
+    def find_relation_data(attributes, relation_name)
+      keys_to_check = [relation_name.underscore, relation_name.camelize(:lower)]
+      key = keys_to_check.find { |k| attributes.key?(k) }
+      [attributes[key], key] if key
     end
 
-    def filter_attributes(attributes, target_class)
-      target_field_names = target_class.fields.keys.map(&:to_s)
-      attributes.slice(*target_field_names).except("_id").except(*@attributes_to_exclude)
-    end
-
+    # Recursively processes embedded data
     def process_embedded_data(data, embedded_class)
-      # Recursively process embedded data
       if data.is_a?(Array)
         data.map { |item| copy_attributes(item, embedded_class) }
       elsif data.is_a?(Hash) || data.is_a?(BSON::Document)
