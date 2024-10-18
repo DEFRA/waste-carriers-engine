@@ -127,7 +127,6 @@ module WasteCarriersEngine
       transient_registration.reload
 
       do_not_copy_attributes = %w[
-        _id
         conviction_search_result
         conviction_sign_offs
         created_at
@@ -148,7 +147,6 @@ module WasteCarriersEngine
       SafeCopyAttributesService.run(
         source_instance: transient_registration,
         target_class: Registration,
-        embedded_documents: %w[addresses metaData financeDetails],
         attributes_to_exclude: do_not_copy_attributes
       )
     end

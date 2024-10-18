@@ -24,7 +24,8 @@ module WasteCarriersEngine
       end
 
       it "copies nested objects from the registration" do
-        expect(past_registration.registered_address).to eq(registration.registered_address)
+        expect(past_registration.registered_address.attributes.except("_id"))
+          .to eq(registration.registered_address.attributes.except("_id"))
       end
 
       context "with non-copyable attribute values" do
