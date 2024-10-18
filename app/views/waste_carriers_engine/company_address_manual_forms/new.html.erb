@@ -29,7 +29,7 @@
         </p>
       <% end %>
 
-      <%= f.fields_for :company_address do |f| %>
+      <%= f.fields_for :registered_address do |f| %>
         <%= render("waste_carriers_engine/shared/manual_address", form: @company_address_manual_form, f: f, overseas: @company_address_manual_form.overseas?) %>
       <% end %>
 
