@@ -127,7 +127,6 @@ module WasteCarriersEngine
       transient_registration.reload
 
       do_not_copy_attributes = %w[
-        _id
         conviction_search_result
         conviction_sign_offs
         created_at

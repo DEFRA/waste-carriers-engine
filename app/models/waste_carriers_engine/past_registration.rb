@@ -12,7 +12,6 @@ module WasteCarriersEngine
     embedded_in :registration, class_name: "WasteCarriersEngine::Registration"
 
     NON_COPYABLE_ATTRIBUTES = %w[
-      _id
       accountEmail
       past_registrations
       locking_name
