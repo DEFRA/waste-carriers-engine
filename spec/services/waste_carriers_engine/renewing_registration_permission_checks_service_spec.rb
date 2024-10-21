@@ -12,9 +12,8 @@ module WasteCarriersEngine
 
     describe ".run" do
       let(:transient_registration) { instance_double(RenewingRegistration, from_magic_link: false) }
-      let(:user) { instance_double(User) }
       let(:result) { instance_double(PermissionChecksResult) }
-      let(:params) { { transient_registration: transient_registration, user: user } }
+      let(:params) { { transient_registration: transient_registration } }
 
       before do
         allow(result).to receive(:invalid!)
@@ -40,52 +39,25 @@ module WasteCarriersEngine
 
         before do
           allow(transient_registration).to receive(:registration).and_return(registration)
-
-          allow(Ability).to receive(:new).with(user).and_return(ability)
-          allow(ability).to receive(:can?).with(:update, transient_registration).and_return(can)
+          allow(transient_registration).to receive(:registration).and_return(registration)
+          allow(transient_registration).to receive(:can_be_renewed?).and_return(renewable)
         end
 
-        context "when the user does not have the correct permissions" do
-          let(:can) { false }
+        context "when the transient_registration cannot be renewed" do
+          let(:renewable) { false }
 
-          it "returns a missing permissions result" do
+          it "returns an unrenewable result" do
             expect(described_class.run(params)).to eq(result)
 
-            expect(result).to have_received(:needs_permissions!)
+            expect(result).to have_received(:unrenewable!)
           end
         end
 
-        context "when the user has the correct permissions" do
-          let(:can) { true }
-          let(:registration) { instance_double(Registration) }
+        context "when the transient_registration is renewable" do
+          let(:renewable) { true }
 
-          before do
-            allow(transient_registration).to receive(:registration).and_return(registration)
-            allow(transient_registration).to receive(:can_be_renewed?).and_return(renewable)
-          end
-
-          context "when the transient_registration cannot be renewed" do
-            let(:renewable) { false }
-
-            it "returns an unrenewable result" do
-              expect(described_class.run(params)).to eq(result)
-
-              expect(result).to have_received(:unrenewable!)
-            end
-          end
-
-          context "when the transient_registration is renewable" do
-            let(:renewable) { true }
-
-            context "when the transient registration is accessed through a magic link" do
-              let(:transient_registration) { instance_double(RenewingRegistration, from_magic_link: true) }
-
-              it "returns a pass result" do
-                expect(described_class.run(params)).to eq(result)
-
-                expect(result).to have_received(:pass!)
-              end
-            end
+          context "when the transient registration is accessed through a magic link" do
+            let(:transient_registration) { instance_double(RenewingRegistration, from_magic_link: true) }
 
             it "returns a pass result" do
               expect(described_class.run(params)).to eq(result)
@@ -93,26 +65,12 @@ module WasteCarriersEngine
               expect(result).to have_received(:pass!)
             end
           end
-        end
-      end
 
-      describe "temporary additional debugging" do
-        let(:valid) { true }
-        let(:registration) { create(:registration, :has_required_data) }
-        let(:transient_registration) do
-          create(:renewing_registration, reg_identifier: registration.reg_identifier, from_magic_link: false)
-        end
-        let(:user) { nil }
+          it "returns a pass result" do
+            expect(described_class.run(params)).to eq(result)
 
-        before do
-          allow(Airbrake).to receive(:notify)
-          allow(FeatureToggle).to receive(:active?).with(:additional_debug_logging).and_return true
-        end
-
-        it "logs an error" do
-          described_class.run(params)
-
-          expect(Airbrake).to have_received(:notify)
+            expect(result).to have_received(:pass!)
+          end
         end
       end
     end

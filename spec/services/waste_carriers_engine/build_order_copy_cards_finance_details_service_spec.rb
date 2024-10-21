@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe BuildOrderCopyCardsFinanceDetailsService do
     describe ".run" do
-      subject(:run_service) { described_class.run(transient_registration:, payment_method:, cards_count:, user: current_user) }
+      subject(:run_service) { described_class.run(transient_registration:, payment_method:, cards_count:) }
 
       let(:payment_method) { :govpay }
       let(:transient_registration) do
@@ -18,7 +18,6 @@ module WasteCarriersEngine
       end
       let(:finance_details) { transient_registration.finance_details }
       let(:order) { finance_details.orders.last }
-      let(:current_user) { build(:user) }
       let(:cards_count) { 2 }
 
       before { allow(Rails.configuration).to receive(:card_charge).and_return(1_000) }
