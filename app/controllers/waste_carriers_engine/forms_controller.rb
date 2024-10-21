@@ -82,7 +82,7 @@ module WasteCarriersEngine
     end
 
     def setup_checks_pass?
-      result = FlowPermissionChecksService.run(user: current_user, transient_registration: @transient_registration)
+      result = FlowPermissionChecksService.run(transient_registration: @transient_registration)
 
       return true if result.pass? && state_is_correct?
 
