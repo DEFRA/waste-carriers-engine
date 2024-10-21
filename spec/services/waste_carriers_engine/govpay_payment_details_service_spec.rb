@@ -17,14 +17,13 @@ module WasteCarriersEngine
     let(:payment_uuid) { valid_payment_uuid }
     let(:order) { transient_registration.finance_details.orders.first }
     let(:is_moto) { false }
-    let(:current_user) { build(:user) }
     let(:govpay_front_office_api_token) { Rails.configuration.govpay_front_office_api_token }
     let(:govpay_back_office_api_token) { Rails.configuration.govpay_back_office_api_token }
 
     before do
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
-      transient_registration.prepare_for_payment(:govpay, current_user)
+      transient_registration.prepare_for_payment(:govpay)
     end
 
     subject(:service) { described_class.new(payment_uuid: payment_uuid, is_moto: is_moto) }

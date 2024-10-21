@@ -11,10 +11,9 @@ module WasteCarriersEngine
     end
 
     let(:transient_registration) { build(:renewing_registration, :has_required_data, temp_cards: 0) }
-    let(:current_user) { build(:user) }
 
     describe "new_finance_details" do
-      let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
+      let(:finance_details) { transient_registration.prepare_for_payment(:govpay) }
 
       it "includes 1 order" do
         expect(finance_details.orders.length).to eq(1)
@@ -134,7 +133,7 @@ module WasteCarriersEngine
       end
 
       context "when there is an order" do
-        let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
+        let(:finance_details) { transient_registration.prepare_for_payment(:govpay) }
 
         it "has the correct balance" do
           finance_details.update_balance

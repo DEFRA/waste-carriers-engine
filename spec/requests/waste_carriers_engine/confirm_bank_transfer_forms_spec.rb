@@ -25,7 +25,7 @@ module WasteCarriersEngine
         context "when the transient_registration is a new registration" do
           let(:transient_registration) do
             create(:new_registration,
-                   contact_email: user.email,
+                   contact_email: "bar.baz@example.com",
                    workflow_state: "confirm_bank_transfer_form",
                    temp_cards: 2)
           end
@@ -39,7 +39,7 @@ module WasteCarriersEngine
 
         context "when a govpay order already exists" do
           before do
-            transient_registration.prepare_for_payment(:govpay, user)
+            transient_registration.prepare_for_payment(:govpay)
             transient_registration.finance_details.orders.first.world_pay_status = Payment::STATUS_CANCELLED
           end
 

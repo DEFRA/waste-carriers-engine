@@ -15,7 +15,7 @@ module WasteCarriersEngine
     private
 
     def set_up_finance_details
-      @transient_registration.prepare_for_payment(:bank_transfer, current_user)
+      @transient_registration.prepare_for_payment(:bank_transfer)
     end
   end
 end

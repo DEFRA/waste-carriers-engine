@@ -13,15 +13,14 @@ module WasteCarriersEngine
              :has_finance_details,
              temp_cards: 0)
     end
-    let(:current_user) { build(:user) }
     let(:order) { transient_registration.finance_details.orders.first }
-    let(:govpay_service) { described_class.new(transient_registration, order, current_user) }
+    let(:govpay_service) { described_class.new(transient_registration, order) }
 
     before do
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
 
-      transient_registration.prepare_for_payment(:govpay, current_user)
+      transient_registration.prepare_for_payment(:govpay)
 
       stub_request(:any, /.*#{govpay_host}.*/).to_return(
         status: 200,
