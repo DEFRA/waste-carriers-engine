@@ -8,10 +8,6 @@ module WasteCarriersEngine
 
     it_behaves_like "Can check if registration type changed"
 
-    describe "scopes" do
-      it_behaves_like "TransientRegistration named scopes"
-    end
-
     describe "workflow_state" do
 
       context "when a RenewingRegistration is created" do

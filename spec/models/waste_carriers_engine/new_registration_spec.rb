@@ -6,10 +6,6 @@ module WasteCarriersEngine
   RSpec.describe NewRegistration do
     subject(:new_registration) { build(:new_registration) }
 
-    describe "scopes" do
-      it_behaves_like "TransientRegistration named scopes"
-    end
-
     describe "#tier_known?" do
       subject(:new_registration) { build(:new_registration, temp_check_your_tier: temp_check_your_tier) }
 
