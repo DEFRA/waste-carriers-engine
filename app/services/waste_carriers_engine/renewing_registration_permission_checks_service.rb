@@ -6,16 +6,7 @@ module WasteCarriersEngine
     private
 
     def all_checks_pass?
-      transient_registration_is_valid? && user_has_permission? && can_be_renewed?
-    end
-
-    def user_has_permission?
-      return true if transient_registration.from_magic_link
-      return true if can?(:update, transient_registration)
-
-      permission_check_result.needs_permissions!
-
-      false
+      transient_registration_is_valid? && can_be_renewed?
     end
 
     def can_be_renewed?
