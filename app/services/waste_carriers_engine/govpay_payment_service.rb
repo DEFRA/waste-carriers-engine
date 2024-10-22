@@ -5,9 +5,10 @@ require "rest-client"
 module WasteCarriersEngine
   class GovpayPaymentService
 
-    def initialize(transient_registration, order)
+    def initialize(transient_registration, order, current_user = nil)
       @transient_registration = transient_registration
       @order = order
+      @current_user = current_user
     end
 
     def prepare_for_payment

@@ -34,7 +34,8 @@ module WasteCarriersEngine
       end
 
       def certificate_presenter
-        @_certificate_presenter ||= CertificateGeneratorService.run(registration: @registration)
+        @_certificate_presenter ||= CertificateGeneratorService.run(registration: @registration,
+                                                                    requester: @requester)
       end
     end
   end
