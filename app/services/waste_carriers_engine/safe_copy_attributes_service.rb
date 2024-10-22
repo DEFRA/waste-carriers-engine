@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # This responsible for safely copying attributes from a source instance of
-  # one class to a new instance of the targeted class. It ensures that only attributes
-  # that are defined in the target class are copied, excluding any specified attributes.
-  # The service also handles embedded relations recursively, processing nested
-  # attributes according to the target class definitions.
+  # This responsible for safely copying attributes and embedded relations from a source instance of
+  # one class to a new instance of the targeted class. By default it will copy every attribute except _id
+  # and every embedded relation that are defined in the target class. However, both attributes and embedded
+  # relations can be excluded by passing them into the attributes_to_exclude argument
+  # Embedded relations are processed recursively, and attributes to exclude
+  # will be applied to the embedded relations as well.
 
   class SafeCopyAttributesService
     def self.run(source_instance:, target_class:, attributes_to_exclude: [])
