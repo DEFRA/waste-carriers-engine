@@ -21,7 +21,6 @@ module WasteCarriersEngine
       attributes = SafeCopyAttributesService.run(
         source_instance: registration,
         target_class: self.class,
-        embedded_documents: %w[metaData],
         attributes_to_exclude: options[:ignorable_attributes]
       )
       assign_attributes(strip_whitespace(attributes))

@@ -14,7 +14,7 @@ module WasteCarriersEngine
         let(:valid_params) do
           {
             token: company_address_form.token,
-            company_address: {
+            registered_address: {
               uprn: "340116"
             }
           }
@@ -63,7 +63,7 @@ module WasteCarriersEngine
 
       describe "#temp_address" do
         it "pre-selects the address" do
-          expect(company_address_form.company_address.uprn.to_s).to eq(transient_registration.addresses.where(address_type: "REGISTERED").first.uprn.to_s)
+          expect(company_address_form.registered_address.uprn.to_s).to eq(transient_registration.addresses.where(address_type: "REGISTERED").first.uprn.to_s)
         end
       end
     end

@@ -12,7 +12,6 @@ module WasteCarriersEngine
     embedded_in :registration, class_name: "WasteCarriersEngine::Registration"
 
     NON_COPYABLE_ATTRIBUTES = %w[
-      _id
       accountEmail
       past_registrations
       locking_name
@@ -22,6 +21,7 @@ module WasteCarriersEngine
       deregistration_token_created_at
       view_certificate_token
       view_certificate_token_created_at
+      conviction_sign_offs
     ].freeze
 
     def self.build_past_registration(registration, cause = nil)
@@ -35,7 +35,6 @@ module WasteCarriersEngine
       attributes = SafeCopyAttributesService.run(
         source_instance: registration,
         target_class: self,
-        embedded_documents: %w[addresses metaData financeDetails key_people conviction_search_result],
         attributes_to_exclude: NON_COPYABLE_ATTRIBUTES
       )
 

@@ -14,8 +14,7 @@ module WasteCarriersEngine
     field :from_magic_link, type: Boolean
 
     COPY_DATA_OPTIONS = {
-      ignorable_attributes: %w[_id
-                               accountEmail
+      ignorable_attributes: %w[accountEmail
                                constructionWaste
                                contactEmail
                                conviction_search_result
