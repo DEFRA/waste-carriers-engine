@@ -4,8 +4,9 @@ module WasteCarriersEngine
   class BaseBuildFinanceDetailsService < BaseService
     attr_reader :transient_registration, :user, :cards_count
 
-    def run(transient_registration:, payment_method:, cards_count: 0)
+    def run(transient_registration:, payment_method:, user: nil, cards_count: 0)
       @transient_registration = transient_registration
+      @user = user
       @cards_count = cards_count
 
       # Handle race condition if multiple browsers submit the order:
@@ -39,7 +40,7 @@ module WasteCarriersEngine
     end
 
     def order_email
-      transient_registration.contact_email
+      user.present? ? user.email : transient_registration.contact_email
     end
 
     def build_order_items

@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe FlowPermissionChecksService do
     describe ".run" do
-      let(:params) { { transient_registration: transient_registration } }
+      let(:params) { { transient_registration: transient_registration, user: nil } }
       let(:result) { instance_double(PermissionChecksResult) }
 
       before do
