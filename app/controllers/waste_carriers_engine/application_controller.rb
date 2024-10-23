@@ -26,7 +26,9 @@ module WasteCarriersEngine
     def current_user
       return unless defined?(super)
 
+      # :nocov:
       super
+      # :nocov:
     end
 
     protected
