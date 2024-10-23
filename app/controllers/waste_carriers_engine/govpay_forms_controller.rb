@@ -45,9 +45,9 @@ module WasteCarriersEngine
     private
 
     def prepare_for_payment
-      @transient_registration.prepare_for_payment(:govpay)
+      @transient_registration.prepare_for_payment(:govpay, current_user)
       order = @transient_registration.finance_details.orders.first
-      govpay_service = GovpayPaymentService.new(@transient_registration, order)
+      govpay_service = GovpayPaymentService.new(@transient_registration, order, current_user)
       govpay_service.prepare_for_payment
     end
 
