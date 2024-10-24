@@ -17,7 +17,6 @@ module WasteCarriersEngine
              :has_finance_details,
              temp_cards: 0)
     end
-    let(:current_user) { build(:user) }
     let(:order) { transient_registration.finance_details.orders.first }
     let(:govpay_validator_service) { instance_double(GovpayValidatorService) }
 
@@ -26,7 +25,7 @@ module WasteCarriersEngine
       allow(GovpayValidatorService).to receive(:new).and_return(govpay_validator_service)
       allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
-      transient_registration.prepare_for_payment(:govpay, current_user)
+      transient_registration.prepare_for_payment(:govpay)
       order.govpay_id = "a_govpay_id"
       order.save!
       allow(govpay_payment_details_service).to receive(:govpay_payment_status).and_return(Payment::STATUS_CREATED)
@@ -76,7 +75,7 @@ module WasteCarriersEngine
         end
 
         context "when a new order is initiated before the first one is completed" do
-          before { transient_registration.prepare_for_payment("card", nil) }
+          before { transient_registration.prepare_for_payment("card") }
 
           it { expect(govpay_callback_service.process_payment).to be true }
         end

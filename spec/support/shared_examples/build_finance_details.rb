@@ -26,7 +26,7 @@ module WasteCarriersEngine
 
       it "has the correct updated_by_user" do
         run_service
-        expect(order.updated_by_user).to eq(current_user.email)
+        expect(order.updated_by_user).to eq(transient_registration.contact_email)
       end
 
       it "updates the date_created" do

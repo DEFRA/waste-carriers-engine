@@ -849,22 +849,19 @@ module WasteCarriersEngine
     end
 
     describe "#increment_certificate_version" do
-      let(:user) { create(:user) }
-
       context "when version is already present" do
         let(:meta_data) { build(:metaData, certificateVersion: 1, certificateVersionHistory: [{ foo: :bar }]) }
         let(:registration) { create(:registration, :has_required_data, metaData: meta_data) }
 
         it "increments verson number by 1" do
-          registration.increment_certificate_version(user)
+          registration.increment_certificate_version
           expect(registration.metaData.certificate_version).to eq(2)
         end
 
         it "updates certificate_version_history" do
-          registration.increment_certificate_version(user)
+          registration.increment_certificate_version
           expect(registration.metaData.certificate_version_history.length).to eq 2
           expect(registration.metaData.certificate_version_history.last[:version]).to eq(2)
-          expect(registration.metaData.certificate_version_history.last[:generated_by]).to eq(user.email)
           expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end
@@ -879,15 +876,14 @@ module WasteCarriersEngine
         end
 
         it "keeps the version at 1" do
-          registration.increment_certificate_version(user)
+          registration.increment_certificate_version
           expect(registration.metaData.certificate_version).to eq(1)
         end
 
         it "updates certificate_version_history" do
-          registration.increment_certificate_version(user)
+          registration.increment_certificate_version
           expect(registration.metaData.certificate_version_history.length).to eq 1
           expect(registration.metaData.certificate_version_history.last[:version]).to eq(1)
-          expect(registration.metaData.certificate_version_history.last[:generated_by]).to eq(user.email)
           expect(registration.metaData.certificate_version_history.last[:generated_at]).to be_present
         end
       end

@@ -10,6 +10,9 @@ module WasteCarriersEngine
     end
 
     def user_has_permission?
+      # user permission checks apply only to the back office
+      return true unless WasteCarriersEngine.configuration.host_is_back_office?
+
       return true if transient_registration.from_magic_link
       return true if can?(:update, transient_registration)
 

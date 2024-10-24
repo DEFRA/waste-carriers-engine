@@ -71,7 +71,7 @@ module WasteCarriersEngine
       renewal_application_submitted? && super
     end
 
-    def prepare_for_payment(mode, user)
+    def prepare_for_payment(mode, user = nil)
       BuildRenewalFinanceDetailsService.run(transient_registration: self, payment_method: mode, user:)
     end
 

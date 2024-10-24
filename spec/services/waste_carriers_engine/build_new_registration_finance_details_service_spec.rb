@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe BuildNewRegistrationFinanceDetailsService do
     describe ".run" do
-      subject(:run_service) { described_class.run(transient_registration:, payment_method:, user: current_user) }
+      subject(:run_service) { described_class.run(transient_registration:, payment_method:) }
 
       let(:payment_method) { :govpay }
       let(:transient_registration) do
@@ -19,7 +19,6 @@ module WasteCarriersEngine
       end
       let(:finance_details) { transient_registration.finance_details }
       let(:order) { finance_details.orders.last }
-      let(:current_user) { build(:user) }
 
       it_behaves_like "build finance details"
 

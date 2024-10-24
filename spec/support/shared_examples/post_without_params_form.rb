@@ -7,11 +7,7 @@
 # a set of valid params, a set of invalid params, and an attribute to test persistence
 # Default to :reg_identifier for forms which don't submit new data
 RSpec.shared_examples "POST without params form" do |form|
-  let(:user) { create(:user) }
-
-  before do
-    sign_in(user)
-  end
+  let(:user) { build(:user) }
 
   context "when the token is invalid" do
     it "redirects to the invalid page" do

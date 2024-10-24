@@ -11,10 +11,9 @@ module WasteCarriersEngine
     end
 
     let(:transient_registration) { create(:renewing_registration, :has_required_data, temp_cards: 0) }
-    let(:current_user) { build(:user) }
 
     describe "update_after_online_payment" do
-      let(:finance_details) { transient_registration.prepare_for_payment(:govpay, current_user) }
+      let(:finance_details) { transient_registration.prepare_for_payment(:govpay) }
       let(:order) { finance_details.orders.first }
 
       it "updates the date_last_updated" do

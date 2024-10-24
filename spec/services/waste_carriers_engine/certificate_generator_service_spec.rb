@@ -6,9 +6,8 @@ module WasteCarriersEngine
   RSpec.describe CertificateGeneratorService do
     describe "run" do
       let(:registration) { build(:registration, :has_required_data) }
-      let(:requester) { build(:user) }
       let(:view) { ActionController::Base.new.view_context }
-      let(:run_service) { described_class.run(registration: registration, requester: requester, view: view) }
+      let(:run_service) { described_class.run(registration: registration, view: view) }
 
       it "does not change the registration's certificate version" do
         expect { run_service }.not_to change { registration.metaData.certificate_version }

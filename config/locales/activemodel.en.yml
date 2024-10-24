@@ -1,0 +1,15 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+en:
+  activemodel:
+    errors:
+      models:
+        waste_carriers_engine/renewal_lookup_validatable:
+          already_confirmed: "Email was already confirmed, please try signing in"
+          confirmation_period_expired: "Email needs to be confirmed within %{period}, please request a new one"
+          expired: "Password reset token has expired, please request a new one"
+          not_found: "Password reset token not found"
+          not_locked: "Account was not locked"
+          not_saved:
+            one: "1 error prohibited this %{resource} from being saved:"
+            other: "%{count} errors prohibited this %{resource} from being saved:"

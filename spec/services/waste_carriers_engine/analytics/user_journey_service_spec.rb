@@ -148,16 +148,6 @@ module WasteCarriersEngine
           it { expect(UserJourney.last.started_route).to eq "ASSISTED_DIGITAL" }
           it { expect(UserJourney.last.page_views.last.route).to eq "ASSISTED_DIGITAL" }
         end
-
-        context "with a logged-in user" do
-          let(:current_user) { create(:user) }
-
-          it "stores the current user's email address on the user journey" do
-            described_class.run(transient_registration:, current_user:)
-
-            expect(UserJourney.last.user).to eq current_user.email
-          end
-        end
       end
     end
   end

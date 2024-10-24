@@ -56,7 +56,7 @@ FactoryBot.define do
 
     trait :has_finance_details do
       after(:build, :create) do |renewing_registration|
-        renewing_registration.prepare_for_payment(:govpay, build(:user))
+        renewing_registration.prepare_for_payment(:govpay)
       end
     end
 

@@ -5,7 +5,6 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe Payment do
     let(:transient_registration) { build(:renewing_registration, :has_required_data) }
-    let(:current_user) { build(:user) }
 
     it_behaves_like "Can have payment type", resource: described_class.new
 
@@ -90,12 +89,12 @@ module WasteCarriersEngine
     describe "new_from_online_payment" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
-          transient_registration.prepare_for_payment(:govpay, current_user)
+          transient_registration.prepare_for_payment(:govpay)
         end
       end
 
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { described_class.new_from_online_payment(order, current_user.email) }
+      let(:payment) { described_class.new_from_online_payment(order, transient_registration.contact_email) }
 
       it "sets the correct order_key" do
         expect(payment.order_key).to eq("1514764800")
@@ -118,7 +117,7 @@ module WasteCarriersEngine
       end
 
       it "has the correct updated_by_user" do
-        expect(payment.updated_by_user).to eq(current_user.email)
+        expect(payment.updated_by_user).to eq(transient_registration.contact_email)
       end
 
       it "sets the correct comment" do
@@ -129,7 +128,7 @@ module WasteCarriersEngine
     describe "new_from_non_online_payment" do
       before do
         Timecop.freeze(Time.new(2018, 1, 1)) do
-          transient_registration.prepare_for_payment(:govpay, current_user)
+          transient_registration.prepare_for_payment(:govpay)
         end
       end
 
@@ -143,7 +142,7 @@ module WasteCarriersEngine
           date_received_year: 2018,
           payment_type: "BANKTRANSFER",
           registration_reference: "foo",
-          updated_by_user: current_user.email
+          updated_by_user: transient_registration.contact_email
         }
       end
 
@@ -205,11 +204,11 @@ module WasteCarriersEngine
 
     describe "update_after_online_payment" do
       let(:order) { transient_registration.finance_details.orders.first }
-      let(:payment) { described_class.new_from_online_payment(order, current_user.email) }
+      let(:payment) { described_class.new_from_online_payment(order, transient_registration.contact_email) }
 
       before do
         Timecop.freeze(Time.new(2018, 3, 4)) do
-          transient_registration.prepare_for_payment(:govpay, current_user)
+          transient_registration.prepare_for_payment(:govpay)
           payment.update_after_online_payment({ govpay_status: Payment::STATUS_CREATED })
         end
       end

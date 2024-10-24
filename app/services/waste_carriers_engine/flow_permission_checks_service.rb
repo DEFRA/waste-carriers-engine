@@ -9,7 +9,7 @@ module WasteCarriersEngine
 
     attr_reader :transient_registration, :user
 
-    def run(transient_registration:, user:)
+    def run(transient_registration:, user: nil)
       @transient_registration = transient_registration
       @user = user
 

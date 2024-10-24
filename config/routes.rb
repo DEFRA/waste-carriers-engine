@@ -7,10 +7,6 @@ WasteCarriersEngine::Engine.routes.draw do
             path: "start",
             path_names: { new: "" }
 
-  get "transient-registration/:token/destroy",
-      to: "transient_registrations#destroy",
-      as: "delete_transient_registration"
-
   scope "/:token" do
     # New registration flow
     resources :renew_registration_forms,
