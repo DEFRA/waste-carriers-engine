@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 
 RSpec.describe WasteCarriersEngine::RefreshCompaniesHouseNameService do
 
@@ -11,12 +11,16 @@ RSpec.describe WasteCarriersEngine::RefreshCompaniesHouseNameService do
   let(:registration) { create(:registration, :has_required_data, registered_company_name: old_registered_name) }
   let(:reg_identifier) { registration.reg_identifier }
   let(:companies_house_name) { new_registered_name }
-  let(:drch_instance) { instance_double(DefraRubyCompaniesHouse) }
+  let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
+  let(:companies_house_api_reponse) do
+    {
+      company_name: companies_house_name
+    }
+  end
 
   before do
-    allow(DefraRubyCompaniesHouse).to receive(:new).and_return(drch_instance)
-    allow(drch_instance).to receive(:load_company).and_return(true)
-    allow(drch_instance).to receive(:company_name).and_return(companies_house_name)
+    allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
+    allow(companies_house_api).to receive(:run).and_return(companies_house_api_reponse)
   end
 
   context "with no previous companies house name" do
