@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "defra_ruby_companies_house"
 
 module WasteCarriersEngine
   RSpec.describe UseTradingNameForm do

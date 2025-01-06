@@ -37,13 +37,13 @@ module WasteCarriersEngine
     end
 
     def companies_house_host=(value)
-      DefraRuby::Validators.configure do |configuration|
+      DefraRuby::CompaniesHouse.configure do |configuration|
         configuration.companies_house_host = value
       end
     end
 
     def companies_house_api_key=(value)
-      DefraRuby::Validators.configure do |configuration|
+      DefraRuby::CompaniesHouse.configure do |configuration|
         configuration.companies_house_api_key = value
       end
     end
