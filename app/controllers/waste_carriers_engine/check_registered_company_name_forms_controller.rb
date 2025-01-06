@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 
 module WasteCarriersEngine
   class CheckRegisteredCompanyNameFormsController < ::WasteCarriersEngine::FormsController
@@ -26,7 +26,8 @@ module WasteCarriersEngine
     end
 
     def company_name
-      DefraRubyCompaniesHouse.new(@transient_registration.company_no).company_name
+      company_details = DefraRuby::CompaniesHouse::API.run(company_number: @transient_registration.company_no)
+      company_details[:company_name]
     end
   end
 end

@@ -1,19 +1,24 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 
 module WasteCarriersEngine
   RSpec.describe "CheckRegisteredCompanyNameForms" do
 
     let(:company_name) { Faker::Company.name }
     let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
-    let(:companies_house_service) { instance_double(DefraRubyCompaniesHouse) }
+    let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
+    let(:companies_house_api_reponse) do
+      {
+        company_name:,
+        registered_office_address: company_address
+      }
+    end
 
     before do
-      allow(DefraRubyCompaniesHouse).to receive(:new).and_return(companies_house_service)
-      allow(companies_house_service).to receive(:company_name).and_return(company_name)
-      allow(companies_house_service).to receive(:registered_office_address_lines).and_return(company_address)
+      allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
+      allow(companies_house_api).to receive(:run).and_return(companies_house_api_reponse)
     end
 
     include_examples "GET flexible form", "check_registered_company_name_form"
@@ -42,7 +47,7 @@ module WasteCarriersEngine
 
         context "when the company house API is down" do
           before do
-            allow(companies_house_service).to receive(:company_name).and_raise(StandardError)
+            allow(companies_house_api).to receive(:run).and_raise(StandardError)
           end
 
           it "raises an error" do

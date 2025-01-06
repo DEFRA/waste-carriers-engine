@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 
 module WasteCarriersEngine
   # rubocop:disable Metrics/ModuleLength
@@ -258,9 +258,11 @@ module WasteCarriersEngine
       return false if company_no.blank? || overseas?
 
       begin
-        company_status = DefraRubyCompaniesHouse.new(company_no).company_status
+        company_status = DefraRuby::CompaniesHouse::API.run(company_number: company_no)[:company_status]
         !%w[active voluntary-arrangement].include?(company_status)
-      rescue StandardError
+      rescue StandardError => e
+        Rails.logger.error "Error checking company status: #{e}"
+        Airbrake.notify(e)
         true
       end
     end
