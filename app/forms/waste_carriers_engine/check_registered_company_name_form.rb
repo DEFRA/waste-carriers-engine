@@ -8,11 +8,11 @@ module WasteCarriersEngine
     validates :temp_use_registered_company_details, "waste_carriers_engine/yes_no": true
 
     def registered_company_name
-      companies_house_service.company_name
+      @registered_company_name ||= companies_house_details[:company_name]
     end
 
     def registered_office_address_lines
-      companies_house_service.registered_office_address_lines
+      @registered_office_address_lines ||= companies_house_details[:registered_office_address]
     end
 
     def submit(params)
@@ -26,8 +26,8 @@ module WasteCarriersEngine
 
     private
 
-    def companies_house_service
-      @_companies_house_service ||= DefraRubyCompaniesHouse.new(company_no)
+    def companies_house_details
+      @_companies_house_details ||= DefraRuby::CompaniesHouse::API.run(company_number: company_no)
     end
   end
 end

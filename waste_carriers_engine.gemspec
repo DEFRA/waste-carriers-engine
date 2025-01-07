@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.add_dependency "high_voltage", "~> 3.1.2"
 
   # Validations
-  s.add_dependency "defra_ruby_validators", "~> 2.6"
+  s.add_dependency "defra_ruby_validators", "~> 3.0"
   s.add_dependency "uk_postcode", "~> 2.1.8"
 
   s.add_dependency "defra_ruby_govpay"
@@ -59,6 +59,9 @@ Gem::Specification.new do |s|
   # Used to handle requests to the address lookup web service used (currently
   # EA Address Facade v1)
   s.add_dependency "defra_ruby_address", "~> 0.1.0"
+
+  # # Used to access the Companies House API for company details validation
+  s.add_dependency "defra_ruby_companies_house"
 
   # Used as part of testing. When enabled adds a /last-email route from which
   # details of the last email sent by the app can be accessed

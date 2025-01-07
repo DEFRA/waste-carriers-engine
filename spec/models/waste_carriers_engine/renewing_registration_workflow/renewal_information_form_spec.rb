@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 
 module WasteCarriersEngine
   RSpec.describe RenewingRegistration do
@@ -17,13 +17,19 @@ module WasteCarriersEngine
     let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
     let(:business_type) { nil }
     let(:location) { "england" }
-    let(:defra_ruby_companies_house) { instance_double(DefraRubyCompaniesHouse) }
+    let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
+    let(:companies_house_api_reponse) do
+      {
+        company_status:
+      }
+    end
+
     let(:company_status) { "active" }
     let(:company_number) { "12345678" }
 
     before do
-      allow(DefraRubyCompaniesHouse).to receive(:new).and_return(defra_ruby_companies_house)
-      allow(defra_ruby_companies_house).to receive(:company_status).and_return(company_status)
+      allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
+      allow(companies_house_api).to receive(:run).and_return(companies_house_api_reponse)
     end
 
     describe "#workflow_state" do
@@ -119,7 +125,7 @@ module WasteCarriersEngine
 
           context "when Companies House Api returns an error" do
             before do
-              allow(defra_ruby_companies_house).to receive(:company_status).and_raise(StandardError)
+              allow(companies_house_api).to receive(:run).and_raise(StandardError)
             end
 
             context "when the business type is limitedCompany with non-UK company number" do
