@@ -18,7 +18,7 @@ module WasteCarriersEngine
     let(:business_type) { nil }
     let(:location) { "england" }
     let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
-    let(:companies_house_api_reponse) { {company_status: } }
+    let(:companies_house_api_reponse) { { company_status: } }
     let(:company_status) { :active }
     let(:company_number) { "12345678" }
 
