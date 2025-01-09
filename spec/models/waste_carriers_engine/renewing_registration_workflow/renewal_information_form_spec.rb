@@ -18,13 +18,8 @@ module WasteCarriersEngine
     let(:business_type) { nil }
     let(:location) { "england" }
     let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
-    let(:companies_house_api_reponse) do
-      {
-        company_status:
-      }
-    end
-
-    let(:company_status) { "active" }
+    let(:companies_house_api_reponse) { {company_status: } }
+    let(:company_status) { :active }
     let(:company_number) { "12345678" }
 
     before do
@@ -76,8 +71,7 @@ module WasteCarriersEngine
 
           shared_examples "check_registered_company_name_form or invalid_company_status_form" do
 
-            %w[active
-               voluntary-arrangement].each do |status|
+            %i[active voluntary-arrangement].each do |status|
               context "with a company status of #{status}" do
                 let(:company_status) { status }
 
