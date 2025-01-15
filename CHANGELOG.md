@@ -443,6 +443,7 @@
 
 **Fixed bugs:**
 
+- Fix/ruby 3441 companies house gem [\#1597](https://github.com/DEFRA/waste-carriers-engine/pull/1597) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Chore/ruby 3409 mongoid reference one [\#1582](https://github.com/DEFRA/waste-carriers-engine/pull/1582) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - RUBY 3387 implement solution to govpay status being stored twice [\#1581](https://github.com/DEFRA/waste-carriers-engine/pull/1581) ([jjromeo](https://github.com/jjromeo))
 - Revert address area change to not update area attribute [\#1575](https://github.com/DEFRA/waste-carriers-engine/pull/1575) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
@@ -724,6 +725,16 @@
 
 **Merged pull requests:**
 
+- Bump defra\_ruby\_companies\_house from 1.0.0 to 1.0.3 [\#1596](https://github.com/DEFRA/waste-carriers-engine/pull/1596) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Use the companies house gem [\#1594](https://github.com/DEFRA/waste-carriers-engine/pull/1594) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump rails from 7.0.8.6 to 7.0.8.7 [\#1593](https://github.com/DEFRA/waste-carriers-engine/pull/1593) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump nokogiri from 1.15.6 to 1.15.7 [\#1592](https://github.com/DEFRA/waste-carriers-engine/pull/1592) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rails-html-sanitizer from 1.6.0 to 1.6.1 [\#1591](https://github.com/DEFRA/waste-carriers-engine/pull/1591) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump defra\_ruby\_validators from 2.6.0 to 2.7.2 [\#1590](https://github.com/DEFRA/waste-carriers-engine/pull/1590) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump govuk\_design\_system\_formbuilder from 5.7.0 to 5.7.1 [\#1588](https://github.com/DEFRA/waste-carriers-engine/pull/1588) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1587](https://github.com/DEFRA/waste-carriers-engine/pull/1587) ([jjromeo](https://github.com/jjromeo))
+- Bump rexml from 3.3.6 to 3.3.9 [\#1586](https://github.com/DEFRA/waste-carriers-engine/pull/1586) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rails from 7.0.8.5 to 7.0.8.6 [\#1584](https://github.com/DEFRA/waste-carriers-engine/pull/1584) ([dependabot[bot]](https://github.com/apps/dependabot))
 - RUBY-3433:  Tech Debt : remove devise and cancancan gems + remove front-office users from wcr engine [\#1583](https://github.com/DEFRA/waste-carriers-engine/pull/1583) ([brujeo](https://github.com/brujeo))
 - Bump actiontext from 7.0.8.4 to 7.0.8.5 [\#1577](https://github.com/DEFRA/waste-carriers-engine/pull/1577) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump govuk\_design\_system\_formbuilder from 5.6.0 to 5.7.0 [\#1576](https://github.com/DEFRA/waste-carriers-engine/pull/1576) ([dependabot[bot]](https://github.com/apps/dependabot))
