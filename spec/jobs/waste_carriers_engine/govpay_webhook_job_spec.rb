@@ -28,16 +28,66 @@ module WasteCarriersEngine
         allow(refund_webhook_service).to receive(:run)
       end
 
-      context "with an unrecognised webhook body" do
-        let(:webhook_body) { { foo: :bar } }
+      context "when handling errors" do
+        before do
+          allow(Airbrake).to receive(:notify)
+          allow(FeatureToggle).to receive(:active?).with("enhanced_govpay_logging").and_return(false)
+        end
 
-        before { allow(Airbrake).to receive(:notify) }
+        context "with an unrecognised webhook body" do
+          let(:webhook_body) { { "foo" => "bar" } }
 
-        it "notifies Airbrake" do
-          perform_now
+          it "notifies Airbrake with basic params" do
+            perform_now
+            expect(Airbrake).to have_received(:notify)
+              .with(an_instance_of(ArgumentError), refund_id: nil, payment_id: nil, service_type: "front_office")
+          end
 
-          expect(Airbrake).to have_received(:notify)
-            .with(an_instance_of(ArgumentError), refund_id: nil, payment_id: nil)
+          context "when enhanced logging is enabled" do
+            before { allow(FeatureToggle).to receive(:active?).with("enhanced_govpay_logging").and_return(true) }
+
+            it "includes webhook body in Airbrake notification" do
+              perform_now
+              expect(Airbrake).to have_received(:notify)
+                .with(
+                  an_instance_of(ArgumentError),
+                  hash_including(
+                    refund_id: nil,
+                    payment_id: nil,
+                    service_type: "front_office",
+                    webhook_body: { "foo" => "bar" }
+                  )
+                )
+            end
+          end
+        end
+
+        context "with service type detection" do
+          shared_examples "logs correct service type" do |moto, expected_service|
+            let(:webhook_body) do
+              {
+                "resource_type" => "invalid_type",
+                "resource" => { "moto" => moto }
+              }
+            end
+
+            it "includes correct service type in Airbrake notification" do
+              perform_now
+              expect(Airbrake).to have_received(:notify)
+                .with(
+                  an_instance_of(ArgumentError),
+                  hash_including(service_type: expected_service)
+                )
+            end
+          end
+
+          context "with a front office payment" do
+            it_behaves_like "logs correct service type", false, "front_office"
+          end
+
+          context "with a back office payment" do
+            it_behaves_like "logs correct service type", true, "back_office"
+          end
         end
       end
 
