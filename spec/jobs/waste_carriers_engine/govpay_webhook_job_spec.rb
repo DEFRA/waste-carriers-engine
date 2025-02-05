@@ -2,6 +2,22 @@
 
 require "rails_helper"
 
+RSpec::Matchers.define :have_webhook_body_sanitized do
+  match do |notify_args|
+    webhook_body = notify_args[:webhook_body]["resource"]
+    webhook_body.is_a?(Hash) &&
+      !webhook_body.key?("email") &&
+      !webhook_body.key?("card_details") &&
+      webhook_body.key?("amount") &&
+      webhook_body.key?("description") &&
+      webhook_body.key?("reference")
+  end
+
+  failure_message do
+    "expected webhook body to have sensitive fields removed and non-sensitive fields preserved"
+  end
+end
+
 module WasteCarriersEngine
 
   RSpec.describe GovpayWebhookJob do
@@ -45,6 +61,28 @@ module WasteCarriersEngine
 
           context "when enhanced logging is enabled" do
             before { allow(FeatureToggle).to receive(:active?).with("enhanced_govpay_logging").and_return(true) }
+
+            context "with sensitive information in webhook body" do
+              let(:webhook_body) do
+                json = JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read)
+                json["resource_type"] = "invalid_type" # This will trigger error handling
+                json
+              end
+
+              it "sanitizes the webhook body correctly" do
+                captured_args = nil
+                allow(Airbrake).to receive(:notify) { |*args| captured_args = args }
+                perform_now
+
+                webhook_body = captured_args[1][:webhook_body]
+                expect(webhook_body["resource"]).not_to include("email", "card_details")
+                expect(webhook_body["resource"]).to include(
+                  "amount" => 5000,
+                  "description" => "Pay your council tax",
+                  "reference" => "12345"
+                )
+              end
+            end
 
             it "includes webhook body in Airbrake notification" do
               perform_now

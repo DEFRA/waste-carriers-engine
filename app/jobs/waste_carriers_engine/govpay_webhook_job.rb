@@ -31,13 +31,10 @@ module WasteCarriersEngine
     def sanitize_webhook_body(body)
       return body unless body.is_a?(Hash)
 
-      # Deep clone the hash to avoid modifying the original
       sanitized = body.deep_dup
 
-      # Remove PII fields if they exist
       if sanitized["resource"].is_a?(Hash)
-        # Remove email and card details
-        sanitized["resource"].delete("email_address")
+        sanitized["resource"].delete("email")
         sanitized["resource"].delete("card_details")
       end
 
