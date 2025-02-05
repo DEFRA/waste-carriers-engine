@@ -13,13 +13,17 @@ module WasteCarriersEngine
     rescue StandardError => e
       service_type = webhook_body.dig("resource", "moto") ? "back_office" : "front_office"
       Rails.logger.error "Error running GovpayWebhookJob (#{service_type}): #{e}"
-      Airbrake.notify(
-        e,
+      notification_params = {
         refund_id: webhook_body["refund_id"],
         payment_id: webhook_body["payment_id"],
-        service_type: service_type,
-        webhook_body: sanitize_webhook_body(webhook_body)
-      )
+        service_type: service_type
+      }
+
+      if FeatureToggle.active?("enhanced_govpay_logging")
+        notification_params[:webhook_body] = sanitize_webhook_body(webhook_body)
+      end
+
+      Airbrake.notify(e, notification_params)
     end
 
     private
