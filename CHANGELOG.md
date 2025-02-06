@@ -443,6 +443,8 @@
 
 **Fixed bugs:**
 
+- Add `logger` require statement to `engine.rb` in WasteCarriersEngine [\#1602](https://github.com/DEFRA/waste-carriers-engine/pull/1602) ([jjromeo](https://github.com/jjromeo))
+- RUBY 3459 wcr payment not found for webhook payment id [\#1601](https://github.com/DEFRA/waste-carriers-engine/pull/1601) ([jjromeo](https://github.com/jjromeo))
 - Fix/ruby 3441 companies house gem [\#1597](https://github.com/DEFRA/waste-carriers-engine/pull/1597) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Chore/ruby 3409 mongoid reference one [\#1582](https://github.com/DEFRA/waste-carriers-engine/pull/1582) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - RUBY 3387 implement solution to govpay status being stored twice [\#1581](https://github.com/DEFRA/waste-carriers-engine/pull/1581) ([jjromeo](https://github.com/jjromeo))
@@ -725,6 +727,8 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1599](https://github.com/DEFRA/waste-carriers-engine/pull/1599) ([jjromeo](https://github.com/jjromeo))
+- Bump govuk\_design\_system\_formbuilder from 5.7.1 to 5.8.0 [\#1598](https://github.com/DEFRA/waste-carriers-engine/pull/1598) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump defra\_ruby\_companies\_house from 1.0.0 to 1.0.3 [\#1596](https://github.com/DEFRA/waste-carriers-engine/pull/1596) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Use the companies house gem [\#1594](https://github.com/DEFRA/waste-carriers-engine/pull/1594) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Bump rails from 7.0.8.6 to 7.0.8.7 [\#1593](https://github.com/DEFRA/waste-carriers-engine/pull/1593) ([dependabot[bot]](https://github.com/apps/dependabot))
