@@ -82,6 +82,14 @@ module WasteCarriersEngine
                   "reference" => "12345"
                 )
               end
+
+              it "includes the payment_id outside the webhook body" do
+                captured_args = nil
+                allow(Airbrake).to receive(:notify) { |*args| captured_args = args }
+                perform_now
+
+                expect(captured_args[1][:payment_id]).to eq(webhook_body["resource"]["payment_id"])
+              end
             end
 
             it "includes webhook body in Airbrake notification" do
