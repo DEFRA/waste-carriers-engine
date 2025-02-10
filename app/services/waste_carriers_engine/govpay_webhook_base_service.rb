@@ -55,7 +55,9 @@ module WasteCarriersEngine
 
     def find_registration
       result = Registration.find_by("finance_details.payments.govpay_id": webhook_payment_or_refund_id)
-      raise ArgumentError, "Payment not found for webhook payment_id #{webhook_payment_or_refund_id}" if result.blank?
+      if result.blank?
+        raise ArgumentError, "Registration not found for webhook payment_id #{webhook_payment_or_refund_id}"
+      end
 
       result
     end
