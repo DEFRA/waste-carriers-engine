@@ -11,12 +11,34 @@ module WasteCarriersEngine
         raise ArgumentError, "Unrecognised Govpay webhook type"
       end
     rescue StandardError => e
-      Rails.logger.error "Error running GovpayWebhookJob: #{e}"
-      Airbrake.notify(
-        e,
-        refund_id: webhook_body["refund_id"],
-        payment_id: webhook_body["payment_id"]
-      )
+      service_type = webhook_body.dig("resource", "moto") ? "back_office" : "front_office"
+      Rails.logger.error "Error running GovpayWebhookJob (#{service_type}): #{e}"
+      notification_params = {
+        refund_id: webhook_body&.dig("resource", "refund_id"),
+        payment_id: webhook_body&.dig("resource", "payment_id"),
+        service_type: service_type
+      }
+
+      if FeatureToggle.active?("enhanced_govpay_logging")
+        notification_params[:webhook_body] = sanitize_webhook_body(webhook_body)
+      end
+
+      Airbrake.notify(e, notification_params)
+    end
+
+    private
+
+    def sanitize_webhook_body(body)
+      return body unless body.is_a?(Hash)
+
+      sanitized = body.deep_dup
+
+      if sanitized["resource"].is_a?(Hash)
+        sanitized["resource"].delete("email")
+        sanitized["resource"].delete("card_details")
+      end
+
+      sanitized
     end
   end
 end

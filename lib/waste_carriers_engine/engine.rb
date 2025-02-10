@@ -8,6 +8,7 @@ require "defra_ruby/address"
 require "defra_ruby/alert"
 require "defra_ruby_email"
 require "defra_ruby_validators"
+require "logger"
 
 module WasteCarriersEngine
   class Engine < ::Rails::Engine
