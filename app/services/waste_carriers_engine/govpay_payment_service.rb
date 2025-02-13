@@ -12,12 +12,10 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      response = DefraRubyGovpay::API.new(host_is_back_office:).send_request(
-        method: :post,
-        path: "/payments",
-        is_moto: host_is_back_office,
-        params: payment_params
-      )
+      response = govpay_payment_response
+
+      WasteCarriersEngine::DetailedLogger.warn "!!! Govpay: GovpayPaymentService prepare_for_payment, payment_uuid " \
+                          "#{@order.payment_uuid}, payment_params: #{payment_params}"
 
       response_json = JSON.parse(response.body)
 
@@ -32,8 +30,8 @@ module WasteCarriersEngine
       else
         :error
       end
-    rescue StandardError
-      # The error will have been logged by CanSendGovPayRequest, just return an error response here
+    rescue StandardError => e
+      WasteCarriersEngine::DetailedLogger.error("!!! Govpay: GovpayPaymentService prepare_for_payment error: #{e}")
       :error
     end
 
@@ -51,6 +49,15 @@ module WasteCarriersEngine
     end
 
     private
+
+    def govpay_payment_response
+      DefraRubyGovpay::API.new(host_is_back_office:).send_request(
+        method: :post,
+        path: "/payments",
+        is_moto: host_is_back_office,
+        params: payment_params
+      )
+    end
 
     def host_is_back_office
       @host_is_back_office ||= WasteCarriersEngine.configuration.host_is_back_office?

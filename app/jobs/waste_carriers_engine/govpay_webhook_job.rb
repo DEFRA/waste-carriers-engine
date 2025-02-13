@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "waste_carriers_engine/detailed_logger"
+
 module WasteCarriersEngine
   class GovpayWebhookJob < ApplicationJob
     def perform(webhook_body)
@@ -40,6 +42,7 @@ module WasteCarriersEngine
 
       if FeatureToggle.active?("enhanced_govpay_logging")
         notification_params[:webhook_body] = sanitize_webhook_body(webhook_body)
+        WasteCarriersEngine::DetailedLogger.error "!!! Govpay: Webhook job error #{error}: #{notification_params}"
       end
 
       Airbrake.notify(error, notification_params)

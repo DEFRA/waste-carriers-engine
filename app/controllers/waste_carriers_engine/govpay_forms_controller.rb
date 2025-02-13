@@ -52,7 +52,10 @@ module WasteCarriersEngine
     end
 
     def respond_to_acceptable_payment(action)
-      return unless valid_transient_registration?
+      valid = valid_transient_registration?
+      WasteCarriersEngine::DetailedLogger.warn "!!! Govpay: GovpayFormsController responding to accepted payment, " \
+                          "action #{action}, TR valid: #{valid}"
+      return unless valid
 
       govpay_callback_service = create_govpay_callback_service(action)
 
@@ -66,7 +69,10 @@ module WasteCarriersEngine
     end
 
     def respond_to_unsuccessful_payment(action)
-      return unless valid_transient_registration?
+      valid = valid_transient_registration?
+      WasteCarriersEngine::DetailedLogger.warn "!!! Govpay: GovpayFormsController responding to unsuccessful payment, " \
+                          "action #{action}, TR valid: #{valid}"
+      return unless valid
 
       govpay_callback_service = create_govpay_callback_service(action)
 
@@ -98,7 +104,7 @@ module WasteCarriersEngine
 
       valid_text = is_valid ? "Valid" : "Invalid"
       title = "#{valid_text} Govpay response: #{action}"
-      Rails.logger.debug [title, "Params:", params.to_json].join("\n")
+      Rails.logger.warn [title, "Params:", params.to_json].join("\n")
       Airbrake.notify(title, error_message: params)
     end
 
