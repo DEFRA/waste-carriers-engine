@@ -53,7 +53,7 @@ module WasteCarriersEngine
 
     def respond_to_acceptable_payment(action)
       valid = valid_transient_registration?
-      WasteCarriersEngine::DetailedLogger.warn "!!! Govpay: GovpayFormsController responding to accepted payment, " \
+      DetailedLogger.warn "!!! Govpay: GovpayFormsController responding to accepted payment, " \
                           "action #{action}, TR valid: #{valid}"
       return unless valid
 
@@ -70,7 +70,7 @@ module WasteCarriersEngine
 
     def respond_to_unsuccessful_payment(action)
       valid = valid_transient_registration?
-      WasteCarriersEngine::DetailedLogger.warn "!!! Govpay: GovpayFormsController responding to unsuccessful payment, " \
+      DetailedLogger.warn "!!! Govpay: GovpayFormsController responding to unsuccessful payment, " \
                           "action #{action}, TR valid: #{valid}"
       return unless valid
 

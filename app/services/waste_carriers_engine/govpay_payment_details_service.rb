@@ -20,7 +20,7 @@ module WasteCarriersEngine
       # Special case: If failed, check whether this was because of a cancellation
       status = Payment::STATUS_CANCELLED if payment_cancelled(status, response)
 
-      WasteCarriersEngine::DetailedLogger.warn "!!! Govpay: GovpayPaymentDetailsService handling response #{response}; " \
+      DetailedLogger.warn "!!! Govpay: GovpayPaymentDetailsService handling response #{response}; " \
                           "got status #{status} for payment_uuid #{@payment_uuid}}"
 
       status

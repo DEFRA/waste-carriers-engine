@@ -14,7 +14,7 @@ module WasteCarriersEngine
     def prepare_for_payment
       response = govpay_payment_response
 
-      WasteCarriersEngine::DetailedLogger.warn "!!! Govpay: GovpayPaymentService prepare_for_payment, payment_uuid " \
+      DetailedLogger.warn "!!! Govpay: GovpayPaymentService prepare_for_payment, payment_uuid " \
                           "#{@order.payment_uuid}, payment_params: #{payment_params}"
 
       response_json = JSON.parse(response.body)
@@ -31,7 +31,7 @@ module WasteCarriersEngine
         :error
       end
     rescue StandardError => e
-      WasteCarriersEngine::DetailedLogger.error("!!! Govpay: GovpayPaymentService prepare_for_payment error: #{e}")
+      DetailedLogger.error("!!! Govpay: GovpayPaymentService prepare_for_payment error: #{e}")
       :error
     end
 
