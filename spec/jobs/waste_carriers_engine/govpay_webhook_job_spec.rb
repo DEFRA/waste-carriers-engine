@@ -38,6 +38,7 @@ module WasteCarriersEngine
       let(:refund_webhook_service) { instance_double(WasteCarriersEngine::GovpayWebhookRefundService) }
 
       before do
+        allow(FeatureToggle).to receive(:active?).with(:detailed_logging)
         allow(WasteCarriersEngine::GovpayWebhookPaymentService).to receive(:new).and_return(payment_webhook_service)
         allow(payment_webhook_service).to receive(:run)
         allow(WasteCarriersEngine::GovpayWebhookRefundService).to receive(:new).and_return(refund_webhook_service)

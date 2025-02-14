@@ -12,6 +12,8 @@ require "dotenv/load"
 Bundler.require(*Rails.groups)
 require "waste_carriers_engine"
 
+require "waste_carriers_engine/detailed_logger"
+
 module Dummy
   class Application < Rails::Application
     config.load_defaults 7.0
@@ -103,6 +105,7 @@ module Dummy
       Rails.root.join("log/#{Rails.env}.log"),
       Rails.application.config.wcrs_logger_max_files,
       Rails.application.config.wcrs_logger_max_filesize
+
     )
   end
 end
