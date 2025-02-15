@@ -5,11 +5,17 @@ require "rest-client"
 module WasteCarriersEngine
   class GovpayCallbackService
     def initialize(payment_uuid, action)
-      @payment_uuid = payment_uuid
-      @action = action
-      @payment_status = govpay_payment_details_service.govpay_payment_status
-      @transient_registration = transient_registration_by_payment_uuid
-      @order = order_by_payment_uuid
+      Rails.logger.tagged("GovpayCallbackService", "initialize") do
+        @payment_uuid = payment_uuid
+        @action = action
+        @payment_status = govpay_payment_details_service.govpay_payment_status
+        @transient_registration = transient_registration_by_payment_uuid
+        @order = order_by_payment_uuid
+        DetailedLogger.warn "payment_uuid: #{payment_uuid}; action: #{action}; payment_status: #{@payment_status}, " \
+                            "transient_registration id: #{@transient_registration&.id}, " \
+                            "transient_registration reg_identifier: #{@transient_registration&.reg_identifier}, " \
+                            "order code: #{@order&.order_code}"
+      end
     end
 
     def process_payment
