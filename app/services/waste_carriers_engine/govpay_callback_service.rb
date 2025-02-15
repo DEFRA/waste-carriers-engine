@@ -13,24 +13,25 @@ module WasteCarriersEngine
     end
 
     def process_payment
-      return false unless valid_response?
+      Rails.logger.tagged("GovpayCallbackService", "process_payment") do
+        return false unless valid_response?
 
-      payment_status = GovpayPaymentDetailsService.payment_status(@action)
-
-      DetailedLogger.warn "!!! Govpay: GovpayCallbackService process_payment for payment_uuid #{@payment_uuid}," \
-                          "payment status #{@payment_status}"
-
-      case payment_status
-      when :success
-        update_payment_data
-      else
-        update_order_status
+        payment_status = GovpayPaymentDetailsService.payment_status(@action)
+  
+        DetailedLogger.warn "payment_uuid #{@payment_uuid}, payment status #{@payment_status}"
+  
+        case payment_status
+        when :success
+          update_payment_data
+        else
+          update_order_status
+        end
+  
+        true
+      rescue StandardError => e
+        DetailedLogger.warn "Error processing payment_uuid #{@payment_uuid}: #{e}"
+        raise e
       end
-
-      true
-    rescue StandardError => e
-      DetailedLogger.warn "!!! Govpay: Error processing payment_uuid #{@payment_uuid} in GovpayCallbackService: #{e}"
-      raise e
     end
 
     private
@@ -39,15 +40,15 @@ module WasteCarriersEngine
       validator = govpay_response_validator(@payment_status)
       valid = validator.public_send("valid_#{GovpayPaymentDetailsService.payment_status(@action)}?")
 
-      DetailedLogger.warn "!!! Govpay: GovpayCallbackService validating status \"#{@payment_status}\" " \
-                          "for payment uuid #{@payment_uuid}, valid: #{valid}"
+      DetailedLogger.warn "Validating status \"#{@payment_status}\" for payment uuid #{@payment_uuid}, valid: #{valid}"
 
       valid
     end
 
     def update_payment_data
-      DetailedLogger.warn "!!! Govpay: GovpayCallbackService updating payment data"
+      DetailedLogger.warn "Updating order #{@order.id}, reference #{@order.code} after online payment"
       @order.update_after_online_payment
+      DetailedLogger.warn "Creating payment after online payment"
       payment = Payment.new_from_online_payment(@order, user_email)
       payment.update_after_online_payment(
         govpay_status: Payment::STATUS_SUCCESS,

@@ -12,27 +12,28 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      response = govpay_payment_response
+      Rails.logger.tagged("GovpayPaymentService", "prepare_for_payment") do
+        response = govpay_payment_response
 
-      DetailedLogger.warn "!!! Govpay: GovpayPaymentService prepare_for_payment, payment_uuid " \
-                          "#{@order.payment_uuid}, payment_params: #{payment_params}"
-
-      response_json = JSON.parse(response.body)
-
-      govpay_payment_id = response_json["payment_id"]
-      if govpay_payment_id.present?
-        @order.govpay_id = govpay_payment_id
-        @order.save!
-        {
-          payment: nil, # @payment,
-          url: govpay_redirect_url(response)
-        }
-      else
+        DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}"
+  
+        response_json = JSON.parse(response.body)
+  
+        govpay_payment_id = response_json["payment_id"]
+        if govpay_payment_id.present?
+          @order.govpay_id = govpay_payment_id
+          @order.save!
+          {
+            payment: nil, # @payment,
+            url: govpay_redirect_url(response)
+          }
+        else
+          :error
+        end
+      rescue StandardError => e
+        DetailedLogger.error("prepare_for_payment error: #{e}")
         :error
       end
-    rescue StandardError => e
-      DetailedLogger.error("!!! Govpay: GovpayPaymentService prepare_for_payment error: #{e}")
-      :error
     end
 
     def payment_callback_url

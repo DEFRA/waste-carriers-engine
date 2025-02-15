@@ -10,18 +10,20 @@ module WasteCarriersEngine
     VALID_STATUS_TRANSITIONS = {}.freeze
 
     def run(webhook_body)
-      @webhook_body = webhook_body
+      Rails.logger.tagged("GovpayWebhookBaseService") do
+        @webhook_body = webhook_body
 
-      validate_webhook_body
-
-      @previous_status = wcr_payment.govpay_payment_status
-      if webhook_payment_or_refund_status == @previous_status
-        Rails.logger.warn "Status \"#{@previous_status}\" unchanged in #{payment_or_refund_str} webhook update " \
-                          "for #{log_webhook_context}"
-      else
-        validate_status_transition
-
-        update_payment_or_refund_status
+        validate_webhook_body
+  
+        @previous_status = wcr_payment.govpay_payment_status
+        if webhook_payment_or_refund_status == @previous_status
+          Rails.logger.warn "Status \"#{@previous_status}\" unchanged in #{payment_or_refund_str} webhook update " \
+                            "for #{log_webhook_context}"
+        else
+          validate_status_transition
+  
+          update_payment_or_refund_status
+        end
       end
     end
 

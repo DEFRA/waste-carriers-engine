@@ -15,24 +15,26 @@ module WasteCarriersEngine
 
     # Payment status in Govpay terms
     def govpay_payment_status
-      status = response&.dig("state", "status") || "error"
+      Rails.logger.tagged("GovpayPaymentDetailsService", "govpay_payment_status") do
+        status = response&.dig("state", "status") || "error"
 
-      # Special case: If failed, check whether this was because of a cancellation
-      status = Payment::STATUS_CANCELLED if payment_cancelled(status, response)
-
-      DetailedLogger.warn "!!! Govpay: GovpayPaymentDetailsService handling response #{response}; " \
-                          "got status #{status} for payment_uuid #{@payment_uuid}}"
-
-      status
-    rescue StandardError => e
-      Rails.logger.error "#{e.class} error retrieving status for payment, " \
-                         "uuid #{@payment_uuid}, govpay id #{govpay_id}: #{e}"
-      Airbrake.notify(e, message: e.message,
-                         payment_uuid:,
-                         govpay_id:,
-                         entity:)
-
-      raise e
+        # Special case: If failed, check whether this was because of a cancellation
+        status = Payment::STATUS_CANCELLED if payment_cancelled(status, response)
+  
+        DetailedLogger.warn "Handling response #{response}; " \
+                            "got status #{status} for payment_uuid #{@payment_uuid}}"
+  
+        status
+      rescue StandardError => e
+        Rails.logger.error "#{e.class} error retrieving status for payment, " \
+                           "uuid #{@payment_uuid}, govpay id #{govpay_id}: #{e}"
+        Airbrake.notify(e, message: e.message,
+                           payment_uuid:,
+                           govpay_id:,
+                           entity:)
+  
+        raise e
+      end
     end
 
     def payment
