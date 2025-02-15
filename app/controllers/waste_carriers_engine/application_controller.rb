@@ -4,6 +4,9 @@ module WasteCarriersEngine
   class ApplicationController < ActionController::Base
     include WasteCarriersEngine::CanAddDebugLogging
 
+    # Tag all log rows with the controller and action name if detailed logging enabled
+    around_action :tag_logs
+
     # Collect analytics data
     after_action :record_user_journey
 
@@ -32,6 +35,13 @@ module WasteCarriersEngine
     end
 
     protected
+
+    # Wrap the yield in a TaggedLogging block to identify controller and action in logs
+    def tag_logs
+      Rails.logger.tagged(self.class.name, self.action_name) do
+        yield
+      end
+    end
 
     def record_user_journey
       return unless @transient_registration.present? && @transient_registration.token.present?
