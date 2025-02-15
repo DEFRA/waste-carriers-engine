@@ -37,10 +37,8 @@ module WasteCarriersEngine
     protected
 
     # Wrap the yield in a TaggedLogging block to identify controller and action in logs
-    def tag_logs
-      Rails.logger.tagged(self.class.name, self.action_name) do
-        yield
-      end
+    def tag_logs(&)
+      Rails.logger.tagged(self.class.name, action_name, &)
     end
 
     def record_user_journey

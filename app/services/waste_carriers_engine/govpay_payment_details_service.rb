@@ -20,10 +20,10 @@ module WasteCarriersEngine
 
         # Special case: If failed, check whether this was because of a cancellation
         status = Payment::STATUS_CANCELLED if payment_cancelled(status, response)
-  
+
         DetailedLogger.warn "Handling response #{response}; " \
                             "got status #{status} for payment_uuid #{@payment_uuid}}"
-  
+
         status
       rescue StandardError => e
         Rails.logger.error "#{e.class} error retrieving status for payment, " \
@@ -32,7 +32,7 @@ module WasteCarriersEngine
                            payment_uuid:,
                            govpay_id:,
                            entity:)
-  
+
         raise e
       end
     end

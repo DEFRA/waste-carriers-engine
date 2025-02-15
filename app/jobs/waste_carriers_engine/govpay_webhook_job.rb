@@ -40,7 +40,7 @@ module WasteCarriersEngine
         service_type: service_type
       }
 
-      if FeatureToggle.active?("enhanced_govpay_logging")
+      if FeatureToggle.active?(:detailed_logging)
         notification_params[:webhook_body] = sanitize_webhook_body(webhook_body)
         DetailedLogger.error "Webhook job error #{error}: #{notification_params}"
       end

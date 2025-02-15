@@ -17,16 +17,16 @@ module WasteCarriersEngine
         return false unless valid_response?
 
         payment_status = GovpayPaymentDetailsService.payment_status(@action)
-  
+
         DetailedLogger.warn "payment_uuid #{@payment_uuid}, payment status #{@payment_status}"
-  
+
         case payment_status
         when :success
           update_payment_data
         else
           update_order_status
         end
-  
+
         true
       rescue StandardError => e
         DetailedLogger.warn "Error processing payment_uuid #{@payment_uuid}: #{e}"
@@ -46,7 +46,7 @@ module WasteCarriersEngine
     end
 
     def update_payment_data
-      DetailedLogger.warn "Updating order #{@order.id}, reference #{@order.code} after online payment"
+      DetailedLogger.warn "Updating order #{@order.id}, reference #{@order.order_code} after online payment"
       @order.update_after_online_payment
       DetailedLogger.warn "Creating payment after online payment"
       payment = Payment.new_from_online_payment(@order, user_email)
