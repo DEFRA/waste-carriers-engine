@@ -36,10 +36,19 @@ module WasteCarriersEngine
 
     protected
 
-    # Wrap the yield in a TaggedLogging block to identify controller and action in logs
-    def tag_logs(&)
-      Rails.logger.tagged(self.class.name, action_name, &)
+    # Implementing this cop's recommendation obfuscates the logic of this method:
+    # rubocop:disable Style/ExplicitBlockArgument
+    def tag_logs
+      # If detailed_logging is enabled, wrap the yield in a TaggedLogging block to log identify controller and action
+      if FeatureToggle.active?(:detailed_logging)
+        Rails.logger.tagged(self.class.name, action_name) do
+          yield
+        end
+      else
+        yield
+      end
     end
+    # rubocop:enable Style/ExplicitBlockArgument
 
     def record_user_journey
       return unless @transient_registration.present? && @transient_registration.token.present?

@@ -22,11 +22,12 @@ Style/DisableCopsWithinSourceCodeDirective:
   Enabled: true
   AllowedCops:
     - Layout/LineLength
-    - Naming/MemoizedInstanceVariableName
     - Metrics/BlockLength
     - Metrics/ClassLength
     - Metrics/MethodLength
     - Metrics/ModuleLength
+    - Naming/MemoizedInstanceVariableName
     - RSpec/AnyInstance
     - RSpec/LetSetup
     - Style/EmptyElse
+    - Style/ExplicitBlockArgument
