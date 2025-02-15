@@ -42,7 +42,7 @@ module WasteCarriersEngine
 
       if FeatureToggle.active?("enhanced_govpay_logging")
         notification_params[:webhook_body] = sanitize_webhook_body(webhook_body)
-        DetailedLogger.error "!!! Govpay: Webhook job error #{error}: #{notification_params}"
+        DetailedLogger.error "Webhook job error #{error}: #{notification_params}"
       end
 
       Airbrake.notify(error, notification_params)
