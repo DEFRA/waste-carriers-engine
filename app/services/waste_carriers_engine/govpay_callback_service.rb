@@ -24,7 +24,8 @@ module WasteCarriersEngine
 
         payment_status = GovpayPaymentDetailsService.payment_status(@action)
 
-        DetailedLogger.warn "payment_uuid #{@payment_uuid}, payment status #{@payment_status}"
+        DetailedLogger.warn "processing payment payment_uuid #{@payment_uuid}, action #{@action}, " \
+                            "payment status #{@payment_status}"
 
         case payment_status
         when :success

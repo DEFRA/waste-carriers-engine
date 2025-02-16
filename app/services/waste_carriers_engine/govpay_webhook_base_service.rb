@@ -81,7 +81,7 @@ module WasteCarriersEngine
 
     def payment_or_refund_str
       # :nocov:
-      NotImplementedError
+      raise NotImplementedError
       # :nocov:
     end
 

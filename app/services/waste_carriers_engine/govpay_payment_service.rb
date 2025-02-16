@@ -14,12 +14,12 @@ module WasteCarriersEngine
     def prepare_for_payment
       Rails.logger.tagged("GovpayPaymentService", "prepare_for_payment") do
         response = govpay_payment_response
-
-        DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}"
-
         response_json = JSON.parse(response.body)
 
         govpay_payment_id = response_json["payment_id"]
+        DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}, " \
+                            "received govpay payment id #{govpay_payment_id}"
+
         if govpay_payment_id.present?
           @order.govpay_id = govpay_payment_id
           @order.save!

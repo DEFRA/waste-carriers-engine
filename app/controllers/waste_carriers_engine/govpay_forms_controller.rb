@@ -9,6 +9,7 @@ module WasteCarriersEngine
       super(GovpayForm, "govpay_form")
 
       payment_info = prepare_for_payment
+      DetailedLogger.warn "payment_info: #{payment_info}"
 
       if payment_info == :error
         flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.setup_error")
@@ -20,13 +21,13 @@ module WasteCarriersEngine
 
     def payment_callback
       find_or_initialize_transient_registration(params[:token])
-      DetailedLogger.warn "Found transient_registration: #{@transient_registration&.reg_identifier}"
+      DetailedLogger.warn "payment_callback transient_registration: #{@transient_registration&.reg_identifier}"
 
       govpay_payment_status = GovpayPaymentDetailsService.new(
         payment_uuid: params[:uuid],
         is_moto: WasteCarriersEngine.configuration.host_is_back_office?
       ).govpay_payment_status
-      DetailedLogger.warn "govpay payment status: #{govpay_payment_status}"
+      DetailedLogger.warn "payment_callback govpay payment status: #{govpay_payment_status}"
 
       process_govpay_payment_status(govpay_payment_status)
     rescue StandardError => e
