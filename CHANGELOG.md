@@ -443,6 +443,7 @@
 
 **Fixed bugs:**
 
+- Fix payment/refund id lookup for govpay webhook error logging [\#1604](https://github.com/DEFRA/waste-carriers-engine/pull/1604) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Add `logger` require statement to `engine.rb` in WasteCarriersEngine [\#1602](https://github.com/DEFRA/waste-carriers-engine/pull/1602) ([jjromeo](https://github.com/jjromeo))
 - RUBY 3459 wcr payment not found for webhook payment id [\#1601](https://github.com/DEFRA/waste-carriers-engine/pull/1601) ([jjromeo](https://github.com/jjromeo))
 - Fix/ruby 3441 companies house gem [\#1597](https://github.com/DEFRA/waste-carriers-engine/pull/1597) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
@@ -727,6 +728,8 @@
 
 **Merged pull requests:**
 
+- Fix/ruby 3459 govpay webhook logging [\#1606](https://github.com/DEFRA/waste-carriers-engine/pull/1606) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Update CHANGELOG [\#1603](https://github.com/DEFRA/waste-carriers-engine/pull/1603) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1599](https://github.com/DEFRA/waste-carriers-engine/pull/1599) ([jjromeo](https://github.com/jjromeo))
 - Bump govuk\_design\_system\_formbuilder from 5.7.1 to 5.8.0 [\#1598](https://github.com/DEFRA/waste-carriers-engine/pull/1598) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump defra\_ruby\_companies\_house from 1.0.0 to 1.0.3 [\#1596](https://github.com/DEFRA/waste-carriers-engine/pull/1596) ([dependabot[bot]](https://github.com/apps/dependabot))
