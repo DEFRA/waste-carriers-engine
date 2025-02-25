@@ -30,6 +30,9 @@ module WasteCarriersEngine
 
       let(:update_refund_service) { instance_double(WasteCarriersEngine::GovpayUpdateRefundStatusService) }
 
+      # # Make finance details refundable
+      # before { registration.finance_details.orders.first.update(total_amount: 1) }
+
       include_examples "Govpay webhook services error logging"
 
       shared_examples "failed refund update" do
@@ -87,6 +90,19 @@ module WasteCarriersEngine
               # finished statuses
               it_behaves_like "no valid transitions", Payment::STATUS_SUCCESS
               it_behaves_like "no valid transitions", "error"
+
+              # There are no valid transitions other than to success other than to success.
+              # context "when the webhook changes the status to a non-success value" do
+
+              context "when the webhook changes the status to success" do
+                let(:prior_payment_status) { Payment::STATUS_SUBMITTED }
+
+                before { assign_webhook_status("success") }
+
+                it "updates the balance" do
+                  expect { run_service }.to change { wcr_payment.finance_details.reload.balance }
+                end
+              end
             end
           end
         end

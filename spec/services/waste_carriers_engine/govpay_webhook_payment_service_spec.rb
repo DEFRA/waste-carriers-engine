@@ -20,6 +20,8 @@ module WasteCarriersEngine
                govpay_payment_status: prior_payment_status)
       end
 
+      before { registration.finance_details.update_balance }
+
       include_examples "Govpay webhook services error logging"
 
       context "when the update is not for a payment" do
@@ -75,6 +77,26 @@ module WasteCarriersEngine
               it_behaves_like "no valid transitions", Payment::STATUS_FAILED
               it_behaves_like "no valid transitions", Payment::STATUS_CANCELLED
               it_behaves_like "no valid transitions", "error"
+
+              context "when the webhook changes the status to a non-success value" do
+                let(:prior_payment_status) { Payment::STATUS_STARTED }
+
+                before { assign_webhook_status("cancelled") }
+
+                it "does not update the balance" do
+                  expect { run_service }.not_to change { wcr_payment.finance_details.reload.balance }
+                end
+              end
+
+              context "when the webhook changes the status to success" do
+                let(:prior_payment_status) { Payment::STATUS_STARTED }
+
+                before { assign_webhook_status("success") }
+
+                it "updates the balance" do
+                  expect { run_service }.to change { wcr_payment.finance_details.reload.balance }
+                end
+              end
             end
           end
         end
@@ -95,7 +117,7 @@ module WasteCarriersEngine
         end
       end
 
-      # used by shared examples - different for payment vs refund webhooks
+      # used above and by shared examples - different for payment vs refund webhooks
       def assign_webhook_status(status)
         webhook_body["resource"]["state"]["status"] = status
       end
