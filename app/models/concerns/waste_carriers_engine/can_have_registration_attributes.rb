@@ -177,9 +177,7 @@ module WasteCarriersEngine
       end
 
       def pending_online_payment?
-        return false unless finance_details.present? &&
-                            finance_details.orders.present? &&
-                            finance_details.orders.first.present?
+        return false unless finance_details&.orders&.first.present?
 
         GovpayValidatorService.valid_govpay_status?(:pending, finance_details.orders.first.govpay_status)
       end

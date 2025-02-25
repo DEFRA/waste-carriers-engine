@@ -28,7 +28,7 @@ module WasteCarriersEngine
                             "payment status #{@payment_status}"
 
         case payment_status
-        when :success
+        when :success, :pending
           update_payment_data
         else
           update_order_status
@@ -58,7 +58,7 @@ module WasteCarriersEngine
       DetailedLogger.warn "Creating payment after online payment"
       payment = Payment.new_from_online_payment(@order, user_email)
       payment.update_after_online_payment(
-        govpay_status: Payment::STATUS_SUCCESS,
+        govpay_status: @payment_status,
         govpay_id: @order.govpay_id
       )
       @transient_registration.finance_details.update_balance

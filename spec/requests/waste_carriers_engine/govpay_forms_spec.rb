@@ -25,7 +25,6 @@ module WasteCarriersEngine
                workflow_state: "govpay_form",
                workflow_history: ["payment_summary_form"])
       end
-      let(:order) { transient_registration.finance_details.orders.first }
       let(:token) { transient_registration[:token] }
 
       describe "#new" do
@@ -38,6 +37,7 @@ module WasteCarriersEngine
         end
 
         it "creates a new finance_details" do
+          expect(transient_registration.reload.finance_details).not_to be_present
           get new_govpay_form_path(token)
           expect(transient_registration.reload.finance_details).to be_present
         end
@@ -62,6 +62,7 @@ module WasteCarriersEngine
           end
 
           it "creates a new finance_details" do
+            expect(transient_registration.reload.finance_details).not_to be_present
             get new_govpay_form_path(token)
             expect(transient_registration.reload.finance_details).to be_present
           end
@@ -172,9 +173,11 @@ module WasteCarriersEngine
               before do
                 govpay_id = SecureRandom.hex(22)
                 order.update!(govpay_id: govpay_id)
-                payment = build(:payment, amount: order.total_amount, govpay_payment_status: Payment::STATUS_CREATED, govpay_id: govpay_id)
-                transient_registration.finance_details.payments = [payment]
-                transient_registration.finance_details.save
+              end
+
+              it "creates a payment" do
+                expect { get payment_callback_govpay_forms_path(token, order.payment_uuid) }
+                  .to change { transient_registration.reload.finance_details.payments.count }.by(1)
               end
 
               it "redirects to renewal_received_pending_govpay_payment_form" do
@@ -193,6 +196,12 @@ module WasteCarriersEngine
 
           context "when govpay status is created" do
             let(:govpay_status) { Payment::STATUS_CREATED }
+
+            it_behaves_like "payment is pending"
+          end
+
+          context "when govpay status is started" do
+            let(:govpay_status) { Payment::STATUS_STARTED }
 
             it_behaves_like "payment is pending"
           end

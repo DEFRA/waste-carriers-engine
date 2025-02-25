@@ -5,11 +5,10 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe GovpayCallbackService do
-    let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
-    let(:payment_uuid) { order.payment_uuid }
-    let(:action) { "success" }
-    let(:govpay_callback_service) { described_class.new(payment_uuid, action) }
+    let(:govpay_callback_service) { described_class.new(payment_uuid, govpay_payment_status) }
+
     let(:govpay_payment_details_service) { instance_double(GovpayPaymentDetailsService) }
+    let(:payment_uuid) { order.payment_uuid }
     let(:transient_registration) do
       create(:renewing_registration,
              :has_required_data,
@@ -18,24 +17,22 @@ module WasteCarriersEngine
              temp_cards: 0)
     end
     let(:order) { transient_registration.finance_details.orders.first }
-    let(:govpay_validator_service) { instance_double(GovpayValidatorService) }
 
     before do
       allow(GovpayPaymentDetailsService).to receive(:new).and_return(govpay_payment_details_service)
-      allow(GovpayValidatorService).to receive(:new).and_return(govpay_validator_service)
-      allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
       allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
       transient_registration.prepare_for_payment(:govpay)
       order.govpay_id = "a_govpay_id"
       order.save!
-      allow(govpay_payment_details_service).to receive(:govpay_payment_status).and_return(Payment::STATUS_CREATED)
     end
 
     describe "#process_payment" do
-      context "when the response is valid" do
-        before do
-          allow(govpay_validator_service).to receive(:valid_success?).and_return(true)
-        end
+
+      before do
+        allow(govpay_payment_details_service).to receive(:govpay_payment_status).and_return(govpay_payment_status)
+      end
+
+      shared_examples "a valid response" do
 
         it "returns true" do
           expect(govpay_callback_service.process_payment).to be true
@@ -43,17 +40,12 @@ module WasteCarriersEngine
 
         it "updates the payment status" do
           govpay_callback_service.process_payment
-          expect(transient_registration.reload.finance_details.payments.first.govpay_payment_status).to eq(Payment::STATUS_SUCCESS)
+          expect(transient_registration.reload.finance_details.payments.first.govpay_payment_status).to eq(govpay_payment_status)
         end
 
         it "updates the order status" do
           govpay_callback_service.process_payment
-          expect(transient_registration.reload.finance_details.orders.first.govpay_status).to eq(Payment::STATUS_SUCCESS)
-        end
-
-        it "updates the balance" do
-          govpay_callback_service.process_payment
-          expect(transient_registration.reload.finance_details.balance).to eq(0)
+          expect(transient_registration.reload.finance_details.orders.first.govpay_status).to eq(govpay_payment_status)
         end
 
         context "when run in the front office" do
@@ -81,11 +73,47 @@ module WasteCarriersEngine
         end
       end
 
+      context "when the response is valid" do
+        context "when the govpay status is 'created'" do
+          let(:govpay_payment_status) { Payment::STATUS_CREATED }
+
+          it_behaves_like "a valid response"
+
+          it "does not update the balance" do
+            expect { govpay_callback_service.process_payment }
+              .not_to change { transient_registration.reload.finance_details.balance }
+          end
+        end
+
+        context "when the govpay status is 'started'" do
+          let(:govpay_payment_status) { Payment::STATUS_STARTED }
+
+          it_behaves_like "a valid response"
+
+          it "does not update the balance" do
+            expect { govpay_callback_service.process_payment }
+              .not_to change { transient_registration.reload.finance_details.balance }
+          end
+        end
+
+        context "when the govpay status is 'success'" do
+          let(:govpay_payment_status) { Payment::STATUS_SUCCESS }
+
+          it_behaves_like "a valid response"
+
+          it "updates the balance" do
+            expect { govpay_callback_service.process_payment }
+              .to change { transient_registration.reload.finance_details.balance }.to(0)
+          end
+        end
+      end
+
       context "when the response is invalid" do
         let(:payment_uuid) { "invalid_uuid" }
+        let(:govpay_payment_status) { "started" }
 
         before do
-          allow(govpay_validator_service).to receive(:valid_success?).and_return(false)
+          allow(govpay_payment_details_service).to receive(:govpay_payment_status)
         end
 
         it "returns false" do
@@ -101,23 +129,6 @@ module WasteCarriersEngine
         it "does not create a payment" do
           govpay_callback_service.process_payment
           expect(transient_registration.reload.finance_details.payments.count).to eq(0)
-        end
-      end
-
-      context "when the action is not success" do
-        let(:action) { "failure" }
-
-        before do
-          allow(govpay_validator_service).to receive(:valid_failure?).and_return(true)
-        end
-
-        it "returns true" do
-          expect(govpay_callback_service.process_payment).to be true
-        end
-
-        it "updates only the order status" do
-          govpay_callback_service.process_payment
-          expect(transient_registration.reload.finance_details.payments).to be_empty
         end
       end
     end
