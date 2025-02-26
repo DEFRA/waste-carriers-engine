@@ -443,6 +443,7 @@
 
 **Fixed bugs:**
 
+- Fix/ruby 3459 payment callbacks [\#1609](https://github.com/DEFRA/waste-carriers-engine/pull/1609) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix payment/refund id lookup for govpay webhook error logging [\#1604](https://github.com/DEFRA/waste-carriers-engine/pull/1604) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Add `logger` require statement to `engine.rb` in WasteCarriersEngine [\#1602](https://github.com/DEFRA/waste-carriers-engine/pull/1602) ([jjromeo](https://github.com/jjromeo))
 - RUBY 3459 wcr payment not found for webhook payment id [\#1601](https://github.com/DEFRA/waste-carriers-engine/pull/1601) ([jjromeo](https://github.com/jjromeo))
@@ -728,6 +729,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1607](https://github.com/DEFRA/waste-carriers-engine/pull/1607) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/ruby 3459 govpay webhook logging [\#1606](https://github.com/DEFRA/waste-carriers-engine/pull/1606) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1603](https://github.com/DEFRA/waste-carriers-engine/pull/1603) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1599](https://github.com/DEFRA/waste-carriers-engine/pull/1599) ([jjromeo](https://github.com/jjromeo))
