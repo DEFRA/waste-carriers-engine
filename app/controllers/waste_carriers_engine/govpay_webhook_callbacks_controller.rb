@@ -6,6 +6,8 @@ module WasteCarriersEngine
 
     def process_webhook
       pay_signature = request.headers["Pay-Signature"]
+      # need to rewind in case already read
+      request.body.rewind
       body = request.body.read
 
       raise ArgumentError, "Govpay payment webhook request missing Pay-Signature header" unless pay_signature.present?
