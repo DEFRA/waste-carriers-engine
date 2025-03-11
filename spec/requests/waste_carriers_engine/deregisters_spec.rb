@@ -39,7 +39,7 @@ module WasteCarriersEngine
           let(:token_created_at) { 3.months.ago }
 
           it "returns a 422 response code" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
           end
 
           it "renders the correct template" do
@@ -55,7 +55,7 @@ module WasteCarriersEngine
           let(:active) { false }
 
           it "returns a 422 response code" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
           end
 
           it "renders the correct template" do
