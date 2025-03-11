@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  # rubocop:disable Metrics/ClassLength
   class GovpayFormsController < ::WasteCarriersEngine::FormsController
     include UnsubmittableForm
     include CanAddDebugLogging
@@ -15,18 +16,17 @@ module WasteCarriersEngine
         flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.setup_error")
         go_back
       else
-        redirect_to payment_info[:url], allow_other_host: true
+        govpay_next_url = payment_info[:url]
+        # Store the URL in case the form is reloaded
+        @transient_registration.update(temp_govpay_next_url: govpay_next_url)
+
+        redirect_to govpay_next_url, allow_other_host: true
       end
     end
 
     def payment_callback
       find_or_initialize_transient_registration(params[:token])
       DetailedLogger.warn "payment_callback transient_registration: #{@transient_registration&.reg_identifier}"
-
-      govpay_payment_status = GovpayPaymentDetailsService.new(
-        payment_uuid: params[:uuid],
-        is_moto: WasteCarriersEngine.configuration.host_is_back_office?
-      ).govpay_payment_status
       DetailedLogger.warn "payment_callback govpay payment status: #{govpay_payment_status}"
 
       process_govpay_payment_status(govpay_payment_status)
@@ -39,6 +39,24 @@ module WasteCarriersEngine
     end
 
     private
+
+    def order
+      @transient_registration.finance_details&.orders&.first
+    end
+
+    def govpay_payment_status
+      @govpay_payment_status ||= GovpayPaymentDetailsService.new(
+        payment_uuid: order.payment_uuid,
+        is_moto: WasteCarriersEngine.configuration.host_is_back_office?
+      ).govpay_payment_status
+    end
+
+    def govpay_payment_in_progress?
+      return false if order&.govpay_id.blank? || @transient_registration.temp_govpay_next_url.blank?
+
+      # Payment started but cancelled => not in progress
+      govpay_payment_status != Payment::STATUS_CANCELLED
+    end
 
     def process_govpay_payment_status(govpay_payment_status)
       govpay_payment_application_status = GovpayPaymentDetailsService.payment_status(govpay_payment_status)
@@ -54,8 +72,10 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
+      # Don't call govpay if a payment is already in progress
+      return { url: @transient_registration.temp_govpay_next_url } if govpay_payment_in_progress?
+
       @transient_registration.prepare_for_payment(:govpay, current_user)
-      order = @transient_registration.finance_details.orders.first
       govpay_service = GovpayPaymentService.new(@transient_registration, order, current_user)
       govpay_service.prepare_for_payment
     end
@@ -120,4 +140,5 @@ module WasteCarriersEngine
       flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.#{type}")
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

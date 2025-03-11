@@ -30,6 +30,8 @@ module WasteCarriersEngine
       describe "#new" do
 
         before do
+          allow(GovpayPaymentService).to receive(:new).and_call_original
+
           stub_request(:any, /.*#{govpay_host}.*/).to_return(
             status: 200,
             body: File.read("./spec/fixtures/files/govpay/get_payment_response_created.json")
@@ -50,6 +52,18 @@ module WasteCarriersEngine
         it "populates govpay_id on the order" do
           get new_govpay_form_path(token)
           expect(transient_registration.reload.finance_details.orders[0].govpay_id).to be_present
+        end
+
+        # Guard against page reloads
+        context "when the govpay form is reloaded" do
+          before do
+            get new_govpay_form_path(token)
+            get new_govpay_form_path(token)
+          end
+
+          it "calls the Gov.UK Pay API only once" do
+            expect(GovpayPaymentService).to have_received(:new).exactly(:once)
+          end
         end
 
         context "when the transient_registration is a new registration" do
