@@ -25,6 +25,12 @@ module WasteCarriersEngine
     ].freeze
 
     def self.build_past_registration(registration, cause = nil)
+      Rails.logger.warn "\n>> existing past_registrations:"
+      registration.past_registrations.each do |past_registration|
+        Rails.logger.warn ">>> past_registration: #{past_registration.inspect}"
+        Rails.logger.warn ">>> valid? #{past_registration.valid?}"
+        Rails.logger.warn ">>> errors: #{past_registration.errors.to_hash}"
+      end
       past_registration = PastRegistration.new
       past_registration.cause = cause if cause.present?
 
@@ -39,6 +45,11 @@ module WasteCarriersEngine
       )
 
       past_registration.assign_attributes(attributes)
+      Rails.logger.warn "\n>> new past_registration:"
+      Rails.logger.warn ">>> past_registration: #{past_registration.inspect}"
+      Rails.logger.warn ">>> valid? #{past_registration.valid?}"
+      byebug
+      Rails.logger.warn ">>> errors: #{past_registration.errors.to_hash}"
 
       past_registration.save!
       past_registration
