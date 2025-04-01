@@ -27,7 +27,7 @@ module WasteCarriersEngine
     end
 
     def complete_renewal_if_ready
-      return unless registration.is_a?(NewRegistration)
+      return unless registration.is_a?(WasteCarriersEngine::RenewingRegistration)
       return unless webhook_payment_or_refund_status == "success"
 
       RenewalCompletionService.new(registration).complete_renewal
