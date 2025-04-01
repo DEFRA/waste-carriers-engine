@@ -43,6 +43,7 @@ module WasteCarriersEngine
 
     SUBMITTED_STATES = %w[renewal_complete_form
                           renewal_received_pending_conviction_form
+                          renewal_received_pending_govpay_payment_form
                           renewal_received_pending_payment_form].freeze
 
     def registration

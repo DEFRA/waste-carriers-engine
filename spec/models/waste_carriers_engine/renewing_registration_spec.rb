@@ -112,6 +112,7 @@ module WasteCarriersEngine
       end
 
       %w[renewal_received_pending_payment_form
+         renewal_received_pending_govpay_payment_form
          renewal_received_pending_conviction_form
          renewal_complete_form].each do |valid_state|
         context "when the workflow_state is #{valid_state}" do
