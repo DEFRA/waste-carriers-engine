@@ -18,10 +18,19 @@ module WasteCarriersEngine
     def update_payment_or_refund_status
       wcr_payment.update(govpay_payment_status: webhook_payment_or_refund_status)
       wcr_payment.finance_details.update_balance
-      wcr_payment.finance_details.registration.save!
+      (wcr_payment.finance_details.registration || wcr_payment.finance_details.transient_registration).save!
+
+      complete_renewal_if_ready
 
       Rails.logger.info "Updated status from #{previous_status} to #{webhook_payment_or_refund_status} " \
                         "for #{log_webhook_context}"
+    end
+
+    def complete_renewal_if_ready
+      return unless registration.is_a?(NewRegistration)
+      return unless webhook_payment_or_refund_status == "success"
+
+      RenewalCompletionService.new(registration).complete_renewal
     end
 
     def log_webhook_context

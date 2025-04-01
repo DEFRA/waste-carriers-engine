@@ -108,7 +108,7 @@ module WasteCarriersEngine
           it_behaves_like "status is present in the update"
         end
 
-        context "when the payment belongs to a transient_registration" do
+        context "when the payment belongs to a renewing registration" do
           let(:registration) { create(:new_registration, :has_required_data) }
           let(:renewal_completion_service) { instance_double(RenewalCompletionService) }
 
@@ -119,10 +119,26 @@ module WasteCarriersEngine
 
           it_behaves_like "status is present in the update"
 
-          it "calls the renewal completion service" do
-            run_service
+          context "when the status is not success" do
+            let(:prior_payment_status) { "started" }
 
-            expect(renewal_completion_service).to have_received(:complete_renewal)
+            before { webhook_body["resource"]["state"]["status"] = "submitted" }
+
+            it "does not call the renewal completion service" do
+              run_service
+
+              expect(renewal_completion_service).not_to have_received(:complete_renewal)
+            end
+          end
+
+          context "when the status is success" do
+            before { webhook_body["resource"]["state"]["status"] = "success" }
+
+            it "calls the renewal completion service" do
+              run_service
+
+              expect(renewal_completion_service).to have_received(:complete_renewal)
+            end
           end
         end
 
