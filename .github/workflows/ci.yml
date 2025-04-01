@@ -38,8 +38,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install xvfb -y
           sudo apt-get install wkhtmltopdf -y
-          sudo apt-get install -qq python3 python3-pip
-          sudo pip3 install mtools[mlaunch]
 
       # We don't have to specify the ruby version, or grab it from .ruby-verion. This action supports reading the
       # version from .ruby-version itself
