@@ -12,7 +12,7 @@
       "language": "en",
       "email": "sherlock.holmes@example.com",
       "state": {
-        "status": "submitted",
+        "status": "success",
         "finished": false
       },
       "payment_id": "hu20sqlact5260q2nanm0q8u93",
