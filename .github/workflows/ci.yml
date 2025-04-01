@@ -39,10 +39,13 @@ jobs:
           sudo apt-get install xvfb -y
           sudo apt-get install wkhtmltopdf -y
 
+      # Install MongoDB as per https://www.mongodb.com/community/forums/t/installing-mongodb-over-ubuntu-22-04/159931
           wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc |  gpg --dearmor | sudo tee /usr/share/keyrings/mongodb.gpg > /dev/null
           echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
           sudo apt update
-          sudo apt install mongodb-org
+          sudo apt install mongodb-org mongo
+
+      # Python is required for mlaunch, which we use to start a MongoDB cluster
           sudo apt-get install -qq python3 python3-pip
           sudo pip3 install mtools[mlaunch]
 
