@@ -60,24 +60,18 @@ jobs:
           echo "Contents of $TMP_DIR/mongodb-org-6.0.list:"
           cat "$TMP_DIR/mongodb-org-6.0.list"
 
-          # Create a new GPG keyring in TMP_DIR for MongoDB
+          # Add the MongoDB key to the apt keyring in the temporary directory
           gpg --no-default-keyring --keyring "$TMP_DIR/mongodb-keyring.gpg" --import "$TMP_DIR/mongodb-server-6.0.gpg"
+          echo "MongoDB key added to $TMP_DIR/mongodb-keyring.gpg"
 
-          # Add the repository and keyring to apt configuration
-          sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list < "$TMP_DIR/mongodb-org-6.0.list"
-          
-          # Update APT and use the keyring from TMP_DIR
+          # Update APT to use the keyring in the temporary directory and the repo list in the temporary directory
           sudo apt-get update -o Dir::Etc::sourcelist="$TMP_DIR/mongodb-org-6.0.list" \
-                                -o Dir::Etc::sourceparts="-" \
-                                -o APT::Get::List-Cleanup="0" \
-                                -o APT::Keyring::File="$TMP_DIR/mongodb-keyring.gpg"
+                               -o Dir::Etc::sourceparts="-" \
+                               -o APT::Get::List-Cleanup="0" \
+                               -o Dir::Etc::trusted="true"
 
-          # Install MongoDB
-          sudo apt-get install -y -o Dir::Etc::sourcelist="$TMP_DIR/mongodb-org-6.0.list" \
-                                       -o Dir::Etc::sourceparts="-" \
-                                       -o APT::Get::List-Cleanup="0" \
-                                       -o APT::Keyring::File="$TMP_DIR/mongodb-keyring.gpg" \
-                                       mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
+          # Install MongoDB packages
+          sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
 
 
 
