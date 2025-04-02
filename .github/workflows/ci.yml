@@ -40,6 +40,9 @@ jobs:
           sudo apt-get install xvfb -y
           sudo apt-get install wkhtmltopdf -y
 
+          #
+
+
           # Create a temporary directory for APT configuration and GPG key
           TMP_DIR=$(mktemp -d)
           echo "TMP_DIR: $TMP_DIR"
@@ -48,30 +51,26 @@ jobs:
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
           echo "MongoDB GPG key downloaded to $TMP_DIR/mongodb-server-6.0.gpg"
 
-          # Create the MongoDB APT source list file in the temporary directory
-          echo "deb [ arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
+          # Add the GPG key to APT's trusted keyring (without writing to system directories)
+          sudo mkdir -p /usr/share/keyrings
+          sudo cp "$TMP_DIR/mongodb-server-6.0.gpg" /usr/share/keyrings/mongodb-server-6.0.gpg
 
-          # Debugging step: Check the repository list file contents before copying
+          # Create the MongoDB APT source list file in the temporary directory
+          echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
+          echo "MongoDB repository list created in $TMP_DIR/mongodb-org-6.0.list"
+
+          # Debugging step: Check the repository list file contents
           echo "Contents of $TMP_DIR/mongodb-org-6.0.list:"
           cat "$TMP_DIR/mongodb-org-6.0.list"
 
-          # Add the MongoDB list file from TMP_DIR to the APT sources list directory
-          sudo cp "$TMP_DIR/mongodb-org-6.0.list" /etc/apt/sources.list.d/
+          # Use the custom repository list for the APT update without writing to system directories
+          sudo apt-get update -o Dir::Etc::sourcelist="$TMP_DIR/mongodb-org-6.0.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
 
-          # Debugging step: Check if MongoDB list file is correctly placed
-          echo "Contents of /etc/apt/sources.list.d/mongodb-org-6.0.list:"
-          cat /etc/apt/sources.list.d/mongodb-org-6.0.list
+          # Install MongoDB from the custom repository
+          sudo apt-get install -y -o Dir::Etc::sourcelist="$TMP_DIR/mongodb-org-6.0.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
 
-          # Debugging step: Check repository configuration
-          echo "Checking APT configuration"
-          apt-cache policy
 
-          # Clear the APT cache and update
-          echo "Clearing APT cache"
-          sudo rm -rf /var/lib/apt/lists/*
-
-          sudo apt-get update
-          sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
+          #
 
           sudo apt-get install -qq python3 python3-pip
           sudo pip3 install mtools[mlaunch]
