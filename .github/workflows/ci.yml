@@ -89,7 +89,9 @@ jobs:
           sudo apt-cache policy  # Check the current APT configuration and repository sources
 
           # Use the temporary directory directly in APT without copying anything to system directories
-          sudo apt-get update -y -o Dir::Etc::SourcesList="$TMP_DIR/mongodb-org-6.0.gpg" -o Dir::Etc::SourceParts="$TMP_DIR" -o Dir::State::Lists="$TMP_DIR"
+          # sudo apt-get update -y -o Dir::Etc::SourcesList="$TMP_DIR/mongodb-org-6.0.gpg" -o Dir::Etc::SourceParts="$TMP_DIR" -o Dir::State::Lists="$TMP_DIR"
+          sudo apt-get update -y -o Dir::Etc::SourcesList="/etc/apt/sources.list.d/mongodb-org-6.0.list" -o Dir::Etc::SourceParts="$TMP_DIR" -o Dir::State::Lists="$TMP_DIR" -o Debug::Acquire::http=true
+
 
           sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
 
