@@ -46,12 +46,22 @@ jobs:
           # Download the MongoDB GPG key into the temporary directory
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
 
+          # List the file and its ownership before applying chmod
+          ls -l "$TMP_DIR/mongodb-org-6.0.list"
+
           # Ensure the files are accessible by the _apt user (fix permissions)
+          sudo chown root:root "$TMP_DIR/mongodb-org-6.0.list"
           sudo chown -R 644 "$TMP_DIR"
+
+          # Check permissions after chmod and chown
+          ls -l "$TMP_DIR/mongodb-org-6.0.list"
 
           # Ensure chmod worked
           echo "Ensuring chmod worked"
           ls -l "$TMP_DIR/mongodb-org-6.0.list"  # Verify the permissions again after chmod
+
+          # Check if _apt can access the file
+          sudo -u _apt ls -l "$TMP_DIR/mongodb-org-6.0.list"
 
           # Create the MongoDB APT source list file in the temporary directory
           echo "deb [ arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
