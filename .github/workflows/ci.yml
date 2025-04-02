@@ -43,6 +43,7 @@ jobs:
           #
 
 
+
           # Create a temporary directory for APT configuration and GPG key
           TMP_DIR=$(mktemp -d)
           echo "TMP_DIR: $TMP_DIR"
@@ -51,23 +52,23 @@ jobs:
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
           echo "MongoDB GPG key downloaded to $TMP_DIR/mongodb-server-6.0.gpg"
 
-          # Add the GPG key to APT's trusted keyring (without writing to system directories)
-          sudo mkdir -p /usr/share/keyrings
-          sudo cp "$TMP_DIR/mongodb-server-6.0.gpg" /usr/share/keyrings/mongodb-server-6.0.gpg
-
           # Create the MongoDB APT source list file in the temporary directory
-          echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
+          echo "deb [arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
           echo "MongoDB repository list created in $TMP_DIR/mongodb-org-6.0.list"
 
           # Debugging step: Check the repository list file contents
           echo "Contents of $TMP_DIR/mongodb-org-6.0.list:"
           cat "$TMP_DIR/mongodb-org-6.0.list"
 
-          # Use the custom repository list for the APT update without writing to system directories
+          # Ensure the GPG key is used directly from the temporary directory (no copy to /usr/share/keyrings)
+          # Use APT's 'signed-by' option directly from the temporary directory
+
+          # Update the APT repository list using the custom list and GPG key from TMP_DIR
           sudo apt-get update -o Dir::Etc::sourcelist="$TMP_DIR/mongodb-org-6.0.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
 
           # Install MongoDB from the custom repository
           sudo apt-get install -y -o Dir::Etc::sourcelist="$TMP_DIR/mongodb-org-6.0.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
+
 
 
           #
