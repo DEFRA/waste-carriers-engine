@@ -40,9 +40,9 @@ jobs:
           sudo apt-get install xvfb -y
           sudo apt-get install wkhtmltopdf -y
 
-          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo tee /usr/share/keyrings/mongodb-server-6.0.gpg
-          echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-          apt-get update > /dev/null
+          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+          sudo apt-add-repository "deb [ arch=amd64,arm64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse"
+          sudo apt-get update > /dev/null
           sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
 
           sudo apt-get install -qq python3 python3-pip
