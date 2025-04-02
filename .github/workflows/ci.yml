@@ -54,10 +54,10 @@ jobs:
           ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
 
           # Ensure the files are accessible by the _apt user (fix permissions)
-          sudo chown root:root "$TMP_DIR/mongodb-server-6.0.gpg"
+          # sudo chown root:root "$TMP_DIR/mongodb-server-6.0.gpg"
           sudo chown -R 644 "$TMP_DIR"
 
-          echo ">> Check permissions after chmod and chown"
+          echo ">> Check permissions after chmod"
           echo ">>> ls -l \"$TMP_DIR/mongodb-server-6.0.gpg\":"
           ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
 
