@@ -47,7 +47,7 @@ jobs:
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
 
           # Ensure the files are accessible by the _apt user (fix permissions)
-          sudo chown -R _apt:_apt "$TMP_DIR"
+          sudo chown -R 644 "$TMP_DIR"
 
           # Create the MongoDB APT source list file in the temporary directory
           echo "deb [ arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
