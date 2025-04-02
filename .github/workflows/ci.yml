@@ -33,7 +33,6 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of sonarcloud analysis
 
       # Install various other dependencies
-      # Install MongoDB as per https://www.mongodb.com/community/forums/t/installing-mongodb-over-ubuntu-22-04/159931
       # Python is required for mlaunch, which we use to start a MongoDB cluster
       - name: Install dependencies
         run: |
@@ -42,7 +41,7 @@ jobs:
           sudo apt-get install wkhtmltopdf -y
 
           sudo apt-get install gnupg curl
-          ubuntu@cna:~$ echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+          echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
           deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse
           apt-get update > /dev/null
           sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
@@ -50,8 +49,7 @@ jobs:
           sudo apt-get install -qq python3 python3-pip
           sudo pip3 install mtools[mlaunch]
 
-      # We don't have to specify the ruby version, or grab it from .ruby-verion. This action supports reading the
-      # version from .ruby-version itself
+      # This action uses the ruby version specified in .ruby-version
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
