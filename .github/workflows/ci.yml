@@ -49,20 +49,20 @@ jobs:
 
           echo ">> List the file and its ownership before applying chmod"
           ls -lR "$TMP_DIR"
-          ls -l "$TMP_DIR/mongodb-org-6.0.gpg"
+          ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
 
           # Ensure the files are accessible by the _apt user (fix permissions)
-          sudo chown root:root "$TMP_DIR/mongodb-org-6.0.gpg"
+          sudo chown root:root "$TMP_DIR/mongodb-server-6.0.gpg"
           sudo chown -R 644 "$TMP_DIR"
 
           echo ">> Check permissions after chmod and chown"
-          ls -l "$TMP_DIR/mongodb-org-6.0.gpg"
+          ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
 
           echo ">> Ensuring chmod worked"
-          ls -l "$TMP_DIR/mongodb-org-6.0.gpg"  # Verify the permissions again after chmod
+          ls -l "$TMP_DIR/mongodb-server-6.0.gpg"  # Verify the permissions again after chmod
 
           echo ">> Check if _apt can access the file"
-          sudo -u _apt ls -l "$TMP_DIR/mongodb-org-6.0.gpg"
+          sudo -u _apt ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
 
           # Create the MongoDB APT source list file in the temporary directory
           echo "deb [ arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.gpg"
