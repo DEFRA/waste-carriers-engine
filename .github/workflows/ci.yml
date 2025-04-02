@@ -42,11 +42,13 @@ jobs:
 
           # Create a temporary directory to hold the APT source and GPG key
           TMP_DIR=$(mktemp -d)
+          echo ">> TMP_DIR: ${TMP_DIR}"
 
           # Download the MongoDB GPG key into the temporary directory
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
 
           # List the file and its ownership before applying chmod
+          echo ">> ls -l ${ls -l \"$TMP_DIR/mongodb-org-6.0.list\""}"
           ls -l "$TMP_DIR/mongodb-org-6.0.list"
 
           # Ensure the files are accessible by the _apt user (fix permissions)
@@ -54,6 +56,7 @@ jobs:
           sudo chown -R 644 "$TMP_DIR"
 
           # Check permissions after chmod and chown
+          echo ">> ls -l ${ls -l \"$TMP_DIR/mongodb-org-6.0.list\""}"
           ls -l "$TMP_DIR/mongodb-org-6.0.list"
 
           # Ensure chmod worked
