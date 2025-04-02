@@ -40,8 +40,20 @@ jobs:
           sudo apt-get install xvfb -y
           sudo apt-get install wkhtmltopdf -y
 
-          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-          sudo apt-add-repository "deb [ arch=amd64,arm64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse"
+          # Create a temporary directory to hold the APT source and GPG key
+          TMP_DIR=$(mktemp -d)
+
+          # Download the MongoDB GPG key into the temporary directory
+          curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
+
+          # Create the MongoDB APT source list file in the temporary directory
+          echo "deb [ arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
+
+          # Run apt-get update, using the temporary keyring and list file
+          sudo apt-get update -o Dir::Etc::SourceList=$TMP_DIR/mongodb-org-6.0.list \
+                               -o Dir::Etc::Main=$TMP_DIR \
+                               -o Dir::Etc::Parts=$TMP_DIR \
+                               -o Dir::State::Lists=$TMP_DIR
           sudo apt-get update > /dev/null
           sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
 
