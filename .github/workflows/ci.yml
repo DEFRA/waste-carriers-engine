@@ -48,7 +48,9 @@ jobs:
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
 
           echo ">> List the file and its ownership before applying chmod"
+          echo ">>> ls -lR \"$TMP_DIR\":"
           ls -lR "$TMP_DIR"
+          echo ">>> ls -l \"$TMP_DIR/mongodb-server-6.0.gpg\":"
           ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
 
           # Ensure the files are accessible by the _apt user (fix permissions)
@@ -56,6 +58,7 @@ jobs:
           sudo chown -R 644 "$TMP_DIR"
 
           echo ">> Check permissions after chmod and chown"
+          echo ">>> ls -l \"$TMP_DIR/mongodb-server-6.0.gpg\":"
           ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
 
           echo ">> Ensuring chmod worked"
