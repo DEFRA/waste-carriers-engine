@@ -40,59 +40,37 @@ jobs:
           sudo apt-get install xvfb -y
           sudo apt-get install wkhtmltopdf -y
 
-          # Create a temporary directory to hold the APT source and GPG key
+          # Create a temporary directory for APT configuration and GPG key
           TMP_DIR=$(mktemp -d)
-          echo ">> TMP_DIR: ${TMP_DIR}"
+          echo "TMP_DIR: $TMP_DIR"
 
           # Download the MongoDB GPG key into the temporary directory
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
-
-          echo ">> List the file and its ownership before applying chmod"
-          echo ">>> ls -lR \"$TMP_DIR\":"
-          ls -lR "$TMP_DIR"
-          echo ">>> ls -l \"$TMP_DIR/mongodb-server-6.0.gpg\":"
-          ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
-
-          # Ensure the files are accessible by the _apt user (fix permissions)
-          # sudo chown root:root "$TMP_DIR/mongodb-server-6.0.gpg"
-          sudo chmod -R ugo+rwx "$TMP_DIR"
-
-          echo ">> Check permissions after chmod"
-          echo ">>> ls -l \"$TMP_DIR/mongodb-server-6.0.gpg\":"
-          ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
-
-          echo ">> Ensuring chmod worked"
-          ls -l "$TMP_DIR/mongodb-server-6.0.gpg"  # Verify the permissions again after chmod
-
-          echo ">> Check if _apt can access the file"
-          sudo -u _apt ls -l "$TMP_DIR/mongodb-server-6.0.gpg"
+          echo "MongoDB GPG key downloaded to $TMP_DIR/mongodb-server-6.0.gpg"
 
           # Create the MongoDB APT source list file in the temporary directory
-          echo "deb [ arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.gpg"
+          echo "deb [ arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
 
-          # Debugging step: Check directory and file permissions
-          echo "Checking directory and file permissions"
-          ls -l "$TMP_DIR"  # List the temporary directory contents
-          ls -ld "$TMP_DIR"  # Check permissions of the temporary directory
-          ls -l "$TMP_DIR/mongodb-org-6.0.gpg"  # Check permissions of the specific file
+          # Debugging step: Check the repository list file contents before copying
+          echo "Contents of $TMP_DIR/mongodb-org-6.0.list:"
+          cat "$TMP_DIR/mongodb-org-6.0.list"
 
-          # Check the current user
-          echo "Checking current user"
-          whoami  # This shows which user is running the script
+          # Add the MongoDB list file from TMP_DIR to the APT sources list directory
+          sudo cp "$TMP_DIR/mongodb-org-6.0.list" /etc/apt/sources.list.d/
 
-          # Check if _apt can read the file
-          echo "Checking _apt user permissions"
-          sudo -u _apt ls -l "$TMP_DIR/mongodb-org-6.0.gpg"  # Simulate the _apt user accessing the file
+          # Debugging step: Check if MongoDB list file is correctly placed
+          echo "Contents of /etc/apt/sources.list.d/mongodb-org-6.0.list:"
+          cat /etc/apt/sources.list.d/mongodb-org-6.0.list
 
-          # Debugging apt configuration
+          # Debugging step: Check repository configuration
           echo "Checking APT configuration"
-          sudo apt-cache policy  # Check the current APT configuration and repository sources
+          apt-cache policy
 
-          # Use the temporary directory directly in APT without copying anything to system directories
-          # sudo apt-get update -y -o Dir::Etc::SourcesList="$TMP_DIR/mongodb-org-6.0.gpg" -o Dir::Etc::SourceParts="$TMP_DIR" -o Dir::State::Lists="$TMP_DIR"
-          sudo apt-get update -y -o Dir::Etc::SourcesList="/etc/apt/sources.list.d/mongodb-org-6.0.list" -o Dir::Etc::SourceParts="$TMP_DIR" -o Dir::State::Lists="$TMP_DIR" -o Debug::Acquire::http=true
+          # Clear the APT cache and update
+          echo "Clearing APT cache"
+          sudo rm -rf /var/lib/apt/lists/*
 
-
+          sudo apt-get update
           sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
 
           sudo apt-get install -qq python3 python3-pip
