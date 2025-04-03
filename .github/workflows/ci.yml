@@ -60,18 +60,19 @@ jobs:
           echo "Contents of $TMP_DIR/mongodb-org-6.0.list:"
           cat "$TMP_DIR/mongodb-org-6.0.list"
 
-          # Add the MongoDB key to the apt keyring in the temporary directory
-          gpg --no-default-keyring --keyring "$TMP_DIR/mongodb-keyring.gpg" --import "$TMP_DIR/mongodb-server-6.0.gpg"
-          echo "MongoDB key added to $TMP_DIR/mongodb-keyring.gpg"
+          # Import the GPG key into APT's trusted keyring inside the temp directory
+          sudo mkdir -p "$TMP_DIR/keyrings"
+          sudo cp "$TMP_DIR/mongodb-server-6.0.gpg" "$TMP_DIR/keyrings/mongodb-server-6.0.gpg"
+          echo "MongoDB GPG key copied to $TMP_DIR/keyrings/mongodb-server-6.0.gpg"
 
-          # Update APT to use the keyring in the temporary directory and the repo list in the temporary directory
-          sudo apt-get update -o Dir::Etc::sourcelist="$TMP_DIR/mongodb-org-6.0.list" \
-                               -o Dir::Etc::sourceparts="-" \
-                               -o APT::Get::List-Cleanup="0" \
-                               -o Dir::Etc::trusted="true"
+          # Use the keyring during the APT update process to avoid the NO_PUBKEY error
+          echo "deb [arch=amd64,arm64 signed-by=$TMP_DIR/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee "$TMP_DIR/mongodb-org-6.0.list" > /dev/null
+
+          # Set APT to use the repository from the temp directory and update
+          sudo apt-get update -o Dir::Etc::SourceList="$TMP_DIR/mongodb-org-6.0.list" -o Dir::Etc::SourceParts="$TMP_DIR" -o Dir::State::Lists="$TMP_DIR"
 
           # Install MongoDB packages
-          sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
+          sudo apt-get install -y -o Dir::Etc::SourceList="$TMP_DIR/mongodb-org-6.0.list" -o Dir::Etc::SourceParts="$TMP_DIR" -o Dir::State::Lists="$TMP_DIR" mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
 
 
 
