@@ -48,6 +48,12 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.12.0
+        with:
+          mongodb-version: '6.0'
+
       - name: Set up databases
         run: |
           mlaunch --replicaset --name wcrepl --auth --username mongoAdmin --password password1234
