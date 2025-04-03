@@ -33,55 +33,16 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of sonarcloud analysis
 
       # Install various other dependencies
-      # Python is required for mlaunch, which we use to start a MongoDB cluster
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install xvfb -y
           sudo apt-get install wkhtmltopdf -y
-
-          #
-
-
-
-          # Create a temporary directory for APT configuration and GPG key
-          TMP_DIR=$(mktemp -d)
-          echo "TMP_DIR: $TMP_DIR"
-
-          # Download the MongoDB GPG key into the temporary directory
-          curl -fsSL https://pgp.mongodb.com/server-6.0.asc -o "$TMP_DIR/mongodb-server-6.0.gpg"
-          echo "MongoDB GPG key downloaded to $TMP_DIR/mongodb-server-6.0.gpg"
-
-          # Create the MongoDB APT source list file in the temporary directory
-          echo "deb [arch=amd64,arm64 signed-by=$TMP_DIR/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" > "$TMP_DIR/mongodb-org-6.0.list"
-          echo "MongoDB repository list created in $TMP_DIR/mongodb-org-6.0.list"
-
-          # Debugging step: Check the repository list file contents
-          echo "Contents of $TMP_DIR/mongodb-org-6.0.list:"
-          cat "$TMP_DIR/mongodb-org-6.0.list"
-
-          # Create a temporary directory for the keyring (required for apt to recognize it)
-          mkdir -p "$TMP_DIR/keyrings"
-          cp "$TMP_DIR/mongodb-server-6.0.gpg" "$TMP_DIR/keyrings/mongodb-server-6.0.gpg"
-          echo "MongoDB GPG key copied to $TMP_DIR/keyrings/mongodb-server-6.0.gpg"
-
-          # Now add the APT repository and update, using the temporary directory
-          echo "deb [arch=amd64,arm64 signed-by=$TMP_DIR/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list > /dev/null
-
-          # Update the APT index
-          sudo apt-get update
-
-          # Install MongoDB packages
-          sudo apt-get install -y mongodb-org mongodb-org-shell mongodb-org-server mongodb-org-mongos
-
-
-
-          #
-
-          sudo apt-get install -qq python3 python3-pip
+          sudo apt-get install -qq python python3-pip
           sudo pip3 install mtools[mlaunch]
 
-      # This action uses the ruby version specified in .ruby-version
+      # We don't have to specify the ruby version, or grab it from .ruby-verion. This action supports reading the
+      # version from .ruby-version itself
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
