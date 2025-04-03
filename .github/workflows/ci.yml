@@ -54,12 +54,13 @@ jobs:
         with:
           mongodb-version: '6.0'
           mongodb-replica-set: wcrepl
+          mongodb-username: mongoAdmin
+          mongodb-password: password1234
 
-      # - name: Set up databases
-      #   run: |
-      #     mlaunch --replicaset --name wcrepl --auth --username mongoAdmin --password password1234
-      #     mongo "mongodb://mongoAdmin:password1234@localhost:27017,localhost:27018,localhost:27019/waste-carriers-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
-      #     mongo "mongodb://mongoAdmin:password1234@localhost:27017,localhost:27018,localhost:27019/waste-carriers-users-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+      - name: Set up databases
+        run: |
+          mongo "mongodb://mongoAdmin:password1234@localhost:27017/waste-carriers-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+          mongo "mongodb://mongoAdmin:password1234@localhost:27017/waste-carriers-users-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
 
       # Run linting first. No point running the tests if there is a linting issue
       - name: Run lint check
