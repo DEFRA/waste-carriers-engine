@@ -59,8 +59,9 @@ jobs:
 
       - name: Set up databases
         run: |
-          mongosh "mongodb://mongoAdmin:password1234@localhost:27017/waste-carriers-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
-          mongosh "mongodb://mongoAdmin:password1234@localhost:27017/waste-carriers-users-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+          find / -name "mongo*"
+          mongo "mongodb://mongoAdmin:password1234@localhost:27017/waste-carriers-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+          mongo "mongodb://mongoAdmin:password1234@localhost:27017/waste-carriers-users-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
 
       # Run linting first. No point running the tests if there is a linting issue
       - name: Run lint check
