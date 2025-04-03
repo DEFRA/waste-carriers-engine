@@ -56,13 +56,21 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mongodb-mongosh
 
-      - name: Start MongoDB
+      - name: Start MongoDB and create admin user
+        uses: supercharge/mongodb-github-action@1.12.0
+        with:
+          mongodb-version: '7.0'
+          mongodb-username: mongoAdmin
+          mongodb-password: password1234
+
+      - name: Stop MongoDB to allow restart as replica set
+        run: sudo service mongod stop
+
+      - name: Start MongoDB as replica set
         uses: supercharge/mongodb-github-action@1.12.0
         with:
           mongodb-version: '7.0'
           mongodb-replica-set: wcrepl
-          mongodb-username: mongoAdmin
-          mongodb-password: password1234
 
       - name: Set up databases
         run: |
