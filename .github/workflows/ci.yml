@@ -69,8 +69,8 @@ jobs:
         run: docker stop $(docker ps -a | grep "mongodb" | awk '{print $1}')
       - name: Remove stopped container
         run: docker container prune -f
-      - name: Recheck mongodb instances
-        run: docker ps -a | grep "mongodb"
+      # - name: Recheck mongodb instances
+      #   run: docker ps -a | grep "mongodb"
 
       - name: Start MongoDB as replica set
         uses: supercharge/mongodb-github-action@1.12.0
