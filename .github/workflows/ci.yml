@@ -28,7 +28,7 @@ jobs:
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of sonarcloud analysis
 
@@ -78,6 +78,10 @@ jobs:
       #   with:
       #     mongodb-version: '7.0'
       #     mongodb-replica-set: wcrepl
+
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
 
       - name: Set up databases
         run: |
