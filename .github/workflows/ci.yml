@@ -63,9 +63,11 @@ jobs:
           mongodb-username: mongoAdmin
           mongodb-password: password1234
 
-      - name: Stop MongoDB to allow restart as replica set
+      - name: Check mongodb instances
         run: docker ps -a | grep "mongodb"
+      - name: Stop MongoDB to allow restart as replica set
         run: docker stop $(docker ps -a | grep "mongodb" | awk '{print $1}')
+      - name: Recheck mongodb instances
         run: docker ps -a | grep "mongodb"
 
       - name: Start MongoDB as replica set
