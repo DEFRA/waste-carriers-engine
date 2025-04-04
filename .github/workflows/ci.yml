@@ -67,6 +67,8 @@ jobs:
         run: docker ps -a | grep "mongodb"
       - name: Stop MongoDB to allow restart as replica set
         run: docker stop $(docker ps -a | grep "mongodb" | awk '{print $1}')
+      - name: Remove sgtopped container
+        run: docker container prune
       - name: Recheck mongodb instances
         run: docker ps -a | grep "mongodb"
 
