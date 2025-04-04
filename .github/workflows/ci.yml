@@ -62,21 +62,22 @@ jobs:
           mongodb-version: '7.0'
           mongodb-username: mongoAdmin
           mongodb-password: password1234
-
-      - name: Check mongodb instances
-        run: docker ps -a | grep "mongodb"
-      - name: Stop MongoDB to allow restart as replica set
-        run: docker stop $(docker ps -a | grep "mongodb" | awk '{print $1}')
-      - name: Remove stopped container
-        run: docker container prune -f
-      # - name: Recheck mongodb instances
-      #   run: docker ps -a | grep "mongodb"
-
-      - name: Start MongoDB as replica set
-        uses: supercharge/mongodb-github-action@1.12.0
-        with:
-          mongodb-version: '7.0'
           mongodb-replica-set: wcrepl
+
+      # - name: Check mongodb instances
+      #   run: docker ps -a | grep "mongodb"
+      # - name: Stop MongoDB to allow restart as replica set
+      #   run: docker stop $(docker ps -a | grep "mongodb" | awk '{print $1}')
+      # - name: Remove stopped container
+      #   run: docker container prune -f
+      # # - name: Recheck mongodb instances
+      # #   run: docker ps -a | grep "mongodb"
+
+      # - name: Start MongoDB as replica set
+      #   uses: supercharge/mongodb-github-action@1.12.0
+      #   with:
+      #     mongodb-version: '7.0'
+      #     mongodb-replica-set: wcrepl
 
       - name: Set up databases
         run: |
