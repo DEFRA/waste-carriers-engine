@@ -109,7 +109,7 @@ module WasteCarriersEngine
         end
 
         context "when the payment belongs to a renewing registration" do
-          let(:registration) { create(:new_registration, :has_required_data) }
+          let(:registration) { create(:renewing_registration, :has_required_data, :has_finance_details) }
           let(:renewal_completion_service) { instance_double(RenewalCompletionService) }
 
           before do
