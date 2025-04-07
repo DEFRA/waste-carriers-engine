@@ -26,39 +26,37 @@ jobs:
       WCRS_GOVPAY_BACK_OFFICE_CALLBACK_WEBHOOK_SIGNING_SECRET: foo2
 
     steps:
-      # Downloads a copy of the code in your repository before running CI tests
+      # Downloads a copy of the code in your repository
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of sonarcloud analysis
 
-      # Install various other dependencies
-      # Install MongoDB as per https://www.mongodb.com/community/forums/t/installing-mongodb-over-ubuntu-22-04/159931
-      # Python is required for mlaunch, which we use to start a MongoDB cluster
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install xvfb -y
-          sudo apt-get install wkhtmltopdf -y
-          wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
-          echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-          sudo apt update
-          sudo apt-get install -qq mongodb-org
-          sudo apt-get install -qq python3 python3-pip
-          sudo pip3 install mtools[mlaunch]
-
-      # We don't have to specify the ruby version, or grab it from .ruby-verion. This action supports reading the
-      # version from .ruby-version itself
+      # This action reads the ruby version from .ruby-version 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      - name: Install mongosh
+        run: |
+          sudo apt-get install gnupg
+          wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+          sudo apt-get update
+          sudo apt-get install -y mongodb-mongosh
+
+      - name: Start MongoDB in single node form and create admin user
+        uses: supercharge/mongodb-github-action@1.12.0
+        with:
+          mongodb-version: '7.0'
+          mongodb-username: mongoAdmin
+          mongodb-password: password1234
+
       - name: Set up databases
         run: |
-          mlaunch --replicaset --name wcrepl --auth --username mongoAdmin --password password1234
-          mongo "mongodb://mongoAdmin:password1234@localhost:27017,localhost:27018,localhost:27019/waste-carriers-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
-          mongo "mongodb://mongoAdmin:password1234@localhost:27017,localhost:27018,localhost:27019/waste-carriers-users-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+          mongosh "mongodb://mongoAdmin:password1234@localhost:27017,localhost:27018,localhost:27019/waste-carriers-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
+          mongosh "mongodb://mongoAdmin:password1234@localhost:27017,localhost:27018,localhost:27019/waste-carriers-users-test?authSource=admin&replicaSet=wcrepl" --eval 'db.createUser({user:"mongoUser", pwd:"password1234", roles:["readWrite", "dbAdmin", "userAdmin"]})'
 
       # Run linting first. No point running the tests if there is a linting issue
       - name: Run lint check
