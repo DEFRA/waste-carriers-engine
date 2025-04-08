@@ -32,12 +32,20 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of sonarcloud analysis
 
+      # Install various other dependencies
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install xvfb -y
+          sudo apt-get install wkhtmltopdf -y
+
       # This action reads the ruby version from .ruby-version 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      # Install MongoDB as per https://www.mongodb.com/community/forums/t/installing-mongodb-over-ubuntu-22-04/159931
       - name: Install mongosh
         run: |
           sudo apt-get install gnupg
