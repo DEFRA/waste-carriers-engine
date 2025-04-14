@@ -11,7 +11,7 @@ module WasteCarriersEngine
           payment = GovpayFindPaymentService.run(payment_id: payment_id)
           return if payment.blank?
 
-          registration = find_registration_for_payment(payment)
+          registration = GovpayFindRegistrationService.run(payment: payment)
           return if registration.blank?
 
           previous_status = payment.govpay_payment_status
@@ -29,16 +29,6 @@ module WasteCarriersEngine
     end
 
     private
-
-    def self.find_registration_for_payment(payment)
-      registration = Registration.where("finance_details.payments.govpay_id" => payment.govpay_id).first
-
-      if registration.blank?
-        registration = TransientRegistration.where("finance_details.payments.govpay_id" => payment.govpay_id).first
-      end
-
-      registration
-    end
 
     def self.update_payment_status(payment, status)
       payment.update(govpay_payment_status: status)

@@ -12,7 +12,7 @@ module WasteCarriersEngine
           refund = GovpayFindPaymentService.run(payment_id: refund_id)
           return if refund.blank?
 
-          registration = find_registration_for_payment(refund)
+          registration = GovpayFindRegistrationService.run(payment: refund)
           return if registration.blank?
 
           # Store previous status for logging
@@ -31,20 +31,6 @@ module WasteCarriersEngine
           Airbrake.notify "Error processing webhook for refund #{refund_id}, payment #{payment_id}", e
         end
       end
-    end
-
-    private
-
-    def self.find_registration_for_payment(payment)
-      # Try to find in registrations first
-      registration = Registration.where("finance_details.payments.govpay_id" => payment.govpay_id).first
-
-      # If not found, try to find in transient registrations
-      if registration.blank?
-        registration = TransientRegistration.where("finance_details.payments.govpay_id" => payment.govpay_id).first
-      end
-
-      registration
     end
   end
 end
