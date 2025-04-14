@@ -38,11 +38,7 @@ module WasteCarriersEngine
         allow(GovpayFindRegistrationService).to receive(:run).with(payment: payment).and_return(registration)
       end
 
-      it "updates the payment status" do
-        expect { described_class.process(webhook_body) }.to change { payment.reload.govpay_payment_status }.from("created").to("success")
-      end
-
-      it "updates the finance details balance" do
+      it "updates the payment status and finance details balance" do
         expect { described_class.process(webhook_body) }.to change { payment.reload.govpay_payment_status }.from("created").to("success")
       end
 

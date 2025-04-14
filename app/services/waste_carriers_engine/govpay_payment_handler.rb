@@ -9,10 +9,10 @@ module WasteCarriersEngine
 
         begin
           payment = GovpayFindPaymentService.run(payment_id: payment_id)
-          return if payment.blank?
+          next if payment.blank?
 
           registration = GovpayFindRegistrationService.run(payment: payment)
-          return if registration.blank?
+          next if registration.blank?
 
           previous_status = payment.govpay_payment_status
 
@@ -20,15 +20,14 @@ module WasteCarriersEngine
 
           complete_renewal_if_ready(registration, status)
 
-          Rails.logger.info "Updated status from #{previous_status} to #{status} for payment #{payment_id}, registration #{registration.regIdentifier}"
+          Rails.logger.info "Updated status from #{previous_status} to #{status} for payment #{payment_id}, " \
+                            "registration #{registration.regIdentifier}"
         rescue StandardError => e
           Rails.logger.error "Error processing webhook for payment #{payment_id}: #{e}"
           Airbrake.notify "Error processing webhook for payment #{payment_id}", e
         end
       end
     end
-
-    private
 
     def self.update_payment_status(payment, status)
       payment.update(govpay_payment_status: status)

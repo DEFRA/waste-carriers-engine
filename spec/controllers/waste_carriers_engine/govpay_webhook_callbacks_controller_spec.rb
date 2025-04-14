@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe GovpayWebhookCallbacksController, type: :controller do
+  RSpec.describe GovpayWebhookCallbacksController do
     routes { WasteCarriersEngine::Engine.routes }
 
     describe "POST process_webhook" do

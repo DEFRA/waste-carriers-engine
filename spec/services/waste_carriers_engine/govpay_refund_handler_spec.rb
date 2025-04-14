@@ -62,9 +62,9 @@ module WasteCarriersEngine
           update_service = instance_double(GovpayUpdateRefundStatusService)
           allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
           allow(update_service).to receive(:run)
-          
+
           described_class.process(webhook_body)
-          
+
           expect(update_service).not_to have_received(:run)
         end
       end
@@ -76,9 +76,9 @@ module WasteCarriersEngine
           update_service = instance_double(GovpayUpdateRefundStatusService)
           allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
           allow(update_service).to receive(:run)
-          
+
           described_class.process(webhook_body)
-          
+
           expect(update_service).not_to have_received(:run)
         end
       end
