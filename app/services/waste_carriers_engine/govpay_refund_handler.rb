@@ -15,10 +15,8 @@ module WasteCarriersEngine
           registration = GovpayFindRegistrationService.run(payment: refund)
           return if registration.blank?
 
-          # Store previous status for logging
           previous_status = refund.govpay_payment_status
 
-          # Use the existing service to update the refund status
           GovpayUpdateRefundStatusService.new.run(
             registration: registration,
             refund_id: refund_id,
