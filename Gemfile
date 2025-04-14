@@ -13,6 +13,9 @@ gem "sassc-rails"
 # development dependencies will be added by default to the :development group.
 gemspec
 
+# Use local version of defra_ruby_govpay for development
+gem "defra_ruby_govpay", path: "/Users/jeromepratt/Source/vagrant/defra_ruby_govpay"
+
 # GOV.UK styling
 gem "defra_ruby_template", "~> 5.0"
 

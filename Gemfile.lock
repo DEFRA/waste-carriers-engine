@@ -23,6 +23,12 @@ PATH
       uk_postcode (~> 2.1.8)
       wicked_pdf (~> 2.6.3)
 
+PATH
+  remote: /Users/jeromepratt/Source/vagrant/defra_ruby_govpay
+  specs:
+    defra_ruby_govpay (0.2.5)
+      rest-client (~> 2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -160,8 +166,6 @@ GEM
       notifications-ruby-client
       rails
       sprockets-rails
-    defra_ruby_govpay (0.2.5)
-      rest-client (~> 2.1)
     defra_ruby_style (0.3.0)
       rubocop (>= 1.0, < 2.0)
     defra_ruby_template (5.4.1)
@@ -495,6 +499,7 @@ PLATFORMS
 
 DEPENDENCIES
   database_cleaner-mongoid (~> 2.0.1)
+  defra_ruby_govpay!
   defra_ruby_style (~> 0.3.0)
   defra_ruby_template (~> 5.0)
   dotenv-rails (~> 2.8.1)
