@@ -19,11 +19,11 @@ module WasteCarriersEngine
 
       before do
         allow(Airbrake).to receive(:notify)
-        if defined?(validation_success) && validation_success
-          allow(ValidateGovpayPaymentWebhookBodyService).to receive(:run).and_return(true)
+        allow(ValidateGovpayPaymentWebhookBodyService).to receive(:new).and_return webhook_validation_service
+        if validation_success
+          allow(webhook_validation_service).to receive(:run).and_return(true)
         else
-          allow(ValidateGovpayPaymentWebhookBodyService).to receive(:run)
-            .and_raise(ValidateGovpayPaymentWebhookBodyService::ValidationFailure)
+          allow(webhook_validation_service).to receive(:run).and_raise(ValidateGovpayPaymentWebhookBodyService::ValidationFailure)
         end
       end
 

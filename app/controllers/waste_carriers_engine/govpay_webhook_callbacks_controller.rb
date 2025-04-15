@@ -22,6 +22,5 @@ module WasteCarriersEngine
       # always return 200 to Govpay even if validation fails
       render nothing: true, layout: false, status: 200
     end
-
   end
 end
