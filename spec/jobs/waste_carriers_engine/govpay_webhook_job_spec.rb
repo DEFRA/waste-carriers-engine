@@ -58,7 +58,7 @@ module WasteCarriersEngine
           it "notifies Airbrake with basic params" do
             perform_now
             expect(Airbrake).to have_received(:notify)
-              .with(an_instance_of(StandardError), refund_id: nil, payment_id: nil, service_type: "front_office")
+              .with(an_instance_of(ArgumentError), refund_id: nil, payment_id: nil, service_type: "front_office")
           end
 
           context "when enhanced logging is enabled" do
@@ -97,7 +97,7 @@ module WasteCarriersEngine
               perform_now
               expect(Airbrake).to have_received(:notify)
                 .with(
-                  an_instance_of(StandardError),
+                  an_instance_of(ArgumentError),
                   hash_including(
                     refund_id: nil,
                     payment_id: nil,
