@@ -12,9 +12,7 @@ module WasteCarriersEngine
 
       raise ArgumentError, "Govpay payment webhook request missing Pay-Signature header" unless pay_signature.present?
 
-      valid_signature = validate_signature(body, pay_signature)
-
-      raise ArgumentError, "Invalid webhook signature" unless valid_signature
+      ValidateGovpayPaymentWebhookBodyService.run(body: body, signature: pay_signature)
 
       GovpayWebhookJob.perform_later(JSON.parse(body))
     rescue StandardError, Mongoid::Errors::DocumentNotFound => e
@@ -25,24 +23,5 @@ module WasteCarriersEngine
       render nothing: true, layout: false, status: 200
     end
 
-    private
-
-    def validate_signature(body, pay_signature)
-      front_office_valid = DefraRubyGovpay::CallbackValidator.call(
-        body,
-        ENV.fetch("WCRS_GOVPAY_CALLBACK_WEBHOOK_SIGNING_SECRET"),
-        pay_signature
-      )
-
-      unless front_office_valid
-        back_office_valid = DefraRubyGovpay::CallbackValidator.call(
-          body,
-          ENV.fetch("WCRS_GOVPAY_BACK_OFFICE_CALLBACK_WEBHOOK_SIGNING_SECRET"),
-          pay_signature
-        )
-      end
-
-      front_office_valid || back_office_valid
-    end
   end
 end
