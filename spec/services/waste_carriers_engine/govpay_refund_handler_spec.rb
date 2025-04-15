@@ -29,7 +29,6 @@ module WasteCarriersEngine
         allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run).and_yield(
           id: govpay_refund_id,
           status: status,
-          type: "refund",
           webhook_body: webhook_body
         ).and_return({ payment_id: govpay_refund_id, status: status })
 
