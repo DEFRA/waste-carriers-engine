@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module WasteCarriersEngine
-  RSpec.describe GovpayRefundHandler do
+  RSpec.describe GovpayRefundWebhookHandler do
     describe ".process" do
       let(:govpay_payment_id) { "govpay-payment-#{SecureRandom.uuid}" }
       let(:govpay_refund_id) { "govpay-refund-#{SecureRandom.uuid}" }
@@ -26,11 +26,9 @@ module WasteCarriersEngine
         registration.finance_details.update_balance
         registration.save!
 
-        allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run).and_yield(
-          id: govpay_refund_id,
-          status: status,
-          webhook_body: webhook_body
-        ).and_return({ payment_id: govpay_refund_id, status: status })
+        allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run).with(webhook_body).and_return(
+          { id: govpay_refund_id, payment_id: govpay_payment_id, status: status }
+        )
 
         allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_refund_id).and_return(refund)
         allow(GovpayFindRegistrationService).to receive(:run).with(payment: refund).and_return(registration)

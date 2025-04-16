@@ -19,15 +19,15 @@ module WasteCarriersEngine
     private
 
     def process_payment_webhook(webhook_body)
-      result = GovpayPaymentHandler.process(webhook_body)
+      result = GovpayPaymentWebhookHandler.process(webhook_body)
 
-      Rails.logger.info "Processed payment webhook for payment_id: #{result[:payment_id]}, status: #{result[:status]}"
+      Rails.logger.info "Processed payment webhook for payment_id: #{result[:id]}, status: #{result[:status]}"
     end
 
     def process_refund_webhook(webhook_body)
-      result = GovpayRefundHandler.process(webhook_body)
+      result = GovpayRefundWebhookHandler.process(webhook_body)
 
-      Rails.logger.info "Processed refund webhook for refund_id: #{result[:payment_id]}, status: #{result[:status]}"
+      Rails.logger.info "Processed refund webhook for refund_id: #{result[:id]}, status: #{result[:status]}"
     end
 
     def sanitize_webhook_body(body)
