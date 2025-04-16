@@ -2,11 +2,7 @@
 
 module WasteCarriersEngine
   class GovpayFindRegistrationService < BaseService
-    def self.run(payment:)
-      new.run(payment)
-    end
-
-    def run(payment)
+    def run(payment:)
       return if payment.blank?
 
       registration = Registration.where("finance_details.payments.govpay_id" => payment.govpay_id).first
