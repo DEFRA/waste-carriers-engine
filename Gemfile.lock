@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/defra-ruby-govpay
-  revision: 653f5d0dee3234de34514252b894df94283dea66
+  revision: 3912c14d6353d66389b1f221dd0306e7d693afe3
   branch: RUBY-3757-wcr-tech-move-govpay-webhook-handling-to-the-govpay-gem
   specs:
     defra_ruby_govpay (0.2.5)
