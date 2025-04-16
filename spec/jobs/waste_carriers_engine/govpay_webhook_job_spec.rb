@@ -34,13 +34,13 @@ module WasteCarriersEngine
     describe ".perform_now" do
       subject(:perform_now) { described_class.perform_now(webhook_body) }
 
-      let(:payment_service_result) { { payment_id: "123", status: "success" } }
-      let(:refund_service_result) { { payment_id: "789", status: "success" } }
+      let(:payment_service_result) { { id: "123", status: "success" } }
+      let(:refund_service_result) { { id: "345", payment_id: "789", status: "success" } }
 
       before do
         allow(FeatureToggle).to receive(:active?).with(:detailed_logging)
-        allow(DefraRubyGovpay::GovpayWebhookPaymentService).to receive(:run).and_return(payment_service_result)
-        allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run).and_return(refund_service_result)
+        allow(GovpayPaymentWebhookHandler).to receive(:process).and_return(payment_service_result)
+        allow(GovpayRefundWebhookHandler).to receive(:process).and_return(refund_service_result)
         allow(Rails.logger).to receive(:info)
       end
 
@@ -48,8 +48,8 @@ module WasteCarriersEngine
         before do
           allow(Airbrake).to receive(:notify)
           allow(FeatureToggle).to receive(:active?).with(:detailed_logging).and_return(false)
-          allow(DefraRubyGovpay::GovpayWebhookPaymentService).to receive(:run).and_raise(StandardError.new("Test error"))
-          allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run).and_raise(StandardError.new("Test error"))
+          allow(GovpayPaymentWebhookHandler).to receive(:process).and_raise(StandardError.new("Test error"))
+          allow(GovpayRefundWebhookHandler).to receive(:process).and_raise(StandardError.new("Test error"))
         end
 
         context "with an unrecognised webhook body" do
@@ -140,31 +140,31 @@ module WasteCarriersEngine
 
       context "with a payment webhook" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read) }
-        let(:payment_service_result) { { payment_id: "hu20sqlact5260q2nanm0q8u93", status: "submitted" } }
+        let(:payment_service_result) { { id: "hu20sqlact5260q2nanm0q8u93", status: "submitted" } }
 
-        it "processes the payment webhook using DefraRubyGovpay::GovpayWebhookPaymentService" do
+        it "processes the payment webhook using GovpayPaymentWebhookHandler" do
           perform_now
-          expect(DefraRubyGovpay::GovpayWebhookPaymentService).to have_received(:run).with(webhook_body)
+          expect(GovpayPaymentWebhookHandler).to have_received(:process).with(webhook_body)
         end
 
         it "logs the payment webhook processing" do
           perform_now
-          expect(Rails.logger).to have_received(:info).with(/Processed payment webhook for payment_id: hu20sqlact5260q2nanm0q8u93/)
+          expect(Rails.logger).to have_received(:info).with(/Processed payment webhook for payment_id: hu20sqlact5260q2nanm0q8u93, status:/)
         end
       end
 
       context "with a refund webhook" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_refund_update_body.json").read) }
-        let(:refund_service_result) { { payment_id: "789", status: "success" } }
+        let(:refund_service_result) { { id: "345", payment_id: "789", status: "success" } }
 
-        it "processes the refund webhook using DefraRubyGovpay::GovpayWebhookRefundService" do
+        it "processes the refund webhook using GovpayRefundWebhookHandler" do
           perform_now
-          expect(DefraRubyGovpay::GovpayWebhookRefundService).to have_received(:run).with(webhook_body)
+          expect(GovpayRefundWebhookHandler).to have_received(:process).with(webhook_body)
         end
 
         it "logs the refund webhook processing" do
           perform_now
-          expect(Rails.logger).to have_received(:info).with(/Processed refund webhook for refund_id: 789/)
+          expect(Rails.logger).to have_received(:info).with(/Processed refund webhook for refund_id: 345, status:/)
         end
       end
     end
