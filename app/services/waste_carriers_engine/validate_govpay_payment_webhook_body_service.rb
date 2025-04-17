@@ -7,11 +7,19 @@ module WasteCarriersEngine
     def run(body:, signature:)
       raise ValidationFailure, "Missing expected signature" if signature.blank?
 
-      body_signatures = GovpayPaymentWebhookSignatureService.run(body:)
+      valid_signature = DefraRubyGovpay::CallbackValidator.call(
+        body,
+        ENV.fetch("WCRS_GOVPAY_CALLBACK_WEBHOOK_SIGNING_SECRET"),
+        signature
+      ) || DefraRubyGovpay::CallbackValidator.call(
+        body,
+        ENV.fetch("WCRS_GOVPAY_BACK_OFFICE_CALLBACK_WEBHOOK_SIGNING_SECRET"),
+        signature
+      )
 
-      return true if body_signatures[:front_office] == signature || body_signatures[:back_office] == signature
+      raise ValidationFailure, "digest/signature header mismatch" unless valid_signature
 
-      raise ValidationFailure, "digest/signature header mismatch"
+      true
     end
   end
 end

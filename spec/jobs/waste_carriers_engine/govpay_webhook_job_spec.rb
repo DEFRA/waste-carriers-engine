@@ -34,21 +34,22 @@ module WasteCarriersEngine
     describe ".perform_now" do
       subject(:perform_now) { described_class.perform_now(webhook_body) }
 
-      let(:payment_webhook_service) { instance_double(WasteCarriersEngine::GovpayWebhookPaymentService) }
-      let(:refund_webhook_service) { instance_double(WasteCarriersEngine::GovpayWebhookRefundService) }
+      let(:payment_service_result) { { id: "123", status: "success" } }
+      let(:refund_service_result) { { id: "345", payment_id: "789", status: "success" } }
 
       before do
         allow(FeatureToggle).to receive(:active?).with(:detailed_logging)
-        allow(WasteCarriersEngine::GovpayWebhookPaymentService).to receive(:new).and_return(payment_webhook_service)
-        allow(payment_webhook_service).to receive(:run)
-        allow(WasteCarriersEngine::GovpayWebhookRefundService).to receive(:new).and_return(refund_webhook_service)
-        allow(refund_webhook_service).to receive(:run)
+        allow(GovpayPaymentWebhookHandler).to receive(:process).and_return(payment_service_result)
+        allow(GovpayRefundWebhookHandler).to receive(:process).and_return(refund_service_result)
+        allow(Rails.logger).to receive(:info)
       end
 
       context "when handling errors" do
         before do
           allow(Airbrake).to receive(:notify)
           allow(FeatureToggle).to receive(:active?).with(:detailed_logging).and_return(false)
+          allow(GovpayPaymentWebhookHandler).to receive(:process).and_raise(StandardError.new("Test error"))
+          allow(GovpayRefundWebhookHandler).to receive(:process).and_raise(StandardError.new("Test error"))
         end
 
         context "with an unrecognised webhook body" do
@@ -66,7 +67,6 @@ module WasteCarriersEngine
             context "with sensitive information in webhook body" do
               let(:webhook_body) do
                 json = JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read)
-                json["resource_type"] = "invalid_type" # This will trigger error handling
                 json
               end
 
@@ -113,7 +113,7 @@ module WasteCarriersEngine
           shared_examples "logs correct service type" do |moto, expected_service|
             let(:webhook_body) do
               {
-                "resource_type" => "invalid_type",
+                "resource_type" => "payment",
                 "resource" => { "moto" => moto }
               }
             end
@@ -122,7 +122,7 @@ module WasteCarriersEngine
               perform_now
               expect(Airbrake).to have_received(:notify)
                 .with(
-                  an_instance_of(ArgumentError),
+                  an_instance_of(StandardError),
                   hash_including(service_type: expected_service)
                 )
             end
@@ -138,46 +138,34 @@ module WasteCarriersEngine
         end
       end
 
-      context "with a payment webhook_body" do
+      context "with a payment webhook" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read) }
+        let(:payment_service_result) { { id: "hu20sqlact5260q2nanm0q8u93", status: "submitted" } }
 
-        it "calls the payment webhook service" do
+        it "processes the payment webhook using GovpayPaymentWebhookHandler" do
           perform_now
+          expect(GovpayPaymentWebhookHandler).to have_received(:process).with(webhook_body)
+        end
 
-          expect(payment_webhook_service).to have_received(:run)
+        it "logs the payment webhook processing" do
+          perform_now
+          expect(Rails.logger).to have_received(:info).with(/Processed payment webhook for payment_id: hu20sqlact5260q2nanm0q8u93, status:/)
         end
       end
 
-      context "with a refund webhook_body" do
+      context "with a refund webhook" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_refund_update_body.json").read) }
+        let(:refund_service_result) { { id: "345", payment_id: "789", status: "success" } }
 
-        it "calls the refund webhook service" do
+        it "processes the refund webhook using GovpayRefundWebhookHandler" do
           perform_now
-
-          expect(refund_webhook_service).to have_received(:run)
-        end
-      end
-
-      context "with different casings for resource_type" do
-        shared_examples "a valid payment webhook" do |resource_type_value|
-          let(:webhook_body) do
-            {
-              "resource_type" => resource_type_value,
-              "refund_id" => nil # Ensure it's treated as a payment
-            }
-          end
-
-          it "calls the payment webhook service" do
-            perform_now
-
-            expect(payment_webhook_service).to have_received(:run).with(webhook_body)
-          end
+          expect(GovpayRefundWebhookHandler).to have_received(:process).with(webhook_body)
         end
 
-        it_behaves_like "a valid payment webhook", "payment"
-        it_behaves_like "a valid payment webhook", "Payment"
-        it_behaves_like "a valid payment webhook", "PAYMENT"
-        it_behaves_like "a valid payment webhook", "PaYmEnT"
+        it "logs the refund webhook processing" do
+          perform_now
+          expect(Rails.logger).to have_received(:info).with(/Processed refund webhook for refund_id: 345, status:/)
+        end
       end
     end
   end
