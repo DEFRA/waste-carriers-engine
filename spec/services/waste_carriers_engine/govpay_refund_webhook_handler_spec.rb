@@ -55,6 +55,7 @@ module WasteCarriersEngine
 
       context "when the refund is not found" do
         before { allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_refund_id).and_return(nil) }
+
         # When refund is not found, previous_status will be nil
         let(:previous_status) { nil }
 

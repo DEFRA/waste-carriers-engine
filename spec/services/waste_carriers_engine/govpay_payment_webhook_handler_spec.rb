@@ -29,8 +29,7 @@ module WasteCarriersEngine
 
         allow(DefraRubyGovpay::GovpayWebhookPaymentService).to receive(:run)
           .with(webhook_body, previous_status: "created")
-          .and_return({ id: govpay_id, status: status }
-        )
+          .and_return({ id: govpay_id, status: status })
 
         allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_id).and_return(payment)
         allow(GovpayFindRegistrationService).to receive(:run).with(payment: payment).and_return(registration)
@@ -65,7 +64,7 @@ module WasteCarriersEngine
       end
 
       context "when the payment is not found" do
-        before do 
+        before do
           allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_id).and_return(nil)
           # When payment is not found, previous_status will be nil
           allow(DefraRubyGovpay::GovpayWebhookPaymentService).to receive(:run)

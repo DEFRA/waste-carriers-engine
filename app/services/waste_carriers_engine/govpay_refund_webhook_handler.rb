@@ -25,7 +25,7 @@ module WasteCarriersEngine
       update_refund_status(refund_id, registration, status)
 
       Rails.logger.info "Updated status from #{previous_status} to #{status} for refund #{refund_id}, " \
-        "payment #{payment_id}, registration #{registration.regIdentifier}"
+                        "payment #{payment_id}, registration #{registration.regIdentifier}"
     rescue StandardError => e
       Rails.logger.error "Error processing webhook for refund #{refund_id}, payment #{payment_id}: #{e}"
       Airbrake.notify "Error processing webhook for refund #{refund_id}, payment #{payment_id}", e

@@ -26,7 +26,7 @@ module WasteCarriersEngine
       complete_renewal_if_ready(registration, status)
 
       Rails.logger.info "Updated status from #{previous_status} to #{status} for payment #{payment_id}, " \
-        "registration #{registration.regIdentifier}"
+                        "registration #{registration.regIdentifier}"
     rescue StandardError => e
       Rails.logger.error "Error processing webhook for payment #{payment_id}: #{e}"
       Airbrake.notify "Error processing webhook for payment #{payment_id}", e
