@@ -15,10 +15,12 @@ module WasteCarriersEngine
           "status" => status
         }
       end
+      let(:previous_status) { "submitted" }
 
       let(:payment) { build(:payment, :govpay, govpay_id: govpay_payment_id, govpay_payment_status: "success") }
-      let(:refund) { build(:payment, :govpay_refund_pending, govpay_id: govpay_refund_id, refunded_payment_govpay_id: govpay_payment_id, govpay_payment_status: "submitted") }
+      let(:refund) { build(:payment, :govpay_refund_pending, govpay_id: govpay_refund_id, refunded_payment_govpay_id: govpay_payment_id, govpay_payment_status: previous_status) }
       let(:registration) { create(:registration, :has_required_data, finance_details: build(:finance_details, :has_required_data)) }
+      let(:update_service) { instance_double(GovpayUpdateRefundStatusService) }
 
       before do
         registration.finance_details.payments << payment
@@ -26,8 +28,9 @@ module WasteCarriersEngine
         registration.finance_details.update_balance
         registration.save!
 
+        allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
         allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run)
-          .with(webhook_body, previous_status: "submitted")
+          .with(webhook_body, previous_status: previous_status)
           .and_return({ id: govpay_refund_id, payment_id: govpay_payment_id, status: status })
 
         allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_refund_id).and_return(refund)
@@ -35,8 +38,6 @@ module WasteCarriersEngine
       end
 
       it "processes the refund through GovpayUpdateRefundStatusService" do
-        update_service = instance_double(GovpayUpdateRefundStatusService)
-        allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
         allow(update_service).to receive(:run).with(
           registration: registration,
           refund_id: govpay_refund_id,
@@ -54,10 +55,10 @@ module WasteCarriersEngine
 
       context "when the refund is not found" do
         before { allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_refund_id).and_return(nil) }
+        # When refund is not found, previous_status will be nil
+        let(:previous_status) { nil }
 
         it "returns early without updating the refund status" do
-          update_service = instance_double(GovpayUpdateRefundStatusService)
-          allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
           allow(update_service).to receive(:run)
 
           described_class.process(webhook_body)
@@ -82,8 +83,6 @@ module WasteCarriersEngine
 
       context "when an error occurs" do
         before do
-          update_service = instance_double(GovpayUpdateRefundStatusService)
-          allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
           allow(update_service).to receive(:run).and_raise(StandardError.new("Test error"))
           allow(Airbrake).to receive(:notify)
           allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run)
