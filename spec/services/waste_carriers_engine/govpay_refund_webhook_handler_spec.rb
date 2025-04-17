@@ -17,7 +17,7 @@ module WasteCarriersEngine
       end
 
       let(:payment) { build(:payment, :govpay, govpay_id: govpay_payment_id, govpay_payment_status: "success") }
-      let(:refund) { build(:payment, :govpay_refund_pending, govpay_id: govpay_refund_id, refunded_payment_govpay_id: govpay_payment_id) }
+      let(:refund) { build(:payment, :govpay_refund_pending, govpay_id: govpay_refund_id, refunded_payment_govpay_id: govpay_payment_id, govpay_payment_status: "submitted") }
       let(:registration) { create(:registration, :has_required_data, finance_details: build(:finance_details, :has_required_data)) }
 
       before do
@@ -26,9 +26,9 @@ module WasteCarriersEngine
         registration.finance_details.update_balance
         registration.save!
 
-        allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run).with(webhook_body).and_return(
-          { id: govpay_refund_id, payment_id: govpay_payment_id, status: status }
-        )
+        allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run)
+          .with(webhook_body, previous_status: "submitted")
+          .and_return({ id: govpay_refund_id, payment_id: govpay_payment_id, status: status })
 
         allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_refund_id).and_return(refund)
         allow(GovpayFindRegistrationService).to receive(:run).with(payment: refund).and_return(registration)
@@ -86,6 +86,9 @@ module WasteCarriersEngine
           allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
           allow(update_service).to receive(:run).and_raise(StandardError.new("Test error"))
           allow(Airbrake).to receive(:notify)
+          allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run)
+            .with(webhook_body, previous_status: "submitted")
+            .and_raise(StandardError, "Something went wrong")
         end
 
         it "catches the error and continues" do

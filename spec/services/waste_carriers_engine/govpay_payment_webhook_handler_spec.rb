@@ -27,8 +27,9 @@ module WasteCarriersEngine
         registration.finance_details.update_balance
         registration.save!
 
-        allow(DefraRubyGovpay::GovpayWebhookPaymentService).to receive(:run).with(webhook_body).and_return(
-          { id: govpay_id, status: status }
+        allow(DefraRubyGovpay::GovpayWebhookPaymentService).to receive(:run)
+          .with(webhook_body, previous_status: "created")
+          .and_return({ id: govpay_id, status: status }
         )
 
         allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_id).and_return(payment)
@@ -64,7 +65,13 @@ module WasteCarriersEngine
       end
 
       context "when the payment is not found" do
-        before { allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_id).and_return(nil) }
+        before do 
+          allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_id).and_return(nil)
+          # When payment is not found, previous_status will be nil
+          allow(DefraRubyGovpay::GovpayWebhookPaymentService).to receive(:run)
+            .with(webhook_body, previous_status: nil)
+            .and_return({ id: govpay_id, status: status })
+        end
 
         it "returns early without updating any payment" do
           expect { described_class.process(webhook_body) }.not_to change { payment.reload.govpay_payment_status }
