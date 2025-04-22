@@ -4,97 +4,119 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe GovpayRefundWebhookHandler do
+
     describe ".process" do
-      let(:govpay_payment_id) { "govpay-payment-#{SecureRandom.uuid}" }
-      let(:govpay_refund_id) { "govpay-refund-#{SecureRandom.uuid}" }
-      let(:status) { "success" }
-      let(:webhook_body) do
-        {
-          "refund_id" => govpay_refund_id,
-          "payment_id" => govpay_payment_id,
-          "status" => status
-        }
+
+      subject(:run_service) { described_class.process(webhook_body) }
+
+      let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_refund_update_body.json").read) }
+      let(:govpay_refund_id) { webhook_body["refund_id"] }
+      let(:govpay_payment_id) { webhook_body["payment_id"] }
+      let(:registration) { create(:registration, :has_required_data) }
+      let!(:wcr_original_payment) do
+        create(:payment, :govpay,
+               finance_details: registration.finance_details,
+               govpay_id: govpay_payment_id,
+               govpay_payment_status: Payment::STATUS_COMPLETE)
       end
-      let(:previous_status) { "submitted" }
-
-      let(:payment) { build(:payment, :govpay, govpay_id: govpay_payment_id, govpay_payment_status: "success") }
-      let(:refund) { build(:payment, :govpay_refund_pending, govpay_id: govpay_refund_id, refunded_payment_govpay_id: govpay_payment_id, govpay_payment_status: previous_status) }
-      let(:registration) { create(:registration, :has_required_data, finance_details: build(:finance_details, :has_required_data)) }
-      let(:update_service) { instance_double(GovpayUpdateRefundStatusService) }
-
-      before do
-        registration.finance_details.payments << payment
-        registration.finance_details.payments << refund
-        registration.finance_details.update_balance
-        registration.save!
-
-        allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
-        allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run)
-          .with(webhook_body, previous_status: previous_status)
-          .and_return({ id: govpay_refund_id, payment_id: govpay_payment_id, status: status })
-
-        allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_refund_id).and_return(refund)
-        allow(GovpayFindRegistrationService).to receive(:run).with(payment: refund).and_return(registration)
+      let(:prior_payment_status) { Payment::STATUS_SUBMITTED }
+      let!(:wcr_payment) do
+        create(:payment, :govpay_refund,
+               finance_details: registration.finance_details,
+               govpay_id: govpay_refund_id,
+               refunded_payment_govpay_id: wcr_original_payment.govpay_id,
+               govpay_payment_status: prior_payment_status)
       end
 
-      it "processes the refund through GovpayUpdateRefundStatusService" do
-        allow(update_service).to receive(:run).with(
-          registration: registration,
-          refund_id: govpay_refund_id,
-          new_status: status
-        ).and_return(true)
+      let(:update_refund_service) { instance_double(WasteCarriersEngine::GovpayUpdateRefundStatusService) }
 
-        described_class.process(webhook_body)
+      # # Make finance details refundable
+      # before { registration.finance_details.orders.first.update(total_amount: 1) }
 
-        expect(update_service).to have_received(:run).with(
-          registration: registration,
-          refund_id: govpay_refund_id,
-          new_status: status
-        )
+      include_examples "Govpay webhook services error logging"
+
+      shared_examples "failed refund update" do
+        it { expect { run_service }.to raise_error(ArgumentError) }
+
+        it_behaves_like "logs an error"
       end
 
-      context "when the refund is not found" do
-        before { allow(GovpayFindPaymentService).to receive(:run).with(payment_id: govpay_refund_id).and_return(nil) }
+      context "when the update is not for a refund" do
+        before { webhook_body.delete("refund_id") }
 
-        # When refund is not found, previous_status will be nil
-        let(:previous_status) { nil }
-
-        it "returns early without updating the refund status" do
-          allow(update_service).to receive(:run)
-
-          described_class.process(webhook_body)
-
-          expect(update_service).not_to have_received(:run)
-        end
+        it_behaves_like "failed refund update"
       end
 
-      context "when the registration is not found" do
-        before { allow(GovpayFindRegistrationService).to receive(:run).with(payment: refund).and_return(nil) }
+      context "when the update is for a refund" do
+        context "when status is not present in the update" do
+          before { webhook_body["status"] = nil }
 
-        it "returns early without updating the refund status" do
-          update_service = instance_double(GovpayUpdateRefundStatusService)
-          allow(GovpayUpdateRefundStatusService).to receive(:new).and_return(update_service)
-          allow(update_service).to receive(:run)
-
-          described_class.process(webhook_body)
-
-          expect(update_service).not_to have_received(:run)
-        end
-      end
-
-      context "when an error occurs" do
-        before do
-          allow(update_service).to receive(:run).and_raise(StandardError.new("Test error"))
-          allow(Airbrake).to receive(:notify)
-          allow(DefraRubyGovpay::GovpayWebhookRefundService).to receive(:run)
-            .with(webhook_body, previous_status: "submitted")
-            .and_raise(StandardError, "Something went wrong")
+          it_behaves_like "failed refund update"
         end
 
-        it "catches the error and continues" do
-          expect { described_class.process(webhook_body) }.not_to raise_error
+        context "when status is present in the update" do
+          context "when the refund is not found" do
+            before { webhook_body["refund_id"] = "foo" }
+
+            it_behaves_like "failed refund update"
+          end
+
+          context "when the refund is found" do
+            context "when the refund status has not changed" do
+              let(:prior_payment_status) { Payment::STATUS_SUCCESS }
+
+              it { expect { run_service }.not_to change(wcr_payment, :govpay_payment_status) }
+
+              it "writes a warning to the Rails log" do
+                run_service
+
+                expect(Rails.logger).to have_received(:warn)
+              end
+            end
+
+            context "when the update service raises an exception" do
+              let(:update_refund_service) { instance_double(WasteCarriersEngine::GovpayUpdateRefundStatusService) }
+              before do
+                allow(WasteCarriersEngine::GovpayUpdateRefundStatusService).to receive(:new).and_return(update_refund_service)
+                allow(update_refund_service).to receive(:run).and_raise(StandardError)
+              end
+
+
+              it_behaves_like "logs an error"
+            end
+
+            context "when the refund status has changed" do
+
+              include_examples "Govpay webhook status transitions"
+
+              # unfinished statuses
+              it_behaves_like "valid and invalid transitions", Payment::STATUS_SUBMITTED, %w[success], %w[error]
+
+              # finished statuses
+              it_behaves_like "no valid transitions", Payment::STATUS_SUCCESS
+              it_behaves_like "no valid transitions", "error"
+
+              # There are no valid transitions other than to success other than to success.
+              # context "when the webhook changes the status to a non-success value" do
+
+              context "when the webhook changes the status to success" do
+                let(:prior_payment_status) { Payment::STATUS_SUBMITTED }
+
+                before { assign_webhook_status("success") }
+
+                it "updates the balance" do
+                  expect { run_service }.to change { wcr_payment.finance_details.reload.balance }
+                end
+              end
+            end
+          end
         end
       end
+    end
+
+    # used by shared examples - different for payment vs refund webhooks
+    def assign_webhook_status(status)
+      webhook_body["status"] = status
     end
   end
 end

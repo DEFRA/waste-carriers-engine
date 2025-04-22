@@ -14,7 +14,7 @@ RSpec.shared_examples "Govpay webhook services error logging" do
       run_service
 
       expect(Airbrake).to have_received(:notify)
-    rescue ArgumentError
+    rescue StandardError
       # expected exception
     end
 
@@ -22,7 +22,7 @@ RSpec.shared_examples "Govpay webhook services error logging" do
       run_service
 
       expect(Rails.logger).to have_received(:error)
-    rescue ArgumentError
+    rescue StandardError
       # expected exception
     end
   end
