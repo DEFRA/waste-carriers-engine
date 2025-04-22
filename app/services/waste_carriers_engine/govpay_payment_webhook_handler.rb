@@ -30,6 +30,7 @@ module WasteCarriersEngine
     rescue StandardError => e
       Rails.logger.error "Error processing webhook for payment #{payment_id}: #{e}"
       Airbrake.notify "Error processing webhook for payment #{payment_id}", e
+      raise
     end
 
     def self.update_payment_status(payment, status)
