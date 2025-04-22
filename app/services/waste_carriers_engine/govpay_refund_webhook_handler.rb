@@ -29,10 +29,11 @@ module WasteCarriersEngine
     rescue StandardError => e
       Rails.logger.error "Error processing webhook for refund #{refund_id}, payment #{payment_id}: #{e}"
       Airbrake.notify "Error processing webhook for refund #{refund_id}, payment #{payment_id}", e
+      raise
     end
 
     def self.update_refund_status(refund_id, registration, status)
-      GovpayUpdateRefundStatusService.new.run(
+      GovpayUpdateRefundStatusService.run(
         registration: registration,
         refund_id: refund_id,
         new_status: status
