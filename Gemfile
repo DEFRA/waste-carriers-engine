@@ -13,10 +13,6 @@ gem "sassc-rails"
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# Use GitHub version of defra_ruby_govpay with the webhook handling feature
-gem "defra_ruby_govpay", git: "https://github.com/DEFRA/defra-ruby-govpay",
-                         branch: "RUBY-3757-wcr-tech-move-govpay-webhook-handling-to-the-govpay-gem"
-
 # GOV.UK styling
 gem "defra_ruby_template", "~> 5.0"
 
