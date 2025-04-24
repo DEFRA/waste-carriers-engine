@@ -12,7 +12,7 @@ module WasteCarriersEngine
 
       raise ArgumentError, "Govpay payment webhook request missing Pay-Signature header" unless pay_signature.present?
 
-      ValidateGovpayPaymentWebhookBodyService.run(body: body, signature: pay_signature)
+      ValidateGovpayWebhookBodyService.run(body: body, signature: pay_signature)
 
       GovpayWebhookJob.perform_later(JSON.parse(body))
     rescue StandardError, Mongoid::Errors::DocumentNotFound => e

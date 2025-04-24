@@ -15,15 +15,15 @@ module WasteCarriersEngine
       let(:digest) { OpenSSL::Digest.new("sha256") }
       let(:valid_signature) { OpenSSL::HMAC.hexdigest(digest, webhook_signing_secret, webhook_body) }
 
-      let(:webhook_validation_service) { instance_double(ValidateGovpayPaymentWebhookBodyService) }
+      let(:webhook_validation_service) { instance_double(ValidateGovpayWebhookBodyService) }
 
       before do
         allow(Airbrake).to receive(:notify)
-        allow(ValidateGovpayPaymentWebhookBodyService).to receive(:new).and_return webhook_validation_service
+        allow(ValidateGovpayWebhookBodyService).to receive(:new).and_return webhook_validation_service
         if validation_success
           allow(webhook_validation_service).to receive(:run).and_return(true)
         else
-          allow(webhook_validation_service).to receive(:run).and_raise(ValidateGovpayPaymentWebhookBodyService::ValidationFailure)
+          allow(webhook_validation_service).to receive(:run).and_raise(ValidateGovpayWebhookBodyService::ValidationFailure)
         end
       end
 
