@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/DEFRA/defra-ruby-govpay
+  revision: f48c467813858f5dcf351f41f1b1e222e6c4c2a2
+  branch: RUBY-3757-wcr-tech-move-govpay-webhook-handling-to-the-govpay-gem
+  specs:
+    defra_ruby_govpay (0.2.7)
+      rest-client (~> 2.1)
+
 PATH
   remote: .
   specs:
@@ -160,8 +168,6 @@ GEM
       notifications-ruby-client
       rails
       sprockets-rails
-    defra_ruby_govpay (0.2.7)
-      rest-client (~> 2.1)
     defra_ruby_style (0.3.0)
       rubocop (>= 1.0, < 2.0)
     defra_ruby_template (5.4.1)
@@ -495,6 +501,7 @@ PLATFORMS
 
 DEPENDENCIES
   database_cleaner-mongoid (~> 2.0.1)
+  defra_ruby_govpay!
   defra_ruby_style (~> 0.3.0)
   defra_ruby_template (~> 5.0)
   dotenv-rails (~> 2.8.1)
