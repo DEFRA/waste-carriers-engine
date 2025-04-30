@@ -66,7 +66,7 @@ RSpec.shared_examples "Govpay webhook status transitions" do
 
     it "does not update the status from #{old_status} to #{new_status}" do
       expect { run_service }.not_to(change { wcr_payment.reload.govpay_payment_status })
-    rescue DefraRubyGovpay::GovpayWebhookBaseService::InvalidGovpayStatusTransition
+    rescue DefraRubyGovpay::WebhookBaseService::InvalidStatusTransition
       # expected exception
     end
 
@@ -74,7 +74,7 @@ RSpec.shared_examples "Govpay webhook status transitions" do
       run_service
 
       expect(Airbrake).to have_received(:notify)
-    rescue DefraRubyGovpay::GovpayWebhookBaseService::InvalidGovpayStatusTransition
+    rescue DefraRubyGovpay::WebhookBaseService::InvalidStatusTransition
       # expected exception
     end
   end

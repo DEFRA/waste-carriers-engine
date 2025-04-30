@@ -8,7 +8,7 @@ module WasteCarriersEngine
 
       previous_status = payment&.govpay_payment_status
 
-      result = DefraRubyGovpay::GovpayWebhookPaymentService.run(
+      result = DefraRubyGovpay::WebhookPaymentService.run(
         webhook_body,
         previous_status: previous_status
       )

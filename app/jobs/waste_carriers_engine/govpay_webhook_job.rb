@@ -31,7 +31,7 @@ module WasteCarriersEngine
     end
 
     def sanitize_webhook_body(body)
-      DefraRubyGovpay::GovpayWebhookSanitizerService.call(body)
+      DefraRubyGovpay::WebhookSanitizerService.call(body)
     end
 
     def handle_error(error, webhook_body)
