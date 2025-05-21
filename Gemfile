@@ -67,6 +67,10 @@ group :test do
 
   gem "database_cleaner-mongoid", "~> 2.0.1"
 
+  gem "defra_ruby_govpay",
+      git: "https://github.com/DEFRA/defra-ruby-govpay",
+      branch: "chore/RUBY-3754_debug_govpay_timeout"
+
   gem "factory_bot_rails", "~> 6.2.0", require: false
 
   gem "faker", "~> 3.2.0"

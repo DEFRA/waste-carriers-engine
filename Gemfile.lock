@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/DEFRA/defra-ruby-govpay
+  revision: 7d8eb0e6dcc51f19d0c9d31c4488c12f9b23dcfb
+  branch: chore/RUBY-3754_debug_govpay_timeout
+  specs:
+    defra_ruby_govpay (1.0.0)
+      rest-client (~> 2.1)
+
 PATH
   remote: .
   specs:
@@ -492,6 +500,7 @@ PLATFORMS
 
 DEPENDENCIES
   database_cleaner-mongoid (~> 2.0.1)
+  defra_ruby_govpay!
   defra_ruby_style (~> 0.3.0)
   defra_ruby_template (~> 5.0)
   dotenv-rails (~> 2.8.1)
