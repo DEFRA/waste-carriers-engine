@@ -83,8 +83,8 @@ module WasteCarriersEngine
       Rails.logger.warn ">>>> prepare_for_payment"
       Rails.logger.warn ">>>> prepare_for_payment transient_registration \"#{@transient_registration&.token}\""
       Rails.logger.warn ">>>> prepare_for_payment temp_govpay_next_url \"#{@transient_registration&.temp_govpay_next_url}\""
-      DetailedLogger.warn "Starting prepare_for_payment for transient_registration \"#{@transient_registration&.token}\"; " \
-                          "temp_govpay_next_url \"#{@transient_registration&.temp_govpay_next_url}\""
+      # DetailedLogger.warn "Starting prepare_for_payment for transient_registration \"#{@transient_registration&.token}\"; " \
+      #                     "temp_govpay_next_url \"#{@transient_registration&.temp_govpay_next_url}\""
       # Don't call govpay if a payment is already in progress
       return { url: @transient_registration.temp_govpay_next_url } if govpay_payment_in_progress?
 
