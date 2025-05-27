@@ -26,6 +26,7 @@ module WasteCarriersEngine
         redirect_to govpay_next_url, allow_other_host: true
       end
     rescue StandardError => e
+      Rails.logger.error "GovpayFormsController#new error: \"#{e}\"\n#{e.backtrace}"
       DetailedLogger.warn "Error: #{e}\n#{e.backtrace}"
     end
 
