@@ -9,7 +9,7 @@ module WasteCarriersEngine
     def new
       super(GovpayForm, "govpay_form")
 
-      DetailedLogger.warn "new: params #{params}"
+      DetailedLogger.warn ">>> new: params #{params}"
 
       payment_info = prepare_for_payment
       DetailedLogger.warn "payment_info: #{payment_info}"
