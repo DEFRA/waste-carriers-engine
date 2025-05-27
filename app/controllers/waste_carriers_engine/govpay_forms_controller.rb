@@ -13,13 +13,18 @@ module WasteCarriersEngine
       
       super(GovpayForm, "govpay_form")
 
+      Rails.logger.warn ">>> prepare_for_payment pre"
       payment_info = prepare_for_payment
+      Rails.logger.warn ">>> prepare_for_payment post"
       DetailedLogger.warn "payment_info: #{payment_info}"
 
       if payment_info == :error
+      Rails.logger.warn ">>> prepare_for_payment error"
+
         flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.setup_error")
         go_back
       else
+        Rails.logger.warn ">>> prepare_for_payment NO error"
         govpay_next_url = payment_info[:url]
         # Store the URL in case the form is reloaded
         DetailedLogger.warn "new govpay_next_url: \"#{govpay_next_url}\""
@@ -91,6 +96,7 @@ module WasteCarriersEngine
       #                     "temp_govpay_next_url \"#{@transient_registration&.temp_govpay_next_url}\""
       # Don't call govpay if a payment is already in progress
       return { url: @transient_registration.temp_govpay_next_url } if govpay_payment_in_progress?
+      Rails.logger.warn ">>>> prepare_for_payment: still here"
 
       @transient_registration.prepare_for_payment(:govpay, current_user)
       govpay_service = GovpayPaymentService.new(@transient_registration, order, current_user)
