@@ -9,6 +9,8 @@ module WasteCarriersEngine
     def new
       super(GovpayForm, "govpay_form")
 
+      DetailedLogger.warn "new: params #{params}"
+
       payment_info = prepare_for_payment
       DetailedLogger.warn "payment_info: #{payment_info}"
 
@@ -23,6 +25,8 @@ module WasteCarriersEngine
 
         redirect_to govpay_next_url, allow_other_host: true
       end
+    rescue StandardError => e
+      DetailedLogger.warn "Error: #{e}\n#{e.backtrace}"
     end
 
     def payment_callback
