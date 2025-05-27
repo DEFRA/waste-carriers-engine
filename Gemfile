@@ -38,6 +38,7 @@ group :development, :test do
 
   gem "rubocop-rspec", "~> 2.22.0", require: false
 
+  gem "rubocop-rspec_rails"
 end
 
 # Remainder of Gemfile.lock omitted for brevity

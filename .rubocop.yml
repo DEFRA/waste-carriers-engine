@@ -7,6 +7,7 @@ inherit_gem:
 require:
   - rubocop-factory_bot
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 3.2.2
