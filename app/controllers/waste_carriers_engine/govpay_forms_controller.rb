@@ -7,9 +7,9 @@ module WasteCarriersEngine
     include CanAddDebugLogging
 
     def new
-      super(GovpayForm, "govpay_form")
-
       DetailedLogger.warn ">>> new: params #{params}"
+      
+      super(GovpayForm, "govpay_form")
 
       payment_info = prepare_for_payment
       DetailedLogger.warn "payment_info: #{payment_info}"
