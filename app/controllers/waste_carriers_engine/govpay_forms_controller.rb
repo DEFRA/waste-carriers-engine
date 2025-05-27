@@ -7,6 +7,8 @@ module WasteCarriersEngine
     include CanAddDebugLogging
 
     def new
+      Rails.logger.warn ">>> new"
+      Rails.logger.warn ">>> params #{params}"
       DetailedLogger.warn ">>> new: params #{params}"
       
       super(GovpayForm, "govpay_form")
