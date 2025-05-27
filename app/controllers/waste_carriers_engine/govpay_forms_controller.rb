@@ -60,6 +60,10 @@ module WasteCarriersEngine
     end
 
     def govpay_payment_in_progress?
+      Rails.logger.warn ">>>> govpay_payment_in_progress? order.govpay_id: #{order.govpay_id}"
+      Rails.logger.warn ">>>> govpay_payment_in_progress? @transient_registration: #{@transient_registration.inspect}"
+      Rails.logger.warn ">>>> govpay_payment_in_progress? temp_govpay_next_url: #{@transient_registration.temp_govpay_next_url}"
+
       return false if order&.govpay_id.blank? || @transient_registration.temp_govpay_next_url.blank?
 
       # Payment started but cancelled => not in progress
