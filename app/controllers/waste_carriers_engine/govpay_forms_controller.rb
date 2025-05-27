@@ -18,6 +18,7 @@ module WasteCarriersEngine
       else
         govpay_next_url = payment_info[:url]
         # Store the URL in case the form is reloaded
+        DetailedLogger.warn "new govpay_next_url: \"#{govpay_next_url}\""
         @transient_registration.update(temp_govpay_next_url: govpay_next_url)
 
         redirect_to govpay_next_url, allow_other_host: true
@@ -72,7 +73,7 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      DetailedLogger.warn "Starting prepare_for_payment for tranient_registration #{@tranient_registration.token}; " \
+      DetailedLogger.warn "Starting prepare_for_payment for tranient_registration \"#{@tranient_registration&.token}\"; " \
                           "temp_govpay_next_url \"#{temp_govpay_next_url}\""
       # Don't call govpay if a payment is already in progress
       return { url: @transient_registration.temp_govpay_next_url } if govpay_payment_in_progress?
