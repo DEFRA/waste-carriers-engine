@@ -37,7 +37,7 @@ module WasteCarriersEngine
     end
 
     def payment_callback_url
-      WasteCarriersEngine::DefraRubyGovpayHelper.payment_callback_url(@transient_registration, @order)
+      WasteCarriersEngine::DefraRubyGovpayHelper.govpay_callback_url(@transient_registration, @order)
     end
 
     def govpay_redirect_url(response)
