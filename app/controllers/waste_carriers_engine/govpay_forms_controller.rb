@@ -72,6 +72,8 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
+      DetailedLogger.warn "Starting prepare_for_payment for tranient_registration #{@tranient_registration.token}; " \
+                          "temp_govpay_next_url \"#{temp_govpay_next_url}\""
       # Don't call govpay if a payment is already in progress
       return { url: @transient_registration.temp_govpay_next_url } if govpay_payment_in_progress?
 

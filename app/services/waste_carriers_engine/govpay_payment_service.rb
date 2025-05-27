@@ -37,12 +37,7 @@ module WasteCarriersEngine
     end
 
     def payment_callback_url
-      host = Rails.configuration.host
-      path = WasteCarriersEngine::Engine.routes.url_helpers.payment_callback_govpay_forms_path(
-        token: @transient_registration.token, uuid: @order.payment_uuid
-      )
-
-      [host, path].join
+      WasteCarriersEngine::DefraRubyGovpayHelper.payment_callback_url(@transient_registration, @order)
     end
 
     def govpay_redirect_url(response)
