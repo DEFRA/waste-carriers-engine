@@ -6,15 +6,23 @@ module WasteCarriersEngine
   class GovpayPaymentService
 
     def initialize(transient_registration, order, current_user = nil)
+      Rails.logger.warn ">>>> GovpayPaymentService init"
+      Rails.logger.warn ">>>> GovpayPaymentService init: TR #{transient_registration}"
+      Rails.logger.warn ">>>> GovpayPaymentService init: order #{order}"
+
       @transient_registration = transient_registration
       @order = order
       @current_user = current_user
     end
 
     def prepare_for_payment
+      Rails.logger.warn ">>>> GovpayPaymentService prepare_for_payment: in"
       Rails.logger.tagged("GovpayPaymentService", "prepare_for_payment") do
+        Rails.logger.warn ">>>> GovpayPaymentService prepare_for_payment: after tagged"
         response = govpay_payment_response
+        Rails.logger.warn ">>>> GovpayPaymentService prepare_for_payment: response: #{response}"
         response_json = JSON.parse(response.body)
+        Rails.logger.warn ">>>> GovpayPaymentService prepare_for_payment: response_json: #{response_json}"
 
         govpay_payment_id = response_json["payment_id"]
         DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}, " \
@@ -47,12 +55,18 @@ module WasteCarriersEngine
     private
 
     def govpay_payment_response
+      Rails.logger.warn ">>>> GovpayPaymentService govpay_payment_response: IN, calling DefraRubyGovpay::API.new(host_is_back_office:).send_request..."
+
+
+      
       DefraRubyGovpay::API.new(host_is_back_office:).send_request(
         method: :post,
         path: "/payments",
         is_moto: host_is_back_office,
         params: payment_params
       )
+    rescue StandardError => e
+      Rails.logger.error "++++ ERROR: #{e}\n#{e.backtrace}"
     end
 
     def host_is_back_office
