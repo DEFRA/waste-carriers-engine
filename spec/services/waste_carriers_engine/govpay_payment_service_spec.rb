@@ -98,7 +98,7 @@ module WasteCarriersEngine
     end
 
     describe "#payment_callback_url" do
-      let(:callback_host) { Faker::Internet.url }
+      let(:callback_host) { "http://localhost:" }
 
       before { allow(Rails.configuration).to receive(:host).and_return(callback_host) }
 
