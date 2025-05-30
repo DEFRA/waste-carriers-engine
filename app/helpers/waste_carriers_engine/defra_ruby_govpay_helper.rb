@@ -11,12 +11,12 @@ module WasteCarriersEngine
       path = WasteCarriersEngine::Engine.routes.url_helpers.payment_callback_govpay_forms_path(
         token: transient_registration.token, uuid: order.payment_uuid
       )
-    #   Rails.logger.warn ">>> DefraRubyGovpayHelper: initial callback_url \"#{[host, path].join}\""
-    #   # If using the mocks, adapt the callback_url to align with the root of the mocks path
-    #   # so that the back-office can reach the front-office.
-    #   if ENV["WCRS_MOCK_ENABLED"].to_s.downcase == "true"
-    #     host = url_root(ENV.fetch("WCRS_MOCK_FO_GOVPAY_URL")) || host
-    #   end
+      Rails.logger.warn ">>> DefraRubyGovpayHelper: initial callback_url \"#{[host, path].join}\""
+      # If using the mocks, adapt the callback_url to align with the root of the mocks path
+      # so that the back-office can reach the front-office.
+      if ENV["WCRS_MOCK_ENABLED"].to_s.downcase == "true"
+        host = url_root(ENV.fetch("WCRS_MOCK_FO_GOVPAY_URL")) || host
+      end
       Rails.logger.warn ">>> DefraRubyGovpayHelper: FINAL callback_url \"#{[host, path].join}\""
 
       [host, path].join
