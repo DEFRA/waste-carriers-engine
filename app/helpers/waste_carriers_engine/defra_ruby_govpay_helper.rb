@@ -15,25 +15,25 @@ module WasteCarriersEngine
       # If using the mocks, adapt the callback_url to align with the root of the mocks path
       # so that the back-office can reach the front-office.
       if ENV["WCRS_MOCK_ENABLED"].to_s.downcase == "true"
-        host = url_root(ENV.fetch("WCRS_MOCK_FO_GOVPAY_URL")) || host
+        host = ENV.fetch("WCRS_MOCK_BO_GOVPAY_URL") || host
       end
       Rails.logger.warn ">>> DefraRubyGovpayHelper: FINAL callback_url \"#{[host, path].join}\""
 
       [host, path].join
     end
 
-    def self.url_root(url)
-      uri = URI.parse(url)
-      url_root = "#{uri.scheme}://#{uri.host}"
+    # def self.url_root(url)
+    #   uri = URI.parse(url)
+    #   url_root = "#{uri.scheme}://#{uri.host}"
 
-      if uri.port.present?
-        url_root += ":#{uri.port}"
-        url_root += host_is_back_office? ? "/bo" : "/fo"
-      end
+    #   if uri.port.present?
+    #     url_root += ":#{uri.port}"
+    #     url_root += host_is_back_office? ? "/bo" : "/fo"
+    #   end
 
-      Rails.logger.warn ">>> DefraRubyGovpayHelper.url_root for url \"#{url}\", port #{uri.port} => url_root for callback is \"#{url_root}\""
+    #   Rails.logger.warn ">>> DefraRubyGovpayHelper.url_root for url \"#{url}\", port #{uri.port} => url_root for callback is \"#{url_root}\""
 
-      url_root
-    end
+    #   url_root
+    # end
   end
 end
