@@ -22,18 +22,29 @@ module WasteCarriersEngine
       [host, path].join
     end
 
-    # def self.url_root(url)
-    #   uri = URI.parse(url)
-    #   url_root = "#{uri.scheme}://#{uri.host}"
+    def self.govpay_next_url(url)
+      return url unless ENV["WCRS_MOCK_ENABLED"].to_s.downcase == "true"
 
-    #   if uri.port.present?
-    #     url_root += ":#{uri.port}"
-    #     url_root += host_is_back_office? ? "/bo" : "/fo"
-    #   end
+      return url unless Rails.env.production?
 
-    #   Rails.logger.warn ">>> DefraRubyGovpayHelper.url_root for url \"#{url}\", port #{uri.port} => url_root for callback is \"#{url_root}\""
+      mocks_url = host_is_back_office? ? ENV.fetch("WCRS_MOCK_BO_GOVPAY_URL") : ENV.fetch("WCRS_MOCK_FO_GOVPAY_URL")
+      url.gsub!(url_root(url), ENV.fetch("WCRS_PUBLIC_DOMAIN"))
+    end
 
-    #   url_root
-    # end
+    private
+
+    def self.url_root(url)
+      uri = URI.parse(url)
+      url_root = "#{uri.scheme}://#{uri.host}"
+
+      if uri.port.present?
+        url_root += ":#{uri.port}"
+        # url_root += host_is_back_office? ? "/bo" : "/fo"
+      end
+
+      Rails.logger.warn ">>> DefraRubyGovpayHelper.url_root for url \"#{url}\", port #{uri.port} => url_root for callback is \"#{url_root}\""
+
+      url_root
+    end
   end
 end
