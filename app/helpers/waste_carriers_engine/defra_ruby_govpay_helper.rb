@@ -26,7 +26,10 @@ module WasteCarriersEngine
       uri = URI.parse(url)
       url_root = "#{uri.scheme}://#{uri.host}"
 
-      url_root += ":#{uri.port}" if uri.port.present?
+      if uri.port.present?
+        url_root += ":#{uri.port}"
+        url_root += host_is_back_office? ? "/bo" : "/fo"
+      end
 
       Rails.logger.warn ">>> DefraRubyGovpayHelper.url_root for url \"#{url}\", port #{uri.port} => url_root for callback is \"#{url_root}\""
 
