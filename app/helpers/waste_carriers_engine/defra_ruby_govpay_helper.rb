@@ -30,11 +30,16 @@ module WasteCarriersEngine
 
       return url unless Rails.env.production?
 
+      mocks_url_var = WasteCarriersEngine.configuration.host_is_back_office? ? "WCRS_MOCK_BO_GOVPAY_URL" : "WCRS_MOCK_FO_GOVPAY_URL"
+      mocks_url = ENV.fetch(mocks_url_var)
+
       external_url_var = WasteCarriersEngine.configuration.host_is_back_office? ? "WCRS_PUBLIC_DOMAIN" : "WCRS_BACK_OFFICE_DOMAIN"
-      mocks_url = ENV.fetch(external_url_var)
-      DetailedLogger.warn "next_url for #{url}, using env var \"#{external_url_var}\" => \"#{ENV.fetch(external_url_var)}\""
-      DetailedLogger.warn "mocks_url: \"#{mocks_url}\", mocks_url root: \"#{url_root(mocks_url)}\""
-      DetailedLogger.warn "next_url: \"#{url.gsub!(url_root(mocks_url), ENV.fetch(external_url_var))}\""
+      external_url = Env.fetch(external_url_var)
+
+      DetailedLogger.warn "%%%% next_url for #{url}"
+      DetailedLogger.warn "%%%% mocks_url: \"#{mocks_url}\""
+      DetailedLogger.warn "%%%% external_url \"#{external_url}\""
+      DetailedLogger.warn "%%%% next_url: \"#{url.gsub!(url_root(mocks_url), external_url)}\""
       url.gsub!(url_root(mocks_url), ENV.fetch(external_url_var))
     end
 
