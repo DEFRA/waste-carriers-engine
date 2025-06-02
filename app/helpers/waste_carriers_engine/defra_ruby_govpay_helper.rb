@@ -32,15 +32,16 @@ module WasteCarriersEngine
 
       mocks_url_var = WasteCarriersEngine.configuration.host_is_back_office? ? "WCRS_MOCK_BO_GOVPAY_URL" : "WCRS_MOCK_FO_GOVPAY_URL"
       mocks_url = ENV.fetch(mocks_url_var)
+      mocks_url_root = url_root(mocks_url)
 
       external_url_var = WasteCarriersEngine.configuration.host_is_back_office? ? "WCRS_PUBLIC_DOMAIN" : "WCRS_BACK_OFFICE_DOMAIN"
       external_url = ENV.fetch(external_url_var)
 
       DetailedLogger.warn "%%%% next_url for #{url}"
-      DetailedLogger.warn "%%%% mocks_url: \"#{mocks_url}\""
+      DetailedLogger.warn "%%%% mocks_url: \"#{mocks_url}\"; mocks_root \"#{mocks_url_root)}\""
       DetailedLogger.warn "%%%% external_url \"#{external_url}\""
-      DetailedLogger.warn "%%%% next_url: \"#{url.gsub!(url_root(mocks_url), external_url)}\""
-      url.gsub!(url_root(mocks_url), ENV.fetch(external_url_var))
+      DetailedLogger.warn "%%%% next_url: \"#{url.gsub!(mocks_url_root, external_url)}\""
+      url.gsub!(mocks_url_root, external_url)
     end
 
     private
