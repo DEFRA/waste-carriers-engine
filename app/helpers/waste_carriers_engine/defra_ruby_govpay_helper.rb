@@ -14,12 +14,12 @@ module WasteCarriersEngine
       Rails.logger.warn ">>> DefraRubyGovpayHelper: initial callback_url \"#{[host, path].join}\""
       # If using the mocks, adapt the callback_url to align with the root of the mocks path
       # so that the back-office can reach the front-office.
-      if ENV["WCRS_MOCK_ENABLED"].to_s.downcase == "true"
-        Rails.logger.warn "****** DefraRubyGovpayHelper 1: host \"#{host}\", path: \"#{path}\""
-        host = url_root(ENV.fetch("WCRS_MOCK_BO_GOVPAY_URL")) || host
-        # path.gsub!(/^\/fo/, "")
-        Rails.logger.warn "****** DefraRubyGovpayHelper 2: host \"#{host}\", path: \"#{path}\""
-      end
+    #   if ENV["WCRS_MOCK_ENABLED"].to_s.downcase == "true"
+    #     Rails.logger.warn "****** DefraRubyGovpayHelper 1: host \"#{host}\", path: \"#{path}\""
+    #     host = url_root(ENV.fetch("WCRS_MOCK_BO_GOVPAY_URL")) || host
+    #     # path.gsub!(/^\/fo/, "")
+    #     Rails.logger.warn "****** DefraRubyGovpayHelper 2: host \"#{host}\", path: \"#{path}\""
+    #   end
       Rails.logger.warn ">>> DefraRubyGovpayHelper: FINAL callback_url \"#{[host, path].join}\""
 
       [host, path].join

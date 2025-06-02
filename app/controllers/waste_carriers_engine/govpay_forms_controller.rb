@@ -29,6 +29,7 @@ module WasteCarriersEngine
         # If mocks are enabled the mocks will return the internal form of the URL with ports; need to map to the external form
         payment_info_url = payment_info[:url]
         govpay_next_url = DefraRubyGovpayHelper.govpay_next_url(payment_info_url)
+        DetailedLogger.warn "DefraRubyGovpayHelper.govpay_next_url returned \"#{govpay_next_url}\""
 
         # Store the URL in case the form is reloaded
         DetailedLogger.warn "new govpay_next_url: \"#{govpay_next_url}\""
