@@ -30,8 +30,8 @@ module WasteCarriersEngine
 
       return url unless Rails.env.production?
 
-      env_abbreviation = WasteCarriersEngine.configuration.host_is_back_office? ? "BO" : "FO"
-      mocks_url = ENV.fetch("WCRS_MOCK_#{env_abbreviation}_GOVPAY_URL")
+      external_url_var = WasteCarriersEngine.configuration.host_is_back_office? ? "WCRS_PUBLIC_DOMAIN" : "WCRS_BACK_OFFICE_DOMAIN"
+      mocks_url = ENV.fetch(external_url_var)
       url.gsub!(url_root(mocks_url), ENV.fetch("WCRS_PUBLIC_DOMAIN"))
     end
 
