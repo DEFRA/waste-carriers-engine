@@ -41,7 +41,7 @@ module WasteCarriersEngine
       DetailedLogger.warn "%%%% mocks_url: \"#{mocks_url}\"; mocks_root \"#{mocks_url_root}\""
       DetailedLogger.warn "%%%% external_url \"#{external_url}\""
       DetailedLogger.warn "%%%% next_url: \"#{url.gsub!(mocks_url_root, external_url)}\""
-      url.gsub!(mocks_url_root, external_url)
+      url.gsub(mocks_url_root, external_url)
     end
 
     private
