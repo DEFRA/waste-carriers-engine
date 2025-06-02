@@ -32,7 +32,10 @@ module WasteCarriersEngine
 
       external_url_var = WasteCarriersEngine.configuration.host_is_back_office? ? "WCRS_PUBLIC_DOMAIN" : "WCRS_BACK_OFFICE_DOMAIN"
       mocks_url = ENV.fetch(external_url_var)
-      url.gsub!(url_root(mocks_url), ENV.fetch("WCRS_PUBLIC_DOMAIN"))
+      DetailedLogger.warn "next_url for #{url}, using env var \"#{external_url_var}\" => \"#{ENV.fetch(external_url_var)}\""
+      DetailedLogger.warn "mocks_url: \"#{mocks_url}\", mocks_url root: \"#{url_root(mocks_url)}\""
+      DetailedLogger.warn "next_url: \"#{url.gsub!(url_root(mocks_url), ENV.fetch(external_url_var))}\""
+      url.gsub!(url_root(mocks_url), ENV.fetch(external_url_var))
     end
 
     private
