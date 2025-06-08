@@ -21,10 +21,20 @@ module WasteCarriersEngine
                             "received govpay payment id #{govpay_payment_id}"
         DetailedLogger.warn "govpay_redirect_url for response #{response}: \"#{govpay_redirect_url(response)}\""
         DetailedLogger.warn "payment_callback_url: \"#{payment_callback}\""
-        DetailedLogger.warn "govpay_mocks_external_root_url: #{ENV['govpay_mocks_external_root_url']}"
-        DetailedLogger.warn "govpay_mocks_external_root_url_other: #{ENV['govpay_mocks_external_root_url_other']}"
-        DetailedLogger.warn "govpay_mocks_internal_root_url: #{ENV['govpay_mocks_internal_root_url']}"
-        DetailedLogger.warn "govpay_mocks_internal_root_url_other: #{ENV['govpay_mocks_internal_root_url_other']}"
+        DetailedLogger.warn "WCRS_MOCK_BO_GOVPAY_URL: \"#{ENV["WCRS_MOCK_BO_GOVPAY_URL"]}\""
+        DetailedLogger.warn "WCRS_MOCK_FO_GOVPAY_URL: \"#{ENV["WCRS_MOCK_FO_GOVPAY_URL"]}\""
+        DetailedLogger.warn "WCRS_MOCK_BO_GOVPAY_URL_INTERNAL: \"#{ENV["WCRS_MOCK_BO_GOVPAY_URL_INTERNAL"]}\""
+        DetailedLogger.warn "WCRS_MOCK_FO_GOVPAY_URL_INTERNAL: \"#{ENV["WCRS_MOCK_FO_GOVPAY_URL_INTERNAL"]}\""
+        DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_external_root_url => #{DefraRubyMocks.configuration.govpay_mocks_external_root_url}"
+        DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_external_root_url_other => #{DefraRubyMocks.configuration.govpay_mocks_external_root_url_other}"
+        DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url}"
+        DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other}"
+
+
+        WCRS_MOCK_BO_GOVPAY_URL=https://wcr-dev.aws-int.defra.cloud/fo/mocks/govpay/v1
+        WCRS_MOCK_FO_GOVPAY_URL=https://wcr-admin-dev.aws-int.defra.cloud/bo/mocks/govpay/v1
+        WCRS_MOCK_BO_GOVPAY_URL_INTERNAL=https://devwcr.aws-int.defra.cloud:8002/fo/mocks/govpay/v1
+        WCRS_MOCK_FO_GOVPAY_URL_INTERNAL
 
         if govpay_payment_id.present?
           @order.govpay_id = govpay_payment_id
