@@ -10,6 +10,11 @@ module WasteCarriersEngine
       super(GovpayForm, "govpay_form")
 
       DetailedLogger.warn "GovpayFormsController#new preparing for payment"
+      DetailedLogger.warn "govpay_mocks_external_root_url: #{ENV['govpay_mocks_external_root_url']}"
+      DetailedLogger.warn "govpay_mocks_external_root_url_other: #{ENV['govpay_mocks_external_root_url_other']}"
+      DetailedLogger.warn "govpay_mocks_internal_root_url: #{ENV['govpay_mocks_internal_root_url']}"
+      DetailedLogger.warn "govpay_mocks_internal_root_url_other: #{ENV['govpay_mocks_internal_root_url_other']}"
+
       payment_info = prepare_for_payment
       DetailedLogger.warn "payment_info: #{payment_info}"
 
