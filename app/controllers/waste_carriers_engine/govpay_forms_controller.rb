@@ -9,6 +9,7 @@ module WasteCarriersEngine
     def new
       super(GovpayForm, "govpay_form")
 
+      DetailedLogger.warn "GovpayFormsController#new preparing for payment"
       payment_info = prepare_for_payment
       DetailedLogger.warn "payment_info: #{payment_info}"
 
@@ -73,10 +74,13 @@ module WasteCarriersEngine
 
     def prepare_for_payment
       # Don't call govpay if a payment is already in progress
+      DetailedLogger.warn "GovpayFormsController#prepare_for_payment: payment in progress: #{govpay_payment_in_progress?}"
       return { url: @transient_registration.temp_govpay_next_url } if govpay_payment_in_progress?
 
+      DetailedLogger.warn ">>> Calling TransientRegistration#prepare_for_payment..."
       @transient_registration.prepare_for_payment(:govpay, current_user)
       govpay_service = GovpayPaymentService.new(@transient_registration, order, current_user)
+      DetailedLogger.warn ">>> Calling GovpayPaymentService#prepare_for_payment..."
       govpay_service.prepare_for_payment
     end
 
