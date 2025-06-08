@@ -19,6 +19,12 @@ module WasteCarriersEngine
         govpay_payment_id = response_json["payment_id"]
         DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}, " \
                             "received govpay payment id #{govpay_payment_id}"
+        DetailedLogger.warn "govpay_redirect_url for response #{response}: \"#{govpay_redirect_url(response)}\""
+        DetailedLogger.warn "payment_callback_url: \"#{payment_callback}\""
+        DetailedLogger.warn "govpay_mocks_external_root_url: #{ENV['govpay_mocks_external_root_url']}"
+        DetailedLogger.warn "govpay_mocks_external_root_url_other: #{ENV['govpay_mocks_external_root_url_other']}"
+        DetailedLogger.warn "govpay_mocks_internal_root_url: #{ENV['govpay_mocks_internal_root_url']}"
+        DetailedLogger.warn "govpay_mocks_internal_root_url_other: #{ENV['govpay_mocks_internal_root_url_other']}"
 
         if govpay_payment_id.present?
           @order.govpay_id = govpay_payment_id
