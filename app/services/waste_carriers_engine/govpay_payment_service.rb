@@ -30,12 +30,6 @@ module WasteCarriersEngine
         DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url}"
         DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other}"
 
-
-        WCRS_MOCK_BO_GOVPAY_URL=https://wcr-dev.aws-int.defra.cloud/fo/mocks/govpay/v1
-        WCRS_MOCK_FO_GOVPAY_URL=https://wcr-admin-dev.aws-int.defra.cloud/bo/mocks/govpay/v1
-        WCRS_MOCK_BO_GOVPAY_URL_INTERNAL=https://devwcr.aws-int.defra.cloud:8002/fo/mocks/govpay/v1
-        WCRS_MOCK_FO_GOVPAY_URL_INTERNAL
-
         if govpay_payment_id.present?
           @order.govpay_id = govpay_payment_id
           @order.save!
