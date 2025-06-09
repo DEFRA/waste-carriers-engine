@@ -9,20 +9,22 @@ module WasteCarriersEngine
     def new
       super(GovpayForm, "govpay_form")
 
-      DetailedLogger.warn "GovpayFormsController#new preparing for payment"
-      DetailedLogger.warn "govpay_mocks_external_root_url: #{ENV['govpay_mocks_external_root_url']}"
-      DetailedLogger.warn "govpay_mocks_external_root_url_other: #{ENV['govpay_mocks_external_root_url_other']}"
-      DetailedLogger.warn "govpay_mocks_internal_root_url: #{ENV['govpay_mocks_internal_root_url']}"
-      DetailedLogger.warn "govpay_mocks_internal_root_url_other: #{ENV['govpay_mocks_internal_root_url_other']}"
+      Rails.logger.warn "GovpayFormsController#new preparing for payment"
+      Rails.logger.warn "WCRS_MOCK_BO_GOVPAY_URL: #{ENV['WCRS_MOCK_BO_GOVPAY_URL']}"
+      Rails.logger.warn "WCRS_MOCK_FO_GOVPAY_URL: #{ENV['WCRS_MOCK_FO_GOVPAY_URL']}"
+      Rails.logger.warn "WCRS_MOCK_BO_GOVPAY_URL_INTERNAL: #{ENV['WCRS_MOCK_BO_GOVPAY_URL_INTERNAL']}"
+      Rails.logger.warn "WCRS_MOCK_FO_GOVPAY_URL_INTERNAL: #{ENV['WCRS_MOCK_FO_GOVPAY_URL_INTERNAL']}"
 
       payment_info = prepare_for_payment
-      DetailedLogger.warn "payment_info: #{payment_info}"
+      Rails.logger.warn "payment_info: #{payment_info}"
 
       if payment_info == :error
         flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.new.setup_error")
         go_back
       else
         govpay_next_url = payment_info[:url]
+        Rails.logger.warn "govpay_next_url: #{govpay_next_url}"
+
         # Store the URL in case the form is reloaded
         @transient_registration.update(temp_govpay_next_url: govpay_next_url)
 

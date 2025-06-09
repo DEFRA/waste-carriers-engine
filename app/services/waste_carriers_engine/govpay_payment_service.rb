@@ -20,7 +20,7 @@ module WasteCarriersEngine
         DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}, " \
                             "received govpay payment id #{govpay_payment_id}"
         DetailedLogger.warn "govpay_redirect_url for response #{response}: \"#{govpay_redirect_url(response)}\""
-        DetailedLogger.warn "payment_callback_url: \"#{payment_callback}\""
+        DetailedLogger.warn "payment_callback_url: \"#{payment_callback_url}\""
         DetailedLogger.warn "WCRS_MOCK_BO_GOVPAY_URL: \"#{ENV["WCRS_MOCK_BO_GOVPAY_URL"]}\""
         DetailedLogger.warn "WCRS_MOCK_FO_GOVPAY_URL: \"#{ENV["WCRS_MOCK_FO_GOVPAY_URL"]}\""
         DetailedLogger.warn "WCRS_MOCK_BO_GOVPAY_URL_INTERNAL: \"#{ENV["WCRS_MOCK_BO_GOVPAY_URL_INTERNAL"]}\""
@@ -41,7 +41,7 @@ module WasteCarriersEngine
           :error
         end
       rescue StandardError => e
-        DetailedLogger.error("prepare_for_payment error: #{e}")
+        DetailedLogger.error "prepare_for_payment error: #{e}"
         :error
       end
     end
