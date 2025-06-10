@@ -13,7 +13,6 @@ module WasteCarriersEngine
 
     def prepare_for_payment
       Rails.logger.tagged("GovpayPaymentService", "prepare_for_payment") do
-        DetailedLogger.warn "govpay_redirect_url for response #{response}: \"#{govpay_redirect_url(response)}\""
         DetailedLogger.warn "payment_callback_url: \"#{payment_callback_url}\""
         DetailedLogger.warn "WCRS_MOCK_BO_GOVPAY_URL: \"#{ENV["WCRS_MOCK_BO_GOVPAY_URL"]}\""
         DetailedLogger.warn "WCRS_MOCK_FO_GOVPAY_URL: \"#{ENV["WCRS_MOCK_FO_GOVPAY_URL"]}\""
@@ -24,6 +23,7 @@ module WasteCarriersEngine
         DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url}"
         DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other}"
         response = govpay_payment_response
+        DetailedLogger.warn "govpay_redirect_url for response #{response}: \"#{govpay_redirect_url(response)}\""
         response_json = JSON.parse(response.body)
 
         govpay_payment_id = response_json["payment_id"]
