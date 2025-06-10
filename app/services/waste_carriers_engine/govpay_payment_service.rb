@@ -12,8 +12,7 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      # Rails.logger.tagged("GovpayPaymentService", "prepare_for_payment") do
-      begin
+      Rails.logger.tagged("GovpayPaymentService", "prepare_for_payment") do
         response = govpay_payment_response
         response_json = JSON.parse(response.body)
 
