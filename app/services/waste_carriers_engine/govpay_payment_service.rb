@@ -12,14 +12,7 @@ module WasteCarriersEngine
     end
 
     def prepare_for_payment
-      Rails.logger.warn ">>> GovpayPaymentService#prepare_for_payment"
       Rails.logger.tagged("GovpayPaymentService", "prepare_for_payment") do
-        response = govpay_payment_response
-        response_json = JSON.parse(response.body)
-
-        govpay_payment_id = response_json["payment_id"]
-        DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}, " \
-                            "received govpay payment id #{govpay_payment_id}"
         DetailedLogger.warn "govpay_redirect_url for response #{response}: \"#{govpay_redirect_url(response)}\""
         DetailedLogger.warn "payment_callback_url: \"#{payment_callback_url}\""
         DetailedLogger.warn "WCRS_MOCK_BO_GOVPAY_URL: \"#{ENV["WCRS_MOCK_BO_GOVPAY_URL"]}\""
@@ -30,6 +23,12 @@ module WasteCarriersEngine
         DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_external_root_url_other => #{DefraRubyMocks.configuration.govpay_mocks_external_root_url_other}"
         DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url}"
         DetailedLogger.warn "DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other => #{DefraRubyMocks.configuration.govpay_mocks_internal_root_url_other}"
+        response = govpay_payment_response
+        response_json = JSON.parse(response.body)
+
+        govpay_payment_id = response_json["payment_id"]
+        DetailedLogger.warn "payment_uuid #{@order.payment_uuid}, payment_params: #{payment_params}, " \
+                            "received govpay payment id #{govpay_payment_id}"
 
         if govpay_payment_id.present?
           @order.govpay_id = govpay_payment_id
