@@ -13,13 +13,13 @@ module WasteCarriersEngine
         return
       end
 
-      process_payment(payment, webhook_status)
+      update_payment_status(payment, webhook_status)
 
       registration = GovpayFindRegistrationService.run(payment: payment)
       process_registration(registration, payment, webhook_status)
 
       Rails.logger.info "Updated status from #{previous_status} to #{webhook_status} for payment #{payment_id}, " \
-                        "registration #{registration.regIdentifier}"
+                        "registration \"#{registration&.regIdentifier}\""
     rescue StandardError => e
       Rails.logger.error "Error processing webhook for payment #{payment_id}: #{e}"
       Airbrake.notify "Error processing webhook for payment #{payment_id}", e
@@ -31,15 +31,6 @@ module WasteCarriersEngine
         webhook_body,
         previous_status: previous_status
       )[:status]
-    end
-
-    def self.process_payment(payment, webhook_status)
-      if payment.blank?
-        Rails.logger.warn "Payment not found for payment webhook with payment id \"#{payment_id}\""
-        return
-      end
-
-      update_payment_status(payment, webhook_status)
     end
 
     def self.process_registration(registration, payment, webhook_status)

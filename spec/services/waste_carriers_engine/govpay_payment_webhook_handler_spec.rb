@@ -55,6 +55,19 @@ module WasteCarriersEngine
               registration.save!
             end
 
+            context "when the registration is not found" do
+              before do
+                allow(GovpayFindRegistrationService).to receive(:run).and_return(nil)
+                allow(RegistrationCompletionService).to receive(:new)
+              end
+
+              it "does not call the registration completion service" do
+                run_service
+
+                expect(RegistrationCompletionService).not_to have_received(:new)
+              end
+            end
+
             context "when the payment status has not changed" do
               let(:prior_payment_status) { Payment::STATUS_SUCCESS }
 
