@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe GovpayPaymentWebhookHandler do
     describe ".process" do
 
-      subject(:run_service) { described_class.process(webhook_body) }
+      subject(:run_service) { described_class.run(webhook_body) }
 
       let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read) }
       let(:webhook_resource) { webhook_body["resource"] }
@@ -50,7 +50,23 @@ module WasteCarriersEngine
           end
 
           context "when the payment is found" do
-            before { registration.finance_details.update_balance }
+            before do
+              registration.finance_details.update_balance
+              registration.save!
+            end
+
+            context "when the registration is not found" do
+              before do
+                allow(GovpayFindRegistrationService).to receive(:run).and_return(nil)
+                allow(RegistrationCompletionService).to receive(:new)
+              end
+
+              it "does not call the registration completion service" do
+                run_service
+
+                expect(RegistrationCompletionService).not_to have_received(:new)
+              end
+            end
 
             context "when the payment status has not changed" do
               let(:prior_payment_status) { Payment::STATUS_SUCCESS }
@@ -106,6 +122,40 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data) }
 
           it_behaves_like "status is present in the update"
+        end
+
+        context "when the payment belongs to a new registration" do
+          let(:registration) { create(:new_registration, :has_required_data, :has_pending_govpay_status) }
+          let(:registration_completion_service) { instance_double(RegistrationCompletionService) }
+
+          before do
+            allow(RegistrationCompletionService).to receive(:new).and_return(registration_completion_service)
+            allow(registration_completion_service).to receive(:run)
+          end
+
+          it_behaves_like "status is present in the update"
+
+          context "when the status is not success" do
+            let(:prior_payment_status) { "started" }
+
+            before { webhook_body["resource"]["state"]["status"] = "submitted" }
+
+            it "does not call the registration completion service" do
+              run_service
+
+              expect(registration_completion_service).not_to have_received(:run)
+            end
+          end
+
+          context "when the status is success" do
+            before { webhook_body["resource"]["state"]["status"] = "success" }
+
+            it "calls the registration completion service" do
+              run_service
+
+              expect(registration_completion_service).to have_received(:run)
+            end
+          end
         end
 
         context "when the payment belongs to a renewing registration" do
