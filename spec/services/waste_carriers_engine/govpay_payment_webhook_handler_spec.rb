@@ -6,7 +6,7 @@ module WasteCarriersEngine
   RSpec.describe GovpayPaymentWebhookHandler do
     describe ".process" do
 
-      subject(:run_service) { described_class.process(webhook_body) }
+      subject(:run_service) { described_class.run(webhook_body) }
 
       let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read) }
       let(:webhook_resource) { webhook_body["resource"] }

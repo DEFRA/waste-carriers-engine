@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class GovpayPaymentWebhookHandler
-    def self.process(webhook_body)
+  class GovpayPaymentWebhookHandler < BaseService
+    def run(webhook_body)
       payment_id = webhook_body.dig("resource", "payment_id")
       payment = GovpayFindPaymentService.run(payment_id: payment_id)
 
@@ -26,14 +26,14 @@ module WasteCarriersEngine
       raise
     end
 
-    def self.webhook_payment_status(webhook_body, previous_status)
+    def webhook_payment_status(webhook_body, previous_status)
       DefraRubyGovpay::WebhookPaymentService.run(
         webhook_body,
         previous_status: previous_status
       )[:status]
     end
 
-    def self.process_registration(registration, payment, webhook_status)
+    def process_registration(registration, payment, webhook_status)
       if registration.blank?
         Rails.logger.warn "Registration not found for payment with govpay id #{payment.govpay_id}"
         return
@@ -42,13 +42,13 @@ module WasteCarriersEngine
       complete_registration_or_renewal_if_ready(registration, webhook_status)
     end
 
-    def self.update_payment_status(payment, status)
+    def update_payment_status(payment, status)
       payment.update(govpay_payment_status: status)
       payment.finance_details.update_balance
       (payment.finance_details.registration || payment.finance_details.transient_registration).save!
     end
 
-    def self.complete_registration_or_renewal_if_ready(registration, status)
+    def complete_registration_or_renewal_if_ready(registration, status)
       return unless status == "success"
 
       case registration

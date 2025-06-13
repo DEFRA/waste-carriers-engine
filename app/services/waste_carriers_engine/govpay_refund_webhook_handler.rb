@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class GovpayRefundWebhookHandler
-    def self.process(webhook_body)
+  class GovpayRefundWebhookHandler < BaseService
+    def run(webhook_body)
       refund_id = webhook_body["refund_id"]
       refund = GovpayFindPaymentService.run(payment_id: refund_id)
 
@@ -32,7 +32,7 @@ module WasteCarriersEngine
       raise
     end
 
-    def self.update_refund_status(refund_id, registration, status)
+    def update_refund_status(refund_id, registration, status)
       GovpayUpdateRefundStatusService.run(
         registration: registration,
         refund_id: refund_id,
