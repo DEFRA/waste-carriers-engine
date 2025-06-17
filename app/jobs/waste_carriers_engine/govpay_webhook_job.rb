@@ -6,9 +6,9 @@ module WasteCarriersEngine
   class GovpayWebhookJob < ApplicationJob
     def perform(webhook_body)
       if webhook_body["resource_type"]&.downcase == "payment"
-        process_payment_webhook(webhook_body)
+        GovpayPaymentWebhookHandler.run(webhook_body)
       elsif webhook_body["refund_id"].present?
-        process_refund_webhook(webhook_body)
+        GovpayRefundWebhookHandler.run(webhook_body)
       else
         raise ArgumentError, "Unrecognised Govpay webhook type"
       end
@@ -17,18 +17,6 @@ module WasteCarriersEngine
     end
 
     private
-
-    def process_payment_webhook(webhook_body)
-      result = GovpayPaymentWebhookHandler.run(webhook_body)
-
-      Rails.logger.info "Processed payment webhook for payment_id: #{result[:id]}, status: #{result[:status]}"
-    end
-
-    def process_refund_webhook(webhook_body)
-      result = GovpayRefundWebhookHandler.run(webhook_body)
-
-      Rails.logger.info "Processed refund webhook for refund_id: #{result[:id]}, status: #{result[:status]}"
-    end
 
     def sanitize_webhook_body(body)
       DefraRubyGovpay::WebhookSanitizerService.call(body)
