@@ -26,8 +26,6 @@ module WasteCarriersEngine
       include_examples "Govpay webhook services error logging"
 
       describe "invalid webhook errors" do
-        include_examples "Govpay webhook services error logging"
-
         context "when the update is not for a payment" do
           before { webhook_body["resource_type"] = "refund" }
 
