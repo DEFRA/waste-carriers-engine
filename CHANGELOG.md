@@ -443,6 +443,10 @@
 
 **Fixed bugs:**
 
+- fix/RUBY-3819\_payment\_webhook\_reg\_activation [\#1636](https://github.com/DEFRA/waste-carriers-engine/pull/1636) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Remove redundant logging [\#1634](https://github.com/DEFRA/waste-carriers-engine/pull/1634) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Fix/ruby 3819 incomplete registrations [\#1631](https://github.com/DEFRA/waste-carriers-engine/pull/1631) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- RUBY 3757 wcr tech move govpay webhook handling to the govpay gem [\#1620](https://github.com/DEFRA/waste-carriers-engine/pull/1620) ([jjromeo](https://github.com/jjromeo))
 - Fix/ruby 3700 renewal pending govpay [\#1616](https://github.com/DEFRA/waste-carriers-engine/pull/1616) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/ruby 3700 govpay multiple txns [\#1612](https://github.com/DEFRA/waste-carriers-engine/pull/1612) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/ruby 3459 payment callbacks [\#1609](https://github.com/DEFRA/waste-carriers-engine/pull/1609) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
@@ -731,6 +735,11 @@
 
 **Merged pull requests:**
 
+- Bump rack-session from 2.1.0 to 2.1.1 [\#1627](https://github.com/DEFRA/waste-carriers-engine/pull/1627) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump govuk\_design\_system\_formbuilder from 5.9.0 to 5.10.0 [\#1625](https://github.com/DEFRA/waste-carriers-engine/pull/1625) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump net-imap from 0.5.6 to 0.5.7 [\#1622](https://github.com/DEFRA/waste-carriers-engine/pull/1622) ([dependabot[bot]](https://github.com/apps/dependabot))
+- RUBY 3757 wcr tech move govpay webhook handling to the govpay gem [\#1619](https://github.com/DEFRA/waste-carriers-engine/pull/1619) ([jjromeo](https://github.com/jjromeo))
+- Update CHANGELOG [\#1618](https://github.com/DEFRA/waste-carriers-engine/pull/1618) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1614](https://github.com/DEFRA/waste-carriers-engine/pull/1614) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1610](https://github.com/DEFRA/waste-carriers-engine/pull/1610) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1607](https://github.com/DEFRA/waste-carriers-engine/pull/1607) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
