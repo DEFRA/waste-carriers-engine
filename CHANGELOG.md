@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- Fix/ruby 3929 payment webhook logging [\#1642](https://github.com/DEFRA/waste-carriers-engine/pull/1642) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - \[RUBY-3316\] Add context to delete user action [\#1573](https://github.com/DEFRA/waste-carriers-engine/pull/1573) ([brujeo](https://github.com/brujeo))
 - \[RUBY-3375\] Configure Govpay callback endpoint to authenticate both front and back office accounts [\#1572](https://github.com/DEFRA/waste-carriers-engine/pull/1572) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-3219\] Refactor `GovpayFindPaymentService` to support finding payments that are inside a transient registration as this is used in GovpayUpdateRefundStatusService to locate the payment [\#1562](https://github.com/DEFRA/waste-carriers-engine/pull/1562) ([jjromeo](https://github.com/jjromeo))
@@ -735,6 +736,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1639](https://github.com/DEFRA/waste-carriers-engine/pull/1639) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Bump rack-session from 2.1.0 to 2.1.1 [\#1627](https://github.com/DEFRA/waste-carriers-engine/pull/1627) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump govuk\_design\_system\_formbuilder from 5.9.0 to 5.10.0 [\#1625](https://github.com/DEFRA/waste-carriers-engine/pull/1625) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump net-imap from 0.5.6 to 0.5.7 [\#1622](https://github.com/DEFRA/waste-carriers-engine/pull/1622) ([dependabot[bot]](https://github.com/apps/dependabot))
