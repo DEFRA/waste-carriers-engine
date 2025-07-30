@@ -29,6 +29,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", :construction_demolition_form, :construction_waste
+    it_behaves_like "validate yes no", :construction_demolition_form, :construction_waste
   end
 end

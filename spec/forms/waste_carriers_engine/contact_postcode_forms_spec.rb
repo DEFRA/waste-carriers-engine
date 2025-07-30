@@ -50,6 +50,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate postcode", :contact_postcode_form, :temp_contact_postcode
+    it_behaves_like "validate postcode", :contact_postcode_form, :temp_contact_postcode
   end
 end

@@ -18,7 +18,7 @@ module WasteCarriersEngine
           context "when the result of smart answers is lower-tier" do
             let(:lower_tier) { true }
 
-            include_examples "has next transition", next_state: "your_tier_form"
+            it_behaves_like "has next transition", next_state: "your_tier_form"
 
             it "updates the tier of the object to LOWER" do
               expect { new_registration.next }.to change(new_registration, :tier).to(WasteCarriersEngine::NewRegistration::LOWER_TIER)
@@ -28,7 +28,7 @@ module WasteCarriersEngine
           context "when the result of smart answers is upper-tier" do
             let(:lower_tier) { false }
 
-            include_examples "has next transition", next_state: "your_tier_form"
+            it_behaves_like "has next transition", next_state: "your_tier_form"
 
             it "updates the tier of the object to UPPER" do
               expect { new_registration.next }.to change(new_registration, :tier).to(WasteCarriersEngine::NewRegistration::UPPER_TIER)

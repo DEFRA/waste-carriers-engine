@@ -67,6 +67,7 @@ module WasteCarriersEngine
     def self.new_from_online_payment(order, user_email)
       payment = Payment.new
 
+      payment[:govpay_id] = order[:govpay_id]
       payment[:order_key] = order[:order_code]
       payment[:amount] = order[:total_amount]
       payment[:currency] = "GBP"
@@ -77,6 +78,7 @@ module WasteCarriersEngine
       payment[:registration_reference] = "Govpay"
       payment[:comment] = "Paid via Govpay"
       payment[:uuid] = order.payment_uuid
+      payment[:govpay_payment_status] = Payment::STATUS_CREATED
       payment
     end
 
@@ -102,7 +104,6 @@ module WasteCarriersEngine
 
     def update_after_online_payment(params)
       self.govpay_payment_status = params[:govpay_status]
-      self.govpay_id = params[:govpay_id]
       self.moto = WasteCarriersEngine.configuration.host_is_back_office?
       self.date_received = Date.current
       self.date_entered = date_received

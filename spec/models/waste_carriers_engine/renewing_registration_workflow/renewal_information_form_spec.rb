@@ -35,13 +35,13 @@ module WasteCarriersEngine
             context "when upper tier" do
               let(:tier) { WasteCarriersEngine::Registration::UPPER_TIER }
 
-              include_examples "has next transition", next_state: "main_people_form"
+              it_behaves_like "has next transition", next_state: "main_people_form"
             end
 
             context "when lower tier" do
               let(:tier) { WasteCarriersEngine::Registration::LOWER_TIER }
 
-              include_examples "has next transition", next_state: "company_name_form"
+              it_behaves_like "has next transition", next_state: "company_name_form"
             end
           end
 
@@ -75,7 +75,7 @@ module WasteCarriersEngine
               context "with a company status of #{status}" do
                 let(:company_status) { status }
 
-                include_examples "has next transition", next_state: "check_registered_company_name_form"
+                it_behaves_like "has next transition", next_state: "check_registered_company_name_form"
               end
             end
 
@@ -92,7 +92,7 @@ module WasteCarriersEngine
               context "with a company status of #{status}" do
                 let(:company_status) { status }
 
-                include_examples "has next transition", next_state: "invalid_company_status_form"
+                it_behaves_like "has next transition", next_state: "invalid_company_status_form"
               end
             end
           end
@@ -100,13 +100,13 @@ module WasteCarriersEngine
           context "when the business type is limitedCompany" do
             let(:business_type) { "limitedCompany" }
 
-            include_examples "check_registered_company_name_form or invalid_company_status_form"
+            it_behaves_like "check_registered_company_name_form or invalid_company_status_form"
           end
 
           context "when the business type is limitedLiabilityPartnership" do
             let(:business_type) { "limitedLiabilityPartnership" }
 
-            include_examples "check_registered_company_name_form or invalid_company_status_form"
+            it_behaves_like "check_registered_company_name_form or invalid_company_status_form"
           end
 
           context "when the business is overseas" do
@@ -114,7 +114,7 @@ module WasteCarriersEngine
             let(:business_type) { "overseas" }
             let(:company_number) { "invalid" }
 
-            include_examples "has next transition", next_state: "main_people_form"
+            it_behaves_like "has next transition", next_state: "main_people_form"
           end
 
           context "when Companies House Api returns an error" do
@@ -125,13 +125,13 @@ module WasteCarriersEngine
             context "when the business type is limitedCompany with non-UK company number" do
               let(:business_type) { "limitedCompany" }
 
-              include_examples "has next transition", next_state: "invalid_company_status_form"
+              it_behaves_like "has next transition", next_state: "invalid_company_status_form"
             end
 
             context "when the business type is limitedLiabilityPartnership with non-UK company number" do
               let(:business_type) { "limitedLiabilityPartnership" }
 
-              include_examples "has next transition", next_state: "invalid_company_status_form"
+              it_behaves_like "has next transition", next_state: "invalid_company_status_form"
             end
           end
         end

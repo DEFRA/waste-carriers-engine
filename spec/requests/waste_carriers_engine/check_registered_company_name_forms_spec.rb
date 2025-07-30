@@ -21,7 +21,7 @@ module WasteCarriersEngine
       allow(companies_house_api).to receive(:run).and_return(companies_house_api_reponse)
     end
 
-    include_examples "GET flexible form", "check_registered_company_name_form"
+    it_behaves_like "GET flexible form", "check_registered_company_name_form"
 
     describe "GET check_registered_company_name_form_path" do
 
@@ -65,10 +65,10 @@ module WasteCarriersEngine
           create(:new_registration, workflow_state: "check_registered_company_name_form")
         end
 
-        include_examples "POST form",
-                         "check_registered_company_name_form",
-                         valid_params: { temp_use_registered_company_details: "no", company_no: "09360070" },
-                         invalid_params: { temp_use_registered_company_details: "foo", company_no: "09360070" }
+        it_behaves_like "POST form",
+                        "check_registered_company_name_form",
+                        valid_params: { temp_use_registered_company_details: "no", company_no: "09360070" },
+                        invalid_params: { temp_use_registered_company_details: "foo", company_no: "09360070" }
       end
     end
   end

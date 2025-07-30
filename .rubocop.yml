@@ -4,30 +4,24 @@ inherit_gem:
   defra_ruby_style:
     - default.yml
 
-require:
+plugins:
   - rubocop-factory_bot
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 3.2.2
+
+# Not all methods which return a boolean are predicates
+# Also validators require specific method names
+Naming/PredicateMethod:
+  Exclude:
+    - app/validators/waste_carriers_engine/*
+    - app/controllers/waste_carriers_engine/forms_controller.rb
+    - app/forms/waste_carriers_engine/declaration_form.rb
+    - app/services/waste_carriers_engine/refresh_companies_house_name_service.rb
 
 # Notify uses address_line_1 etc naming convention and we want to align with it
 Naming/VariableNumber:
   Enabled: false
 
-Style/ArgumentsForwarding:
-  Enabled: false
-
-Style/DisableCopsWithinSourceCodeDirective:
-  Enabled: true
-  AllowedCops:
-    - Layout/LineLength
-    - Metrics/BlockLength
-    - Metrics/ClassLength
-    - Metrics/MethodLength
-    - Metrics/ModuleLength
-    - Naming/MemoizedInstanceVariableName
-    - RSpec/AnyInstance
-    - RSpec/LetSetup
-    - Style/EmptyElse
-    - Style/ExplicitBlockArgument

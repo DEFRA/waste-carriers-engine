@@ -18,7 +18,7 @@ RSpec.shared_examples "company_address_reuse_form workflow" do |factory:|
       context "when the temp_reuse_registered_address is `yes`" do
         let(:temp_reuse_registered_address) { "yes" }
 
-        include_examples "has next transition", next_state: "check_your_answers_form"
+        it_behaves_like "has next transition", next_state: "check_your_answers_form"
 
         it "invokes the ContactAddressAsRegisteredAddressService" do
           subject.next
@@ -32,7 +32,7 @@ RSpec.shared_examples "company_address_reuse_form workflow" do |factory:|
       context "when the temp_reuse_registered_address is `no`" do
         let(:temp_reuse_registered_address) { "no" }
 
-        include_examples "has next transition", next_state: "contact_postcode_form"
+        it_behaves_like "has next transition", next_state: "contact_postcode_form"
 
         it "does not invoke the ContactAddressAsRegisteredAddressService" do
           subject.next

@@ -43,6 +43,8 @@ module WasteCarriersEngine
         return
       end
 
+      remove_expired_payment
+
       complete_registration_or_renewal_if_ready
     end
 
@@ -50,6 +52,16 @@ module WasteCarriersEngine
       payment.update(govpay_payment_status: webhook_payment_status)
       payment.finance_details.update_balance
       (payment.finance_details.registration || payment.finance_details.transient_registration).save!
+    end
+
+    def remove_expired_payment
+      return unless webhook_payment_status == "expired"
+
+      # If the payment is on a transient_registration, prevent retries from reusing the old next_url:
+      transient_registration = payment.finance_details.transient_registration
+      transient_registration&.update(temp_govpay_next_url: nil)
+
+      payment.destroy!
     end
 
     def complete_registration_or_renewal_if_ready

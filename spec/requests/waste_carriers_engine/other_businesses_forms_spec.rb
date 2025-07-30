@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "OtherBusinessesForms" do
-    include_examples "GET flexible form", "other_businesses_form"
+    it_behaves_like "GET flexible form", "other_businesses_form"
 
     describe "POST other_businesses_form_path" do
 
@@ -13,10 +13,10 @@ module WasteCarriersEngine
           create(:new_registration, workflow_state: "other_businesses_form")
         end
 
-        include_examples "POST form",
-                         "other_businesses_form",
-                         valid_params: { other_businesses: "yes" },
-                         invalid_params: { other_businesses: "foo" }
+        it_behaves_like "POST form",
+                        "other_businesses_form",
+                        valid_params: { other_businesses: "yes" },
+                        invalid_params: { other_businesses: "foo" }
       end
     end
   end

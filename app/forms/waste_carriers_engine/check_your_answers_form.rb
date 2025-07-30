@@ -37,7 +37,7 @@ module WasteCarriersEngine
 
     validates_with KeyPeopleValidator
 
-    after_initialize :valid
+    after_initialize :valid?
 
     def submit(_params)
       attributes = {}
@@ -57,10 +57,6 @@ module WasteCarriersEngine
 
     def renewing_registration?
       transient_registration.is_a?(WasteCarriersEngine::RenewingRegistration)
-    end
-
-    def valid
-      valid?
     end
 
     def business_type_change_valid?

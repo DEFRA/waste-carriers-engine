@@ -11,7 +11,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context "with :main_people_form state transitions" do
         context "with :next transition" do
-          include_examples "has next transition", next_state: "use_trading_name_form"
+          it_behaves_like "has next transition", next_state: "use_trading_name_form"
         end
       end
     end

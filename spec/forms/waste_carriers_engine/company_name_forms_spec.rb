@@ -28,6 +28,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate company_name", :company_name_form
+    it_behaves_like "validate company_name", :company_name_form
   end
 end

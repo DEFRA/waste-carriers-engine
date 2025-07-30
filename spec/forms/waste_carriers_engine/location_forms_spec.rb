@@ -29,6 +29,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate location", :location_form
+    it_behaves_like "validate location", :location_form
   end
 end

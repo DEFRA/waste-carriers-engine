@@ -4,24 +4,24 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "BusinessTypeForms" do
-    include_examples "GET flexible form", "business_type_form"
+    it_behaves_like "GET flexible form", "business_type_form"
 
     describe "POST business_type_form_path" do
-      include_examples "POST renewal form",
-                       "business_type_form",
-                       valid_params: { business_type: "limitedCompany" },
-                       invalid_params: { business_type: "foo" },
-                       test_attribute: :business_type
+      it_behaves_like "POST renewal form",
+                      "business_type_form",
+                      valid_params: { business_type: "limitedCompany" },
+                      invalid_params: { business_type: "foo" },
+                      test_attribute: :business_type
 
       context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "business_type_form")
         end
 
-        include_examples "POST form",
-                         "business_type_form",
-                         valid_params: { business_type: "limitedCompany" },
-                         invalid_params: { business_type: "foo" }
+        it_behaves_like "POST form",
+                        "business_type_form",
+                        valid_params: { business_type: "limitedCompany" },
+                        invalid_params: { business_type: "foo" }
 
         # When the user starts with one business type then navigates back and changes the type
         context "when the transient_registration already has company attributes" do

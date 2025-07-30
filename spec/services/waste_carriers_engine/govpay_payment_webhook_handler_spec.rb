@@ -23,8 +23,6 @@ module WasteCarriersEngine
 
       before { allow(WasteCarriersEngine::RegistrationConfirmationService).to receive(:run) }
 
-      include_examples "Govpay webhook services error logging"
-
       describe "invalid webhook errors" do
         context "when the update is not for a payment" do
           before { webhook_body["resource_type"] = "refund" }
@@ -69,6 +67,7 @@ module WasteCarriersEngine
       shared_examples "a valid payment update" do
 
         before do
+          allow(Rails.logger).to receive(:warn)
           registration.finance_details.update_balance
           registration.save!
         end
@@ -86,8 +85,13 @@ module WasteCarriersEngine
         end
 
         context "when the payment status has changed" do
-
-          include_examples "Govpay webhook status transitions"
+          let(:transient_registration) { create(:new_registration, :has_pending_govpay_status) }
+          let!(:wcr_payment) do
+            create(:payment, :govpay,
+                   finance_details: transient_registration.finance_details,
+                   govpay_id: govpay_payment_id,
+                   govpay_payment_status: prior_payment_status)
+          end
 
           # unfinished statuses
           it_behaves_like "valid and invalid transitions", Payment::STATUS_CREATED, %w[started submitted success failed cancelled error], %w[]
@@ -104,6 +108,30 @@ module WasteCarriersEngine
             let(:prior_payment_status) { Payment::STATUS_STARTED }
 
             before { assign_webhook_status("cancelled") }
+
+            it "does not update the balance" do
+              expect { run_service }.not_to change { wcr_payment.finance_details.reload.balance }
+            end
+          end
+
+          context "when the webhook changes the status to expired" do
+            let(:prior_payment_status) { Payment::STATUS_STARTED }
+
+            before do
+              allow(DefraRubyGovpay::WebhookPaymentService).to receive(:run).and_call_original
+
+              transient_registration.update(temp_govpay_next_url: Faker::Internet.url)
+
+              assign_webhook_status("expired")
+            end
+
+            it "deletes the skeleton payment" do
+              expect { run_service }.to change { wcr_payment.finance_details.reload.payments.count }.by(-1)
+            end
+
+            it "deletes the transient_registration's temp_govpay_next_url value" do
+              expect { run_service }.to change { wcr_payment.finance_details.transient_registration.reload.temp_govpay_next_url }.to(nil)
+            end
 
             it "does not update the balance" do
               expect { run_service }.not_to change { wcr_payment.finance_details.reload.balance }
@@ -199,7 +227,6 @@ module WasteCarriersEngine
       end
 
       context "when the resource_type has different casings" do
-        include_examples "Govpay webhook status transitions"
 
         shared_examples "handles case-insensitive resource_type as payment" do |resource_type_value|
           before { webhook_body["resource_type"] = resource_type_value }
