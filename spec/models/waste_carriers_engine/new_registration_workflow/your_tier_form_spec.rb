@@ -21,7 +21,7 @@ module WasteCarriersEngine
             all_business_types.each do |business_type|
               let(:business_type) { business_type }
 
-              include_examples "has next transition", next_state: "company_name_form"
+              it_behaves_like "has next transition", next_state: "company_name_form"
             end
           end
 
@@ -31,7 +31,7 @@ module WasteCarriersEngine
             all_business_types.each do |business_type|
               let(:business_type) { business_type }
 
-              include_examples "has next transition", next_state: "cbd_type_form"
+              it_behaves_like "has next transition", next_state: "cbd_type_form"
             end
           end
         end

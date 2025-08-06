@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ConvictionDetailsForms" do
-    include_examples "GET flexible form", "conviction_details_form"
+    it_behaves_like "GET flexible form", "conviction_details_form"
 
     describe "POST conviction_details_forms_path" do
 

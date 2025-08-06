@@ -9,7 +9,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context "with :confirm_bank_transfer_form state transitions" do
         context "with :next transition" do
-          include_examples "has next transition", next_state: "registration_received_pending_payment_form"
+          it_behaves_like "has next transition", next_state: "registration_received_pending_payment_form"
         end
       end
     end

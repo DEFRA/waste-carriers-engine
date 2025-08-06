@@ -8,7 +8,7 @@ module WasteCarriersEngine
       render(
         template: file_for(template),
         locals: { message: exception.try(:message) },
-        status: (template_exists(error_code) ? error_code : "500")
+        status: (template_exists?(error_code) ? error_code : "500")
       )
     end
 
@@ -18,7 +18,7 @@ module WasteCarriersEngine
       @error_code ||= params[:status]
     end
 
-    def template_exists(name)
+    def template_exists?(name)
       File.exist?(template_path(name))
     end
 
@@ -30,7 +30,7 @@ module WasteCarriersEngine
     end
 
     def template
-      @template ||= template_exists(error_code) ? error_code : "generic"
+      @template ||= template_exists?(error_code) ? error_code : "generic"
     end
 
     def file_for(name)

@@ -19,13 +19,13 @@ module WasteCarriersEngine
           context "when declared_convictions is yes" do
             let(:declared_convictions) { "yes" }
 
-            include_examples "has next transition", next_state: "conviction_details_form"
+            it_behaves_like "has next transition", next_state: "conviction_details_form"
           end
 
           context "when declared_convictions is no" do
             let(:declared_convictions) { "no" }
 
-            include_examples "has next transition", next_state: "contact_name_form"
+            it_behaves_like "has next transition", next_state: "contact_name_form"
           end
         end
       end

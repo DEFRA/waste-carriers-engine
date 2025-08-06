@@ -11,14 +11,14 @@ module WasteCarriersEngine
 
     def validate_main_people(record)
       return false unless valid_number_of_main_people?(record)
-      return true unless record.main_people.present? && record.main_people.count.positive?
+      return true unless record.main_people.present? && record.main_people.any?
 
       valid_individual_main_people?(record)
     end
 
     def validate_relevant_people(record)
       return false unless valid_number_of_relevant_people?(record)
-      return true unless record.relevant_people.present? && record.relevant_people.count.positive?
+      return true unless record.relevant_people.present? && record.relevant_people.any?
 
       valid_individual_relevant_people?(record)
     end

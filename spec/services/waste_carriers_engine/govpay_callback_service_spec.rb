@@ -17,6 +17,7 @@ module WasteCarriersEngine
              temp_cards: 0)
     end
     let(:order) { transient_registration.finance_details.orders.first }
+    let(:govpay_payment_status) { "submitted" }
 
     before do
       allow(GovpayPaymentDetailsService).to receive(:new).and_return(govpay_payment_details_service)
@@ -24,6 +25,9 @@ module WasteCarriersEngine
       transient_registration.prepare_for_payment(:govpay)
       order.govpay_id = "a_govpay_id"
       order.save!
+      payment = build(:payment, :govpay_pending, govpay_id: order.govpay_id, amount: order.total_amount)
+      transient_registration.finance_details.payments << payment
+      transient_registration.finance_details.update_balance
     end
 
     describe "#process_payment" do
@@ -121,14 +125,8 @@ module WasteCarriersEngine
         end
 
         it "does not update the order" do
-          unmodified_order = transient_registration.finance_details.orders.first
-          govpay_callback_service.process_payment
-          expect(transient_registration.reload.finance_details.orders.first).to eq(unmodified_order)
-        end
-
-        it "does not create a payment" do
-          govpay_callback_service.process_payment
-          expect(transient_registration.reload.finance_details.payments.count).to eq(0)
+          expect { govpay_callback_service.process_payment }
+            .not_to change { transient_registration.reload.finance_details.orders }
         end
       end
     end

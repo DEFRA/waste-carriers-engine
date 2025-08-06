@@ -15,8 +15,7 @@ module WasteCarriersEngine
     before do
       allow(EntityMatchingService).to receive(:new).and_return(entity_matching_service)
       allow(EntityMatchingService).to receive(:run)
-      allow(entity_matching_service).to receive(:check_business_for_matches).and_return(false)
-      allow(entity_matching_service).to receive(:check_people_for_matches).and_return(false)
+      allow(entity_matching_service).to receive_messages(check_business_for_matches: false, check_people_for_matches: false)
     end
 
     describe "run" do

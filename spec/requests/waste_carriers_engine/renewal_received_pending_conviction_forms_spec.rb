@@ -4,6 +4,6 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "RenewalReceivedPendingConvictionForms" do
-    include_examples "GET locked-in form", "renewal_received_pending_conviction_form"
+    it_behaves_like "GET locked-in form", "renewal_received_pending_conviction_form"
   end
 end

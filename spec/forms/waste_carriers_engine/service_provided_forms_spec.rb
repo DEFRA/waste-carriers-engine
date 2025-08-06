@@ -29,6 +29,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", :service_provided_form, :is_main_service
+    it_behaves_like "validate yes no", :service_provided_form, :is_main_service
   end
 end

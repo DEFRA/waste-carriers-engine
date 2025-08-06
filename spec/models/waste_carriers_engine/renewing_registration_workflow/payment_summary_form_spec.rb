@@ -18,13 +18,13 @@ module WasteCarriersEngine
           context "when paying by card" do
             let(:temp_payment_method) { "card" }
 
-            include_examples "has next transition", next_state: "payment_method_confirmation_form"
+            it_behaves_like "has next transition", next_state: "payment_method_confirmation_form"
           end
 
           context "when paying by bank transfer" do
             let(:temp_payment_method) { "bank_transfer" }
 
-            include_examples "has next transition", next_state: "payment_method_confirmation_form"
+            it_behaves_like "has next transition", next_state: "payment_method_confirmation_form"
           end
         end
       end

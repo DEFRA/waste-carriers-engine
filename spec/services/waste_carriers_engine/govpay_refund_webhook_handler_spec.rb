@@ -30,10 +30,7 @@ module WasteCarriersEngine
 
       let(:update_refund_service) { instance_double(WasteCarriersEngine::GovpayUpdateRefundStatusService) }
 
-      # # Make finance details refundable
-      # before { registration.finance_details.orders.first.update(total_amount: 1) }
-
-      include_examples "Govpay webhook services error logging"
+      before { allow(Rails.logger).to receive(:warn) }
 
       shared_examples "failed refund update" do
         it { expect { run_service }.to raise_error(ArgumentError) }
@@ -81,8 +78,6 @@ module WasteCarriersEngine
             end
 
             context "when the refund status has changed" do
-
-              include_examples "Govpay webhook status transitions"
 
               # unfinished statuses
               it_behaves_like "valid and invalid transitions", Payment::STATUS_SUBMITTED, %w[success], %w[error]

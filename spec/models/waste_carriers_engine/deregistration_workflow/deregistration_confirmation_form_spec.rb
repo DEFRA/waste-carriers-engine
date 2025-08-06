@@ -17,13 +17,13 @@ module WasteCarriersEngine
           context "when deregistration is confirmed" do
             let(:temp_confirm_deregistration) { "yes" }
 
-            include_examples "has next transition", next_state: "deregistration_complete_form"
+            it_behaves_like "has next transition", next_state: "deregistration_complete_form"
           end
 
           context "when deregistration is declined" do
             let(:temp_confirm_deregistration) { "no" }
 
-            include_examples "has next transition", next_state: "start_form"
+            it_behaves_like "has next transition", next_state: "start_form"
           end
         end
       end

@@ -24,6 +24,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate registration_type", :cbd_type_form
+    it_behaves_like "validate registration_type", :cbd_type_form
   end
 end

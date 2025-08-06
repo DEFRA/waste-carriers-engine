@@ -29,10 +29,7 @@ module WasteCarriersEngine
       end
 
       def from_file(feature_name)
-        feature_toggles[feature_name] && (
-          feature_toggles[feature_name][:active] == true ||
-          feature_toggles[feature_name][:active] == "true"
-        )
+        feature_toggles[feature_name] && [true, "true"].include?(feature_toggles[feature_name][:active])
       end
 
       def load_feature_toggles

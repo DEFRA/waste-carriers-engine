@@ -5,9 +5,7 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe FinanceDetails do
     before do
-      allow(Rails.configuration).to receive(:renewal_charge).and_return(10_000)
-      allow(Rails.configuration).to receive(:type_change_charge).and_return(2_500)
-      allow(Rails.configuration).to receive(:card_charge).and_return(1_000)
+      allow(Rails.configuration).to receive_messages(renewal_charge: 10_000, type_change_charge: 2_500, card_charge: 1_000)
     end
 
     let(:transient_registration) { build(:renewing_registration, :has_required_data, temp_cards: 0) }

@@ -171,7 +171,7 @@ module WasteCarriersEngine
                   order_items_by_type[oi["type"]] += 1
                 end
               end
-              order_items_by_type.each do |k, _v|
+              order_items_by_type.each_key do |k|
                 expect(OrderItemLog.where(type: k).count).to eq order_items_by_type[k]
               end
             end

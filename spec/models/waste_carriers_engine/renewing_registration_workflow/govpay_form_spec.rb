@@ -27,7 +27,7 @@ module WasteCarriersEngine
                 allow(renewing_registration).to receive(:pending_online_payment?).and_return(false)
               end
 
-              include_examples "has next transition", next_state: "renewal_complete_form"
+              it_behaves_like "has next transition", next_state: "renewal_complete_form"
 
               it "does not send a confirmation email after the 'next' event" do
                 renewing_registration.next!
@@ -42,7 +42,7 @@ module WasteCarriersEngine
                 allow(renewing_registration).to receive(:pending_online_payment?).and_return(true)
               end
 
-              include_examples "has next transition", next_state: "renewal_received_pending_govpay_payment_form"
+              it_behaves_like "has next transition", next_state: "renewal_received_pending_govpay_payment_form"
 
               it "sends a confirmation email after the 'next' event" do
                 renewing_registration.next!
@@ -61,7 +61,7 @@ module WasteCarriersEngine
               allow(renewing_registration).to receive(:conviction_check_required?).and_return(true)
             end
 
-            include_examples "has next transition", next_state: "renewal_received_pending_conviction_form"
+            it_behaves_like "has next transition", next_state: "renewal_received_pending_conviction_form"
 
             it "sends a confirmation email after the 'next' event" do
               renewing_registration.next!

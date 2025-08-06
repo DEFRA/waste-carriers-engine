@@ -5,24 +5,24 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "DeclarationForms" do
 
-    include_examples "GET locked-in form", "declaration_form"
+    it_behaves_like "GET locked-in form", "declaration_form"
 
     describe "POST declaration_form_path" do
-      include_examples "POST renewal form",
-                       "declaration_form",
-                       valid_params: { declaration: 1 },
-                       invalid_params: { declaration: "foo" },
-                       test_attribute: :declaration
+      it_behaves_like "POST renewal form",
+                      "declaration_form",
+                      valid_params: { declaration: 1 },
+                      invalid_params: { declaration: "foo" },
+                      test_attribute: :declaration
 
       context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "declaration_form")
         end
 
-        include_examples "POST form",
-                         "declaration_form",
-                         valid_params: { declaration: 1 },
-                         invalid_params: { declaration: "foo" }
+        it_behaves_like "POST form",
+                        "declaration_form",
+                        valid_params: { declaration: 1 },
+                        invalid_params: { declaration: "foo" }
       end
     end
 

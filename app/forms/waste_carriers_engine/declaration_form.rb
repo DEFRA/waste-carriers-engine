@@ -11,7 +11,7 @@ module WasteCarriersEngine
     end
 
     def submit(attributes)
-      return false unless super(attributes)
+      return false unless super
 
       if transient_registration.is_a?(WasteCarriersEngine::NewRegistration)
         transient_registration.update_attributes(reg_identifier: GenerateRegIdentifierService.run)
