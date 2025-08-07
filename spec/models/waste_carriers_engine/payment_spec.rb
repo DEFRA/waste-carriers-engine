@@ -101,7 +101,7 @@ module WasteCarriersEngine
       end
 
       it "sets the correct amount" do
-        expect(payment.amount).to eq(11_000)
+        expect(payment.amount).to eq(13_000)
       end
 
       it "sets the correct currency" do
