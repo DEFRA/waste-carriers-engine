@@ -21,7 +21,7 @@ module WasteCarriersEngine
     let(:govpay_back_office_api_token) { Rails.configuration.govpay_back_office_api_token }
 
     before do
-      allow(Rails.configuration).to receive(:renewal_charge).and_return(10_500)
+      allow(Rails.configuration).to receive(:renewal_charge).and_return(Rails.configuration.renewal_charge)
 
       transient_registration.prepare_for_payment(:govpay)
     end

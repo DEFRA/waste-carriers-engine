@@ -21,7 +21,7 @@ module WasteCarriersEngine
             last_name: renewing_registration.last_name,
             sort_code: "60-70-80",
             account_number: "1001 4411",
-            payment_due: "110",
+            payment_due: "130",
             iban: "GB23 NWBK 607080 10014411",
             swiftbic: "NWBK GB2L",
             currency: "Sterling"
