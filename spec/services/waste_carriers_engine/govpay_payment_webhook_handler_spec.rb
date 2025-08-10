@@ -21,9 +21,10 @@ module WasteCarriersEngine
                govpay_payment_status: prior_payment_status)
       end
 
-      before { allow(WasteCarriersEngine::RegistrationConfirmationService).to receive(:run) }
-
-      include_examples "Govpay webhook services error logging"
+      before do
+        allow(WasteCarriersEngine::RegistrationCompletionService).to receive(:run)
+        allow(WasteCarriersEngine::RegistrationConfirmationService).to receive(:run)
+      end
 
       describe "invalid webhook errors" do
         context "when the update is not for a payment" do
@@ -55,13 +56,12 @@ module WasteCarriersEngine
         context "when the registration is not found" do
           before do
             allow(GovpayFindRegistrationService).to receive(:run).and_return(nil)
-            allow(RegistrationCompletionService).to receive(:new)
           end
 
           it "does not call the registration completion service" do
             run_service
 
-            expect(RegistrationCompletionService).not_to have_received(:new)
+            expect(WasteCarriersEngine::RegistrationCompletionService).not_to have_received(:run)
           end
         end
       end
@@ -69,8 +69,9 @@ module WasteCarriersEngine
       shared_examples "a valid payment update" do
 
         before do
-          registration.finance_details.update_balance
-          registration.save!
+          allow(Rails.logger).to receive(:warn)
+          wcr_payment.finance_details.update_balance
+          wcr_payment.save!
         end
 
         context "when the payment status has not changed" do
@@ -86,8 +87,19 @@ module WasteCarriersEngine
         end
 
         context "when the payment status has changed" do
+          let(:transient_registration) { create(:new_registration, :has_pending_govpay_status) }
+          let!(:wcr_payment) do
+            create(:payment, :govpay,
+                   finance_details: transient_registration.finance_details,
+                   govpay_id: govpay_payment_id,
+                   govpay_payment_status: prior_payment_status)
+          end
 
-          include_examples "Govpay webhook status transitions"
+          before do
+            allow(Rails.logger).to receive(:warn)
+            transient_registration.finance_details.update_balance
+            transient_registration.save!
+          end
 
           # unfinished statuses
           it_behaves_like "valid and invalid transitions", Payment::STATUS_CREATED, %w[started submitted success failed cancelled error], %w[]
@@ -107,6 +119,34 @@ module WasteCarriersEngine
 
             it "does not update the balance" do
               expect { run_service }.not_to change { wcr_payment.finance_details.reload.balance }
+            end
+          end
+
+          context "when the webhook changes the status to expired" do
+            let(:prior_payment_status) { Payment::STATUS_STARTED }
+
+            before do
+              allow(DefraRubyGovpay::WebhookPaymentService).to receive(:run).and_call_original
+
+              transient_registration.update(temp_govpay_next_url: Faker::Internet.url)
+
+              assign_webhook_status("expired")
+            end
+
+            it "does not delete the skeleton payment" do
+              expect { run_service }.not_to change { wcr_payment.finance_details.reload.payments.count }
+            end
+
+            it "deletes the transient_registration's temp_govpay_next_url value" do
+              expect { run_service }.to change { wcr_payment.finance_details.transient_registration.reload.temp_govpay_next_url }.to(nil)
+            end
+
+            it "does not update the balance" do
+              expect { run_service }.not_to change { wcr_payment.finance_details.reload.balance }
+            end
+
+            it "updates the payment status" do
+              expect { run_service }.to change { wcr_payment.reload.govpay_payment_status }.to(Payment::STATUS_EXPIRED)
             end
           end
 
@@ -132,12 +172,6 @@ module WasteCarriersEngine
 
       context "when the payment belongs to a new registration" do
         let(:registration) { create(:new_registration, :has_required_data, :has_pending_govpay_status) }
-        let(:registration_completion_service) { instance_double(RegistrationCompletionService) }
-
-        before do
-          allow(RegistrationCompletionService).to receive(:new).and_return(registration_completion_service)
-          allow(registration_completion_service).to receive(:run)
-        end
 
         it_behaves_like "a valid payment update"
 
@@ -149,7 +183,7 @@ module WasteCarriersEngine
           it "does not call the registration completion service" do
             run_service
 
-            expect(registration_completion_service).not_to have_received(:run)
+            expect(RegistrationCompletionService).not_to have_received(:run)
           end
         end
 
@@ -159,7 +193,7 @@ module WasteCarriersEngine
           it "calls the registration completion service" do
             run_service
 
-            expect(registration_completion_service).to have_received(:run)
+            expect(RegistrationCompletionService).to have_received(:run)
           end
         end
       end
@@ -199,7 +233,6 @@ module WasteCarriersEngine
       end
 
       context "when the resource_type has different casings" do
-        include_examples "Govpay webhook status transitions"
 
         shared_examples "handles case-insensitive resource_type as payment" do |resource_type_value|
           before { webhook_body["resource_type"] = resource_type_value }

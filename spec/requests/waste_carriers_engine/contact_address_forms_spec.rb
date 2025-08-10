@@ -8,7 +8,7 @@ module WasteCarriersEngine
       stub_address_finder_service(uprn: "340116")
     end
 
-    include_examples "GET flexible form", "contact_address_form"
+    it_behaves_like "GET flexible form", "contact_address_form"
 
     describe "POST contact_address_forms_path" do
 

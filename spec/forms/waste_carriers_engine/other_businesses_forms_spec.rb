@@ -29,6 +29,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", :other_businesses_form, :other_businesses
+    it_behaves_like "validate yes no", :other_businesses_form, :other_businesses
   end
 end

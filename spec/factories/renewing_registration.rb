@@ -60,6 +60,10 @@ FactoryBot.define do
       end
     end
 
+    trait :has_pending_govpay_status do
+      finance_details { association :finance_details, :has_pending_govpay_order, strategy: :build }
+    end
+
     trait :has_paid_order do
       finance_details { association(:finance_details, :has_paid_order_and_payment, strategy: :build) }
     end

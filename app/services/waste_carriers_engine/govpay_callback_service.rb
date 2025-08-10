@@ -55,13 +55,11 @@ module WasteCarriersEngine
     def update_payment_data
       DetailedLogger.warn "Updating order #{@order.id}, reference #{@order.order_code} after online payment"
       @order.update_after_online_payment
-      DetailedLogger.warn "Creating payment after online payment"
-      payment = Payment.new_from_online_payment(@order, user_email)
-      payment.update_after_online_payment(
-        govpay_status: @payment_status,
-        govpay_id: @order.govpay_id
-      )
-      @transient_registration.finance_details.update_balance
+      DetailedLogger.warn "Retrieving skeleton payment created after initial Govpay call"
+      payment = GovpayFindPaymentService.run(payment_id: @order.govpay_id)
+      payment.update_after_online_payment(govpay_status: @payment_status)
+
+      @transient_registration.reload.finance_details.update_balance
       @transient_registration.finance_details.save!
     end
 
@@ -81,7 +79,9 @@ module WasteCarriersEngine
     end
 
     def order_by_payment_uuid
-      @transient_registration&.finance_details&.orders&.find_by(payment_uuid: @payment_uuid)
+      return nil unless @transient_registration&.finance_details&.orders
+
+      @transient_registration.finance_details.orders.find_by(payment_uuid: @payment_uuid)
     end
 
     def govpay_response_validator(govpay_status)

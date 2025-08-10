@@ -19,7 +19,7 @@ module WasteCarriersEngine
         status = response&.dig("state", "status") || "error"
 
         # Special case: If failed, check whether this was because of a cancellation
-        status = Payment::STATUS_CANCELLED if payment_cancelled(status, response)
+        status = Payment::STATUS_CANCELLED if payment_cancelled?(status, response)
 
         DetailedLogger.warn "Handling response #{response}; " \
                             "got status #{status} for payment_uuid #{@payment_uuid}}"
@@ -73,7 +73,7 @@ module WasteCarriersEngine
         )
     end
 
-    def payment_cancelled(status, response)
+    def payment_cancelled?(status, response)
       status == Payment::STATUS_FAILED && response.dig("state", "code") == "P0030"
     end
 

@@ -68,8 +68,6 @@ module WasteCarriersEngine
         results.uniq
       end
 
-      private
-
       # We want to ignore certain common words for the purposes of name matching.
       # This includes company types and suffixes, and major locations.
       # This is so a name like "Bobby's Bins Ltd" will still match "Bobby's Bins
@@ -82,6 +80,8 @@ module WasteCarriersEngine
         uk gb europe intl international england wales
         scotland cymru
       ].freeze
+
+      private
 
       private_class_method def self.org_name_search_term(term)
         return if term.blank?

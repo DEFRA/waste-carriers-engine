@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ConfirmBankTransferForms" do
-    include_examples "GET locked-in form", "confirm_bank_transfer_form"
+    it_behaves_like "GET locked-in form", "confirm_bank_transfer_form"
 
     describe "GET new_confirm_bank_transfer_form" do
 
@@ -55,6 +55,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "POST without params form", "confirm_bank_transfer_form"
+    it_behaves_like "POST without params form", "confirm_bank_transfer_form"
   end
 end

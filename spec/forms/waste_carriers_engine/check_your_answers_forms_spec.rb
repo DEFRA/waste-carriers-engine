@@ -33,14 +33,14 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", :check_your_answers_form, :declared_convictions
-    include_examples "validate business_type", :check_your_answers_form
-    include_examples "validate company_name", :check_your_answers_form
-    include_examples "validate location", :check_your_answers_form
-    include_examples "validate person name", :check_your_answers_form, :first_name
-    include_examples "validate person name", :check_your_answers_form, :last_name
-    include_examples "validate phone_number", :check_your_answers_form
-    include_examples "validate registration_type", :check_your_answers_form
+    it_behaves_like "validate yes no", :check_your_answers_form, :declared_convictions
+    it_behaves_like "validate business_type", :check_your_answers_form
+    it_behaves_like "validate company_name", :check_your_answers_form
+    it_behaves_like "validate location", :check_your_answers_form
+    it_behaves_like "validate person name", :check_your_answers_form, :first_name
+    it_behaves_like "validate person name", :check_your_answers_form, :last_name
+    it_behaves_like "validate phone_number", :check_your_answers_form
+    it_behaves_like "validate registration_type", :check_your_answers_form
 
     context "when a valid transient registration exists" do
       let(:check_your_answers_form) { build(:check_your_answers_form, :has_required_data) }
@@ -211,7 +211,7 @@ module WasteCarriersEngine
         context "when running in the front office" do
           before { allow(WasteCarriersEngine.configuration).to receive(:host_is_back_office?).and_return(false) }
 
-          include_examples "validate email", :check_your_answers_form, :contact_email
+          it_behaves_like "validate email", :check_your_answers_form, :contact_email
         end
 
         context "when running in the back office" do

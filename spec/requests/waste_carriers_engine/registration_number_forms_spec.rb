@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "RegistrationNumberForms" do
-    include_examples "GET flexible form", "registration_number_form"
+    it_behaves_like "GET flexible form", "registration_number_form"
 
     describe "POST registration_number_forms_path" do
       let(:drch_validator) { instance_double(DefraRuby::Validators::CompaniesHouseService) }

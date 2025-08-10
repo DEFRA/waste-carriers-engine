@@ -3,28 +3,28 @@
 module WasteCarriersEngine
   class DetailedLogger
     # Do not log anything unless detailed_logging is enabled.
-    def self.fatal(*args)
-      Rails.logger.fatal(*args) if detail_enabled?
+    def self.fatal(*)
+      Rails.logger.fatal(*) if detail_enabled?
     end
 
-    def self.error(*args)
-      Rails.logger.error(*args) if detail_enabled?
+    def self.error(*)
+      Rails.logger.error(*) if detail_enabled?
     end
 
-    def self.warn(*args)
-      Rails.logger.warn(*args) if detail_enabled?
+    def self.warn(*)
+      Rails.logger.warn(*) if detail_enabled?
     end
 
-    def self.info(*args)
-      Rails.logger.info(*args) if detail_enabled?
+    def self.info(*)
+      Rails.logger.info(*) if detail_enabled?
     end
 
-    def self.debug(*args)
-      Rails.logger.debug(*args) if detail_enabled?
+    def self.debug(*)
+      Rails.logger.debug(*) if detail_enabled?
     end
 
-    def self.unknown(*args)
-      Rails.logger.unknown(*args) if detail_enabled?
+    def self.unknown(*)
+      Rails.logger.unknown(*) if detail_enabled?
     end
 
     def self.detail_enabled?

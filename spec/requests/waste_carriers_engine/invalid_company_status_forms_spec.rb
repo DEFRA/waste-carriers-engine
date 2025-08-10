@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "InvalidCompanyStatusForms" do
-    include_examples "GET flexible form", "invalid_company_status_form"
+    it_behaves_like "GET flexible form", "invalid_company_status_form"
 
     describe "POST invalid_company_status_form_path" do
       let(:transient_registration) do

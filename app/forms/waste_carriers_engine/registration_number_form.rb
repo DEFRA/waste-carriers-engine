@@ -19,7 +19,7 @@ module WasteCarriersEngine
     private
 
     def format_company_no(company_no)
-      company_no&.to_s&.upcase&.rjust(8, "0")
+      company_no&.upcase&.rjust(8, "0")
     end
   end
 end

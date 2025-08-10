@@ -21,10 +21,11 @@ module WasteCarriersEngine
                             "received govpay payment id #{govpay_payment_id}"
 
         if govpay_payment_id.present?
-          @order.govpay_id = govpay_payment_id
-          @order.save!
+          @order.update(govpay_id: govpay_payment_id)
+          payment = Payment.new_from_online_payment(@order, user_email)
+
           {
-            payment: nil, # @payment,
+            payment:,
             url: govpay_redirect_url(response)
           }
         else
@@ -72,6 +73,10 @@ module WasteCarriersEngine
         description: "Your Waste Carrier Registration #{@transient_registration.reg_identifier}",
         moto: WasteCarriersEngine.configuration.host_is_back_office?
       }
+    end
+
+    def user_email
+      @current_user&.email || @transient_registration.contact_email
     end
   end
 end
