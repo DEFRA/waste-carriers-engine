@@ -48,7 +48,7 @@ FactoryBot.define do
       orders { [build(:order, :has_required_data)] }
       payments do
         [
-          build(:payment, :bank_transfer, amount: 10_500),
+          build(:payment, :bank_transfer, amount: Rails.configuration.renewal_charge),
           build(:payment, :bank_transfer, amount: 500)
         ]
       end
@@ -64,7 +64,7 @@ FactoryBot.define do
       end
       payments do
         [
-          build(:payment, :bank_transfer, amount: 10_500),
+          build(:payment, :bank_transfer, amount: Rails.configuration.renewal_charge),
           build(:payment, :bank_transfer, amount: 500),
           build(:payment, :bank_transfer, amount: 500)
         ]
@@ -88,7 +88,7 @@ FactoryBot.define do
 
     trait :has_outstanding_copy_card do
       orders { [build(:order, :has_required_data)] }
-      payments { [build(:payment, :bank_transfer, amount: 10_500)] }
+      payments { [build(:payment, :bank_transfer, amount: Rails.configuration.renewal_charge)] }
       after(:build, :create, &:update_balance)
     end
   end
