@@ -17,7 +17,7 @@ module WasteCarriersEngine
       GovpayWebhookJob.perform_later(JSON.parse(body))
     rescue StandardError, Mongoid::Errors::DocumentNotFound => e
       Rails.logger.error "Govpay payment webhook body validation failed: #{e}"
-      Airbrake.notify(e, body: body, signature: pay_signature)
+      Airbrake.notify(e, body: DefraRubyGovpay::WebhookSanitizerService.call(body), signature: pay_signature)
     ensure
       # always return 200 to Govpay even if validation fails
       render nothing: true, layout: false, status: 200
