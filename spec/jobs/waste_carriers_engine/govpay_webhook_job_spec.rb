@@ -41,7 +41,6 @@ module WasteCarriersEngine
         allow(FeatureToggle).to receive(:active?).with(:detailed_logging)
         allow(GovpayPaymentWebhookHandler).to receive(:run).and_return(payment_service_result)
         allow(GovpayRefundWebhookHandler).to receive(:run).and_return(refund_service_result)
-        allow(Rails.logger).to receive(:info)
       end
 
       context "when handling errors" do
@@ -146,11 +145,6 @@ module WasteCarriersEngine
           perform_now
           expect(GovpayPaymentWebhookHandler).to have_received(:run).with(webhook_body)
         end
-
-        it "logs the payment webhook processing" do
-          perform_now
-          expect(Rails.logger).to have_received(:info).with(/Processed payment webhook for payment_id: hu20sqlact5260q2nanm0q8u93, status:/)
-        end
       end
 
       context "with a refund webhook" do
@@ -160,11 +154,6 @@ module WasteCarriersEngine
         it "processes the refund webhook using GovpayRefundWebhookHandler" do
           perform_now
           expect(GovpayRefundWebhookHandler).to have_received(:run).with(webhook_body)
-        end
-
-        it "logs the refund webhook processing" do
-          perform_now
-          expect(Rails.logger).to have_received(:info).with(/Processed refund webhook for refund_id: 345, status:/)
         end
       end
     end

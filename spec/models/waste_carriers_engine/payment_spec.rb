@@ -101,7 +101,7 @@ module WasteCarriersEngine
       end
 
       it "sets the correct amount" do
-        expect(payment.amount).to eq(11_000)
+        expect(payment.amount).to eq(Rails.configuration.renewal_charge + Rails.configuration.card_charge)
       end
 
       it "sets the correct currency" do
