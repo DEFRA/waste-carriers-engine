@@ -9,11 +9,16 @@ module WasteCarriersEngine
       subject(:webhook_request) { post webhook_route, headers: headers, params: webhook_body }
 
       let(:webhook_route) { "/govpay_payment_update" }
-      let(:headers) { "Pay-Signature" => signature }
       let(:webhook_body) { file_fixture("govpay/webhook_payment_update_body.json").read }
       let(:webhook_signing_secret) { ENV.fetch("WCRS_GOVPAY_CALLBACK_WEBHOOK_SIGNING_SECRET") }
       let(:digest) { OpenSSL::Digest.new("sha256") }
       let(:valid_signature) { OpenSSL::HMAC.hexdigest(digest, webhook_signing_secret, webhook_body) }
+      let(:headers) do
+        {
+          "Pay-Signature" => valid_signature,
+          "Content-Type" => "application/json"
+        }
+      end
 
       let(:webhook_validation_service) { class_double(DefraRubyGovpay::WebhookBodyValidatorService) }
 

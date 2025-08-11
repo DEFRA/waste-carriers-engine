@@ -56,6 +56,8 @@ module WasteCarriersEngine
       return unless webhook_payment_status == "success"
 
       case registration
+      when WasteCarriersEngine::Registration
+        RegistrationActivationService.run(registration:)
       when WasteCarriersEngine::NewRegistration
         RegistrationCompletionService.run(registration)
       when WasteCarriersEngine::RenewingRegistration
