@@ -8,7 +8,7 @@
         <%= t(".heading.#{@transient_registration.tier}") %>
       </h1>
       <p class="govuk-body">
-        <%= t(".paragraph_1.#{@transient_registration.tier}") %>
+        <%= t(".paragraph_1.#{@transient_registration.tier}", registration_charge: display_pence_as_pounds(Rails.configuration.new_registration_charge)) %>
       </p>
       <%= render "shared/what_are_lower_and_upper_tier" %>
       <%= f.govuk_submit t(".next_button") %>

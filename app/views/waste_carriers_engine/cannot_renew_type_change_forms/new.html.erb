@@ -2,6 +2,11 @@
 
 <div class="govuk-body">
   <h1 class="govuk-heading-l"><%= t(".heading", reg_identifier: @cannot_renew_type_change_form.reg_identifier) %></h1>
-  <p><%= t(".paragraph") %></p>
+  <p>
+    <%= t(".paragraph",
+          registration_charge: display_pence_as_pounds(Rails.configuration.new_registration_charge),
+          renewal_charge: display_pence_as_pounds(Rails.configuration.renewal_charge)
+         ) %>
+  </p>
   <%= link_to t(".next_button"), start_forms_path, class: "govuk-button" %>
 </div>
