@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- Update prices [\#1647](https://github.com/DEFRA/waste-carriers-engine/pull/1647) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/ruby 3929 payment webhook logging [\#1642](https://github.com/DEFRA/waste-carriers-engine/pull/1642) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - \[RUBY-3316\] Add context to delete user action [\#1573](https://github.com/DEFRA/waste-carriers-engine/pull/1573) ([brujeo](https://github.com/brujeo))
 - \[RUBY-3375\] Configure Govpay callback endpoint to authenticate both front and back office accounts [\#1572](https://github.com/DEFRA/waste-carriers-engine/pull/1572) ([jjromeo](https://github.com/jjromeo))
@@ -444,6 +445,7 @@
 
 **Fixed bugs:**
 
+- Parameterise prices values in i18n [\#1648](https://github.com/DEFRA/waste-carriers-engine/pull/1648) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - fix/RUBY-3819\_payment\_webhook\_reg\_activation [\#1636](https://github.com/DEFRA/waste-carriers-engine/pull/1636) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Remove redundant logging [\#1634](https://github.com/DEFRA/waste-carriers-engine/pull/1634) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/ruby 3819 incomplete registrations [\#1631](https://github.com/DEFRA/waste-carriers-engine/pull/1631) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
@@ -736,7 +738,13 @@
 
 **Merged pull requests:**
 
+- Bump defra\_ruby\_govpay from 1.0.0 to 1.0.2 [\#1646](https://github.com/DEFRA/waste-carriers-engine/pull/1646) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1643](https://github.com/DEFRA/waste-carriers-engine/pull/1643) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1639](https://github.com/DEFRA/waste-carriers-engine/pull/1639) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump defra\_ruby\_template from 5.4.1 to 5.11.0 [\#1638](https://github.com/DEFRA/waste-carriers-engine/pull/1638) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump govuk\_design\_system\_formbuilder from 5.10.1 to 5.11.0 [\#1637](https://github.com/DEFRA/waste-carriers-engine/pull/1637) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump matrix from 0.4.2 to 0.4.3 [\#1635](https://github.com/DEFRA/waste-carriers-engine/pull/1635) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump aasm from 5.5.0 to 5.5.1 [\#1632](https://github.com/DEFRA/waste-carriers-engine/pull/1632) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump rack-session from 2.1.0 to 2.1.1 [\#1627](https://github.com/DEFRA/waste-carriers-engine/pull/1627) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump govuk\_design\_system\_formbuilder from 5.9.0 to 5.10.0 [\#1625](https://github.com/DEFRA/waste-carriers-engine/pull/1625) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump net-imap from 0.5.6 to 0.5.7 [\#1622](https://github.com/DEFRA/waste-carriers-engine/pull/1622) ([dependabot[bot]](https://github.com/apps/dependabot))
