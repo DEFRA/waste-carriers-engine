@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module WasteExemptionsEngine
+module WasteCarriersEngine
   RSpec.describe "SuppressParameterLogging" do
 
     before do
