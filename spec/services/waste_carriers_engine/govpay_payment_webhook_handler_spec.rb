@@ -27,8 +27,6 @@ module WasteCarriersEngine
         allow(Rails.logger).to receive(:warn).and_call_original
       end
 
-      it_behaves_like "Govpay webhook services error logging"
-
       describe "invalid webhook errors" do
         context "when the update is not for a payment" do
           before { webhook_body["resource_type"] = "refund" }

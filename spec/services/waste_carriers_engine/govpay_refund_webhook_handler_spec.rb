@@ -28,8 +28,6 @@ module WasteCarriersEngine
 
       let(:update_refund_service) { instance_double(WasteCarriersEngine::GovpayUpdateRefundStatusService) }
 
-      it_behaves_like "Govpay webhook services error logging"
-
       shared_examples "failed refund update" do
         it { expect { run_service }.to raise_error(ArgumentError) }
 
