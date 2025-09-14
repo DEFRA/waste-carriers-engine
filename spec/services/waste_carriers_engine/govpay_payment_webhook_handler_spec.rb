@@ -21,9 +21,13 @@ module WasteCarriersEngine
                govpay_payment_status: prior_payment_status)
       end
 
-      before { allow(WasteCarriersEngine::RegistrationConfirmationService).to receive(:run) }
+      before do
+        allow(WasteCarriersEngine::RegistrationConfirmationService).to receive(:run)
+        allow(Rails.logger).to receive(:info).and_call_original
+        allow(Rails.logger).to receive(:warn).and_call_original
+      end
 
-      include_examples "Govpay webhook services error logging"
+      it_behaves_like "Govpay webhook services error logging"
 
       describe "invalid webhook errors" do
         context "when the update is not for a payment" do
@@ -86,8 +90,6 @@ module WasteCarriersEngine
         end
 
         context "when the payment status has changed" do
-
-          include_examples "Govpay webhook status transitions"
 
           # unfinished statuses
           it_behaves_like "valid and invalid transitions", Payment::STATUS_CREATED, %w[started submitted success failed cancelled error], %w[]
@@ -199,8 +201,6 @@ module WasteCarriersEngine
       end
 
       context "when the resource_type has different casings" do
-        include_examples "Govpay webhook status transitions"
-
         shared_examples "handles case-insensitive resource_type as payment" do |resource_type_value|
           before { webhook_body["resource_type"] = resource_type_value }
 

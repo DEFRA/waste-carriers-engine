@@ -28,7 +28,7 @@ module WasteCarriersEngine
 
       let(:update_refund_service) { instance_double(WasteCarriersEngine::GovpayUpdateRefundStatusService) }
 
-      include_examples "Govpay webhook services error logging"
+      it_behaves_like "Govpay webhook services error logging"
 
       shared_examples "failed refund update" do
         it { expect { run_service }.to raise_error(ArgumentError) }
@@ -43,6 +43,8 @@ module WasteCarriersEngine
       end
 
       context "when the update is for a refund" do
+        before { allow(Rails.logger).to receive(:warn).and_call_original }
+
         context "when status is not present in the update" do
           before { webhook_body["resource"]["state"]["status"] = nil }
 
