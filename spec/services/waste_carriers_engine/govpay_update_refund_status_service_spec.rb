@@ -14,7 +14,7 @@ module WasteCarriersEngine
 
       before { registration.finance_details.payments << refund }
 
-      subject(:run_service) { described_class.new.run(registration:, refund_id:, new_status: refund_status) }
+      subject(:run_service) { described_class.new.run(refund:, new_status: refund_status) }
 
       context "when the refund status has not changed" do
         let(:refund_status) { Payment::STATUS_SUBMITTED }

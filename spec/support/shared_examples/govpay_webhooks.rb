@@ -93,3 +93,7 @@ RSpec.shared_examples "Govpay webhook status transitions" do
     it_behaves_like "valid and invalid transitions", old_status, %w[], %w[created started submitted success failed cancelled error] - [old_status]
   end
 end
+
+def assign_webhook_status(status)
+  webhook_body["resource"]["state"]["status"] = status
+end

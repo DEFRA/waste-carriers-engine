@@ -212,10 +212,5 @@ module WasteCarriersEngine
         end
       end
     end
-
-    # used above and by shared examples - different for payment vs refund webhooks
-    def assign_webhook_status(status)
-      webhook_body["resource"]["state"]["status"] = status
-    end
   end
 end
