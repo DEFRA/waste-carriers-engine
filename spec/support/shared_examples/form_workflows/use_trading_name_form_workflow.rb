@@ -8,7 +8,7 @@ RSpec.shared_examples "use_trading_name_form workflow" do |factory:|
     context "when the user selects Yes" do
       let(:params) { { temp_use_trading_name: "yes" } }
 
-      include_examples "has next transition", next_state: "company_name_form"
+      it_behaves_like "has next transition", next_state: "company_name_form"
     end
 
     context "when the user selects No" do
@@ -17,10 +17,10 @@ RSpec.shared_examples "use_trading_name_form workflow" do |factory:|
       context "when the business is based overseas" do
         let(:params) { { temp_use_trading_name: "no", location: "overseas" } }
 
-        include_examples "has next transition", next_state: "company_address_manual_form"
+        it_behaves_like "has next transition", next_state: "company_address_manual_form"
       end
 
-      include_examples "has next transition", next_state: "company_postcode_form"
+      it_behaves_like "has next transition", next_state: "company_postcode_form"
     end
   end
 end

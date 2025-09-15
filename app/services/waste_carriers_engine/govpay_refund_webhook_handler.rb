@@ -15,7 +15,7 @@ module WasteCarriersEngine
         previous_status: previous_status
       )
 
-      refund_id = result[:id]
+      result[:id]
       new_status = result[:status]
 
       GovpayUpdateRefundStatusService.run(refund:, new_status:)

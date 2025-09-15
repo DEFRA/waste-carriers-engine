@@ -25,7 +25,7 @@ end
 
 RSpec.shared_examples "does not log an error" do
   before { allow(Airbrake).to receive(:notify) }
-  
+
   it "does not notify Airbrake" do
     run_service
 

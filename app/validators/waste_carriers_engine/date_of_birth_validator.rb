@@ -46,7 +46,7 @@ module WasteCarriersEngine
     def field_present?(record, type, field)
       return true unless field.blank?
 
-      error_message = "#{type}_blank".to_sym
+      error_message = :"#{type}_blank"
       record.errors.add(:dob, error_message)
       false
     end
@@ -54,7 +54,7 @@ module WasteCarriersEngine
     def field_is_integer?(record, type, field)
       return true if field.is_a? Integer
 
-      error_message = "#{type}_integer".to_sym
+      error_message = :"#{type}_integer"
       record.errors.add(:dob, error_message)
       false
     end
@@ -68,7 +68,7 @@ module WasteCarriersEngine
 
       return true if ranges[type].include?(field)
 
-      error_message = "#{type}_range".to_sym
+      error_message = :"#{type}_range"
       record.errors.add(:dob, error_message)
       false
     end

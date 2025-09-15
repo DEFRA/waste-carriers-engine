@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "PaymentMethodConfirmationForms" do
-    include_examples "GET locked-in form", "payment_method_confirmation_form"
+    it_behaves_like "GET locked-in form", "payment_method_confirmation_form"
 
     describe "POST payment_method_confirmation_form_path" do
       let(:confirmation_response) { "yes" }
@@ -43,11 +43,11 @@ module WasteCarriersEngine
                  temp_payment_method: "card")
         end
 
-        include_examples "POST renewal form",
-                         "payment_method_confirmation_form",
-                         valid_params: { temp_confirm_payment_method: "yes" },
-                         invalid_params: { temp_confirm_payment_method: "foo" },
-                         test_attribute: :temp_confirm_payment_method
+        it_behaves_like "POST renewal form",
+                        "payment_method_confirmation_form",
+                        valid_params: { temp_confirm_payment_method: "yes" },
+                        invalid_params: { temp_confirm_payment_method: "foo" },
+                        test_attribute: :temp_confirm_payment_method
 
         it_behaves_like "redirects based on the confirmation response"
       end
@@ -57,11 +57,11 @@ module WasteCarriersEngine
           create(:new_registration, workflow_state: "payment_method_confirmation_form", temp_payment_method: "card")
         end
 
-        include_examples "POST form",
-                         "payment_method_confirmation_form",
-                         valid_params: { temp_confirm_payment_method: "no" },
-                         invalid_params: { temp_confirm_payment_method: "foo" },
-                         test_attribute: :temp_confirm_payment_method
+        it_behaves_like "POST form",
+                        "payment_method_confirmation_form",
+                        valid_params: { temp_confirm_payment_method: "no" },
+                        invalid_params: { temp_confirm_payment_method: "foo" },
+                        test_attribute: :temp_confirm_payment_method
 
         it_behaves_like "redirects based on the confirmation response"
       end

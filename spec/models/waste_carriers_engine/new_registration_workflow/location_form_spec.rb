@@ -16,31 +16,31 @@ module WasteCarriersEngine
           context "when the location is northern_ireland" do
             let(:location) { "northern_ireland" }
 
-            include_examples "has next transition", next_state: "register_in_northern_ireland_form"
+            it_behaves_like "has next transition", next_state: "register_in_northern_ireland_form"
           end
 
           context "when the location is scotland" do
             let(:location) { "scotland" }
 
-            include_examples "has next transition", next_state: "must_register_in_scotland_form"
+            it_behaves_like "has next transition", next_state: "must_register_in_scotland_form"
           end
 
           context "when the location is wales" do
             let(:location) { "wales" }
 
-            include_examples "has next transition", next_state: "must_register_in_wales_form"
+            it_behaves_like "has next transition", next_state: "must_register_in_wales_form"
           end
 
           context "when the location is not in the UK" do
             let(:location) { "overseas" }
 
-            include_examples "has next transition", next_state: "check_your_tier_form"
+            it_behaves_like "has next transition", next_state: "check_your_tier_form"
           end
 
           context "when the location is in england" do
             let(:location) { "england" }
 
-            include_examples "has next transition", next_state: "business_type_form"
+            it_behaves_like "has next transition", next_state: "business_type_form"
           end
         end
       end

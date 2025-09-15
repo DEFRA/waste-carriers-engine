@@ -58,8 +58,8 @@ module WasteCarriersEngine
               hash_including(
                 payment_id: webhook_body["resource_id"],
                 service_type: "front_office"
-                )
               )
+            )
         end
 
         context "when enhanced logging is enabled" do

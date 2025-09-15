@@ -5,7 +5,11 @@ require "waste_carriers_engine/detailed_logger"
 module WasteCarriersEngine
   class GovpayWebhookJob < ApplicationJob
     def perform(webhook_body)
-      refund_webhook?(webhook_body) ? GovpayRefundWebhookHandler.run(webhook_body) : GovpayPaymentWebhookHandler.run(webhook_body)
+      if refund_webhook?(webhook_body)
+        GovpayRefundWebhookHandler.run(webhook_body)
+      else
+        GovpayPaymentWebhookHandler.run(webhook_body)
+      end
     rescue StandardError => e
       handle_error(e, webhook_body)
     end

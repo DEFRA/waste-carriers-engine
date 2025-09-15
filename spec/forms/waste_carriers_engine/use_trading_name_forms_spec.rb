@@ -44,6 +44,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", :use_trading_name_form, :temp_use_trading_name
+    it_behaves_like "validate yes no", :use_trading_name_form, :temp_use_trading_name
   end
 end

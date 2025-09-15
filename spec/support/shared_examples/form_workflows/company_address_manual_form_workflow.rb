@@ -50,7 +50,7 @@ RSpec.shared_examples "company_address_manual_form workflow" do |factory:|
       context "when the registration is a lower tier" do
         subject { build(:new_registration, :lower, workflow_state: "company_address_manual_form") }
 
-        include_examples "has next transition", next_state: "contact_name_form"
+        it_behaves_like "has next transition", next_state: "contact_name_form"
       end
     end
   end
