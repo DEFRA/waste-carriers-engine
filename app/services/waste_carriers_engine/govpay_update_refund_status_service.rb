@@ -41,6 +41,10 @@ module WasteCarriersEngine
       refund.save!
 
       registration = GovpayFindRegistrationService.run(payment: refund)
+      if registration.nil?
+        raise StandardError, "Registration not found for refund for payment #{refund.refunded_payment_govpay_id}"
+      end
+
       registration.reload.finance_details.update_balance
       registration.save!
 

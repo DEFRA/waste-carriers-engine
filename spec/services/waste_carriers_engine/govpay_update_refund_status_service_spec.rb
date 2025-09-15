@@ -39,6 +39,14 @@ module WasteCarriersEngine
         it { expect { run_service }.to change { refund.reload.govpay_payment_status }.to(Payment::STATUS_SUCCESS) }
         it { expect { run_service }.to change { registration.reload.finance_details.balance }.by(-refund_amount) }
       end
+
+      context "when the registration is not found" do
+        let(:refund_status) { Payment::STATUS_SUCCESS }
+
+        before { allow(GovpayFindRegistrationService).to receive(:run).and_return(nil) }
+
+        it { expect { run_service }.to raise_error(StandardError) }
+      end
     end
   end
 end
