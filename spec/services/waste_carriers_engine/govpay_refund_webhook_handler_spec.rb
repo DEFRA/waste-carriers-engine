@@ -56,6 +56,12 @@ module WasteCarriersEngine
             it_behaves_like "failed refund update"
           end
 
+          context "when the refund is not found" do
+            before { wcr_payment.update(refunded_payment_govpay_id: nil) }
+
+            it_behaves_like "failed refund update"
+          end
+
           context "when the refund is found" do
             context "when the refund status has not changed" do
               let(:prior_refund_status) { Payment::STATUS_SUCCESS }
