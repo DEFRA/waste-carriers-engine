@@ -19,6 +19,8 @@ module WasteCarriersEngine
     private
 
     def format_company_no(company_no)
+      return "" if company_no.blank?
+
       company_no.to_s.upcase.rjust(8, "0")
     end
   end

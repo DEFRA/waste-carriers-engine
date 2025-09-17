@@ -20,7 +20,6 @@ module WasteCarriersEngine
 
     before do
       allow(GovpayPaymentDetailsService).to receive(:new).and_return(govpay_payment_details_service)
-      # allow(Rails.configuration).to receive(:renewal_charge).and_return(Rails.configuration.renewal_charge)
       transient_registration.prepare_for_payment(:govpay)
       order.govpay_id = "a_govpay_id"
       order.save!
