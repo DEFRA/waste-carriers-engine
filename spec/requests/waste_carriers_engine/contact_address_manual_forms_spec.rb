@@ -4,7 +4,7 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "ContactAddressManualForms" do
-    include_examples "GET flexible form", "contact_address_manual_form"
+    it_behaves_like "GET flexible form", "contact_address_manual_form"
 
     describe "POST contact_address_manual_forms_path" do
 

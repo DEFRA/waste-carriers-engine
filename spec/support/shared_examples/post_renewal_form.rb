@@ -113,9 +113,4 @@ RSpec.shared_examples "POST renewal form" do |form, options|
       end
     end
   end
-
-  # Should call a method like new_location_form_path("CBDU1234")
-  def new_path_for(form, transient_registration)
-    send("new_#{form}_path", transient_registration.token)
-  end
 end

@@ -5,29 +5,22 @@ require "rest-client"
 module WasteCarriersEngine
   class GovpayCallbackService
     def initialize(payment_uuid, action)
-      Rails.logger.tagged("GovpayCallbackService", "initialize") do
-        @payment_uuid = payment_uuid
-        @action = action
-        @payment_status = govpay_payment_details_service.govpay_payment_status
-        @transient_registration = transient_registration_by_payment_uuid
-        @order = order_by_payment_uuid
-        DetailedLogger.warn "payment_uuid: #{payment_uuid}; action: #{action}; payment_status: #{@payment_status}, " \
-                            "transient_registration id: #{@transient_registration&.id}, " \
-                            "transient_registration reg_identifier: #{@transient_registration&.reg_identifier}, " \
-                            "order code: #{@order&.order_code}"
-      end
+      @payment_uuid = payment_uuid
+      @action = action
     end
 
     def process_payment
       Rails.logger.tagged("GovpayCallbackService", "process_payment") do
+        @govpay_payment_status = govpay_payment_details_service.govpay_payment_status
+        @transient_registration = transient_registration_by_payment_uuid
+
+        @order = order_by_payment_uuid
+
         return false unless valid_response?
 
-        payment_status = GovpayPaymentDetailsService.payment_status(@action)
+        log_callback_details
 
-        DetailedLogger.warn "processing payment payment_uuid #{@payment_uuid}, action #{@action}, " \
-                            "payment status #{@payment_status}"
-
-        case payment_status
+        case GovpayPaymentDetailsService.payment_status(@action)
         when :success, :pending
           update_payment_data
         else
@@ -44,10 +37,11 @@ module WasteCarriersEngine
     private
 
     def valid_response?
-      validator = govpay_response_validator(@payment_status)
+      validator = GovpayValidatorService.new(@order, @payment_uuid, @govpay_payment_status)
       valid = validator.public_send("valid_#{GovpayPaymentDetailsService.payment_status(@action)}?")
 
-      DetailedLogger.warn "Validating status \"#{@payment_status}\" for payment uuid #{@payment_uuid}, valid: #{valid}"
+      DetailedLogger.warn "Validating status \"#{@govpay_payment_status}\" " \
+                          "for payment uuid #{@payment_uuid}, valid: #{valid}"
 
       valid
     end
@@ -58,7 +52,7 @@ module WasteCarriersEngine
       DetailedLogger.warn "Creating payment after online payment"
       payment = Payment.new_from_online_payment(@order, user_email)
       payment.update_after_online_payment(
-        govpay_status: @payment_status,
+        govpay_status: @govpay_payment_status,
         govpay_id: @order.govpay_id
       )
       @transient_registration.finance_details.update_balance
@@ -81,15 +75,22 @@ module WasteCarriersEngine
     end
 
     def order_by_payment_uuid
-      @transient_registration&.finance_details&.orders&.find_by(payment_uuid: @payment_uuid)
-    end
+      return nil unless @transient_registration&.finance_details.present?
 
-    def govpay_response_validator(govpay_status)
-      GovpayValidatorService.new(@order, @payment_uuid, govpay_status)
+      @transient_registration.finance_details.orders&.find_by(payment_uuid: @payment_uuid)
     end
 
     def user_email
       @current_user&.email || @transient_registration.contact_email
+    end
+
+    def log_callback_details
+      DetailedLogger.warn "payment_uuid: #{@payment_uuid}; " \
+                          "action: #{@action}; " \
+                          "payment_status: #{@govpay_payment_status}, " \
+                          "transient_registration id: #{@transient_registration&.id}, " \
+                          "transient_registration reg_identifier: #{@transient_registration&.reg_identifier}, " \
+                          "order code: #{@order&.order_code}"
     end
   end
 end

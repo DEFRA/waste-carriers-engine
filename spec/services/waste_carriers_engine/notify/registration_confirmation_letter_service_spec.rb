@@ -79,7 +79,7 @@ module WasteCarriersEngine
               }
             end
 
-            it "will create a communication record with the expected attributes" do
+            it "creates a communication record with the expected attributes" do
               Timecop.freeze(time_sent) do
                 expect { run_service }.to change { registration.communication_records.count }.by(1)
                 expect(registration.communication_records.last[:notify_template_id]).to eq(expected_communication_record_attrs[:notify_template_id])
@@ -190,7 +190,7 @@ module WasteCarriersEngine
               }
             end
 
-            it "will create a communication record with the expected attributes" do
+            it "creates a communication record with the expected attributes" do
               Timecop.freeze(time_sent) do
                 expect { run_service }.to change { registration.communication_records.count }.by(1)
                 expect(registration.communication_records.last[:notify_template_id]).to eq(expected_communication_record_attrs[:notify_template_id])

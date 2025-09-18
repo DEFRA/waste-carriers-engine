@@ -22,9 +22,7 @@ module WasteCarriersEngine
     let(:confirmed_email) { contact_email }
 
     before do
-      allow(validatable).to receive(:contact_email).and_return(contact_email)
-      allow(validatable).to receive(:confirmed_email).and_return(confirmed_email)
-      allow(validatable).to receive(:no_contact_email).and_return(no_contact_email)
+      allow(validatable).to receive_messages(contact_email: contact_email, confirmed_email: confirmed_email, no_contact_email: no_contact_email)
     end
 
     shared_examples "is valid" do
