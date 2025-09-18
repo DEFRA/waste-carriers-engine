@@ -11,8 +11,7 @@ module WasteCarriersEngine
       let(:service) { described_class.run(registration: registration) }
 
       before do
-        allow(Rails.configuration).to receive(:expires_after).and_return(3)
-        allow(Rails.configuration).to receive(:grace_window).and_return(5)
+        allow(Rails.configuration).to receive_messages(expires_after: 3, grace_window: 5)
 
         allow(ExpiryDateService).to receive(:run).with(registration: registration).and_return(expiry_date)
       end

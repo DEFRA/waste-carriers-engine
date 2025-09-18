@@ -26,7 +26,7 @@ module WasteCarriersEngine
             context "when the location is #{location}" do
               let(:location) { location }
 
-              include_examples "has next transition", next_state: expected_next_state
+              it_behaves_like "has next transition", next_state: expected_next_state
             end
           end
         end

@@ -2,9 +2,11 @@
 
 module WasteCarriersEngine
   class GovpayRefundWebhookHandler < BaseService
+    attr_reader :govpay_payment_id
+
     def run(webhook_body)
-      refund_id = webhook_body["refund_id"]
-      refund = GovpayFindPaymentService.run(payment_id: refund_id)
+      @govpay_payment_id = webhook_body["resource_id"]
+      refund = find_refund
 
       previous_status = refund&.govpay_payment_status
 
@@ -13,31 +15,40 @@ module WasteCarriersEngine
         previous_status: previous_status
       )
 
-      refund_id = result[:id]
-      payment_id = result[:payment_id]
-      status = result[:status]
+      result[:id]
+      new_status = result[:status]
 
-      return if refund.blank?
-
-      registration = GovpayFindRegistrationService.run(payment: refund)
-      return if registration.blank?
-
-      update_refund_status(refund_id, registration, status)
-
-      Rails.logger.info "Updated status from #{previous_status} to #{status} for refund #{refund_id}, " \
-                        "payment #{payment_id}, registration #{registration.regIdentifier}"
-    rescue StandardError => e
-      Rails.logger.error "Error processing webhook for refund #{refund_id}, payment #{payment_id}: #{e}"
-      Airbrake.notify "Error processing webhook for refund #{refund_id}, payment #{payment_id}", e
-      raise
+      GovpayUpdateRefundStatusService.run(refund:, new_status:)
     end
 
-    def update_refund_status(refund_id, registration, status)
-      GovpayUpdateRefundStatusService.run(
-        registration: registration,
-        refund_id: refund_id,
-        new_status: status
-      )
+    private
+
+    def find_refund
+      payment = GovpayFindPaymentService.run(payment_id: govpay_payment_id)
+      handle_payment_not_found unless payment.present?
+
+      # Look for the refund as a sibling of the original payment
+      @refund = payment.finance_details.payments.where(
+        payment_type: "REFUND",
+        refunded_payment_govpay_id: govpay_payment_id
+      ).last
+      handle_refund_not_found unless @refund.present?
+
+      @refund
+    end
+
+    def handle_payment_not_found
+      error_message = "Govpay payment not found for govpay_id #{govpay_payment_id}"
+      Rails.logger.error error_message
+      Airbrake.notify error_message
+      raise ArgumentError, "payment not found"
+    end
+
+    def handle_refund_not_found
+      error_message = "Govpay refund not found for payment with govpay_id #{govpay_payment_id}"
+      Rails.logger.error error_message
+      Airbrake.notify error_message
+      raise ArgumentError, "refund not found"
     end
   end
 end

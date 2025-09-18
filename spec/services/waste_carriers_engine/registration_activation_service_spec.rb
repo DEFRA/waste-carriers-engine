@@ -15,8 +15,7 @@ module WasteCarriersEngine
 
       context "when there is no unpaid balance or pending convictions check" do
         before do
-          allow(registration).to receive(:unpaid_balance?).and_return(false)
-          allow(registration).to receive(:pending_manual_conviction_check?).and_return(false)
+          allow(registration).to receive_messages(unpaid_balance?: false, pending_manual_conviction_check?: false)
 
           allow(RegistrationConfirmationService)
             .to receive(:run)

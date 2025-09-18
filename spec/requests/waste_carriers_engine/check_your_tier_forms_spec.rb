@@ -41,10 +41,10 @@ module WasteCarriersEngine
         create(:new_registration, workflow_state: "check_your_tier_form")
       end
 
-      include_examples "POST form",
-                       "check_your_tier_form",
-                       valid_params: { temp_check_your_tier: "lower" },
-                       invalid_params: { temp_check_your_tier: "foo" }
+      it_behaves_like "POST form",
+                      "check_your_tier_form",
+                      valid_params: { temp_check_your_tier: "lower" },
+                      invalid_params: { temp_check_your_tier: "foo" }
     end
   end
 end

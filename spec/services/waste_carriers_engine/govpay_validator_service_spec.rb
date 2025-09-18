@@ -17,8 +17,7 @@ module WasteCarriersEngine
     let(:govpay_host) { "https://publicapi.payments.service.gov.uk" }
 
     before do
-      allow(Rails.configuration).to receive(:govpay_url).and_return(govpay_host)
-      allow(Rails.configuration).to receive(:renewal_charge).and_return(Rails.configuration.renewal_charge)
+      allow(Rails.configuration).to receive_messages(govpay_url: govpay_host, renewal_charge: Rails.configuration.renewal_charge)
     end
 
     shared_examples "valid and invalid Govpay status" do |method, valid_status, invalid_status|

@@ -11,8 +11,8 @@ module WasteCarriersEngine
       allow(drch_validator).to receive(:status).and_return(:active)
     end
 
-    include_examples "GET flexible form", "check_your_answers_form"
+    it_behaves_like "GET flexible form", "check_your_answers_form"
 
-    include_examples "POST without params form", "check_your_answers_form"
+    it_behaves_like "POST without params form", "check_your_answers_form"
   end
 end

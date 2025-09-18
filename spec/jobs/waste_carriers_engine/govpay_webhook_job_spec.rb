@@ -34,94 +34,83 @@ module WasteCarriersEngine
     describe ".perform_now" do
       subject(:perform_now) { described_class.perform_now(webhook_body) }
 
-      let(:payment_service_result) { { id: "123", status: "success" } }
-      let(:refund_service_result) { { id: "345", payment_id: "789", status: "success" } }
+      let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read) }
 
       before do
         allow(FeatureToggle).to receive(:active?).with(:detailed_logging)
-        allow(GovpayPaymentWebhookHandler).to receive(:run).and_return(payment_service_result)
-        allow(GovpayRefundWebhookHandler).to receive(:run).and_return(refund_service_result)
+        allow(GovpayPaymentWebhookHandler).to receive(:run)
+        allow(GovpayRefundWebhookHandler).to receive(:run)
       end
 
-      context "when handling errors" do
+      context "with an invalid webhook body" do
         before do
+          webhook_body["event_type"] = nil
+
           allow(Airbrake).to receive(:notify)
           allow(FeatureToggle).to receive(:active?).with(:detailed_logging).and_return(false)
-          allow(GovpayPaymentWebhookHandler).to receive(:run).and_raise(StandardError.new("Test error"))
-          allow(GovpayRefundWebhookHandler).to receive(:run).and_raise(StandardError.new("Test error"))
         end
 
-        context "with an unrecognised webhook body" do
-          let(:webhook_body) { { "foo" => "bar" } }
+        it "notifies Airbrake with basic params" do
+          perform_now
+          expect(Airbrake).to have_received(:notify)
+            .with(
+              an_instance_of(ArgumentError),
+              hash_including(
+                payment_id: webhook_body["resource_id"],
+                service_type: "front_office"
+              )
+            )
+        end
 
-          it "notifies Airbrake with basic params" do
-            perform_now
-            expect(Airbrake).to have_received(:notify)
-              .with(an_instance_of(ArgumentError), refund_id: nil, payment_id: nil, service_type: "front_office")
+        context "when enhanced logging is enabled" do
+          before { allow(FeatureToggle).to receive(:active?).with(:detailed_logging).and_return(true) }
+
+          context "with sensitive information in webhook body" do
+
+            it "sanitizes the webhook body correctly" do
+              captured_args = nil
+              allow(Airbrake).to receive(:notify) { |*args| captured_args = args }
+              perform_now
+              webhook_body = captured_args[1][:webhook_body]
+              expect(webhook_body["resource"]).not_to include("email", "card_details")
+              expect(webhook_body["resource"]).to include(
+                "amount" => 47_600,
+                "description" => "Pay your council tax",
+                "reference" => "1c9229b1-ee51-4235-a31a-e8d5f35de0cc"
+              )
+            end
+
+            it "includes the payment_id outside the webhook body" do
+              captured_args = nil
+              allow(Airbrake).to receive(:notify) { |*args| captured_args = args }
+              perform_now
+
+              expect(captured_args[1][:payment_id]).to eq(webhook_body["resource"]["payment_id"])
+            end
           end
 
-          context "when enhanced logging is enabled" do
-            before { allow(FeatureToggle).to receive(:active?).with(:detailed_logging).and_return(true) }
-
-            context "with sensitive information in webhook body" do
-              let(:webhook_body) do
-                json = JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read)
-                json
-              end
-
-              it "sanitizes the webhook body correctly" do
-                captured_args = nil
-                allow(Airbrake).to receive(:notify) { |*args| captured_args = args }
-                perform_now
-
-                webhook_body = captured_args[1][:webhook_body]
-                expect(webhook_body["resource"]).not_to include("email", "card_details")
-                expect(webhook_body["resource"]).to include(
-                  "amount" => 5000,
-                  "description" => "Pay your council tax",
-                  "reference" => "12345"
+          it "includes webhook body in Airbrake notification" do
+            perform_now
+            expect(Airbrake).to have_received(:notify)
+              .with(
+                an_instance_of(ArgumentError),
+                hash_including(
+                  payment_id: webhook_body["resource_id"],
+                  service_type: "front_office"
                 )
-              end
-
-              it "includes the payment_id outside the webhook body" do
-                captured_args = nil
-                allow(Airbrake).to receive(:notify) { |*args| captured_args = args }
-                perform_now
-
-                expect(captured_args[1][:payment_id]).to eq(webhook_body["resource"]["payment_id"])
-              end
-            end
-
-            it "includes webhook body in Airbrake notification" do
-              perform_now
-              expect(Airbrake).to have_received(:notify)
-                .with(
-                  an_instance_of(ArgumentError),
-                  hash_including(
-                    refund_id: nil,
-                    payment_id: nil,
-                    service_type: "front_office",
-                    webhook_body: { "foo" => "bar" }
-                  )
-                )
-            end
+              )
           end
         end
 
         context "with service type detection" do
           shared_examples "logs correct service type" do |moto, expected_service|
-            let(:webhook_body) do
-              {
-                "resource_type" => "payment",
-                "resource" => { "moto" => moto }
-              }
-            end
+            before { webhook_body["resource"]["moto"] = moto }
 
             it "includes correct service type in Airbrake notification" do
               perform_now
               expect(Airbrake).to have_received(:notify)
                 .with(
-                  an_instance_of(StandardError),
+                  an_instance_of(ArgumentError),
                   hash_including(service_type: expected_service)
                 )
             end
@@ -139,7 +128,6 @@ module WasteCarriersEngine
 
       context "with a payment webhook" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_payment_update_body.json").read) }
-        let(:payment_service_result) { { id: "hu20sqlact5260q2nanm0q8u93", status: "submitted" } }
 
         it "processes the payment webhook using GovpayPaymentWebhookHandler" do
           perform_now
@@ -149,7 +137,6 @@ module WasteCarriersEngine
 
       context "with a refund webhook" do
         let(:webhook_body) { JSON.parse(file_fixture("govpay/webhook_refund_update_body.json").read) }
-        let(:refund_service_result) { { id: "345", payment_id: "789", status: "success" } }
 
         it "processes the refund webhook using GovpayRefundWebhookHandler" do
           perform_now

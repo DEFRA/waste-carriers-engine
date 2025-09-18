@@ -6,7 +6,7 @@ module WasteCarriersEngine
       if params[:commit] == I18n.t("waste_carriers_engine.#{form}s.form.add_person_link")
         submit_and_add_another(form_class, form)
       else
-        super(form_class, form)
+        super
       end
     end
 

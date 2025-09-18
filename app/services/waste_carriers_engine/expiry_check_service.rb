@@ -56,7 +56,7 @@ module WasteCarriersEngine
     private
 
     def current_day_is_within_grace_window?(last_day_of_grace_window)
-      current_day >= expiry_date.to_date && current_day <= last_day_of_grace_window
+      current_day.between?(expiry_date.to_date, last_day_of_grace_window)
     end
 
     # We store dates and times in UTC, but want to use the current date in the

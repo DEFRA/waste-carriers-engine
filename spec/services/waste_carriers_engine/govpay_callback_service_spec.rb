@@ -20,7 +20,6 @@ module WasteCarriersEngine
 
     before do
       allow(GovpayPaymentDetailsService).to receive(:new).and_return(govpay_payment_details_service)
-      allow(Rails.configuration).to receive(:renewal_charge).and_return(Rails.configuration.renewal_charge)
       transient_registration.prepare_for_payment(:govpay)
       order.govpay_id = "a_govpay_id"
       order.save!
@@ -109,10 +108,11 @@ module WasteCarriersEngine
       end
 
       context "when the response is invalid" do
-        let(:payment_uuid) { "invalid_uuid" }
         let(:govpay_payment_status) { "started" }
 
         before do
+          order.update(payment_uuid: "invalid_uuid")
+
           allow(govpay_payment_details_service).to receive(:govpay_payment_status)
         end
 

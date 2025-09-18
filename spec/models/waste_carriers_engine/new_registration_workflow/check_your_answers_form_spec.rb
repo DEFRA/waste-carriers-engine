@@ -9,7 +9,7 @@ module WasteCarriersEngine
     describe "#workflow_state" do
       context "with :check_your_answers_form state transitions" do
         context "with :next transition" do
-          include_examples "has next transition", next_state: "declaration_form"
+          it_behaves_like "has next transition", next_state: "declaration_form"
         end
       end
     end

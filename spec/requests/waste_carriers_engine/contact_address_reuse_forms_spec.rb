@@ -5,14 +5,14 @@ require "rails_helper"
 module WasteCarriersEngine
   RSpec.describe "ContactAddressReuseForms" do
 
-    include_examples "GET flexible form", "contact_address_reuse_form"
+    it_behaves_like "GET flexible form", "contact_address_reuse_form"
 
     RSpec.shared_examples "new or renewing registration" do
 
-      include_examples "POST form",
-                       "contact_address_reuse_form",
-                       valid_params: { temp_reuse_registered_address: "yes" },
-                       invalid_params: { temp_reuse_registered_address: "" }
+      it_behaves_like "POST form",
+                      "contact_address_reuse_form",
+                      valid_params: { temp_reuse_registered_address: "yes" },
+                      invalid_params: { temp_reuse_registered_address: "" }
 
       context "when the contact address will be reused" do
         it "redirects to check_your_answers form" do

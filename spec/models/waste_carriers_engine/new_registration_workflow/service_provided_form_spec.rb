@@ -12,11 +12,11 @@ module WasteCarriersEngine
           context "when waste is their main service" do
             subject { build(:new_registration, workflow_state: "service_provided_form", is_main_service: "yes") }
 
-            include_examples "has next transition", next_state: "waste_types_form"
+            it_behaves_like "has next transition", next_state: "waste_types_form"
           end
 
           context "when waste is not their main service" do
-            include_examples "has next transition", next_state: "construction_demolition_form"
+            it_behaves_like "has next transition", next_state: "construction_demolition_form"
           end
         end
       end

@@ -109,7 +109,7 @@ module WasteCarriersEngine
     end
 
     def manually_entered?
-      address_mode == "manual-foreign" || address_mode == "manual-uk"
+      %w[manual-foreign manual-uk].include?(address_mode)
     end
   end
 end
