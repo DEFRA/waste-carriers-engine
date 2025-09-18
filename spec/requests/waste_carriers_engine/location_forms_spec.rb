@@ -4,24 +4,24 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "LocationForms" do
-    include_examples "GET flexible form", "location_form"
+    it_behaves_like "GET flexible form", "location_form"
 
     describe "POST location_form_path" do
-      include_examples "POST renewal form",
-                       "location_form",
-                       valid_params: { location: "england" },
-                       invalid_params: { location: "foo" },
-                       test_attribute: :location
+      it_behaves_like "POST renewal form",
+                      "location_form",
+                      valid_params: { location: "england" },
+                      invalid_params: { location: "foo" },
+                      test_attribute: :location
 
       context "when the transient_registration is a new registration" do
         let(:transient_registration) do
           create(:new_registration, workflow_state: "location_form")
         end
 
-        include_examples "POST form",
-                         "location_form",
-                         valid_params: { location: "england" },
-                         invalid_params: { location: "foo" }
+        it_behaves_like "POST form",
+                        "location_form",
+                        valid_params: { location: "england" },
+                        invalid_params: { location: "foo" }
 
         # When the user starts with a UK company type and then navigates back and changes the location to non-UK
         context "when the transient_registration already has company attributes" do

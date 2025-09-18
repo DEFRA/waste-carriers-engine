@@ -29,6 +29,6 @@ module WasteCarriersEngine
       end
     end
 
-    include_examples "validate yes no", :payment_method_confirmation_form, :temp_confirm_payment_method
+    it_behaves_like "validate yes no", :payment_method_confirmation_form, :temp_confirm_payment_method
   end
 end

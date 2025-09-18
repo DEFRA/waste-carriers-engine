@@ -5,12 +5,10 @@ require "waste_carriers_engine/detailed_logger"
 module WasteCarriersEngine
   class GovpayWebhookJob < ApplicationJob
     def perform(webhook_body)
-      if webhook_body["resource_type"]&.downcase == "payment"
-        GovpayPaymentWebhookHandler.run(webhook_body)
-      elsif webhook_body["refund_id"].present?
+      if refund_webhook?(webhook_body)
         GovpayRefundWebhookHandler.run(webhook_body)
       else
-        raise ArgumentError, "Unrecognised Govpay webhook type"
+        GovpayPaymentWebhookHandler.run(webhook_body)
       end
     rescue StandardError => e
       handle_error(e, webhook_body)
@@ -18,8 +16,11 @@ module WasteCarriersEngine
 
     private
 
-    def sanitize_webhook_body(body)
-      DefraRubyGovpay::WebhookSanitizerService.call(body)
+    def refund_webhook?(webhook_body)
+      event_type = webhook_body["event_type"]
+      raise ArgumentError, "Invalid webhook body, missing event_type" unless event_type.present?
+
+      event_type == "card_payment_refunded"
     end
 
     def handle_error(error, webhook_body)
@@ -32,7 +33,7 @@ module WasteCarriersEngine
       }
 
       if FeatureToggle.active?(:detailed_logging)
-        notification_params[:webhook_body] = sanitize_webhook_body(webhook_body)
+        notification_params[:webhook_body] = DefraRubyGovpay::WebhookSanitizerService.call(webhook_body)
         DetailedLogger.error "Webhook job error #{error}: #{notification_params}"
       end
 

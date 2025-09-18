@@ -17,8 +17,8 @@ module WasteCarriersEngine
       allow(defra_ruby_companies_api).to receive(:run).and_return(companies_house_api_response)
     end
 
-    include_examples "GET flexible form", "renewal_information_form"
+    it_behaves_like "GET flexible form", "renewal_information_form"
 
-    include_examples "POST without params form", "renewal_information_form"
+    it_behaves_like "POST without params form", "renewal_information_form"
   end
 end

@@ -4,9 +4,14 @@ inherit_gem:
   defra_ruby_style:
     - default.yml
 
-require:
+plugins:
   - rubocop-factory_bot
   - rubocop-rspec
+  - rubocop-rspec_rails
+
+# Bad cop: Not all methods returning a boolean are predicates.
+Naming/PredicateMethod:
+  Enabled: false
 
 AllCops:
   TargetRubyVersion: 3.2.2

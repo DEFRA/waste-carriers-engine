@@ -4,6 +4,7 @@ require "rails_helper"
 
 class RegistrableTest
   include WasteCarriersEngine::CanHaveDeregistrationToken
+
   def active?; end
 end
 

@@ -96,3 +96,8 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 end
+
+# Should call a method like new_location_form_path("CBDU1234")
+def new_path_for(form, transient_registration)
+  send("new_#{form}_path", transient_registration.token)
+end

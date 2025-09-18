@@ -28,13 +28,13 @@ module WasteCarriersEngine
           context "when the registration is upper tier" do
             subject { build(:new_registration, :upper, workflow_state: "company_address_form") }
 
-            include_examples "has next transition", next_state: "declare_convictions_form"
+            it_behaves_like "has next transition", next_state: "declare_convictions_form"
           end
 
           context "when the registration is lower tier" do
             subject { build(:new_registration, :lower, workflow_state: "company_address_form") }
 
-            include_examples "has next transition", next_state: "contact_name_form"
+            it_behaves_like "has next transition", next_state: "contact_name_form"
           end
         end
       end

@@ -4,6 +4,6 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "MustRegisterInWalesForms" do
-    include_examples "GET flexible form", "must_register_in_wales_form"
+    it_behaves_like "GET flexible form", "must_register_in_wales_form"
   end
 end

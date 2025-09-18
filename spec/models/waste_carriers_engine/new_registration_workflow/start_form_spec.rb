@@ -12,13 +12,13 @@ module WasteCarriersEngine
           context "when the temp_start_option is `renew`" do
             let(:temp_start_option) { WasteCarriersEngine::StartForm::RENEW }
 
-            include_examples "has next transition", next_state: "renewal_stop_form"
+            it_behaves_like "has next transition", next_state: "renewal_stop_form"
           end
 
           context "when the temp_start_option is `new`" do
             let(:temp_start_option) { WasteCarriersEngine::StartForm::NEW }
 
-            include_examples "has next transition", next_state: "location_form"
+            it_behaves_like "has next transition", next_state: "location_form"
           end
         end
       end
