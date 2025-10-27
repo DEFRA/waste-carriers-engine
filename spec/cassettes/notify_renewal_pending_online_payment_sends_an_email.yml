@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"foo@example.com","template_id":"3da098e3-3db2-4c99-8e96-ed9d1a8ef227","personalisation":{"reg_identifier":"CBDU1","registration_type":"carrier,
+      string: '{"email_address":"foo@example.com","template_id":"3da098e3-3db2-4c99-8e96-ed9d1a8ef227","personalisation":{"reg_identifier":"CBDU229","registration_type":"carrier,
         broker and dealer"}}'
     headers:
       User-Agent:
-      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      - NOTIFY-API-RUBY-CLIENT/5.4.0
       Content-Type:
       - application/json
       Authorization:
@@ -21,50 +21,46 @@ http_interactions:
   response:
     status:
       code: 201
-      message: Created
+      message: CREATED
     headers:
       Content-Type:
       - application/json
       Content-Length:
-      - '1011'
+      - '1048'
       Connection:
       - keep-alive
       Date:
-      - Tue, 17 May 2022 16:12:38 GMT
+      - Mon, 27 Oct 2025 17:11:09 GMT
+      X-B3-Spanid:
+      - self-82103b0c1f0e137c
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
       - GET,PUT,POST,DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Server:
-      - gunicorn
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-B3-Spanid:
-      - 30d987ef7f19714d
       X-B3-Traceid:
-      - 390284b76f3e756830d987ef7f19714d
-      X-Vcap-Request-Id:
-      - f048d391-2715-432b-5b5f-f5c9668459f3
+      - gI-m6c-XRiZ2jg6MqcUDisftSrLPeMLz55hLg1rYyLDu6yC23rLV8Q==
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 57f9250ef620b33bc5b87625f8d36f5e.cloudfront.net (CloudFront)
+      - 1.1 90927d233f1a615dc244e8b198aa1f04.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LHR62-C3
+      - LHR50-P3
       X-Amz-Cf-Id:
-      - QLyOQdLghQ3wFGgev4XfSWwjfye2BHTAufKPiFfZtRRUmWrXKVJKaw==
+      - gI-m6c-XRiZ2jg6MqcUDisftSrLPeMLz55hLg1rYyLDu6yC23rLV8Q==
     body:
       encoding: UTF-8
       string: '{"content":{"body":"#Your application to renew your waste carrier,
         broker and dealer registration has been received\r\n\r\nYour registration
-        number is still\r\nCBDU1 \r\n\r\nWe are currently processing your payment.
+        number is still\r\nCBDU229 \r\n\r\nWe are currently processing your payment.
         We''ll email you to let you know when your renewal application has been successful.\r\n\r\n*If
         you have enquiries please contact the Environment Agency helpline: 03708 506506\r\n*This
-        is an automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","subject":"Your
-        application to renew waste carriers registration CBDU1 has been received"},"id":"5511c9ae-0ae6-4c0b-bc36-e72c8d48430d","reference":null,"scheduled_for":null,"template":{"id":"3da098e3-3db2-4c99-8e96-ed9d1a8ef227","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/3da098e3-3db2-4c99-8e96-ed9d1a8ef227","version":7},"uri":"https://api.notifications.service.gov.uk/v2/notifications/5511c9ae-0ae6-4c0b-bc36-e72c8d48430d"}
+        is an automated email, please do not reply","from_email":"waste.carriers.registration.service@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Your
+        application to renew waste carriers registration CBDU229 has been received"},"id":"af78138f-3e90-4e7e-94d3-49f862284cb5","reference":null,"scheduled_for":null,"template":{"id":"3da098e3-3db2-4c99-8e96-ed9d1a8ef227","uri":"https://api.notifications.service.gov.uk/services/25cb6b94-8ce7-485b-918a-559f3b18f69c/templates/3da098e3-3db2-4c99-8e96-ed9d1a8ef227","version":7},"uri":"https://api.notifications.service.gov.uk/v2/notifications/af78138f-3e90-4e7e-94d3-49f862284cb5"}
 
-'
-  recorded_at: Tue, 17 May 2022 16:12:37 GMT
-recorded_with: VCR 6.1.0
+        '
+  recorded_at: Mon, 27 Oct 2025 17:11:10 GMT
+recorded_with: VCR 6.2.0
