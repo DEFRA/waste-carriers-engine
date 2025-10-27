@@ -71,7 +71,7 @@ Gem::Specification.new do |s|
   s.add_dependency "notifications-ruby-client", "~> 5.4.0"
 
   # Used to build and parse XML requests
-  s.add_dependency "nokogiri", "~> 1.15.3"
+  s.add_dependency "nokogiri", "~> 1.18.9"
 
   # Used to get a 2-character country code for Worldpay
   s.add_dependency "countries", "~> 5.5.0"
