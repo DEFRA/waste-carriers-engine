@@ -445,6 +445,7 @@
 
 **Fixed bugs:**
 
+- Fix/ruby 4002 refund webhooks [\#1654](https://github.com/DEFRA/waste-carriers-engine/pull/1654) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Parameterise prices values in i18n [\#1648](https://github.com/DEFRA/waste-carriers-engine/pull/1648) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - fix/RUBY-3819\_payment\_webhook\_reg\_activation [\#1636](https://github.com/DEFRA/waste-carriers-engine/pull/1636) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Remove redundant logging [\#1634](https://github.com/DEFRA/waste-carriers-engine/pull/1634) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
@@ -738,6 +739,15 @@
 
 **Merged pull requests:**
 
+- Update nokogiri dependency [\#1663](https://github.com/DEFRA/waste-carriers-engine/pull/1663) ([brujeo](https://github.com/brujeo))
+- Updated CI configuration to use global sonar token [\#1662](https://github.com/DEFRA/waste-carriers-engine/pull/1662) ([brujeo](https://github.com/brujeo))
+- Bump aasm from 5.5.1 to 5.5.2 [\#1661](https://github.com/DEFRA/waste-carriers-engine/pull/1661) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop from 1.80.2 to 1.81.6 [\#1660](https://github.com/DEFRA/waste-carriers-engine/pull/1660) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rack from 3.1.16 to 3.1.18 [\#1659](https://github.com/DEFRA/waste-carriers-engine/pull/1659) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rails from 7.2.2.1 to 7.2.2.2 [\#1652](https://github.com/DEFRA/waste-carriers-engine/pull/1652) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump activestorage from 7.2.2.1 to 7.2.2.2 [\#1651](https://github.com/DEFRA/waste-carriers-engine/pull/1651) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump activerecord from 7.2.2.1 to 7.2.2.2 [\#1650](https://github.com/DEFRA/waste-carriers-engine/pull/1650) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1649](https://github.com/DEFRA/waste-carriers-engine/pull/1649) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Bump defra\_ruby\_govpay from 1.0.0 to 1.0.2 [\#1646](https://github.com/DEFRA/waste-carriers-engine/pull/1646) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1643](https://github.com/DEFRA/waste-carriers-engine/pull/1643) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update CHANGELOG [\#1639](https://github.com/DEFRA/waste-carriers-engine/pull/1639) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
