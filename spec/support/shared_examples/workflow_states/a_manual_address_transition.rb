@@ -2,12 +2,11 @@
 
 RSpec.shared_examples "a manual address transition" do |next_state:, address_type:, factory:|
   describe "#workflow_state" do
+    current_state = :"#{address_type}_address_manual_form"
     subject do
       build(factory, workflow_state: current_state, location: location,
                      tier: defined?(tier) ? tier : WasteCarriersEngine::Registration::UPPER_TIER)
     end
-
-    let(:current_state) { :"#{address_type}_address_manual_form" }
 
     context "when subject.overseas? is false" do
       let(:location) { "england" }
