@@ -54,8 +54,7 @@ module WasteCarriersEngine
     def govpay_payment_in_progress?
       return false if order&.govpay_id.blank? || @transient_registration.temp_govpay_next_url.blank?
 
-      # Payment started but cancelled => not in progress
-      govpay_payment_status != Payment::STATUS_CANCELLED
+      [Payment::STATUS_CANCELLED, Payment::STATUS_FAILED].exclude?(govpay_payment_status)
     end
 
     def process_govpay_payment_status(govpay_payment_status)
