@@ -21,12 +21,7 @@ module WasteCarriersEngine
                             "received govpay payment id #{govpay_payment_id}"
 
         if govpay_payment_id.present?
-          @order.govpay_id = govpay_payment_id
-          @order.save!
-          {
-            payment: nil, # @payment,
-            url: govpay_redirect_url(response)
-          }
+          update_transient_registration_and_order(response, govpay_payment_id)
         else
           :error
         end
@@ -50,6 +45,17 @@ module WasteCarriersEngine
     end
 
     private
+
+    def update_transient_registration_and_order(response, govpay_payment_id)
+      @transient_registration.update(temp_govpay_next_url: govpay_redirect_url(response))
+
+      @order.govpay_id = govpay_payment_id
+      @order.save!
+      {
+        payment: nil,
+        url: govpay_redirect_url(response)
+      }
+    end
 
     def govpay_payment_response
       DefraRubyGovpay::API.new(host_is_back_office:).send_request(

@@ -44,7 +44,7 @@ module WasteCarriersEngine
         end
 
         # Including this test because the Worldpay equivalent does create a new payment
-        it "does not create a new payment" do
+        it "does not create a new payment in the service" do
           expect { govpay_service.prepare_for_payment }.not_to change { transient_registration.finance_details.payments.length }
         end
 

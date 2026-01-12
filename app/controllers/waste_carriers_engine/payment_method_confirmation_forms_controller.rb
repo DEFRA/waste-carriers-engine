@@ -8,6 +8,17 @@ module WasteCarriersEngine
 
     def create
       super(PaymentMethodConfirmationForm, "payment_method_confirmation_form")
+
+      # If we land on this page with temp_govpay_next_url already set,
+      # most likely the payment has failed or been cancelled on Gov.UK Pay and we've been redirected back.
+      # So the existing transaction on Gov.UK Pay is in a terminal state.
+      # So we need to start a new Gov.UK Pay payment.
+      return unless @transient_registration.temp_govpay_next_url.present?
+
+      govpay_service = GovpayPaymentService.new(@transient_registration,
+                                                @transient_registration.finance_details.orders.last,
+                                                current_user)
+      govpay_service.prepare_for_payment
     end
 
     private
