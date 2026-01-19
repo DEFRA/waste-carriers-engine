@@ -10,6 +10,7 @@ module WasteCarriersEngine
     STATUS_CREATED = "created"
     STATUS_SUBMITTED = "submitted"
     STATUS_CANCELLED = "cancelled"
+    STATUS_ERROR = "error"
     STATUS_FAILED = "failed"
     STATUS_SUCCESS = "success"
     STATUS_COMPLETE = "complete"
