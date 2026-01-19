@@ -168,6 +168,8 @@ module WasteCarriersEngine
 
       it_behaves_like "maps to the expected status", Payment::STATUS_CANCELLED, :cancel
 
+      it_behaves_like "maps to the expected status", Payment::STATUS_ERROR, :error
+
       it_behaves_like "maps to the expected status", nil, :error
     end
   end

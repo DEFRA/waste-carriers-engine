@@ -96,6 +96,12 @@ module WasteCarriersEngine
             it_behaves_like "allows retry after unsuccessful payment"
           end
 
+          context "with error status" do
+            let(:payment_status) { Payment::STATUS_ERROR }
+
+            it_behaves_like "allows retry after unsuccessful payment"
+          end
+
           context "with failed status" do
             let(:payment_status) { Payment::STATUS_FAILED }
 
