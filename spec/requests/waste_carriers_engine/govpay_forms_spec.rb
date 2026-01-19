@@ -66,6 +66,43 @@ module WasteCarriersEngine
           end
         end
 
+        context "when a previous payment was cancelled or failed" do
+          let(:payment_details_service) { instance_double(GovpayPaymentDetailsService) }
+
+          RSpec.shared_examples "allows retry after unsuccessful payment" do
+            before do
+              transient_registration.prepare_for_payment(:govpay)
+              transient_registration.update(temp_govpay_next_url: "https://www.payments.service.gov.uk/secure/test")
+
+              allow(GovpayPaymentDetailsService).to receive(:new).and_return(payment_details_service)
+              allow(payment_details_service).to receive(:govpay_payment_status).and_return(payment_status)
+              allow(GovpayPaymentService).to receive(:new).and_call_original
+            end
+
+            it "allows a new payment to be created" do
+              get new_govpay_form_path(token)
+              expect(GovpayPaymentService).to have_received(:new).at_least(:once)
+            end
+
+            it "redirects to govpay" do
+              get new_govpay_form_path(token)
+              expect(response.location).to include("https://www.payments.service.gov.uk")
+            end
+          end
+
+          context "with cancelled status" do
+            let(:payment_status) { Payment::STATUS_CANCELLED }
+
+            it_behaves_like "allows retry after unsuccessful payment"
+          end
+
+          context "with failed status" do
+            let(:payment_status) { Payment::STATUS_FAILED }
+
+            it_behaves_like "allows retry after unsuccessful payment"
+          end
+        end
+
         context "when the transient_registration is a new registration" do
           let(:transient_registration) do
             create(:new_registration,
