@@ -52,7 +52,7 @@ group :development do
   # New dev's should first create GitHub personal app token and add it to their
   # ~/.bash_profile (or equivalent)
   # https://github.com/skywinder/github-changelog-generator#github-token
-  gem "github_changelog_generator", "~> 1.16.4"
+  gem "github_changelog_generator", "~> 1.15.2"
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem "web-console", "~> 4.2.0"
