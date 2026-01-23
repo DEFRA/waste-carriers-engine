@@ -40,8 +40,8 @@ RSpec.shared_examples "validate postcode" do |form_factory, field|
     end
   end
 
-  describe "handle OSPlacesAddressLookupService responses" do
-    before { allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response) }
+  describe "handle OsApiAddressLookupV1Service responses" do
+    before { allow(DefraRuby::Address::OsApiAddressLookupV1Service).to receive(:run).and_return(response) }
 
     context "when a postcode search returns an error" do
       let(:response) { instance_double(DefraRuby::Address::Response, successful?: false, error: "foo") }

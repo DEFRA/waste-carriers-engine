@@ -62,14 +62,14 @@ module WasteCarriersEngine
     def update_from_os_places_data(data)
       self[:uprn] = data["uprn"]
       self[:address_mode] = "address-results"
-      self[:dependent_locality] = data["dependentLocality"]
-      self[:administrative_area] = data["administrativeArea"]
-      self[:town_city] = data["town"]
+      self[:dependent_locality] = data["locality"]
+      self[:administrative_area] = data["city"]
+      self[:town_city] = data["city"]
       self[:postcode] = data["postcode"]
       self[:country] = data["country"]
-      self[:local_authority_update_date] = data["localAuthorityUpdateDate"]
-      self[:easting] = data["easting"]
-      self[:northing] = data["northing"]
+      self[:local_authority_update_date] = data["last_update_date"]
+      self[:easting] = data["x"]&.to_i
+      self[:northing] = data["y"]&.to_i
 
       assign_house_number_and_address_lines(data)
 
@@ -77,17 +77,16 @@ module WasteCarriersEngine
     end
 
     def assign_house_number_and_address_lines(os_data)
-      data = os_data.clone.slice("departmentName", "organisationName", "postOfficeBoxNumber",
-                                 "subBuildingName", "buildingName", "buildingNumber",
-                                 "dependentThroughfare", "thoroughfareName", "dependentLocality")
+      # Extract house number from address field only when org/premises are blank
+      extracted_house_number = extract_house_number_from_address(os_data)
+
+      data = os_data.clone.slice("organisation", "premises", "street_address", "locality")
                     .delete_if { |_k, v| v.nil? || v.empty? }
 
-      # Avoid exceeding the number of available lines by merging some values if necessary.
-      combined_if_length_exceeds(5, data, "departmentName", "organisationName")
-      combined_if_length_exceeds(5, data, "subBuildingName", "buildingName")
-      combined_if_length_exceeds(5, data, "buildingNumber", "dependentThroughfare")
-
       lines = data.values.reject(&:blank?)
+
+      # Prepend extracted house number if we found one
+      lines.unshift(extracted_house_number) if extracted_house_number.present?
 
       address_attributes = %i[house_number
                               address_line_1
@@ -99,13 +98,25 @@ module WasteCarriersEngine
       write_attribute(address_attributes.shift, lines.shift) until lines.empty?
     end
 
-    def combined_if_length_exceeds(max_lines, data, field1, field2)
-      return if data.keys.length <= max_lines
+    private
 
-      return if !data[field1].present? || !data[field2].present?
+    def extract_house_number_from_address(os_data)
+      # Only extract when organisation AND premises are both blank
+      # Otherwise, those fields already contain the relevant info
+      return nil if os_data["organisation"].present? || os_data["premises"].present?
 
-      data[field2] = data.values_at(field1, field2).reject(&:blank?).join(", ")
-      data.delete(field1)
+      address = os_data["address"]
+      street_address = os_data["street_address"]
+
+      return nil if address.blank? || street_address.blank?
+
+      # Find where street_address starts in the full address (case-insensitive)
+      street_index = address.upcase.index(street_address.upcase)
+      return nil if street_index.nil? || street_index.zero?
+
+      # Extract everything before street_address and clean trailing comma/spaces
+      prefix = address[0...street_index]
+      prefix.sub(/,\s*\z/, "").strip.presence
     end
 
     def manually_entered?
