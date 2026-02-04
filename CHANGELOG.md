@@ -445,6 +445,9 @@
 
 **Fixed bugs:**
 
+- \[RUBY-4145\] Add handling for payment error status in GovPay forms controller [\#1679](https://github.com/DEFRA/waste-carriers-engine/pull/1679) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-3974\] Allow retry for payments that were failed as well as cancelled [\#1673](https://github.com/DEFRA/waste-carriers-engine/pull/1673) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-4039\] Fix conviction types link in convictions form [\#1672](https://github.com/DEFRA/waste-carriers-engine/pull/1672) ([brujeo](https://github.com/brujeo))
 - Fix/ruby 4002 refund webhooks [\#1654](https://github.com/DEFRA/waste-carriers-engine/pull/1654) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Parameterise prices values in i18n [\#1648](https://github.com/DEFRA/waste-carriers-engine/pull/1648) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - fix/RUBY-3819\_payment\_webhook\_reg\_activation [\#1636](https://github.com/DEFRA/waste-carriers-engine/pull/1636) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
@@ -739,6 +742,9 @@
 
 **Merged pull requests:**
 
+- Bump rubocop-rspec from 3.8.0 to 3.9.0 [\#1676](https://github.com/DEFRA/waste-carriers-engine/pull/1676) ([dependabot[bot]](https://github.com/apps/dependabot))
+- mongodb upgrade for github ci [\#1675](https://github.com/DEFRA/waste-carriers-engine/pull/1675) ([brujeo](https://github.com/brujeo))
+- Update CHANGELOG [\#1670](https://github.com/DEFRA/waste-carriers-engine/pull/1670) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update nokogiri dependency [\#1663](https://github.com/DEFRA/waste-carriers-engine/pull/1663) ([brujeo](https://github.com/brujeo))
 - Updated CI configuration to use global sonar token [\#1662](https://github.com/DEFRA/waste-carriers-engine/pull/1662) ([brujeo](https://github.com/brujeo))
 - Bump aasm from 5.5.1 to 5.5.2 [\#1661](https://github.com/DEFRA/waste-carriers-engine/pull/1661) ([dependabot[bot]](https://github.com/apps/dependabot))
