@@ -116,7 +116,7 @@ module WasteCarriersEngine
       context "when the registration is lower tier" do
         let(:tier) { "LOWER" }
 
-        expected = "A lower tier waste carrier, broker and dealer"
+        let(:expected) { "A lower tier waste carrier, broker and dealer" }
 
         it "returns 'expected'" do
           expect(presenter.tier_and_registration_type).to eq(expected)

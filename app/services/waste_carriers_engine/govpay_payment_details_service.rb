@@ -48,6 +48,7 @@ module WasteCarriersEngine
         Payment::STATUS_STARTED => :pending,
         Payment::STATUS_SUBMITTED => :pending,
         Payment::STATUS_CANCELLED => :cancel,
+        Payment::STATUS_ERROR => :error,
         Payment::STATUS_FAILED => :failure,
         nil => :error
       }.freeze[status] || status.to_sym
