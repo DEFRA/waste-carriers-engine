@@ -24,10 +24,4 @@ module WasteCarriersEngine
   end
 end
 
-module Mongoid
-  module Attributes
-    module Processing
-      prepend WasteCarriersEngine::MongoidMonkeyPatch
-    end
-  end
-end
+Mongoid::Attributes::Processing.prepend(WasteCarriersEngine::MongoidMonkeyPatch)

@@ -2,20 +2,20 @@
 
 require "rails_helper"
 
-module Test
-  OptionalEmailValidatable = Struct.new(:contact_email) do
-    include ActiveModel::Validations
-
-    attr_reader :contact_email
-
-    validates_with WasteCarriersEngine::OptionalEmailValidator, attributes: [:contact_email]
-  end
-end
-
 module WasteCarriersEngine
+  module OptionalEmailValidatorTest
+    Validatable = Struct.new(:contact_email) do
+      include ActiveModel::Validations
+
+      attr_reader :contact_email
+
+      validates_with OptionalEmailValidator, attributes: [:contact_email]
+    end
+  end
+
   RSpec.describe OptionalEmailValidator do
 
-    subject(:validatable) { Test::OptionalEmailValidatable.new }
+    subject(:validatable) { OptionalEmailValidatorTest::Validatable.new }
 
     before do
       allow(validatable).to receive(:contact_email).and_return(contact_email)

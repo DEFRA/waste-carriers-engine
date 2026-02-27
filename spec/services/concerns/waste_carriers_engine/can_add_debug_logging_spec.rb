@@ -2,11 +2,11 @@
 
 require "rails_helper"
 
-class DebugClass
-  include WasteCarriersEngine::CanAddDebugLogging
-end
-
 module WasteCarriersEngine
+  class DebugClass
+    include CanAddDebugLogging
+  end
+
   RSpec.describe CanAddDebugLogging do
 
     describe "#log_transient_registration_details" do
