@@ -2,14 +2,14 @@
 
 require "rails_helper"
 
-class RegistrableTest
-  include WasteCarriersEngine::CanHaveViewCertificateToken
-end
-
 module WasteCarriersEngine
+  class RegistrableViewCertificateTest
+    include CanHaveViewCertificateToken
+  end
+
   RSpec.describe "CanHaveViewCertificateToken" do
 
-    subject(:registrable) { RegistrableTest.new }
+    subject(:registrable) { RegistrableViewCertificateTest.new }
 
     describe "#generate_view_certificate_token!" do
       it "generates a token" do

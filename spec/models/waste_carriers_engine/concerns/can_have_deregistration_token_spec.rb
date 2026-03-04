@@ -2,18 +2,18 @@
 
 require "rails_helper"
 
-class RegistrableTest
-  include WasteCarriersEngine::CanHaveDeregistrationToken
-
-  def active?; end
-end
-
 module WasteCarriersEngine
+  class RegistrableDeregistrationTest
+    include CanHaveDeregistrationToken
+
+    def active?; end
+  end
+
   RSpec.describe "CanHaveDeregistrationToken" do
 
     before { allow(registrable).to receive(:active?).and_return(true) }
 
-    subject(:registrable) { RegistrableTest.new }
+    subject(:registrable) { RegistrableDeregistrationTest.new }
 
     describe "#generate_deregistration_token" do
 
