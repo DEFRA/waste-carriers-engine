@@ -58,13 +58,17 @@ module Dummy
     config.companies_house_host = ENV["WCRS_COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk/"
     config.companies_house_api_key = ENV["WCRS_COMPANIES_HOUSE_API_KEY"]
 
+    # OS Placess postcode lookup config
+    config.os_places_service_url = ENV["WCRS_OSPLACES_URL"] || "https://api.os.uk/search/places/v1"
+    config.os_places_api_key = ENV["WCRS_OSPLACES_KEY"]
+
+
     # Paths
     # This is the domain to use on URLs for FO services such as renewal and deregistration
     config.wcrs_fo_link_domain = ENV["WCRS_RENEWALS_DOMAIN"] || "http://localhost:3002"
 
     config.wcrs_frontend_url = ENV["WCRS_FRONTEND_DOMAIN"] || "http://localhost:3000"
     config.wcrs_services_url = ENV["WCRS_SERVICES_DOMAIN"] || "http://localhost:8003"
-    config.os_places_service_url = ENV["WCRS_OS_PLACES_DOMAIN"] || "http://localhost:8005"
     config.host = config.wcrs_fo_link_domain
 
     # Fees

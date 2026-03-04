@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class UpdateAddressDetailsFromOsPlacesService < BaseService
+  class UpdateAddressDetailsFromOsApiService < BaseService
     attr_accessor :address
 
     def run(address:)

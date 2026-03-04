@@ -7,7 +7,7 @@ module AddressFinderServiceStubHelper
 
     response = instance_double(DefraRuby::Address::Response, results: address_json, successful?: true)
 
-    allow(DefraRuby::Address::OsPlacesAddressLookupService).to receive(:run).and_return(response)
+    allow(DefraRuby::Address::OsApiAddressLookupV1Service).to receive(:run).and_return(response)
   end
 end
 

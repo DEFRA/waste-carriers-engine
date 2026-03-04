@@ -58,7 +58,7 @@ Gem::Specification.new do |s|
 
   # Used to handle requests to the address lookup web service used (currently
   # EA Address Facade v1)
-  s.add_dependency "defra_ruby_address", "~> 0.1.0"
+  s.add_dependency "defra_ruby_address", "~> 0.3.0"
 
   # # Used to access the Companies House API for company details validation
   s.add_dependency "defra_ruby_companies_house"
