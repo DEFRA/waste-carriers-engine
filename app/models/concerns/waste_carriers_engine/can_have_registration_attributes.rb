@@ -212,7 +212,7 @@ module WasteCarriersEngine
       def main_people
         return [] unless key_people.present?
 
-        key_people.where(person_type: "KEY")
+        key_people.select { |person| person.person_type == "KEY" }
       end
 
       def declared_convictions?
@@ -222,7 +222,7 @@ module WasteCarriersEngine
       def relevant_people
         return [] unless key_people.present?
 
-        key_people.where(person_type: "RELEVANT")
+        key_people.select { |person| person.person_type == "RELEVANT" }
       end
 
       def conviction_check_required?

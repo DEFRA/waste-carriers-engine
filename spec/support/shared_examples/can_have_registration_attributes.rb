@@ -378,6 +378,32 @@ RSpec.shared_examples "Can have registration attributes" do |factory:|
     end
   end
 
+  describe "#main_people" do
+    let(:main_person) { build(:key_person, :main, first_name: "Steve", last_name: "Oxby") }
+    let(:relevant_person) { build(:key_person, :relevant, first_name: "Jane", last_name: "Doe") }
+
+    before do
+      allow(resource).to receive(:key_people).and_return([main_person, relevant_person])
+    end
+
+    it "returns only key people" do
+      expect(resource.main_people).to eq([main_person])
+    end
+  end
+
+  describe "#relevant_people" do
+    let(:main_person) { build(:key_person, :main, first_name: "Steve", last_name: "Oxby") }
+    let(:relevant_person) { build(:key_person, :relevant, first_name: "Jane", last_name: "Doe") }
+
+    before do
+      allow(resource).to receive(:key_people).and_return([main_person, relevant_person])
+    end
+
+    it "returns only relevant people" do
+      expect(resource.relevant_people).to eq([relevant_person])
+    end
+  end
+
   describe "#legal_entity_name" do
     subject { resource.legal_entity_name }
 
