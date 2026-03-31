@@ -89,9 +89,9 @@ module WasteCarriersEngine
       context "when the registration has past_registrations" do
         let(:past_registration) { PastRegistration.build_past_registration(registration) }
 
-        context "when the past_registration has an expiry date more than 6 months ago" do
+        context "when the past_registration has an expiry date older than the renewal window" do
           before do
-            past_registration.update(expires_on: 1.year.ago)
+            past_registration.update(expires_on: (Rails.configuration.renewal_window.months + 1.month).ago)
           end
 
           it "returns false" do
