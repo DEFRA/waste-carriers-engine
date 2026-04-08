@@ -110,6 +110,60 @@ module WasteCarriersEngine
           expect(check_service.expiry_date_after_renewal).to eq(Date.new(2021, 3, 25))
         end
       end
+
+      context "when a renewed registration was submitted early in GMT and expires in BST" do
+        before do
+          allow(Rails.configuration).to receive(:expires_after).and_return(3)
+        end
+
+        let(:registration) do
+          build(
+            :registration,
+            :has_required_data,
+            expires_on: Time.utc(2023, 4, 3, 0, 0, 0),
+            metaData: build(
+              :metaData,
+              :has_required_data,
+              date_registered: Time.utc(2020, 2, 24, 16, 0, 53),
+              date_activated: Time.utc(2020, 2, 24, 16, 0, 53)
+            )
+          )
+        end
+
+        subject(:check_service) { described_class.new(registration) }
+
+        it "uses the stored expiry date as the renewal basis" do
+          expect(check_service.expiry_date).to eq(Time.utc(2023, 4, 2, 23, 0, 0))
+          expect(check_service.expiry_date_after_renewal).to eq(Date.new(2026, 4, 3))
+        end
+      end
+
+      context "when a renewed registration was submitted early in BST and expires in GMT" do
+        before do
+          allow(Rails.configuration).to receive(:expires_after).and_return(3)
+        end
+
+        let(:registration) do
+          build(
+            :registration,
+            :has_required_data,
+            expires_on: Time.utc(2019, 1, 19, 23, 35, 38),
+            metaData: build(
+              :metaData,
+              :has_required_data,
+              date_registered: Time.utc(2015, 7, 19, 22, 28, 6),
+              date_activated: Time.utc(2015, 7, 19, 22, 35, 38)
+            )
+          )
+        end
+
+        subject(:check_service) { described_class.new(registration) }
+
+        it "does not let the DST correction move the renewal on by a day" do
+          expect(check_service.expiry_date).to eq(Time.utc(2019, 1, 20, 0, 35, 38))
+          expect(check_service.expiry_date_after_renewal).to eq(Date.new(2022, 1, 19))
+        end
+      end
     end
 
     describe "#expired?" do

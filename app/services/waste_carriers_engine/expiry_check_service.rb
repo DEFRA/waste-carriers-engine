@@ -21,7 +21,7 @@ module WasteCarriersEngine
     end
 
     def expiry_date_after_renewal
-      expiry_date.to_date + Rails.configuration.expires_after.years
+      renewal_expiry_date.to_date + Rails.configuration.expires_after.years
     end
 
     def expired?
@@ -57,6 +57,12 @@ module WasteCarriersEngine
 
     def current_day_is_within_grace_window?(last_day_of_grace_window)
       current_day.between?(expiry_date.to_date, last_day_of_grace_window)
+    end
+
+    # Renewal extensions should be based on the stored expiry boundary of the
+    # current term, not the DST-adjusted expiry date used for status checks.
+    def renewal_expiry_date
+      expires_on
     end
 
     # We store dates and times in UTC, but want to use the current date in the
