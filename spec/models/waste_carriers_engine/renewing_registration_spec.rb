@@ -216,6 +216,32 @@ module WasteCarriersEngine
       end
     end
 
+    describe "#projected_renewal_end_date" do
+      let(:registration) do
+        create(
+          :registration,
+          :has_required_data,
+          expires_on: Time.utc(2023, 4, 3, 0, 0, 0),
+          metaData: build(
+            :metaData,
+            :has_required_data,
+            date_registered: Time.utc(2020, 2, 24, 16, 0, 53),
+            date_activated: Time.utc(2020, 2, 24, 16, 0, 53)
+          )
+        )
+      end
+
+      subject(:renewing_registration) { described_class.new(reg_identifier: registration.reg_identifier) }
+
+      before do
+        allow(Rails.configuration).to receive(:expires_after).and_return(3)
+      end
+
+      it "uses the stored expiry date when projecting the renewed term" do
+        expect(renewing_registration.projected_renewal_end_date).to eq(Date.new(2026, 4, 3))
+      end
+    end
+
     describe "#ready_to_complete?" do
       context "when the transient registration is ready to complete" do
         let(:renewing_registration) { build(:renewing_registration, :is_ready_to_complete) }
