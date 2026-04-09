@@ -118,7 +118,7 @@ FactoryBot.define do
 
     trait :expires_later do
       metaData { association :metaData, :has_required_data, status: :ACTIVE, strategy: :build }
-      expires_on { 2.years.from_now }
+      expires_on { (Rails.configuration.renewal_window.months + 1.year).from_now }
     end
 
     trait :expires_in_3_years do
