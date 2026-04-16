@@ -55,10 +55,10 @@
 - cert creation date [\#1362](https://github.com/DEFRA/waste-carriers-engine/pull/1362) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - delete person label [\#1360](https://github.com/DEFRA/waste-carriers-engine/pull/1360) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Add restore attributes to metaData [\#1349](https://github.com/DEFRA/waste-carriers-engine/pull/1349) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- Email history [\#1339](https://github.com/DEFRA/waste-carriers-engine/pull/1339) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 **Fixed bugs:**
 
+- \[RUBY-4238\] Fix expiry date calculation to use renewal expiry date instead of current [\#1700](https://github.com/DEFRA/waste-carriers-engine/pull/1700) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4145\] Add handling for payment error status in GovPay forms controller [\#1679](https://github.com/DEFRA/waste-carriers-engine/pull/1679) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-3974\] Allow retry for payments that were failed as well as cancelled [\#1673](https://github.com/DEFRA/waste-carriers-engine/pull/1673) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4039\] Fix conviction types link in convictions form [\#1672](https://github.com/DEFRA/waste-carriers-engine/pull/1672) ([brujeo](https://github.com/brujeo))
@@ -118,11 +118,12 @@
 - add reg\_identifier to deregistration email [\#1346](https://github.com/DEFRA/waste-carriers-engine/pull/1346) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Exclude dereg attributes from attribute copying [\#1343](https://github.com/DEFRA/waste-carriers-engine/pull/1343) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/dereg token copy error [\#1342](https://github.com/DEFRA/waste-carriers-engine/pull/1342) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- edit registration copy error [\#1341](https://github.com/DEFRA/waste-carriers-engine/pull/1341) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- Missed card payment type [\#1335](https://github.com/DEFRA/waste-carriers-engine/pull/1335) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 **Merged pull requests:**
 
+- Bump rack from 3.2.5 to 3.2.6 [\#1697](https://github.com/DEFRA/waste-carriers-engine/pull/1697) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Refactoring specs to use dynamic renewal window [\#1696](https://github.com/DEFRA/waste-carriers-engine/pull/1696) ([brujeo](https://github.com/brujeo))
+- Chore/changelog [\#1695](https://github.com/DEFRA/waste-carriers-engine/pull/1695) ([brujeo](https://github.com/brujeo))
 - Bump dependencies and fix test class namespacing [\#1685](https://github.com/DEFRA/waste-carriers-engine/pull/1685) ([brujeo](https://github.com/brujeo))
 - Bump rack from 3.2.4 to 3.2.5 [\#1684](https://github.com/DEFRA/waste-carriers-engine/pull/1684) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump faraday from 2.14.0 to 2.14.1 [\#1683](https://github.com/DEFRA/waste-carriers-engine/pull/1683) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -261,7 +262,6 @@
 - Bump nokogiri from 1.14.2 to 1.14.3 [\#1348](https://github.com/DEFRA/waste-carriers-engine/pull/1348) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump devise from 4.9.0 to 4.9.2 [\#1347](https://github.com/DEFRA/waste-carriers-engine/pull/1347) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump countries from 5.3.1 to 5.3.2 [\#1344](https://github.com/DEFRA/waste-carriers-engine/pull/1344) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Update CHANGELOG [\#1340](https://github.com/DEFRA/waste-carriers-engine/pull/1340) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 
 
