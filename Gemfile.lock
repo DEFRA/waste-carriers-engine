@@ -146,7 +146,7 @@ GEM
     defra_ruby_style (0.3.0)
       rubocop (>= 1.0, < 2.0)
     defra_ruby_template (5.11.1)
-    defra_ruby_validators (3.0.0)
+    defra_ruby_validators (3.0.1)
       activemodel
       defra_ruby_companies_house
       i18n
