@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.add_dependency "high_voltage", "~> 3.1.2"
 
   # Validations
-  s.add_dependency "defra_ruby_validators", "~> 3.0"
+  s.add_dependency "defra_ruby_validators"
   s.add_dependency "uk_postcode", "~> 2.1.8"
 
   s.add_dependency "defra_ruby_govpay"
