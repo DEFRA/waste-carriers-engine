@@ -71,7 +71,7 @@ module WasteCarriersEngine
 
           shared_examples "check_registered_company_name_form or invalid_company_status_form" do
 
-            %i[active voluntary-arrangement].each do |status|
+            %i[active voluntary-arrangement liquidation].each do |status|
               context "with a company status of #{status}" do
                 let(:company_status) { status }
 
@@ -80,7 +80,6 @@ module WasteCarriersEngine
             end
 
             %w[dissolved
-               liquidation
                receivership
                administration
                converted-closed

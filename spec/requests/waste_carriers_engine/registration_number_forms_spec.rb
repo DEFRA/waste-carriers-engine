@@ -25,7 +25,7 @@ module WasteCarriersEngine
           let(:valid_params) { { company_no: "12345678" } }
 
           it "returns a 302 response and redirects to the check_registered_company_name form" do
-            post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
+            post_registration_number_form(valid_params)
 
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(new_check_registered_company_name_form_path(transient_registration[:token]))
@@ -36,7 +36,7 @@ module WasteCarriersEngine
           let(:invalid_params) { { company_no: "" } }
 
           it "does not update the transient registration" do
-            post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: invalid_params }
+            post_registration_number_form(invalid_params)
             expect(transient_registration.reload[:token].to_s).not_to eq(invalid_params[:token])
           end
         end
@@ -51,14 +51,19 @@ module WasteCarriersEngine
 
         let(:valid_params) { { company_no: "01234567" } }
 
-        it "does not update the transient registration, returns a 302 response and redirects to the correct form for the state" do
-          post registration_number_forms_path(transient_registration[:token]), params: { registration_number_form: valid_params }
+        it "does not update the transient registration and redirects to the correct form for the state" do
+          post_registration_number_form(valid_params)
 
           expect(transient_registration.reload[:company_no].to_s).not_to eq(valid_params[:company_no])
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(new_renewal_start_form_path(transient_registration[:token]))
         end
       end
+    end
+
+    def post_registration_number_form(params)
+      post registration_number_forms_path(transient_registration[:token]),
+           params: { registration_number_form: params }
     end
   end
 end

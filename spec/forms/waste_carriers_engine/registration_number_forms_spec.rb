@@ -63,5 +63,12 @@ module WasteCarriersEngine
       expect(validators[:company_no].first.class)
         .to eq(DefraRuby::Validators::CompaniesHouseNumberValidator)
     end
+
+    it "configures the company_no validator to allow liquidation" do
+      validator = build(:registration_number_form, :has_required_data)._validators[:company_no].first
+
+      expect(validator.options[:permitted_statuses])
+        .to include(:liquidation)
+    end
   end
 end
