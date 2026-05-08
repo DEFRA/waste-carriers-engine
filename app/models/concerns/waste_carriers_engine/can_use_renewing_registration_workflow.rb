@@ -259,7 +259,7 @@ module WasteCarriersEngine
 
       begin
         company_status = DefraRuby::CompaniesHouse::API.run(company_number: company_no)[:company_status]
-        !%i[active voluntary-arrangement].include?(company_status)
+        !WasteCarriersEngine::CompaniesHouseStatusService.permitted_status?(company_status)
       rescue StandardError => e
         Rails.logger.error "Error checking company status: #{e}"
         Airbrake.notify(e)

@@ -5,6 +5,7 @@ module WasteCarriersEngine
     delegate :company_no, :business_type, to: :transient_registration
 
     validates :company_no, "defra_ruby/validators/companies_house_number": {
+      permitted_statuses: WasteCarriersEngine::CompaniesHouseStatusService::PERMITTED_STATUSES,
       messages: custom_error_messages(:company_no, :inactive)
     }
 

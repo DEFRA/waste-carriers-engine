@@ -13,6 +13,10 @@ gem "sassc-rails"
 # development dependencies will be added by default to the :development group.
 gemspec
 
+gem "defra_ruby_validators",
+    git: "https://github.com/DEFRA/defra-ruby-validators.git",
+    branch: "RUBY-4303-wcr-allow-companies-going-through-liquidation-to-register-or-renew"
+
 # GOV.UK styling
 gem "defra_ruby_template", "~> 5.0"
 
