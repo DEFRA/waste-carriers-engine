@@ -115,12 +115,12 @@
 - Add support for govpay refund statuses [\#1371](https://github.com/DEFRA/waste-carriers-engine/pull/1371) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - remove cert date from confirmation emails [\#1366](https://github.com/DEFRA/waste-carriers-engine/pull/1366) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - add cert generation date to PDF certificate [\#1364](https://github.com/DEFRA/waste-carriers-engine/pull/1364) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- add reg\_identifier to deregistration email [\#1346](https://github.com/DEFRA/waste-carriers-engine/pull/1346) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- Exclude dereg attributes from attribute copying [\#1343](https://github.com/DEFRA/waste-carriers-engine/pull/1343) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- Fix/dereg token copy error [\#1342](https://github.com/DEFRA/waste-carriers-engine/pull/1342) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 **Merged pull requests:**
 
+- \[RUBY-4303\] Allow companies going through liquidation to register or renew [\#1708](https://github.com/DEFRA/waste-carriers-engine/pull/1708) ([jjromeo](https://github.com/jjromeo))
+- RUBY-4266 Update defra\_ruby\_validators [\#1707](https://github.com/DEFRA/waste-carriers-engine/pull/1707) ([jjromeo](https://github.com/jjromeo))
+- Bump gem dependencies 2026-04-15 [\#1703](https://github.com/DEFRA/waste-carriers-engine/pull/1703) ([brujeo](https://github.com/brujeo))
 - Bump rack from 3.2.5 to 3.2.6 [\#1697](https://github.com/DEFRA/waste-carriers-engine/pull/1697) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Refactoring specs to use dynamic renewal window [\#1696](https://github.com/DEFRA/waste-carriers-engine/pull/1696) ([brujeo](https://github.com/brujeo))
 - Chore/changelog [\#1695](https://github.com/DEFRA/waste-carriers-engine/pull/1695) ([brujeo](https://github.com/brujeo))
