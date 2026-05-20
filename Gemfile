@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby "3.2.2"
+ruby "3.4.6"
 
 # Temporary workaround until we implement webpack assets
 # See: https://github.com/sass/sassc-rails/issues/114
@@ -75,6 +75,8 @@ group :test do
   gem "faker", "~> 3.2.0"
 
   gem "govuk_design_system_formbuilder", "~> 5.3"
+
+  gem "observer", "~> 0.1.2"
 
   gem "rails-controller-testing", "~> 1.0.5"
 

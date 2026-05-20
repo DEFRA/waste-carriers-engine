@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.license = "The Open Government Licence (OGL) Version 3"
 
   s.metadata["rubygems_mfa_required"] = "true"
-  s.required_ruby_version = ">= 3.2.2"
+  s.required_ruby_version = ">= 3.4.6"
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
 
