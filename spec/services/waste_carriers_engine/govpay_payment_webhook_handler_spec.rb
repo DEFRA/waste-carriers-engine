@@ -52,6 +52,14 @@ module WasteCarriersEngine
           it { expect { run_service }.to raise_error(ArgumentError) }
 
           it_behaves_like "logs an error"
+
+          it "notifies Airbrake with the error and a params hash" do
+            allow(Airbrake).to receive(:notify)
+
+            expect { run_service }.to raise_error(ArgumentError)
+
+            expect(Airbrake).to have_received(:notify).with(instance_of(ArgumentError), instance_of(Hash))
+          end
         end
 
         context "when the registration is not found" do
