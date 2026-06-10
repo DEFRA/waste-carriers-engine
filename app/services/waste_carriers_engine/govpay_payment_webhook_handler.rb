@@ -26,7 +26,7 @@ module WasteCarriersEngine
                         "payment #{payment_id}, registration \"#{registration&.regIdentifier}\""
     rescue StandardError => e
       Rails.logger.error "Error processing webhook for payment #{payment_id}: #{e}"
-      Airbrake.notify "Error processing webhook for payment #{payment_id}", e
+      Airbrake.notify(e, message: "Error processing webhook for payment", payment_id: payment_id)
       raise
     end
 
