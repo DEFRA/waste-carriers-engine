@@ -26,6 +26,20 @@ module WasteCarriersEngine
             hash_including(payment_id: payment_id)
           )
         end
+
+        context "with raise_on_missing: false" do
+          subject(:run_service) { described_class.run(payment_id:, raise_on_missing: false) }
+
+          it "returns nil" do
+            expect(run_service).to be_nil
+          end
+
+          it "does not notify Airbrake" do
+            run_service
+
+            expect(Airbrake).not_to have_received(:notify)
+          end
+        end
       end
 
       context "with a valid payment id in a Registration" do
