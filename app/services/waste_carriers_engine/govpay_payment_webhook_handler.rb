@@ -6,8 +6,9 @@ module WasteCarriersEngine
 
     def run(webhook_body)
       @webhook_body = webhook_body
-      @payment_id = webhook_body.dig("resource", "payment_id")
-      @payment = GovpayFindPaymentService.run(payment_id: payment_id)
+      @payment = find_payment
+
+      return log_unrecorded_payment if payment.blank?
 
       @previous_status = payment.govpay_payment_status
 
@@ -28,6 +29,26 @@ module WasteCarriersEngine
       Rails.logger.error "Error processing webhook for payment #{payment_id}: #{e}"
       Airbrake.notify(e, message: "Error processing webhook for payment", payment_id: payment_id)
       raise
+    end
+
+    # A payment document is only persisted once a payment succeeds, so a
+    # missing payment is only a concern if the webhook reports success.
+    # Uses the raw status here because webhook_payment_status memoizes the
+    # gem result, which must not happen before previous_status is known.
+    def find_payment
+      @payment_id = webhook_body.dig("resource", "payment_id")
+      GovpayFindPaymentService.run(
+        payment_id: payment_id,
+        raise_on_missing: raw_webhook_status == Payment::STATUS_SUCCESS
+      )
+    end
+
+    def raw_webhook_status
+      webhook_body.dig("resource", "state", "status")
+    end
+
+    def log_unrecorded_payment
+      Rails.logger.warn "Ignoring \"#{raw_webhook_status}\" webhook for unrecorded payment #{payment_id}"
     end
 
     def webhook_payment_status
