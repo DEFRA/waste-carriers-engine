@@ -46,9 +46,7 @@ module WasteCarriersEngine
           it "sends an email" do
             expect(run_service).to be_a(Notifications::Client::ResponseNotification)
             expect(run_service.template["id"]).to eq(template_id)
-            expect(run_service.content["subject"]).to match(
-              /We’re processing your waste carrier registration CBDU/
-            )
+            expect(run_service.content["subject"]).to include("We’re processing your waste carrier registration CBDU")
           end
 
           it_behaves_like "can create a communication record", "email"
