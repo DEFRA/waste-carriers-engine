@@ -54,10 +54,11 @@
 - Move conviction type detail to a static page [\#1374](https://github.com/DEFRA/waste-carriers-engine/pull/1374) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - cert creation date [\#1362](https://github.com/DEFRA/waste-carriers-engine/pull/1362) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - delete person label [\#1360](https://github.com/DEFRA/waste-carriers-engine/pull/1360) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- Add restore attributes to metaData [\#1349](https://github.com/DEFRA/waste-carriers-engine/pull/1349) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 **Fixed bugs:**
 
+- Fix/ruby 4317 wcr govpay investigate callback errors [\#1718](https://github.com/DEFRA/waste-carriers-engine/pull/1718) ([brujeo](https://github.com/brujeo))
+- \[RUBY-4301\] Fix Airbrake notification to include error and params hash in webhook handler [\#1717](https://github.com/DEFRA/waste-carriers-engine/pull/1717) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4238\] Fix expiry date calculation to use renewal expiry date instead of current [\#1700](https://github.com/DEFRA/waste-carriers-engine/pull/1700) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4145\] Add handling for payment error status in GovPay forms controller [\#1679](https://github.com/DEFRA/waste-carriers-engine/pull/1679) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-3974\] Allow retry for payments that were failed as well as cancelled [\#1673](https://github.com/DEFRA/waste-carriers-engine/pull/1673) ([jjromeo](https://github.com/jjromeo))
@@ -118,6 +119,9 @@
 
 **Merged pull requests:**
 
+- Feature/ruby 4335 wcr security enable bundler cooldown give new gems a few days to be vetted [\#1723](https://github.com/DEFRA/waste-carriers-engine/pull/1723) ([brujeo](https://github.com/brujeo))
+- RUBY-4265 Update Ruby to 3.4.6 [\#1712](https://github.com/DEFRA/waste-carriers-engine/pull/1712) ([jjromeo](https://github.com/jjromeo))
+- Chore/changelog 08/05/2026 [\#1709](https://github.com/DEFRA/waste-carriers-engine/pull/1709) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4303\] Allow companies going through liquidation to register or renew [\#1708](https://github.com/DEFRA/waste-carriers-engine/pull/1708) ([jjromeo](https://github.com/jjromeo))
 - RUBY-4266 Update defra\_ruby\_validators [\#1707](https://github.com/DEFRA/waste-carriers-engine/pull/1707) ([jjromeo](https://github.com/jjromeo))
 - Bump gem dependencies 2026-04-15 [\#1703](https://github.com/DEFRA/waste-carriers-engine/pull/1703) ([brujeo](https://github.com/brujeo))
@@ -258,10 +262,6 @@
 - Add code to assign an area to an address through postcode [\#1355](https://github.com/DEFRA/waste-carriers-engine/pull/1355) ([jjromeo](https://github.com/jjromeo))
 - Bump defra\_ruby\_alert from 2.1.1 to 2.2.1 [\#1354](https://github.com/DEFRA/waste-carriers-engine/pull/1354) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update CHANGELOG [\#1351](https://github.com/DEFRA/waste-carriers-engine/pull/1351) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- Bump countries from 5.3.2 to 5.4.0 [\#1350](https://github.com/DEFRA/waste-carriers-engine/pull/1350) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump nokogiri from 1.14.2 to 1.14.3 [\#1348](https://github.com/DEFRA/waste-carriers-engine/pull/1348) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump devise from 4.9.0 to 4.9.2 [\#1347](https://github.com/DEFRA/waste-carriers-engine/pull/1347) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump countries from 5.3.1 to 5.3.2 [\#1344](https://github.com/DEFRA/waste-carriers-engine/pull/1344) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 
 
