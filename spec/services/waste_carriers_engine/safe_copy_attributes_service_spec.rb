@@ -65,12 +65,6 @@ module WasteCarriersEngine
           it_behaves_like "returns the correct attributes"
         end
 
-        context "when the source is a DeregisteringRegistration" do
-          let(:source_instance) { build(:deregistering_registration) }
-
-          it_behaves_like "returns the correct attributes"
-        end
-
         context "when the source is a BSON::Document" do
           let(:source_instance) do
             attributes = build(:new_registration, :has_required_data).attributes

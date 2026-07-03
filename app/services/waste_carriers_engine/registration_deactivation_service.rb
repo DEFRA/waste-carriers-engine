@@ -19,33 +19,18 @@ module WasteCarriersEngine
       @status = status
 
       set_metadata
-
-      send_confirmation_email unless WasteCarriersEngine.configuration.host_is_back_office?
     end
 
     private
 
     def set_metadata
-      if WasteCarriersEngine.configuration.host_is_back_office?
-        deactivation_channel = "BACK OFFICE"
-      else
-        @reason = I18n.t(".front_office_deactivation_reason", email: registration.contact_email)
-        @status = "INACTIVE"
-        @email = registration.contact_email
-        deactivation_channel = "DIGITAL"
-      end
-
       registration.metaData.status = @status
       registration.metaData.revoked_reason = @reason
       registration.metaData.deactivated_by = @email
-      registration.metaData.deactivation_route = deactivation_channel
+      registration.metaData.deactivation_route = "BACK OFFICE"
       registration.metaData.dateDeactivated = Time.zone.now
 
       registration.save!
-    end
-
-    def send_confirmation_email
-      Notify::DeregistrationConfirmationEmailService.run(registration: registration)
     end
   end
 end

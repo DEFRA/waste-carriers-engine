@@ -55,18 +55,6 @@ WasteCarriersEngine::Engine.routes.draw do
               path_names: { new: "" }
     # End of new registration flow
 
-    # Deregistration flow
-    resources :deregistration_confirmation_forms,
-              only: %i[new create],
-              path: "deregistration-confirmation",
-              path_names: { new: "" }
-
-    resources :deregistration_complete_forms,
-              only: %i[new create],
-              path: "deregistration-complete",
-              path_names: { new: "" }
-    # End of deregistration flow
-
     resources :renewal_start_forms,
               only: %i[new create],
               path: "renew",
@@ -357,11 +345,6 @@ WasteCarriersEngine::Engine.routes.draw do
   get "/renew/:token",
       to: "renews#new",
       as: "renew"
-
-  # Deregister via magic link token
-  get "/deregister/:token",
-      to: "deregisters#new",
-      as: "deregister"
 
   # Static pages with HighVoltage
   resources :pages, only: [:show], controller: "pages"
