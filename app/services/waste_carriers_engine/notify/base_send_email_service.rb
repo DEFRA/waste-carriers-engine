@@ -18,9 +18,7 @@ module WasteCarriersEngine
         @requester = requester
 
         client = Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key)
-        client.send_email(notify_options).tap do |response|
-          create_communication_record if response.instance_of?(Notifications::Client::ResponseNotification)
-        end
+        send_with_communication_record(client, :send_email, notify_options)
       end
 
       private
