@@ -20,16 +20,3 @@ en:
         point1: Go back to your email and follow the link again.
         point2: Copy the whole link from the email and paste it into your web browser. Make sure that you include all of the characters at the end of the link.
         point3_html: "If that does not work, <a href=\"%{link_to_new_registration}\">start a new registration</a>."
-    deregisters:
-      deregistration_link_expired:
-        title: This link has expired. We will send a new link to your contact email address.
-        heading: This link has expired. We will send a new link to your contact email address.
-        paragraph1: You can close this window.
-      already_ceased:
-        title: This link has already been used. Your registration is no longer active.
-        heading: This link has already been used. Your registration is no longer active.
-        paragraph1: You can close this window.
-      invalid_deregistration_link:
-        title: There is a problem with this registration.
-        heading: There is a problem with this registration.
-        paragraph1: Make sure the link is correctly copied. You can close this window.

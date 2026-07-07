@@ -22,7 +22,7 @@ module WasteCarriersEngine
       params = { transient_registration: transient_registration, user: user }
 
       case transient_registration
-      when NewRegistration, DeregisteringRegistration
+      when NewRegistration
         BlankPermissionCheckService.run(params)
       else
         # For transient_registration class Xyz, run XyzPermissionChecksService:

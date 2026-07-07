@@ -28,7 +28,6 @@ module WasteCarriersEngine
         renewal_received_pending_conviction_form
         renewal_received_pending_govpay_payment_form
         renewal_received_pending_payment_form
-        deregistration_complete_form
       ].freeze
 
       field :journey_type, type: String
