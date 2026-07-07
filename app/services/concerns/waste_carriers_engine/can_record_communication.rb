@@ -9,9 +9,6 @@ module WasteCarriersEngine
 
     private
 
-    # Sends a notification via the Notify client, creating a communication
-    # record from the response. If the request fails, the Notify error message
-    # is recorded as the delivery status and the error is re-raised.
     def send_with_communication_record(client, notify_method, options)
       response = client.public_send(notify_method, options)
       if response.instance_of?(Notifications::Client::ResponseNotification)
