@@ -119,6 +119,8 @@
 
 **Merged pull requests:**
 
+- Feature/ruby 4356 wcr remove deregistration functionality [\#1725](https://github.com/DEFRA/waste-carriers-engine/pull/1725) ([brujeo](https://github.com/brujeo))
+- changelog update 29/06/2026 [\#1724](https://github.com/DEFRA/waste-carriers-engine/pull/1724) ([brujeo](https://github.com/brujeo))
 - Feature/ruby 4335 wcr security enable bundler cooldown give new gems a few days to be vetted [\#1723](https://github.com/DEFRA/waste-carriers-engine/pull/1723) ([brujeo](https://github.com/brujeo))
 - RUBY-4265 Update Ruby to 3.4.6 [\#1712](https://github.com/DEFRA/waste-carriers-engine/pull/1712) ([jjromeo](https://github.com/jjromeo))
 - Chore/changelog 08/05/2026 [\#1709](https://github.com/DEFRA/waste-carriers-engine/pull/1709) ([brujeo](https://github.com/brujeo))
@@ -260,8 +262,6 @@
 - Feature/ruby 2128 wcr accessibility missing autocomplete [\#1359](https://github.com/DEFRA/waste-carriers-engine/pull/1359) ([brujeo](https://github.com/brujeo))
 - remove downgrade to  os\_map\_ref gem [\#1357](https://github.com/DEFRA/waste-carriers-engine/pull/1357) ([jjromeo](https://github.com/jjromeo))
 - Add code to assign an area to an address through postcode [\#1355](https://github.com/DEFRA/waste-carriers-engine/pull/1355) ([jjromeo](https://github.com/jjromeo))
-- Bump defra\_ruby\_alert from 2.1.1 to 2.2.1 [\#1354](https://github.com/DEFRA/waste-carriers-engine/pull/1354) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Update CHANGELOG [\#1351](https://github.com/DEFRA/waste-carriers-engine/pull/1351) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 
 
