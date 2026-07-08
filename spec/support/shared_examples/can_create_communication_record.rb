@@ -31,6 +31,7 @@ RSpec.shared_examples "can create a communication record" do |notification_type|
       expect(registration.communication_records.last[:sent_to]).to eq(expected_communication_record_attrs[:sent_to])
       expect(registration.communication_records.last[:content]).to eq(response.content["body"])
       expect(registration.communication_records.last[:delivery_status]).to eq("sent")
+      expect(registration.communication_records.last[:notification_id]).to eq(response.id)
     end
   end
 
@@ -61,6 +62,7 @@ RSpec.shared_examples "can create a communication record" do |notification_type|
       record = registration.communication_records.last
       expect(record[:delivery_status]).to eq("BadRequestError: Can't send to this recipient")
       expect(record[:content]).to be_nil
+      expect(record[:notification_id]).to be_nil
       expect(record[:notify_template_id]).to eq(template_id)
     end
   end
