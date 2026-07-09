@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 SENSITIVE_ROUTES = [
-  %r{/govpay_payment_update$}
+  %r{/govpay_payment_update$},
+  %r{/notify_callback$}
 ].freeze
 
 LOG_FORMAT = "Processing by %s#%s as %s"
