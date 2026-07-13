@@ -218,13 +218,13 @@ GEM
     json (2.20.0)
     jwt (2.10.3)
       base64
-    language_server-protocol (3.17.0.5)
+    language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
     loofah (2.25.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
-    mail (2.9.0)
+    mail (2.9.1)
       logger
       mini_mime (>= 0.1.1)
       net-imap
@@ -236,7 +236,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.0414)
+    mime-types-data (3.2026.0701)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.27.0)
@@ -383,7 +383,7 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.13.7)
-    rubocop (1.88.0)
+    rubocop (1.88.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -394,7 +394,7 @@ GEM
       rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.49.1)
+    rubocop-ast (1.50.0)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     rubocop-factory_bot (2.28.0)
@@ -423,7 +423,8 @@ GEM
     sawyer (0.9.3)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
-    secure_headers (6.5.0)
+    secure_headers (7.3.0)
+      cgi (>= 0.1)
     securerandom (0.4.1)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -508,7 +509,7 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   sassc-rails
-  secure_headers (~> 6.5.0)
+  secure_headers (~> 7.3.0)
   simplecov (~> 0.22.0)
   spring (~> 4.1.1)
   spring-commands-rspec (~> 1.0.4)
