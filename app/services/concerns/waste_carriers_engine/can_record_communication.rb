@@ -23,6 +23,7 @@ module WasteCarriersEngine
     def communication_record_attributes(response: nil, delivery_status: nil)
       {
         notify_template_id: template_id,
+        notification_id: response&.id,
         notification_type: notification_type,
         comms_label: comms_label,
         sent_at: Time.now.utc,

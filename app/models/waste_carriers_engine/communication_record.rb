@@ -6,6 +6,7 @@ module WasteCarriersEngine
 
     field :registration_id, type: BSON::ObjectId
     field :notify_template_id, type: String
+    field :notification_id, type: String
     field :notification_type, type: String
     field :comms_label, type: String
     field :sent_at, type: DateTime
@@ -14,5 +15,7 @@ module WasteCarriersEngine
     field :delivery_status, type: String
 
     belongs_to :registration
+
+    index({ notification_id: 1 }, { background: true })
   end
 end

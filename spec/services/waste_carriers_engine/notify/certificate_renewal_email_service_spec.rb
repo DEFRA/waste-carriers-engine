@@ -27,7 +27,11 @@ module WasteCarriersEngine
         end
         let(:notifications_client) { instance_double(Notifications::Client) }
         let(:notifications_client_response_notification) do
-          instance_double(Notifications::Client::ResponseNotification, content: { "body" => "Email content" })
+          instance_double(
+            Notifications::Client::ResponseNotification,
+            id: "740e5834-3a29-46b4-9a6f-16142fde533a",
+            content: { "body" => "Email content" }
+          )
         end
 
         subject(:run_service) { described_class.run(registration: registration) }
