@@ -20,7 +20,7 @@ gem "mongo_session_store"
 
 gem "matrix", "~> 0.4.2"
 
-gem "secure_headers", "~> 6.5.0"
+gem "secure_headers", "~> 7.3.0"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks", "~> 5.2.1"
