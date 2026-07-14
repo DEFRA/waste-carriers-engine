@@ -11,6 +11,7 @@ module WasteCarriersEngine
     field :comms_label, type: String
     field :sent_at, type: DateTime
     field :sent_to, type: String
+    field :subject, type: String
     field :content, type: String
     field :delivery_status, type: String
 

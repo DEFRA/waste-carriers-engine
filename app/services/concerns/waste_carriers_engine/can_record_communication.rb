@@ -28,6 +28,7 @@ module WasteCarriersEngine
         comms_label: comms_label,
         sent_at: Time.now.utc,
         sent_to: recipient,
+        subject: response&.content&.fetch("subject", nil),
         content: response&.content&.fetch("body", nil),
         delivery_status: delivery_status || (DEFAULT_DELIVERY_STATUS if response)
       }
