@@ -3,6 +3,7 @@ PATH
   specs:
     waste_carriers_engine (0.0.1)
       aasm (~> 5.5.0)
+      breasal (~> 0.0.1)
       countries (~> 5.5.0)
       defra_ruby_address (~> 0.3.0)
       defra_ruby_alert (~> 2.2.1)
@@ -112,6 +113,7 @@ GEM
     benchmark (0.5.0)
     bigdecimal (4.1.2)
     bindex (0.8.1)
+    breasal (0.0.1)
     bson (5.2.0)
     builder (3.3.0)
     byebug (11.1.3)
