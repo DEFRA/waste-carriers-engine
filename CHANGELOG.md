@@ -6,6 +6,9 @@
 
 **Implemented enhancements:**
 
+- \[RUBY-4340\] Capture the message subject on communication records [\#1732](https://github.com/DEFRA/waste-carriers-engine/pull/1732) ([jjromeo](https://github.com/jjromeo))
+- Feature/ruby 4339 wcr implement message delivery status call back [\#1730](https://github.com/DEFRA/waste-carriers-engine/pull/1730) ([brujeo](https://github.com/brujeo))
+- \[RUBY-4340\] Add content and delivery status fields to communication records [\#1726](https://github.com/DEFRA/waste-carriers-engine/pull/1726) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 4163 wcr tech debt implement os places address lookup service in defra ruby address gem [\#1680](https://github.com/DEFRA/waste-carriers-engine/pull/1680) ([brujeo](https://github.com/brujeo))
 - Update prices [\#1647](https://github.com/DEFRA/waste-carriers-engine/pull/1647) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/ruby 3929 payment webhook logging [\#1642](https://github.com/DEFRA/waste-carriers-engine/pull/1642) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
@@ -52,8 +55,6 @@
 - confirm payment method [\#1386](https://github.com/DEFRA/waste-carriers-engine/pull/1386) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Update declaration content [\#1383](https://github.com/DEFRA/waste-carriers-engine/pull/1383) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Move conviction type detail to a static page [\#1374](https://github.com/DEFRA/waste-carriers-engine/pull/1374) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- cert creation date [\#1362](https://github.com/DEFRA/waste-carriers-engine/pull/1362) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- delete person label [\#1360](https://github.com/DEFRA/waste-carriers-engine/pull/1360) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 **Fixed bugs:**
 
@@ -119,6 +120,9 @@
 
 **Merged pull requests:**
 
+- Chore: Update secure\_headers gem to version 7.3.0 [\#1731](https://github.com/DEFRA/waste-carriers-engine/pull/1731) ([brujeo](https://github.com/brujeo))
+- Feature: Add prepare-release script for automated changelog preparation [\#1728](https://github.com/DEFRA/waste-carriers-engine/pull/1728) ([brujeo](https://github.com/brujeo))
+- Chore/changelog 07 07 2026 [\#1727](https://github.com/DEFRA/waste-carriers-engine/pull/1727) ([brujeo](https://github.com/brujeo))
 - Feature/ruby 4356 wcr remove deregistration functionality [\#1725](https://github.com/DEFRA/waste-carriers-engine/pull/1725) ([brujeo](https://github.com/brujeo))
 - changelog update 29/06/2026 [\#1724](https://github.com/DEFRA/waste-carriers-engine/pull/1724) ([brujeo](https://github.com/brujeo))
 - Feature/ruby 4335 wcr security enable bundler cooldown give new gems a few days to be vetted [\#1723](https://github.com/DEFRA/waste-carriers-engine/pull/1723) ([brujeo](https://github.com/brujeo))
@@ -258,10 +262,6 @@
 - Fix/ruby 2464 lower tier registrations flagged for conviction checks [\#1368](https://github.com/DEFRA/waste-carriers-engine/pull/1368) ([brujeo](https://github.com/brujeo))
 - setting automcomplete to off for password fields [\#1365](https://github.com/DEFRA/waste-carriers-engine/pull/1365) ([brujeo](https://github.com/brujeo))
 - Adding more fields to be autocompleted [\#1363](https://github.com/DEFRA/waste-carriers-engine/pull/1363) ([brujeo](https://github.com/brujeo))
-- Bump rspec-rails from 6.0.1 to 6.0.2 [\#1361](https://github.com/DEFRA/waste-carriers-engine/pull/1361) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Feature/ruby 2128 wcr accessibility missing autocomplete [\#1359](https://github.com/DEFRA/waste-carriers-engine/pull/1359) ([brujeo](https://github.com/brujeo))
-- remove downgrade to  os\_map\_ref gem [\#1357](https://github.com/DEFRA/waste-carriers-engine/pull/1357) ([jjromeo](https://github.com/jjromeo))
-- Add code to assign an area to an address through postcode [\#1355](https://github.com/DEFRA/waste-carriers-engine/pull/1355) ([jjromeo](https://github.com/jjromeo))
 
 
 
