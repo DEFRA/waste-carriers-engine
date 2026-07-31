@@ -13,6 +13,9 @@ gem "sassc-rails"
 # development dependencies will be added by default to the :development group.
 gemspec
 
+# Temporarily sourced from a branch until the coordinate conversion services are released
+gem "defra_ruby_address", github: "DEFRA/defra-ruby-address", branch: "feature/RUBY-4350-coordinate-conversion"
+
 # GOV.UK styling
 gem "defra_ruby_template", "~> 5.0"
 

@@ -57,8 +57,9 @@ Gem::Specification.new do |s|
   s.add_dependency "defra_ruby_alert", "~> 2.2.1"
 
   # Used to handle requests to the address lookup web service used (currently
-  # EA Address Facade v1)
-  s.add_dependency "defra_ruby_address", "~> 0.3.0"
+  # EA Address Facade v1), and to convert British National Grid eastings and
+  # northings to WGS84 latitude and longitude for MongoDB geospatial queries
+  s.add_dependency "defra_ruby_address", "~> 0.3"
 
   # # Used to access the Companies House API for company details validation
   s.add_dependency "defra_ruby_companies_house"
@@ -72,10 +73,6 @@ Gem::Specification.new do |s|
 
   # Used to build and parse XML requests
   s.add_dependency "nokogiri", "~> 1.19.1"
-
-  # Used to convert British National Grid eastings and northings to WGS84
-  # latitude and longitude for MongoDB geospatial queries
-  s.add_dependency "breasal", "~> 0.0.1"
 
   # Used to get a 2-character country code for Worldpay
   s.add_dependency "countries", "~> 5.5.0"
