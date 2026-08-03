@@ -59,7 +59,7 @@ Gem::Specification.new do |s|
   # Used to handle requests to the address lookup web service used (currently
   # EA Address Facade v1), and to convert British National Grid eastings and
   # northings to WGS84 latitude and longitude for MongoDB geospatial queries
-  s.add_dependency "defra_ruby_address", "~> 0.3"
+  s.add_dependency "defra_ruby_address", "~> 0.4"
 
   # # Used to access the Companies House API for company details validation
   s.add_dependency "defra_ruby_companies_house"

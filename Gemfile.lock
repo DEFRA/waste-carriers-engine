@@ -1,18 +1,10 @@
-GIT
-  remote: https://github.com/DEFRA/defra-ruby-address.git
-  revision: cd03e8089b70c0fc377edc34ee56e5fe8e362f89
-  branch: feature/RUBY-4350-coordinate-conversion
-  specs:
-    defra_ruby_address (0.3.0)
-      rest-client (~> 2.0)
-
 PATH
   remote: .
   specs:
     waste_carriers_engine (0.0.1)
       aasm (~> 5.5.0)
       countries (~> 5.5.0)
-      defra_ruby_address (~> 0.3)
+      defra_ruby_address (~> 0.4)
       defra_ruby_alert (~> 2.2.1)
       defra_ruby_companies_house
       defra_ruby_email (~> 1.3.0)
@@ -138,6 +130,8 @@ GEM
       database_cleaner-core (~> 2.0.0)
       mongoid
     date (3.5.1)
+    defra_ruby_address (0.4.0)
+      rest-client (~> 2.0)
     defra_ruby_alert (2.2.1)
       airbrake
     defra_ruby_companies_house (1.0.3)
@@ -496,7 +490,6 @@ PLATFORMS
 
 DEPENDENCIES
   database_cleaner-mongoid (~> 2.0.1)
-  defra_ruby_address!
   defra_ruby_style (~> 0.3.0)
   defra_ruby_template (~> 5.0)
   dotenv-rails (~> 2.8.1)
