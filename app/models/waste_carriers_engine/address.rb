@@ -77,16 +77,9 @@ module WasteCarriersEngine
     end
 
     def assign_house_number_and_address_lines(os_data)
-      # Extract house number from address field only when org/premises are blank
-      extracted_house_number = extract_house_number_from_address(os_data)
-
-      data = os_data.clone.slice("organisation", "premises", "street_address", "locality")
-                    .delete_if { |_k, v| v.nil? || v.empty? }
-
-      lines = data.values.reject(&:blank?)
-
-      # Prepend extracted house number if we found one
-      lines.unshift(extracted_house_number) if extracted_house_number.present?
+      lines = leading_lines_before_street(os_data)
+      lines += [os_data["street_address"], os_data["locality"]]
+      lines = lines.reject(&:blank?)
 
       address_attributes = %i[house_number
                               address_line_1
@@ -94,17 +87,36 @@ module WasteCarriersEngine
                               address_line_3
                               address_line_4]
 
+      # Fold surplus leading parts into house_number so no line is lost
+      overflow = lines.size - address_attributes.size
+      lines = [lines.shift(overflow + 1).join(", ")] + lines if overflow.positive?
+
       # Assign lines one at a time until we run out of lines to assign
       write_attribute(address_attributes.shift, lines.shift) until lines.empty?
     end
 
     private
 
-    def extract_house_number_from_address(os_data)
-      # Only extract when organisation AND premises are both blank
-      # Otherwise, those fields already contain the relevant info
-      return nil if os_data["organisation"].present? || os_data["premises"].present?
+    # The lines that come before the street (organisation, sub-building, premises).
+    # Prefer parsing them from the full "address" string, as components like a flat
+    # or sub-building name have no structured field of their own and would be lost.
+    def leading_lines_before_street(os_data)
+      structured = [os_data["organisation"], os_data["premises"]].reject(&:blank?)
+      prefix = address_prefix_before_street(os_data)
+      return structured if prefix.blank?
+      return [prefix] if structured.empty?
 
+      parts = prefix.split(/,\s*/)
+
+      # Never drop a structured value the prefix did not include
+      structured.each do |value|
+        parts << value if parts.none? { |part| part.casecmp?(value) }
+      end
+
+      parts
+    end
+
+    def address_prefix_before_street(os_data)
       address = os_data["address"]
       street_address = os_data["street_address"]
 
@@ -115,8 +127,7 @@ module WasteCarriersEngine
       return nil if street_index.nil? || street_index.zero?
 
       # Extract everything before street_address and clean trailing comma/spaces
-      prefix = address[0...street_index]
-      prefix.sub(/,\s*\z/, "").strip.presence
+      address[0...street_index].sub(/,\s*\z/, "").strip.presence
     end
 
     def manually_entered?
