@@ -21,14 +21,14 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "rails", "~> 7.2"
+  s.add_dependency "rails", "~> 8.1.0"
 
   # Use MongoDB as the database
-  s.add_dependency "mongoid", "~> 8.1"
+  s.add_dependency "mongoid", "~> 9.1"
 
   # Implement document-level locking
   # Note v2.0.1 interferes with the delegate method
-  s.add_dependency "mongoid-locker", "~> 2.0.2"
+  s.add_dependency "mongoid-locker", "~> 2.2"
 
   s.add_dependency "mongo_session_store", "~> 3.2.1"
 
