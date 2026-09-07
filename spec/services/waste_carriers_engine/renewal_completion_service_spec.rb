@@ -179,6 +179,33 @@ module WasteCarriersEngine
           expect { complete_renewal }.to change { registration.reload.key_people.count }.by(1)
         end
 
+        context "when the registration has key people which are not in the transient_registration" do
+          let(:transient_registration) do
+            create(
+              :renewing_registration,
+              :has_required_data,
+              :has_addresses,
+              :has_paid_order_with_two_orders,
+              workflow_state: "renewal_complete_form"
+            )
+          end
+
+          before do
+            registration.update(key_people: [build(:key_person, :has_required_data)])
+
+            # Legacy key people may only have a date of birth stored. KeyPerson#after_initialize fills in the
+            # individual dob fields when the document is loaded, which leaves it with pending changes.
+            Registration.collection.update_one(
+              { _id: registration._id },
+              { "$unset" => { "key_people.0.dob_day" => true, "key_people.0.dob_month" => true, "key_people.0.dob_year" => true } }
+            )
+          end
+
+          it "removes the key people from the registration" do
+            expect { complete_renewal }.to change { registration.reload.key_people.count }.from(1).to(0)
+          end
+        end
+
         it "copies location" do
           transient_registration.update(location: "scotland")
           expect { complete_renewal }.to change { registration.reload.location }.to("scotland")

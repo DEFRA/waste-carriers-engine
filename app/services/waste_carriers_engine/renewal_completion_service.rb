@@ -166,8 +166,28 @@ module WasteCarriersEngine
         # remove those attributes from the registration instead of leaving the existing values
         next if renewal_attributes.key?(old_attribute)
 
-        registration.remove_attribute(old_attribute.to_sym)
+        embedded_relation = embedded_relation_stored_as(old_attribute)
+
+        if embedded_relation
+          clear_embedded_relation(embedded_relation)
+        else
+          registration.remove_attribute(old_attribute.to_sym)
+        end
       end
+    end
+
+    def embedded_relation_stored_as(attribute_name)
+      registration.embedded_relations.values.find { |relation| relation.store_as == attribute_name }
+    end
+
+    # Embedded relations must be cleared through the association rather than with remove_attribute,
+    # so the already-loaded child documents are discarded as well. Otherwise Mongoid 9 keeps any
+    # pending $set for those children (e.g. dob fields filled in by KeyPerson#after_initialize)
+    # alongside the $unset of the parent path, and MongoDB rejects the update as a conflict.
+    def clear_embedded_relation(relation)
+      empty_value = relation.is_a?(Mongoid::Association::Embedded::EmbedsMany) ? [] : nil
+
+      registration.public_send("#{relation.name}=", empty_value)
     end
 
     def increment_certificate_version
