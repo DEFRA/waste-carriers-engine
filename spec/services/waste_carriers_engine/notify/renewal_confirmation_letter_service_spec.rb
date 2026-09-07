@@ -6,7 +6,7 @@ module WasteCarriersEngine
   module Notify
 
     # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable RSpec/AnyInstance
+    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RenewalConfirmationLetterService do
 
       context "with an upper tier registration" do
@@ -107,6 +107,5 @@ module WasteCarriersEngine
         end
       end
     end
-    # rubocop:enable RSpec/AnyInstance
   end
 end

@@ -37,7 +37,7 @@ module WasteCarriersEngine
     protected
 
     # Implementing this cop's recommendation obfuscates the logic of this method:
-    # rubocop:disable Style/ExplicitBlockArgument
+    # rubocop:disable-next Style/ExplicitBlockArgument
     def tag_logs
       # If detailed_logging is enabled, wrap the yield in a TaggedLogging block to log identify controller and action
       if FeatureToggle.active?(:detailed_logging)
@@ -48,7 +48,6 @@ module WasteCarriersEngine
         yield
       end
     end
-    # rubocop:enable Style/ExplicitBlockArgument
 
     def record_user_journey
       return unless @transient_registration.present? && @transient_registration.token.present?

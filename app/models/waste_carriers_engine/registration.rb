@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ClassLength
+  # rubocop:disable-next Metrics/ClassLength
   class Registration
     include Mongoid::Document
     include CanCheckRegistrationStatus
@@ -158,5 +158,4 @@ module WasteCarriersEngine
       @_check_service ||= ExpiryCheckService.new(self)
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

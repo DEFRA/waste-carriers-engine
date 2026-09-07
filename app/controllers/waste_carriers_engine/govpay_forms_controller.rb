@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ClassLength
+  # rubocop:disable-next Metrics/ClassLength
   class GovpayFormsController < ::WasteCarriersEngine::FormsController
     include UnsubmittableForm
     include CanAddDebugLogging
@@ -139,5 +139,4 @@ module WasteCarriersEngine
       flash[:error] = I18n.t(".waste_carriers_engine.govpay_forms.#{action}.#{type}")
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

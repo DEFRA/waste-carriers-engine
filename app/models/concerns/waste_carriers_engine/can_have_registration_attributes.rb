@@ -3,7 +3,7 @@
 module WasteCarriersEngine
   # Define the attributes a registration or a renewal has
 
-  # rubocop:disable Metrics/ModuleLength
+  # rubocop:disable-next Metrics/ModuleLength
   module CanHaveRegistrationAttributes
     extend ActiveSupport::Concern
     include Mongoid::Document
@@ -12,7 +12,7 @@ module WasteCarriersEngine
     # Rubocop sees a module as a block, and as such is not very forgiving in how
     # many lines it allows. In the case of this concern we have to list out all
     # the attributes on a registration so cannot help it being overly long.
-    # rubocop:disable Metrics/BlockLength
+    # rubocop:disable-next Metrics/BlockLength
     included do
       # For this section only we feel it makes it more readble if certain
       # attributes are aligned. The problem is this doesn't allow us much room
@@ -278,7 +278,7 @@ module WasteCarriersEngine
       end
 
       # rubocop and SonarCloud disagree about this
-      # rubocop:disable Style/EmptyElse
+      # rubocop:disable-next Style/EmptyElse
       def legal_entity_name
         case business_type
         when "limitedCompany", "limitedLiabilityPartnership"
@@ -289,7 +289,6 @@ module WasteCarriersEngine
           nil
         end
       end
-      # rubocop:enable Style/EmptyElse
 
       def first_person_name
         return nil unless key_people.present? && key_people[0].present?
@@ -297,8 +296,6 @@ module WasteCarriersEngine
         format("%<first>s %<last>s", first: key_people[0].first_name, last: key_people[0].last_name)
       end
     end
-    # rubocop:enable Metrics/BlockLength
   end
-  # rubocop:enable Metrics/ModuleLength
 
 end

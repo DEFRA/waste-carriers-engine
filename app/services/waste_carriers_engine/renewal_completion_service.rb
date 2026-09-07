@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 module WasteCarriersEngine
   class RenewalCompletionService
     class CannotComplete < StandardError; end
@@ -124,7 +124,7 @@ module WasteCarriersEngine
       Airbrake.notify(e, registration_no: registration.reg_identifier) if defined?(Airbrake)
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable-next Metrics/MethodLength
     def copy_data_from_transient_registration
       registration_attributes = registration.attributes.except(
         "_id",
@@ -159,7 +159,6 @@ module WasteCarriersEngine
 
       registration.write_attributes(renewal_attributes)
     end
-    # rubocop:enable Metrics/MethodLength
 
     def remove_unused_attributes(registration_attributes, renewal_attributes)
       registration_attributes.each_key do |old_attribute|
@@ -182,4 +181,3 @@ module WasteCarriersEngine
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
