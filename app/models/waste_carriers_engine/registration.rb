@@ -30,10 +30,12 @@ module WasteCarriersEngine
     validates :tier,
               inclusion: { in: TIERS }
 
-    scope :active, -> { where("metaData.status" => "ACTIVE") }
+    METADATA_STATUS_FIELD = "metaData.status"
+
+    scope :active, -> { where(METADATA_STATUS_FIELD => "ACTIVE") }
     scope :expired_at_end_of_today, -> { where(:expires_on.lte => Time.now.in_time_zone("London").end_of_day) }
-    scope :active_and_expired, -> { where("metaData.status" => { :$in => %w[ACTIVE EXPIRED] }) }
-    scope :not_cancelled, -> { where("metaData.status" => { :$nin => %w[INACTIVE] }) }
+    scope :active_and_expired, -> { where(METADATA_STATUS_FIELD => { :$in => %w[ACTIVE EXPIRED] }) }
+    scope :not_cancelled, -> { where(METADATA_STATUS_FIELD => { :$nin => %w[INACTIVE] }) }
     scope :communications_accepted, -> { where(communications_opted_in: true) }
 
     field :renew_token, type: String
