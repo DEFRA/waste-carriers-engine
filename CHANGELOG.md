@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- \[RUBY-4350\] Add geospatial EA area lookup using MongoDB [\#1735](https://github.com/DEFRA/waste-carriers-engine/pull/1735) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4340\] Capture the message subject on communication records [\#1732](https://github.com/DEFRA/waste-carriers-engine/pull/1732) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 4339 wcr implement message delivery status call back [\#1730](https://github.com/DEFRA/waste-carriers-engine/pull/1730) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4340\] Add content and delivery status fields to communication records [\#1726](https://github.com/DEFRA/waste-carriers-engine/pull/1726) ([jjromeo](https://github.com/jjromeo))
@@ -58,6 +59,7 @@
 
 **Fixed bugs:**
 
+- \[RUBY-4385\] Refactor address line assignment to preserve flat details [\#1742](https://github.com/DEFRA/waste-carriers-engine/pull/1742) ([brujeo](https://github.com/brujeo))
 - Fix/ruby 4317 wcr govpay investigate callback errors [\#1718](https://github.com/DEFRA/waste-carriers-engine/pull/1718) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4301\] Fix Airbrake notification to include error and params hash in webhook handler [\#1717](https://github.com/DEFRA/waste-carriers-engine/pull/1717) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4238\] Fix expiry date calculation to use renewal expiry date instead of current [\#1700](https://github.com/DEFRA/waste-carriers-engine/pull/1700) ([jjromeo](https://github.com/jjromeo))
@@ -120,6 +122,9 @@
 
 **Merged pull requests:**
 
+- Bump json from 2.21.1 to 2.21.2 [\#1739](https://github.com/DEFRA/waste-carriers-engine/pull/1739) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump activestorage from 7.2.3.1 to 7.2.3.2 [\#1738](https://github.com/DEFRA/waste-carriers-engine/pull/1738) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Chore/changelog 30 07 2026 [\#1737](https://github.com/DEFRA/waste-carriers-engine/pull/1737) ([brujeo](https://github.com/brujeo))
 - Chore: Update secure\_headers gem to version 7.3.0 [\#1731](https://github.com/DEFRA/waste-carriers-engine/pull/1731) ([brujeo](https://github.com/brujeo))
 - Feature: Add prepare-release script for automated changelog preparation [\#1728](https://github.com/DEFRA/waste-carriers-engine/pull/1728) ([brujeo](https://github.com/brujeo))
 - Chore/changelog 07 07 2026 [\#1727](https://github.com/DEFRA/waste-carriers-engine/pull/1727) ([brujeo](https://github.com/brujeo))
