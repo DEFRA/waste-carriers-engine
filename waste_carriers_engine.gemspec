@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rest-client", "~> 2.1.0"
 
   # Use High Voltage for static pages
-  s.add_dependency "high_voltage", "~> 3.1.2"
+  s.add_dependency "high_voltage", "~> 5.0.0"
 
   # Validations
   s.add_dependency "defra_ruby_validators", "~> 3.1"
