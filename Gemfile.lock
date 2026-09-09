@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/DEFRA/defra-ruby-template
-  revision: c22d20f8e48745c676b7545ec8693f48c47157bc
-  branch: RUBY-4334-all-tech-debt-defra-ruby-template-upgrade-to-govuk-frontend-6-4-0-and-fix-template-drift
-  specs:
-    defra_ruby_template (6.4.0)
-
 PATH
   remote: .
   specs:
@@ -158,6 +151,7 @@ GEM
       rest-client (~> 2.1)
     defra_ruby_style (0.3.0)
       rubocop (>= 1.0, < 2.0)
+    defra_ruby_template (6.4.0)
     defra_ruby_validators (3.1.0)
       activemodel
       defra_ruby_companies_house
@@ -504,7 +498,7 @@ DEPENDENCIES
   dartsass-sprockets
   database_cleaner-mongoid (~> 2.0.1)
   defra_ruby_style (~> 0.3.0)
-  defra_ruby_template (~> 6.4)!
+  defra_ruby_template (~> 6.4)
   dotenv-rails (~> 2.8.1)
   factory_bot_rails (~> 6.2.0)
   faker (~> 3.2.0)
