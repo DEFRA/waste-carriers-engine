@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/DEFRA/defra-ruby-template
-  revision: 7044f08c9b0367cdcc3063492d44243d6ce21a80
-  branch: RUBY-4334-all-tech-debt-defra-ruby-template-upgrade-to-govuk-frontend-6-4-0-and-fix-template-drift
-  specs:
-    defra_ruby_template (6.4.0)
-
 PATH
   remote: .
   specs:
