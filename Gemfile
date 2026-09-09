@@ -4,9 +4,8 @@ source "https://rubygems.org", cooldown: 7
 
 ruby "3.4.6"
 
-# Temporary workaround until we implement webpack assets
-# See: https://github.com/sass/sassc-rails/issues/114
-gem "sassc-rails"
+# Use Dart Sass with the Sprockets asset pipeline
+gem "dartsass-sprockets"
 
 # Declare your gem's dependencies in waste_carriers_engine.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -14,7 +13,10 @@ gem "sassc-rails"
 gemspec
 
 # GOV.UK styling
-gem "defra_ruby_template", "~> 5.0"
+gem "defra_ruby_template",
+    "~> 6.4",
+    git: "https://github.com/DEFRA/defra-ruby-template",
+    branch: "RUBY-4334-all-tech-debt-defra-ruby-template-upgrade-to-govuk-frontend-6-4-0-and-fix-template-drift"
 
 gem "mongo_session_store"
 
@@ -74,7 +76,7 @@ group :test do
 
   gem "faker", "~> 3.2.0"
 
-  gem "govuk_design_system_formbuilder", "~> 5.3"
+  gem "govuk_design_system_formbuilder", "~> 6.4"
 
   gem "observer", "~> 0.1.2"
 
