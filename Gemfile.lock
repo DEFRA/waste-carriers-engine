@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/DEFRA/defra-ruby-template
+  revision: 7044f08c9b0367cdcc3063492d44243d6ce21a80
+  branch: RUBY-4334-all-tech-debt-defra-ruby-template-upgrade-to-govuk-frontend-6-4-0-and-fix-template-drift
+  specs:
+    defra_ruby_template (6.4.0)
+
 PATH
   remote: .
   specs:
@@ -125,6 +132,12 @@ GEM
       bigdecimal
       rexml
     crass (1.0.7)
+    dartsass-sprockets (3.2.1)
+      railties (>= 4.0.0)
+      sassc-embedded (~> 1.80.1)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     dartsass-sprockets (3.2.1)
       railties (>= 4.0.0)
       sassc-embedded (~> 1.80.1)
