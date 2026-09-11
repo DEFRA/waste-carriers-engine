@@ -21,14 +21,14 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "rails", "~> 7.2"
+  s.add_dependency "rails", "~> 8.1.0"
 
   # Use MongoDB as the database
-  s.add_dependency "mongoid", "~> 8.1"
+  s.add_dependency "mongoid", "~> 9.1"
 
   # Implement document-level locking
   # Note v2.0.1 interferes with the delegate method
-  s.add_dependency "mongoid-locker", "~> 2.0.2"
+  s.add_dependency "mongoid-locker", "~> 2.2"
 
   s.add_dependency "mongo_session_store", "~> 3.2.1"
 
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rest-client", "~> 2.1.0"
 
   # Use High Voltage for static pages
-  s.add_dependency "high_voltage", "~> 3.1.2"
+  s.add_dependency "high_voltage", "~> 5.0.0"
 
   # Validations
   s.add_dependency "defra_ruby_validators", "~> 3.1"

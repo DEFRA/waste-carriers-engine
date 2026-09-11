@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ClassLength
+  # rubocop:disable-next Metrics/ClassLength
   class RegistrationCompletionService < BaseService
     include CanAddDebugLogging
 
     attr_reader :transient_registration
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable-next Metrics/MethodLength
     def run(transient_registration)
       @transient_registration = transient_registration
 
@@ -43,7 +43,6 @@ module WasteCarriersEngine
 
       registration
     end
-    # rubocop:enable Metrics/MethodLength
 
     private
 
@@ -151,5 +150,4 @@ module WasteCarriersEngine
       )
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

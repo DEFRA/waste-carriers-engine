@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 WasteCarriersEngine::Engine.routes.draw do
   resources :start_forms,
             only: %i[new create],
@@ -352,4 +352,3 @@ WasteCarriersEngine::Engine.routes.draw do
   # Static pages with HighVoltage
   resources :pages, only: [:show], controller: "pages"
 end
-# rubocop:enable Metrics/BlockLength

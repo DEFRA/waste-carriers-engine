@@ -5,7 +5,7 @@ module WasteCarriersEngine
     extend ActiveSupport::Concern
     include Mongoid::Document
 
-    # rubocop:disable Metrics/BlockLength
+    # rubocop:disable-next Metrics/BlockLength
     included do
 
       const_set(:PAYMENT_TYPES, [
@@ -80,6 +80,5 @@ module WasteCarriersEngine
         payment_type == REVERSAL
       end
     end
-    # rubocop:enable Metrics/BlockLength
   end
 end

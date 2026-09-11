@@ -3,12 +3,12 @@
 require "defra_ruby/companies_house"
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ModuleLength
+  # rubocop:disable-next Metrics/ModuleLength
   module CanUseRenewingRegistrationWorkflow
     extend ActiveSupport::Concern
     include Mongoid::Document
 
-    # rubocop:disable Metrics/BlockLength
+    # rubocop:disable-next Metrics/BlockLength
     included do
       include AASM
 
@@ -250,7 +250,6 @@ module WasteCarriersEngine
         end
       end
     end
-    # rubocop:enable Metrics/BlockLength
 
     private
 
@@ -335,5 +334,4 @@ module WasteCarriersEngine
       Airbrake.notify(e, registration_no: reg_identifier) if defined?(Airbrake)
     end
   end
-  # rubocop:enable Metrics/ModuleLength
 end

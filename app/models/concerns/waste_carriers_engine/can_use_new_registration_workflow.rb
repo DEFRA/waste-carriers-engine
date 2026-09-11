@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  # rubocop:disable Metrics/ModuleLength
+  # rubocop:disable-next Metrics/ModuleLength
   module CanUseNewRegistrationWorkflow
     extend ActiveSupport::Concern
     include Mongoid::Document
 
-    # rubocop:disable Metrics/BlockLength
+    # rubocop:disable-next Metrics/BlockLength
     included do
       include AASM
 
@@ -401,7 +401,5 @@ module WasteCarriersEngine
         temp_use_trading_name == "yes"
       end
     end
-    # rubocop:enable Metrics/BlockLength
   end
-  # rubocop:enable Metrics/ModuleLength
 end

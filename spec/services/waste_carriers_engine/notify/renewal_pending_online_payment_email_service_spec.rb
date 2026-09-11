@@ -6,7 +6,7 @@ module WasteCarriersEngine
   module Notify
 
     # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable RSpec/AnyInstance
+    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RenewalPendingOnlinePaymentEmailService do
       let(:template_id) { "3da098e3-3db2-4c99-8e96-ed9d1a8ef227" }
       let(:reg_identifier) { registration.reg_identifier }
@@ -61,6 +61,5 @@ module WasteCarriersEngine
         end
       end
     end
-    # rubocop:enable RSpec/AnyInstance
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 module WasteCarriersEngine
   class RenewingRegistration < TransientRegistration
     include CanCheckIfRegistrationTypeChanged
@@ -144,4 +144,3 @@ module WasteCarriersEngine
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
