@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- \[RUBY-4394\] Updated content on registration number page [\#1750](https://github.com/DEFRA/waste-carriers-engine/pull/1750) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4350\] Add geospatial EA area lookup using MongoDB [\#1735](https://github.com/DEFRA/waste-carriers-engine/pull/1735) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4340\] Capture the message subject on communication records [\#1732](https://github.com/DEFRA/waste-carriers-engine/pull/1732) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 4339 wcr implement message delivery status call back [\#1730](https://github.com/DEFRA/waste-carriers-engine/pull/1730) ([brujeo](https://github.com/brujeo))
