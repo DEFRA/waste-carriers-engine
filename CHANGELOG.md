@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- \[RUBY-4394\] Updated content on registration number page [\#1750](https://github.com/DEFRA/waste-carriers-engine/pull/1750) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4350\] Add geospatial EA area lookup using MongoDB [\#1735](https://github.com/DEFRA/waste-carriers-engine/pull/1735) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4340\] Capture the message subject on communication records [\#1732](https://github.com/DEFRA/waste-carriers-engine/pull/1732) ([jjromeo](https://github.com/jjromeo))
 - Feature/ruby 4339 wcr implement message delivery status call back [\#1730](https://github.com/DEFRA/waste-carriers-engine/pull/1730) ([brujeo](https://github.com/brujeo))
@@ -59,6 +60,7 @@
 
 **Fixed bugs:**
 
+- \[RUBY-4419\] Remove branch reference for defra\_ruby\_template in Gemfile and lock [\#1746](https://github.com/DEFRA/waste-carriers-engine/pull/1746) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4385\] Refactor address line assignment to preserve flat details [\#1742](https://github.com/DEFRA/waste-carriers-engine/pull/1742) ([brujeo](https://github.com/brujeo))
 - Fix/ruby 4317 wcr govpay investigate callback errors [\#1718](https://github.com/DEFRA/waste-carriers-engine/pull/1718) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4301\] Fix Airbrake notification to include error and params hash in webhook handler [\#1717](https://github.com/DEFRA/waste-carriers-engine/pull/1717) ([brujeo](https://github.com/brujeo))
@@ -122,6 +124,9 @@
 
 **Merged pull requests:**
 
+- Upgrade to Rails 8.1 and adjust dependencies and configurations [\#1745](https://github.com/DEFRA/waste-carriers-engine/pull/1745) ([brujeo](https://github.com/brujeo))
+- Update CHANGELOG [\#1744](https://github.com/DEFRA/waste-carriers-engine/pull/1744) ([jjromeo](https://github.com/jjromeo))
+- WCR: Update defra-ruby-template to version 6.4.0 [\#1741](https://github.com/DEFRA/waste-carriers-engine/pull/1741) ([jjromeo](https://github.com/jjromeo))
 - Bump json from 2.21.1 to 2.21.2 [\#1739](https://github.com/DEFRA/waste-carriers-engine/pull/1739) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump activestorage from 7.2.3.1 to 7.2.3.2 [\#1738](https://github.com/DEFRA/waste-carriers-engine/pull/1738) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Chore/changelog 30 07 2026 [\#1737](https://github.com/DEFRA/waste-carriers-engine/pull/1737) ([brujeo](https://github.com/brujeo))
