@@ -79,4 +79,8 @@ Gem::Specification.new do |s|
 
   # Used to generate a PDF from HTML, in our case, the users certificate
   s.add_dependency "wicked_pdf", "~> 2.6.3"
+
+  # Used by lib/tasks/changelog.rake, which the back and front office apps also
+  # load. Pinned because that task patches the gem's internals
+  s.add_dependency "github_changelog_generator", "~> 1.18.0"
 end
