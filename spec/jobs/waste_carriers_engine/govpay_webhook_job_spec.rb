@@ -21,6 +21,8 @@ end
 module WasteCarriersEngine
 
   RSpec.describe GovpayWebhookJob do
+    include ActiveJob::TestHelper
+
     describe ".perform_later" do
       subject(:perform_later) { described_class.perform_later(webhook_body) }
 
@@ -141,6 +143,37 @@ module WasteCarriersEngine
         it "processes the refund webhook using GovpayRefundWebhookHandler" do
           perform_now
           expect(GovpayRefundWebhookHandler).to have_received(:run).with(webhook_body)
+        end
+      end
+
+      context "when PaymentNotFoundError is raised" do
+        before do
+          clear_enqueued_jobs
+          allow(GovpayPaymentWebhookHandler).to receive(:run)
+            .and_raise(GovpayFindPaymentService::PaymentNotFoundError, "not found")
+          allow(Airbrake).to receive(:notify)
+          allow(FeatureToggle).to receive(:active?).with(:detailed_logging).and_return(false)
+        end
+
+        it "enqueues a retry" do
+          perform_now
+          expect(described_class).to have_been_enqueued.at_least(:once)
+        end
+
+        it "notifies Airbrake after retries exhausted" do
+          perform_enqueued_jobs(only: described_class) do
+            described_class.perform_later(webhook_body)
+          end
+        rescue GovpayFindPaymentService::PaymentNotFoundError, Minitest::UnexpectedError
+          # expected
+        ensure
+          expect(Airbrake).to have_received(:notify).with(
+            an_instance_of(GovpayFindPaymentService::PaymentNotFoundError),
+            hash_including(
+              payment_id: webhook_body.dig("resource", "payment_id"),
+              service_type: "front_office"
+            )
+          ).once
         end
       end
     end

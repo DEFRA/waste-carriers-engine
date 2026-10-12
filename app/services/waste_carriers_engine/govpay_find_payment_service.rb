@@ -2,6 +2,8 @@
 
 module WasteCarriersEngine
   class GovpayFindPaymentService < WasteCarriersEngine::BaseService
+    class PaymentNotFoundError < StandardError; end
+
     def run(payment_id:, raise_on_missing: true)
       Rails.logger.tagged("GovpayFindPaymentService") do
         @last_error = nil
@@ -44,8 +46,8 @@ module WasteCarriersEngine
       Rails.logger.error "Govpay payment not found for govpay_id #{payment_id}"
       return nil unless raise_on_missing
 
-      Airbrake.notify("Govpay payment not found", payment_id: payment_id, error: @last_error&.message)
-      raise ArgumentError, "invalid govpay_id"
+      raise PaymentNotFoundError,
+            "Govpay payment not found for govpay_id: #{payment_id}, error: #{@last_error&.message}"
     end
   end
 end

@@ -50,28 +50,21 @@ module WasteCarriersEngine
           before { webhook_resource["payment_id"] = "foo" }
 
           context "when the webhook status is success" do
-            it { expect { run_service }.to raise_error(ArgumentError) }
-
-            it_behaves_like "logs an error"
-
-            it "notifies Airbrake with the error and a params hash" do
-              allow(Airbrake).to receive(:notify)
-
-              expect { run_service }.to raise_error(ArgumentError)
-
-              expect(Airbrake).to have_received(:notify).with(instance_of(ArgumentError), instance_of(Hash))
-            end
-
-            it "notifies Airbrake that the payment was not found" do
-              allow(Airbrake).to receive(:notify)
-
-              expect { run_service }.to raise_error(ArgumentError)
-
-              expect(Airbrake).to have_received(:notify).with(
-                "Govpay payment not found",
-                hash_including(payment_id: "foo")
+            before do
+              allow(GovpayFindPaymentService).to receive(:run).and_raise(
+                GovpayFindPaymentService::PaymentNotFoundError,
+                "Govpay payment not found for govpay_id: foo, error: Document not found"
               )
             end
+
+            it "raises PaymentNotFoundError with payment_id and underlying error" do
+              expect { run_service }.to raise_error(
+                GovpayFindPaymentService::PaymentNotFoundError,
+                /govpay_id: foo.*error: Document not found/
+              )
+            end
+
+            it_behaves_like "logs an error"
           end
 
           %w[created started submitted failed cancelled expired error].each do |status|
