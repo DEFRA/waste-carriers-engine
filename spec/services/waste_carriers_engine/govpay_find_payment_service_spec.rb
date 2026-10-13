@@ -12,19 +12,8 @@ module WasteCarriersEngine
       context "with an invalid payment id" do
         let(:payment_id) { "bad_id" }
 
-        before { allow(Airbrake).to receive(:notify) }
-
-        it "raises an exception" do
-          expect { run_service }.to raise_exception(ArgumentError)
-        end
-
-        it "notifies Airbrake with a message, not the rescued Mongoid error" do
-          expect { run_service }.to raise_exception(ArgumentError)
-
-          expect(Airbrake).to have_received(:notify).with(
-            "Govpay payment not found",
-            hash_including(payment_id: payment_id)
-          )
+        it "raises ArgumentError with the payment id" do
+          expect { run_service }.to raise_exception(ArgumentError, /#{payment_id}/)
         end
 
         context "with raise_on_missing: false" do
@@ -32,12 +21,6 @@ module WasteCarriersEngine
 
           it "returns nil" do
             expect(run_service).to be_nil
-          end
-
-          it "does not notify Airbrake" do
-            run_service
-
-            expect(Airbrake).not_to have_received(:notify)
           end
         end
       end

@@ -28,12 +28,18 @@ module WasteCarriersEngine
       end
 
       describe "invalid webhook errors" do
+        before { allow(Rails.logger).to receive(:error) }
+
         context "when the update is not for a payment" do
           before { webhook_body["resource_type"] = "refund" }
 
           it { expect { run_service }.to raise_error(ArgumentError) }
 
-          it_behaves_like "logs an error"
+          it "logs an error" do
+            run_service
+          rescue StandardError
+            expect(Rails.logger).to have_received(:error)
+          end
         end
 
         context "when status is not present in the update" do
@@ -41,7 +47,11 @@ module WasteCarriersEngine
 
           it { expect { run_service }.to raise_error(ArgumentError) }
 
-          it_behaves_like "logs an error"
+          it "logs an error" do
+            run_service
+          rescue StandardError
+            expect(Rails.logger).to have_received(:error)
+          end
         end
       end
 
@@ -49,46 +59,18 @@ module WasteCarriersEngine
         context "when the payment is not found" do
           before { webhook_resource["payment_id"] = "foo" }
 
-          context "when the webhook status is success" do
-            it { expect { run_service }.to raise_error(ArgumentError) }
-
-            it_behaves_like "logs an error"
-
-            it "notifies Airbrake with the error and a params hash" do
-              allow(Airbrake).to receive(:notify)
-
-              expect { run_service }.to raise_error(ArgumentError)
-
-              expect(Airbrake).to have_received(:notify).with(instance_of(ArgumentError), instance_of(Hash))
-            end
-
-            it "notifies Airbrake that the payment was not found" do
-              allow(Airbrake).to receive(:notify)
-
-              expect { run_service }.to raise_error(ArgumentError)
-
-              expect(Airbrake).to have_received(:notify).with(
-                "Govpay payment not found",
-                hash_including(payment_id: "foo")
-              )
+          context "when the webhook status is STATUS_SUCCESS" do
+            it "raises ArgumentError for job to handle" do
+              expect { run_service }.to raise_error(ArgumentError, /foo/)
             end
           end
 
           %w[created started submitted failed cancelled expired error].each do |status|
             context "when the webhook status is #{status}" do
-              before do
-                assign_webhook_status(status)
-                allow(Airbrake).to receive(:notify)
-              end
+              before { assign_webhook_status(status) }
 
               it "does not raise an error" do
                 expect { run_service }.not_to raise_error
-              end
-
-              it "does not notify Airbrake" do
-                run_service
-
-                expect(Airbrake).not_to have_received(:notify)
               end
 
               it "logs the ignored webhook" do

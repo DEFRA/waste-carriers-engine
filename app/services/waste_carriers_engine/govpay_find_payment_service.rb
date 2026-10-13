@@ -44,8 +44,7 @@ module WasteCarriersEngine
       Rails.logger.error "Govpay payment not found for govpay_id #{payment_id}"
       return nil unless raise_on_missing
 
-      Airbrake.notify("Govpay payment not found", payment_id: payment_id, error: @last_error&.message)
-      raise ArgumentError, "invalid govpay_id"
+      raise ArgumentError, "Govpay payment not found for govpay_id: #{payment_id}"
     end
   end
 end
