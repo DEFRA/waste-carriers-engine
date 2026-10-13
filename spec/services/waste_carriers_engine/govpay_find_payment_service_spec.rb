@@ -12,8 +12,8 @@ module WasteCarriersEngine
       context "with an invalid payment id" do
         let(:payment_id) { "bad_id" }
 
-        it "raises ArgumentError with the payment id" do
-          expect { run_service }.to raise_exception(ArgumentError, /#{payment_id}/)
+        it "raises GovpayPaymentNotFoundError with the payment id" do
+          expect { run_service }.to raise_exception(GovpayPaymentNotFoundError, /#{payment_id}/)
         end
 
         context "with raise_on_missing: false" do

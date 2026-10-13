@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 require "waste_carriers_engine/detailed_logger"
+require_dependency "waste_carriers_engine/govpay_find_payment_service"
 
 module WasteCarriersEngine
   class GovpayWebhookJob < ApplicationJob
+    retry_on WasteCarriersEngine::GovpayPaymentNotFoundError, wait: 5.seconds, attempts: 6 do |job, error|
+      job.handle_error(error, job.arguments.first)
+    end
+
     def perform(webhook_body)
       if refund_webhook?(webhook_body)
         GovpayRefundWebhookHandler.run(webhook_body)
@@ -11,16 +16,9 @@ module WasteCarriersEngine
         GovpayPaymentWebhookHandler.run(webhook_body)
       end
     rescue StandardError => e
+      raise if e.is_a?(WasteCarriersEngine::GovpayPaymentNotFoundError)
+
       handle_error(e, webhook_body)
-    end
-
-    private
-
-    def refund_webhook?(webhook_body)
-      event_type = webhook_body["event_type"]
-      raise ArgumentError, "Invalid webhook body, missing event_type" unless event_type.present?
-
-      event_type == "card_payment_refunded"
     end
 
     def handle_error(error, webhook_body)
@@ -39,5 +37,15 @@ module WasteCarriersEngine
 
       Airbrake.notify(error, notification_params)
     end
+
+    private
+
+    def refund_webhook?(webhook_body)
+      event_type = webhook_body["event_type"]
+      raise ArgumentError, "Invalid webhook body, missing event_type" unless event_type.present?
+
+      event_type == "card_payment_refunded"
+    end
+
   end
 end

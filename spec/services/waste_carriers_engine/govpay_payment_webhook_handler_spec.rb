@@ -60,8 +60,8 @@ module WasteCarriersEngine
           before { webhook_resource["payment_id"] = "foo" }
 
           context "when the webhook status is STATUS_SUCCESS" do
-            it "raises ArgumentError for job to handle" do
-              expect { run_service }.to raise_error(ArgumentError, /foo/)
+            it "raises GovpayPaymentNotFoundError for job to retry" do
+              expect { run_service }.to raise_error(GovpayPaymentNotFoundError, /foo/)
             end
           end
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
+  class GovpayPaymentNotFoundError < StandardError; end
+
   class GovpayFindPaymentService < WasteCarriersEngine::BaseService
     def run(payment_id:, raise_on_missing: true)
       Rails.logger.tagged("GovpayFindPaymentService") do
@@ -44,7 +46,7 @@ module WasteCarriersEngine
       Rails.logger.error "Govpay payment not found for govpay_id #{payment_id}"
       return nil unless raise_on_missing
 
-      raise ArgumentError, "Govpay payment not found for govpay_id: #{payment_id}"
+      raise GovpayPaymentNotFoundError, "Govpay payment not found for govpay_id: #{payment_id}"
     end
   end
 end

@@ -143,6 +143,40 @@ module WasteCarriersEngine
           expect(GovpayRefundWebhookHandler).to have_received(:run).with(webhook_body)
         end
       end
+
+      context "when GovpayPaymentNotFoundError is raised" do
+        before do
+          allow(GovpayPaymentWebhookHandler).to receive(:run)
+            .and_raise(GovpayPaymentNotFoundError, "test_payment_id")
+          allow(Airbrake).to receive(:notify)
+          allow(FeatureToggle).to receive(:active?).with(:detailed_logging).and_return(false)
+        end
+
+        it "retries the job" do
+          expect { perform_now }.to have_enqueued_job(described_class).exactly(:once)
+        end
+
+        context "when retries are exhausted" do
+          include ActiveJob::TestHelper
+
+          it "retries 6 times before giving up" do
+            perform_enqueued_jobs do
+              described_class.perform_later(webhook_body)
+            end
+
+            expect(GovpayPaymentWebhookHandler).to have_received(:run).exactly(6).times
+          end
+
+          it "notifies Airbrake after all retries" do
+            perform_enqueued_jobs do
+              described_class.perform_later(webhook_body)
+            end
+
+            expect(Airbrake).to have_received(:notify)
+              .with(an_instance_of(GovpayPaymentNotFoundError), hash_including(:payment_id))
+          end
+        end
+      end
     end
   end
 end

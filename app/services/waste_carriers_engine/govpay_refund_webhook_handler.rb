@@ -24,7 +24,7 @@ module WasteCarriersEngine
     private
 
     def find_refund
-      payment = GovpayFindPaymentService.run(payment_id: govpay_payment_id)
+      payment = GovpayFindPaymentService.run(payment_id: govpay_payment_id, raise_on_missing: false)
       handle_payment_not_found unless payment.present?
 
       # Look for the refund as a sibling of the original payment
