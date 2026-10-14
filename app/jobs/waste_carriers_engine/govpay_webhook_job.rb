@@ -5,7 +5,7 @@ require_dependency "waste_carriers_engine/govpay_find_payment_service"
 
 module WasteCarriersEngine
   class GovpayWebhookJob < ApplicationJob
-    retry_on WasteCarriersEngine::GovpayPaymentNotFoundError, wait: :polynomially_longer, attempts: 6 do |job, error|
+    retry_on WasteCarriersEngine::GovpayPaymentNotFoundError, wait: 5.seconds, attempts: 6 do |job, error|
       job.handle_error(error, job.arguments.first)
     end
 
