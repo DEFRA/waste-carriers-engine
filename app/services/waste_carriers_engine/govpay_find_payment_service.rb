@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module WasteCarriersEngine
-  class GovpayPaymentNotFoundError < StandardError; end
-
   class GovpayFindPaymentService < WasteCarriersEngine::BaseService
     def run(payment_id:, raise_on_missing: true)
       Rails.logger.tagged("GovpayFindPaymentService") do

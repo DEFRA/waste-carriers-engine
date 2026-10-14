@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "waste_carriers_engine/detailed_logger"
-require_dependency "waste_carriers_engine/govpay_find_payment_service"
 
 module WasteCarriersEngine
   class GovpayWebhookJob < ApplicationJob
