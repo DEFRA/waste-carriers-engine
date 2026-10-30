@@ -148,7 +148,7 @@ GEM
     crack (1.0.1)
       bigdecimal
       rexml
-    crass (1.0.7)
+    crass (1.0.8)
     dartsass-sprockets (3.2.1)
       railties (>= 4.0.0)
       sassc-embedded (~> 1.80.1)
@@ -229,7 +229,7 @@ GEM
     google-protobuf (4.36.1)
       bigdecimal
       rake (~> 13.3)
-    govuk_design_system_formbuilder (6.5.0)
+    govuk_design_system_formbuilder (6.6.0)
       actionview (>= 7.2)
       activemodel (>= 7.2)
       activesupport (>= 7.2)
