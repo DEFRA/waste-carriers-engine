@@ -70,5 +70,11 @@ module WasteCarriersEngine
       expect(validator.options[:permitted_statuses])
         .to include(:liquidation)
     end
+
+    it "validates using the DuplicateCompanyRegistrationValidator" do
+      form = build(:registration_number_form, :has_required_data)
+      validator_classes = form.class.validators.map(&:class)
+      expect(validator_classes).to include(DuplicateCompanyRegistrationValidator)
+    end
   end
 end

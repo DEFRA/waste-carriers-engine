@@ -8,6 +8,7 @@ module WasteCarriersEngine
       permitted_statuses: WasteCarriersEngine::CompaniesHouseStatusService::PERMITTED_STATUSES,
       messages: custom_error_messages(:company_no, :inactive)
     }
+    validates_with DuplicateCompanyRegistrationValidator
 
     def submit(params)
       # Assign the params for validation and pass them to the BaseForm method for updating

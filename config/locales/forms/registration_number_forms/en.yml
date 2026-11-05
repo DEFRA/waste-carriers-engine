@@ -19,6 +19,7 @@ en:
           attributes:
             company_no:
               inactive: "Your company must be registered as active, in voluntary arrangement, or in liquidation"
+              already_registered: "This company is already registered"
             reg_identifier:
               invalid_format: "The registration ID is not in a valid format"
               no_registration: "There is no registration matching this ID"
