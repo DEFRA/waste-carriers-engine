@@ -5,12 +5,11 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RegistrationPendingConvictionCheckEmailService do
       let(:template_id) { "e7dbb0d2-feca-4f59-a5e6-576e5051f4e0" }
       let(:registration) { create(:registration, :has_required_data) }
       let(:reg_identifier) { registration.reg_identifier }
+      let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
 
       let(:expected_notify_options) do
         {
@@ -27,7 +26,7 @@ module WasteCarriersEngine
       describe ".run" do
         context "with a contact_email" do
           before do
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_email)
               .with(expected_notify_options)
               .and_call_original
@@ -52,9 +51,11 @@ module WasteCarriersEngine
           before { registration.contact_email = nil }
 
           it "does not attempt to send an email" do
-            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
+            allow(notifications_client).to receive(:send_email)
 
             described_class.run(registration: registration)
+
+            expect(notifications_client).not_to have_received(:send_email)
           end
         end
       end

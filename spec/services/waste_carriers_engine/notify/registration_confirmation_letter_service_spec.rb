@@ -5,10 +5,9 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RegistrationConfirmationLetterService do
       let(:notification_type) { "letter" }
+      let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
 
       context "with an upper tier registration" do
         describe ".run" do
@@ -52,7 +51,7 @@ module WasteCarriersEngine
           end
 
           before do
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_letter)
               .with(expected_notify_options)
               .and_call_original
@@ -163,7 +162,7 @@ module WasteCarriersEngine
           end
 
           before do
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_letter)
               .with(expected_notify_options)
               .and_call_original

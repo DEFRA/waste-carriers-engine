@@ -5,13 +5,13 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RegistrationConfirmationEmailService do
       let(:notification_type) { "email" }
+      let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
 
       before do
         registration.generate_view_certificate_token!
+        allow(Notifications::Client).to receive(:new).and_return(notifications_client)
       end
 
       describe ".run" do
@@ -35,11 +35,7 @@ module WasteCarriersEngine
 
         context "with a contact_email" do
           before do
-            allow(Notifications)
-              .to receive(:prepare_upload)
-              .and_return("Hello World")
-
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_email)
               .with(expected_notify_options)
               .and_call_original
@@ -134,9 +130,11 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data, contact_email: nil) }
 
           it "does not attempt to send an email" do
-            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
+            allow(notifications_client).to receive(:send_email)
 
             described_class.run(registration: registration)
+
+            expect(notifications_client).not_to have_received(:send_email)
           end
         end
       end

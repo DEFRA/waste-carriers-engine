@@ -7,6 +7,7 @@ module WasteCarriersEngine
 
     RSpec.describe CertificateRenewalEmailService do
       let(:notification_type) { "email" }
+      let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
 
       describe ".run" do
         let(:expected_notify_options) do
@@ -25,7 +26,6 @@ module WasteCarriersEngine
             }
           }
         end
-        let(:notifications_client) { instance_double(Notifications::Client) }
         let(:notifications_client_response_notification) do
           instance_double(
             Notifications::Client::ResponseNotification,
