@@ -4,6 +4,21 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "BusinessTypeForms" do
+    context "when service closure is enabled" do
+      let(:transient_registration) { create(:new_registration, workflow_state: "business_type_form") }
+
+      before do
+        allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).and_call_original
+        allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:service_closure).and_return(true)
+      end
+
+      it "redirects in-progress registrations to service closed page" do
+        get new_business_type_form_path(transient_registration.token)
+
+        expect(response).to redirect_to(page_path("service_closed"))
+      end
+    end
+
     it_behaves_like "GET flexible form", "business_type_form"
 
     describe "POST business_type_form_path" do
