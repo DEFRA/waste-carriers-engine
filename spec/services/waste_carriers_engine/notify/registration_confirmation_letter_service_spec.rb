@@ -19,28 +19,28 @@ module WasteCarriersEngine
           let(:presentation_name) { "#{registered_company_name} trading as #{company_name}" }
           let(:expected_company_name) { company_name }
           let(:company_name_regex) { /Name of registered carrier[^\w]*#{expected_company_name}\W/ }
-          let(:expected_notify_options) do
-            {
-              template_id: template_id,
-              reference: registration.reg_identifier,
-              personalisation: {
-                contact_name: "Jane Doe",
-                registration_type: "carrier, broker and dealer",
-                reg_identifier: registration.reg_identifier,
-                company_name: expected_company_name,
-                registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
-                phone_number: "03708 506506",
-                date_registered: registration.metaData.date_registered.to_fs(:standard),
-                expiry_date: registration.expires_on.in_time_zone("London").to_date.to_s(:standard),
-                address_line_1: "Jane Doe",
-                address_line_2: "42",
-                address_line_3: "Foo Gardens",
-                address_line_4: "Baz City",
-                address_line_5: "BS1 5AH",
-                certificate_creation_date: Date.today.to_s(:standard)
-              }
-            }
-          end
+          # let(:expected_notify_options) do
+          #   {
+          #     template_id: template_id,
+          #     reference: registration.reg_identifier,
+          #     personalisation: {
+          #       contact_name: "Jane Doe",
+          #       registration_type: "carrier, broker and dealer",
+          #       reg_identifier: registration.reg_identifier,
+          #       company_name: expected_company_name,
+          #       registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
+          #       phone_number: "03708 506506",
+          #       date_registered: registration.metaData.date_registered.to_fs(:standard),
+          #       expiry_date: registration.expires_on.in_time_zone("London").to_date.to_s(:standard),
+          #       address_line_1: "Jane Doe",
+          #       address_line_2: "42",
+          #       address_line_3: "Foo Gardens",
+          #       address_line_4: "Baz City",
+          #       address_line_5: "BS1 5AH",
+          #       certificate_creation_date: Date.today.to_s(:standard)
+          #     }
+          #   }
+          # end
 
           let(:cassette_name) { "notify_upper_tier_ad_confirmation_letter_business_name" }
 
@@ -50,11 +50,16 @@ module WasteCarriersEngine
             end
           end
 
-          before do
-            allow(notifications_client)
-              .to receive(:send_letter)
-              .with(expected_notify_options)
-              .and_call_original
+          # before do
+          #   allow(notifications_client)
+          #     .to receive(:send_letter)
+          #     # .with(expected_notify_options)
+          #     .and_call_original
+          # end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_letter }
+            let(:reference) { registration.regIdentifier }
           end
 
           it "sends a letter" do
@@ -134,26 +139,26 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data, :lower_tier) }
           let(:template_id) { "e144cc0c-8903-434f-97a0-c798fcd35beb" }
 
-          let(:expected_notify_options) do
-            {
-              template_id: template_id,
-              reference: registration.reg_identifier,
-              personalisation: {
-                contact_name: "Jane Doe",
-                reg_identifier: registration.reg_identifier,
-                company_name: "Acme Waste",
-                registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
-                phone_number: "03708 506506",
-                date_registered: registration.metaData.date_registered.to_fs(:standard),
-                address_line_1: "Jane Doe",
-                address_line_2: "42",
-                address_line_3: "Foo Gardens",
-                address_line_4: "Baz City",
-                address_line_5: "BS1 5AH",
-                certificate_creation_date: Date.today.to_s(:standard)
-              }
-            }
-          end
+          # let(:expected_notify_options) do
+          #   {
+          #     template_id: template_id,
+          #     reference: registration.reg_identifier,
+          #     personalisation: {
+          #       contact_name: "Jane Doe",
+          #       reg_identifier: registration.reg_identifier,
+          #       company_name: "Acme Waste",
+          #       registered_address: "42, Foo Gardens, Baz City, BS1 5AH",
+          #       phone_number: "03708 506506",
+          #       date_registered: registration.metaData.date_registered.to_fs(:standard),
+          #       address_line_1: "Jane Doe",
+          #       address_line_2: "42",
+          #       address_line_3: "Foo Gardens",
+          #       address_line_4: "Baz City",
+          #       address_line_5: "BS1 5AH",
+          #       certificate_creation_date: Date.today.to_s(:standard)
+          #     }
+          #   }
+          # end
 
           subject(:run_service) do
             VCR.use_cassette("notify_lower_tier_ad_confirmation_letter") do
@@ -161,11 +166,16 @@ module WasteCarriersEngine
             end
           end
 
-          before do
-            allow(notifications_client)
-              .to receive(:send_letter)
-              .with(expected_notify_options)
-              .and_call_original
+          # before do
+          #   allow(notifications_client)
+          #     .to receive(:send_letter)
+          #     # .with(expected_notify_options)
+          #     .and_call_original
+          # end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_letter }
+            let(:reference) { registration.regIdentifier }
           end
 
           it "sends a letter" do

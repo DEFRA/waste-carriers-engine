@@ -19,6 +19,7 @@ module WasteCarriersEngine
           {
             email_address: "foo@example.com",
             template_id: template_id,
+            reference: registration.regIdentifier,
             personalisation: {
               reg_identifier: registration.reg_identifier,
               registration_type: registration_type,
@@ -50,6 +51,11 @@ module WasteCarriersEngine
               VCR.use_cassette("notify_lower_tier_registration_confirmation_sends_an_email") do
                 described_class.run(registration: registration)
               end
+            end
+
+            it_behaves_like "calls notify with reference" do
+              let(:send_action) { :send_email }
+              let(:reference) { registration.regIdentifier }
             end
 
             it "sends an email" do
@@ -92,6 +98,11 @@ module WasteCarriersEngine
               VCR.use_cassette("notify_upper_tier_registration_confirmation_sends_an_email") do
                 described_class.run(registration: registration)
               end
+            end
+
+            it_behaves_like "calls notify with reference" do
+              let(:send_action) { :send_email }
+              let(:reference) { registration.regIdentifier }
             end
 
             it "sends an email" do

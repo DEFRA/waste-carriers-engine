@@ -14,6 +14,7 @@ module WasteCarriersEngine
           {
             email_address: "foo@example.com",
             template_id: template_id,
+            reference: registration.regIdentifier,
             personalisation: {
               reg_identifier: registration.reg_identifier,
               registration_type: registration_type,
@@ -33,6 +34,7 @@ module WasteCarriersEngine
             content: { "body" => "Email content" }
           )
         end
+        let(:registration) { create(:registration, :has_required_data, :already_renewed) }
 
         subject(:run_service) { described_class.run(registration: registration) }
 
@@ -48,10 +50,13 @@ module WasteCarriersEngine
           registration.generate_view_certificate_token!
         end
 
-        context "with a contact_email" do
+        it_behaves_like "calls notify with reference" do
+          let(:send_action) { :send_email }
+          let(:reference) { registration.regIdentifier }
+        end
 
+        context "with a contact_email" do
           let(:template_id) { "2eae1dbd-08c1-4602-a4d2-e4481a1acc97" }
-          let(:registration) { create(:registration, :has_required_data, :already_renewed) }
           let(:registration_type) { "carrier, broker and dealer" }
 
           it "sends an email" do
@@ -62,6 +67,11 @@ module WasteCarriersEngine
           it "calls the ViewCertificateLinkService with renew_token: true" do
             run_service
             expect(WasteCarriersEngine::ViewCertificateLinkService).to have_received(:run).with(registration: registration, renew_token: true)
+          end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_email }
+            let(:reference) { registration.regIdentifier }
           end
 
           it_behaves_like "can create a communication record", "email"

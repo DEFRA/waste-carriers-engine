@@ -48,10 +48,20 @@ module WasteCarriersEngine
             end
           end
 
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_email }
+            let(:reference) { registration.regIdentifier }
+          end
+
           it "sends an email" do
             expect(run_service).to be_a(Notifications::Client::ResponseNotification)
             expect(run_service.template["id"]).to eq(template_id)
             expect(run_service.content["subject"]).to include("Payment needed for waste carrier registration CBDU")
+          end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_email }
+            let(:reference) { registration.regIdentifier }
           end
 
           it_behaves_like "can create a communication record", "email"

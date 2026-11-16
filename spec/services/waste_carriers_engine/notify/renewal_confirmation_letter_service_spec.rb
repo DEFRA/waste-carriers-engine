@@ -56,6 +56,11 @@ module WasteCarriersEngine
               .and_call_original
           end
 
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_letter }
+            let(:reference) { registration.regIdentifier }
+          end
+
           it "sends a letter" do
             expect(run_service).to be_a(Notifications::Client::ResponseNotification)
             expect(run_service.template["id"]).to eq(template_id)
@@ -63,6 +68,11 @@ module WasteCarriersEngine
             expect(run_service.content["subject"]).to eq(
               "Your registration as an upper tier carrier, broker and dealer has been renewed"
             )
+          end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_letter }
+            let(:reference) { registration.regIdentifier }
           end
 
           it_behaves_like "can create a communication record", "letter"
