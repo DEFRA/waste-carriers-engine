@@ -13,11 +13,10 @@ module WasteCarriersEngine
       def run(registration:)
         @registration = registration
 
-        client = Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key)
+        client = NotifyClient.new(reference: @registration.reg_identifier)
 
         send_with_communication_record(client, :send_letter,
                                        template_id: template_id,
-                                       reference: @registration.reg_identifier,
                                        personalisation: personalisation)
       end
 

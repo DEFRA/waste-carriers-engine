@@ -5,11 +5,10 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RegistrationPendingPaymentEmailService do
       let(:template_id) { "b8b68a4c-adc9-4fe6-86cd-3d5a83822c47" }
       let(:reg_identifier) { registration.reg_identifier }
+      let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
       let(:expected_notify_options) do
         {
           email_address: "foo@example.com",
@@ -37,7 +36,7 @@ module WasteCarriersEngine
       describe ".run" do
         context "with a contact_email" do
           before do
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_email)
               .with(expected_notify_options)
               .and_call_original
@@ -49,10 +48,20 @@ module WasteCarriersEngine
             end
           end
 
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_email }
+            let(:reference) { registration.reg_identifier }
+          end
+
           it "sends an email" do
             expect(run_service).to be_a(Notifications::Client::ResponseNotification)
             expect(run_service.template["id"]).to eq(template_id)
             expect(run_service.content["subject"]).to include("Payment needed for waste carrier registration CBDU")
+          end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_email }
+            let(:reference) { registration.reg_identifier }
           end
 
           it_behaves_like "can create a communication record", "email"
@@ -62,9 +71,11 @@ module WasteCarriersEngine
           before { registration.contact_email = nil }
 
           it "does not attempt to send an email" do
-            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
+            allow(notifications_client).to receive(:send_email)
 
             described_class.run(registration: registration)
+
+            expect(notifications_client).not_to have_received(:send_email)
           end
         end
       end

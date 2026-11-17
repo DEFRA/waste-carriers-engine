@@ -17,7 +17,8 @@ module WasteCarriersEngine
         @order = order
         @requester = requester
 
-        client = Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key)
+        client = NotifyClient.new(reference: @registration.reg_identifier)
+
         send_with_communication_record(client, :send_email, notify_options)
       end
 

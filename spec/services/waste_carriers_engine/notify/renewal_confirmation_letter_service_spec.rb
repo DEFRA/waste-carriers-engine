@@ -5,9 +5,8 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RenewalConfirmationLetterService do
+      let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
 
       context "with an upper tier registration" do
         describe ".run" do
@@ -51,10 +50,15 @@ module WasteCarriersEngine
           end
 
           before do
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_letter)
               .with(expected_notify_options)
               .and_call_original
+          end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_letter }
+            let(:reference) { registration.reg_identifier }
           end
 
           it "sends a letter" do
@@ -64,6 +68,11 @@ module WasteCarriersEngine
             expect(run_service.content["subject"]).to eq(
               "Your registration as an upper tier carrier, broker and dealer has been renewed"
             )
+          end
+
+          it_behaves_like "calls notify with reference" do
+            let(:send_action) { :send_letter }
+            let(:reference) { registration.reg_identifier }
           end
 
           it_behaves_like "can create a communication record", "letter"

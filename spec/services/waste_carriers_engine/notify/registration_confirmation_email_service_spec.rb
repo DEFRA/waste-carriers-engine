@@ -5,13 +5,13 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RegistrationConfirmationEmailService do
       let(:notification_type) { "email" }
+      let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
 
       before do
         registration.generate_view_certificate_token!
+        allow(Notifications::Client).to receive(:new).and_return(notifications_client)
       end
 
       describe ".run" do
@@ -19,6 +19,7 @@ module WasteCarriersEngine
           {
             email_address: "foo@example.com",
             template_id: template_id,
+            reference: registration.reg_identifier,
             personalisation: {
               reg_identifier: registration.reg_identifier,
               registration_type: registration_type,
@@ -35,11 +36,7 @@ module WasteCarriersEngine
 
         context "with a contact_email" do
           before do
-            allow(Notifications)
-              .to receive(:prepare_upload)
-              .and_return("Hello World")
-
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_email)
               .with(expected_notify_options)
               .and_call_original
@@ -54,6 +51,11 @@ module WasteCarriersEngine
               VCR.use_cassette("notify_lower_tier_registration_confirmation_sends_an_email") do
                 described_class.run(registration: registration)
               end
+            end
+
+            it_behaves_like "calls notify with reference" do
+              let(:send_action) { :send_email }
+              let(:reference) { registration.reg_identifier }
             end
 
             it "sends an email" do
@@ -98,6 +100,11 @@ module WasteCarriersEngine
               end
             end
 
+            it_behaves_like "calls notify with reference" do
+              let(:send_action) { :send_email }
+              let(:reference) { registration.reg_identifier }
+            end
+
             it "sends an email" do
               expect(run_service).to be_a(Notifications::Client::ResponseNotification)
               expect(run_service.template["id"]).to eq(template_id)
@@ -134,9 +141,11 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data, contact_email: nil) }
 
           it "does not attempt to send an email" do
-            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
+            allow(notifications_client).to receive(:send_email)
 
             described_class.run(registration: registration)
+
+            expect(notifications_client).not_to have_received(:send_email)
           end
         end
       end

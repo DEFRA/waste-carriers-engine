@@ -5,8 +5,6 @@ require "rails_helper"
 module WasteCarriersEngine
   module Notify
 
-    # TODO: Refactor to remove the use of allow_any_instance_of
-    # rubocop:disable-next RSpec/AnyInstance
     RSpec.describe RenewalConfirmationEmailService do
 
       before do
@@ -14,6 +12,7 @@ module WasteCarriersEngine
       end
 
       describe ".run" do
+        let(:notifications_client) { Notifications::Client.new(WasteCarriersEngine.configuration.notify_api_key) }
         let(:expected_notify_options) do
           {
             email_address: "foo@example.com",
@@ -37,7 +36,7 @@ module WasteCarriersEngine
               .to receive(:prepare_upload)
               .and_return("My certificate")
 
-            allow_any_instance_of(Notifications::Client)
+            allow(notifications_client)
               .to receive(:send_email)
               .with(expected_notify_options)
               .and_call_original
@@ -61,6 +60,11 @@ module WasteCarriersEngine
                 .to match(/Your waste carriers registration CBDU\d+ has been renewed/)
             end
 
+            it_behaves_like "calls notify with reference" do
+              let(:send_action) { :send_email }
+              let(:reference) { registration.reg_identifier }
+            end
+
             it_behaves_like "can create a communication record", "email"
           end
         end
@@ -69,9 +73,11 @@ module WasteCarriersEngine
           let(:registration) { create(:registration, :has_required_data, :already_renewed, contact_email: nil) }
 
           it "does not attempt to send an email" do
-            expect_any_instance_of(Notifications::Client).not_to receive(:send_email)
+            allow(notifications_client).to receive(:send_email)
 
             described_class.run(registration: registration)
+
+            expect(notifications_client).not_to have_received(:send_email)
           end
         end
       end
