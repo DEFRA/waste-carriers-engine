@@ -3,7 +3,6 @@
 module WasteCarriersEngine
   class RenewalStartFormsController < ::WasteCarriersEngine::FormsController
     prepend_before_action :authenticate_user!, if: :should_authenticate_user?
-    before_action :check_service_closure
 
     def new
       if !@transient_registration.from_magic_link &&
@@ -25,12 +24,6 @@ module WasteCarriersEngine
     end
 
     private
-
-    def check_service_closure
-      return unless FeatureToggle.active?(:service_closure)
-
-      redirect_to page_path("service_closed")
-    end
 
     def find_or_initialize_transient_registration(token)
       @transient_registration = RenewingRegistration.where(token: token).first ||

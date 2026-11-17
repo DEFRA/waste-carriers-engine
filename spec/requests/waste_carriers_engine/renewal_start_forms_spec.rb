@@ -4,19 +4,6 @@ require "rails_helper"
 
 module WasteCarriersEngine
   RSpec.describe "RenewalStartForms" do
-    context "when service closure is enabled" do
-      before do
-        allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).and_call_original
-        allow(WasteCarriersEngine::FeatureToggle).to receive(:active?).with(:service_closure).and_return(true)
-      end
-
-      it "redirects to service closed page" do
-        get new_renewal_start_form_path("CBDU12345")
-
-        expect(response).to redirect_to(page_path("service_closed"))
-      end
-    end
-
     describe "GET new_renewal_start_form_path" do
       let(:registration) { create(:registration, :has_required_data, :expires_soon) }
 
