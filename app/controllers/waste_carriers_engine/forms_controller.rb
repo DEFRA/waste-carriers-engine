@@ -7,6 +7,7 @@ module WasteCarriersEngine
 
     before_action :back_button_cache_buster
     before_action :validate_token
+    before_action :check_service_closure
 
     # Expects a form class name (eg BusinessTypeForm) and a snake_case name for the form (eg business_type_form)
     def new(form_class, form)
@@ -45,6 +46,16 @@ module WasteCarriersEngine
 
     def validate_token
       redirect_to(page_path("invalid")) unless find_or_initialize_transient_registration(params[:token])
+    end
+
+    def check_service_closure
+      return unless FeatureToggle.active?(:service_closure)
+      # Only block new registrations and renewals; allow edits and copy card orders
+      unless @transient_registration.is_a?(NewRegistration) || @transient_registration.is_a?(RenewingRegistration)
+        return
+      end
+
+      redirect_to page_path("service_closed")
     end
 
     # We're not really memoizing this instance variable here, so we don't think
