@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- \[RUBY-4521\] Prevent duplicate registrations for same company number [\#1766](https://github.com/DEFRA/waste-carriers-engine/pull/1766) ([tobyprivett](https://github.com/tobyprivett))
 - \[RUBY-4509\] Add retries to govPay webhook callback [\#1756](https://github.com/DEFRA/waste-carriers-engine/pull/1756) ([tobyprivett](https://github.com/tobyprivett))
 - \[RUBY-4394\] Updated content on registration number page [\#1750](https://github.com/DEFRA/waste-carriers-engine/pull/1750) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4350\] Add geospatial EA area lookup using MongoDB [\#1735](https://github.com/DEFRA/waste-carriers-engine/pull/1735) ([jjromeo](https://github.com/jjromeo))
@@ -754,6 +755,12 @@
 
 **Merged pull requests:**
 
+- Bump rspec-rails from 8.0.4 to 8.1.0 [\#1779](https://github.com/DEFRA/waste-carriers-engine/pull/1779) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump addressable from 2.9.0 to 2.9.1 [\#1778](https://github.com/DEFRA/waste-carriers-engine/pull/1778) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Consolidate dependabot gem updates [\#1777](https://github.com/DEFRA/waste-carriers-engine/pull/1777) ([tobyprivett](https://github.com/tobyprivett))
+- Bump nokogiri from 1.19.4 to 1.19.6 [\#1768](https://github.com/DEFRA/waste-carriers-engine/pull/1768) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1765](https://github.com/DEFRA/waste-carriers-engine/pull/1765) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump crass from 1.0.7 to 1.0.8 [\#1763](https://github.com/DEFRA/waste-carriers-engine/pull/1763) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump defra\_ruby\_companies\_house from 1.0.3 to 1.0.4 [\#1762](https://github.com/DEFRA/waste-carriers-engine/pull/1762) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump rubocop from 1.92.0 to 1.92.1 [\#1761](https://github.com/DEFRA/waste-carriers-engine/pull/1761) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump mongoid-locker from 2.2.0 to 2.3.0 [\#1760](https://github.com/DEFRA/waste-carriers-engine/pull/1760) ([dependabot[bot]](https://github.com/apps/dependabot))
