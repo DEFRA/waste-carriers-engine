@@ -9,7 +9,7 @@ module WasteCarriersEngine
       subject(:notify_client) { described_class.new(reference:, client:) }
 
       let(:registration) { create(:registration, :has_required_data) }
-      let(:reference) { registration.regIdentifier }
+      let(:reference) { registration.reg_identifier }
       let(:client) { instance_double(Notifications::Client, send_email: nil, send_sms: nil, send_letter: nil) }
 
       before { allow(Notifications::Client).to receive(:new).and_return(client) }

@@ -19,7 +19,7 @@ module WasteCarriersEngine
       def run(registration:)
         @registration = registration
 
-        client = NotifyClient.new(reference: @registration.regIdentifier)
+        client = NotifyClient.new(reference: @registration.reg_identifier)
 
         send_with_communication_record(client, :send_letter,
                                        template_id: template_id,

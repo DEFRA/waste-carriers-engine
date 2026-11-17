@@ -17,7 +17,7 @@ module WasteCarriersEngine
         @order = order
         @requester = requester
 
-        client = NotifyClient.new(reference: @registration.regIdentifier)
+        client = NotifyClient.new(reference: @registration.reg_identifier)
 
         send_with_communication_record(client, :send_email, notify_options)
       end

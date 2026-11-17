@@ -19,7 +19,7 @@ module WasteCarriersEngine
           {
             email_address: "foo@example.com",
             template_id: template_id,
-            reference: registration.regIdentifier,
+            reference: registration.reg_identifier,
             personalisation: {
               reg_identifier: registration.reg_identifier,
               registration_type: registration_type,
@@ -55,7 +55,7 @@ module WasteCarriersEngine
 
             it_behaves_like "calls notify with reference" do
               let(:send_action) { :send_email }
-              let(:reference) { registration.regIdentifier }
+              let(:reference) { registration.reg_identifier }
             end
 
             it "sends an email" do
@@ -102,7 +102,7 @@ module WasteCarriersEngine
 
             it_behaves_like "calls notify with reference" do
               let(:send_action) { :send_email }
-              let(:reference) { registration.regIdentifier }
+              let(:reference) { registration.reg_identifier }
             end
 
             it "sends an email" do

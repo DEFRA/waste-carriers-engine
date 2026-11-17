@@ -50,7 +50,7 @@ module WasteCarriersEngine
 
           it_behaves_like "calls notify with reference" do
             let(:send_action) { :send_email }
-            let(:reference) { registration.regIdentifier }
+            let(:reference) { registration.reg_identifier }
           end
 
           it_behaves_like "can create a communication record", "email"
