@@ -4,6 +4,7 @@ module WasteCarriersEngine
   class RenewsController < ApplicationController
     include CanRedirectFormToCorrectPath
 
+    before_action :check_service_closure
     before_action :validate_renew_token
 
     def new
@@ -14,6 +15,12 @@ module WasteCarriersEngine
     end
 
     private
+
+    def check_service_closure
+      return unless FeatureToggle.active?(:service_closure)
+
+      redirect_to page_path("service_closed")
+    end
 
     def validate_renew_token
       return render(:invalid_magic_link, status: 404) unless registration.present?
