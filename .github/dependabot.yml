@@ -8,6 +8,8 @@ updates:
   versioning-strategy: lockfile-only
   cooldown:
     default-days: 7
+    exclude:
+    - "defra_ruby_*"
   ignore:
   - dependency-name: airbrake
     versions:
