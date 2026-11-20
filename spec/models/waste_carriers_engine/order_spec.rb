@@ -71,10 +71,11 @@ module WasteCarriersEngine
 
           context "when associated payment does not exist" do
             before do
-              transient_registration.finance_details.orders = [build(:order, :has_required_data, govpay_id: "1234")]
+              transient_registration.finance_details.orders = [build(:order, :has_required_data, govpay_id: "nonexistent_govpay_id")]
             end
 
-            it "returns nil" do
+            it "returns nil without raising Mongoid::Errors::DocumentNotFound" do
+              expect { order.govpay_status }.not_to raise_error
               expect(order.govpay_status).to be_nil
             end
           end
