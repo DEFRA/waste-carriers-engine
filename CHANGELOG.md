@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- Feature/ruby 4587 reg refs to notify [\#1782](https://github.com/DEFRA/waste-carriers-engine/pull/1782) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- \[RUBY-4371\] Add feature toggle to stop new registrations and renewals [\#1781](https://github.com/DEFRA/waste-carriers-engine/pull/1781) ([tobyprivett](https://github.com/tobyprivett))
 - \[RUBY-4521\] Prevent duplicate registrations for same company number [\#1766](https://github.com/DEFRA/waste-carriers-engine/pull/1766) ([tobyprivett](https://github.com/tobyprivett))
 - \[RUBY-4509\] Add retries to govPay webhook callback [\#1756](https://github.com/DEFRA/waste-carriers-engine/pull/1756) ([tobyprivett](https://github.com/tobyprivett))
 - \[RUBY-4394\] Updated content on registration number page [\#1750](https://github.com/DEFRA/waste-carriers-engine/pull/1750) ([brujeo](https://github.com/brujeo))
@@ -755,6 +757,11 @@
 
 **Merged pull requests:**
 
+- \[RUBY-4602\] Update to ruby 3.4.13 [\#1786](https://github.com/DEFRA/waste-carriers-engine/pull/1786) ([tobyprivett](https://github.com/tobyprivett))
+- Bump defra\_ruby\_email from 1.3.0 to 1.3.1 [\#1785](https://github.com/DEFRA/waste-carriers-engine/pull/1785) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Chore/dependabot defra ruby [\#1784](https://github.com/DEFRA/waste-carriers-engine/pull/1784) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Exclude defra\_ruby\_\* gems from Dependabot cooldown [\#1783](https://github.com/DEFRA/waste-carriers-engine/pull/1783) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Update CHANGELOG [\#1780](https://github.com/DEFRA/waste-carriers-engine/pull/1780) ([tobyprivett](https://github.com/tobyprivett))
 - Bump rspec-rails from 8.0.4 to 8.1.0 [\#1779](https://github.com/DEFRA/waste-carriers-engine/pull/1779) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump addressable from 2.9.0 to 2.9.1 [\#1778](https://github.com/DEFRA/waste-carriers-engine/pull/1778) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Consolidate dependabot gem updates [\#1777](https://github.com/DEFRA/waste-carriers-engine/pull/1777) ([tobyprivett](https://github.com/tobyprivett))
