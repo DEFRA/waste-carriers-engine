@@ -4,8 +4,8 @@
 # This is as per its docs https://github.com/colszowka/simplecov#getting-started
 require "./spec/support/simplecov"
 
-# Call "binding.pry" anywhere in the code to stop execution and get a debugger console
-require "pry-byebug"
+# Call "binding.break" or "debugger" anywhere in the code to stop execution and get a debugger console
+require "debug"
 
 # Test helpers for gems
 require "aasm/rspec"
