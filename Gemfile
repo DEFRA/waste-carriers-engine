@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby "3.4.13"
+ruby "4.0.10"
 
 # Use Dart Sass with the Sprockets asset pipeline
 gem "dartsass-sprockets"
