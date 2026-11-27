@@ -14,7 +14,7 @@ Naming/PredicateMethod:
   Enabled: false
 
 AllCops:
-  TargetRubyVersion: 3.4
+  TargetRubyVersion: 4.0
 
 # Notify uses address_line_1 etc naming convention and we want to align with it
 Naming/VariableNumber:
